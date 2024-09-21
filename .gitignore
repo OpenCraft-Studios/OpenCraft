@@ -1,0 +1,4 @@
+./build*
+./minecraft/saves*
+./minecraft/logs*
+./out*
