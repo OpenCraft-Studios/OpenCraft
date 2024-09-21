@@ -64,7 +64,7 @@ I hope that you can be part of that community forking the repository or simply, 
     <h3>Screenshots</h3>
   </summary><br />
   <p align="center">
-    <img width="49%" src="assets/images/screenshotmenu.png" alt="PNG"/>
+    <img width="49%" src="assets/images/screenshot1.png" alt="PNG"/>
   </p>
 </details>
 
