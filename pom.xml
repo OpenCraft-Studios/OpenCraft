@@ -17,6 +17,13 @@
 		<maven.compiler.target>21</maven.compiler.target>
 	</properties>
 
+	<scm>
+		<url>https://github.com/OpenCraft-Studios/OpenCraft.git</url>
+		<tag>HEAD</tag>
+		<connection>scm:git:${project.scm.url}</connection>
+		<developerConnection>scm:git:${project.scm.url}</developerConnection>
+	</scm>
+
 	<build>
 		<plugins>
 			<plugin>
