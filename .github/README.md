@@ -64,8 +64,13 @@ I hope that you can be part of that community forking the repository or simply, 
     <h3>Screenshots</h3>
   </summary><br />
   <p align="center">
-    <img width="49%" src="assets/images/screenshot1.png" alt="PNG"/>
+    <img width="49%" src="assets/images/screenshot1.png" alt="PNG"/>&nbsp;
+    <img width="49%" src="assets/images/screenshot2.png" alt="PNG"/>
   </p>
+<!--  <div align="center">
+    <img width="80%" src="assets/images/screenshot3.png" alt="PNG<"/>
+    <p><b>+6 languages</b></p>
+  </div>-->
 </details>
 
 ---
