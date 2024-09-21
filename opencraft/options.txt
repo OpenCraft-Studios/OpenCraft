@@ -7,8 +7,8 @@ bobView:true
 anaglyph3d:false
 limitFramerate:false
 difficulty:2
-fancyGraphics:true
-FOV:85.0
+fancyGraphics:false
+FOV:110.0
 minimumBrightness:0.0
 key_Forward:17
 key_Left:30

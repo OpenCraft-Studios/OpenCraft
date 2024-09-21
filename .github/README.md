@@ -49,7 +49,7 @@
 <br />
 
 ## ✅ Getting started
-**OpenCraft** is a game programmed in Java, it has the same libraries (LWJGL 2 + Java 8/21) that Minecraft uses.
+**OpenCraft** is a game programmed in Java, it has the same motor (LWJGL 2 + Java 17) that Minecraft.
 
 ### Why this project? 🤔
 > I created this project because Minecraft is closed-source. I know that you can decompile it, but modification

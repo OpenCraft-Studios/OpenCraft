@@ -89,11 +89,11 @@ public class EntityRenderer {
         final float n5 = sin2;
         final float n6 = cos * n3;
         double n7 = this.mc.playerController.getBlockReachDistance();
-        this.mc.objectMouseOver = this.mc.world.rayTraceBlocks(orientCamera, orientCamera.addVector(n4 * n7, n5 * n7, n6 * n7));
+        this.mc.objectMouseOver = this.mc.world.rayTraceBlocks(orientCamera, orientCamera.add(n4 * n7, n5 * n7, n6 * n7));
         double distanceTo = n7;
         final Vec3 orientCamera2 = this.orientCamera(float1);
         if (this.mc.objectMouseOver != null) {
-            distanceTo = this.mc.objectMouseOver.hitVec.distanceTo(orientCamera2);
+            distanceTo = this.mc.objectMouseOver.hitVec.distance(orientCamera2);
         }
         if (this.mc.playerController instanceof PlayerControllerTest) {
             n7 = (distanceTo = 32.0);
@@ -103,7 +103,7 @@ public class EntityRenderer {
             }
             n7 = distanceTo;
         }
-        final Vec3 addVector = orientCamera2.addVector(n4 * n7, n5 * n7, n6 * n7);
+        final Vec3 addVector = orientCamera2.add(n4 * n7, n5 * n7, n6 * n7);
         this.pointedEntity = null;
         final List entitiesWithinAABBExcludingEntity = this.mc.world.getEntitiesWithinAABBExcludingEntity(thePlayer, thePlayer.boundingBox.addCoord(n4 * n7, n5 * n7, n6 * n7));
         double n8 = 0.0;
@@ -113,7 +113,7 @@ public class EntityRenderer {
                 final float n9 = 0.1f;
                 final MovingObjectPosition calculateIntercept = pointedEntity.boundingBox.expand(n9, n9, n9).calculateIntercept(orientCamera2, addVector);
                 if (calculateIntercept != null) {
-                    final double distanceTo2 = orientCamera2.distanceTo(calculateIntercept.hitVec);
+                    final double distanceTo2 = orientCamera2.distance(calculateIntercept.hitVec);
                     if (distanceTo2 < n8 || n8 == 0.0) {
                         this.pointedEntity = pointedEntity;
                         n8 = distanceTo2;
@@ -189,7 +189,7 @@ public class EntityRenderer {
                 n7 *= 0.1f;
                 final MovingObjectPosition rayTraceBlocks = this.mc.world.rayTraceBlocks(Vec3.newTemp(double1 + n5, double2 + n6, double3 + n7), Vec3.newTemp(double1 - n2 + n5 + n7, double2 - n4 + n6, double3 - n3 + n7));
                 if (rayTraceBlocks != null) {
-                    final double distanceTo = rayTraceBlocks.hitVec.distanceTo(Vec3.newTemp(double1, double2, double3));
+                    final double distanceTo = rayTraceBlocks.hitVec.distance(Vec3.newTemp(double1, double2, double3));
                     if (distanceTo < n) {
                         n = distanceTo;
                     }
@@ -494,13 +494,13 @@ public class EntityRenderer {
         float n = 1.0f / (4 - this.mc.options.renderDistance);
         n = 1.0f - (float) Math.pow((double) n, 0.25);
         final Vec3 skyColor = theWorld.getSkyColor(float1);
-        final float n2 = (float) skyColor.xCoord;
-        final float n3 = (float) skyColor.yCoord;
-        final float n4 = (float) skyColor.zCoord;
+        final float n2 = (float) skyColor.x;
+        final float n3 = (float) skyColor.y;
+        final float n4 = (float) skyColor.z;
         final Vec3 fogColor = theWorld.getFogColor(float1);
-        this.fogColorRed = (float) fogColor.xCoord;
-        this.fogColorGreen = (float) fogColor.yCoord;
-        this.fogColorBlue = (float) fogColor.zCoord;
+        this.fogColorRed = (float) fogColor.x;
+        this.fogColorGreen = (float) fogColor.y;
+        this.fogColorBlue = (float) fogColor.z;
         this.fogColorRed += (n2 - this.fogColorRed) * n;
         this.fogColorGreen += (n3 - this.fogColorGreen) * n;
         this.fogColorBlue += (n4 - this.fogColorBlue) * n;

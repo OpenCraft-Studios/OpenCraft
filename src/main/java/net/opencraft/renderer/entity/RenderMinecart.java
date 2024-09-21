@@ -35,14 +35,14 @@ public class RenderMinecart extends Render<EntityMinecart> {
             if (posOffset2 == null) {
                 posOffset2 = pos;
             }
-            xCoord += pos.xCoord - double1;
-            sqrt_double += (posOffset.yCoord + posOffset2.yCoord) / 2.0 - double2;
-            yCoord += pos.zCoord - double3;
-            final Vec3 addVector = posOffset2.addVector(-posOffset.xCoord, -posOffset.yCoord, -posOffset.zCoord);
-            if (addVector.lengthVector() != 0.0) {
+            xCoord += pos.x - double1;
+            sqrt_double += (posOffset.y + posOffset2.y) / 2.0 - double2;
+            yCoord += pos.z - double3;
+            final Vec3 addVector = posOffset2.add(-posOffset.x, -posOffset.y, -posOffset.z);
+            if (addVector.length() != 0.0) {
                 final Vec3 normalize = addVector.normalize();
-                nya1 = (float) (Math.atan2(normalize.zCoord, normalize.xCoord) * 180.0 / 3.141592653589793);
-                n = (float) (Math.atan(normalize.yCoord) * 73.0);
+                nya1 = (float) (Math.atan2(normalize.z, normalize.x) * 180.0 / 3.141592653589793);
+                n = (float) (Math.atan(normalize.y) * 73.0);
             }
         }
         GL11.glTranslatef((float) xCoord, (float) sqrt_double, (float) yCoord);

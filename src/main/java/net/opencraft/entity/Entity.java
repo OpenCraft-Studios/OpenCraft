@@ -510,9 +510,9 @@ public abstract class Entity {
     }
 
     public boolean isInRangeToRenderVec3D(final Vec3 var1) {
-        final double n = this.posX - var1.xCoord;
-        final double n2 = this.posY - var1.yCoord;
-        final double n3 = this.posZ - var1.zCoord;
+        final double n = this.posX - var1.x;
+        final double n2 = this.posY - var1.y;
+        final double n3 = this.posZ - var1.z;
         return this.isInRangeToRenderDist(n * n + n2 * n2 + n3 * n3);
     }
 

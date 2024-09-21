@@ -4,21 +4,16 @@ package net.opencraft.util;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.joml.Vector3f;
+
 public class Vec3 {
 
-    private static List<Vec3> vectorList;
-    
-    private static int nextVector;
-    public double xCoord;
-    public double yCoord;
-    public double zCoord;
+    public double x;
+    public double y;
+    public double z;
 
     public static Vec3 createVectorHelper(final double double1, final double double2, final double double3) {
         return new Vec3(double1, double2, double3);
-    }
-
-    public static void initialize() {
-        Vec3.nextVector = 0;
     }
 
     /**
@@ -39,111 +34,107 @@ public class Vec3 {
         if (double3 == -0.0) {
             double3 = 0.0;
         }
-        this.xCoord = double1;
-        this.yCoord = double2;
-        this.zCoord = double3;
+        this.x = double1;
+        this.y = double2;
+        this.z = double3;
     }
 
     private Vec3 setComponents(final double double1, final double double2, final double double3) {
-        this.xCoord = double1;
-        this.yCoord = double2;
-        this.zCoord = double3;
+        this.x = double1;
+        this.y = double2;
+        this.z = double3;
         return this;
     }
 
     public Vec3 subtract(final Vec3 bo) {
-        return newTemp(bo.xCoord - this.xCoord, bo.yCoord - this.yCoord, bo.zCoord - this.zCoord);
+        return newTemp(bo.x - this.x, bo.y - this.y, bo.z - this.z);
     }
 
     public Vec3 normalize() {
-        final double n = Mth.sqrt_double(this.xCoord * this.xCoord + this.yCoord * this.yCoord + this.zCoord * this.zCoord);
+        final double n = Mth.sqrt_double(this.x * this.x + this.y * this.y + this.z * this.z);
         if (n < 1.0E-4) {
             return newTemp(0.0, 0.0, 0.0);
         }
-        return newTemp(this.xCoord / n, this.yCoord / n, this.zCoord / n);
+        return newTemp(this.x / n, this.y / n, this.z / n);
     }
 
-    public Vec3 crossProduct(final Vec3 bo) {
-        return newTemp(this.yCoord * bo.zCoord - this.zCoord * bo.yCoord, this.zCoord * bo.xCoord - this.xCoord * bo.zCoord, this.xCoord * bo.yCoord - this.yCoord * bo.xCoord);
+    public Vec3 cross(final Vec3 bo) {
+        return newTemp(this.y * bo.z - this.z * bo.y, this.z * bo.x - this.x * bo.z, this.x * bo.y - this.y * bo.x);
     }
 
-    public Vec3 addVector(final double double1, final double double2, final double double3) {
-        return newTemp(this.xCoord + double1, this.yCoord + double2, this.zCoord + double3);
+    public Vec3 add(final double double1, final double double2, final double double3) {
+        return newTemp(this.x + double1, this.y + double2, this.z + double3);
     }
 
-    public double distanceTo(final Vec3 bo) {
-        final double n = bo.xCoord - this.xCoord;
-        final double n2 = bo.yCoord - this.yCoord;
-        final double n3 = bo.zCoord - this.zCoord;
+    public double distance(final Vec3 bo) {
+        final double n = bo.x - this.x;
+        final double n2 = bo.y - this.y;
+        final double n3 = bo.z - this.z;
         return Mth.sqrt_double(n * n + n2 * n2 + n3 * n3);
     }
 
-    public double squareDistanceTo(final Vec3 bo) {
-        final double n = bo.xCoord - this.xCoord;
-        final double n2 = bo.yCoord - this.yCoord;
-        final double n3 = bo.zCoord - this.zCoord;
+    public double distanceSquared(final Vec3 bo) {
+        final double n = bo.x - this.x;
+        final double n2 = bo.y - this.y;
+        final double n3 = bo.z - this.z;
+        new Vector3f().distance(null);
         return n * n + n2 * n2 + n3 * n3;
     }
 
-    public double squareDistanceTo(final double double1, final double double2, final double double3) {
-        final double n = double1 - this.xCoord;
-        final double n2 = double2 - this.yCoord;
-        final double n3 = double3 - this.zCoord;
+    public double distanceSquared(final double double1, final double double2, final double double3) {
+        final double n = double1 - this.x;
+        final double n2 = double2 - this.y;
+        final double n3 = double3 - this.z;
         return n * n + n2 * n2 + n3 * n3;
     }
 
-    public double lengthVector() {
-        return Mth.sqrt_double(this.xCoord * this.xCoord + this.yCoord * this.yCoord + this.zCoord * this.zCoord);
+    public double length() {
+        return Mth.sqrt_double(this.x * this.x + this.y * this.y + this.z * this.z);
     }
 
     public Vec3 getIntermediateWithXValue(final Vec3 bo, final double double2) {
-        final double n = bo.xCoord - this.xCoord;
-        final double n2 = bo.yCoord - this.yCoord;
-        final double n3 = bo.zCoord - this.zCoord;
+        final double n = bo.x - this.x;
+        final double n2 = bo.y - this.y;
+        final double n3 = bo.z - this.z;
         if (n * n < 1.0000000116860974E-7) {
             return null;
         }
-        final double n4 = (double2 - this.xCoord) / n;
+        final double n4 = (double2 - this.x) / n;
         if (n4 < 0.0 || n4 > 1.0) {
             return null;
         }
-        return newTemp(this.xCoord + n * n4, this.yCoord + n2 * n4, this.zCoord + n3 * n4);
+        return newTemp(this.x + n * n4, this.y + n2 * n4, this.z + n3 * n4);
     }
 
     public Vec3 getIntermediateWithYValue(final Vec3 bo, final double double2) {
-        final double n = bo.xCoord - this.xCoord;
-        final double n2 = bo.yCoord - this.yCoord;
-        final double n3 = bo.zCoord - this.zCoord;
+        final double n = bo.x - this.x;
+        final double n2 = bo.y - this.y;
+        final double n3 = bo.z - this.z;
         if (n2 * n2 < 1.0000000116860974E-7) {
             return null;
         }
-        final double n4 = (double2 - this.yCoord) / n2;
+        final double n4 = (double2 - this.y) / n2;
         if (n4 < 0.0 || n4 > 1.0) {
             return null;
         }
-        return newTemp(this.xCoord + n * n4, this.yCoord + n2 * n4, this.zCoord + n3 * n4);
+        return newTemp(this.x + n * n4, this.y + n2 * n4, this.z + n3 * n4);
     }
 
     public Vec3 getIntermediateWithZValue(final Vec3 bo, final double double2) {
-        final double n = bo.xCoord - this.xCoord;
-        final double n2 = bo.yCoord - this.yCoord;
-        final double n3 = bo.zCoord - this.zCoord;
+        final double n = bo.x - this.x;
+        final double n2 = bo.y - this.y;
+        final double n3 = bo.z - this.z;
         if (n3 * n3 < 1.0000000116860974E-7) {
             return null;
         }
-        final double n4 = (double2 - this.zCoord) / n3;
+        final double n4 = (double2 - this.z) / n3;
         if (n4 < 0.0 || n4 > 1.0) {
             return null;
         }
-        return newTemp(this.xCoord + n * n4, this.yCoord + n2 * n4, this.zCoord + n3 * n4);
+        return newTemp(this.x + n * n4, this.y + n2 * n4, this.z + n3 * n4);
     }
 
     public String toString() {
-        return new StringBuilder().append("(").append(this.xCoord).append(", ").append(this.yCoord).append(", ").append(this.zCoord).append(")").toString();
-    }
-
-    static {
-        Vec3.vectorList = (List) new ArrayList();
-        Vec3.nextVector = 0;
+        return new StringBuilder().append("(").append(this.x).append(", ").append(this.y).append(", ").append(this.z).append(")").toString();
     }
 }

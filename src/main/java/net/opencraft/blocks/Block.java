@@ -386,8 +386,8 @@ public class Block {
     }
 
     public MovingObjectPosition collisionRayTrace(final World world, final int xCoord, final int yCoord, final int zCoord, Vec3 var1, Vec3 var2) {
-        var1 = var1.addVector(-xCoord, -yCoord, -zCoord);
-        var2 = var2.addVector(-xCoord, -yCoord, -zCoord);
+        var1 = var1.add(-xCoord, -yCoord, -zCoord);
+        var2 = var2.add(-xCoord, -yCoord, -zCoord);
         Vec3 intermediateWithXValue = var1.getIntermediateWithXValue(var2, this.minX);
         Vec3 intermediateWithXValue2 = var1.getIntermediateWithXValue(var2, this.maxX);
         Vec3 intermediateWithYValue = var1.getIntermediateWithYValue(var2, this.minY);
@@ -413,22 +413,22 @@ public class Block {
             intermediateWithZValue2 = null;
         }
         Vec3 vec3D = null;
-        if (intermediateWithXValue != null && (vec3D == null || var1.distanceTo(intermediateWithXValue) < var1.distanceTo(vec3D))) {
+        if (intermediateWithXValue != null && (vec3D == null || var1.distance(intermediateWithXValue) < var1.distance(vec3D))) {
             vec3D = intermediateWithXValue;
         }
-        if (intermediateWithXValue2 != null && (vec3D == null || var1.distanceTo(intermediateWithXValue2) < var1.distanceTo(vec3D))) {
+        if (intermediateWithXValue2 != null && (vec3D == null || var1.distance(intermediateWithXValue2) < var1.distance(vec3D))) {
             vec3D = intermediateWithXValue2;
         }
-        if (intermediateWithYValue != null && (vec3D == null || var1.distanceTo(intermediateWithYValue) < var1.distanceTo(vec3D))) {
+        if (intermediateWithYValue != null && (vec3D == null || var1.distance(intermediateWithYValue) < var1.distance(vec3D))) {
             vec3D = intermediateWithYValue;
         }
-        if (intermediateWithYValue2 != null && (vec3D == null || var1.distanceTo(intermediateWithYValue2) < var1.distanceTo(vec3D))) {
+        if (intermediateWithYValue2 != null && (vec3D == null || var1.distance(intermediateWithYValue2) < var1.distance(vec3D))) {
             vec3D = intermediateWithYValue2;
         }
-        if (intermediateWithZValue != null && (vec3D == null || var1.distanceTo(intermediateWithZValue) < var1.distanceTo(vec3D))) {
+        if (intermediateWithZValue != null && (vec3D == null || var1.distance(intermediateWithZValue) < var1.distance(vec3D))) {
             vec3D = intermediateWithZValue;
         }
-        if (intermediateWithZValue2 != null && (vec3D == null || var1.distanceTo(intermediateWithZValue2) < var1.distanceTo(vec3D))) {
+        if (intermediateWithZValue2 != null && (vec3D == null || var1.distance(intermediateWithZValue2) < var1.distance(vec3D))) {
             vec3D = intermediateWithZValue2;
         }
         if (vec3D == null) {
@@ -453,19 +453,19 @@ public class Block {
         if (vec3D == intermediateWithZValue2) {
             integer4 = 3;
         }
-        return new MovingObjectPosition(xCoord, yCoord, zCoord, integer4, vec3D.addVector(xCoord, yCoord, zCoord));
+        return new MovingObjectPosition(xCoord, yCoord, zCoord, integer4, vec3D.add(xCoord, yCoord, zCoord));
     }
 
     private boolean isVecInsideYZBounds(final Vec3 var1) {
-        return var1 != null && var1.yCoord >= this.minY && var1.yCoord <= this.maxY && var1.zCoord >= this.minZ && var1.zCoord <= this.maxZ;
+        return var1 != null && var1.y >= this.minY && var1.y <= this.maxY && var1.z >= this.minZ && var1.z <= this.maxZ;
     }
 
     private boolean isVecInsideXZBounds(final Vec3 var1) {
-        return var1 != null && var1.xCoord >= this.minX && var1.xCoord <= this.maxX && var1.zCoord >= this.minZ && var1.zCoord <= this.maxZ;
+        return var1 != null && var1.x >= this.minX && var1.x <= this.maxX && var1.z >= this.minZ && var1.z <= this.maxZ;
     }
 
     private boolean isVecInsideXYBounds(final Vec3 var1) {
-        return var1 != null && var1.xCoord >= this.minX && var1.xCoord <= this.maxX && var1.yCoord >= this.minY && var1.yCoord <= this.maxY;
+        return var1 != null && var1.x >= this.minX && var1.x <= this.maxX && var1.y >= this.minY && var1.y <= this.maxY;
     }
 
     public void onBlockDestroyedByExplosion(final World world, final int xCoord, final int yCoord, final int zCoord) {
