@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>net.opencraft</groupId>
-	<artifactId>nCraft</artifactId>
+	<artifactId>OpenCraft</artifactId>
 	<version>24r14</version>
 	<name>OpenCraft</name>
 	<packaging>jar</packaging>

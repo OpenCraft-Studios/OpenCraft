@@ -47,7 +47,7 @@ public class ThreadDownloadResources extends Thread {
             }
         } catch (IOException ex) {
             this.loadResource(this.resourcesFolder, "");
-            System.err.println("Tell nicolas that his server is down!");
+            System.err.println("Cannot download resources. Using local resources instead. Error: " + ex);
         }
     }
 

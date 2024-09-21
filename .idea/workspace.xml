@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="25d71ebe-8d4c-4c8e-849f-7f5eb50423f7" name="Changes" comment="Update git ignore again.">
+      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/lwjgl_2_9_4_all_lite.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_09_2024_17_03_[Changes]/Block.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_09_2024_17_03_[Changes]/Buffer.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_09_2024_17_03_[Changes]/CodeBook$DecodeAux.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_09_2024_17_03_[Changes]/CodeBook.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_09_2024_17_03_[Changes]/Comment.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_09_2024_17_03_[Changes]/Drft.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_09_2024_17_03_[Changes]/DspState.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_09_2024_17_03_[Changes]/Floor0$EchstateFloor0.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_09_2024_17_03_[Changes]/Floor0$InfoFloor0.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_09_2024_17_03_[Changes]/Floor0$LookFloor0.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_09_2024_17_03_[Changes]/Floor0.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_09_2024_17_03_[Changes]/Floor1$EchstateFloor1.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_09_2024_17_03_[Changes]/Floor1$InfoFloor1.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_09_2024_17_03_[Changes]/Floor1$LookFloor1.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_09_2024_17_03_[Changes]/Floor1$Lsfit_acc.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_09_2024_17_03_[Changes]/Floor1.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_09_2024_17_03_[Changes]/FuncFloor.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_09_2024_17_03_[Changes]/FuncMapping.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_09_2024_17_03_[Changes]/FuncResidue.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_09_2024_17_03_[Changes]/FuncTime.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_09_2024_17_03_[Changes]/Info.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_09_2024_17_03_[Changes]/InfoMode.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_09_2024_17_03_[Changes]/Lookup.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_09_2024_17_03_[Changes]/Lpc.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_09_2024_17_03_[Changes]/Lsp.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_09_2024_17_03_[Changes]/Mapping0$InfoMapping0.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_09_2024_17_03_[Changes]/Mapping0$LookMapping0.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_09_2024_17_03_[Changes]/Mapping0.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_09_2024_17_03_[Changes]/Mdct.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_09_2024_17_03_[Changes]/Packet.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_09_2024_17_03_[Changes]/Page.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_09_2024_17_03_[Changes]/PsyInfo.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_09_2024_17_03_[Changes]/PsyLook.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_09_2024_17_03_[Changes]/Residue0$InfoResidue0.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_09_2024_17_03_[Changes]/Residue0$LookResidue0.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_09_2024_17_03_[Changes]/Residue0.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_09_2024_17_03_[Changes]/Residue1.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_09_2024_17_03_[Changes]/Residue2.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_09_2024_17_03_[Changes]/StaticCodeBook.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_09_2024_17_03_[Changes]/StreamState.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_09_2024_17_03_[Changes]/SyncState.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_09_2024_17_03_[Changes]/Time0.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_09_2024_17_03_[Changes]/Util.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_09_2024_17_03_[Changes]/shelved.patch" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_09_2024_17_03_[Changes]1/Block.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_09_2024_17_03_[Changes]1/Buffer.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_09_2024_17_03_[Changes]1/CodeBook$DecodeAux.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_09_2024_17_03_[Changes]1/CodeBook.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_09_2024_17_03_[Changes]1/Comment.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_09_2024_17_03_[Changes]1/Drft.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_09_2024_17_03_[Changes]1/DspState.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_09_2024_17_03_[Changes]1/Floor0$EchstateFloor0.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_09_2024_17_03_[Changes]1/Floor0$InfoFloor0.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_09_2024_17_03_[Changes]1/Floor0$LookFloor0.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_09_2024_17_03_[Changes]1/Floor0.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_09_2024_17_03_[Changes]1/Floor1$EchstateFloor1.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_09_2024_17_03_[Changes]1/Floor1$InfoFloor1.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_09_2024_17_03_[Changes]1/Floor1$LookFloor1.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_09_2024_17_03_[Changes]1/Floor1$Lsfit_acc.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_09_2024_17_03_[Changes]1/Floor1.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_09_2024_17_03_[Changes]1/FuncFloor.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_09_2024_17_03_[Changes]1/FuncMapping.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_09_2024_17_03_[Changes]1/FuncResidue.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_09_2024_17_03_[Changes]1/FuncTime.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_09_2024_17_03_[Changes]1/Info.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_09_2024_17_03_[Changes]1/InfoMode.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_09_2024_17_03_[Changes]1/Lookup.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_09_2024_17_03_[Changes]1/Lpc.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_09_2024_17_03_[Changes]1/Lsp.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_09_2024_17_03_[Changes]1/Mapping0$InfoMapping0.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_09_2024_17_03_[Changes]1/Mapping0$LookMapping0.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_09_2024_17_03_[Changes]1/Mapping0.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_09_2024_17_03_[Changes]1/Mdct.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_09_2024_17_03_[Changes]1/Packet.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_09_2024_17_03_[Changes]1/Page.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_09_2024_17_03_[Changes]1/PsyInfo.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_09_2024_17_03_[Changes]1/PsyLook.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_09_2024_17_03_[Changes]1/Residue0$InfoResidue0.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_09_2024_17_03_[Changes]1/Residue0$LookResidue0.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_09_2024_17_03_[Changes]1/Residue0.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_09_2024_17_03_[Changes]1/Residue1.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_09_2024_17_03_[Changes]1/Residue2.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_09_2024_17_03_[Changes]1/StaticCodeBook.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_09_2024_17_03_[Changes]1/StreamState.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_09_2024_17_03_[Changes]1/SyncState.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_09_2024_17_03_[Changes]1/Time0.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_09_2024_17_03_[Changes]1/Util.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_09_2024_17_03_[Changes]1/shelved.patch" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_09_2024_17_03__Changes_.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_09_2024_17_03__Changes_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/OpenCraft.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/opencraft/ThreadDownloadResources.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/opencraft/ThreadDownloadResources.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/META-INF/maven/net.opencraft/nCraft/pom.properties" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="PUSH_TAGS">
+      <GitPushTagMode>
+        <option name="argument" value="--follow-tags" />
+        <option name="title" value="Current Branch" />
+      </GitPushTagMode>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;TheNicolasDeveloper&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/OpenCraft-Studios/nCraft.git&quot;,
+    &quot;accountId&quot;: &quot;93396247-5948-485f-b371-8bbac8e6c940&quot;
+  }
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 2
+}</component>
+  <component name="ProjectId" id="2mNdSTXHp0PR5xTYVid3WTEltOT" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.OpenCraftRunner.executor": "Debug",
+    "Application.RunClient.executor": "Run",
+    "Application.Unnamed.executor": "Run",
+    "Downloaded.Files.Path.Enabled": "true",
+    "Maven.nCraft [org.apache.maven.plugins:maven-install-plugin:3.1.2:install].executor": "Run",
+    "Maven.nCraft [org.apache.maven.plugins:maven-jar-plugin:3.4.1:jar].executor": "Run",
+    "Repository.Attach.Annotations": "false",
+    "Repository.Attach.JavaDocs": "false",
+    "Repository.Attach.Sources": "false",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "com.codeium.enabled": "true",
+    "git-widget-placeholder": "master",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "D:/projects/OpenCraft",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.23701298",
+    "project.structure.side.proportion": "0.23057325",
+    "settings.editor.selected.configurable": "preferences.lookFeel"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\projects\nCraft\src\main\java\assets" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="" />
+      <recent name="assets" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="RunClient" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="net.opencraft.client.Main" />
+      <module name="OpenCraft" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="OpenCraft" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="OpenCraft" />
+      <option name="filePath" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="25d71ebe-8d4c-4c8e-849f-7f5eb50423f7" name="Changes" comment="" />
+      <created>1726920969624</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1726920969624</updated>
+    </task>
+    <task id="LOCAL-00001" summary="Fix text in menu being gray instead of white and fix gitignore">
+      <option name="closed" value="true" />
+      <created>1726921941398</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1726921941398</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Add readme file">
+      <option name="closed" value="true" />
+      <created>1726923189628</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1726923189628</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Refactor some stuff">
+      <option name="closed" value="true" />
+      <created>1726927768468</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1726927768468</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Update pom.xml libraries">
+      <option name="closed" value="true" />
+      <created>1726931204855</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1726931204855</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Add git ignore">
+      <option name="closed" value="true" />
+      <created>1726931288587</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1726931288587</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Update git ignore">
+      <option name="closed" value="true" />
+      <created>1726935754010</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1726935754010</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Update git ignore">
+      <option name="closed" value="true" />
+      <created>1726935966875</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1726935966875</updated>
+    </task>
+    <task id="LOCAL-00008" summary="some random files idk it wants to commit for some reason">
+      <option name="closed" value="true" />
+      <created>1726935989701</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1726935989701</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Update git ignore again.">
+      <option name="closed" value="true" />
+      <created>1726937265381</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1726937265381</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
+    <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Fix text in menu being gray instead of white and fix gitignore" />
+    <MESSAGE value="Add readme file" />
+    <MESSAGE value="Refactor some stuff" />
+    <MESSAGE value="Update pom.xml libraries" />
+    <MESSAGE value="Add git ignore" />
+    <MESSAGE value="Update git ignore" />
+    <MESSAGE value="some random files idk it wants to commit for some reason" />
+    <MESSAGE value="Update git ignore again." />
+    <option name="LAST_COMMIT_MESSAGE" value="Update git ignore again." />
+  </component>
+</project>
