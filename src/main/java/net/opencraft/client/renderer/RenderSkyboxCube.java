@@ -36,7 +36,7 @@ public class RenderSkyboxCube {
         GL11.glDisable(GL11.GL_CULL_FACE);
         GL11.glDepthMask(false);
 
-        for(int j = 0; j < 3; ++j) {
+        for(int j = 0; j < 4; ++j) {
             GlStateManager.pushMatrix();
             float f = ((float) (j % 2) / 2.0F - 0.5F) / 256.0F;
             float f1 = ((float) (j / 2) / 2.0F - 0.5F) / 256.0F;
