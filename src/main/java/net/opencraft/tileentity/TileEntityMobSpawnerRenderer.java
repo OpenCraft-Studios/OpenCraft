@@ -6,7 +6,7 @@ import java.util.Map;
 
 import net.opencraft.entity.Entity;
 import net.opencraft.entity.EntityList;
-import net.opencraft.renderer.entity.RenderManager;
+import net.opencraft.client.renderer.entity.RenderManager;
 
 import org.lwjgl.opengl.GL11;
 

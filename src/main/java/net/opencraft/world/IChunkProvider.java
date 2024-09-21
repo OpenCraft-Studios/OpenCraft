@@ -1,7 +1,7 @@
 
 package net.opencraft.world;
 
-import net.opencraft.renderer.gui.IProgressUpdate;
+import net.opencraft.client.renderer.gui.IProgressUpdate;
 import net.opencraft.world.chunk.Chunk;
 
 public interface IChunkProvider {

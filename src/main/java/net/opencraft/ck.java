@@ -4,7 +4,7 @@ package net.opencraft;
 import net.opencraft.blocks.material.Material;
 import net.opencraft.entity.Entity;
 import net.opencraft.entity.EntityLiving;
-import net.opencraft.renderer.gui.IProgressUpdate;
+import net.opencraft.client.renderer.gui.IProgressUpdate;
 import net.opencraft.util.Mth;
 import net.opencraft.world.World;
 import net.opencraft.world.chunk.ChunkPosition;

@@ -2,7 +2,7 @@
 package net.opencraft.inventory;
 
 import net.opencraft.item.ItemStack;
-import net.opencraft.renderer.gui.GuiContainer;
+import net.opencraft.client.renderer.gui.GuiContainer;
 
 public class Slot {
 
