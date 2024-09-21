@@ -15,7 +15,7 @@ import net.opencraft.client.settings.GameSettings;
 import net.opencraft.client.renderer.GLAllocation;
 import net.opencraft.client.texture.TextureFX;
 import net.opencraft.ei;
-import net.opencraft.p;
+import net.opencraft.ImageProvider;
 import org.lwjgl.opengl.GL11;
 
 public class RenderEngine {
@@ -250,7 +250,7 @@ public class RenderEngine {
         return ei.c;
     }
 
-    public ei a(final String string, final p p) {
+    public ei a(final String string, final ImageProvider p) {
         final ei ei = (ei) this.f.get(string);
         if (ei == null) {
             this.f.put(string, new ei(string, p));

@@ -2,7 +2,7 @@
 package net.opencraft.client.renderer;
 
 import net.opencraft.PositionTextureVertex;
-import net.opencraft.util.Vec3D;
+import net.opencraft.util.Vec3;
 
 public class TexturedQuad {
 
@@ -34,7 +34,7 @@ public class TexturedQuad {
     }
 
     public void draw(final Tessellator ag, final float float2) {
-        final Vec3D normalize = this.vertexPositions[1].vector3D.subtract(this.vertexPositions[2].vector3D).crossProduct(this.vertexPositions[1].vector3D.subtract(this.vertexPositions[0].vector3D)).normalize();
+        final Vec3 normalize = this.vertexPositions[1].vector3D.subtract(this.vertexPositions[2].vector3D).crossProduct(this.vertexPositions[1].vector3D.subtract(this.vertexPositions[0].vector3D)).normalize();
         ag.startDrawingQuads();
         ag.setNormal((float) normalize.xCoord, (float) normalize.yCoord, (float) normalize.zCoord);
         for (int i = 0; i < 4; ++i) {

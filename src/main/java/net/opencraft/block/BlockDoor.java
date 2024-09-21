@@ -6,8 +6,8 @@ import net.opencraft.block.material.Material;
 import net.opencraft.client.input.MovingObjectPosition;
 import net.opencraft.entity.EntityPlayer;
 import net.opencraft.item.Item;
-import net.opencraft.util.AxisAlignedBB;
-import net.opencraft.util.Vec3D;
+import net.opencraft.physics.AABB;
+import net.opencraft.util.Vec3;
 import net.opencraft.world.IBlockAccess;
 import net.opencraft.world.World;
 
@@ -54,13 +54,13 @@ public class BlockDoor extends Block {
     }
 
     @Override
-    public AxisAlignedBB getSelectedBoundingBoxFromPool(final World world, final int xCoord, final int yCoord, final int zCoord) {
+    public AABB getSelectedBoundingBoxFromPool(final World world, final int xCoord, final int yCoord, final int zCoord) {
         this.setBlockBoundsBasedOnState(world, xCoord, yCoord, zCoord);
         return super.getSelectedBoundingBoxFromPool(world, xCoord, yCoord, zCoord);
     }
 
     @Override
-    public AxisAlignedBB getCollisionBoundingBoxFromPool(final World world, final int xCoord, final int yCoord, final int zCoord) {
+    public AABB getCollisionBoundingBoxFromPool(final World world, final int xCoord, final int yCoord, final int zCoord) {
         this.setBlockBoundsBasedOnState(world, xCoord, yCoord, zCoord);
         return super.getCollisionBoundingBoxFromPool(world, xCoord, yCoord, zCoord);
     }
@@ -149,7 +149,7 @@ public class BlockDoor extends Block {
     }
 
     @Override
-    public MovingObjectPosition collisionRayTrace(final World world, final int xCoord, final int yCoord, final int zCoord, final Vec3D var1, final Vec3D var2) {
+    public MovingObjectPosition collisionRayTrace(final World world, final int xCoord, final int yCoord, final int zCoord, final Vec3 var1, final Vec3 var2) {
         this.setBlockBoundsBasedOnState(world, xCoord, yCoord, zCoord);
         return super.collisionRayTrace(world, xCoord, yCoord, zCoord, var1, var2);
     }

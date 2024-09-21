@@ -1,12 +1,12 @@
 
 package net.opencraft.block;
 
-import java.util.ArrayList;
-import java.util.Random;
+import java.util.*;
+
 import net.opencraft.entity.Entity;
 import net.opencraft.entity.EntityPlayer;
-import net.opencraft.util.AxisAlignedBB;
-import net.opencraft.util.Vec3D;
+import net.opencraft.physics.AABB;
+import net.opencraft.util.Vec3;
 import net.opencraft.world.IBlockAccess;
 import net.opencraft.world.World;
 
@@ -43,7 +43,7 @@ public class BlockStair extends Block {
     }
 
     @Override
-    public void getCollidingBoundingBoxes(final World world, final int xCoord, final int yCoord, final int zCoord, final AxisAlignedBB aabb, final ArrayList arrayList) {
+    public void getCollidingBoundingBoxes(World world, int xCoord, int yCoord, final int zCoord, AABB aabb, List<AABB> arrayList) {
         final int blockMetadata = world.getBlockMetadata(xCoord, yCoord, zCoord);
         if (blockMetadata == 0) {
             this.setBlockBounds(0.0f, 0.0f, 0.0f, 0.5f, 0.5f, 1.0f);
@@ -207,12 +207,12 @@ public class BlockStair extends Block {
     }
 
     @Override
-    public AxisAlignedBB getSelectedBoundingBoxFromPool(final World world, final int xCoord, final int yCoord, final int zCoord) {
+    public AABB getSelectedBoundingBoxFromPool(final World world, final int xCoord, final int yCoord, final int zCoord) {
         return this.modelBlock.getSelectedBoundingBoxFromPool(world, xCoord, yCoord, zCoord);
     }
 
     @Override
-    public void velocityToAddToEntity(final World world, final int xCoord, final int yCoord, final int zCoord, final Entity entity, final Vec3D var1) {
+    public void velocityToAddToEntity(final World world, final int xCoord, final int yCoord, final int zCoord, final Entity entity, final Vec3 var1) {
         this.modelBlock.velocityToAddToEntity(world, xCoord, yCoord, zCoord, entity, var1);
     }
 

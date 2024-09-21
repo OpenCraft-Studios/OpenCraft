@@ -1,22 +1,17 @@
 
 package net.opencraft.block;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
+
 import net.opencraft.block.material.Material;
 import net.opencraft.client.input.MovingObjectPosition;
-import net.opencraft.client.sound.StepSound;
-import net.opencraft.client.sound.StepSoundSand;
-import net.opencraft.client.sound.StepSoundStone;
-import net.opencraft.entity.Entity;
-import net.opencraft.entity.EntityItem;
-import net.opencraft.entity.EntityPlayer;
-import net.opencraft.item.Item;
-import net.opencraft.item.ItemBlock;
-import net.opencraft.item.ItemStack;
+import net.opencraft.client.sound.*;
+import net.opencraft.entity.*;
+import net.opencraft.item.*;
+import net.opencraft.physics.AABB;
 import net.opencraft.tileentity.TileEntitySign;
-import net.opencraft.util.AxisAlignedBB;
-import net.opencraft.util.Vec3D;
+import net.opencraft.util.Vec3;
 import net.opencraft.world.IBlockAccess;
 import net.opencraft.world.World;
 
@@ -301,19 +296,19 @@ public class Block {
         return this.blockIndexInTexture;
     }
 
-    public AxisAlignedBB getSelectedBoundingBoxFromPool(final World world, final int xCoord, final int yCoord, final int zCoord) {
-        return AxisAlignedBB.getBoundingBoxFromPool(xCoord + this.minX, yCoord + this.minY, zCoord + this.minZ, xCoord + this.maxX, yCoord + this.maxY, zCoord + this.maxZ);
+    public AABB getSelectedBoundingBoxFromPool(final World world, final int xCoord, final int yCoord, final int zCoord) {
+        return AABB.getBoundingBoxFromPool(xCoord + this.minX, yCoord + this.minY, zCoord + this.minZ, xCoord + this.maxX, yCoord + this.maxY, zCoord + this.maxZ);
     }
 
-    public void getCollidingBoundingBoxes(final World world, final int xCoord, final int yCoord, final int zCoord, final AxisAlignedBB aabb, final ArrayList arrayList) {
-        final AxisAlignedBB collisionBoundingBoxFromPool = this.getCollisionBoundingBoxFromPool(world, xCoord, yCoord, zCoord);
-        if (collisionBoundingBoxFromPool != null && aabb.intersectsWith(collisionBoundingBoxFromPool)) {
-            arrayList.add(collisionBoundingBoxFromPool);
+    public void getCollidingBoundingBoxes(World world, int xCoord, int yCoord, int zCoord, AABB aabb, List<AABB> list) {
+        AABB aabb1 = this.getCollisionBoundingBoxFromPool(world, xCoord, yCoord, zCoord);
+        if (aabb1 != null && aabb.intersectsWith(aabb1)) {
+            list.add(aabb1);
         }
     }
 
-    public AxisAlignedBB getCollisionBoundingBoxFromPool(final World world, final int xCoord, final int yCoord, final int zCoord) {
-        return AxisAlignedBB.getBoundingBoxFromPool(xCoord + this.minX, yCoord + this.minY, zCoord + this.minZ, xCoord + this.maxX, yCoord + this.maxY, zCoord + this.maxZ);
+    public AABB getCollisionBoundingBoxFromPool(final World world, final int xCoord, final int yCoord, final int zCoord) {
+        return AABB.getBoundingBoxFromPool(xCoord + this.minX, yCoord + this.minY, zCoord + this.minZ, xCoord + this.maxX, yCoord + this.maxY, zCoord + this.maxZ);
     }
 
     public boolean isOpaqueCube() {
@@ -390,15 +385,15 @@ public class Block {
         return this.blockResistance / 5.0f;
     }
 
-    public MovingObjectPosition collisionRayTrace(final World world, final int xCoord, final int yCoord, final int zCoord, Vec3D var1, Vec3D var2) {
+    public MovingObjectPosition collisionRayTrace(final World world, final int xCoord, final int yCoord, final int zCoord, Vec3 var1, Vec3 var2) {
         var1 = var1.addVector(-xCoord, -yCoord, -zCoord);
         var2 = var2.addVector(-xCoord, -yCoord, -zCoord);
-        Vec3D intermediateWithXValue = var1.getIntermediateWithXValue(var2, this.minX);
-        Vec3D intermediateWithXValue2 = var1.getIntermediateWithXValue(var2, this.maxX);
-        Vec3D intermediateWithYValue = var1.getIntermediateWithYValue(var2, this.minY);
-        Vec3D intermediateWithYValue2 = var1.getIntermediateWithYValue(var2, this.maxY);
-        Vec3D intermediateWithZValue = var1.getIntermediateWithZValue(var2, this.minZ);
-        Vec3D intermediateWithZValue2 = var1.getIntermediateWithZValue(var2, this.maxZ);
+        Vec3 intermediateWithXValue = var1.getIntermediateWithXValue(var2, this.minX);
+        Vec3 intermediateWithXValue2 = var1.getIntermediateWithXValue(var2, this.maxX);
+        Vec3 intermediateWithYValue = var1.getIntermediateWithYValue(var2, this.minY);
+        Vec3 intermediateWithYValue2 = var1.getIntermediateWithYValue(var2, this.maxY);
+        Vec3 intermediateWithZValue = var1.getIntermediateWithZValue(var2, this.minZ);
+        Vec3 intermediateWithZValue2 = var1.getIntermediateWithZValue(var2, this.maxZ);
         if (!this.isVecInsideYZBounds(intermediateWithXValue)) {
             intermediateWithXValue = null;
         }
@@ -417,7 +412,7 @@ public class Block {
         if (!this.isVecInsideXYBounds(intermediateWithZValue2)) {
             intermediateWithZValue2 = null;
         }
-        Vec3D vec3D = null;
+        Vec3 vec3D = null;
         if (intermediateWithXValue != null && (vec3D == null || var1.distanceTo(intermediateWithXValue) < var1.distanceTo(vec3D))) {
             vec3D = intermediateWithXValue;
         }
@@ -461,15 +456,15 @@ public class Block {
         return new MovingObjectPosition(xCoord, yCoord, zCoord, integer4, vec3D.addVector(xCoord, yCoord, zCoord));
     }
 
-    private boolean isVecInsideYZBounds(final Vec3D var1) {
+    private boolean isVecInsideYZBounds(final Vec3 var1) {
         return var1 != null && var1.yCoord >= this.minY && var1.yCoord <= this.maxY && var1.zCoord >= this.minZ && var1.zCoord <= this.maxZ;
     }
 
-    private boolean isVecInsideXZBounds(final Vec3D var1) {
+    private boolean isVecInsideXZBounds(final Vec3 var1) {
         return var1 != null && var1.xCoord >= this.minX && var1.xCoord <= this.maxX && var1.zCoord >= this.minZ && var1.zCoord <= this.maxZ;
     }
 
-    private boolean isVecInsideXYBounds(final Vec3D var1) {
+    private boolean isVecInsideXYBounds(final Vec3 var1) {
         return var1 != null && var1.xCoord >= this.minX && var1.xCoord <= this.maxX && var1.yCoord >= this.minY && var1.yCoord <= this.maxY;
     }
 
@@ -497,7 +492,7 @@ public class Block {
     public void onBlockClicked(final World world, final int xCoord, final int yCoord, final int zCoord, final EntityPlayer entityPlayer) {
     }
 
-    public void velocityToAddToEntity(final World world, final int xCoord, final int yCoord, final int zCoord, final Entity entity, final Vec3D var1) {
+    public void velocityToAddToEntity(final World world, final int xCoord, final int yCoord, final int zCoord, final Entity entity, final Vec3 var1) {
     }
 
     public void setBlockBoundsBasedOnState(final IBlockAccess blockAccess, final int xCoord, final int yCoord, final int zCoord) {

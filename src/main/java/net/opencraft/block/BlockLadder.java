@@ -3,7 +3,7 @@ package net.opencraft.block;
 
 import java.util.Random;
 import net.opencraft.block.material.Material;
-import net.opencraft.util.AxisAlignedBB;
+import net.opencraft.physics.AABB;
 import net.opencraft.world.World;
 
 public class BlockLadder extends Block {
@@ -13,7 +13,7 @@ public class BlockLadder extends Block {
     }
 
     @Override
-    public AxisAlignedBB getCollisionBoundingBoxFromPool(final World world, final int xCoord, final int yCoord, final int zCoord) {
+    public AABB getCollisionBoundingBoxFromPool(final World world, final int xCoord, final int yCoord, final int zCoord) {
         final int blockMetadata = world.getBlockMetadata(xCoord, yCoord, zCoord);
         final float n = 0.125f;
         if (blockMetadata == 2) {
@@ -32,7 +32,7 @@ public class BlockLadder extends Block {
     }
 
     @Override
-    public AxisAlignedBB getSelectedBoundingBoxFromPool(final World world, final int xCoord, final int yCoord, final int zCoord) {
+    public AABB getSelectedBoundingBoxFromPool(final World world, final int xCoord, final int yCoord, final int zCoord) {
         final int blockMetadata = world.getBlockMetadata(xCoord, yCoord, zCoord);
         final float n = 0.125f;
         if (blockMetadata == 2) {

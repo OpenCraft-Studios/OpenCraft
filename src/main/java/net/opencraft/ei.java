@@ -10,7 +10,7 @@ public class ei {
     public int c;
     public boolean d;
 
-    public ei(final String string, final p p) {
+    public ei(final String string, final ImageProvider p) {
         this.b = 1;
         this.c = -1;
         this.d = false;

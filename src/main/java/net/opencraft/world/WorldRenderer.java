@@ -12,9 +12,9 @@ import net.opencraft.client.renderer.culling.ICamera;
 import net.opencraft.client.renderer.entity.Render;
 import net.opencraft.client.renderer.entity.RenderBlocks;
 import net.opencraft.entity.Entity;
+import net.opencraft.physics.AABB;
 import net.opencraft.tileentity.TileEntity;
 import net.opencraft.tileentity.TileEntityRenderer;
-import net.opencraft.util.AxisAlignedBB;
 import net.opencraft.util.MathHelper;
 import net.opencraft.world.chunk.Chunk;
 import net.opencraft.world.chunk.ChunkCache;
@@ -45,7 +45,7 @@ public class WorldRenderer {
     public int s;
     public float t;
     public boolean u;
-    public AxisAlignedBB v;
+    public AABB v;
     public int w;
     public boolean x;
     public boolean y;
@@ -96,9 +96,9 @@ public class WorldRenderer {
         this.j = integer2 - this.m;
         this.k = integer3 - this.n;
         final float n = 2.0f;
-        this.v = AxisAlignedBB.getBoundingBox(integer1 - n, integer2 - n, integer3 - n, integer1 + this.f + n, integer2 + this.g + n, integer3 + this.h + n);
+        this.v = AABB.getBoundingBox(integer1 - n, integer2 - n, integer3 - n, integer1 + this.f + n, integer2 + this.g + n, integer3 + this.h + n);
         GL11.glNewList(this.C + 2, 4864);
-        Render.renderAABB(AxisAlignedBB.getBoundingBoxFromPool(this.l - n, this.m - n, this.n - n, this.l + this.f + n, this.m + this.g + n, this.n + this.h + n));
+        Render.renderAABB(AABB.getBoundingBoxFromPool(this.l - n, this.m - n, this.n - n, this.l + this.f + n, this.m + this.g + n, this.n + this.h + n));
         GL11.glEndList();
         this.f();
     }

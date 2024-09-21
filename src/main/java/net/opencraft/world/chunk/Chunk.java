@@ -2,13 +2,14 @@
 package net.opencraft.world.chunk;
 
 import net.opencraft.entity.Entity;
+import net.opencraft.physics.AABB;
 import net.opencraft.block.BlockContainer;
 import net.opencraft.block.Block;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import net.opencraft.util.AxisAlignedBB;
+
 import net.opencraft.EnumSkyBlock;
 import net.opencraft.util.MathHelper;
 import net.opencraft.tileentity.TileEntity;
@@ -380,7 +381,7 @@ public class Chunk {
         this.isModified = true;
     }
 
-    public void getEntitiesWithinAABBForEntity(final Entity entity, final AxisAlignedBB aabb, final List list) {
+    public void getEntitiesWithinAABBForEntity(final Entity entity, final AABB aabb, final List list) {
         int floor_double = MathHelper.floor_double((aabb.minY - 2.0) / 16.0);
         int floor_double2 = MathHelper.floor_double((aabb.maxY + 2.0) / 16.0);
         if (floor_double < 0) {
@@ -400,7 +401,7 @@ public class Chunk {
         }
     }
 
-    public void getEntitiesOfTypeWithinAAAB(final Class class1, final AxisAlignedBB aabb, final List list) {
+    public void getEntitiesOfTypeWithinAAAB(final Class class1, final AABB aabb, final List list) {
         int floor_double = MathHelper.floor_double((aabb.minY - 2.0) / 16.0);
         int floor_double2 = MathHelper.floor_double((aabb.maxY + 2.0) / 16.0);
         if (floor_double < 0) {

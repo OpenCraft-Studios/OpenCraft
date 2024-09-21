@@ -4,8 +4,8 @@ package net.opencraft.block;
 import java.util.Random;
 import net.opencraft.block.material.Material;
 import net.opencraft.entity.Entity;
-import net.opencraft.util.AxisAlignedBB;
-import net.opencraft.util.Vec3D;
+import net.opencraft.physics.AABB;
+import net.opencraft.util.Vec3;
 import net.opencraft.world.IBlockAccess;
 import net.opencraft.world.World;
 
@@ -73,7 +73,7 @@ public abstract class BlockFluid extends Block {
     }
 
     @Override
-    public AxisAlignedBB getCollisionBoundingBoxFromPool(final World world, final int xCoord, final int yCoord, final int zCoord) {
+    public AABB getCollisionBoundingBoxFromPool(final World world, final int xCoord, final int yCoord, final int zCoord) {
         return null;
     }
 
@@ -92,8 +92,8 @@ public abstract class BlockFluid extends Block {
         return 0;
     }
 
-    private Vec3D getFlowVector(final IBlockAccess blockAccess, final int xCoord, final int yCoord, final int zCoord) {
-        Vec3D vec3D = Vec3D.createVector(0.0, 0.0, 0.0);
+    private Vec3 getFlowVector(final IBlockAccess blockAccess, final int xCoord, final int yCoord, final int zCoord) {
+        Vec3 vec3D = Vec3.newTemp(0.0, 0.0, 0.0);
         final int effectiveFlowDecay = this.getEffectiveFlowDecay(blockAccess, xCoord, yCoord, zCoord);
         for (int i = 0; i < 4; ++i) {
             int n = xCoord;
@@ -156,8 +156,8 @@ public abstract class BlockFluid extends Block {
     }
 
     @Override
-    public void velocityToAddToEntity(final World world, final int xCoord, final int yCoord, final int zCoord, final Entity entity, final Vec3D var1) {
-        final Vec3D flowVector = this.getFlowVector(world, xCoord, yCoord, zCoord);
+    public void velocityToAddToEntity(final World world, final int xCoord, final int yCoord, final int zCoord, final Entity entity, final Vec3 var1) {
+        final Vec3 flowVector = this.getFlowVector(world, xCoord, yCoord, zCoord);
         var1.xCoord += flowVector.xCoord;
         var1.yCoord += flowVector.yCoord;
         var1.zCoord += flowVector.zCoord;
@@ -263,7 +263,7 @@ public abstract class BlockFluid extends Block {
     }
 
     public static double getFlowDirection(final IBlockAccess blockAccess, final int xCoord, final int yCoord, final int zCoord, final Material material) {
-        Vec3D vec3D = null;
+        Vec3 vec3D = null;
         if (material == Material.water) {
             vec3D = ((BlockFluid) Block.waterMoving).getFlowVector(blockAccess, xCoord, yCoord, zCoord);
         }

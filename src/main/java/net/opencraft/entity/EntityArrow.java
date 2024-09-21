@@ -7,7 +7,7 @@ import net.opencraft.item.Item;
 import net.opencraft.item.ItemStack;
 import net.opencraft.nbt.NBTTagCompound;
 import net.opencraft.util.MathHelper;
-import net.opencraft.util.Vec3D;
+import net.opencraft.util.Vec3;
 import net.opencraft.world.World;
 
 public class EntityArrow extends Entity {
@@ -104,11 +104,11 @@ public class EntityArrow extends Entity {
         } else {
             ++this.ticksInAir;
         }
-        MovingObjectPosition rayTraceBlocks = this.worldObj.rayTraceBlocks(Vec3D.createVector(this.posX, this.posY, this.posZ), Vec3D.createVector(this.posX + this.motionX, this.posY + this.motionY, this.posZ + this.motionZ));
-        final Vec3D vector = Vec3D.createVector(this.posX, this.posY, this.posZ);
-        Vec3D var2 = Vec3D.createVector(this.posX + this.motionX, this.posY + this.motionY, this.posZ + this.motionZ);
+        MovingObjectPosition rayTraceBlocks = this.worldObj.rayTraceBlocks(Vec3.newTemp(this.posX, this.posY, this.posZ), Vec3.newTemp(this.posX + this.motionX, this.posY + this.motionY, this.posZ + this.motionZ));
+        final Vec3 vector = Vec3.newTemp(this.posX, this.posY, this.posZ);
+        Vec3 var2 = Vec3.newTemp(this.posX + this.motionX, this.posY + this.motionY, this.posZ + this.motionZ);
         if (rayTraceBlocks != null) {
-            var2 = Vec3D.createVector(rayTraceBlocks.hitVec.xCoord, rayTraceBlocks.hitVec.yCoord, rayTraceBlocks.hitVec.zCoord);
+            var2 = Vec3.newTemp(rayTraceBlocks.hitVec.xCoord, rayTraceBlocks.hitVec.yCoord, rayTraceBlocks.hitVec.zCoord);
         }
         Entity eq = null;
         final List entitiesWithinAABBExcludingEntity = this.worldObj.getEntitiesWithinAABBExcludingEntity(this, this.boundingBox.addCoord(this.motionX, this.motionY, this.motionZ).expand(1.0, 1.0, 1.0));

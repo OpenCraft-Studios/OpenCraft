@@ -7,9 +7,9 @@ import java.util.HashSet;
 import java.util.List;
 import net.opencraft.block.Block;
 import net.opencraft.entity.Entity;
-import net.opencraft.util.AxisAlignedBB;
+import net.opencraft.physics.AABB;
 import net.opencraft.util.MathHelper;
-import net.opencraft.util.Vec3D;
+import net.opencraft.util.Vec3;
 import net.opencraft.world.World;
 import net.opencraft.world.chunk.ChunkPosition;
 
@@ -57,8 +57,8 @@ public class Explosion {
         int i = MathHelper.floor_double(double3 - float6 - 1.0);
         int j = MathHelper.floor_double(double3 + float6 + 1.0);
         int k = MathHelper.floor_double(double4 - float6 - 1.0);
-        final List entitiesWithinAABBExcludingEntity = fe.getEntitiesWithinAABBExcludingEntity(eq, AxisAlignedBB.getBoundingBoxFromPool(i, k, MathHelper.floor_double(double5 - float6 - 1.0), j, MathHelper.floor_double(double4 + float6 + 1.0), MathHelper.floor_double(double5 + float6 + 1.0)));
-        final Vec3D vector = Vec3D.createVector(double3, double4, double5);
+        final List entitiesWithinAABBExcludingEntity = fe.getEntitiesWithinAABBExcludingEntity(eq, AABB.getBoundingBoxFromPool(i, k, MathHelper.floor_double(double5 - float6 - 1.0), j, MathHelper.floor_double(double4 + float6 + 1.0), MathHelper.floor_double(double5 + float6 + 1.0)));
+        final Vec3 vector = Vec3.newTemp(double3, double4, double5);
         for (int l = 0; l < entitiesWithinAABBExcludingEntity.size(); ++l) {
             final Entity entity = (Entity) entitiesWithinAABBExcludingEntity.get(l);
             final double n9 = entity.getDistance(double3, double4, double5) / float6;

@@ -36,12 +36,8 @@ import net.opencraft.client.texture.TextureWaterFlowFX;
 import net.opencraft.entity.EntityPlayerSP;
 import net.opencraft.entity.EntityRenderer;
 import net.opencraft.item.ItemStack;
-import net.opencraft.util.AxisAlignedBB;
-import net.opencraft.util.EnumOS2;
-import net.opencraft.util.EnumOSMappingHelper;
-import net.opencraft.util.MathHelper;
-import net.opencraft.util.UnexpectedThrowable;
-import net.opencraft.util.Vec3D;
+import net.opencraft.physics.AABB;
+import net.opencraft.util.*;
 import net.opencraft.world.World;
 import net.opencraft.world.WorldRenderer;
 import org.lwjgl.LWJGLException;
@@ -346,8 +342,8 @@ public class OpenCraft implements Runnable {
             long currentTimeMillis = System.currentTimeMillis();
             int n = 0;
             while (oc.running) {
-                AxisAlignedBB.clearBoundingBoxPool();
-                Vec3D.initialize();
+                AABB.clearBoundingBoxPool();
+                Vec3.initialize();
                 if (Display.isCloseRequested()) {
                     oc.shutdown();
                 }

@@ -1,13 +1,13 @@
 
 package net.opencraft.client.renderer.entity;
 
-import net.opencraft.util.AxisAlignedBB;
 import net.opencraft.util.MathHelper;
 import net.opencraft.client.renderer.Tessellator;
 import net.opencraft.world.World;
 import net.opencraft.client.entity.model.ModelBase;
 import net.opencraft.client.entity.model.ModelBiped;
 import net.opencraft.entity.Entity;
+import net.opencraft.physics.AABB;
 import net.opencraft.block.Block;
 import org.lwjgl.opengl.GL11;
 
@@ -146,7 +146,7 @@ public abstract class Render<T extends Entity> {
         instance.addVertexWithUV(n3, n4, n5, n8, n9);
     }
 
-    public static void renderOffsetAABB(final AxisAlignedBB en, final double double2, final double double3, final double double4) {
+    public static void renderOffsetAABB(final AABB en, final double double2, final double double3, final double double4) {
         GL11.glDisable(3553);
         final Tessellator instance = Tessellator.instance;
         GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
@@ -187,7 +187,7 @@ public abstract class Render<T extends Entity> {
         GL11.glEnable(3553);
     }
 
-    public static void renderAABB(final AxisAlignedBB en) {
+    public static void renderAABB(final AABB en) {
         final Tessellator instance = Tessellator.instance;
         instance.startDrawingQuads();
         instance.addVertex(en.minX, en.maxY, en.minZ);

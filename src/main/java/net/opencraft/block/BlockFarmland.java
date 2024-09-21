@@ -4,7 +4,7 @@ package net.opencraft.block;
 import java.util.Random;
 import net.opencraft.block.material.Material;
 import net.opencraft.entity.Entity;
-import net.opencraft.util.AxisAlignedBB;
+import net.opencraft.physics.AABB;
 import net.opencraft.world.World;
 
 public class BlockFarmland extends Block {
@@ -18,8 +18,8 @@ public class BlockFarmland extends Block {
     }
 
     @Override
-    public AxisAlignedBB getCollisionBoundingBoxFromPool(final World world, final int xCoord, final int yCoord, final int zCoord) {
-        return AxisAlignedBB.getBoundingBoxFromPool(xCoord + 0, yCoord + 0, zCoord + 0, xCoord + 1, yCoord + 1, zCoord + 1);
+    public AABB getCollisionBoundingBoxFromPool(final World world, final int xCoord, final int yCoord, final int zCoord) {
+        return AABB.getBoundingBoxFromPool(xCoord + 0, yCoord + 0, zCoord + 0, xCoord + 1, yCoord + 1, zCoord + 1);
     }
 
     @Override

@@ -6,7 +6,7 @@ import net.opencraft.client.entity.model.ModelBase;
 import net.opencraft.client.entity.model.ModelMinecart;
 import net.opencraft.entity.EntityMinecart;
 import net.opencraft.util.MathHelper;
-import net.opencraft.util.Vec3D;
+import net.opencraft.util.Vec3;
 import org.lwjgl.opengl.GL11;
 
 public class RenderMinecart extends Render<EntityMinecart> {
@@ -24,11 +24,11 @@ public class RenderMinecart extends Render<EntityMinecart> {
         final double double2 = entityLiving.lastTickPosY + (entityLiving.posY - entityLiving.lastTickPosY) * nya2;
         final double double3 = entityLiving.lastTickPosZ + (entityLiving.posZ - entityLiving.lastTickPosZ) * nya2;
         final double double4 = 0.30000001192092896;
-        final Vec3D pos = entityLiving.getPos(double1, double2, double3);
+        final Vec3 pos = entityLiving.getPos(double1, double2, double3);
         float n = entityLiving.prevRotationPitch + (entityLiving.rotationPitch - entityLiving.prevRotationPitch) * nya2;
         if (pos != null) {
-            Vec3D posOffset = entityLiving.getPosOffset(double1, double2, double3, double4);
-            Vec3D posOffset2 = entityLiving.getPosOffset(double1, double2, double3, -double4);
+            Vec3 posOffset = entityLiving.getPosOffset(double1, double2, double3, double4);
+            Vec3 posOffset2 = entityLiving.getPosOffset(double1, double2, double3, -double4);
             if (posOffset == null) {
                 posOffset = pos;
             }
@@ -38,9 +38,9 @@ public class RenderMinecart extends Render<EntityMinecart> {
             xCoord += pos.xCoord - double1;
             sqrt_double += (posOffset.yCoord + posOffset2.yCoord) / 2.0 - double2;
             yCoord += pos.zCoord - double3;
-            final Vec3D addVector = posOffset2.addVector(-posOffset.xCoord, -posOffset.yCoord, -posOffset.zCoord);
+            final Vec3 addVector = posOffset2.addVector(-posOffset.xCoord, -posOffset.yCoord, -posOffset.zCoord);
             if (addVector.lengthVector() != 0.0) {
-                final Vec3D normalize = addVector.normalize();
+                final Vec3 normalize = addVector.normalize();
                 nya1 = (float) (Math.atan2(normalize.zCoord, normalize.xCoord) * 180.0 / 3.141592653589793);
                 n = (float) (Math.atan(normalize.yCoord) * 73.0);
             }

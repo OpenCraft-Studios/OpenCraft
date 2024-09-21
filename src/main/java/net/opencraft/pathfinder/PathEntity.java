@@ -2,7 +2,7 @@
 package net.opencraft.pathfinder;
 
 import net.opencraft.entity.Entity;
-import net.opencraft.util.Vec3D;
+import net.opencraft.util.Vec3;
 
 public class PathEntity {
 
@@ -23,7 +23,7 @@ public class PathEntity {
         return this.pathIndex >= this.points.length;
     }
 
-    public Vec3D getPosition(final Entity eq) {
-        return Vec3D.createVector(this.points[this.pathIndex].xCoord + (int) (eq.width + 1.0f) * 0.5f, (float) this.points[this.pathIndex].yCoord, this.points[this.pathIndex].zCoord + (int) (eq.width + 1.0f) * 0.5f);
+    public Vec3 getPosition(final Entity eq) {
+        return Vec3.newTemp(this.points[this.pathIndex].xCoord + (int) (eq.width + 1.0f) * 0.5f, (float) this.points[this.pathIndex].yCoord, this.points[this.pathIndex].zCoord + (int) (eq.width + 1.0f) * 0.5f);
     }
 }

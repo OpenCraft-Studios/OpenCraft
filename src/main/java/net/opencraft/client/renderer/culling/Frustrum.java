@@ -1,7 +1,7 @@
 
 package net.opencraft.client.renderer.culling;
 
-import net.opencraft.util.AxisAlignedBB;
+import net.opencraft.physics.AABB;
 
 public class Frustrum implements ICamera {
 
@@ -24,7 +24,7 @@ public class Frustrum implements ICamera {
         return this.clippingHelper.isBoxInFrustum(minX - this.xPosition, minY - this.yPosition, minZ - this.zPosition, maxX - this.xPosition, maxY - this.yPosition, maxZ - this.zPosition);
     }
 
-    public boolean isBoundingBoxInFrustum(final AxisAlignedBB aabb) {
+    public boolean isBoundingBoxInFrustum(final AABB aabb) {
         return this.isBoxInFrustum(aabb.minX, aabb.minY, aabb.minZ, aabb.maxX, aabb.maxY, aabb.maxZ);
     }
 }

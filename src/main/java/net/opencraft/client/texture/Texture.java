@@ -6,9 +6,9 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
 import java.awt.image.ImageObserver;
-import net.opencraft.p;
+import net.opencraft.ImageProvider;
 
-public class Texture implements p {
+public class Texture implements ImageProvider {
 
     private int[] a;
     private int b;

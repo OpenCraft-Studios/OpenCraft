@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.Random;
 import net.opencraft.block.material.Material;
 import net.opencraft.client.input.MovingObjectPosition;
-import net.opencraft.util.AxisAlignedBB;
-import net.opencraft.util.Vec3D;
+import net.opencraft.physics.AABB;
+import net.opencraft.util.Vec3;
 import net.opencraft.world.IBlockAccess;
 import net.opencraft.world.World;
 import net.opencraft.world.chunk.ChunkPosition;
@@ -20,7 +20,7 @@ public class BlockRail extends Block {
     }
 
     @Override
-    public AxisAlignedBB getCollisionBoundingBoxFromPool(final World world, final int xCoord, final int yCoord, final int zCoord) {
+    public AABB getCollisionBoundingBoxFromPool(final World world, final int xCoord, final int yCoord, final int zCoord) {
         return null;
     }
 
@@ -30,7 +30,7 @@ public class BlockRail extends Block {
     }
 
     @Override
-    public MovingObjectPosition collisionRayTrace(final World world, final int xCoord, final int yCoord, final int zCoord, final Vec3D var1, final Vec3D var2) {
+    public MovingObjectPosition collisionRayTrace(final World world, final int xCoord, final int yCoord, final int zCoord, final Vec3 var1, final Vec3 var2) {
         this.setBlockBoundsBasedOnState(world, xCoord, yCoord, zCoord);
         return super.collisionRayTrace(world, xCoord, yCoord, zCoord, var1, var2);
     }
@@ -110,18 +110,18 @@ public class BlockRail extends Block {
 
     public static class RailLogic {
 
-        private final World worldObj;
+    	private final List<ChunkPosition> connectedTracks = new ArrayList<>();
+
+    	private final World world;
         private final int trackX;
         private final int trackY;
         private final int trackZ;
         private int metadataValues;
-        private final List connectedTracks;
         final /* synthetic */ BlockRail rail;
 
         public RailLogic(final BlockRail bn, final World fe, final int integer3, final int integer4, final int integer5) {
             this.rail = bn;
-            this.connectedTracks = new ArrayList();
-            this.worldObj = fe;
+            this.world = fe;
             this.trackX = integer3;
             this.trackY = integer4;
             this.trackZ = integer5;
@@ -176,14 +176,14 @@ public class BlockRail extends Block {
         }
 
         private RailLogic getMinecartTrackLogic(final ChunkPosition ia) {
-            if (this.worldObj.getBlockId(ia.x, ia.y, ia.z) == this.rail.blockID) {
-                return new RailLogic(this.rail, this.worldObj, ia.x, ia.y, ia.z);
+            if (this.world.getBlockId(ia.x, ia.y, ia.z) == this.rail.blockID) {
+                return new RailLogic(this.rail, this.world, ia.x, ia.y, ia.z);
             }
-            if (this.worldObj.getBlockId(ia.x, ia.y + 1, ia.z) == this.rail.blockID) {
-                return new RailLogic(this.rail, this.worldObj, ia.x, ia.y + 1, ia.z);
+            if (this.world.getBlockId(ia.x, ia.y + 1, ia.z) == this.rail.blockID) {
+                return new RailLogic(this.rail, this.world, ia.x, ia.y + 1, ia.z);
             }
-            if (this.worldObj.getBlockId(ia.x, ia.y - 1, ia.z) == this.rail.blockID) {
-                return new RailLogic(this.rail, this.worldObj, ia.x, ia.y - 1, ia.z);
+            if (this.world.getBlockId(ia.x, ia.y - 1, ia.z) == this.rail.blockID) {
+                return new RailLogic(this.rail, this.world, ia.x, ia.y - 1, ia.z);
             }
             return null;
         }
@@ -248,25 +248,25 @@ public class BlockRail extends Block {
                 metadataValue = 9;
             }
             if (metadataValue == 0) {
-                if (this.worldObj.getBlockId(this.trackX, this.trackY + 1, this.trackZ - 1) == this.rail.blockID) {
+                if (this.world.getBlockId(this.trackX, this.trackY + 1, this.trackZ - 1) == this.rail.blockID) {
                     metadataValue = 4;
                 }
-                if (this.worldObj.getBlockId(this.trackX, this.trackY + 1, this.trackZ + 1) == this.rail.blockID) {
+                if (this.world.getBlockId(this.trackX, this.trackY + 1, this.trackZ + 1) == this.rail.blockID) {
                     metadataValue = 5;
                 }
             }
             if (metadataValue == 1) {
-                if (this.worldObj.getBlockId(this.trackX + 1, this.trackY + 1, this.trackZ) == this.rail.blockID) {
+                if (this.world.getBlockId(this.trackX + 1, this.trackY + 1, this.trackZ) == this.rail.blockID) {
                     metadataValue = 2;
                 }
-                if (this.worldObj.getBlockId(this.trackX - 1, this.trackY + 1, this.trackZ) == this.rail.blockID) {
+                if (this.world.getBlockId(this.trackX - 1, this.trackY + 1, this.trackZ) == this.rail.blockID) {
                     metadataValue = 3;
                 }
             }
             if (metadataValue < 0) {
                 metadataValue = 0;
             }
-            this.worldObj.setBlockMetadataWithNotify(this.trackX, this.trackY, this.trackZ, metadataValue);
+            this.world.setBlockMetadataWithNotify(this.trackX, this.trackY, this.trackZ, metadataValue);
         }
 
         private boolean func_786_c(final int integer1, final int integer2, final int integer3) {
@@ -303,18 +303,18 @@ public class BlockRail extends Block {
                 n = 9;
             }
             if (n == 0) {
-                if (this.worldObj.getBlockId(this.trackX, this.trackY + 1, this.trackZ - 1) == this.rail.blockID) {
+                if (this.world.getBlockId(this.trackX, this.trackY + 1, this.trackZ - 1) == this.rail.blockID) {
                     n = 4;
                 }
-                if (this.worldObj.getBlockId(this.trackX, this.trackY + 1, this.trackZ + 1) == this.rail.blockID) {
+                if (this.world.getBlockId(this.trackX, this.trackY + 1, this.trackZ + 1) == this.rail.blockID) {
                     n = 5;
                 }
             }
             if (n == 1) {
-                if (this.worldObj.getBlockId(this.trackX + 1, this.trackY + 1, this.trackZ) == this.rail.blockID) {
+                if (this.world.getBlockId(this.trackX + 1, this.trackY + 1, this.trackZ) == this.rail.blockID) {
                     n = 2;
                 }
-                if (this.worldObj.getBlockId(this.trackX - 1, this.trackY + 1, this.trackZ) == this.rail.blockID) {
+                if (this.world.getBlockId(this.trackX - 1, this.trackY + 1, this.trackZ) == this.rail.blockID) {
                     n = 3;
                 }
             }
@@ -323,7 +323,7 @@ public class BlockRail extends Block {
             }
             this.metadataValues = n;
             this.setConnections();
-            this.worldObj.setBlockMetadataWithNotify(this.trackX, this.trackY, this.trackZ, n);
+            this.world.setBlockMetadataWithNotify(this.trackX, this.trackY, this.trackZ, n);
             for (int i = 0; i < this.connectedTracks.size(); ++i) {
                 final RailLogic minecartTrackLogic = this.getMinecartTrackLogic((ChunkPosition) this.connectedTracks.get(i));
                 if (minecartTrackLogic != null) {

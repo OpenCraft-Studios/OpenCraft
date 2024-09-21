@@ -8,10 +8,10 @@ import javax.imageio.ImageIO;
 public class fm extends Thread {
 
     public final /* synthetic */ String a;
-    public final /* synthetic */ p b;
+    public final /* synthetic */ ImageProvider b;
     public final /* synthetic */ ei c;
 
-    public fm(final ei ei, final String string, final p p) {
+    public fm(final ei ei, final String string, final ImageProvider p) {
         this.c = ei;
         this.a = string;
         this.b = p;

@@ -3,7 +3,7 @@ package net.opencraft;
 
 import java.awt.image.BufferedImage;
 
-public interface p {
+public interface ImageProvider {
 
     BufferedImage a(final BufferedImage bufferedImage);
 }

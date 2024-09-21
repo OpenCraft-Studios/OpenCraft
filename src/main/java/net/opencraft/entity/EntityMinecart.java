@@ -9,9 +9,9 @@ import net.opencraft.item.ItemStack;
 import net.opencraft.nbt.NBTBase;
 import net.opencraft.nbt.NBTTagCompound;
 import net.opencraft.nbt.NBTTagList;
-import net.opencraft.util.AxisAlignedBB;
+import net.opencraft.physics.AABB;
 import net.opencraft.util.MathHelper;
-import net.opencraft.util.Vec3D;
+import net.opencraft.util.Vec3;
 import net.opencraft.world.World;
 
 public class EntityMinecart extends Entity implements IInventory {
@@ -37,12 +37,12 @@ public class EntityMinecart extends Entity implements IInventory {
     }
 
     @Override
-    public AxisAlignedBB getCollisionBox(final Entity entity) {
+    public AABB getCollisionBox(final Entity entity) {
         return entity.boundingBox;
     }
 
     @Override
-    public AxisAlignedBB getBoundingBox() {
+    public AABB getBoundingBox() {
         return this.boundingBox;
     }
 
@@ -132,7 +132,7 @@ public class EntityMinecart extends Entity implements IInventory {
         final double n = 0.4;
         final double n2 = 0.0078125;
         if (this.worldObj.getBlockId(floor_double, floor_double2, floor_double3) == Block.rail.blockID) {
-            final Vec3D pos = this.getPos(this.posX, this.posY, this.posZ);
+            final Vec3 pos = this.getPos(this.posX, this.posY, this.posZ);
             final int blockMetadata = this.worldObj.getBlockMetadata(floor_double, floor_double2, floor_double3);
             this.posY = floor_double2;
             if (blockMetadata >= 2 && blockMetadata <= 5) {
@@ -215,7 +215,7 @@ public class EntityMinecart extends Entity implements IInventory {
                 this.motionY *= 0.0;
                 this.motionZ *= 0.9599999785423279;
             }
-            final Vec3D pos2 = this.getPos(this.posX, this.posY, this.posZ);
+            final Vec3 pos2 = this.getPos(this.posX, this.posY, this.posZ);
             if (pos2 != null && pos != null) {
                 final double n11 = (pos.yCoord - pos2.yCoord) * 0.05;
                 n5 = Math.sqrt(this.motionX * this.motionX + this.motionZ * this.motionZ);
@@ -291,7 +291,7 @@ public class EntityMinecart extends Entity implements IInventory {
         }
     }
 
-    public Vec3D getPosOffset(double double1, double double2, double double3, final double double4) {
+    public Vec3 getPosOffset(double double1, double double2, double double3, final double double4) {
         final int floor_double = MathHelper.floor_double(double1);
         int floor_double2 = MathHelper.floor_double(double2);
         final int floor_double3 = MathHelper.floor_double(double3);
@@ -322,7 +322,7 @@ public class EntityMinecart extends Entity implements IInventory {
         return null;
     }
 
-    public Vec3D getPos(double double1, double double2, double double3) {
+    public Vec3 getPos(double double1, double double2, double double3) {
         final int floor_double = MathHelper.floor_double(double1);
         int floor_double2 = MathHelper.floor_double(double2);
         final int floor_double3 = MathHelper.floor_double(double3);
@@ -364,7 +364,7 @@ public class EntityMinecart extends Entity implements IInventory {
             if (n9 > 0.0) {
                 double2 += 0.5;
             }
-            return Vec3D.createVector(double1, double2, double3);
+            return Vec3.newTemp(double1, double2, double3);
         }
         return null;
     }

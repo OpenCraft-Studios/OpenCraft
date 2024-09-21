@@ -3,7 +3,7 @@ package net.opencraft.block;
 
 import java.util.Random;
 import net.opencraft.block.material.Material;
-import net.opencraft.util.AxisAlignedBB;
+import net.opencraft.physics.AABB;
 import net.opencraft.world.World;
 
 public class BlockGears extends Block {
@@ -13,7 +13,7 @@ public class BlockGears extends Block {
     }
 
     @Override
-    public AxisAlignedBB getCollisionBoundingBoxFromPool(final World world, final int xCoord, final int yCoord, final int zCoord) {
+    public AABB getCollisionBoundingBoxFromPool(final World world, final int xCoord, final int yCoord, final int zCoord) {
         return null;
     }
 

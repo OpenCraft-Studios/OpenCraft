@@ -1,4 +1,3 @@
-
 package net.opencraft;
 
 public enum EnumArt {
@@ -28,11 +27,11 @@ public enum EnumArt {
     public final int offsetX;
     public final int offsetY;
 
-    private EnumArt(final String title, final int sizeX, final int sizeY, final int offestX, final int offsetY) {
+    private EnumArt(final String title, final int sizeX, final int sizeY, final int offsetX, final int offsetY) {
         this.title = title;
         this.sizeX = sizeX;
         this.sizeY = sizeY;
-        this.offsetX = offestX;
+        this.offsetX = offsetX;
         this.offsetY = offsetY;
     }
 }

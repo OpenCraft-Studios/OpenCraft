@@ -28,11 +28,11 @@ import net.opencraft.entity.EntitySorter;
 import net.opencraft.entity.EntitySplashFX;
 import net.opencraft.fi;
 import net.opencraft.item.ItemStack;
+import net.opencraft.physics.AABB;
 import net.opencraft.tileentity.TileEntity;
 import net.opencraft.tileentity.TileEntityRenderer;
-import net.opencraft.util.AxisAlignedBB;
 import net.opencraft.util.MathHelper;
-import net.opencraft.util.Vec3D;
+import net.opencraft.util.Vec3;
 import net.opencraft.world.IWorldAccess;
 import net.opencraft.world.World;
 import net.opencraft.world.WorldRenderer;
@@ -267,7 +267,7 @@ public class RenderGlobal implements IWorldAccess {
         }
     }
 
-    public void renderEntities(final Vec3D bo, final ICamera jt, final float float3) {
+    public void renderEntities(final Vec3 bo, final ICamera jt, final float float3) {
         TileEntityRenderer.instance.a(this.k, this.l, this.t.fontRenderer, this.t.thePlayer, float3);
         RenderManager.instance.cacheActiveRenderInfo(this.k, this.l, this.t.fontRenderer, this.t.thePlayer, this.t.gameSettings, float3);
         this.I = 0;
@@ -533,7 +533,7 @@ public class RenderGlobal implements IWorldAccess {
 
     public void renderSky(final float float1) {
         GL11.glDisable(3553);
-        final Vec3D skyColor = this.k.getSkyColor(float1);
+        final Vec3 skyColor = this.k.getSkyColor(float1);
         float n = (float) skyColor.xCoord;
         float n2 = (float) skyColor.yCoord;
         float n3 = (float) skyColor.zCoord;
@@ -611,7 +611,7 @@ public class RenderGlobal implements IWorldAccess {
         GL11.glBindTexture(3553, this.l.getTexture("/assets/clouds.png"));
         GL11.glEnable(3042);
         GL11.glBlendFunc(770, 771);
-        final Vec3D drawClouds = this.k.drawClouds(float1);
+        final Vec3 drawClouds = this.k.drawClouds(float1);
         float float2 = (float) drawClouds.xCoord;
         float float3 = (float) drawClouds.yCoord;
         float float4 = (float) drawClouds.zCoord;
@@ -665,7 +665,7 @@ public class RenderGlobal implements IWorldAccess {
         GL11.glBindTexture(3553, this.l.getTexture("/assets/clouds.png"));
         GL11.glEnable(3042);
         GL11.glBlendFunc(770, 771);
-        final Vec3D drawClouds = this.k.drawClouds(float1);
+        final Vec3 drawClouds = this.k.drawClouds(float1);
         float float2 = (float) drawClouds.xCoord;
         float float3 = (float) drawClouds.yCoord;
         float float4 = (float) drawClouds.zCoord;
@@ -872,7 +872,7 @@ public class RenderGlobal implements IWorldAccess {
         }
     }
 
-    private void a(final AxisAlignedBB en) {
+    private void a(final AABB en) {
         final Tessellator instance = Tessellator.instance;
         instance.startDrawing(3);
         instance.addVertex(en.minX, en.minY, en.minZ);

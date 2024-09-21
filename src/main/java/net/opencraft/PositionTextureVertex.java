@@ -1,16 +1,16 @@
 
 package net.opencraft;
 
-import net.opencraft.util.Vec3D;
+import net.opencraft.util.Vec3;
 
 public class PositionTextureVertex {
 
-    public Vec3D vector3D;
+    public Vec3 vector3D;
     public float texturePositionX;
     public float texturePositionY;
 
     public PositionTextureVertex(final float float1, final float float2, final float float3, final float float4, final float float5) {
-        this(Vec3D.createVectorHelper(float1, float2, float3), float4, float5);
+        this(Vec3.createVectorHelper(float1, float2, float3), float4, float5);
     }
 
 
@@ -20,7 +20,7 @@ public class PositionTextureVertex {
         this.texturePositionY = float3;
     }
 
-    public PositionTextureVertex(final Vec3D bo, final float float2, final float float3) {
+    public PositionTextureVertex(final Vec3 bo, final float float2, final float float3) {
         this.vector3D = bo;
         this.texturePositionX = float2;
         this.texturePositionY = float3;

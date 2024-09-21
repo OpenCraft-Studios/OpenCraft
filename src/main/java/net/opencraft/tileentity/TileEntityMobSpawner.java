@@ -4,7 +4,7 @@ package net.opencraft.tileentity;
 import net.opencraft.entity.EntityList;
 import net.opencraft.entity.EntityLiving;
 import net.opencraft.nbt.NBTTagCompound;
-import net.opencraft.util.AxisAlignedBB;
+import net.opencraft.physics.AABB;
 
 public class TileEntityMobSpawner extends TileEntity {
 
@@ -52,7 +52,7 @@ public class TileEntityMobSpawner extends TileEntity {
             if (entity == null) {
                 return;
             }
-            if (this.worldObj.getEntitiesWithinAABB(entity.getClass(), AxisAlignedBB.getBoundingBoxFromPool(this.xCoord, this.yCoord, this.zCoord, this.xCoord + 1, this.yCoord + 1, this.zCoord + 1).expand(8.0, 4.0, 8.0)).size() >= 6) {
+            if (this.worldObj.getEntitiesWithinAABB(entity.getClass(), AABB.getBoundingBoxFromPool(this.xCoord, this.yCoord, this.zCoord, this.xCoord + 1, this.yCoord + 1, this.zCoord + 1).expand(8.0, 4.0, 8.0)).size() >= 6) {
                 this.updateDelay();
                 return;
             }
