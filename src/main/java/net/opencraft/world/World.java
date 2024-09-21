@@ -728,7 +728,7 @@ public class World implements IBlockAccess {
                 ((IWorldAccess) this.worldAccesses.get(i)).obtainEntitySkin(entity);
             }
         } else {
-            System.out.println("Failed to add entity " + entity);
+            System.out.println("Failed to add entity " + entity + ", Can't find chunk x: " + floor_double + " z: " + floor_double2);
         }
     }
 
