@@ -231,7 +231,11 @@ public class GameSettings {
                         this.fancyGraphics = split[1].equals("true");
                     }
                     if (split[0].equals("FOV")) {
-                        this.FOV = Integer.parseInt(split[1]);
+                        String string = split[1];
+                        if (string.contains(".")) {
+                            string = string.substring(0, string.indexOf("."));
+                        }
+                        this.FOV = Integer.parseInt(string);
                     }
                     if (split[0].equals("minimumBrightness")) {
                         this.minimumBrightness = Float.parseFloat(split[1]);
