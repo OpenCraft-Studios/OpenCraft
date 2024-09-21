@@ -95,12 +95,12 @@ public class LoadingScreenRenderer implements IProgressUpdate {
             final Tessellator instance = Tessellator.instance;
             GL11.glBindTexture(3553, this.mc.renderEngine.getTexture("/assets/dirt.png"));
             final float n = 32.0f;
-            instance.startDrawingQuads();
+            instance.beginQuads();
             instance.setColorOpaque_I(4210752);
-            instance.addVertexWithUV(0.0, scaledHeight, 0.0, 0.0, scaledHeight / n);
-            instance.addVertexWithUV(scaledWidth, scaledHeight, 0.0, scaledWidth / n, scaledHeight / n);
-            instance.addVertexWithUV(scaledWidth, 0.0, 0.0, scaledWidth / n, 0.0);
-            instance.addVertexWithUV(0.0, 0.0, 0.0, 0.0, 0.0);
+            instance.vertexUV(0.0, scaledHeight, 0.0, 0.0, scaledHeight / n);
+            instance.vertexUV(scaledWidth, scaledHeight, 0.0, scaledWidth / n, scaledHeight / n);
+            instance.vertexUV(scaledWidth, 0.0, 0.0, scaledWidth / n, 0.0);
+            instance.vertexUV(0.0, 0.0, 0.0, 0.0, 0.0);
             instance.draw();
             if (integer >= 0) {
                 final int n2 = 100;
@@ -108,17 +108,17 @@ public class LoadingScreenRenderer implements IProgressUpdate {
                 final int n4 = scaledWidth / 2 - n2 / 2;
                 final int n5 = scaledHeight / 2 + 16;
                 GL11.glDisable(3553);
-                instance.startDrawingQuads();
+                instance.beginQuads();
                 instance.setColorOpaque_I(8421504);
-                instance.addVertex(n4, n5, 0.0);
-                instance.addVertex(n4, n5 + n3, 0.0);
-                instance.addVertex(n4 + n2, n5 + n3, 0.0);
-                instance.addVertex(n4 + n2, n5, 0.0);
+                instance.vertex(n4, n5, 0.0);
+                instance.vertex(n4, n5 + n3, 0.0);
+                instance.vertex(n4 + n2, n5 + n3, 0.0);
+                instance.vertex(n4 + n2, n5, 0.0);
                 instance.setColorOpaque_I(8454016);
-                instance.addVertex(n4, n5, 0.0);
-                instance.addVertex(n4, n5 + n3, 0.0);
-                instance.addVertex(n4 + integer, n5 + n3, 0.0);
-                instance.addVertex(n4 + integer, n5, 0.0);
+                instance.vertex(n4, n5, 0.0);
+                instance.vertex(n4, n5 + n3, 0.0);
+                instance.vertex(n4 + integer, n5 + n3, 0.0);
+                instance.vertex(n4 + integer, n5, 0.0);
                 instance.draw();
                 GL11.glEnable(3553);
             }

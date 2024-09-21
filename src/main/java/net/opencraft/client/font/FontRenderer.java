@@ -66,14 +66,14 @@ public class FontRenderer {
         Tessellator ag2 = Tessellator.instance;
         for (n7 = 0; n7 < 256; ++n7) {
             GL11.glNewList((int) (this.fontDisplayLists + n7), (int) 4864);
-            ag2.startDrawingQuads();
+            ag2.beginQuads();
             n6 = n7 % 16 * 8;
             n5 = n7 / 16 * 8;
             float f = 7.99f;
-            ag2.addVertexWithUV(0.0, 0.0f + f, 0.0, (float) n6 / 128.0f, ((float) n5 + f) / 128.0f);
-            ag2.addVertexWithUV(0.0f + f, 0.0f + f, 0.0, ((float) n6 + f) / 128.0f, ((float) n5 + f) / 128.0f);
-            ag2.addVertexWithUV(0.0f + f, 0.0, 0.0, ((float) n6 + f) / 128.0f, (float) n5 / 128.0f);
-            ag2.addVertexWithUV(0.0, 0.0, 0.0, (float) n6 / 128.0f, (float) n5 / 128.0f);
+            ag2.vertexUV(0.0, 0.0f + f, 0.0, (float) n6 / 128.0f, ((float) n5 + f) / 128.0f);
+            ag2.vertexUV(0.0f + f, 0.0f + f, 0.0, ((float) n6 + f) / 128.0f, ((float) n5 + f) / 128.0f);
+            ag2.vertexUV(0.0f + f, 0.0, 0.0, ((float) n6 + f) / 128.0f, (float) n5 / 128.0f);
+            ag2.vertexUV(0.0, 0.0, 0.0, (float) n6 / 128.0f, (float) n5 / 128.0f);
             ag2.draw();
             GL11.glTranslatef((float) this.charWidth[n7], (float) 0.0f, (float) 0.0f);
             GL11.glEndList();

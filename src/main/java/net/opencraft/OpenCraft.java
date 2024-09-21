@@ -1,5 +1,6 @@
-
 package net.opencraft;
+
+import static org.lwjgl.opengl.GL11.*;
 
 import java.io.File;
 
@@ -18,8 +19,8 @@ import net.opencraft.client.font.FontRenderer;
 import net.opencraft.client.gui.*;
 import net.opencraft.client.input.*;
 import net.opencraft.client.renderer.*;
-import net.opencraft.client.renderer.entity.Renderer;
 import net.opencraft.client.renderer.entity.RenderGlobal;
+import net.opencraft.client.renderer.entity.Renderer;
 import net.opencraft.client.settings.GameSettings;
 import net.opencraft.client.sound.SoundManager;
 import net.opencraft.client.texture.*;
@@ -156,7 +157,9 @@ public class OpenCraft implements Runnable {
         Display.setTitle("OpenCraft ".concat(SharedConstants.VERSION_STRING));
         Display.setResizable(true);
         try {
-            Display.create();
+            PixelFormat pixelformat = new PixelFormat();
+            pixelformat = pixelformat.withDepthBits(24);
+            Display.create(pixelformat);
         } catch (LWJGLException ex) {
         	System.exit(1);
         }
@@ -174,17 +177,17 @@ public class OpenCraft implements Runnable {
             ex2.printStackTrace();
         }
         oc.checkGLError("Pre startup");
-        GL11.glEnable(3553);
-        GL11.glShadeModel(7425);
-        GL11.glClearDepth(1.0);
-        GL11.glEnable(2929);
-        GL11.glDepthFunc(515);
-        GL11.glEnable(3008);
-        GL11.glAlphaFunc(516, 0.1f);
-        GL11.glCullFace(1029);
-        GL11.glMatrixMode(5889);
-        GL11.glLoadIdentity();
-        GL11.glMatrixMode(5888);
+        glEnable(GL_TEXTURE_2D);
+        glShadeModel(7425);
+        glClearDepth(1.0);
+        glEnable(2929);
+        glDepthFunc(515);
+        glEnable(3008);
+        glAlphaFunc(516, 0.1f);
+        glCullFace(1029);
+        glMatrixMode(5889);
+        glLoadIdentity();
+        glMatrixMode(5888);
         oc.checkGLError("Startup");
         oc.glCapabilities = new OpenGlCapsChecker();
         oc.sndManager.loadSoundSettings(oc.gameSettings);
@@ -197,7 +200,7 @@ public class OpenCraft implements Runnable {
         oc.renderEngine.registerTextureFX(new TextureGearsFX(0));
         oc.renderEngine.registerTextureFX(new TextureGearsFX(1));
         oc.renderGlobal = new RenderGlobal(oc, oc.renderEngine);
-        GL11.glViewport(0, 0, oc.width, oc.height);
+        glViewport(0, 0, oc.width, oc.height);
         oc.displayGuiScreen(new GuiMainMenu());
         oc.effectRenderer = new EffectRenderer(oc.theWorld, oc.renderEngine);
         try {
@@ -214,31 +217,31 @@ public class OpenCraft implements Runnable {
         final ScaledResolution scaledResolution = new ScaledResolution(oc.width, oc.height);
         final int scaledWidth = scaledResolution.getScaledWidth();
         final int scaledHeight = scaledResolution.getScaledHeight();
-        GL11.glClear(16640);
-        GL11.glMatrixMode(5889);
-        GL11.glLoadIdentity();
-        GL11.glOrtho(0.0, scaledWidth, scaledHeight, 0.0, 1000.0, 3000.0);
-        GL11.glMatrixMode(5888);
-        GL11.glLoadIdentity();
-        GL11.glTranslatef(0.0f, 0.0f, -2000.0f);
-        GL11.glViewport(0, 0, oc.width, oc.height);
-        GL11.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-        GL11.glDisable(2896);
-        GL11.glDisable(2912);
-        GL11.glEnable(3553);
+        glClear(16640);
+        glMatrixMode(5889);
+        glLoadIdentity();
+        glOrtho(0.0, scaledWidth, scaledHeight, 0.0, 1000.0, 3000.0);
+        glMatrixMode(5888);
+        glLoadIdentity();
+        glTranslatef(0.0f, 0.0f, -2000.0f);
+        glViewport(0, 0, oc.width, oc.height);
+        glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+        glDisable(2896);
+        glDisable(2912);
+        glEnable(3553);
         final Tessellator instance = Tessellator.instance;
-        GL11.glBindTexture(3553, oc.renderEngine.getTexture("/assets/dirt.png"));
-        GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+        glBindTexture(3553, oc.renderEngine.getTexture("/assets/dirt.png"));
+        glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
         final float n = 32.0f;
-        instance.startDrawingQuads();
+        instance.beginQuads();
         instance.setColorOpaque_I(4210752);
-        instance.addVertexWithUV(0.0, oc.height, 0.0, 0.0, oc.height / n + 0.0f);
-        instance.addVertexWithUV(oc.width, oc.height, 0.0, oc.width / n, oc.height / n + 0.0f);
-        instance.addVertexWithUV(oc.width, 0.0, 0.0, oc.width / n, 0.0);
-        instance.addVertexWithUV(0.0, 0.0, 0.0, 0.0, 0.0);
+        instance.vertexUV(0.0, oc.height, 0.0, 0.0, oc.height / n + 0.0f);
+        instance.vertexUV(oc.width, oc.height, 0.0, oc.width / n, oc.height / n + 0.0f);
+        instance.vertexUV(oc.width, 0.0, 0.0, oc.width / n, 0.0);
+        instance.vertexUV(0.0, 0.0, 0.0, 0.0, 0.0);
         instance.draw();
-        GL11.glEnable(3008);
-        GL11.glAlphaFunc(516, 0.1f);
+        glEnable(3008);
+        glAlphaFunc(516, 0.1f);
         oc.fontRenderer.drawStringWithShadow2("Loading...", 8, oc.height / 2 - 16, -1);
         Display.swapBuffers();
     }
@@ -267,7 +270,7 @@ public class OpenCraft implements Runnable {
     }
 
     private void checkGLError(final String string) {
-        final int glGetError = GL11.glGetError();
+        final int glGetError = glGetError();
         if (glGetError != 0) {
             final String gluErrorString = GLU.gluErrorString(glGetError);
             System.out.println("########## GL ERROR ##########");
@@ -342,7 +345,7 @@ public class OpenCraft implements Runnable {
                     oc.timer.renderPartialTicks = 1.0f;
                 }
                 oc.sndManager.setListener(oc.thePlayer, oc.timer.renderPartialTicks);
-                GL11.glEnable(3553);
+                glEnable(3553);
                 if (oc.theWorld != null) {
                     while (oc.theWorld.updatingLighting()) {
                     }
@@ -401,36 +404,36 @@ public class OpenCraft implements Runnable {
         final long nanoTime = System.nanoTime();
         OpenCraft.tickTimes[OpenCraft.numRecordedFrameTimes++ & OpenCraft.tickTimes.length - 1] = nanoTime - oc.prevFrameTime;
         oc.prevFrameTime = nanoTime;
-        GL11.glClear(256);
-        GL11.glMatrixMode(5889);
-        GL11.glLoadIdentity();
-        GL11.glOrtho(0.0, oc.width, oc.height, 0.0, 1000.0, 3000.0);
-        GL11.glMatrixMode(5888);
-        GL11.glLoadIdentity();
-        GL11.glTranslatef(0.0f, 0.0f, -2000.0f);
-        GL11.glLineWidth(1.0f);
-        GL11.glDisable(3553);
+        glClear(256);
+        glMatrixMode(5889);
+        glLoadIdentity();
+        glOrtho(0.0, oc.width, oc.height, 0.0, 1000.0, 3000.0);
+        glMatrixMode(5888);
+        glLoadIdentity();
+        glTranslatef(0.0f, 0.0f, -2000.0f);
+        glLineWidth(1.0f);
+        glDisable(3553);
         final Tessellator instance = Tessellator.instance;
-        instance.startDrawing(7);
+        instance.begin(7);
         instance.setColorOpaque_I(538968064);
-        instance.addVertex(0.0, oc.height - 100, 0.0);
-        instance.addVertex(0.0, oc.height, 0.0);
-        instance.addVertex(OpenCraft.tickTimes.length, oc.height, 0.0);
-        instance.addVertex(OpenCraft.tickTimes.length, oc.height - 100, 0.0);
+        instance.vertex(0.0, oc.height - 100, 0.0);
+        instance.vertex(0.0, oc.height, 0.0);
+        instance.vertex(OpenCraft.tickTimes.length, oc.height, 0.0);
+        instance.vertex(OpenCraft.tickTimes.length, oc.height - 100, 0.0);
         instance.draw();
         long n = 0L;
         for (int i = 0; i < OpenCraft.tickTimes.length; ++i) {
             n += OpenCraft.tickTimes[i];
         }
         int i = (int) (n / 200000L / OpenCraft.tickTimes.length);
-        instance.startDrawing(7);
+        instance.begin(7);
         instance.setColorOpaque_I(541065216);
-        instance.addVertex(0.0, oc.height - i, 0.0);
-        instance.addVertex(0.0, oc.height, 0.0);
-        instance.addVertex(OpenCraft.tickTimes.length, oc.height, 0.0);
-        instance.addVertex(OpenCraft.tickTimes.length, oc.height - i, 0.0);
+        instance.vertex(0.0, oc.height - i, 0.0);
+        instance.vertex(0.0, oc.height, 0.0);
+        instance.vertex(OpenCraft.tickTimes.length, oc.height, 0.0);
+        instance.vertex(OpenCraft.tickTimes.length, oc.height - i, 0.0);
         instance.draw();
-        instance.startDrawing(1);
+        instance.begin(1);
         for (int j = 0; j < OpenCraft.tickTimes.length; ++j) {
             final int n2 = (j - OpenCraft.numRecordedFrameTimes & OpenCraft.tickTimes.length - 1) * 255 / OpenCraft.tickTimes.length;
             int n3 = n2 * n2 / 255;
@@ -438,11 +441,11 @@ public class OpenCraft implements Runnable {
             int n4 = n3 * n3 / 255;
             n4 = n4 * n4 / 255;
             instance.setColorOpaque_I(-16777216 + n4 + n3 * 256 + n2 * 65536);
-            instance.addVertex(j + 0.5f, oc.height - OpenCraft.tickTimes[j] / 200000L + 0.5f, 0.0);
-            instance.addVertex(j + 0.5f, oc.height + 0.5f, 0.0);
+            instance.vertex(j + 0.5f, oc.height - OpenCraft.tickTimes[j] / 200000L + 0.5f, 0.0);
+            instance.vertex(j + 0.5f, oc.height + 0.5f, 0.0);
         }
         instance.draw();
-        GL11.glEnable(3553);
+        glEnable(3553);
     }
 
     public void shutdown() {
@@ -642,7 +645,7 @@ public class OpenCraft implements Runnable {
         if (!oc.isGamePaused && oc.theWorld != null) {
             oc.playerController.updateController();
         }
-        GL11.glBindTexture(3553, oc.renderEngine.getTexture("/assets/terrain.png"));
+        glBindTexture(3553, oc.renderEngine.getTexture("/assets/terrain.png"));
         if (!oc.isGamePaused) {
             oc.renderEngine.updateDynamicTextures();
         }

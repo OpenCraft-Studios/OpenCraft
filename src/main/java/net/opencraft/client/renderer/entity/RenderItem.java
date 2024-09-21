@@ -81,12 +81,12 @@ public class RenderItem extends Render<EntityItem> {
                     GL11.glTranslatef((this.random.nextFloat() * 2.0f - 1.0f) * 0.3f, (this.random.nextFloat() * 2.0f - 1.0f) * 0.3f, (this.random.nextFloat() * 2.0f - 1.0f) * 0.3f);
                 }
                 GL11.glRotatef(180.0f - this.renderManager.playerViewY, 0.0f, 1.0f, 0.0f);
-                instance.startDrawingQuads();
+                instance.beginQuads();
                 instance.setNormal(0.0f, 1.0f, 0.0f);
-                instance.addVertexWithUV(0.0f - n10, 0.0f - n11, 0.0, n5, n8);
-                instance.addVertexWithUV(n9 - n10, 0.0f - n11, 0.0, n6, n8);
-                instance.addVertexWithUV(n9 - n10, 1.0f - n11, 0.0, n6, n7);
-                instance.addVertexWithUV(0.0f - n10, 1.0f - n11, 0.0, n5, n7);
+                instance.vertexUV(0.0f - n10, 0.0f - n11, 0.0, n5, n8);
+                instance.vertexUV(n9 - n10, 0.0f - n11, 0.0, n6, n8);
+                instance.vertexUV(n9 - n10, 1.0f - n11, 0.0, n6, n7);
+                instance.vertexUV(0.0f - n10, 1.0f - n11, 0.0, n5, n7);
                 instance.draw();
                 GL11.glPopMatrix();
             }
@@ -156,12 +156,12 @@ public class RenderItem extends Render<EntityItem> {
     }
 
     private void renderQuad(final Tessellator ag, final int integer2, final int integer3, final int integer4, final int integer5, final int integer6) {
-        ag.startDrawingQuads();
+        ag.beginQuads();
         ag.setColorOpaque_I(integer6);
-        ag.addVertex(integer2 + 0, integer3 + 0, 0.0);
-        ag.addVertex(integer2 + 0, integer3 + integer5, 0.0);
-        ag.addVertex(integer2 + integer4, integer3 + integer5, 0.0);
-        ag.addVertex(integer2 + integer4, integer3 + 0, 0.0);
+        ag.vertex(integer2 + 0, integer3 + 0, 0.0);
+        ag.vertex(integer2 + 0, integer3 + integer5, 0.0);
+        ag.vertex(integer2 + integer4, integer3 + integer5, 0.0);
+        ag.vertex(integer2 + integer4, integer3 + 0, 0.0);
         ag.draw();
     }
 
@@ -170,11 +170,11 @@ public class RenderItem extends Render<EntityItem> {
         final float n2 = 0.00390625f;
         final float n3 = 0.00390625f;
         final Tessellator instance = Tessellator.instance;
-        instance.startDrawingQuads();
-        instance.addVertexWithUV(integer1 + 0, integer2 + integer6, n, (integer3 + 0) * n2, (integer4 + integer6) * n3);
-        instance.addVertexWithUV(integer1 + integer5, integer2 + integer6, n, (integer3 + integer5) * n2, (integer4 + integer6) * n3);
-        instance.addVertexWithUV(integer1 + integer5, integer2 + 0, n, (integer3 + integer5) * n2, (integer4 + 0) * n3);
-        instance.addVertexWithUV(integer1 + 0, integer2 + 0, n, (integer3 + 0) * n2, (integer4 + 0) * n3);
+        instance.beginQuads();
+        instance.vertexUV(integer1 + 0, integer2 + integer6, n, (integer3 + 0) * n2, (integer4 + integer6) * n3);
+        instance.vertexUV(integer1 + integer5, integer2 + integer6, n, (integer3 + integer5) * n2, (integer4 + integer6) * n3);
+        instance.vertexUV(integer1 + integer5, integer2 + 0, n, (integer3 + integer5) * n2, (integer4 + 0) * n3);
+        instance.vertexUV(integer1 + 0, integer2 + 0, n, (integer3 + 0) * n2, (integer4 + 0) * n3);
         instance.draw();
     }
 }

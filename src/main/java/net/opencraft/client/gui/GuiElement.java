@@ -27,13 +27,13 @@ public class GuiElement {
         GL11.glDisable(3008);
         GL11.glBlendFunc(770, 771);
         final Tessellator instance = Tessellator.instance;
-        instance.startDrawingQuads();
+        instance.beginQuads();
         instance.setColorRGBA_F(float5, float6, float7, float4);
-        instance.addVertex(integer3, integer2, 0.0);
-        instance.addVertex(integer1, integer2, 0.0);
+        instance.vertex(integer3, integer2, 0.0);
+        instance.vertex(integer1, integer2, 0.0);
         instance.setColorRGBA_F(float9, float10, float11, float8);
-        instance.addVertex(integer1, integer4, 0.0);
-        instance.addVertex(integer3, integer4, 0.0);
+        instance.vertex(integer1, integer4, 0.0);
+        instance.vertex(integer3, integer4, 0.0);
         instance.draw();
         GL11.glDisable(3042);
         GL11.glEnable(3008);
@@ -52,11 +52,11 @@ public class GuiElement {
         final float n = 0.00390625f;
         final float n2 = 0.00390625f;
         final Tessellator instance = Tessellator.instance;
-        instance.startDrawingQuads();
-        instance.addVertexWithUV(integer1 + 0, integer2 + integer6, this.zLevel, (integer3 + 0) * n, (integer4 + integer6) * n2);
-        instance.addVertexWithUV(integer1 + integer5, integer2 + integer6, this.zLevel, (integer3 + integer5) * n, (integer4 + integer6) * n2);
-        instance.addVertexWithUV(integer1 + integer5, integer2 + 0, this.zLevel, (integer3 + integer5) * n, (integer4 + 0) * n2);
-        instance.addVertexWithUV(integer1 + 0, integer2 + 0, this.zLevel, (integer3 + 0) * n, (integer4 + 0) * n2);
+        instance.beginQuads();
+        instance.vertexUV(integer1 + 0, integer2 + integer6, this.zLevel, (integer3 + 0) * n, (integer4 + integer6) * n2);
+        instance.vertexUV(integer1 + integer5, integer2 + integer6, this.zLevel, (integer3 + integer5) * n, (integer4 + integer6) * n2);
+        instance.vertexUV(integer1 + integer5, integer2 + 0, this.zLevel, (integer3 + integer5) * n, (integer4 + 0) * n2);
+        instance.vertexUV(integer1 + 0, integer2 + 0, this.zLevel, (integer3 + 0) * n, (integer4 + 0) * n2);
         instance.draw();
     }
 }

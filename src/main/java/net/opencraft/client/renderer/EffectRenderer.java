@@ -67,7 +67,7 @@ public class EffectRenderer {
                 }
                 GL11.glBindTexture(3553, n);
                 final Tessellator instance = Tessellator.instance;
-                instance.startDrawingQuads();
+                instance.beginQuads();
                 for (int j = 0; j < this.fxLayers[i].size(); ++j) {
                     ((EntityFX) this.fxLayers[i].get(j)).renderParticle(instance, float2, cos, cos2, sin, float3, float4);
                 }

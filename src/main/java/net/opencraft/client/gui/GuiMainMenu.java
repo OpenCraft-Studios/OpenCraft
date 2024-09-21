@@ -84,7 +84,7 @@ public class GuiMainMenu extends GuiScreen {
         this.drawString(this.fontRenderer, string2, this.width - this.fontRenderer.getStringWidth(string2) - 2, 12, 16777215);
         super.drawScreen(mouseX, mouseY, partialTicks);
 
-        super.id.sndManager.currentMusicTheme = "menu";
-        super.id.sndManager.playRandomMusicIfReady();
+        id.sndManager.currentMusicTheme = "menu";
+        id.sndManager.playRandomMusicIfReady();
     }
 }

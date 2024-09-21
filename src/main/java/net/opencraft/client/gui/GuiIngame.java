@@ -165,11 +165,11 @@ public class GuiIngame extends GuiElement {
         GL11.glColor4f(this.prevVignetteBrightness, this.prevVignetteBrightness, this.prevVignetteBrightness, 1.0f);
         GL11.glBindTexture(3553, this.mc.renderEngine.getTexture("/assets/misc/vignette.png"));
         final Tessellator instance = Tessellator.instance;
-        instance.startDrawingQuads();
-        instance.addVertexWithUV(0.0, integer3, -90.0, 0.0, 1.0);
-        instance.addVertexWithUV(integer2, integer3, -90.0, 1.0, 1.0);
-        instance.addVertexWithUV(integer2, 0.0, -90.0, 1.0, 0.0);
-        instance.addVertexWithUV(0.0, 0.0, -90.0, 0.0, 0.0);
+        instance.beginQuads();
+        instance.vertexUV(0.0, integer3, -90.0, 0.0, 1.0);
+        instance.vertexUV(integer2, integer3, -90.0, 1.0, 1.0);
+        instance.vertexUV(integer2, 0.0, -90.0, 1.0, 0.0);
+        instance.vertexUV(0.0, 0.0, -90.0, 0.0, 0.0);
         instance.draw();
         GL11.glDepthMask(true);
         GL11.glEnable(2929);

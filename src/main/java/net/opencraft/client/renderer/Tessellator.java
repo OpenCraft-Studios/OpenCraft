@@ -1,41 +1,30 @@
 
 package net.opencraft.client.renderer;
 
+import static org.lwjgl.opengl.ARBBufferObject.*;
+import static org.lwjgl.opengl.GL11.*;
+
 import java.nio.*;
 
 import org.lwjgl.BufferUtils;
-import org.lwjgl.opengl.*;
+import org.lwjgl.opengl.GLContext;
 
 public class Tessellator {
 
-    private static boolean b;
-    private static boolean c;
+	public static final Tessellator instance;
+    private static boolean TRIANGLE_TESSELATION, c;
+
     private ByteBuffer d;
     private IntBuffer e;
     private FloatBuffer f;
     private int[] g;
-    private int h;
-    private double i;
-    private double j;
-    private int k;
-    private boolean l;
-    private boolean m;
-    private boolean n;
-    private int o;
-    private int p;
-    private boolean q;
-    private int r;
-    private double s;
-    private double t;
-    private double u;
-    private int v;
-    public static final Tessellator instance;
-    private boolean w;
+    private int h, k, o, p, mode, v;
+    private boolean l, m, n, q;
+    private double i, j, s, t, u;
+    private boolean drawing;
     private boolean x;
+    private int z, A, B;
     private IntBuffer y;
-    private int z;
-    private int A;
-    private int B;
 
     private Tessellator(final int integer) {
         this.h = 0;
@@ -45,7 +34,7 @@ public class Tessellator {
         this.o = 0;
         this.p = 0;
         this.q = false;
-        this.w = false;
+        this.drawing = false;
         this.x = false;
         this.z = 0;
         this.A = 10;
@@ -56,15 +45,15 @@ public class Tessellator {
         this.g = new int[integer];
         this.x = (Tessellator.c && GLContext.getCapabilities().GL_ARB_vertex_buffer_object);
         if (this.x) {
-            ARBVertexBufferObject.glGenBuffersARB(this.y = BufferUtils.createIntBuffer(this.A));
+            glGenBuffersARB(this.y = BufferUtils.createIntBuffer(this.A));
         }
     }
 
     public void draw() {
-        if (!this.w) {
+        if (!this.drawing)
             throw new IllegalStateException("Not tesselating!");
-        }
-        this.w = false;
+        
+        this.drawing = false;
         if (this.h > 0) {
             this.e.clear();
             this.e.put(this.g, 0, this.o);
@@ -72,87 +61,87 @@ public class Tessellator {
             this.d.limit(this.o * 4);
             if (this.x) {
                 this.z = (this.z + 1) % this.A;
-                ARBVertexBufferObject.glBindBufferARB(34962, this.y.get(this.z));
-                ARBVertexBufferObject.glBufferDataARB(34962, this.d, 35040);
+                glBindBufferARB(34962, this.y.get(this.z));
+                glBufferDataARB(34962, this.d, GL_STREAM_DRAW_ARB);
             }
             if (this.m) {
                 if (this.x) {
-                    GL11.glTexCoordPointer(2, 5126, 32, 12L);
+                    glTexCoordPointer(2, 5126, 32, 12L);
                 } else {
                     this.f.position(3);
-                    GL11.glTexCoordPointer(2, 32, this.f);
+                    glTexCoordPointer(2, 32, this.f);
                 }
-                GL11.glEnableClientState(32888);
+                glEnableClientState(32888);
             }
             if (this.l) {
                 if (this.x) {
-                    GL11.glColorPointer(4, 5121, 32, 20L);
+                    glColorPointer(4, 5121, 32, 20L);
                 } else {
                     this.d.position(20);
-                    GL11.glColorPointer(4, true, 32, this.d);
+                    glColorPointer(4, true, 32, this.d);
                 }
-                GL11.glEnableClientState(32886);
+                glEnableClientState(32886);
             }
             if (this.n) {
                 if (this.x) {
-                    GL11.glNormalPointer(5120, 32, 24L);
+                    glNormalPointer(5120, 32, 24L);
                 } else {
                     this.d.position(24);
-                    GL11.glNormalPointer(32, this.d);
+                    glNormalPointer(32, this.d);
                 }
-                GL11.glEnableClientState(32885);
+                glEnableClientState(32885);
             }
             if (this.x) {
-                GL11.glVertexPointer(3, 5126, 32, 0L);
+                glVertexPointer(3, 5126, 32, 0L);
             } else {
                 this.f.position(0);
-                GL11.glVertexPointer(3, 32, this.f);
+                glVertexPointer(3, 32, this.f);
             }
-            GL11.glEnableClientState(32884);
-            if (this.r == 7 && Tessellator.b) {
-                GL11.glDrawArrays(4, 0, this.h);
+            glEnableClientState(32884);
+            if (this.mode == GL_QUADS && Tessellator.TRIANGLE_TESSELATION) {
+                glDrawArrays(GL_TRIANGLES, 0, this.h);
             } else {
-                GL11.glDrawArrays(this.r, 0, this.h);
+                glDrawArrays(this.mode, 0, this.h);
             }
-            GL11.glDisableClientState(32884);
+            glDisableClientState(32884);
             if (this.m) {
-                GL11.glDisableClientState(32888);
+                glDisableClientState(32888);
             }
             if (this.l) {
-                GL11.glDisableClientState(32886);
+                glDisableClientState(32886);
             }
             if (this.n) {
-                GL11.glDisableClientState(32885);
+                glDisableClientState(32885);
             }
         }
-        this.d();
+        this.end();
     }
 
-    private void d() {
+    private void end() {
         this.h = 0;
         this.d.clear();
         this.o = 0;
         this.p = 0;
     }
 
-    public void startDrawingQuads() {
-        this.startDrawing(7);
+    public void beginQuads() {
+        this.begin(7);
     }
 
-    public void startDrawing(final int integer) {
-        if (this.w) {
+    public void begin(int mode) {
+        if (this.drawing)
             throw new IllegalStateException("Already tesselating!");
-        }
-        this.w = true;
-        this.d();
-        this.r = integer;
+        
+        this.drawing = true;
+        this.end();
+        this.mode = mode;
         this.n = false;
         this.l = false;
         this.m = false;
         this.q = false;
     }
 
-    public void a(final double double1, final double double2) {
+    public void uv(final double double1, final double double2) {
         this.m = true;
         this.i = double1;
         this.j = double2;
@@ -202,14 +191,14 @@ public class Tessellator {
         this.k = (integer4 << 24 | integer3 << 16 | integer2 << 8 | integer1);
     }
 
-    public void addVertexWithUV(final double double1, final double double2, final double double3, final double double4, final double double5) {
-        this.a(double4, double5);
-        this.addVertex(double1, double2, double3);
+    public void vertexUV(double x, double y, double z, double u, double v) {
+        this.uv(u, v);
+        this.vertex(x, y, z);
     }
 
-    public void addVertex(final double double1, final double double2, final double double3) {
+    public void vertex(final double double1, final double double2, final double double3) {
         ++this.p;
-        if (this.r == 7 && Tessellator.b && this.p % 4 == 0) {
+        if (this.mode == 7 && Tessellator.TRIANGLE_TESSELATION && this.p % 4 == 0) {
             for (int i = 0; i < 2; ++i) {
                 final int n = 8 * (3 - i);
                 if (this.m) {
@@ -243,7 +232,7 @@ public class Tessellator {
         ++this.h;
         if (this.h % 4 == 0 && this.o >= this.B - 32) {
             this.draw();
-            this.w = true;
+            this.drawing = true;
         }
     }
 
@@ -256,7 +245,7 @@ public class Tessellator {
     }
 
     public void setNormal(final float float1, final float float2, final float float3) {
-        if (!this.w) {
+        if (!this.drawing) {
             System.out.println("But..");
         }
         this.n = true;
@@ -270,7 +259,7 @@ public class Tessellator {
     }
 
     static {
-        Tessellator.b = true;
+        Tessellator.TRIANGLE_TESSELATION = true;
         Tessellator.c = false;
         instance = new Tessellator(2097152);
     }

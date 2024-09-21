@@ -35,9 +35,9 @@ public class EntityDiggingFX extends EntityFX {
         final float n8 = (float) (this.prevPosZ + (this.posZ - this.prevPosZ) * float2 - EntityDiggingFX.interpPosZ);
         final float entityBrightness = this.getEntityBrightness(float2);
         ag.setColorOpaque_F(entityBrightness * this.particleRed, entityBrightness * this.particleGreen, entityBrightness * this.particleBlue);
-        ag.addVertexWithUV(n6 - float3 * n5 - float6 * n5, n7 - float4 * n5, n8 - float5 * n5 - float7 * n5, n, n4);
-        ag.addVertexWithUV(n6 - float3 * n5 + float6 * n5, n7 + float4 * n5, n8 - float5 * n5 + float7 * n5, n, n3);
-        ag.addVertexWithUV(n6 + float3 * n5 + float6 * n5, n7 + float4 * n5, n8 + float5 * n5 + float7 * n5, n2, n3);
-        ag.addVertexWithUV(n6 + float3 * n5 - float6 * n5, n7 - float4 * n5, n8 + float5 * n5 - float7 * n5, n2, n4);
+        ag.vertexUV(n6 - float3 * n5 - float6 * n5, n7 - float4 * n5, n8 - float5 * n5 - float7 * n5, n, n4);
+        ag.vertexUV(n6 - float3 * n5 + float6 * n5, n7 + float4 * n5, n8 - float5 * n5 + float7 * n5, n, n3);
+        ag.vertexUV(n6 + float3 * n5 + float6 * n5, n7 + float4 * n5, n8 + float5 * n5 + float7 * n5, n2, n3);
+        ag.vertexUV(n6 + float3 * n5 - float6 * n5, n7 - float4 * n5, n8 + float5 * n5 - float7 * n5, n2, n4);
     }
 }

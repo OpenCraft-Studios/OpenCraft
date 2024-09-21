@@ -146,7 +146,7 @@ public class WorldRenderer {
                                 GL11.glTranslatef(-this.h / 2.0f, -this.g / 2.0f, -this.h / 2.0f);
                                 GL11.glScalef(n6, n6, n6);
                                 GL11.glTranslatef(this.h / 2.0f, this.g / 2.0f, this.h / 2.0f);
-                                WorldRenderer.tessellator.startDrawingQuads();
+                                WorldRenderer.tessellator.beginQuads();
                                 WorldRenderer.tessellator.setTranslationD(-this.c, -this.d, -this.e);
                             }
                             if (j == 0 && Block.blocksList[blockId] instanceof ContainerBlock) {

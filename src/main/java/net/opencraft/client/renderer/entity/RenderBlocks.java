@@ -130,26 +130,26 @@ public class RenderBlocks {
             double n14 = integer2 + 0.5 + 0.3;
             double n15 = integer4 + 0.5 - 0.3;
             double n16 = integer4 + 0.5 + 0.3;
-            instance.addVertexWithUV(n13, integer3 + n8, integer4 + 1, n5, n6);
-            instance.addVertexWithUV(n9, integer3 + 0, integer4 + 1, n5, n7);
-            instance.addVertexWithUV(n9, integer3 + 0, integer4 + 0, n4, n7);
-            instance.addVertexWithUV(n13, integer3 + n8, integer4 + 0, n4, n6);
-            instance.addVertexWithUV(n14, integer3 + n8, integer4 + 0, n5, n6);
-            instance.addVertexWithUV(n10, integer3 + 0, integer4 + 0, n5, n7);
-            instance.addVertexWithUV(n10, integer3 + 0, integer4 + 1, n4, n7);
-            instance.addVertexWithUV(n14, integer3 + n8, integer4 + 1, n4, n6);
+            instance.vertexUV(n13, integer3 + n8, integer4 + 1, n5, n6);
+            instance.vertexUV(n9, integer3 + 0, integer4 + 1, n5, n7);
+            instance.vertexUV(n9, integer3 + 0, integer4 + 0, n4, n7);
+            instance.vertexUV(n13, integer3 + n8, integer4 + 0, n4, n6);
+            instance.vertexUV(n14, integer3 + n8, integer4 + 0, n5, n6);
+            instance.vertexUV(n10, integer3 + 0, integer4 + 0, n5, n7);
+            instance.vertexUV(n10, integer3 + 0, integer4 + 1, n4, n7);
+            instance.vertexUV(n14, integer3 + n8, integer4 + 1, n4, n6);
             n4 = n2 / 256.0f;
             n5 = (n2 + 15.99f) / 256.0f;
             n6 = (n3 + 16) / 256.0f;
             n7 = (n3 + 15.99f + 16.0f) / 256.0f;
-            instance.addVertexWithUV(integer2 + 1, integer3 + n8, n16, n5, n6);
-            instance.addVertexWithUV(integer2 + 1, integer3 + 0, n12, n5, n7);
-            instance.addVertexWithUV(integer2 + 0, integer3 + 0, n12, n4, n7);
-            instance.addVertexWithUV(integer2 + 0, integer3 + n8, n16, n4, n6);
-            instance.addVertexWithUV(integer2 + 0, integer3 + n8, n15, n5, n6);
-            instance.addVertexWithUV(integer2 + 0, integer3 + 0, n11, n5, n7);
-            instance.addVertexWithUV(integer2 + 1, integer3 + 0, n11, n4, n7);
-            instance.addVertexWithUV(integer2 + 1, integer3 + n8, n15, n4, n6);
+            instance.vertexUV(integer2 + 1, integer3 + n8, n16, n5, n6);
+            instance.vertexUV(integer2 + 1, integer3 + 0, n12, n5, n7);
+            instance.vertexUV(integer2 + 0, integer3 + 0, n12, n4, n7);
+            instance.vertexUV(integer2 + 0, integer3 + n8, n16, n4, n6);
+            instance.vertexUV(integer2 + 0, integer3 + n8, n15, n5, n6);
+            instance.vertexUV(integer2 + 0, integer3 + 0, n11, n5, n7);
+            instance.vertexUV(integer2 + 1, integer3 + 0, n11, n4, n7);
+            instance.vertexUV(integer2 + 1, integer3 + n8, n15, n4, n6);
             n9 = integer2 + 0.5 - 0.5;
             n10 = integer2 + 0.5 + 0.5;
             n11 = integer4 + 0.5 - 0.5;
@@ -158,26 +158,26 @@ public class RenderBlocks {
             n14 = integer2 + 0.5 + 0.4;
             n15 = integer4 + 0.5 - 0.4;
             n16 = integer4 + 0.5 + 0.4;
-            instance.addVertexWithUV(n13, integer3 + n8, integer4 + 0, n4, n6);
-            instance.addVertexWithUV(n9, integer3 + 0, integer4 + 0, n4, n7);
-            instance.addVertexWithUV(n9, integer3 + 0, integer4 + 1, n5, n7);
-            instance.addVertexWithUV(n13, integer3 + n8, integer4 + 1, n5, n6);
-            instance.addVertexWithUV(n14, integer3 + n8, integer4 + 1, n4, n6);
-            instance.addVertexWithUV(n10, integer3 + 0, integer4 + 1, n4, n7);
-            instance.addVertexWithUV(n10, integer3 + 0, integer4 + 0, n5, n7);
-            instance.addVertexWithUV(n14, integer3 + n8, integer4 + 0, n5, n6);
+            instance.vertexUV(n13, integer3 + n8, integer4 + 0, n4, n6);
+            instance.vertexUV(n9, integer3 + 0, integer4 + 0, n4, n7);
+            instance.vertexUV(n9, integer3 + 0, integer4 + 1, n5, n7);
+            instance.vertexUV(n13, integer3 + n8, integer4 + 1, n5, n6);
+            instance.vertexUV(n14, integer3 + n8, integer4 + 1, n4, n6);
+            instance.vertexUV(n10, integer3 + 0, integer4 + 1, n4, n7);
+            instance.vertexUV(n10, integer3 + 0, integer4 + 0, n5, n7);
+            instance.vertexUV(n14, integer3 + n8, integer4 + 0, n5, n6);
             n4 = n2 / 256.0f;
             n5 = (n2 + 15.99f) / 256.0f;
             n6 = n3 / 256.0f;
             n7 = (n3 + 15.99f) / 256.0f;
-            instance.addVertexWithUV(integer2 + 0, integer3 + n8, n16, n4, n6);
-            instance.addVertexWithUV(integer2 + 0, integer3 + 0, n12, n4, n7);
-            instance.addVertexWithUV(integer2 + 1, integer3 + 0, n12, n5, n7);
-            instance.addVertexWithUV(integer2 + 1, integer3 + n8, n16, n5, n6);
-            instance.addVertexWithUV(integer2 + 1, integer3 + n8, n15, n4, n6);
-            instance.addVertexWithUV(integer2 + 1, integer3 + 0, n11, n4, n7);
-            instance.addVertexWithUV(integer2 + 0, integer3 + 0, n11, n5, n7);
-            instance.addVertexWithUV(integer2 + 0, integer3 + n8, n15, n5, n6);
+            instance.vertexUV(integer2 + 0, integer3 + n8, n16, n4, n6);
+            instance.vertexUV(integer2 + 0, integer3 + 0, n12, n4, n7);
+            instance.vertexUV(integer2 + 1, integer3 + 0, n12, n5, n7);
+            instance.vertexUV(integer2 + 1, integer3 + n8, n16, n5, n6);
+            instance.vertexUV(integer2 + 1, integer3 + n8, n15, n4, n6);
+            instance.vertexUV(integer2 + 1, integer3 + 0, n11, n4, n7);
+            instance.vertexUV(integer2 + 0, integer3 + 0, n11, n5, n7);
+            instance.vertexUV(integer2 + 0, integer3 + n8, n15, n5, n6);
         } else {
             final float n17 = 0.2f;
             final float n18 = 0.0625f;
@@ -193,44 +193,44 @@ public class RenderBlocks {
                 n4 = n10;
             }
             if (Block.fire.canBlockCatchFire(this.a, integer2 - 1, integer3, integer4)) {
-                instance.addVertexWithUV(integer2 + n17, integer3 + n8 + n18, integer4 + 1, n5, n6);
-                instance.addVertexWithUV(integer2 + 0, integer3 + 0 + n18, integer4 + 1, n5, n7);
-                instance.addVertexWithUV(integer2 + 0, integer3 + 0 + n18, integer4 + 0, n4, n7);
-                instance.addVertexWithUV(integer2 + n17, integer3 + n8 + n18, integer4 + 0, n4, n6);
-                instance.addVertexWithUV(integer2 + n17, integer3 + n8 + n18, integer4 + 0, n4, n6);
-                instance.addVertexWithUV(integer2 + 0, integer3 + 0 + n18, integer4 + 0, n4, n7);
-                instance.addVertexWithUV(integer2 + 0, integer3 + 0 + n18, integer4 + 1, n5, n7);
-                instance.addVertexWithUV(integer2 + n17, integer3 + n8 + n18, integer4 + 1, n5, n6);
+                instance.vertexUV(integer2 + n17, integer3 + n8 + n18, integer4 + 1, n5, n6);
+                instance.vertexUV(integer2 + 0, integer3 + 0 + n18, integer4 + 1, n5, n7);
+                instance.vertexUV(integer2 + 0, integer3 + 0 + n18, integer4 + 0, n4, n7);
+                instance.vertexUV(integer2 + n17, integer3 + n8 + n18, integer4 + 0, n4, n6);
+                instance.vertexUV(integer2 + n17, integer3 + n8 + n18, integer4 + 0, n4, n6);
+                instance.vertexUV(integer2 + 0, integer3 + 0 + n18, integer4 + 0, n4, n7);
+                instance.vertexUV(integer2 + 0, integer3 + 0 + n18, integer4 + 1, n5, n7);
+                instance.vertexUV(integer2 + n17, integer3 + n8 + n18, integer4 + 1, n5, n6);
             }
             if (Block.fire.canBlockCatchFire(this.a, integer2 + 1, integer3, integer4)) {
-                instance.addVertexWithUV(integer2 + 1 - n17, integer3 + n8 + n18, integer4 + 0, n4, n6);
-                instance.addVertexWithUV(integer2 + 1 - 0, integer3 + 0 + n18, integer4 + 0, n4, n7);
-                instance.addVertexWithUV(integer2 + 1 - 0, integer3 + 0 + n18, integer4 + 1, n5, n7);
-                instance.addVertexWithUV(integer2 + 1 - n17, integer3 + n8 + n18, integer4 + 1, n5, n6);
-                instance.addVertexWithUV(integer2 + 1 - n17, integer3 + n8 + n18, integer4 + 1, n5, n6);
-                instance.addVertexWithUV(integer2 + 1 - 0, integer3 + 0 + n18, integer4 + 1, n5, n7);
-                instance.addVertexWithUV(integer2 + 1 - 0, integer3 + 0 + n18, integer4 + 0, n4, n7);
-                instance.addVertexWithUV(integer2 + 1 - n17, integer3 + n8 + n18, integer4 + 0, n4, n6);
+                instance.vertexUV(integer2 + 1 - n17, integer3 + n8 + n18, integer4 + 0, n4, n6);
+                instance.vertexUV(integer2 + 1 - 0, integer3 + 0 + n18, integer4 + 0, n4, n7);
+                instance.vertexUV(integer2 + 1 - 0, integer3 + 0 + n18, integer4 + 1, n5, n7);
+                instance.vertexUV(integer2 + 1 - n17, integer3 + n8 + n18, integer4 + 1, n5, n6);
+                instance.vertexUV(integer2 + 1 - n17, integer3 + n8 + n18, integer4 + 1, n5, n6);
+                instance.vertexUV(integer2 + 1 - 0, integer3 + 0 + n18, integer4 + 1, n5, n7);
+                instance.vertexUV(integer2 + 1 - 0, integer3 + 0 + n18, integer4 + 0, n4, n7);
+                instance.vertexUV(integer2 + 1 - n17, integer3 + n8 + n18, integer4 + 0, n4, n6);
             }
             if (Block.fire.canBlockCatchFire(this.a, integer2, integer3, integer4 - 1)) {
-                instance.addVertexWithUV(integer2 + 0, integer3 + n8 + n18, integer4 + n17, n5, n6);
-                instance.addVertexWithUV(integer2 + 0, integer3 + 0 + n18, integer4 + 0, n5, n7);
-                instance.addVertexWithUV(integer2 + 1, integer3 + 0 + n18, integer4 + 0, n4, n7);
-                instance.addVertexWithUV(integer2 + 1, integer3 + n8 + n18, integer4 + n17, n4, n6);
-                instance.addVertexWithUV(integer2 + 1, integer3 + n8 + n18, integer4 + n17, n4, n6);
-                instance.addVertexWithUV(integer2 + 1, integer3 + 0 + n18, integer4 + 0, n4, n7);
-                instance.addVertexWithUV(integer2 + 0, integer3 + 0 + n18, integer4 + 0, n5, n7);
-                instance.addVertexWithUV(integer2 + 0, integer3 + n8 + n18, integer4 + n17, n5, n6);
+                instance.vertexUV(integer2 + 0, integer3 + n8 + n18, integer4 + n17, n5, n6);
+                instance.vertexUV(integer2 + 0, integer3 + 0 + n18, integer4 + 0, n5, n7);
+                instance.vertexUV(integer2 + 1, integer3 + 0 + n18, integer4 + 0, n4, n7);
+                instance.vertexUV(integer2 + 1, integer3 + n8 + n18, integer4 + n17, n4, n6);
+                instance.vertexUV(integer2 + 1, integer3 + n8 + n18, integer4 + n17, n4, n6);
+                instance.vertexUV(integer2 + 1, integer3 + 0 + n18, integer4 + 0, n4, n7);
+                instance.vertexUV(integer2 + 0, integer3 + 0 + n18, integer4 + 0, n5, n7);
+                instance.vertexUV(integer2 + 0, integer3 + n8 + n18, integer4 + n17, n5, n6);
             }
             if (Block.fire.canBlockCatchFire(this.a, integer2, integer3, integer4 + 1)) {
-                instance.addVertexWithUV(integer2 + 1, integer3 + n8 + n18, integer4 + 1 - n17, n4, n6);
-                instance.addVertexWithUV(integer2 + 1, integer3 + 0 + n18, integer4 + 1 - 0, n4, n7);
-                instance.addVertexWithUV(integer2 + 0, integer3 + 0 + n18, integer4 + 1 - 0, n5, n7);
-                instance.addVertexWithUV(integer2 + 0, integer3 + n8 + n18, integer4 + 1 - n17, n5, n6);
-                instance.addVertexWithUV(integer2 + 0, integer3 + n8 + n18, integer4 + 1 - n17, n5, n6);
-                instance.addVertexWithUV(integer2 + 0, integer3 + 0 + n18, integer4 + 1 - 0, n5, n7);
-                instance.addVertexWithUV(integer2 + 1, integer3 + 0 + n18, integer4 + 1 - 0, n4, n7);
-                instance.addVertexWithUV(integer2 + 1, integer3 + n8 + n18, integer4 + 1 - n17, n4, n6);
+                instance.vertexUV(integer2 + 1, integer3 + n8 + n18, integer4 + 1 - n17, n4, n6);
+                instance.vertexUV(integer2 + 1, integer3 + 0 + n18, integer4 + 1 - 0, n4, n7);
+                instance.vertexUV(integer2 + 0, integer3 + 0 + n18, integer4 + 1 - 0, n5, n7);
+                instance.vertexUV(integer2 + 0, integer3 + n8 + n18, integer4 + 1 - n17, n5, n6);
+                instance.vertexUV(integer2 + 0, integer3 + n8 + n18, integer4 + 1 - n17, n5, n6);
+                instance.vertexUV(integer2 + 0, integer3 + 0 + n18, integer4 + 1 - 0, n5, n7);
+                instance.vertexUV(integer2 + 1, integer3 + 0 + n18, integer4 + 1 - 0, n4, n7);
+                instance.vertexUV(integer2 + 1, integer3 + n8 + n18, integer4 + 1 - n17, n4, n6);
             }
             if (Block.fire.canBlockCatchFire(this.a, integer2, integer3 + 1, integer4)) {
                 final double n10 = integer2 + 0.5 + 0.5;
@@ -248,31 +248,31 @@ public class RenderBlocks {
                 ++integer3;
                 n8 = -0.2f;
                 if ((integer2 + integer3 + integer4 & 0x1) == 0x0) {
-                    instance.addVertexWithUV(n14, integer3 + n8, integer4 + 0, n5, n6);
-                    instance.addVertexWithUV(n10, integer3 + 0, integer4 + 0, n5, n7);
-                    instance.addVertexWithUV(n10, integer3 + 0, integer4 + 1, n4, n7);
-                    instance.addVertexWithUV(n14, integer3 + n8, integer4 + 1, n4, n6);
+                    instance.vertexUV(n14, integer3 + n8, integer4 + 0, n5, n6);
+                    instance.vertexUV(n10, integer3 + 0, integer4 + 0, n5, n7);
+                    instance.vertexUV(n10, integer3 + 0, integer4 + 1, n4, n7);
+                    instance.vertexUV(n14, integer3 + n8, integer4 + 1, n4, n6);
                     n4 = n2 / 256.0f;
                     n5 = (n2 + 15.99f) / 256.0f;
                     n6 = (n3 + 16) / 256.0f;
                     n7 = (n3 + 15.99f + 16.0f) / 256.0f;
-                    instance.addVertexWithUV(n15, integer3 + n8, integer4 + 1, n5, n6);
-                    instance.addVertexWithUV(n11, integer3 + 0, integer4 + 1, n5, n7);
-                    instance.addVertexWithUV(n11, integer3 + 0, integer4 + 0, n4, n7);
-                    instance.addVertexWithUV(n15, integer3 + n8, integer4 + 0, n4, n6);
+                    instance.vertexUV(n15, integer3 + n8, integer4 + 1, n5, n6);
+                    instance.vertexUV(n11, integer3 + 0, integer4 + 1, n5, n7);
+                    instance.vertexUV(n11, integer3 + 0, integer4 + 0, n4, n7);
+                    instance.vertexUV(n15, integer3 + n8, integer4 + 0, n4, n6);
                 } else {
-                    instance.addVertexWithUV(integer2 + 0, integer3 + n8, n19, n5, n6);
-                    instance.addVertexWithUV(integer2 + 0, integer3 + 0, n13, n5, n7);
-                    instance.addVertexWithUV(integer2 + 1, integer3 + 0, n13, n4, n7);
-                    instance.addVertexWithUV(integer2 + 1, integer3 + n8, n19, n4, n6);
+                    instance.vertexUV(integer2 + 0, integer3 + n8, n19, n5, n6);
+                    instance.vertexUV(integer2 + 0, integer3 + 0, n13, n5, n7);
+                    instance.vertexUV(integer2 + 1, integer3 + 0, n13, n4, n7);
+                    instance.vertexUV(integer2 + 1, integer3 + n8, n19, n4, n6);
                     n4 = n2 / 256.0f;
                     n5 = (n2 + 15.99f) / 256.0f;
                     n6 = (n3 + 16) / 256.0f;
                     n7 = (n3 + 15.99f + 16.0f) / 256.0f;
-                    instance.addVertexWithUV(integer2 + 1, integer3 + n8, n16, n5, n6);
-                    instance.addVertexWithUV(integer2 + 1, integer3 + 0, n12, n5, n7);
-                    instance.addVertexWithUV(integer2 + 0, integer3 + 0, n12, n4, n7);
-                    instance.addVertexWithUV(integer2 + 0, integer3 + n8, n16, n4, n6);
+                    instance.vertexUV(integer2 + 1, integer3 + n8, n16, n5, n6);
+                    instance.vertexUV(integer2 + 1, integer3 + 0, n12, n5, n7);
+                    instance.vertexUV(integer2 + 0, integer3 + 0, n12, n4, n7);
+                    instance.vertexUV(integer2 + 0, integer3 + n8, n16, n4, n6);
                 }
             }
         }
@@ -305,28 +305,28 @@ public class RenderBlocks {
         final float n13 = 0.125f;
         final float n14 = 0.05f;
         if (this.a.isBlockNormalCube(integer2 - 1, integer3, integer4)) {
-            instance.addVertexWithUV(integer2 + n14, integer3 + 1 + n13, integer4 + 1 + n13, n5, n7);
-            instance.addVertexWithUV(integer2 + n14, integer3 + 0 - n13, integer4 + 1 + n13, n5, n8);
-            instance.addVertexWithUV(integer2 + n14, integer3 + 0 - n13, integer4 + 0 - n13, n6, n8);
-            instance.addVertexWithUV(integer2 + n14, integer3 + 1 + n13, integer4 + 0 - n13, n6, n7);
+            instance.vertexUV(integer2 + n14, integer3 + 1 + n13, integer4 + 1 + n13, n5, n7);
+            instance.vertexUV(integer2 + n14, integer3 + 0 - n13, integer4 + 1 + n13, n5, n8);
+            instance.vertexUV(integer2 + n14, integer3 + 0 - n13, integer4 + 0 - n13, n6, n8);
+            instance.vertexUV(integer2 + n14, integer3 + 1 + n13, integer4 + 0 - n13, n6, n7);
         }
         if (this.a.isBlockNormalCube(integer2 + 1, integer3, integer4)) {
-            instance.addVertexWithUV(integer2 + 1 - n14, integer3 + 0 - n13, integer4 + 1 + n13, n6, n8);
-            instance.addVertexWithUV(integer2 + 1 - n14, integer3 + 1 + n13, integer4 + 1 + n13, n6, n7);
-            instance.addVertexWithUV(integer2 + 1 - n14, integer3 + 1 + n13, integer4 + 0 - n13, n5, n7);
-            instance.addVertexWithUV(integer2 + 1 - n14, integer3 + 0 - n13, integer4 + 0 - n13, n5, n8);
+            instance.vertexUV(integer2 + 1 - n14, integer3 + 0 - n13, integer4 + 1 + n13, n6, n8);
+            instance.vertexUV(integer2 + 1 - n14, integer3 + 1 + n13, integer4 + 1 + n13, n6, n7);
+            instance.vertexUV(integer2 + 1 - n14, integer3 + 1 + n13, integer4 + 0 - n13, n5, n7);
+            instance.vertexUV(integer2 + 1 - n14, integer3 + 0 - n13, integer4 + 0 - n13, n5, n8);
         }
         if (this.a.isBlockNormalCube(integer2, integer3, integer4 - 1)) {
-            instance.addVertexWithUV(integer2 + 1 + n13, integer3 + 0 - n13, integer4 + n14, n10, n12);
-            instance.addVertexWithUV(integer2 + 1 + n13, integer3 + 1 + n13, integer4 + n14, n10, n11);
-            instance.addVertexWithUV(integer2 + 0 - n13, integer3 + 1 + n13, integer4 + n14, n9, n11);
-            instance.addVertexWithUV(integer2 + 0 - n13, integer3 + 0 - n13, integer4 + n14, n9, n12);
+            instance.vertexUV(integer2 + 1 + n13, integer3 + 0 - n13, integer4 + n14, n10, n12);
+            instance.vertexUV(integer2 + 1 + n13, integer3 + 1 + n13, integer4 + n14, n10, n11);
+            instance.vertexUV(integer2 + 0 - n13, integer3 + 1 + n13, integer4 + n14, n9, n11);
+            instance.vertexUV(integer2 + 0 - n13, integer3 + 0 - n13, integer4 + n14, n9, n12);
         }
         if (this.a.isBlockNormalCube(integer2, integer3, integer4 + 1)) {
-            instance.addVertexWithUV(integer2 + 1 + n13, integer3 + 1 + n13, integer4 + 1 - n14, n9, n11);
-            instance.addVertexWithUV(integer2 + 1 + n13, integer3 + 0 - n13, integer4 + 1 - n14, n9, n12);
-            instance.addVertexWithUV(integer2 + 0 - n13, integer3 + 0 - n13, integer4 + 1 - n14, n10, n12);
-            instance.addVertexWithUV(integer2 + 0 - n13, integer3 + 1 + n13, integer4 + 1 - n14, n10, n11);
+            instance.vertexUV(integer2 + 1 + n13, integer3 + 1 + n13, integer4 + 1 - n14, n9, n11);
+            instance.vertexUV(integer2 + 1 + n13, integer3 + 0 - n13, integer4 + 1 - n14, n9, n12);
+            instance.vertexUV(integer2 + 0 - n13, integer3 + 0 - n13, integer4 + 1 - n14, n10, n12);
+            instance.vertexUV(integer2 + 0 - n13, integer3 + 1 + n13, integer4 + 1 - n14, n10, n11);
         }
         return true;
     }
@@ -382,14 +382,14 @@ public class RenderBlocks {
             ++n18;
             ++n19;
         }
-        instance.addVertexWithUV(n9, n17, n13, n5, n6);
-        instance.addVertexWithUV(n10, n18, n14, n5, n7);
-        instance.addVertexWithUV(n11, n19, n15, n4, n7);
-        instance.addVertexWithUV(n12, n20, n16, n4, n6);
-        instance.addVertexWithUV(n12, n20, n16, n4, n6);
-        instance.addVertexWithUV(n11, n19, n15, n4, n7);
-        instance.addVertexWithUV(n10, n18, n14, n5, n7);
-        instance.addVertexWithUV(n9, n17, n13, n5, n6);
+        instance.vertexUV(n9, n17, n13, n5, n6);
+        instance.vertexUV(n10, n18, n14, n5, n7);
+        instance.vertexUV(n11, n19, n15, n4, n7);
+        instance.vertexUV(n12, n20, n16, n4, n6);
+        instance.vertexUV(n12, n20, n16, n4, n6);
+        instance.vertexUV(n11, n19, n15, n4, n7);
+        instance.vertexUV(n10, n18, n14, n5, n7);
+        instance.vertexUV(n9, n17, n13, n5, n6);
         return true;
     }
 
@@ -411,28 +411,28 @@ public class RenderBlocks {
         final float n8 = 0.0f;
         final float n9 = 0.05f;
         if (blockMetadata == 5) {
-            instance.addVertexWithUV(integer2 + n9, integer3 + 1 + n8, integer4 + 1 + n8, n4, n6);
-            instance.addVertexWithUV(integer2 + n9, integer3 + 0 - n8, integer4 + 1 + n8, n4, n7);
-            instance.addVertexWithUV(integer2 + n9, integer3 + 0 - n8, integer4 + 0 - n8, n5, n7);
-            instance.addVertexWithUV(integer2 + n9, integer3 + 1 + n8, integer4 + 0 - n8, n5, n6);
+            instance.vertexUV(integer2 + n9, integer3 + 1 + n8, integer4 + 1 + n8, n4, n6);
+            instance.vertexUV(integer2 + n9, integer3 + 0 - n8, integer4 + 1 + n8, n4, n7);
+            instance.vertexUV(integer2 + n9, integer3 + 0 - n8, integer4 + 0 - n8, n5, n7);
+            instance.vertexUV(integer2 + n9, integer3 + 1 + n8, integer4 + 0 - n8, n5, n6);
         }
         if (blockMetadata == 4) {
-            instance.addVertexWithUV(integer2 + 1 - n9, integer3 + 0 - n8, integer4 + 1 + n8, n5, n7);
-            instance.addVertexWithUV(integer2 + 1 - n9, integer3 + 1 + n8, integer4 + 1 + n8, n5, n6);
-            instance.addVertexWithUV(integer2 + 1 - n9, integer3 + 1 + n8, integer4 + 0 - n8, n4, n6);
-            instance.addVertexWithUV(integer2 + 1 - n9, integer3 + 0 - n8, integer4 + 0 - n8, n4, n7);
+            instance.vertexUV(integer2 + 1 - n9, integer3 + 0 - n8, integer4 + 1 + n8, n5, n7);
+            instance.vertexUV(integer2 + 1 - n9, integer3 + 1 + n8, integer4 + 1 + n8, n5, n6);
+            instance.vertexUV(integer2 + 1 - n9, integer3 + 1 + n8, integer4 + 0 - n8, n4, n6);
+            instance.vertexUV(integer2 + 1 - n9, integer3 + 0 - n8, integer4 + 0 - n8, n4, n7);
         }
         if (blockMetadata == 3) {
-            instance.addVertexWithUV(integer2 + 1 + n8, integer3 + 0 - n8, integer4 + n9, n5, n7);
-            instance.addVertexWithUV(integer2 + 1 + n8, integer3 + 1 + n8, integer4 + n9, n5, n6);
-            instance.addVertexWithUV(integer2 + 0 - n8, integer3 + 1 + n8, integer4 + n9, n4, n6);
-            instance.addVertexWithUV(integer2 + 0 - n8, integer3 + 0 - n8, integer4 + n9, n4, n7);
+            instance.vertexUV(integer2 + 1 + n8, integer3 + 0 - n8, integer4 + n9, n5, n7);
+            instance.vertexUV(integer2 + 1 + n8, integer3 + 1 + n8, integer4 + n9, n5, n6);
+            instance.vertexUV(integer2 + 0 - n8, integer3 + 1 + n8, integer4 + n9, n4, n6);
+            instance.vertexUV(integer2 + 0 - n8, integer3 + 0 - n8, integer4 + n9, n4, n7);
         }
         if (blockMetadata == 2) {
-            instance.addVertexWithUV(integer2 + 1 + n8, integer3 + 1 + n8, integer4 + 1 - n9, n4, n6);
-            instance.addVertexWithUV(integer2 + 1 + n8, integer3 + 0 - n8, integer4 + 1 - n9, n4, n7);
-            instance.addVertexWithUV(integer2 + 0 - n8, integer3 + 0 - n8, integer4 + 1 - n9, n5, n7);
-            instance.addVertexWithUV(integer2 + 0 - n8, integer3 + 1 + n8, integer4 + 1 - n9, n5, n6);
+            instance.vertexUV(integer2 + 1 + n8, integer3 + 1 + n8, integer4 + 1 - n9, n4, n6);
+            instance.vertexUV(integer2 + 1 + n8, integer3 + 0 - n8, integer4 + 1 - n9, n4, n7);
+            instance.vertexUV(integer2 + 0 - n8, integer3 + 0 - n8, integer4 + 1 - n9, n5, n7);
+            instance.vertexUV(integer2 + 0 - n8, integer3 + 1 + n8, integer4 + 1 - n9, n5, n6);
         }
         return true;
     }
@@ -477,26 +477,26 @@ public class RenderBlocks {
         final double n15 = double4 + 0.5;
         final double n16 = 0.0625;
         final double n17 = 0.625;
-        instance.addVertexWithUV(double2 + double5 * (1.0 - n17) - n16, double3 + n17, double4 + double6 * (1.0 - n17) - n16, n8, n9);
-        instance.addVertexWithUV(double2 + double5 * (1.0 - n17) - n16, double3 + n17, double4 + double6 * (1.0 - n17) + n16, n8, n11);
-        instance.addVertexWithUV(double2 + double5 * (1.0 - n17) + n16, double3 + n17, double4 + double6 * (1.0 - n17) + n16, n10, n11);
-        instance.addVertexWithUV(double2 + double5 * (1.0 - n17) + n16, double3 + n17, double4 + double6 * (1.0 - n17) - n16, n10, n9);
-        instance.addVertexWithUV(double2 - n16, double3 + 1.0, n14, n4, n6);
-        instance.addVertexWithUV(double2 - n16 + double5, double3 + 0.0, n14 + double6, n4, n7);
-        instance.addVertexWithUV(double2 - n16 + double5, double3 + 0.0, n15 + double6, n5, n7);
-        instance.addVertexWithUV(double2 - n16, double3 + 1.0, n15, n5, n6);
-        instance.addVertexWithUV(double2 + n16, double3 + 1.0, n15, n4, n6);
-        instance.addVertexWithUV(double2 + double5 + n16, double3 + 0.0, n15 + double6, n4, n7);
-        instance.addVertexWithUV(double2 + double5 + n16, double3 + 0.0, n14 + double6, n5, n7);
-        instance.addVertexWithUV(double2 + n16, double3 + 1.0, n14, n5, n6);
-        instance.addVertexWithUV(n12, double3 + 1.0, double4 + n16, n4, n6);
-        instance.addVertexWithUV(n12 + double5, double3 + 0.0, double4 + n16 + double6, n4, n7);
-        instance.addVertexWithUV(n13 + double5, double3 + 0.0, double4 + n16 + double6, n5, n7);
-        instance.addVertexWithUV(n13, double3 + 1.0, double4 + n16, n5, n6);
-        instance.addVertexWithUV(n13, double3 + 1.0, double4 - n16, n4, n6);
-        instance.addVertexWithUV(n13 + double5, double3 + 0.0, double4 - n16 + double6, n4, n7);
-        instance.addVertexWithUV(n12 + double5, double3 + 0.0, double4 - n16 + double6, n5, n7);
-        instance.addVertexWithUV(n12, double3 + 1.0, double4 - n16, n5, n6);
+        instance.vertexUV(double2 + double5 * (1.0 - n17) - n16, double3 + n17, double4 + double6 * (1.0 - n17) - n16, n8, n9);
+        instance.vertexUV(double2 + double5 * (1.0 - n17) - n16, double3 + n17, double4 + double6 * (1.0 - n17) + n16, n8, n11);
+        instance.vertexUV(double2 + double5 * (1.0 - n17) + n16, double3 + n17, double4 + double6 * (1.0 - n17) + n16, n10, n11);
+        instance.vertexUV(double2 + double5 * (1.0 - n17) + n16, double3 + n17, double4 + double6 * (1.0 - n17) - n16, n10, n9);
+        instance.vertexUV(double2 - n16, double3 + 1.0, n14, n4, n6);
+        instance.vertexUV(double2 - n16 + double5, double3 + 0.0, n14 + double6, n4, n7);
+        instance.vertexUV(double2 - n16 + double5, double3 + 0.0, n15 + double6, n5, n7);
+        instance.vertexUV(double2 - n16, double3 + 1.0, n15, n5, n6);
+        instance.vertexUV(double2 + n16, double3 + 1.0, n15, n4, n6);
+        instance.vertexUV(double2 + double5 + n16, double3 + 0.0, n15 + double6, n4, n7);
+        instance.vertexUV(double2 + double5 + n16, double3 + 0.0, n14 + double6, n5, n7);
+        instance.vertexUV(double2 + n16, double3 + 1.0, n14, n5, n6);
+        instance.vertexUV(n12, double3 + 1.0, double4 + n16, n4, n6);
+        instance.vertexUV(n12 + double5, double3 + 0.0, double4 + n16 + double6, n4, n7);
+        instance.vertexUV(n13 + double5, double3 + 0.0, double4 + n16 + double6, n5, n7);
+        instance.vertexUV(n13, double3 + 1.0, double4 + n16, n5, n6);
+        instance.vertexUV(n13, double3 + 1.0, double4 - n16, n4, n6);
+        instance.vertexUV(n13 + double5, double3 + 0.0, double4 - n16 + double6, n4, n7);
+        instance.vertexUV(n12 + double5, double3 + 0.0, double4 - n16 + double6, n5, n7);
+        instance.vertexUV(n12, double3 + 1.0, double4 - n16, n5, n6);
     }
 
     public void a(final Block gs, final int integer, final double double3, final double double4, final double double5) {
@@ -515,22 +515,22 @@ public class RenderBlocks {
         final double n9 = double3 + 0.5 + 0.44999998807907104;
         final double n10 = double5 + 0.5 - 0.44999998807907104;
         final double n11 = double5 + 0.5 + 0.44999998807907104;
-        instance.addVertexWithUV(n8, double4 + 1.0, n10, n4, n6);
-        instance.addVertexWithUV(n8, double4 + 0.0, n10, n4, n7);
-        instance.addVertexWithUV(n9, double4 + 0.0, n11, n5, n7);
-        instance.addVertexWithUV(n9, double4 + 1.0, n11, n5, n6);
-        instance.addVertexWithUV(n9, double4 + 1.0, n11, n4, n6);
-        instance.addVertexWithUV(n9, double4 + 0.0, n11, n4, n7);
-        instance.addVertexWithUV(n8, double4 + 0.0, n10, n5, n7);
-        instance.addVertexWithUV(n8, double4 + 1.0, n10, n5, n6);
-        instance.addVertexWithUV(n8, double4 + 1.0, n11, n4, n6);
-        instance.addVertexWithUV(n8, double4 + 0.0, n11, n4, n7);
-        instance.addVertexWithUV(n9, double4 + 0.0, n10, n5, n7);
-        instance.addVertexWithUV(n9, double4 + 1.0, n10, n5, n6);
-        instance.addVertexWithUV(n9, double4 + 1.0, n10, n4, n6);
-        instance.addVertexWithUV(n9, double4 + 0.0, n10, n4, n7);
-        instance.addVertexWithUV(n8, double4 + 0.0, n11, n5, n7);
-        instance.addVertexWithUV(n8, double4 + 1.0, n11, n5, n6);
+        instance.vertexUV(n8, double4 + 1.0, n10, n4, n6);
+        instance.vertexUV(n8, double4 + 0.0, n10, n4, n7);
+        instance.vertexUV(n9, double4 + 0.0, n11, n5, n7);
+        instance.vertexUV(n9, double4 + 1.0, n11, n5, n6);
+        instance.vertexUV(n9, double4 + 1.0, n11, n4, n6);
+        instance.vertexUV(n9, double4 + 0.0, n11, n4, n7);
+        instance.vertexUV(n8, double4 + 0.0, n10, n5, n7);
+        instance.vertexUV(n8, double4 + 1.0, n10, n5, n6);
+        instance.vertexUV(n8, double4 + 1.0, n11, n4, n6);
+        instance.vertexUV(n8, double4 + 0.0, n11, n4, n7);
+        instance.vertexUV(n9, double4 + 0.0, n10, n5, n7);
+        instance.vertexUV(n9, double4 + 1.0, n10, n5, n6);
+        instance.vertexUV(n9, double4 + 1.0, n10, n4, n6);
+        instance.vertexUV(n9, double4 + 0.0, n10, n4, n7);
+        instance.vertexUV(n8, double4 + 0.0, n11, n5, n7);
+        instance.vertexUV(n8, double4 + 1.0, n11, n5, n6);
     }
 
     public void b(final Block gs, final int integer, final double double3, final double double4, final double double5) {
@@ -549,42 +549,42 @@ public class RenderBlocks {
         double n9 = double3 + 0.5 + 0.25;
         double n10 = double5 + 0.5 - 0.5;
         double n11 = double5 + 0.5 + 0.5;
-        instance.addVertexWithUV(n8, double4 + 1.0, n10, n4, n6);
-        instance.addVertexWithUV(n8, double4 + 0.0, n10, n4, n7);
-        instance.addVertexWithUV(n8, double4 + 0.0, n11, n5, n7);
-        instance.addVertexWithUV(n8, double4 + 1.0, n11, n5, n6);
-        instance.addVertexWithUV(n8, double4 + 1.0, n11, n4, n6);
-        instance.addVertexWithUV(n8, double4 + 0.0, n11, n4, n7);
-        instance.addVertexWithUV(n8, double4 + 0.0, n10, n5, n7);
-        instance.addVertexWithUV(n8, double4 + 1.0, n10, n5, n6);
-        instance.addVertexWithUV(n9, double4 + 1.0, n11, n4, n6);
-        instance.addVertexWithUV(n9, double4 + 0.0, n11, n4, n7);
-        instance.addVertexWithUV(n9, double4 + 0.0, n10, n5, n7);
-        instance.addVertexWithUV(n9, double4 + 1.0, n10, n5, n6);
-        instance.addVertexWithUV(n9, double4 + 1.0, n10, n4, n6);
-        instance.addVertexWithUV(n9, double4 + 0.0, n10, n4, n7);
-        instance.addVertexWithUV(n9, double4 + 0.0, n11, n5, n7);
-        instance.addVertexWithUV(n9, double4 + 1.0, n11, n5, n6);
+        instance.vertexUV(n8, double4 + 1.0, n10, n4, n6);
+        instance.vertexUV(n8, double4 + 0.0, n10, n4, n7);
+        instance.vertexUV(n8, double4 + 0.0, n11, n5, n7);
+        instance.vertexUV(n8, double4 + 1.0, n11, n5, n6);
+        instance.vertexUV(n8, double4 + 1.0, n11, n4, n6);
+        instance.vertexUV(n8, double4 + 0.0, n11, n4, n7);
+        instance.vertexUV(n8, double4 + 0.0, n10, n5, n7);
+        instance.vertexUV(n8, double4 + 1.0, n10, n5, n6);
+        instance.vertexUV(n9, double4 + 1.0, n11, n4, n6);
+        instance.vertexUV(n9, double4 + 0.0, n11, n4, n7);
+        instance.vertexUV(n9, double4 + 0.0, n10, n5, n7);
+        instance.vertexUV(n9, double4 + 1.0, n10, n5, n6);
+        instance.vertexUV(n9, double4 + 1.0, n10, n4, n6);
+        instance.vertexUV(n9, double4 + 0.0, n10, n4, n7);
+        instance.vertexUV(n9, double4 + 0.0, n11, n5, n7);
+        instance.vertexUV(n9, double4 + 1.0, n11, n5, n6);
         n8 = double3 + 0.5 - 0.5;
         n9 = double3 + 0.5 + 0.5;
         n10 = double5 + 0.5 - 0.25;
         n11 = double5 + 0.5 + 0.25;
-        instance.addVertexWithUV(n8, double4 + 1.0, n10, n4, n6);
-        instance.addVertexWithUV(n8, double4 + 0.0, n10, n4, n7);
-        instance.addVertexWithUV(n9, double4 + 0.0, n10, n5, n7);
-        instance.addVertexWithUV(n9, double4 + 1.0, n10, n5, n6);
-        instance.addVertexWithUV(n9, double4 + 1.0, n10, n4, n6);
-        instance.addVertexWithUV(n9, double4 + 0.0, n10, n4, n7);
-        instance.addVertexWithUV(n8, double4 + 0.0, n10, n5, n7);
-        instance.addVertexWithUV(n8, double4 + 1.0, n10, n5, n6);
-        instance.addVertexWithUV(n9, double4 + 1.0, n11, n4, n6);
-        instance.addVertexWithUV(n9, double4 + 0.0, n11, n4, n7);
-        instance.addVertexWithUV(n8, double4 + 0.0, n11, n5, n7);
-        instance.addVertexWithUV(n8, double4 + 1.0, n11, n5, n6);
-        instance.addVertexWithUV(n8, double4 + 1.0, n11, n4, n6);
-        instance.addVertexWithUV(n8, double4 + 0.0, n11, n4, n7);
-        instance.addVertexWithUV(n9, double4 + 0.0, n11, n5, n7);
-        instance.addVertexWithUV(n9, double4 + 1.0, n11, n5, n6);
+        instance.vertexUV(n8, double4 + 1.0, n10, n4, n6);
+        instance.vertexUV(n8, double4 + 0.0, n10, n4, n7);
+        instance.vertexUV(n9, double4 + 0.0, n10, n5, n7);
+        instance.vertexUV(n9, double4 + 1.0, n10, n5, n6);
+        instance.vertexUV(n9, double4 + 1.0, n10, n4, n6);
+        instance.vertexUV(n9, double4 + 0.0, n10, n4, n7);
+        instance.vertexUV(n8, double4 + 0.0, n10, n5, n7);
+        instance.vertexUV(n8, double4 + 1.0, n10, n5, n6);
+        instance.vertexUV(n9, double4 + 1.0, n11, n4, n6);
+        instance.vertexUV(n9, double4 + 0.0, n11, n4, n7);
+        instance.vertexUV(n8, double4 + 0.0, n11, n5, n7);
+        instance.vertexUV(n8, double4 + 1.0, n11, n5, n6);
+        instance.vertexUV(n8, double4 + 1.0, n11, n4, n6);
+        instance.vertexUV(n8, double4 + 0.0, n11, n4, n7);
+        instance.vertexUV(n9, double4 + 0.0, n11, n5, n7);
+        instance.vertexUV(n9, double4 + 1.0, n11, n5, n6);
     }
 
     public boolean i(final Block gs, final int integer2, final int integer3, final int integer4) {
@@ -629,10 +629,10 @@ public class RenderBlocks {
             final float n9 = Mth.cos(n5) * 8.0f / 256.0f;
             final float blockBrightness = gs.getBlockBrightness(this.a, integer2, integer3, integer4);
             instance.setColorOpaque_F(n2 * blockBrightness, n2 * blockBrightness, n2 * blockBrightness);
-            instance.addVertexWithUV(integer2 + 0, integer3 + a, integer4 + 0, n6 - n9 - n8, n7 - n9 + n8);
-            instance.addVertexWithUV(integer2 + 0, integer3 + a2, integer4 + 1, n6 - n9 + n8, n7 + n9 + n8);
-            instance.addVertexWithUV(integer2 + 1, integer3 + a3, integer4 + 1, n6 + n9 + n8, n7 + n9 - n8);
-            instance.addVertexWithUV(integer2 + 1, integer3 + a4, integer4 + 0, n6 + n9 - n8, n7 - n9 - n8);
+            instance.vertexUV(integer2 + 0, integer3 + a, integer4 + 0, n6 - n9 - n8, n7 - n9 + n8);
+            instance.vertexUV(integer2 + 0, integer3 + a2, integer4 + 1, n6 - n9 + n8, n7 + n9 + n8);
+            instance.vertexUV(integer2 + 1, integer3 + a3, integer4 + 1, n6 + n9 + n8, n7 + n9 - n8);
+            instance.vertexUV(integer2 + 1, integer3 + a4, integer4 + 0, n6 + n9 - n8, n7 - n9 - n8);
         }
         if (this.d || shouldSideBeRendered2) {
             final float blockBrightness2 = gs.getBlockBrightness(this.a, integer2, integer3 - 1, integer4);
@@ -708,10 +708,10 @@ public class RenderBlocks {
                     blockBrightness3 *= n4;
                 }
                 instance.setColorOpaque_F(n2 * blockBrightness3, n2 * blockBrightness3, n2 * blockBrightness3);
-                instance.addVertexWithUV(n9, integer3 + n12, blockBrightness, n15, double5);
-                instance.addVertexWithUV(n13, integer3 + n8, n14, n16, double6);
-                instance.addVertexWithUV(n13, integer3 + 0, n14, n16, n17);
-                instance.addVertexWithUV(n9, integer3 + 0, blockBrightness, n15, n17);
+                instance.vertexUV(n9, integer3 + n12, blockBrightness, n15, double5);
+                instance.vertexUV(n13, integer3 + n8, n14, n16, double6);
+                instance.vertexUV(n13, integer3 + 0, n14, n16, n17);
+                instance.vertexUV(n9, integer3 + 0, blockBrightness, n15, n17);
             }
         }
         gs.minY = minY;
@@ -751,7 +751,7 @@ public class RenderBlocks {
         final float n3 = 0.8f;
         final float n4 = 0.6f;
         final Tessellator instance = Tessellator.instance;
-        instance.startDrawingQuads();
+        instance.beginQuads();
         final float blockBrightness = gs.getBlockBrightness(fe, integer3, integer4, integer5);
         float n5 = gs.getBlockBrightness(fe, integer3, integer4 - 1, integer5);
         if (n5 < blockBrightness) {
@@ -1080,10 +1080,10 @@ public class RenderBlocks {
         final double n9 = double3 + gs.minY;
         final double n10 = double4 + gs.minZ;
         final double n11 = double4 + gs.maxZ;
-        instance.addVertexWithUV(n7, n9, n11, n3, n6);
-        instance.addVertexWithUV(n7, n9, n10, n3, n5);
-        instance.addVertexWithUV(n8, n9, n10, n4, n5);
-        instance.addVertexWithUV(n8, n9, n11, n4, n6);
+        instance.vertexUV(n7, n9, n11, n3, n6);
+        instance.vertexUV(n7, n9, n10, n3, n5);
+        instance.vertexUV(n8, n9, n10, n4, n5);
+        instance.vertexUV(n8, n9, n11, n4, n6);
     }
 
     public void b(final Block gs, final double double2, final double double3, final double double4, int integer) {
@@ -1110,10 +1110,10 @@ public class RenderBlocks {
         final double n9 = double3 + gs.maxY;
         final double n10 = double4 + gs.minZ;
         final double n11 = double4 + gs.maxZ;
-        instance.addVertexWithUV(n8, n9, n11, n4, n6);
-        instance.addVertexWithUV(n8, n9, n10, n4, n5);
-        instance.addVertexWithUV(n7, n9, n10, n3, n5);
-        instance.addVertexWithUV(n7, n9, n11, n3, n6);
+        instance.vertexUV(n8, n9, n11, n4, n6);
+        instance.vertexUV(n8, n9, n10, n4, n5);
+        instance.vertexUV(n7, n9, n10, n3, n5);
+        instance.vertexUV(n7, n9, n11, n3, n6);
     }
 
     public void c(final Block gs, final double double2, final double double3, final double double4, int integer) {
@@ -1145,10 +1145,10 @@ public class RenderBlocks {
         final double n9 = double3 + gs.minY;
         final double n10 = double3 + gs.maxY;
         final double n11 = double4 + gs.minZ;
-        instance.addVertexWithUV(n7, n10, n11, n4, n5);
-        instance.addVertexWithUV(n8, n10, n11, n3, n5);
-        instance.addVertexWithUV(n8, n9, n11, n3, n6);
-        instance.addVertexWithUV(n7, n9, n11, n4, n6);
+        instance.vertexUV(n7, n10, n11, n4, n5);
+        instance.vertexUV(n8, n10, n11, n3, n5);
+        instance.vertexUV(n8, n9, n11, n3, n6);
+        instance.vertexUV(n7, n9, n11, n4, n6);
     }
 
     public void d(final Block gs, final double double2, final double double3, final double double4, int integer) {
@@ -1180,10 +1180,10 @@ public class RenderBlocks {
         final double n9 = double3 + gs.minY;
         final double n10 = double3 + gs.maxY;
         final double n11 = double4 + gs.maxZ;
-        instance.addVertexWithUV(n7, n10, n11, n3, n5);
-        instance.addVertexWithUV(n7, n9, n11, n3, n6);
-        instance.addVertexWithUV(n8, n9, n11, n4, n6);
-        instance.addVertexWithUV(n8, n10, n11, n4, n5);
+        instance.vertexUV(n7, n10, n11, n3, n5);
+        instance.vertexUV(n7, n9, n11, n3, n6);
+        instance.vertexUV(n8, n9, n11, n4, n6);
+        instance.vertexUV(n8, n10, n11, n4, n5);
     }
 
     public void e(final Block gs, final double double2, final double double3, final double double4, int integer) {
@@ -1215,10 +1215,10 @@ public class RenderBlocks {
         final double n9 = double3 + gs.maxY;
         final double n10 = double4 + gs.minZ;
         final double n11 = double4 + gs.maxZ;
-        instance.addVertexWithUV(n7, n9, n11, n4, n5);
-        instance.addVertexWithUV(n7, n9, n10, n3, n5);
-        instance.addVertexWithUV(n7, n8, n10, n3, n6);
-        instance.addVertexWithUV(n7, n8, n11, n4, n6);
+        instance.vertexUV(n7, n9, n11, n4, n5);
+        instance.vertexUV(n7, n9, n10, n3, n5);
+        instance.vertexUV(n7, n8, n10, n3, n6);
+        instance.vertexUV(n7, n8, n11, n4, n6);
     }
 
     public void f(final Block gs, final double double2, final double double3, final double double4, int integer) {
@@ -1250,10 +1250,10 @@ public class RenderBlocks {
         final double n9 = double3 + gs.maxY;
         final double n10 = double4 + gs.minZ;
         final double n11 = double4 + gs.maxZ;
-        instance.addVertexWithUV(n7, n8, n11, n3, n6);
-        instance.addVertexWithUV(n7, n8, n10, n4, n6);
-        instance.addVertexWithUV(n7, n9, n10, n4, n5);
-        instance.addVertexWithUV(n7, n9, n11, n3, n5);
+        instance.vertexUV(n7, n8, n11, n3, n6);
+        instance.vertexUV(n7, n8, n10, n4, n6);
+        instance.vertexUV(n7, n9, n10, n4, n5);
+        instance.vertexUV(n7, n9, n11, n3, n5);
     }
 
     public void renderBlockOnInventory(final Block gs) {
@@ -1262,43 +1262,43 @@ public class RenderBlocks {
         final int renderType = gs.getRenderType();
         if (renderType == 0) {
             GL11.glTranslatef(-0.5f, -0.5f, -0.5f);
-            instance.startDrawingQuads();
+            instance.beginQuads();
             instance.setNormal(0.0f, -1.0f, 0.0f);
             this.a(gs, 0.0, 0.0, 0.0, gs.getBlockTextureFromSide(0));
             instance.draw();
-            instance.startDrawingQuads();
+            instance.beginQuads();
             instance.setNormal(0.0f, 1.0f, 0.0f);
             this.b(gs, 0.0, 0.0, 0.0, gs.getBlockTextureFromSide(1));
             instance.draw();
-            instance.startDrawingQuads();
+            instance.beginQuads();
             instance.setNormal(0.0f, 0.0f, -1.0f);
             this.c(gs, 0.0, 0.0, 0.0, gs.getBlockTextureFromSide(2));
             instance.draw();
-            instance.startDrawingQuads();
+            instance.beginQuads();
             instance.setNormal(0.0f, 0.0f, 1.0f);
             this.d(gs, 0.0, 0.0, 0.0, gs.getBlockTextureFromSide(3));
             instance.draw();
-            instance.startDrawingQuads();
+            instance.beginQuads();
             instance.setNormal(-1.0f, 0.0f, 0.0f);
             this.e(gs, 0.0, 0.0, 0.0, gs.getBlockTextureFromSide(4));
             instance.draw();
-            instance.startDrawingQuads();
+            instance.beginQuads();
             instance.setNormal(1.0f, 0.0f, 0.0f);
             this.f(gs, 0.0, 0.0, 0.0, gs.getBlockTextureFromSide(5));
             instance.draw();
             GL11.glTranslatef(0.5f, 0.5f, 0.5f);
         } else if (renderType == 1) {
-            instance.startDrawingQuads();
+            instance.beginQuads();
             instance.setNormal(0.0f, -1.0f, 0.0f);
             this.a(gs, n, -0.5, -0.5, -0.5);
             instance.draw();
         } else if (renderType == 6) {
-            instance.startDrawingQuads();
+            instance.beginQuads();
             instance.setNormal(0.0f, -1.0f, 0.0f);
             this.b(gs, n, -0.5, -0.5, -0.5);
             instance.draw();
         } else if (renderType == 2) {
-            instance.startDrawingQuads();
+            instance.beginQuads();
             instance.setNormal(0.0f, -1.0f, 0.0f);
             this.a(gs, -0.5, -0.5, -0.5, 0.0, 0.0);
             instance.draw();

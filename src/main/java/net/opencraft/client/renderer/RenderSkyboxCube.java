@@ -49,38 +49,38 @@ public class RenderSkyboxCube {
                 // Bind the texture for the current face
                 mc.renderEngine.bindTexture(mc.renderEngine.getTexture(this.locations[i]));
 
-                tessellator.startDrawingQuads();
+                tessellator.beginQuads();
 
                 if (i == 0) { // Front face
-                    tessellator.addVertexWithUV(-1.0D, -1.0D, 1.0D, 0.0D, 0.0D);
-                    tessellator.addVertexWithUV(1.0D, -1.0D, 1.0D, 1.0D, 0.0D);
-                    tessellator.addVertexWithUV(1.0D, 1.0D, 1.0D, 1.0D, 1.0D);
-                    tessellator.addVertexWithUV(-1.0D, 1.0D, 1.0D, 0.0D, 1.0D);
+                    tessellator.vertexUV(-1.0D, -1.0D, 1.0D, 0.0D, 0.0D);
+                    tessellator.vertexUV(1.0D, -1.0D, 1.0D, 1.0D, 0.0D);
+                    tessellator.vertexUV(1.0D, 1.0D, 1.0D, 1.0D, 1.0D);
+                    tessellator.vertexUV(-1.0D, 1.0D, 1.0D, 0.0D, 1.0D);
                 } else if (i == 3) { // Left face
-                    tessellator.addVertexWithUV(-1.0D, -1.0D, -1.0D, 0.0D, 0.0D);
-                    tessellator.addVertexWithUV(-1.0D, -1.0D, 1.0D, 1.0D, 0.0D);
-                    tessellator.addVertexWithUV(-1.0D, 1.0D, 1.0D, 1.0D, 1.0D);
-                    tessellator.addVertexWithUV(-1.0D, 1.0D, -1.0D, 0.0D, 1.0D);
+                    tessellator.vertexUV(-1.0D, -1.0D, -1.0D, 0.0D, 0.0D);
+                    tessellator.vertexUV(-1.0D, -1.0D, 1.0D, 1.0D, 0.0D);
+                    tessellator.vertexUV(-1.0D, 1.0D, 1.0D, 1.0D, 1.0D);
+                    tessellator.vertexUV(-1.0D, 1.0D, -1.0D, 0.0D, 1.0D);
                 } else if (i == 2) { // Back face
-                    tessellator.addVertexWithUV(1.0D, -1.0D, -1.0D, 0.0D, 0.0D);
-                    tessellator.addVertexWithUV(-1.0D, -1.0D, -1.0D, 1.0D, 0.0D);
-                    tessellator.addVertexWithUV(-1.0D, 1.0D, -1.0D, 1.0D, 1.0D);
-                    tessellator.addVertexWithUV(1.0D, 1.0D, -1.0D, 0.0D, 1.0D);
+                    tessellator.vertexUV(1.0D, -1.0D, -1.0D, 0.0D, 0.0D);
+                    tessellator.vertexUV(-1.0D, -1.0D, -1.0D, 1.0D, 0.0D);
+                    tessellator.vertexUV(-1.0D, 1.0D, -1.0D, 1.0D, 1.0D);
+                    tessellator.vertexUV(1.0D, 1.0D, -1.0D, 0.0D, 1.0D);
                 } else if (i == 1) { // Right face
-                    tessellator.addVertexWithUV(1.0D, -1.0D, 1.0D, 0.0D, 0.0D);
-                    tessellator.addVertexWithUV(1.0D, -1.0D, -1.0D, 1.0D, 0.0D);
-                    tessellator.addVertexWithUV(1.0D, 1.0D, -1.0D, 1.0D, 1.0D);
-                    tessellator.addVertexWithUV(1.0D, 1.0D, 1.0D, 0.0D, 1.0D);
+                    tessellator.vertexUV(1.0D, -1.0D, 1.0D, 0.0D, 0.0D);
+                    tessellator.vertexUV(1.0D, -1.0D, -1.0D, 1.0D, 0.0D);
+                    tessellator.vertexUV(1.0D, 1.0D, -1.0D, 1.0D, 1.0D);
+                    tessellator.vertexUV(1.0D, 1.0D, 1.0D, 0.0D, 1.0D);
                 } else if (i == 4) { // Bottom face
-                    tessellator.addVertexWithUV(-1.0D, -1.0D, -1.0D, 0.0D, 0.0D);
-                    tessellator.addVertexWithUV(1.0D, -1.0D, -1.0D, 1.0D, 0.0D);
-                    tessellator.addVertexWithUV(1.0D, -1.0D, 1.0D, 1.0D, 1.0D);
-                    tessellator.addVertexWithUV(-1.0D, -1.0D, 1.0D, 0.0D, 1.0D);
+                    tessellator.vertexUV(-1.0D, -1.0D, -1.0D, 0.0D, 0.0D);
+                    tessellator.vertexUV(1.0D, -1.0D, -1.0D, 1.0D, 0.0D);
+                    tessellator.vertexUV(1.0D, -1.0D, 1.0D, 1.0D, 1.0D);
+                    tessellator.vertexUV(-1.0D, -1.0D, 1.0D, 0.0D, 1.0D);
                 } else if (i == 5) { // Top face
-                    tessellator.addVertexWithUV(-1.0D, 1.0D, 1.0D, 0.0D, 0.0D);
-                    tessellator.addVertexWithUV(1.0D, 1.0D, 1.0D, 1.0D, 0.0D);
-                    tessellator.addVertexWithUV(1.0D, 1.0D, -1.0D, 1.0D, 1.0D);
-                    tessellator.addVertexWithUV(-1.0D, 1.0D, -1.0D, 0.0D, 1.0D);
+                    tessellator.vertexUV(-1.0D, 1.0D, 1.0D, 0.0D, 0.0D);
+                    tessellator.vertexUV(1.0D, 1.0D, 1.0D, 1.0D, 0.0D);
+                    tessellator.vertexUV(1.0D, 1.0D, -1.0D, 1.0D, 1.0D);
+                    tessellator.vertexUV(-1.0D, 1.0D, -1.0D, 0.0D, 1.0D);
                 }
 
                 tessellator.draw();

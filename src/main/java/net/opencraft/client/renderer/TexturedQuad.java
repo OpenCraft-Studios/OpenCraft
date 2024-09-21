@@ -35,11 +35,11 @@ public class TexturedQuad {
 
     public void draw(final Tessellator ag, final float float2) {
         final Vec3 normalize = this.vertexPositions[1].vector3D.subtract(this.vertexPositions[2].vector3D).crossProduct(this.vertexPositions[1].vector3D.subtract(this.vertexPositions[0].vector3D)).normalize();
-        ag.startDrawingQuads();
+        ag.beginQuads();
         ag.setNormal((float) normalize.xCoord, (float) normalize.yCoord, (float) normalize.zCoord);
         for (int i = 0; i < 4; ++i) {
             final PositionTextureVertex positionTextureVertex = this.vertexPositions[i];
-            ag.addVertexWithUV((float) positionTextureVertex.vector3D.xCoord * float2, (float) positionTextureVertex.vector3D.yCoord * float2, (float) positionTextureVertex.vector3D.zCoord * float2, positionTextureVertex.texturePositionX, positionTextureVertex.texturePositionY);
+            ag.vertexUV((float) positionTextureVertex.vector3D.xCoord * float2, (float) positionTextureVertex.vector3D.yCoord * float2, (float) positionTextureVertex.vector3D.zCoord * float2, positionTextureVertex.texturePositionX, positionTextureVertex.texturePositionY);
         }
         ag.draw();
     }

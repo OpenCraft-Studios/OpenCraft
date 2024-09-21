@@ -123,12 +123,12 @@ public class GuiScreen extends GuiElement {
             GL11.glBindTexture(3553, this.id.renderEngine.getTexture("/assets/dirt.png"));
             GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
             final float n = 32.0f;
-            instance.startDrawingQuads();
+            instance.beginQuads();
             instance.setColorOpaque_I(4210752);
-            instance.addVertexWithUV(0.0, this.height, 0.0, 0.0, this.height / n + integer);
-            instance.addVertexWithUV(this.width, this.height, 0.0, this.width / n, this.height / n + integer);
-            instance.addVertexWithUV(this.width, 0.0, 0.0, this.width / n, 0 + integer);
-            instance.addVertexWithUV(0.0, 0.0, 0.0, 0.0, 0 + integer);
+            instance.vertexUV(0.0, this.height, 0.0, 0.0, this.height / n + integer);
+            instance.vertexUV(this.width, this.height, 0.0, this.width / n, this.height / n + integer);
+            instance.vertexUV(this.width, 0.0, 0.0, this.width / n, 0 + integer);
+            instance.vertexUV(0.0, 0.0, 0.0, 0.0, 0 + integer);
             instance.draw();
         }
     }

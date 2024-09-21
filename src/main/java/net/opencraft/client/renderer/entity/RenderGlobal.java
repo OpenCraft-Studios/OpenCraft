@@ -113,24 +113,24 @@ public class RenderGlobal implements IWorldAccess {
 		float n4 = 16.0f;
 		for (int i = -n2 * n3; i <= n2 * n3; i += n2) {
 			for (int j = -n2 * n3; j <= n2 * n3; j += n2) {
-				instance.startDrawingQuads();
-				instance.addVertex(i + 0, n4, j + 0);
-				instance.addVertex(i + n2, n4, j + 0);
-				instance.addVertex(i + n2, n4, j + n2);
-				instance.addVertex(i + 0, n4, j + n2);
+				instance.beginQuads();
+				instance.vertex(i + 0, n4, j + 0);
+				instance.vertex(i + n2, n4, j + 0);
+				instance.vertex(i + n2, n4, j + n2);
+				instance.vertex(i + 0, n4, j + n2);
 				instance.draw();
 			}
 		}
 		GL11.glEndList();
 		GL11.glNewList(this.A = this.y + 2, 4864);
 		n4 = -16.0f;
-		instance.startDrawingQuads();
+		instance.beginQuads();
 		for (int i = -n2 * n3; i <= n2 * n3; i += n2) {
 			for (int j = -n2 * n3; j <= n2 * n3; j += n2) {
-				instance.addVertex(i + n2, n4, j + 0);
-				instance.addVertex(i + 0, n4, j + 0);
-				instance.addVertex(i + 0, n4, j + n2);
-				instance.addVertex(i + n2, n4, j + n2);
+				instance.vertex(i + n2, n4, j + 0);
+				instance.vertex(i + 0, n4, j + 0);
+				instance.vertex(i + 0, n4, j + n2);
+				instance.vertex(i + n2, n4, j + n2);
 			}
 		}
 		instance.draw();
@@ -140,7 +140,7 @@ public class RenderGlobal implements IWorldAccess {
 	private void f() {
 		final Random random = new Random(10842L);
 		final Tessellator instance = Tessellator.instance;
-		instance.startDrawingQuads();
+		instance.beginQuads();
 		for (int i = 0; i < 1500; ++i) {
 			double n = random.nextFloat() * 2.0f - 1.0f;
 			double n2 = random.nextFloat() * 2.0f - 1.0f;
@@ -173,7 +173,7 @@ public class RenderGlobal implements IWorldAccess {
 					final double n15 = n12 * cos3 + n11 * sin3;
 					final double n16 = n14 * sin2 + n13 * cos2;
 					final double n17 = n13 * sin2 - n14 * cos2;
-					instance.addVertex(n6 + (n17 * sin - n15 * cos), n7 + n16, n8 + (n15 * sin + n17 * cos));
+					instance.vertex(n6 + (n17 * sin - n15 * cos), n7 + n16, n8 + (n15 * sin + n17 * cos));
 				}
 			}
 		}
@@ -556,19 +556,19 @@ public class RenderGlobal implements IWorldAccess {
 		GL11.glRotatef(this.k.getCelestialAngle(float1) * 360.0f, 1.0f, 0.0f, 0.0f);
 		float n8 = 30.0f;
 		GL11.glBindTexture(3553, this.l.getTexture("/assets/terrain/sun.png"));
-		instance.startDrawingQuads();
-		instance.addVertexWithUV(-n8, 100.0, -n8, 0.0, 0.0);
-		instance.addVertexWithUV(n8, 100.0, -n8, 1.0, 0.0);
-		instance.addVertexWithUV(n8, 100.0, n8, 1.0, 1.0);
-		instance.addVertexWithUV(-n8, 100.0, n8, 0.0, 1.0);
+		instance.beginQuads();
+		instance.vertexUV(-n8, 100.0, -n8, 0.0, 0.0);
+		instance.vertexUV(n8, 100.0, -n8, 1.0, 0.0);
+		instance.vertexUV(n8, 100.0, n8, 1.0, 1.0);
+		instance.vertexUV(-n8, 100.0, n8, 0.0, 1.0);
 		instance.draw();
 		n8 = 20.0f;
 		GL11.glBindTexture(3553, this.l.getTexture("/assets/terrain/moon.png"));
-		instance.startDrawingQuads();
-		instance.addVertexWithUV(-n8, -100.0, n8, 1.0, 1.0);
-		instance.addVertexWithUV(n8, -100.0, n8, 0.0, 1.0);
-		instance.addVertexWithUV(n8, -100.0, -n8, 0.0, 0.0);
-		instance.addVertexWithUV(-n8, -100.0, -n8, 1.0, 0.0);
+		instance.beginQuads();
+		instance.vertexUV(-n8, -100.0, n8, 1.0, 1.0);
+		instance.vertexUV(n8, -100.0, n8, 0.0, 1.0);
+		instance.vertexUV(n8, -100.0, -n8, 0.0, 0.0);
+		instance.vertexUV(-n8, -100.0, -n8, 1.0, 0.0);
 		instance.draw();
 		GL11.glDisable(3553);
 		final float starBrightness = this.k.getStarBrightness(float1);
@@ -625,14 +625,14 @@ public class RenderGlobal implements IWorldAccess {
 		final float n9 = 120.0f - n + 0.33f;
 		final float n10 = (float) (n7 * n4);
 		final float n11 = (float) (n8 * n4);
-		instance.startDrawingQuads();
+		instance.beginQuads();
 		instance.setColorRGBA_F(float2, float3, float4, 0.8f);
 		for (int i = -n2 * n3; i < n2 * n3; i += n2) {
 			for (int j = -n2 * n3; j < n2 * n3; j += n2) {
-				instance.addVertexWithUV(i + 0, n9, j + n2, (i + 0) * n4 + n10, (j + n2) * n4 + n11);
-				instance.addVertexWithUV(i + n2, n9, j + n2, (i + n2) * n4 + n10, (j + n2) * n4 + n11);
-				instance.addVertexWithUV(i + n2, n9, j + 0, (i + n2) * n4 + n10, (j + 0) * n4 + n11);
-				instance.addVertexWithUV(i + 0, n9, j + 0, (i + 0) * n4 + n10, (j + 0) * n4 + n11);
+				instance.vertexUV(i + 0, n9, j + n2, (i + 0) * n4 + n10, (j + n2) * n4 + n11);
+				instance.vertexUV(i + n2, n9, j + n2, (i + n2) * n4 + n10, (j + n2) * n4 + n11);
+				instance.vertexUV(i + n2, n9, j + 0, (i + n2) * n4 + n10, (j + 0) * n4 + n11);
+				instance.vertexUV(i + 0, n9, j + 0, (i + 0) * n4 + n10, (j + 0) * n4 + n11);
 			}
 		}
 		instance.draw();
@@ -691,7 +691,7 @@ public class RenderGlobal implements IWorldAccess {
 			}
 			for (int j = -n13 + 1; j <= n13; ++j) {
 				for (int k = -n13 + 1; k <= n13; ++k) {
-					instance.startDrawingQuads();
+					instance.beginQuads();
 					final float n15 = (float) (j * n12);
 					final float n16 = (float) (k * n12);
 					final float n17 = n15 - n10;
@@ -699,51 +699,51 @@ public class RenderGlobal implements IWorldAccess {
 					if (n6 > -n3 - 1.0f) {
 						instance.setColorRGBA_F(float2 * 0.7f, float3 * 0.7f, float4 * 0.7f, 0.8f);
 						instance.setNormal(0.0f, -1.0f, 0.0f);
-						instance.addVertexWithUV(n17 + 0.0f, n6 + 0.0f, n18 + n12, (n15 + 0.0f) * n9 + n7,
+						instance.vertexUV(n17 + 0.0f, n6 + 0.0f, n18 + n12, (n15 + 0.0f) * n9 + n7,
 								(n16 + n12) * n9 + n8);
-						instance.addVertexWithUV(n17 + n12, n6 + 0.0f, n18 + n12, (n15 + n12) * n9 + n7,
+						instance.vertexUV(n17 + n12, n6 + 0.0f, n18 + n12, (n15 + n12) * n9 + n7,
 								(n16 + n12) * n9 + n8);
-						instance.addVertexWithUV(n17 + n12, n6 + 0.0f, n18 + 0.0f, (n15 + n12) * n9 + n7,
+						instance.vertexUV(n17 + n12, n6 + 0.0f, n18 + 0.0f, (n15 + n12) * n9 + n7,
 								(n16 + 0.0f) * n9 + n8);
-						instance.addVertexWithUV(n17 + 0.0f, n6 + 0.0f, n18 + 0.0f, (n15 + 0.0f) * n9 + n7,
+						instance.vertexUV(n17 + 0.0f, n6 + 0.0f, n18 + 0.0f, (n15 + 0.0f) * n9 + n7,
 								(n16 + 0.0f) * n9 + n8);
 					}
 					if (n6 <= n3 + 1.0f) {
 						instance.setColorRGBA_F(float2, float3, float4, 0.8f);
 						instance.setNormal(0.0f, 1.0f, 0.0f);
-						instance.addVertexWithUV(n17 + 0.0f, n6 + n3 - n14, n18 + n12, (n15 + 0.0f) * n9 + n7,
+						instance.vertexUV(n17 + 0.0f, n6 + n3 - n14, n18 + n12, (n15 + 0.0f) * n9 + n7,
 								(n16 + n12) * n9 + n8);
-						instance.addVertexWithUV(n17 + n12, n6 + n3 - n14, n18 + n12, (n15 + n12) * n9 + n7,
+						instance.vertexUV(n17 + n12, n6 + n3 - n14, n18 + n12, (n15 + n12) * n9 + n7,
 								(n16 + n12) * n9 + n8);
-						instance.addVertexWithUV(n17 + n12, n6 + n3 - n14, n18 + 0.0f, (n15 + n12) * n9 + n7,
+						instance.vertexUV(n17 + n12, n6 + n3 - n14, n18 + 0.0f, (n15 + n12) * n9 + n7,
 								(n16 + 0.0f) * n9 + n8);
-						instance.addVertexWithUV(n17 + 0.0f, n6 + n3 - n14, n18 + 0.0f, (n15 + 0.0f) * n9 + n7,
+						instance.vertexUV(n17 + 0.0f, n6 + n3 - n14, n18 + 0.0f, (n15 + 0.0f) * n9 + n7,
 								(n16 + 0.0f) * n9 + n8);
 					}
 					instance.setColorRGBA_F(float2 * 0.9f, float3 * 0.9f, float4 * 0.9f, 0.8f);
 					if (j > -1) {
 						instance.setNormal(-1.0f, 0.0f, 0.0f);
 						for (int l = 0; l < n12; ++l) {
-							instance.addVertexWithUV(n17 + l + 0.0f, n6 + 0.0f, n18 + n12, (n15 + l + 0.5f) * n9 + n7,
+							instance.vertexUV(n17 + l + 0.0f, n6 + 0.0f, n18 + n12, (n15 + l + 0.5f) * n9 + n7,
 									(n16 + n12) * n9 + n8);
-							instance.addVertexWithUV(n17 + l + 0.0f, n6 + n3, n18 + n12, (n15 + l + 0.5f) * n9 + n7,
+							instance.vertexUV(n17 + l + 0.0f, n6 + n3, n18 + n12, (n15 + l + 0.5f) * n9 + n7,
 									(n16 + n12) * n9 + n8);
-							instance.addVertexWithUV(n17 + l + 0.0f, n6 + n3, n18 + 0.0f, (n15 + l + 0.5f) * n9 + n7,
+							instance.vertexUV(n17 + l + 0.0f, n6 + n3, n18 + 0.0f, (n15 + l + 0.5f) * n9 + n7,
 									(n16 + 0.0f) * n9 + n8);
-							instance.addVertexWithUV(n17 + l + 0.0f, n6 + 0.0f, n18 + 0.0f, (n15 + l + 0.5f) * n9 + n7,
+							instance.vertexUV(n17 + l + 0.0f, n6 + 0.0f, n18 + 0.0f, (n15 + l + 0.5f) * n9 + n7,
 									(n16 + 0.0f) * n9 + n8);
 						}
 					}
 					if (j <= 1) {
 						instance.setNormal(1.0f, 0.0f, 0.0f);
 						for (int l = 0; l < n12; ++l) {
-							instance.addVertexWithUV(n17 + l + 1.0f - n14, n6 + 0.0f, n18 + n12,
+							instance.vertexUV(n17 + l + 1.0f - n14, n6 + 0.0f, n18 + n12,
 									(n15 + l + 0.5f) * n9 + n7, (n16 + n12) * n9 + n8);
-							instance.addVertexWithUV(n17 + l + 1.0f - n14, n6 + n3, n18 + n12,
+							instance.vertexUV(n17 + l + 1.0f - n14, n6 + n3, n18 + n12,
 									(n15 + l + 0.5f) * n9 + n7, (n16 + n12) * n9 + n8);
-							instance.addVertexWithUV(n17 + l + 1.0f - n14, n6 + n3, n18 + 0.0f,
+							instance.vertexUV(n17 + l + 1.0f - n14, n6 + n3, n18 + 0.0f,
 									(n15 + l + 0.5f) * n9 + n7, (n16 + 0.0f) * n9 + n8);
-							instance.addVertexWithUV(n17 + l + 1.0f - n14, n6 + 0.0f, n18 + 0.0f,
+							instance.vertexUV(n17 + l + 1.0f - n14, n6 + 0.0f, n18 + 0.0f,
 									(n15 + l + 0.5f) * n9 + n7, (n16 + 0.0f) * n9 + n8);
 						}
 					}
@@ -751,26 +751,26 @@ public class RenderGlobal implements IWorldAccess {
 					if (k > -1) {
 						instance.setNormal(0.0f, 0.0f, -1.0f);
 						for (int l = 0; l < n12; ++l) {
-							instance.addVertexWithUV(n17 + 0.0f, n6 + n3, n18 + l + 0.0f, (n15 + 0.0f) * n9 + n7,
+							instance.vertexUV(n17 + 0.0f, n6 + n3, n18 + l + 0.0f, (n15 + 0.0f) * n9 + n7,
 									(n16 + l + 0.5f) * n9 + n8);
-							instance.addVertexWithUV(n17 + n12, n6 + n3, n18 + l + 0.0f, (n15 + n12) * n9 + n7,
+							instance.vertexUV(n17 + n12, n6 + n3, n18 + l + 0.0f, (n15 + n12) * n9 + n7,
 									(n16 + l + 0.5f) * n9 + n8);
-							instance.addVertexWithUV(n17 + n12, n6 + 0.0f, n18 + l + 0.0f, (n15 + n12) * n9 + n7,
+							instance.vertexUV(n17 + n12, n6 + 0.0f, n18 + l + 0.0f, (n15 + n12) * n9 + n7,
 									(n16 + l + 0.5f) * n9 + n8);
-							instance.addVertexWithUV(n17 + 0.0f, n6 + 0.0f, n18 + l + 0.0f, (n15 + 0.0f) * n9 + n7,
+							instance.vertexUV(n17 + 0.0f, n6 + 0.0f, n18 + l + 0.0f, (n15 + 0.0f) * n9 + n7,
 									(n16 + l + 0.5f) * n9 + n8);
 						}
 					}
 					if (k <= 1) {
 						instance.setNormal(0.0f, 0.0f, 1.0f);
 						for (int l = 0; l < n12; ++l) {
-							instance.addVertexWithUV(n17 + 0.0f, n6 + n3, n18 + l + 1.0f - n14, (n15 + 0.0f) * n9 + n7,
+							instance.vertexUV(n17 + 0.0f, n6 + n3, n18 + l + 1.0f - n14, (n15 + 0.0f) * n9 + n7,
 									(n16 + l + 0.5f) * n9 + n8);
-							instance.addVertexWithUV(n17 + n12, n6 + n3, n18 + l + 1.0f - n14, (n15 + n12) * n9 + n7,
+							instance.vertexUV(n17 + n12, n6 + n3, n18 + l + 1.0f - n14, (n15 + n12) * n9 + n7,
 									(n16 + l + 0.5f) * n9 + n8);
-							instance.addVertexWithUV(n17 + n12, n6 + 0.0f, n18 + l + 1.0f - n14, (n15 + n12) * n9 + n7,
+							instance.vertexUV(n17 + n12, n6 + 0.0f, n18 + l + 1.0f - n14, (n15 + n12) * n9 + n7,
 									(n16 + l + 0.5f) * n9 + n8);
-							instance.addVertexWithUV(n17 + 0.0f, n6 + 0.0f, n18 + l + 1.0f - n14,
+							instance.vertexUV(n17 + 0.0f, n6 + 0.0f, n18 + l + 1.0f - n14,
 									(n15 + 0.0f) * n9 + n7, (n16 + l + 0.5f) * n9 + n8);
 						}
 					}
@@ -826,7 +826,7 @@ public class RenderGlobal implements IWorldAccess {
 				GL11.glDisable(3008);
 				GL11.glPolygonOffset(-3.0f, -3.0f);
 				GL11.glEnable(32823);
-				instance.startDrawingQuads();
+				instance.beginQuads();
 				instance.setTranslationD(-(gi.lastTickPosX + (gi.posX - gi.lastTickPosX) * float5),
 						-(gi.lastTickPosY + (gi.posY - gi.lastTickPosY) * float5),
 						-(gi.lastTickPosZ + (gi.posZ - gi.lastTickPosZ) * float5));
@@ -900,29 +900,29 @@ public class RenderGlobal implements IWorldAccess {
 
 	private void a(final AABB en) {
 		final Tessellator instance = Tessellator.instance;
-		instance.startDrawing(3);
-		instance.addVertex(en.minX, en.minY, en.minZ);
-		instance.addVertex(en.maxX, en.minY, en.minZ);
-		instance.addVertex(en.maxX, en.minY, en.maxZ);
-		instance.addVertex(en.minX, en.minY, en.maxZ);
-		instance.addVertex(en.minX, en.minY, en.minZ);
+		instance.begin(3);
+		instance.vertex(en.minX, en.minY, en.minZ);
+		instance.vertex(en.maxX, en.minY, en.minZ);
+		instance.vertex(en.maxX, en.minY, en.maxZ);
+		instance.vertex(en.minX, en.minY, en.maxZ);
+		instance.vertex(en.minX, en.minY, en.minZ);
 		instance.draw();
-		instance.startDrawing(3);
-		instance.addVertex(en.minX, en.maxY, en.minZ);
-		instance.addVertex(en.maxX, en.maxY, en.minZ);
-		instance.addVertex(en.maxX, en.maxY, en.maxZ);
-		instance.addVertex(en.minX, en.maxY, en.maxZ);
-		instance.addVertex(en.minX, en.maxY, en.minZ);
+		instance.begin(3);
+		instance.vertex(en.minX, en.maxY, en.minZ);
+		instance.vertex(en.maxX, en.maxY, en.minZ);
+		instance.vertex(en.maxX, en.maxY, en.maxZ);
+		instance.vertex(en.minX, en.maxY, en.maxZ);
+		instance.vertex(en.minX, en.maxY, en.minZ);
 		instance.draw();
-		instance.startDrawing(1);
-		instance.addVertex(en.minX, en.minY, en.minZ);
-		instance.addVertex(en.minX, en.maxY, en.minZ);
-		instance.addVertex(en.maxX, en.minY, en.minZ);
-		instance.addVertex(en.maxX, en.maxY, en.minZ);
-		instance.addVertex(en.maxX, en.minY, en.maxZ);
-		instance.addVertex(en.maxX, en.maxY, en.maxZ);
-		instance.addVertex(en.minX, en.minY, en.maxZ);
-		instance.addVertex(en.minX, en.maxY, en.maxZ);
+		instance.begin(1);
+		instance.vertex(en.minX, en.minY, en.minZ);
+		instance.vertex(en.minX, en.maxY, en.minZ);
+		instance.vertex(en.maxX, en.minY, en.minZ);
+		instance.vertex(en.maxX, en.maxY, en.minZ);
+		instance.vertex(en.maxX, en.minY, en.maxZ);
+		instance.vertex(en.maxX, en.maxY, en.maxZ);
+		instance.vertex(en.minX, en.minY, en.maxZ);
+		instance.vertex(en.minX, en.maxY, en.maxZ);
 		instance.draw();
 	}
 
