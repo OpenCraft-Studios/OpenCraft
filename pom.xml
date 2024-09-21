@@ -4,4 +4,31 @@
   <artifactId>nCraft</artifactId>
   <version>24r14</version>
   <name>OpenCraft</name>
+  <packaging>jar</packaging>
+
+  <description>OpenCraft</description>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.source>21</maven.compiler.source>
+    <maven.compiler.target>21</maven.compiler.target>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.lwjgl.lwjgl</groupId>
+      <artifactId>lwjgl</artifactId>
+      <version>2.9.3</version>
+    </dependency>
+    <dependency>
+      <groupId>org.lwjgl.lwjgl</groupId>
+      <artifactId>lwjgl_util</artifactId>
+      <version>2.9.3</version>
+    </dependency>
+    <dependency>
+      <groupId>com.google.guava</groupId>
+      <artifactId>guava</artifactId>
+      <version>33.2.1-jre</version>
+    </dependency>
+  </dependencies>
 </project>
