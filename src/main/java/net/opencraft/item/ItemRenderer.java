@@ -10,7 +10,7 @@ import net.opencraft.client.renderer.entity.RenderHelper;
 import net.opencraft.client.renderer.entity.RenderManager;
 import net.opencraft.client.renderer.entity.RenderPlayer;
 import net.opencraft.entity.EntityPlayerSP;
-import net.opencraft.util.MathHelper;
+import net.opencraft.util.Mth;
 import org.lwjgl.opengl.GL11;
 
 public class ItemRenderer {
@@ -41,24 +41,24 @@ public class ItemRenderer {
         GL11.glRotatef(thePlayer.prevRotationYaw + (thePlayer.rotationYaw - thePlayer.prevRotationYaw) * float1, 0.0f, 1.0f, 0.0f);
         RenderHelper.enableStandardItemLighting();
         GL11.glPopMatrix();
-        final float lightBrightness = this.a.theWorld.getLightBrightness(MathHelper.floor_double(thePlayer.posX), MathHelper.floor_double(thePlayer.posY), MathHelper.floor_double(thePlayer.posZ));
+        final float lightBrightness = this.a.theWorld.getLightBrightness(Mth.floor_double(thePlayer.posX), Mth.floor_double(thePlayer.posY), Mth.floor_double(thePlayer.posZ));
         GL11.glColor4f(lightBrightness, lightBrightness, lightBrightness, 1.0f);
         if (this.b != null) {
             GL11.glPushMatrix();
             final float n2 = 0.8f;
             if (this.f) {
                 final float n3 = (this.e + float1) / 8.0f;
-                final float n4 = MathHelper.sin(n3 * 3.1415927f);
-                final float n5 = MathHelper.sin(MathHelper.sqrt_float(n3) * 3.1415927f);
-                GL11.glTranslatef(-n5 * 0.4f, MathHelper.sin(MathHelper.sqrt_float(n3) * 3.1415927f * 2.0f) * 0.2f, -n4 * 0.2f);
+                final float n4 = Mth.sin(n3 * 3.1415927f);
+                final float n5 = Mth.sin(Mth.sqrt_float(n3) * 3.1415927f);
+                GL11.glTranslatef(-n5 * 0.4f, Mth.sin(Mth.sqrt_float(n3) * 3.1415927f * 2.0f) * 0.2f, -n4 * 0.2f);
             }
             GL11.glTranslatef(0.7f * n2, -0.65f * n2 - (1.0f - n) * 0.6f, -0.9f * n2);
             GL11.glRotatef(45.0f, 0.0f, 1.0f, 0.0f);
             GL11.glEnable(32826);
             if (this.f) {
                 final float n3 = (this.e + float1) / 8.0f;
-                final float n4 = MathHelper.sin(n3 * n3 * 3.1415927f);
-                final float n5 = MathHelper.sin(MathHelper.sqrt_float(n3) * 3.1415927f);
+                final float n4 = Mth.sin(n3 * n3 * 3.1415927f);
+                final float n5 = Mth.sin(Mth.sqrt_float(n3) * 3.1415927f);
                 GL11.glRotatef(-n4 * 20.0f, 0.0f, 1.0f, 0.0f);
                 GL11.glRotatef(-n5 * 20.0f, 0.0f, 0.0f, 1.0f);
                 GL11.glRotatef(-n5 * 80.0f, 1.0f, 0.0f, 0.0f);
@@ -160,17 +160,17 @@ public class ItemRenderer {
             final float n2 = 0.8f;
             if (this.f) {
                 final float n3 = (this.e + float1) / 8.0f;
-                final float n4 = MathHelper.sin(n3 * 3.1415927f);
-                final float n5 = MathHelper.sin(MathHelper.sqrt_float(n3) * 3.1415927f);
-                GL11.glTranslatef(-n5 * 0.3f, MathHelper.sin(MathHelper.sqrt_float(n3) * 3.1415927f * 2.0f) * 0.4f, -n4 * 0.4f);
+                final float n4 = Mth.sin(n3 * 3.1415927f);
+                final float n5 = Mth.sin(Mth.sqrt_float(n3) * 3.1415927f);
+                GL11.glTranslatef(-n5 * 0.3f, Mth.sin(Mth.sqrt_float(n3) * 3.1415927f * 2.0f) * 0.4f, -n4 * 0.4f);
             }
             GL11.glTranslatef(0.8f * n2, -0.75f * n2 - (1.0f - n) * 0.6f, -0.9f * n2);
             GL11.glRotatef(45.0f, 0.0f, 1.0f, 0.0f);
             GL11.glEnable(32826);
             if (this.f) {
                 final float n3 = (this.e + float1) / 8.0f;
-                final float n4 = MathHelper.sin(n3 * n3 * 3.1415927f);
-                final float n5 = MathHelper.sin(MathHelper.sqrt_float(n3) * 3.1415927f);
+                final float n4 = Mth.sin(n3 * n3 * 3.1415927f);
+                final float n5 = Mth.sin(Mth.sqrt_float(n3) * 3.1415927f);
                 GL11.glRotatef(n5 * 70.0f, 0.0f, 1.0f, 0.0f);
                 GL11.glRotatef(-n4 * 20.0f, 0.0f, 0.0f, 1.0f);
             }
@@ -199,9 +199,9 @@ public class ItemRenderer {
             this.d(float1);
         }
         if (this.a.theWorld.player.isEntityInsideOpaqueBlock()) {
-            final int xCoord = MathHelper.floor_double(this.a.thePlayer.posX);
-            final int floor_double = MathHelper.floor_double(this.a.thePlayer.posY);
-            final int floor_double2 = MathHelper.floor_double(this.a.thePlayer.posZ);
+            final int xCoord = Mth.floor_double(this.a.thePlayer.posX);
+            final int floor_double = Mth.floor_double(this.a.thePlayer.posY);
+            final int floor_double2 = Mth.floor_double(this.a.thePlayer.posZ);
             GL11.glBindTexture(3553, this.a.renderEngine.getTexture("/assets/terrain.png"));
             final int blockId = this.a.theWorld.getBlockId(xCoord, floor_double, floor_double2);
             if (Block.blocksList[blockId] != null) {

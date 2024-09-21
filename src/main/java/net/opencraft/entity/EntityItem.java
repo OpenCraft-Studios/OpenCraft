@@ -5,7 +5,7 @@ import net.opencraft.block.Block;
 import net.opencraft.block.material.Material;
 import net.opencraft.item.ItemStack;
 import net.opencraft.nbt.NBTTagCompound;
-import net.opencraft.util.MathHelper;
+import net.opencraft.util.Mth;
 import net.opencraft.world.World;
 
 public class EntityItem extends Entity {
@@ -52,7 +52,7 @@ public class EntityItem extends Entity {
         this.prevPosY = this.posY;
         this.prevPosZ = this.posZ;
         this.motionY -= 0.03999999910593033;
-        if (this.worldObj.getBlockMaterial(MathHelper.floor_double(this.posX), MathHelper.floor_double(this.posY), MathHelper.floor_double(this.posZ)) == Material.LAVA) {
+        if (this.worldObj.getBlockMaterial(Mth.floor_double(this.posX), Mth.floor_double(this.posY), Mth.floor_double(this.posZ)) == Material.LAVA) {
             this.motionY = 0.20000000298023224;
             this.motionX = (this.rand.nextFloat() - this.rand.nextFloat()) * 0.2f;
             this.motionZ = (this.rand.nextFloat() - this.rand.nextFloat()) * 0.2f;
@@ -82,9 +82,9 @@ public class EntityItem extends Entity {
     }
 
     private boolean pushOutOfBlocks(final double double1, final double double2, final double double3) {
-        final int floor_double = MathHelper.floor_double(double1);
-        final int floor_double2 = MathHelper.floor_double(double2);
-        final int floor_double3 = MathHelper.floor_double(double3);
+        final int floor_double = Mth.floor_double(double1);
+        final int floor_double2 = Mth.floor_double(double2);
+        final int floor_double3 = Mth.floor_double(double3);
         final double n = double1 - floor_double;
         final double n2 = double2 - floor_double2;
         final double n3 = double3 - floor_double3;

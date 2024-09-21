@@ -2,7 +2,7 @@
 package net.opencraft.item;
 
 import net.opencraft.entity.EntityPlayer;
-import net.opencraft.util.MathHelper;
+import net.opencraft.util.Mth;
 import net.opencraft.world.World;
 import net.opencraft.block.Block;
 
@@ -21,7 +21,7 @@ public class ItemDoor extends Item {
         if (!Block.door.canPlaceBlockAt(fe2, xCoord, ++yCoord, zCoord)) {
             return false;
         }
-        int n5 = MathHelper.floor_double((double) ((gi2.rotationYaw + 180.0f) * 4.0f / 360.0f) - 0.5) & 3;
+        int n5 = Mth.floor_double((double) ((gi2.rotationYaw + 180.0f) * 4.0f / 360.0f) - 0.5) & 3;
         int n6 = 0;
         int n7 = 0;
         if (n5 == 0) {

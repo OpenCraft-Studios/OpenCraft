@@ -1,7 +1,7 @@
 
 package net.opencraft.client.renderer.entity;
 
-import net.opencraft.util.MathHelper;
+import net.opencraft.util.Mth;
 import net.opencraft.client.entity.models.ModelBase;
 import net.opencraft.client.entity.models.ModelBiped;
 import net.opencraft.client.renderer.Tessellator;
@@ -87,12 +87,12 @@ public abstract class Render<T extends Entity> {
         final double n = eq.lastTickPosX + (eq.posX - eq.lastTickPosX) * float6;
         final double double5 = eq.lastTickPosY + (eq.posY - eq.lastTickPosY) * float6;
         final double n2 = eq.lastTickPosZ + (eq.posZ - eq.lastTickPosZ) * float6;
-        final int floor_double = MathHelper.floor_double(n - shadowSize);
-        final int floor_double2 = MathHelper.floor_double(n + shadowSize);
-        final int floor_double3 = MathHelper.floor_double(double5 - shadowSize);
-        final int floor_double4 = MathHelper.floor_double(double5);
-        final int floor_double5 = MathHelper.floor_double(n2 - shadowSize);
-        final int floor_double6 = MathHelper.floor_double(n2 + shadowSize);
+        final int floor_double = Mth.floor_double(n - shadowSize);
+        final int floor_double2 = Mth.floor_double(n + shadowSize);
+        final int floor_double3 = Mth.floor_double(double5 - shadowSize);
+        final int floor_double4 = Mth.floor_double(double5);
+        final int floor_double5 = Mth.floor_double(n2 - shadowSize);
+        final int floor_double6 = Mth.floor_double(n2 + shadowSize);
         final double double6 = double2 - n;
         final double double7 = double3 - double5;
         final double double8 = double4 - n2;

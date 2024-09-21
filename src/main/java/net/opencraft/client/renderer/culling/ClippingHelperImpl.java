@@ -3,7 +3,7 @@ package net.opencraft.client.renderer.culling;
 
 import java.nio.FloatBuffer;
 import net.opencraft.client.renderer.GLAllocation;
-import net.opencraft.util.MathHelper;
+import net.opencraft.util.Mth;
 import org.lwjgl.opengl.GL11;
 
 public class ClippingHelperImpl extends ClippingHelper {
@@ -25,7 +25,7 @@ public class ClippingHelperImpl extends ClippingHelper {
     }
 
     private void normalize(final float[][] arr, final int integer) {
-        final float sqrt_float = MathHelper.sqrt_float(arr[integer][0] * arr[integer][0] + arr[integer][1] * arr[integer][1] + arr[integer][2] * arr[integer][2]);
+        final float sqrt_float = Mth.sqrt_float(arr[integer][0] * arr[integer][0] + arr[integer][1] * arr[integer][1] + arr[integer][2] * arr[integer][2]);
         final float[] array = arr[integer];
         final int n = 0;
         array[n] /= sqrt_float;

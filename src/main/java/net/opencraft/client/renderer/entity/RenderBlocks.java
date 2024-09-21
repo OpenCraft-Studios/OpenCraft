@@ -7,7 +7,7 @@ import net.opencraft.block.DoorBlock;
 import net.opencraft.block.LiquidBlock;
 import net.opencraft.block.material.Material;
 import net.opencraft.client.renderer.Tessellator;
-import net.opencraft.util.MathHelper;
+import net.opencraft.util.Mth;
 import net.opencraft.world.IBlockAccess;
 import net.opencraft.world.World;
 import org.lwjgl.opengl.GL11;
@@ -625,8 +625,8 @@ public class RenderBlocks {
                 n6 = (yCoord + 16) / 256.0f;
                 n7 = (zCoord + 16) / 256.0f;
             }
-            final float n8 = MathHelper.sin(n5) * 8.0f / 256.0f;
-            final float n9 = MathHelper.cos(n5) * 8.0f / 256.0f;
+            final float n8 = Mth.sin(n5) * 8.0f / 256.0f;
+            final float n9 = Mth.cos(n5) * 8.0f / 256.0f;
             final float blockBrightness = gs.getBlockBrightness(this.a, integer2, integer3, integer4);
             instance.setColorOpaque_F(n2 * blockBrightness, n2 * blockBrightness, n2 * blockBrightness);
             instance.addVertexWithUV(integer2 + 0, integer3 + a, integer4 + 0, n6 - n9 - n8, n7 - n9 + n8);

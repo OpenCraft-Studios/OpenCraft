@@ -26,7 +26,7 @@ import net.opencraft.pathfinder.PathEntity;
 import net.opencraft.pathfinder.Pathfinder;
 import net.opencraft.physics.AABB;
 import net.opencraft.tileentity.TileEntity;
-import net.opencraft.util.MathHelper;
+import net.opencraft.util.Mth;
 import net.opencraft.util.Vec3;
 import net.opencraft.world.chunk.Chunk;
 import net.opencraft.world.chunk.ChunkCache;
@@ -548,12 +548,12 @@ public class World implements IBlockAccess {
         if (Double.isNaN(var2.xCoord) || Double.isNaN(var2.yCoord) || Double.isNaN(var2.zCoord)) {
             return null;
         }
-        final int floor_double = MathHelper.floor_double(var2.xCoord);
-        final int floor_double2 = MathHelper.floor_double(var2.yCoord);
-        final int floor_double3 = MathHelper.floor_double(var2.zCoord);
-        int floor_double4 = MathHelper.floor_double(var1.xCoord);
-        int floor_double5 = MathHelper.floor_double(var1.yCoord);
-        int floor_double6 = MathHelper.floor_double(var1.zCoord);
+        final int floor_double = Mth.floor_double(var2.xCoord);
+        final int floor_double2 = Mth.floor_double(var2.yCoord);
+        final int floor_double3 = Mth.floor_double(var2.zCoord);
+        int floor_double4 = Mth.floor_double(var1.xCoord);
+        int floor_double5 = Mth.floor_double(var1.yCoord);
+        int floor_double6 = Mth.floor_double(var1.zCoord);
         int n = 20;
         while (n-- >= 0) {
             if (Double.isNaN(var1.xCoord) || Double.isNaN(var1.yCoord) || Double.isNaN(var1.zCoord)) {
@@ -629,7 +629,7 @@ public class World implements IBlockAccess {
             }
             final Vec3 vector;
             final Vec3 vec3D = vector = Vec3.newTemp(var1.xCoord, var1.yCoord, var1.zCoord);
-            final double xCoord2 = MathHelper.floor_double(var1.xCoord);
+            final double xCoord2 = Mth.floor_double(var1.xCoord);
             vector.xCoord = xCoord2;
             floor_double4 = (int) xCoord2;
             if (n8 == 5) {
@@ -638,7 +638,7 @@ public class World implements IBlockAccess {
                 ++vec3D2.xCoord;
             }
             final Vec3 vec3D3 = vec3D;
-            final double yCoord2 = MathHelper.floor_double(var1.yCoord);
+            final double yCoord2 = Mth.floor_double(var1.yCoord);
             vec3D3.yCoord = yCoord2;
             floor_double5 = (int) yCoord2;
             if (n8 == 1) {
@@ -647,7 +647,7 @@ public class World implements IBlockAccess {
                 ++vec3D4.yCoord;
             }
             final Vec3 vec3D5 = vec3D;
-            final double zCoord2 = MathHelper.floor_double(var1.zCoord);
+            final double zCoord2 = Mth.floor_double(var1.zCoord);
             vec3D5.zCoord = zCoord2;
             floor_double6 = (int) zCoord2;
             if (n8 == 3) {
@@ -719,8 +719,8 @@ public class World implements IBlockAccess {
     }
 
     public void entityJoinedWorld(final Entity entity) {
-        final int floor_double = MathHelper.floor_double(entity.posX / 16.0);
-        final int floor_double2 = MathHelper.floor_double(entity.posZ / 16.0);
+        final int floor_double = Mth.floor_double(entity.posX / 16.0);
+        final int floor_double2 = Mth.floor_double(entity.posZ / 16.0);
         if (this.chunkExists(floor_double, floor_double2)) {
             this.getChunkFromChunkCoords(floor_double, floor_double2).addEntity(entity);
             this.loadedEntityList.add(entity);
@@ -746,12 +746,12 @@ public class World implements IBlockAccess {
 
     public List getCollidingBoundingBoxes(final Entity entity, final AABB aabb) {
         this.collidingBoundingBoxes.clear();
-        final int floor_double = MathHelper.floor_double(aabb.minX);
-        final int floor_double2 = MathHelper.floor_double(aabb.maxX + 1.0);
-        final int floor_double3 = MathHelper.floor_double(aabb.minY);
-        final int floor_double4 = MathHelper.floor_double(aabb.maxY + 1.0);
-        final int floor_double5 = MathHelper.floor_double(aabb.minZ);
-        final int floor_double6 = MathHelper.floor_double(aabb.maxZ + 1.0);
+        final int floor_double = Mth.floor_double(aabb.minX);
+        final int floor_double2 = Mth.floor_double(aabb.maxX + 1.0);
+        final int floor_double3 = Mth.floor_double(aabb.minY);
+        final int floor_double4 = Mth.floor_double(aabb.maxY + 1.0);
+        final int floor_double5 = Mth.floor_double(aabb.minZ);
+        final int floor_double6 = Mth.floor_double(aabb.maxZ + 1.0);
         for (int i = floor_double; i < floor_double2; ++i) {
             for (int j = floor_double3 - 1; j < floor_double4; ++j) {
                 for (int k = floor_double5; k < floor_double6; ++k) {
@@ -778,7 +778,7 @@ public class World implements IBlockAccess {
     }
 
     public int calculateSkylightSubtracted(final float float1) {
-        float n = 1.0f - (MathHelper.cos(this.getCelestialAngle(float1) * 3.1415927f * 2.0f) * 2.0f + 0.5f);
+        float n = 1.0f - (Mth.cos(this.getCelestialAngle(float1) * 3.1415927f * 2.0f) * 2.0f + 0.5f);
         if (n < 0.0f) {
             n = 0.0f;
         }
@@ -789,7 +789,7 @@ public class World implements IBlockAccess {
     }
 
     public Vec3 getSkyColor(final float float1) {
-        float n = MathHelper.cos(this.getCelestialAngle(float1) * 3.1415927f * 2.0f) * 2.0f + 0.5f;
+        float n = Mth.cos(this.getCelestialAngle(float1) * 3.1415927f * 2.0f) * 2.0f + 0.5f;
         if (n < 0.0f) {
             n = 0.0f;
         }
@@ -820,7 +820,7 @@ public class World implements IBlockAccess {
     }
 
     public Vec3 drawClouds(final float float1) {
-        float n = MathHelper.cos(this.getCelestialAngle(float1) * 3.1415927f * 2.0f) * 2.0f + 0.5f;
+        float n = Mth.cos(this.getCelestialAngle(float1) * 3.1415927f * 2.0f) * 2.0f + 0.5f;
         if (n < 0.0f) {
             n = 0.0f;
         }
@@ -837,7 +837,7 @@ public class World implements IBlockAccess {
     }
 
     public Vec3 getFogColor(final float float1) {
-        float n = MathHelper.cos(this.getCelestialAngle(float1) * 3.1415927f * 2.0f) * 2.0f + 0.5f;
+        float n = Mth.cos(this.getCelestialAngle(float1) * 3.1415927f * 2.0f) * 2.0f + 0.5f;
         if (n < 0.0f) {
             n = 0.0f;
         }
@@ -858,7 +858,7 @@ public class World implements IBlockAccess {
     }
 
     public float getStarBrightness(final float float1) {
-        float n = 1.0f - (MathHelper.cos(this.getCelestialAngle(float1) * 3.1415927f * 2.0f) * 2.0f + 0.75f);
+        float n = 1.0f - (Mth.cos(this.getCelestialAngle(float1) * 3.1415927f * 2.0f) * 2.0f + 0.75f);
         if (n < 0.0f) {
             n = 0.0f;
         }
@@ -904,8 +904,8 @@ public class World implements IBlockAccess {
                 this.updateEntity(entity);
             }
             if (entity.isDead) {
-                final int j = MathHelper.floor_double(entity.posX / 16.0);
-                final int floor_double = MathHelper.floor_double(entity.posZ / 16.0);
+                final int j = Mth.floor_double(entity.posX / 16.0);
+                final int floor_double = Mth.floor_double(entity.posZ / 16.0);
                 if (this.chunkExists(j, floor_double)) {
                     this.getChunkFromChunkCoords(j, floor_double).removeEntity(entity);
                 }
@@ -921,9 +921,9 @@ public class World implements IBlockAccess {
     }
 
     private void updateEntity(final Entity entity) {
-        final int floor_double = MathHelper.floor_double(entity.posX);
-        MathHelper.floor_double(entity.posY);
-        final int floor_double2 = MathHelper.floor_double(entity.posZ);
+        final int floor_double = Mth.floor_double(entity.posX);
+        Mth.floor_double(entity.posY);
+        final int floor_double2 = Mth.floor_double(entity.posZ);
         final int n = 16;
         if (!this.checkChunksExist(floor_double - n, 0, floor_double2 - n, floor_double + n, 128, floor_double2 + n)) {
             return;
@@ -933,17 +933,17 @@ public class World implements IBlockAccess {
         entity.lastTickPosZ = entity.posZ;
         entity.prevRotationYaw = entity.rotationYaw;
         entity.prevRotationPitch = entity.rotationPitch;
-        final int floor_double3 = MathHelper.floor_double(entity.posX / 16.0);
-        final int floor_double4 = MathHelper.floor_double(entity.posY / 16.0);
-        final int floor_double5 = MathHelper.floor_double(entity.posZ / 16.0);
+        final int floor_double3 = Mth.floor_double(entity.posX / 16.0);
+        final int floor_double4 = Mth.floor_double(entity.posY / 16.0);
+        final int floor_double5 = Mth.floor_double(entity.posZ / 16.0);
         if (entity.ridingEntity != null) {
             entity.updateRidden();
         } else {
             entity.onUpdate();
         }
-        final int floor_double6 = MathHelper.floor_double(entity.posX / 16.0);
-        final int floor_double7 = MathHelper.floor_double(entity.posY / 16.0);
-        final int floor_double8 = MathHelper.floor_double(entity.posZ / 16.0);
+        final int floor_double6 = Mth.floor_double(entity.posX / 16.0);
+        final int floor_double7 = Mth.floor_double(entity.posY / 16.0);
+        final int floor_double8 = Mth.floor_double(entity.posZ / 16.0);
         if (floor_double3 != floor_double6 || floor_double4 != floor_double7 || floor_double5 != floor_double8) {
             if (this.chunkExists(floor_double3, floor_double5)) {
                 this.getChunkFromChunkCoords(floor_double3, floor_double5).removeEntityAtIndex(entity, floor_double4);
@@ -991,12 +991,12 @@ public class World implements IBlockAccess {
     }
 
     public boolean getIsAnyLiquid(final AABB aabb) {
-        int floor_double = MathHelper.floor_double(aabb.minX);
-        final int floor_double2 = MathHelper.floor_double(aabb.maxX + 1.0);
-        int floor_double3 = MathHelper.floor_double(aabb.minY);
-        final int floor_double4 = MathHelper.floor_double(aabb.maxY + 1.0);
-        int floor_double5 = MathHelper.floor_double(aabb.minZ);
-        final int floor_double6 = MathHelper.floor_double(aabb.maxZ + 1.0);
+        int floor_double = Mth.floor_double(aabb.minX);
+        final int floor_double2 = Mth.floor_double(aabb.maxX + 1.0);
+        int floor_double3 = Mth.floor_double(aabb.minY);
+        final int floor_double4 = Mth.floor_double(aabb.maxY + 1.0);
+        int floor_double5 = Mth.floor_double(aabb.minZ);
+        final int floor_double6 = Mth.floor_double(aabb.maxZ + 1.0);
         if (aabb.minX < 0.0) {
             --floor_double;
         }
@@ -1020,12 +1020,12 @@ public class World implements IBlockAccess {
     }
 
     public boolean isBoundingBoxBurning(final AABB aabb) {
-        final int floor_double = MathHelper.floor_double(aabb.minX);
-        final int floor_double2 = MathHelper.floor_double(aabb.maxX + 1.0);
-        final int floor_double3 = MathHelper.floor_double(aabb.minY);
-        final int floor_double4 = MathHelper.floor_double(aabb.maxY + 1.0);
-        final int floor_double5 = MathHelper.floor_double(aabb.minZ);
-        final int floor_double6 = MathHelper.floor_double(aabb.maxZ + 1.0);
+        final int floor_double = Mth.floor_double(aabb.minX);
+        final int floor_double2 = Mth.floor_double(aabb.maxX + 1.0);
+        final int floor_double3 = Mth.floor_double(aabb.minY);
+        final int floor_double4 = Mth.floor_double(aabb.maxY + 1.0);
+        final int floor_double5 = Mth.floor_double(aabb.minZ);
+        final int floor_double6 = Mth.floor_double(aabb.maxZ + 1.0);
         for (int i = floor_double; i < floor_double2; ++i) {
             for (int j = floor_double3; j < floor_double4; ++j) {
                 for (int k = floor_double5; k < floor_double6; ++k) {
@@ -1040,12 +1040,12 @@ public class World implements IBlockAccess {
     }
 
     public boolean handleMaterialAcceleration(final AABB aabb, final Material material, final Entity entity) {
-        final int floor_double = MathHelper.floor_double(aabb.minX);
-        final int floor_double2 = MathHelper.floor_double(aabb.maxX + 1.0);
-        final int floor_double3 = MathHelper.floor_double(aabb.minY);
-        final int floor_double4 = MathHelper.floor_double(aabb.maxY + 1.0);
-        final int floor_double5 = MathHelper.floor_double(aabb.minZ);
-        final int floor_double6 = MathHelper.floor_double(aabb.maxZ + 1.0);
+        final int floor_double = Mth.floor_double(aabb.minX);
+        final int floor_double2 = Mth.floor_double(aabb.maxX + 1.0);
+        final int floor_double3 = Mth.floor_double(aabb.minY);
+        final int floor_double4 = Mth.floor_double(aabb.maxY + 1.0);
+        final int floor_double5 = Mth.floor_double(aabb.minZ);
+        final int floor_double6 = Mth.floor_double(aabb.maxZ + 1.0);
         boolean b = false;
         final Vec3 vector = Vec3.newTemp(0.0, 0.0, 0.0);
         for (int i = floor_double; i < floor_double2; ++i) {
@@ -1070,12 +1070,12 @@ public class World implements IBlockAccess {
     }
 
     public boolean isMaterialInBB(final AABB aabb, final Material material) {
-        final int floor_double = MathHelper.floor_double(aabb.minX);
-        final int floor_double2 = MathHelper.floor_double(aabb.maxX + 1.0);
-        final int floor_double3 = MathHelper.floor_double(aabb.minY);
-        final int floor_double4 = MathHelper.floor_double(aabb.maxY + 1.0);
-        final int floor_double5 = MathHelper.floor_double(aabb.minZ);
-        final int floor_double6 = MathHelper.floor_double(aabb.maxZ + 1.0);
+        final int floor_double = Mth.floor_double(aabb.minX);
+        final int floor_double2 = Mth.floor_double(aabb.maxX + 1.0);
+        final int floor_double3 = Mth.floor_double(aabb.minY);
+        final int floor_double4 = Mth.floor_double(aabb.maxY + 1.0);
+        final int floor_double5 = Mth.floor_double(aabb.minZ);
+        final int floor_double6 = Mth.floor_double(aabb.maxZ + 1.0);
         for (int i = floor_double; i < floor_double2; ++i) {
             for (int j = floor_double3; j < floor_double4; ++j) {
                 for (int k = floor_double5; k < floor_double6; ++k) {
@@ -1238,8 +1238,8 @@ public class World implements IBlockAccess {
             this.saveWorld(false, null);
         }
         this.TickUpdates(false);
-        int i = MathHelper.floor_double(this.player.posX);
-        final int floor_double = MathHelper.floor_double(this.player.posZ);
+        int i = Mth.floor_double(this.player.posX);
+        final int floor_double = Mth.floor_double(this.player.posZ);
         final int n = 64;
         final ChunkCache chunkCache = new ChunkCache(this, i - n, 0, floor_double - n, i + n, 128, floor_double + n);
         for (int j = 0; j < 8000; ++j) {
@@ -1297,10 +1297,10 @@ public class World implements IBlockAccess {
 
     public List getEntitiesWithinAABBExcludingEntity(final Entity entity, final AABB aabb) {
         this.field_1012_M.clear();
-        final int floor_double = MathHelper.floor_double((aabb.minX - 2.0) / 16.0);
-        final int floor_double2 = MathHelper.floor_double((aabb.maxX + 2.0) / 16.0);
-        final int floor_double3 = MathHelper.floor_double((aabb.minZ - 2.0) / 16.0);
-        final int floor_double4 = MathHelper.floor_double((aabb.maxZ + 2.0) / 16.0);
+        final int floor_double = Mth.floor_double((aabb.minX - 2.0) / 16.0);
+        final int floor_double2 = Mth.floor_double((aabb.maxX + 2.0) / 16.0);
+        final int floor_double3 = Mth.floor_double((aabb.minZ - 2.0) / 16.0);
+        final int floor_double4 = Mth.floor_double((aabb.maxZ + 2.0) / 16.0);
         for (int i = floor_double; i <= floor_double2; ++i) {
             for (int j = floor_double3; j <= floor_double4; ++j) {
                 if (this.chunkExists(i, j)) {
@@ -1312,10 +1312,10 @@ public class World implements IBlockAccess {
     }
 
     public List getEntitiesWithinAABB(final Class class1, final AABB aabb) {
-        final int floor_double = MathHelper.floor_double((aabb.minX - 2.0) / 16.0);
-        final int floor_double2 = MathHelper.floor_double((aabb.maxX + 2.0) / 16.0);
-        final int floor_double3 = MathHelper.floor_double((aabb.minZ - 2.0) / 16.0);
-        final int floor_double4 = MathHelper.floor_double((aabb.maxZ + 2.0) / 16.0);
+        final int floor_double = Mth.floor_double((aabb.minX - 2.0) / 16.0);
+        final int floor_double2 = Mth.floor_double((aabb.maxX + 2.0) / 16.0);
+        final int floor_double3 = Mth.floor_double((aabb.minZ - 2.0) / 16.0);
+        final int floor_double4 = Mth.floor_double((aabb.maxZ + 2.0) / 16.0);
         final ArrayList list = new ArrayList();
         for (int i = floor_double; i <= floor_double2; ++i) {
             for (int j = floor_double3; j <= floor_double4; ++j) {
@@ -1377,17 +1377,17 @@ public class World implements IBlockAccess {
     }
 
     public PathEntity getPathToEntity(final Entity entity, final Entity entity2, final float float3) {
-        final int floor_double = MathHelper.floor_double(entity.posX);
-        final int floor_double2 = MathHelper.floor_double(entity.posY);
-        final int floor_double3 = MathHelper.floor_double(entity.posZ);
+        final int floor_double = Mth.floor_double(entity.posX);
+        final int floor_double2 = Mth.floor_double(entity.posY);
+        final int floor_double3 = Mth.floor_double(entity.posZ);
         final int n = (int) (float3 + 32.0f);
         return new Pathfinder(new ChunkCache(this, floor_double - n, floor_double2 - n, floor_double3 - n, floor_double + n, floor_double2 + n, floor_double3 + n)).createEntityPathTo(entity, entity2, float3);
     }
 
     public PathEntity getEntityPathToXYZ(final Entity entity, final int xCoord, final int yCoord, final int zCoord, final float float5) {
-        final int floor_double = MathHelper.floor_double(entity.posX);
-        final int floor_double2 = MathHelper.floor_double(entity.posY);
-        final int floor_double3 = MathHelper.floor_double(entity.posZ);
+        final int floor_double = Mth.floor_double(entity.posX);
+        final int floor_double2 = Mth.floor_double(entity.posY);
+        final int floor_double3 = Mth.floor_double(entity.posZ);
         final int n = (int) (float5 + 32.0f);
         return new Pathfinder(new ChunkCache(this, floor_double - n, floor_double2 - n, floor_double3 - n, floor_double + n, floor_double2 + n, floor_double3 + n)).createEntityPathTo(entity, xCoord, yCoord, zCoord, float5);
     }

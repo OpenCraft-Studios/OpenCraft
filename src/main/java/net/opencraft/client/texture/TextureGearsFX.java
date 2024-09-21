@@ -4,7 +4,7 @@ package net.opencraft.client.texture;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import net.opencraft.block.Block;
-import net.opencraft.util.MathHelper;
+import net.opencraft.util.Mth;
 
 public class TextureGearsFX extends TextureFX {
 
@@ -31,8 +31,8 @@ public class TextureGearsFX extends TextureFX {
     @Override
     public void onTick() {
         this.gearsInt1 = (this.gearsInt1 + this.gearsInt2 & 0x3F);
-        final float sin = MathHelper.sin(this.gearsInt1 / 64.0f * 3.1415927f * 2.0f);
-        final float cos = MathHelper.cos(this.gearsInt1 / 64.0f * 3.1415927f * 2.0f);
+        final float sin = Mth.sin(this.gearsInt1 / 64.0f * 3.1415927f * 2.0f);
+        final float cos = Mth.cos(this.gearsInt1 / 64.0f * 3.1415927f * 2.0f);
         for (int i = 0; i < 16; ++i) {
             for (int j = 0; j < 16; ++j) {
                 final float n = (i / 15.0f - 0.5f) * 31.0f;

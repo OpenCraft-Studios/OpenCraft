@@ -4,7 +4,7 @@ package net.opencraft.world.chunk;
 import java.util.Random;
 import net.opencraft.block.Block;
 import net.opencraft.client.gui.IProgressUpdate;
-import net.opencraft.util.MathHelper;
+import net.opencraft.util.Mth;
 import net.opencraft.world.IChunkProvider;
 import net.opencraft.world.World;
 import net.opencraft.world.gen.NoiseGeneratorOctaves;
@@ -197,13 +197,13 @@ public class ChunkProviderGenerate implements IChunkProvider {
         final int n6 = random.nextInt(integer11 / 2) + integer11 / 4;
         final boolean b2 = random.nextInt(6) == 0;
         while (integer10 < integer11) {
-            final double n7 = 1.5 + MathHelper.sin(integer10 * 3.1415927f / integer11) * float7 * 1.0f;
+            final double n7 = 1.5 + Mth.sin(integer10 * 3.1415927f / integer11) * float7 * 1.0f;
             final double n8 = n7 * double12;
-            final float cos = MathHelper.cos(float9);
-            final float sin = MathHelper.sin(float9);
-            double4 += MathHelper.cos(float8) * cos;
+            final float cos = Mth.cos(float9);
+            final float sin = Mth.sin(float9);
+            double4 += Mth.cos(float8) * cos;
             double5 += sin;
-            double6 += MathHelper.sin(float8) * cos;
+            double6 += Mth.sin(float8) * cos;
             if (b2) {
                 float9 *= 0.92f;
             } else {
@@ -230,12 +230,12 @@ public class ChunkProviderGenerate implements IChunkProvider {
                 }
                 if (double4 >= n - 16.0 - n7 * 2.0 && double6 >= n2 - 16.0 - n7 * 2.0 && double4 <= n + 16.0 + n7 * 2.0) {
                     if (double6 <= n2 + 16.0 + n7 * 2.0) {
-                        int n13 = MathHelper.floor_double(double4 - n7) - integer1 * 16 - 1;
-                        int n14 = MathHelper.floor_double(double4 + n7) - integer1 * 16 + 1;
-                        int n15 = MathHelper.floor_double(double5 - n8) - 1;
-                        int n16 = MathHelper.floor_double(double5 + n8) + 1;
-                        int n17 = MathHelper.floor_double(double6 - n7) - integer2 * 16 - 1;
-                        int n18 = MathHelper.floor_double(double6 + n7) - integer2 * 16 + 1;
+                        int n13 = Mth.floor_double(double4 - n7) - integer1 * 16 - 1;
+                        int n14 = Mth.floor_double(double4 + n7) - integer1 * 16 + 1;
+                        int n15 = Mth.floor_double(double5 - n8) - 1;
+                        int n16 = Mth.floor_double(double5 + n8) + 1;
+                        int n17 = Mth.floor_double(double6 - n7) - integer2 * 16 - 1;
+                        int n18 = Mth.floor_double(double6 + n7) - integer2 * 16 + 1;
                         if (n13 < 0) {
                             n13 = 0;
                         }

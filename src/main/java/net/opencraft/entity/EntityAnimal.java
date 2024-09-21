@@ -3,7 +3,7 @@ package net.opencraft.entity;
 
 import net.opencraft.block.Block;
 import net.opencraft.nbt.NBTTagCompound;
-import net.opencraft.util.MathHelper;
+import net.opencraft.util.Mth;
 import net.opencraft.world.World;
 
 public abstract class EntityAnimal extends EntityCreature {
@@ -32,6 +32,6 @@ public abstract class EntityAnimal extends EntityCreature {
 
     @Override
     public boolean getCanSpawnHere(final double nya1, final double nya2, final double nya3) {
-        return this.worldObj.getBlockLightValue(MathHelper.floor_double(nya1), MathHelper.floor_double(nya2), MathHelper.floor_double(nya3)) > 8 && super.getCanSpawnHere(nya1, nya2, nya3);
+        return this.worldObj.getBlockLightValue(Mth.floor_double(nya1), Mth.floor_double(nya2), Mth.floor_double(nya3)) > 8 && super.getCanSpawnHere(nya1, nya2, nya3);
     }
 }

@@ -3,7 +3,7 @@ package net.opencraft.client.renderer.entity;
 
 import net.opencraft.block.Block;
 import net.opencraft.entity.EntityFallingSand;
-import net.opencraft.util.MathHelper;
+import net.opencraft.util.Mth;
 import net.opencraft.world.World;
 import org.lwjgl.opengl.GL11;
 
@@ -23,7 +23,7 @@ public class RenderFallingSand extends Render<EntityFallingSand> {
         final Block gs = Block.blocksList[entityLiving.blockID];
         final World world = entityLiving.getWorld();
         GL11.glDisable(2896);
-        this.field_197_d.renderBlockFallingSand(gs, world, MathHelper.floor_double(entityLiving.posX), MathHelper.floor_double(entityLiving.posY), MathHelper.floor_double(entityLiving.posZ));
+        this.field_197_d.renderBlockFallingSand(gs, world, Mth.floor_double(entityLiving.posX), Mth.floor_double(entityLiving.posY), Mth.floor_double(entityLiving.posZ));
         GL11.glEnable(2896);
         GL11.glPopMatrix();
     }

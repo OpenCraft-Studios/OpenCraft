@@ -8,7 +8,7 @@ import net.opencraft.block.material.Material;
 import net.opencraft.item.Item;
 import net.opencraft.item.ItemStack;
 import net.opencraft.nbt.NBTTagCompound;
-import net.opencraft.util.MathHelper;
+import net.opencraft.util.Mth;
 import net.opencraft.world.World;
 
 public class EntityPainting extends Entity {
@@ -126,18 +126,18 @@ public class EntityPainting extends Entity {
         int n4 = this.yPosition;
         int n5 = this.zPosition;
         if (this.direction == 0) {
-            n3 = MathHelper.floor_double(this.posX - this.art.sizeX / 32.0f);
+            n3 = Mth.floor_double(this.posX - this.art.sizeX / 32.0f);
         }
         if (this.direction == 1) {
-            n5 = MathHelper.floor_double(this.posZ - this.art.sizeX / 32.0f);
+            n5 = Mth.floor_double(this.posZ - this.art.sizeX / 32.0f);
         }
         if (this.direction == 2) {
-            n3 = MathHelper.floor_double(this.posX - this.art.sizeX / 32.0f);
+            n3 = Mth.floor_double(this.posX - this.art.sizeX / 32.0f);
         }
         if (this.direction == 3) {
-            n5 = MathHelper.floor_double(this.posZ - this.art.sizeX / 32.0f);
+            n5 = Mth.floor_double(this.posZ - this.art.sizeX / 32.0f);
         }
-        n4 = MathHelper.floor_double(this.posY - this.art.sizeY / 32.0f);
+        n4 = Mth.floor_double(this.posY - this.art.sizeY / 32.0f);
         for (int i = 0; i < n; ++i) {
             for (int j = 0; j < n2; ++j) {
                 Material material;

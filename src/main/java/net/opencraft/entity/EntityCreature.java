@@ -2,7 +2,7 @@
 package net.opencraft.entity;
 
 import net.opencraft.pathfinder.PathEntity;
-import net.opencraft.util.MathHelper;
+import net.opencraft.util.Mth;
 import net.opencraft.util.Vec3;
 import net.opencraft.world.World;
 
@@ -46,9 +46,9 @@ public class EntityCreature extends EntityLiving {
             int zCoord = -1;
             float n = -99999.0f;
             for (int i = 0; i < 50; ++i) {
-                final int floor_double2 = MathHelper.floor_double(this.posX + this.rand.nextInt(11) - 5.0);
-                final int floor_double3 = MathHelper.floor_double(this.posY + this.rand.nextInt(7) - 3.0);
-                final int floor_double4 = MathHelper.floor_double(this.posZ + this.rand.nextInt(11) - 5.0);
+                final int floor_double2 = Mth.floor_double(this.posX + this.rand.nextInt(11) - 5.0);
+                final int floor_double3 = Mth.floor_double(this.posY + this.rand.nextInt(7) - 3.0);
+                final int floor_double4 = Mth.floor_double(this.posZ + this.rand.nextInt(11) - 5.0);
                 final float blockPathWeight = this.getBlockPathWeight(floor_double2, floor_double3, floor_double4);
                 if (blockPathWeight > n) {
                     n = blockPathWeight;
@@ -61,7 +61,7 @@ public class EntityCreature extends EntityLiving {
                 this.pathToEntity = this.worldObj.getEntityPathToXYZ(this, floor_double, yCoord, zCoord, float5);
             }
         }
-        int floor_double = MathHelper.floor_double(this.boundingBox.minY);
+        int floor_double = Mth.floor_double(this.boundingBox.minY);
         final boolean handleWaterMovement = this.handleWaterMovement();
         final boolean handleLavaMovement = this.handleLavaMovement();
         if (this.pathToEntity == null || this.rand.nextInt(100) == 0) {
@@ -93,8 +93,8 @@ public class EntityCreature extends EntityLiving {
                 final float rotationYaw = this.rotationYaw;
                 this.rotationYaw = (float) (Math.atan2(n7, n6) * 180.0 / 3.1415927410125732) - 90.0f;
                 final float n8 = (rotationYaw - this.rotationYaw + 90.0f) * 3.1415927f / 180.0f;
-                this.moveStrafing = -MathHelper.sin(n8) * this.moveForward * 1.0f;
-                this.moveForward = MathHelper.cos(n8) * this.moveForward * 1.0f;
+                this.moveStrafing = -Mth.sin(n8) * this.moveForward * 1.0f;
+                this.moveForward = Mth.cos(n8) * this.moveForward * 1.0f;
             }
             if (n5 != 0.0) {
                 this.isJumping = true;

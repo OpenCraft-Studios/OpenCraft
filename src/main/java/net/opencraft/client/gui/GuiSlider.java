@@ -3,7 +3,7 @@ package net.opencraft.client.gui;
 
 import net.opencraft.OpenCraft;
 import net.opencraft.client.font.FontRenderer;
-import net.opencraft.util.MathHelper;
+import net.opencraft.util.Mth;
 import org.lwjgl.opengl.GL11;
 
 public class GuiSlider extends GuiButton {
@@ -28,7 +28,7 @@ public class GuiSlider extends GuiButton {
         this.maxValue = maxValue;
 
         if (this.decimalPlace != 0.0f) {
-            this.sliderValue = MathHelper.roundToDecimalPlace(this.sliderValue, this.decimalPlace);
+            this.sliderValue = Mth.roundToDecimalPlace(this.sliderValue, this.decimalPlace);
         }
 
         this.displayString = this.displayStringName + ": " + this.sliderValue;
@@ -40,11 +40,11 @@ public class GuiSlider extends GuiButton {
                 this.dragging = true;
                 // Calculate the position of the slider relative to the mouse position
                 float sliderPos = (float) (mouseX - this.xPosition - 4) / (float) (this.width - 8);
-                sliderPos = MathHelper.clamp(sliderPos, 0.0f, 1.0f);
+                sliderPos = Mth.clamp(sliderPos, 0.0f, 1.0f);
                 // Update the slider value within the specified range
                 this.sliderValue = minValue + sliderPos * (maxValue - minValue);
                 if (this.decimalPlace != 0.0f) {
-                    this.sliderValue = MathHelper.roundToDecimalPlace(this.sliderValue, this.decimalPlace);
+                    this.sliderValue = Mth.roundToDecimalPlace(this.sliderValue, this.decimalPlace);
                 }
                 this.mc.gameSettings.setOptionFloatValue(this.keyId, this.sliderValue);
                 this.displayString = this.displayStringName + ": " + this.sliderValue;
@@ -58,11 +58,11 @@ public class GuiSlider extends GuiButton {
         if (this.dragging) {
             // Calculate the position of the slider relative to the mouse position
             float sliderPos = (float) (mouseX - this.xPosition - 4) / (float) (this.width - 8);
-            sliderPos = MathHelper.clamp(sliderPos, 0.0f, 1.0f);
+            sliderPos = Mth.clamp(sliderPos, 0.0f, 1.0f);
             // Update the slider value within the specified range
             this.sliderValue = minValue + sliderPos * (maxValue - minValue);
             if (this.decimalPlace != 0.0f) {
-                this.sliderValue = MathHelper.roundToDecimalPlace(this.sliderValue, this.decimalPlace);
+                this.sliderValue = Mth.roundToDecimalPlace(this.sliderValue, this.decimalPlace);
             }
             this.mc.gameSettings.setOptionFloatValue(this.keyId, this.sliderValue);
             this.displayString = this.displayStringName + ": " + this.sliderValue;

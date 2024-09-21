@@ -4,7 +4,7 @@ package net.opencraft.item;
 import net.opencraft.block.material.Material;
 import net.opencraft.client.input.MovingObjectPosition;
 import net.opencraft.entity.EntityPlayer;
-import net.opencraft.util.MathHelper;
+import net.opencraft.util.Mth;
 import net.opencraft.util.Vec3;
 import net.opencraft.world.World;
 
@@ -25,10 +25,10 @@ public class ItemBucket extends Item {
         final float n2 = gi.prevRotationPitch + (gi.rotationPitch - gi.prevRotationPitch) * n;
         final float n3 = gi.prevRotationYaw + (gi.rotationYaw - gi.prevRotationYaw) * n;
         final Vec3 vector = Vec3.newTemp(gi.prevPosX + (gi.posX - gi.prevPosX) * n, gi.prevPosY + (gi.posY - gi.prevPosY) * n, gi.prevPosZ + (gi.posZ - gi.prevPosZ) * n);
-        final float cos = MathHelper.cos(-n3 * 0.017453292f - 3.1415927f);
-        final float sin = MathHelper.sin(-n3 * 0.017453292f - 3.1415927f);
-        final float n4 = -MathHelper.cos(-n2 * 0.017453292f);
-        final float sin2 = MathHelper.sin(-n2 * 0.017453292f);
+        final float cos = Mth.cos(-n3 * 0.017453292f - 3.1415927f);
+        final float sin = Mth.sin(-n3 * 0.017453292f - 3.1415927f);
+        final float n4 = -Mth.cos(-n2 * 0.017453292f);
+        final float sin2 = Mth.sin(-n2 * 0.017453292f);
         final float n5 = sin * n4;
         final float n6 = sin2;
         final float n7 = cos * n4;

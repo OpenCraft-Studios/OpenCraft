@@ -4,7 +4,7 @@ package net.opencraft.client.renderer.entity;
 import net.opencraft.client.entity.models.ModelBase;
 import net.opencraft.entity.EntityLiving;
 import net.opencraft.entity.EntitySheep;
-import net.opencraft.util.MathHelper;
+import net.opencraft.util.Mth;
 import org.lwjgl.opengl.GL11;
 
 public class RenderLiving extends Render<EntityLiving> {
@@ -33,7 +33,7 @@ public class RenderLiving extends Render<EntityLiving> {
             GL11.glRotatef(180.0f - n, 0.0f, 1.0f, 0.0f);
             if (entityLiving.deathTime > 0) {
                 float sqrt_float = (entityLiving.deathTime + nya2 - 1.0f) / 20.0f * 1.6f;
-                sqrt_float = MathHelper.sqrt_float(sqrt_float);
+                sqrt_float = Mth.sqrt_float(sqrt_float);
                 if (sqrt_float > 1.0f) {
                     sqrt_float = 1.0f;
                 }

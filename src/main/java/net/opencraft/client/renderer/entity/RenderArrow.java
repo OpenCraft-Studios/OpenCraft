@@ -1,7 +1,7 @@
 
 package net.opencraft.client.renderer.entity;
 
-import net.opencraft.util.MathHelper;
+import net.opencraft.util.Mth;
 import net.opencraft.client.renderer.Tessellator;
 import net.opencraft.entity.EntityArrow;
 import org.lwjgl.opengl.GL11;
@@ -28,7 +28,7 @@ public class RenderArrow extends Render<EntityArrow> {
         GL11.glEnable((int) 32826);
         float f12 = (float) entityLiving.arrowShake - nya2;
         if (f12 > 0.0f) {
-            float f13 = -MathHelper.sin(f12 * 3.0f) * f12;
+            float f13 = -Mth.sin(f12 * 3.0f) * f12;
             GL11.glRotatef((float) f13, (float) 0.0f, (float) 0.0f, (float) 1.0f);
         }
         GL11.glRotatef((float) 45.0f, (float) 1.0f, (float) 0.0f, (float) 0.0f);

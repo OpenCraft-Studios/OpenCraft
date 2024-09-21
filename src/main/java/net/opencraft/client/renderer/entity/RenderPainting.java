@@ -5,7 +5,7 @@ import java.util.Random;
 import net.opencraft.EnumArt;
 import net.opencraft.client.renderer.Tessellator;
 import net.opencraft.entity.EntityPainting;
-import net.opencraft.util.MathHelper;
+import net.opencraft.util.Mth;
 import org.lwjgl.opengl.GL11;
 
 public class RenderPainting extends Render<EntityPainting> {
@@ -97,20 +97,20 @@ public class RenderPainting extends Render<EntityPainting> {
     }
 
     private void func_160_a(final EntityPainting cy, final float float2, final float float3) {
-        int nya1 = MathHelper.floor_double(cy.posX);
-        final int floor_double = MathHelper.floor_double(cy.posY + float3 / 16.0f);
-        int nya2 = MathHelper.floor_double(cy.posZ);
+        int nya1 = Mth.floor_double(cy.posX);
+        final int floor_double = Mth.floor_double(cy.posY + float3 / 16.0f);
+        int nya2 = Mth.floor_double(cy.posZ);
         if (cy.direction == 0) {
-            nya1 = MathHelper.floor_double(cy.posX + float2 / 16.0f);
+            nya1 = Mth.floor_double(cy.posX + float2 / 16.0f);
         }
         if (cy.direction == 1) {
-            nya2 = MathHelper.floor_double(cy.posZ - float2 / 16.0f);
+            nya2 = Mth.floor_double(cy.posZ - float2 / 16.0f);
         }
         if (cy.direction == 2) {
-            nya1 = MathHelper.floor_double(cy.posX - float2 / 16.0f);
+            nya1 = Mth.floor_double(cy.posX - float2 / 16.0f);
         }
         if (cy.direction == 3) {
-            nya2 = MathHelper.floor_double(cy.posZ + float2 / 16.0f);
+            nya2 = Mth.floor_double(cy.posZ + float2 / 16.0f);
         }
         final float lightBrightness = this.renderManager.worldObj.getLightBrightness(nya1, floor_double, nya2);
         GL11.glColor3f(lightBrightness, lightBrightness, lightBrightness);

@@ -8,7 +8,7 @@ import java.util.List;
 import net.opencraft.block.Block;
 import net.opencraft.entity.Entity;
 import net.opencraft.physics.AABB;
-import net.opencraft.util.MathHelper;
+import net.opencraft.util.Mth;
 import net.opencraft.util.Vec3;
 import net.opencraft.world.World;
 import net.opencraft.world.chunk.ChunkPosition;
@@ -35,9 +35,9 @@ public class Explosion {
                         double double7 = double4;
                         double n7 = double5;
                         for (float n8 = 0.3f; n6 > 0.0f; n6 -= n8 * 0.75f) {
-                            final int floor_double = MathHelper.floor_double(double6);
-                            final int floor_double2 = MathHelper.floor_double(double7);
-                            final int floor_double3 = MathHelper.floor_double(n7);
+                            final int floor_double = Mth.floor_double(double6);
+                            final int floor_double2 = Mth.floor_double(double7);
+                            final int floor_double3 = Mth.floor_double(n7);
                             final int blockId = fe.getBlockId(floor_double, floor_double2, floor_double3);
                             if (blockId > 0) {
                                 n6 -= (Block.blocksList[blockId].getExplosionResistance(eq) + 0.3f) * n8;
@@ -54,10 +54,10 @@ public class Explosion {
             }
         }
         float6 *= 2.0f;
-        int i = MathHelper.floor_double(double3 - float6 - 1.0);
-        int j = MathHelper.floor_double(double3 + float6 + 1.0);
-        int k = MathHelper.floor_double(double4 - float6 - 1.0);
-        final List entitiesWithinAABBExcludingEntity = fe.getEntitiesWithinAABBExcludingEntity(eq, AABB.getBoundingBoxFromPool(i, k, MathHelper.floor_double(double5 - float6 - 1.0), j, MathHelper.floor_double(double4 + float6 + 1.0), MathHelper.floor_double(double5 + float6 + 1.0)));
+        int i = Mth.floor_double(double3 - float6 - 1.0);
+        int j = Mth.floor_double(double3 + float6 + 1.0);
+        int k = Mth.floor_double(double4 - float6 - 1.0);
+        final List entitiesWithinAABBExcludingEntity = fe.getEntitiesWithinAABBExcludingEntity(eq, AABB.getBoundingBoxFromPool(i, k, Mth.floor_double(double5 - float6 - 1.0), j, Mth.floor_double(double4 + float6 + 1.0), Mth.floor_double(double5 + float6 + 1.0)));
         final Vec3 vector = Vec3.newTemp(double3, double4, double5);
         for (int l = 0; l < entitiesWithinAABBExcludingEntity.size(); ++l) {
             final Entity entity = (Entity) entitiesWithinAABBExcludingEntity.get(l);
@@ -66,7 +66,7 @@ public class Explosion {
                 double double6 = entity.posX - double3;
                 double double7 = entity.posY - double4;
                 double n7 = entity.posZ - double5;
-                final double yCoordBlock = MathHelper.sqrt_double(double6 * double6 + double7 * double7 + n7 * n7);
+                final double yCoordBlock = Mth.sqrt_double(double6 * double6 + double7 * double7 + n7 * n7);
                 double6 /= yCoordBlock;
                 double7 /= yCoordBlock;
                 n7 /= yCoordBlock;
@@ -98,7 +98,7 @@ public class Explosion {
                 double n10 = n7 - double3;
                 double n11 = yCoordBlock - double4;
                 double n14 = zCoordBlock - double5;
-                final double n15 = MathHelper.sqrt_double(n10 * n10 + n11 * n11 + n14 * n14);
+                final double n15 = Mth.sqrt_double(n10 * n10 + n11 * n11 + n14 * n14);
                 n10 /= n15;
                 n11 /= n15;
                 n14 /= n15;

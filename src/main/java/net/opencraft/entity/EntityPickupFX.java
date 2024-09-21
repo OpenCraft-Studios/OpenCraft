@@ -1,7 +1,7 @@
 
 package net.opencraft.entity;
 
-import net.opencraft.util.MathHelper;
+import net.opencraft.util.Mth;
 import net.opencraft.client.renderer.entity.RenderManager;
 import net.opencraft.client.renderer.Tessellator;
 import net.opencraft.world.World;
@@ -35,9 +35,9 @@ public class EntityPickupFX extends EntityFX {
         double d7 = d + (d4 - d) * (double) f7;
         double d8 = d2 + (d5 - d2) * (double) f7;
         double d9 = d3 + (d6 - d3) * (double) f7;
-        int n = MathHelper.floor_double(d7);
-        int n2 = MathHelper.floor_double(d8 + (double) (this.yOffset / 2.0f));
-        int n3 = MathHelper.floor_double(d9);
+        int n = Mth.floor_double(d7);
+        int n2 = Mth.floor_double(d8 + (double) (this.yOffset / 2.0f));
+        int n3 = Mth.floor_double(d9);
         float f8 = this.worldObj.getLightBrightness(n, n2, n3);
         GL11.glColor4f((float) f8, (float) f8, (float) f8, (float) 1.0f);
         RenderManager.instance.renderEntityWithPosYaw(this.entityToPickUp, (float) (d7 -= interpPosX), (float) (d8 -= interpPosY), (float) (d9 -= interpPosZ), this.entityToPickUp.rotationYaw, f);

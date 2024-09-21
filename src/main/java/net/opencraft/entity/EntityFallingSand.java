@@ -2,7 +2,7 @@
 package net.opencraft.entity;
 
 import net.opencraft.nbt.NBTTagCompound;
-import net.opencraft.util.MathHelper;
+import net.opencraft.util.Mth;
 import net.opencraft.world.World;
 
 public class EntityFallingSand extends Entity {
@@ -52,9 +52,9 @@ public class EntityFallingSand extends Entity {
         this.motionX *= 0.9800000190734863;
         this.motionY *= 0.9800000190734863;
         this.motionZ *= 0.9800000190734863;
-        final int floor_double = MathHelper.floor_double(this.posX);
-        final int floor_double2 = MathHelper.floor_double(this.posY);
-        final int floor_double3 = MathHelper.floor_double(this.posZ);
+        final int floor_double = Mth.floor_double(this.posX);
+        final int floor_double2 = Mth.floor_double(this.posY);
+        final int floor_double3 = Mth.floor_double(this.posZ);
         if (this.worldObj.getBlockId(floor_double, floor_double2, floor_double3) == this.blockID) {
             this.worldObj.setBlockWithNotify(floor_double, floor_double2, floor_double3, 0);
         }

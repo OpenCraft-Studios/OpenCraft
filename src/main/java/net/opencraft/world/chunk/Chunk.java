@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 import net.opencraft.EnumSkyBlock;
-import net.opencraft.util.MathHelper;
+import net.opencraft.util.Mth;
 import net.opencraft.tileentity.TileEntity;
 import net.opencraft.world.World;
 
@@ -285,12 +285,12 @@ public class Chunk {
 
     public void addEntity(final Entity entity) {
         this.hasEntities = true;
-        final int floor_double = MathHelper.floor_double(entity.posX / 16.0);
-        final int floor_double2 = MathHelper.floor_double(entity.posZ / 16.0);
+        final int floor_double = Mth.floor_double(entity.posX / 16.0);
+        final int floor_double2 = Mth.floor_double(entity.posZ / 16.0);
         if (floor_double != this.xPosition || floor_double2 != this.zPosition) {
             System.out.println(new StringBuilder().append("Wrong location! ").append(entity).toString());
         }
-        int floor_double3 = MathHelper.floor_double(entity.posY / 16.0);
+        int floor_double3 = Mth.floor_double(entity.posY / 16.0);
         if (floor_double3 < 0) {
             floor_double3 = 0;
         }
@@ -301,7 +301,7 @@ public class Chunk {
     }
 
     public void removeEntity(final Entity entity) {
-        this.removeEntityAtIndex(entity, MathHelper.floor_double(entity.posY / 16.0));
+        this.removeEntityAtIndex(entity, Mth.floor_double(entity.posY / 16.0));
     }
 
     public void removeEntityAtIndex(final Entity entity, int integer) {
@@ -382,8 +382,8 @@ public class Chunk {
     }
 
     public void getEntitiesWithinAABBForEntity(final Entity entity, final AABB aabb, final List list) {
-        int floor_double = MathHelper.floor_double((aabb.minY - 2.0) / 16.0);
-        int floor_double2 = MathHelper.floor_double((aabb.maxY + 2.0) / 16.0);
+        int floor_double = Mth.floor_double((aabb.minY - 2.0) / 16.0);
+        int floor_double2 = Mth.floor_double((aabb.maxY + 2.0) / 16.0);
         if (floor_double < 0) {
             floor_double = 0;
         }
@@ -402,8 +402,8 @@ public class Chunk {
     }
 
     public void getEntitiesOfTypeWithinAAAB(final Class class1, final AABB aabb, final List list) {
-        int floor_double = MathHelper.floor_double((aabb.minY - 2.0) / 16.0);
-        int floor_double2 = MathHelper.floor_double((aabb.maxY + 2.0) / 16.0);
+        int floor_double = Mth.floor_double((aabb.minY - 2.0) / 16.0);
+        int floor_double2 = Mth.floor_double((aabb.maxY + 2.0) / 16.0);
         if (floor_double < 0) {
             floor_double = 0;
         }

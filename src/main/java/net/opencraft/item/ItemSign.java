@@ -4,7 +4,7 @@ package net.opencraft.item;
 import net.opencraft.block.Block;
 import net.opencraft.entity.EntityPlayer;
 import net.opencraft.tileentity.TileEntitySign;
-import net.opencraft.util.MathHelper;
+import net.opencraft.util.Mth;
 import net.opencraft.world.World;
 
 public class ItemSign extends Item {
@@ -25,7 +25,7 @@ public class ItemSign extends Item {
             return false;
         }
         fe.setBlockWithNotify(xCoord, yCoord, zCoord, Block.signPost.blockID);
-        fe.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, MathHelper.floor_double((gi.rotationYaw + 180.0f) * 16.0f / 360.0f - 0.5) & 0xF);
+        fe.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, Mth.floor_double((gi.rotationYaw + 180.0f) * 16.0f / 360.0f - 0.5) & 0xF);
         --hw.stackSize;
         gi.displayGUIEditSign((TileEntitySign) fe.getBlockTileEntity(xCoord, yCoord, zCoord));
         return true;

@@ -18,7 +18,7 @@ import net.opencraft.client.renderer.culling.Frustrum;
 import net.opencraft.client.renderer.entity.RenderGlobal;
 import net.opencraft.client.renderer.entity.RenderHelper;
 import net.opencraft.item.ItemRenderer;
-import net.opencraft.util.MathHelper;
+import net.opencraft.util.Mth;
 import net.opencraft.util.Vec3;
 import net.opencraft.world.World;
 import org.lwjgl.input.Mouse;
@@ -61,7 +61,7 @@ public class EntityRenderer {
 
     public void updateRenderer() {
         this.fogColor2 = this.fogColor1;
-        final float lightBrightness = this.mc.theWorld.getLightBrightness(MathHelper.floor_double(this.mc.thePlayer.posX), MathHelper.floor_double(this.mc.thePlayer.posY), MathHelper.floor_double(this.mc.thePlayer.posZ));
+        final float lightBrightness = this.mc.theWorld.getLightBrightness(Mth.floor_double(this.mc.thePlayer.posX), Mth.floor_double(this.mc.thePlayer.posY), Mth.floor_double(this.mc.thePlayer.posZ));
         final float n = (3 - this.mc.gameSettings.renderDistance) / 3.0f;
         this.fogColor1 += (lightBrightness * (1.0f - n) + n - this.fogColor1) * 0.1f;
         ++this.rendererUpdateCount;
@@ -81,10 +81,10 @@ public class EntityRenderer {
         final float n = thePlayer.prevRotationPitch + (thePlayer.rotationPitch - thePlayer.prevRotationPitch) * float1;
         final float n2 = thePlayer.prevRotationYaw + (thePlayer.rotationYaw - thePlayer.prevRotationYaw) * float1;
         final Vec3 orientCamera = this.orientCamera(float1);
-        final float cos = MathHelper.cos(-n2 * 0.017453292f - 3.1415927f);
-        final float sin = MathHelper.sin(-n2 * 0.017453292f - 3.1415927f);
-        final float n3 = -MathHelper.cos(-n * 0.017453292f);
-        final float sin2 = MathHelper.sin(-n * 0.017453292f);
+        final float cos = Mth.cos(-n2 * 0.017453292f - 3.1415927f);
+        final float sin = Mth.sin(-n2 * 0.017453292f - 3.1415927f);
+        final float n3 = -Mth.cos(-n * 0.017453292f);
+        final float sin2 = Mth.sin(-n * 0.017453292f);
         final float n4 = sin * n3;
         final float n5 = sin2;
         final float n6 = cos * n3;
@@ -149,7 +149,7 @@ public class EntityRenderer {
             return;
         }
         sin /= thePlayer.maxHurtTime;
-        sin = MathHelper.sin(sin * sin * sin * sin * 3.1415927f);
+        sin = Mth.sin(sin * sin * sin * sin * 3.1415927f);
         final float attackedAtYaw = thePlayer.attackedAtYaw;
         GL11.glRotatef(-attackedAtYaw, 0.0f, 1.0f, 0.0f);
         GL11.glRotatef(-sin * 14.0f, 0.0f, 0.0f, 1.0f);
@@ -164,9 +164,9 @@ public class EntityRenderer {
         final float n = thePlayer.distanceWalkedModified + (thePlayer.distanceWalkedModified - thePlayer.prevDistanceWalkedModified) * float1;
         final float n2 = thePlayer.prevCameraYaw + (thePlayer.cameraYaw - thePlayer.prevCameraYaw) * float1;
         final float n3 = thePlayer.prevCameraPitch + (thePlayer.cameraPitch - thePlayer.prevCameraPitch) * float1;
-        GL11.glTranslatef(MathHelper.sin(n * 3.1415927f) * n2 * 0.5f, -Math.abs(MathHelper.cos(n * 3.1415927f) * n2), 0.0f);
-        GL11.glRotatef(MathHelper.sin(n * 3.1415927f) * n2 * 3.0f, 0.0f, 0.0f, 1.0f);
-        GL11.glRotatef(Math.abs(MathHelper.cos(n * 3.1415927f + 0.2f) * n2) * 5.0f, 1.0f, 0.0f, 0.0f);
+        GL11.glTranslatef(Mth.sin(n * 3.1415927f) * n2 * 0.5f, -Math.abs(Mth.cos(n * 3.1415927f) * n2), 0.0f);
+        GL11.glRotatef(Mth.sin(n * 3.1415927f) * n2 * 3.0f, 0.0f, 0.0f, 1.0f);
+        GL11.glRotatef(Math.abs(Mth.cos(n * 3.1415927f + 0.2f) * n2) * 5.0f, 1.0f, 0.0f, 0.0f);
         GL11.glRotatef(n3, 1.0f, 0.0f, 0.0f);
     }
 
@@ -177,9 +177,9 @@ public class EntityRenderer {
         final double double3 = thePlayer.prevPosZ + (thePlayer.posZ - thePlayer.prevPosZ) * float1;
         if (this.mc.gameSettings.thirdPersonView) {
             double n = 4.0;
-            final double n2 = -MathHelper.sin(thePlayer.rotationYaw / 180.0f * 3.1415927f) * MathHelper.cos(thePlayer.rotationPitch / 180.0f * 3.1415927f) * n;
-            final double n3 = MathHelper.cos(thePlayer.rotationYaw / 180.0f * 3.1415927f) * MathHelper.cos(thePlayer.rotationPitch / 180.0f * 3.1415927f) * n;
-            final double n4 = -MathHelper.sin(thePlayer.rotationPitch / 180.0f * 3.1415927f) * n;
+            final double n2 = -Mth.sin(thePlayer.rotationYaw / 180.0f * 3.1415927f) * Mth.cos(thePlayer.rotationPitch / 180.0f * 3.1415927f) * n;
+            final double n3 = Mth.cos(thePlayer.rotationYaw / 180.0f * 3.1415927f) * Mth.cos(thePlayer.rotationPitch / 180.0f * 3.1415927f) * n;
+            final double n4 = -Mth.sin(thePlayer.rotationPitch / 180.0f * 3.1415927f) * n;
             for (int i = 0; i < 8; ++i) {
                 float n5 = (float) ((i & 0x1) * 2 - 1);
                 float n6 = (float) ((i >> 1 & 0x1) * 2 - 1);
@@ -409,9 +409,9 @@ public class EntityRenderer {
     private void addRainParticles() {
         final EntityPlayerSP thePlayer = this.mc.thePlayer;
         final World theWorld = this.mc.theWorld;
-        final int floor_double = MathHelper.floor_double(thePlayer.posX);
-        final int floor_double2 = MathHelper.floor_double(thePlayer.posY);
-        final int floor_double3 = MathHelper.floor_double(thePlayer.posZ);
+        final int floor_double = Mth.floor_double(thePlayer.posX);
+        final int floor_double2 = Mth.floor_double(thePlayer.posY);
+        final int floor_double3 = Mth.floor_double(thePlayer.posZ);
         final int n = 4;
         for (int i = 0; i < 50; ++i) {
             final int n2 = floor_double + this.random.nextInt(n * 2 + 1) - n;
@@ -431,9 +431,9 @@ public class EntityRenderer {
     private void renderRainSnow(final float float1) {
         final EntityPlayerSP thePlayer = this.mc.thePlayer;
         final World theWorld = this.mc.theWorld;
-        final int floor_double = MathHelper.floor_double(thePlayer.posX);
-        final int floor_double2 = MathHelper.floor_double(thePlayer.posY);
-        final int floor_double3 = MathHelper.floor_double(thePlayer.posZ);
+        final int floor_double = Mth.floor_double(thePlayer.posX);
+        final int floor_double2 = Mth.floor_double(thePlayer.posY);
+        final int floor_double3 = Mth.floor_double(thePlayer.posZ);
         final Tessellator instance = Tessellator.instance;
         GL11.glDisable(2884);
         GL11.glNormal3f(0.0f, 1.0f, 0.0f);
@@ -456,7 +456,7 @@ public class EntityRenderer {
                     final float n5 = ((this.rendererUpdateCount + i * 3121 + j * 418711) % 32 + float1) / 32.0f;
                     final double n6 = i + 0.5f - thePlayer.posX;
                     final double n7 = j + 0.5f - thePlayer.posZ;
-                    final float n8 = MathHelper.sqrt_double(n6 * n6 + n7 * n7) / n;
+                    final float n8 = Mth.sqrt_double(n6 * n6 + n7 * n7) / n;
                     GL11.glColor4f(1.0f, 1.0f, 1.0f, (1.0f - n8 * n8) * 0.7f);
                     instance.startDrawingQuads();
                     instance.addVertexWithUV(i + 0, n2, j + 0, 0.0f * n4, n2 * n4 / 8.0f + n5 * n4);

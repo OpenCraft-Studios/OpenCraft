@@ -14,20 +14,20 @@ import net.opencraft.item.ItemStack;
 public class CraftingManager {
 
     private static final CraftingManager instance;
-    private List recipes;
+    private List<IRecipe> recipes = new ArrayList<>();
 
     public static final CraftingManager getInstance() {
         return CraftingManager.instance;
     }
 
     private CraftingManager() {
-        this.recipes = (List) new ArrayList();
         new RecipesTools().addRecipes(this);
         new RecipesSwords().addRecipe(this);
         new RecipesOreBlocks().addRecipes(this);
         new RecipesFood().addRecipes(this);
         new RecipesUtilities().addRecipes(this);
         new RecipesArmor().addRecipes(this);
+        
         this.addRecipe(new ItemStack(Block.woolGray, 1), "###", "###", "###", '#', Item.silk);
         this.addRecipe(new ItemStack(Block.tnt, 1), "X#X", "#X#", "X#X", 'X', Item.gunpowder, '#', Block.sand);
         this.addRecipe(new ItemStack(Block.slabSingle, 3), "###", '#', Block.cobblestone);

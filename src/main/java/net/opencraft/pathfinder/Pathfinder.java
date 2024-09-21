@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 import net.opencraft.block.material.Material;
 import net.opencraft.entity.Entity;
-import net.opencraft.util.MathHelper;
+import net.opencraft.util.Mth;
 import net.opencraft.world.IBlockAccess;
 
 public class Pathfinder {
@@ -33,7 +33,7 @@ public class Pathfinder {
     private PathEntity createEntityPathTo(final Entity eq, final double double2, final double double3, final double double4, final float float5) {
         this.path.clearPath();
         this.pointMap.clear();
-        return this.addToPath(eq, this.openPoint(MathHelper.floor_double(eq.boundingBox.minX), MathHelper.floor_double(eq.boundingBox.minY), MathHelper.floor_double(eq.boundingBox.minZ)), this.openPoint(MathHelper.floor_double(double2 - eq.width / 2.0f), MathHelper.floor_double(double3), MathHelper.floor_double(double4 - eq.width / 2.0f)), new PathPoint(MathHelper.floor_float(eq.width + 1.0f), MathHelper.floor_float(eq.height + 1.0f), MathHelper.floor_float(eq.width + 1.0f)), float5);
+        return this.addToPath(eq, this.openPoint(Mth.floor_double(eq.boundingBox.minX), Mth.floor_double(eq.boundingBox.minY), Mth.floor_double(eq.boundingBox.minZ)), this.openPoint(Mth.floor_double(double2 - eq.width / 2.0f), Mth.floor_double(double3), Mth.floor_double(double4 - eq.width / 2.0f)), new PathPoint(Mth.floor_float(eq.width + 1.0f), Mth.floor_float(eq.height + 1.0f), Mth.floor_float(eq.width + 1.0f)), float5);
     }
 
     private PathEntity addToPath(final Entity eq, final PathPoint d2, final PathPoint d3, final PathPoint d4, final float float5) {

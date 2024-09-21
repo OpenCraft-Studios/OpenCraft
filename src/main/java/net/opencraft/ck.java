@@ -5,7 +5,7 @@ import net.opencraft.block.material.Material;
 import net.opencraft.client.gui.IProgressUpdate;
 import net.opencraft.entity.Entity;
 import net.opencraft.entity.EntityLiving;
-import net.opencraft.util.MathHelper;
+import net.opencraft.util.Mth;
 import net.opencraft.world.World;
 import net.opencraft.world.chunk.ChunkPosition;
 
@@ -35,8 +35,8 @@ public class ck {
 
     private int a(final World fe, final int integer, final Entity eq, final IProgressUpdate jd) {
         int n = 0;
-        final int floor_double = MathHelper.floor_double(eq.posX);
-        final int floor_double2 = MathHelper.floor_double(eq.posZ);
+        final int floor_double = Mth.floor_double(eq.posX);
+        final int floor_double2 = Mth.floor_double(eq.posZ);
         final int nextInt = fe.rand.nextInt(this.c.length);
         final ChunkPosition a = this.a(fe, floor_double, floor_double2);
         final int x = a.x;

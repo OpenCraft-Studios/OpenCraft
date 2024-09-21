@@ -1,7 +1,7 @@
 package net.opencraft.client.renderer;
 
 import net.opencraft.OpenCraft;
-import net.opencraft.util.MathHelper;
+import net.opencraft.util.Mth;
 
 public class RenderSkybox {
     private final OpenCraft mc;
@@ -15,6 +15,6 @@ public class RenderSkybox {
 
     public void render(float partialTicks) {
         this.time += partialTicks;
-        this.renderer.render(this.mc, MathHelper.sin(this.time * 0.001F) * 5.0F + 25.0F, -this.time * 0.1F);
+        this.renderer.render(this.mc, Mth.sin(this.time * 0.001F) * 5.0F + 25.0F, -this.time * 0.1F);
     }
 }

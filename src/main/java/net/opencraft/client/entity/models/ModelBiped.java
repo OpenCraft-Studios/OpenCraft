@@ -1,7 +1,7 @@
 
 package net.opencraft.client.entity.models;
 
-import net.opencraft.util.MathHelper;
+import net.opencraft.util.Mth;
 
 public class ModelBiped extends ModelBase {
 
@@ -60,19 +60,19 @@ public class ModelBiped extends ModelBase {
         this.bipedHead.rotateAngleX = nya5 / 57.295776f;
         this.bipedHeadwear.rotateAngleY = this.bipedHead.rotateAngleY;
         this.bipedHeadwear.rotateAngleX = this.bipedHead.rotateAngleX;
-        this.bipedRightArm.rotateAngleX = MathHelper.cos(nya1 * 0.6662f + 3.1415927f) * 2.0f * nya2;
-        this.bipedRightArm.rotateAngleZ = (MathHelper.cos(nya1 * 0.2312f) + 1.0f) * 1.0f * nya2;
-        this.bipedLeftArm.rotateAngleX = MathHelper.cos(nya1 * 0.6662f) * 2.0f * nya2;
-        this.bipedLeftArm.rotateAngleZ = (MathHelper.cos(nya1 * 0.2812f) - 1.0f) * 1.0f * nya2;
-        this.bipedRightLeg.rotateAngleX = MathHelper.cos(nya1 * 0.6662f) * 1.4f * nya2;
-        this.bipedLeftLeg.rotateAngleX = MathHelper.cos(nya1 * 0.6662f + 3.1415927f) * 1.4f * nya2;
+        this.bipedRightArm.rotateAngleX = Mth.cos(nya1 * 0.6662f + 3.1415927f) * 2.0f * nya2;
+        this.bipedRightArm.rotateAngleZ = (Mth.cos(nya1 * 0.2312f) + 1.0f) * 1.0f * nya2;
+        this.bipedLeftArm.rotateAngleX = Mth.cos(nya1 * 0.6662f) * 2.0f * nya2;
+        this.bipedLeftArm.rotateAngleZ = (Mth.cos(nya1 * 0.2812f) - 1.0f) * 1.0f * nya2;
+        this.bipedRightLeg.rotateAngleX = Mth.cos(nya1 * 0.6662f) * 1.4f * nya2;
+        this.bipedLeftLeg.rotateAngleX = Mth.cos(nya1 * 0.6662f + 3.1415927f) * 1.4f * nya2;
         final ModelRenderer bipedRightArm = this.bipedRightArm;
-        bipedRightArm.rotateAngleZ += MathHelper.cos(nya3 * 0.09f) * 0.05f + 0.05f;
+        bipedRightArm.rotateAngleZ += Mth.cos(nya3 * 0.09f) * 0.05f + 0.05f;
         final ModelRenderer bipedLeftArm = this.bipedLeftArm;
-        bipedLeftArm.rotateAngleZ -= MathHelper.cos(nya3 * 0.09f) * 0.05f + 0.05f;
+        bipedLeftArm.rotateAngleZ -= Mth.cos(nya3 * 0.09f) * 0.05f + 0.05f;
         final ModelRenderer bipedRightArm2 = this.bipedRightArm;
-        bipedRightArm2.rotateAngleX += MathHelper.sin(nya3 * 0.067f) * 0.05f;
+        bipedRightArm2.rotateAngleX += Mth.sin(nya3 * 0.067f) * 0.05f;
         final ModelRenderer bipedLeftArm2 = this.bipedLeftArm;
-        bipedLeftArm2.rotateAngleX -= MathHelper.sin(nya3 * 0.067f) * 0.05f;
+        bipedLeftArm2.rotateAngleX -= Mth.sin(nya3 * 0.067f) * 0.05f;
     }
 }

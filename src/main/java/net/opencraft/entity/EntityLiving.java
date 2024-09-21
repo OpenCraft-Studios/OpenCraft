@@ -6,7 +6,7 @@ import net.opencraft.block.Block;
 import net.opencraft.block.material.Material;
 import net.opencraft.client.sound.StepSound;
 import net.opencraft.nbt.NBTTagCompound;
-import net.opencraft.util.MathHelper;
+import net.opencraft.util.Mth;
 import net.opencraft.world.World;
 
 public class EntityLiving extends Entity {
@@ -181,7 +181,7 @@ public class EntityLiving extends Entity {
         this.onLivingUpdate();
         final double n = this.posX - this.prevPosX;
         final double n2 = this.posZ - this.prevPosZ;
-        final float sqrt_double = MathHelper.sqrt_double(n * n + n2 * n2);
+        final float sqrt_double = Mth.sqrt_double(n * n + n2 * n2);
         float renderYawOffset = this.renderYawOffset;
         float n3 = 0.0f;
         this.field_9362_u = this.rotationYawHead;
@@ -310,7 +310,7 @@ public class EntityLiving extends Entity {
     }
 
     public void knockBack(final Entity entity, final int nya1, final double nya2, final double nya3) {
-        final float sqrt_double = MathHelper.sqrt_double(nya2 * nya2 + nya3 * nya3);
+        final float sqrt_double = Mth.sqrt_double(nya2 * nya2 + nya3 * nya3);
         final float n = 0.4f;
         this.motionX /= 2.0;
         this.motionY /= 2.0;
@@ -345,7 +345,7 @@ public class EntityLiving extends Entity {
         final int nya2 = (int) Math.ceil((double) (nya1 - 3.0f));
         if (nya2 > 0) {
             this.attackEntityFrom(null, nya2);
-            final int blockId = this.worldObj.getBlockId(MathHelper.floor_double(this.posX), MathHelper.floor_double(this.posY - 0.20000000298023224 - this.yOffset), MathHelper.floor_double(this.posZ));
+            final int blockId = this.worldObj.getBlockId(Mth.floor_double(this.posX), Mth.floor_double(this.posY - 0.20000000298023224 - this.yOffset), Mth.floor_double(this.posZ));
             if (blockId > 0) {
                 final StepSound stepSound = Block.blocksList[blockId].stepSound;
                 this.worldObj.playSoundAtEntity(this, stepSound.stepSoundDir2(), stepSound.soundVolume() * 0.5f, stepSound.soundPitch() * 0.75f);
@@ -401,7 +401,7 @@ public class EntityLiving extends Entity {
         this.newPosZ = this.newRotationYaw;
         final double n = this.posX - this.prevPosX;
         final double n3 = this.posZ - this.prevPosZ;
-        float n4 = MathHelper.sqrt_double(n * n + n3 * n3) * 4.0f;
+        float n4 = Mth.sqrt_double(n * n + n3 * n3) * 4.0f;
         if (n4 > 1.0f) {
             n4 = 1.0f;
         }
@@ -410,9 +410,9 @@ public class EntityLiving extends Entity {
     }
 
     public boolean isOnLadder() {
-        final int floor_double = MathHelper.floor_double(this.posX);
-        final int floor_double2 = MathHelper.floor_double(this.boundingBox.minY);
-        final int floor_double3 = MathHelper.floor_double(this.posZ);
+        final int floor_double = Mth.floor_double(this.posX);
+        final int floor_double2 = Mth.floor_double(this.boundingBox.minY);
+        final int floor_double3 = Mth.floor_double(this.posZ);
         return this.worldObj.getBlockId(floor_double, floor_double2, floor_double3) == Block.ladder.blockID || this.worldObj.getBlockId(floor_double, floor_double2 + 1, floor_double3) == Block.ladder.blockID;
     }
 

@@ -11,7 +11,7 @@ import net.opencraft.item.ItemStack;
 import net.opencraft.nbt.NBTTagCompound;
 import net.opencraft.tileentity.TileEntityFurnace;
 import net.opencraft.tileentity.TileEntitySign;
-import net.opencraft.util.MathHelper;
+import net.opencraft.util.Mth;
 import net.opencraft.world.World;
 
 public class EntityPlayer extends EntityLiving {
@@ -66,7 +66,7 @@ public class EntityPlayer extends EntityLiving {
         this.inventory.decrementAnimations();
         this.prevCameraYaw = this.cameraYaw;
         super.onLivingUpdate();
-        float sqrt_double = MathHelper.sqrt_double(this.motionX * this.motionX + this.motionZ * this.motionZ);
+        float sqrt_double = Mth.sqrt_double(this.motionX * this.motionX + this.motionZ * this.motionZ);
         float n = (float) Math.atan(-this.motionY * 0.20000000298023224) * 15.0f;
         if (sqrt_double > 0.1f) {
             sqrt_double = 0.1f;
@@ -107,8 +107,8 @@ public class EntityPlayer extends EntityLiving {
         }
         this.inventory.dropAllItems();
         if (entity != null) {
-            this.motionX = -MathHelper.cos((this.attackedAtYaw + this.rotationYaw) * 3.1415927f / 180.0f) * 0.1f;
-            this.motionZ = -MathHelper.sin((this.attackedAtYaw + this.rotationYaw) * 3.1415927f / 180.0f) * 0.1f;
+            this.motionX = -Mth.cos((this.attackedAtYaw + this.rotationYaw) * 3.1415927f / 180.0f) * 0.1f;
+            this.motionZ = -Mth.sin((this.attackedAtYaw + this.rotationYaw) * 3.1415927f / 180.0f) * 0.1f;
         } else {
             final double n = 0.0;
             this.motionZ = n;
@@ -136,14 +136,14 @@ public class EntityPlayer extends EntityLiving {
         if (boolean2) {
             final float n2 = this.rand.nextFloat() * 0.5f;
             final float n3 = this.rand.nextFloat() * 3.1415927f * 2.0f;
-            entity.motionX = -MathHelper.sin(n3) * n2;
-            entity.motionZ = MathHelper.cos(n3) * n2;
+            entity.motionX = -Mth.sin(n3) * n2;
+            entity.motionZ = Mth.cos(n3) * n2;
             entity.motionY = 0.20000000298023224;
         } else {
             n = 0.3f;
-            entity.motionX = -MathHelper.sin(this.rotationYaw / 180.0f * 3.1415927f) * MathHelper.cos(this.rotationPitch / 180.0f * 3.1415927f) * n;
-            entity.motionZ = MathHelper.cos(this.rotationYaw / 180.0f * 3.1415927f) * MathHelper.cos(this.rotationPitch / 180.0f * 3.1415927f) * n;
-            entity.motionY = -MathHelper.sin(this.rotationPitch / 180.0f * 3.1415927f) * n + 0.1f;
+            entity.motionX = -Mth.sin(this.rotationYaw / 180.0f * 3.1415927f) * Mth.cos(this.rotationPitch / 180.0f * 3.1415927f) * n;
+            entity.motionZ = Mth.cos(this.rotationYaw / 180.0f * 3.1415927f) * Mth.cos(this.rotationPitch / 180.0f * 3.1415927f) * n;
+            entity.motionY = -Mth.sin(this.rotationPitch / 180.0f * 3.1415927f) * n + 0.1f;
             n = 0.02f;
             final float n2 = this.rand.nextFloat() * 3.1415927f * 2.0f;
             n *= this.rand.nextFloat();

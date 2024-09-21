@@ -31,7 +31,7 @@ import net.opencraft.item.ItemStack;
 import net.opencraft.physics.AABB;
 import net.opencraft.tileentity.TileEntity;
 import net.opencraft.tileentity.TileEntityRenderer;
-import net.opencraft.util.MathHelper;
+import net.opencraft.util.Mth;
 import net.opencraft.util.Vec3;
 import net.opencraft.world.IWorldAccess;
 import net.opencraft.world.World;
@@ -262,7 +262,7 @@ public class RenderGlobal implements IWorldAccess {
         }
         if (this.k != null) {
             final Entity player = this.k.player;
-            this.b(MathHelper.floor_double(player.posX), MathHelper.floor_double(player.posY), MathHelper.floor_double(player.posZ));
+            this.b(Mth.floor_double(player.posX), Mth.floor_double(player.posY), Mth.floor_double(player.posZ));
             Arrays.sort((Object[]) this.n, (Comparator) new EntitySorter(player));
         }
     }
@@ -384,7 +384,7 @@ public class RenderGlobal implements IWorldAccess {
             this.f = gi.posX;
             this.g = gi.posY;
             this.h = gi.posZ;
-            this.b(MathHelper.floor_double(gi.posX), MathHelper.floor_double(gi.posY), MathHelper.floor_double(gi.posZ));
+            this.b(Mth.floor_double(gi.posX), Mth.floor_double(gi.posY), Mth.floor_double(gi.posZ));
             Arrays.sort((Object[]) this.n, (Comparator) new EntitySorter(gi));
         }
         final int n7 = 0;
@@ -422,7 +422,7 @@ public class RenderGlobal implements IWorldAccess {
                             this.n[k].x = true;
                         }
                         if (this.n[k].isInFrustum && !this.n[k].y) {
-                            final int n14 = (int) (1.0f + MathHelper.sqrt_float(this.n[k].chunkIndex(gi)) / 128.0f);
+                            final int n14 = (int) (1.0f + Mth.sqrt_float(this.n[k].chunkIndex(gi)) / 128.0f);
                             if (this.x % n14 == k % n14) {
                                 final WorldRenderer worldRenderer = this.n[k];
                                 final float n15 = (float) (worldRenderer.i - n);
@@ -626,8 +626,8 @@ public class RenderGlobal implements IWorldAccess {
         final float n4 = 4.8828125E-4f;
         double n7 = this.k.player.prevPosX + (this.k.player.posX - this.k.player.prevPosX) * float1 + (this.x + float1) * 0.03f;
         double n8 = this.k.player.prevPosZ + (this.k.player.posZ - this.k.player.prevPosZ) * float1;
-        final int floor_double = MathHelper.floor_double(n7 / 2048.0);
-        final int floor_double2 = MathHelper.floor_double(n8 / 2048.0);
+        final int floor_double = Mth.floor_double(n7 / 2048.0);
+        final int floor_double2 = Mth.floor_double(n8 / 2048.0);
         n7 -= floor_double * 2048;
         n8 -= floor_double2 * 2048;
         final float n9 = 120.0f - n + 0.33f;
@@ -658,8 +658,8 @@ public class RenderGlobal implements IWorldAccess {
         double n4 = (this.k.player.prevPosX + (this.k.player.posX - this.k.player.prevPosX) * float1 + (this.x + float1) * 0.03f) / n2;
         double n5 = (this.k.player.prevPosZ + (this.k.player.posZ - this.k.player.prevPosZ) * float1) / n2 + 0.33000001311302185;
         final float n6 = 108.0f - n + 0.33f;
-        final int floor_double = MathHelper.floor_double(n4 / 2048.0);
-        final int floor_double2 = MathHelper.floor_double(n5 / 2048.0);
+        final int floor_double = Mth.floor_double(n4 / 2048.0);
+        final int floor_double2 = Mth.floor_double(n5 / 2048.0);
         n4 -= floor_double * 2048;
         n5 -= floor_double2 * 2048;
         GL11.glBindTexture(3553, this.l.getTexture("/assets/clouds.png"));
@@ -680,10 +680,10 @@ public class RenderGlobal implements IWorldAccess {
         float n7 = (float) (n4 * 0.0);
         float n8 = (float) (n5 * 0.0);
         final float n9 = 0.00390625f;
-        n7 = MathHelper.floor_double(n4) * n9;
-        n8 = MathHelper.floor_double(n5) * n9;
-        final float n10 = (float) (n4 - MathHelper.floor_double(n4));
-        final float n11 = (float) (n5 - MathHelper.floor_double(n5));
+        n7 = Mth.floor_double(n4) * n9;
+        n8 = Mth.floor_double(n5) * n9;
+        final float n10 = (float) (n4 - Mth.floor_double(n4));
+        final float n11 = (float) (n5 - Mth.floor_double(n5));
         final int n12 = 8;
         final int n13 = 3;
         final float n14 = 9.765625E-4f;
@@ -794,7 +794,7 @@ public class RenderGlobal implements IWorldAccess {
         GL11.glEnable(3042);
         GL11.glEnable(3008);
         GL11.glBlendFunc(770, 1);
-        GL11.glColor4f(1.0f, 1.0f, 1.0f, (MathHelper.sin(System.currentTimeMillis() / 100.0f) * 0.2f + 0.4f) * 0.5f);
+        GL11.glColor4f(1.0f, 1.0f, 1.0f, (Mth.sin(System.currentTimeMillis() / 100.0f) * 0.2f + 0.4f) * 0.5f);
         if (integer == 0) {
             if (this.damagePartialTime > 0.0f) {
                 GL11.glBlendFunc(774, 768);
@@ -823,8 +823,8 @@ public class RenderGlobal implements IWorldAccess {
             }
         } else if (hw != null) {
             GL11.glBlendFunc(770, 771);
-            final float n2 = MathHelper.sin(System.currentTimeMillis() / 100.0f) * 0.2f + 0.8f;
-            GL11.glColor4f(n2, n2, n2, MathHelper.sin(System.currentTimeMillis() / 200.0f) * 0.2f + 0.5f);
+            final float n2 = Mth.sin(System.currentTimeMillis() / 100.0f) * 0.2f + 0.8f;
+            GL11.glColor4f(n2, n2, n2, Mth.sin(System.currentTimeMillis() / 200.0f) * 0.2f + 0.5f);
             final int n = this.l.getTexture("/assets/terrain.png");
             GL11.glBindTexture(3553, n);
             int blockX = hb.blockX;
@@ -901,12 +901,12 @@ public class RenderGlobal implements IWorldAccess {
     }
 
     public void a(final int integer1, final int integer2, final int integer3, final int integer4, final int integer5, final int integer6) {
-        final int a = MathHelper.a(integer1, 16);
-        final int a2 = MathHelper.a(integer2, 16);
-        final int a3 = MathHelper.a(integer3, 16);
-        final int a4 = MathHelper.a(integer4, 16);
-        final int a5 = MathHelper.a(integer5, 16);
-        final int a6 = MathHelper.a(integer6, 16);
+        final int a = Mth.a(integer1, 16);
+        final int a2 = Mth.a(integer2, 16);
+        final int a3 = Mth.a(integer3, 16);
+        final int a4 = Mth.a(integer4, 16);
+        final int a5 = Mth.a(integer5, 16);
+        final int a6 = Mth.a(integer6, 16);
         for (int i = a; i <= a4; ++i) {
             int n = i % this.p;
             if (n < 0) {

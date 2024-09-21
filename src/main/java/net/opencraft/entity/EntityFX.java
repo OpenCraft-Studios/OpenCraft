@@ -3,7 +3,7 @@ package net.opencraft.entity;
 
 import net.opencraft.client.renderer.Tessellator;
 import net.opencraft.nbt.NBTTagCompound;
-import net.opencraft.util.MathHelper;
+import net.opencraft.util.Mth;
 import net.opencraft.world.World;
 
 public class EntityFX extends Entity {
@@ -37,7 +37,7 @@ public class EntityFX extends Entity {
         this.motionY = double6 + (float) (Math.random() * 2.0 - 1.0) * 0.4f;
         this.motionZ = double7 + (float) (Math.random() * 2.0 - 1.0) * 0.4f;
         final float n = (float) (Math.random() + Math.random() + 1.0) * 0.15f;
-        final float sqrt_double = MathHelper.sqrt_double(this.motionX * this.motionX + this.motionY * this.motionY + this.motionZ * this.motionZ);
+        final float sqrt_double = Mth.sqrt_double(this.motionX * this.motionX + this.motionY * this.motionY + this.motionZ * this.motionZ);
         this.motionX = this.motionX / sqrt_double * n * 0.4000000059604645;
         this.motionY = this.motionY / sqrt_double * n * 0.4000000059604645 + 0.10000000149011612;
         this.motionZ = this.motionZ / sqrt_double * n * 0.4000000059604645;

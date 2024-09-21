@@ -3,7 +3,7 @@ package net.opencraft.entity;
 
 import net.opencraft.item.Item;
 import net.opencraft.nbt.NBTTagCompound;
-import net.opencraft.util.MathHelper;
+import net.opencraft.util.Mth;
 import net.opencraft.world.World;
 
 public class EntitySpider extends EntityMonster {
@@ -37,7 +37,7 @@ public class EntitySpider extends EntityMonster {
             if (this.onGround) {
                 final double n = entity.posX - this.posX;
                 final double n2 = entity.posZ - this.posZ;
-                final float sqrt_double = MathHelper.sqrt_double(n * n + n2 * n2);
+                final float sqrt_double = Mth.sqrt_double(n * n + n2 * n2);
                 this.motionX = n / sqrt_double * 0.5 * 0.800000011920929 + this.motionX * 0.20000000298023224;
                 this.motionZ = n2 / sqrt_double * 0.5 * 0.800000011920929 + this.motionZ * 0.20000000298023224;
                 this.motionY = 0.4000000059604645;

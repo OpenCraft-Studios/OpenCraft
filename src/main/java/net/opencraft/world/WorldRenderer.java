@@ -15,7 +15,7 @@ import net.opencraft.entity.Entity;
 import net.opencraft.physics.AABB;
 import net.opencraft.tileentity.TileEntity;
 import net.opencraft.tileentity.TileEntityRenderer;
-import net.opencraft.util.MathHelper;
+import net.opencraft.util.Mth;
 import net.opencraft.world.chunk.Chunk;
 import net.opencraft.world.chunk.ChunkCache;
 import org.lwjgl.opengl.GL11;
@@ -71,7 +71,7 @@ public class WorldRenderer {
         this.h = integer6;
         this.g = integer6;
         this.f = integer6;
-        this.t = MathHelper.sqrt_float((this.f * this.f + this.g * this.g + this.h * this.h)) / 2.0f;
+        this.t = Mth.sqrt_float((this.f * this.f + this.g * this.g + this.h * this.h)) / 2.0f;
         this.C = integer7;
         this.c = -999;
         this.a(integer3, integer4, integer5);

@@ -6,7 +6,7 @@ import net.opencraft.client.input.MovingObjectPosition;
 import net.opencraft.item.Item;
 import net.opencraft.item.ItemStack;
 import net.opencraft.nbt.NBTTagCompound;
-import net.opencraft.util.MathHelper;
+import net.opencraft.util.Mth;
 import net.opencraft.util.Vec3;
 import net.opencraft.world.World;
 
@@ -46,19 +46,19 @@ public class EntityArrow extends Entity {
         this.owner = entityLiving;
         this.setSize(0.5f, 0.5f);
         this.setPositionAndRotation(entityLiving.posX, entityLiving.posY, entityLiving.posZ, entityLiving.rotationYaw, entityLiving.rotationPitch);
-        this.posX -= MathHelper.cos(this.rotationYaw / 180.0f * 3.1415927f) * 0.16f;
+        this.posX -= Mth.cos(this.rotationYaw / 180.0f * 3.1415927f) * 0.16f;
         this.posY -= 0.10000000149011612;
-        this.posZ -= MathHelper.sin(this.rotationYaw / 180.0f * 3.1415927f) * 0.16f;
+        this.posZ -= Mth.sin(this.rotationYaw / 180.0f * 3.1415927f) * 0.16f;
         this.setPosition(this.posX, this.posY, this.posZ);
         this.yOffset = 0.0f;
-        this.motionX = -MathHelper.sin(this.rotationYaw / 180.0f * 3.1415927f) * MathHelper.cos(this.rotationPitch / 180.0f * 3.1415927f);
-        this.motionZ = MathHelper.cos(this.rotationYaw / 180.0f * 3.1415927f) * MathHelper.cos(this.rotationPitch / 180.0f * 3.1415927f);
-        this.motionY = -MathHelper.sin(this.rotationPitch / 180.0f * 3.1415927f);
+        this.motionX = -Mth.sin(this.rotationYaw / 180.0f * 3.1415927f) * Mth.cos(this.rotationPitch / 180.0f * 3.1415927f);
+        this.motionZ = Mth.cos(this.rotationYaw / 180.0f * 3.1415927f) * Mth.cos(this.rotationPitch / 180.0f * 3.1415927f);
+        this.motionY = -Mth.sin(this.rotationPitch / 180.0f * 3.1415927f);
         this.setArrowHeading(this.motionX, this.motionY, this.motionZ, 1.5f, 1.0f);
     }
 
     public void setArrowHeading(double xCoord, double yCoord, double zCoord, final float yaw, final float pitch) {
-        final float sqrt_double = MathHelper.sqrt_double(xCoord * xCoord + yCoord * yCoord + zCoord * zCoord);
+        final float sqrt_double = Mth.sqrt_double(xCoord * xCoord + yCoord * yCoord + zCoord * zCoord);
         xCoord /= sqrt_double;
         yCoord /= sqrt_double;
         zCoord /= sqrt_double;
@@ -71,7 +71,7 @@ public class EntityArrow extends Entity {
         this.motionX = xCoord;
         this.motionY = yCoord;
         this.motionZ = zCoord;
-        final float sqrt_double2 = MathHelper.sqrt_double(xCoord * xCoord + zCoord * zCoord);
+        final float sqrt_double2 = Mth.sqrt_double(xCoord * xCoord + zCoord * zCoord);
         final float n = (float) (Math.atan2(xCoord, zCoord) * 180.0 / 3.1415927410125732);
         this.rotationYaw = n;
         this.prevRotationYaw = n;
@@ -153,7 +153,7 @@ public class EntityArrow extends Entity {
                 this.motionX = (float) (rayTraceBlocks.hitVec.xCoord - this.posX);
                 this.motionY = (float) (rayTraceBlocks.hitVec.yCoord - this.posY);
                 this.motionZ = (float) (rayTraceBlocks.hitVec.zCoord - this.posZ);
-                final float n3 = MathHelper.sqrt_double(this.motionX * this.motionX + this.motionY * this.motionY + this.motionZ * this.motionZ);
+                final float n3 = Mth.sqrt_double(this.motionX * this.motionX + this.motionY * this.motionY + this.motionZ * this.motionZ);
                 this.posX -= this.motionX / n3 * 0.05000000074505806;
                 this.posY -= this.motionY / n3 * 0.05000000074505806;
                 this.posZ -= this.motionZ / n3 * 0.05000000074505806;
@@ -165,7 +165,7 @@ public class EntityArrow extends Entity {
         this.posX += this.motionX;
         this.posY += this.motionY;
         this.posZ += this.motionZ;
-        final float n3 = MathHelper.sqrt_double(this.motionX * this.motionX + this.motionZ * this.motionZ);
+        final float n3 = Mth.sqrt_double(this.motionX * this.motionX + this.motionZ * this.motionZ);
         this.rotationYaw = (float) (Math.atan2(this.motionX, this.motionZ) * 180.0 / 3.1415927410125732);
         this.rotationPitch = (float) (Math.atan2(this.motionY, (double) n3) * 180.0 / 3.1415927410125732);
         while (this.rotationPitch - this.prevRotationPitch < -180.0f) {

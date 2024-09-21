@@ -4,7 +4,7 @@ package net.opencraft.client.gui;
 import net.opencraft.client.renderer.Tessellator;
 import net.opencraft.client.renderer.RenderSkybox;
 import net.opencraft.client.renderer.RenderSkyboxCube;
-import net.opencraft.util.MathHelper;
+import net.opencraft.util.Mth;
 import org.lwjgl.opengl.GL11;
 
 public class GuiMainMenu extends GuiScreen {
@@ -68,7 +68,7 @@ public class GuiMainMenu extends GuiScreen {
         GL11.glPushMatrix();
         GL11.glTranslatef((float) (this.width / 2 + 90), 70.0f, 0.0f);
         GL11.glRotatef(-20.0f, 0.0f, 0.0f, 1.0f);
-        float n = 1.8f - MathHelper.abs(MathHelper.sin(System.currentTimeMillis() % 1000L / 1000.0f * 3.1415927f * 2.0f) * 0.1f);
+        float n = 1.8f - Mth.abs(Mth.sin(System.currentTimeMillis() % 1000L / 1000.0f * 3.1415927f * 2.0f) * 0.1f);
         n = n * 100.0f / (this.fontRenderer.getStringWidth(this.currentSplash) + 32);
         GL11.glScalef(n, n, n);
         this.drawCenteredString(this.fontRenderer, this.currentSplash, 0, -8, 16776960);

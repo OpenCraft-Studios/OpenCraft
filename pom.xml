@@ -68,6 +68,12 @@
 			<artifactId>jorbis</artifactId>
 			<version>0.0.17</version>
 		</dependency>
+		
+		<dependency>
+			<groupId>org.joml</groupId>
+			<artifactId>joml</artifactId>
+			<version>1.10.8</version>
+		</dependency>
 
 	</dependencies>
 </project>

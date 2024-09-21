@@ -5,7 +5,7 @@ import net.opencraft.block.Block;
 import net.opencraft.client.entity.models.ModelBase;
 import net.opencraft.client.entity.models.ModelMinecart;
 import net.opencraft.entity.EntityMinecart;
-import net.opencraft.util.MathHelper;
+import net.opencraft.util.Mth;
 import net.opencraft.util.Vec3;
 import org.lwjgl.opengl.GL11;
 
@@ -54,7 +54,7 @@ public class RenderMinecart extends Render<EntityMinecart> {
             n2 = 0.0f;
         }
         if (float1 > 0.0f) {
-            GL11.glRotatef(MathHelper.sin(float1) * float1 * n2 / 10.0f * entityLiving.minecartRockDirection, 1.0f, 0.0f, 0.0f);
+            GL11.glRotatef(Mth.sin(float1) * float1 * n2 / 10.0f * entityLiving.minecartRockDirection, 1.0f, 0.0f, 0.0f);
         }
         this.loadTexture("/assets/terrain.png");
         final float n3 = 0.75f;

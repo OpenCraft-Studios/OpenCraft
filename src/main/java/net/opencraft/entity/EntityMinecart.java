@@ -10,7 +10,7 @@ import net.opencraft.nbt.NBTBase;
 import net.opencraft.nbt.NBTTagCompound;
 import net.opencraft.nbt.NBTTagList;
 import net.opencraft.physics.AABB;
-import net.opencraft.util.MathHelper;
+import net.opencraft.util.Mth;
 import net.opencraft.util.Vec3;
 import net.opencraft.world.World;
 
@@ -123,9 +123,9 @@ public class EntityMinecart extends Entity implements IInventory {
         this.prevPosY = this.posY;
         this.prevPosZ = this.posZ;
         this.motionY -= 0.03999999910593033;
-        final int floor_double = MathHelper.floor_double(this.posX);
-        int floor_double2 = MathHelper.floor_double(this.posY);
-        final int floor_double3 = MathHelper.floor_double(this.posZ);
+        final int floor_double = Mth.floor_double(this.posX);
+        int floor_double2 = Mth.floor_double(this.posY);
+        final int floor_double3 = Mth.floor_double(this.posZ);
         if (this.worldObj.getBlockId(floor_double, floor_double2 - 1, floor_double3) == Block.rail.blockID) {
             --floor_double2;
         }
@@ -201,9 +201,9 @@ public class EntityMinecart extends Entity implements IInventory {
                 motionZ = n;
             }
             this.moveEntity(motionX, 0.0, motionZ);
-            if (array[0][1] != 0 && MathHelper.floor_double(this.posX) - floor_double == array[0][0] && MathHelper.floor_double(this.posZ) - floor_double3 == array[0][2]) {
+            if (array[0][1] != 0 && Mth.floor_double(this.posX) - floor_double == array[0][0] && Mth.floor_double(this.posZ) - floor_double3 == array[0][2]) {
                 this.setPosition(this.posX, this.posY + array[0][1], this.posZ);
-            } else if (array[1][1] != 0 && MathHelper.floor_double(this.posX) - floor_double == array[1][0] && MathHelper.floor_double(this.posZ) - floor_double3 == array[1][2]) {
+            } else if (array[1][1] != 0 && Mth.floor_double(this.posX) - floor_double == array[1][0] && Mth.floor_double(this.posZ) - floor_double3 == array[1][2]) {
                 this.setPosition(this.posX, this.posY + array[1][1], this.posZ);
             }
             if (this.riddenByEntity != null) {
@@ -225,8 +225,8 @@ public class EntityMinecart extends Entity implements IInventory {
                 }
                 this.setPosition(this.posX, pos2.yCoord, this.posZ);
             }
-            final int floor_double4 = MathHelper.floor_double(this.posX);
-            final int floor_double5 = MathHelper.floor_double(this.posZ);
+            final int floor_double4 = Mth.floor_double(this.posX);
+            final int floor_double5 = Mth.floor_double(this.posZ);
             if (floor_double4 != floor_double || floor_double5 != floor_double3) {
                 n5 = Math.sqrt(this.motionX * this.motionX + this.motionZ * this.motionZ);
                 this.motionX = n5 * (floor_double4 - floor_double);
@@ -292,9 +292,9 @@ public class EntityMinecart extends Entity implements IInventory {
     }
 
     public Vec3 getPosOffset(double double1, double double2, double double3, final double double4) {
-        final int floor_double = MathHelper.floor_double(double1);
-        int floor_double2 = MathHelper.floor_double(double2);
-        final int floor_double3 = MathHelper.floor_double(double3);
+        final int floor_double = Mth.floor_double(double1);
+        int floor_double2 = Mth.floor_double(double2);
+        final int floor_double3 = Mth.floor_double(double3);
         if (this.worldObj.getBlockId(floor_double, floor_double2 - 1, floor_double3) == Block.rail.blockID) {
             --floor_double2;
         }
@@ -312,9 +312,9 @@ public class EntityMinecart extends Entity implements IInventory {
             n2 /= sqrt;
             double1 += n * double4;
             double3 += n2 * double4;
-            if (array[0][1] != 0 && MathHelper.floor_double(double1) - floor_double == array[0][0] && MathHelper.floor_double(double3) - floor_double3 == array[0][2]) {
+            if (array[0][1] != 0 && Mth.floor_double(double1) - floor_double == array[0][0] && Mth.floor_double(double3) - floor_double3 == array[0][2]) {
                 double2 += array[0][1];
-            } else if (array[1][1] != 0 && MathHelper.floor_double(double1) - floor_double == array[1][0] && MathHelper.floor_double(double3) - floor_double3 == array[1][2]) {
+            } else if (array[1][1] != 0 && Mth.floor_double(double1) - floor_double == array[1][0] && Mth.floor_double(double3) - floor_double3 == array[1][2]) {
                 double2 += array[1][1];
             }
             return this.getPos(double1, double2, double3);
@@ -323,9 +323,9 @@ public class EntityMinecart extends Entity implements IInventory {
     }
 
     public Vec3 getPos(double double1, double double2, double double3) {
-        final int floor_double = MathHelper.floor_double(double1);
-        int floor_double2 = MathHelper.floor_double(double2);
-        final int floor_double3 = MathHelper.floor_double(double3);
+        final int floor_double = Mth.floor_double(double1);
+        int floor_double2 = Mth.floor_double(double2);
+        final int floor_double3 = Mth.floor_double(double3);
         if (this.worldObj.getBlockId(floor_double, floor_double2 - 1, floor_double3) == Block.rail.blockID) {
             --floor_double2;
         }
@@ -405,7 +405,7 @@ public class EntityMinecart extends Entity implements IInventory {
         double n2 = entity.posZ - this.posZ;
         double double1 = n * n + n2 * n2;
         if (double1 >= 9.999999747378752E-5) {
-            double1 = MathHelper.sqrt_double(double1);
+            double1 = Mth.sqrt_double(double1);
             n /= double1;
             n2 /= double1;
             double n3 = 1.0 / double1;

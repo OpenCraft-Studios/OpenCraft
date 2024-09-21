@@ -4,7 +4,7 @@ package net.opencraft.entity;
 import net.opencraft.block.LiquidBlock;
 import net.opencraft.block.material.Material;
 import net.opencraft.client.renderer.Tessellator;
-import net.opencraft.util.MathHelper;
+import net.opencraft.util.Mth;
 import net.opencraft.world.World;
 
 public class EntityRainFX extends EntityFX {
@@ -48,8 +48,8 @@ public class EntityRainFX extends EntityFX {
             this.motionX *= 0.699999988079071;
             this.motionZ *= 0.699999988079071;
         }
-        final Material blockMaterial = this.worldObj.getBlockMaterial(MathHelper.floor_double(this.posX), MathHelper.floor_double(this.posY), MathHelper.floor_double(this.posZ));
-        if ((blockMaterial.isLiquid() || blockMaterial.isSolid()) && this.posY < MathHelper.floor_double(this.posY) + 1 - LiquidBlock.getPercentAir(this.worldObj.getBlockMetadata(MathHelper.floor_double(this.posX), MathHelper.floor_double(this.posY), MathHelper.floor_double(this.posZ)))) {
+        final Material blockMaterial = this.worldObj.getBlockMaterial(Mth.floor_double(this.posX), Mth.floor_double(this.posY), Mth.floor_double(this.posZ));
+        if ((blockMaterial.isLiquid() || blockMaterial.isSolid()) && this.posY < Mth.floor_double(this.posY) + 1 - LiquidBlock.getPercentAir(this.worldObj.getBlockMetadata(Mth.floor_double(this.posX), Mth.floor_double(this.posY), Mth.floor_double(this.posZ)))) {
             this.setEntityDead();
         }
     }

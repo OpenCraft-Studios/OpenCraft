@@ -3,7 +3,7 @@ package net.opencraft.client.renderer.entity;
 
 import net.opencraft.client.entity.models.ModelCreeper;
 import net.opencraft.entity.EntityCreeper;
-import net.opencraft.util.MathHelper;
+import net.opencraft.util.Mth;
 import org.lwjgl.opengl.GL11;
 
 public class RenderCreeper extends RenderLiving {
@@ -15,7 +15,7 @@ public class RenderCreeper extends RenderLiving {
 
     protected void preRenderCallback(final EntityCreeper entityLiving, final float nya1) {
         float setCreeperFlashTime = entityLiving.setCreeperFlashTime(nya1);
-        final float n = 1.0f + MathHelper.sin(setCreeperFlashTime * 100.0f) * setCreeperFlashTime * 0.01f;
+        final float n = 1.0f + Mth.sin(setCreeperFlashTime * 100.0f) * setCreeperFlashTime * 0.01f;
         if (setCreeperFlashTime < 0.0f) {
             setCreeperFlashTime = 0.0f;
         }

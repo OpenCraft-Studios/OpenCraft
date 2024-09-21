@@ -14,7 +14,7 @@ import net.opencraft.nbt.NBTTagDouble;
 import net.opencraft.nbt.NBTTagFloat;
 import net.opencraft.nbt.NBTTagList;
 import net.opencraft.physics.AABB;
-import net.opencraft.util.MathHelper;
+import net.opencraft.util.Mth;
 import net.opencraft.util.Vec3;
 import net.opencraft.world.World;
 
@@ -179,12 +179,12 @@ public abstract class Entity {
         this.prevRotationYaw = this.rotationYaw;
         if (this.handleWaterMovement()) {
             if (!this.inWater && !this.isFirstUpdate) {
-                float volume = MathHelper.sqrt_double(this.motionX * this.motionX * 0.20000000298023224 + this.motionY * this.motionY + this.motionZ * this.motionZ * 0.20000000298023224) * 0.2f;
+                float volume = Mth.sqrt_double(this.motionX * this.motionX * 0.20000000298023224 + this.motionY * this.motionY + this.motionZ * this.motionZ * 0.20000000298023224) * 0.2f;
                 if (volume > 1.0f) {
                     volume = 1.0f;
                 }
                 this.worldObj.playSoundAtEntity(this, "random.splash", volume, 1.0f + (this.rand.nextFloat() - this.rand.nextFloat()) * 0.4f);
-                final float n = (float) MathHelper.floor_double(this.boundingBox.minY);
+                final float n = (float) Mth.floor_double(this.boundingBox.minY);
                 for (int n2 = 0; n2 < 1.0f + this.width * 20.0f; ++n2) {
                     final float n3 = (this.rand.nextFloat() * 2.0f - 1.0f) * this.width;
                     final float n4 = (this.rand.nextFloat() * 2.0f - 1.0f) * this.width;
@@ -329,11 +329,11 @@ public abstract class Entity {
         }
         final double n4 = this.posX - posX;
         final double n5 = this.posZ - posZ;
-        this.distanceWalkedModified += (float) (MathHelper.sqrt_double(n4 * n4 + n5 * n5) * 0.6);
+        this.distanceWalkedModified += (float) (Mth.sqrt_double(n4 * n4 + n5 * n5) * 0.6);
         if (this.canTriggerWalking) {
-            final int floor_double = MathHelper.floor_double(this.posX);
-            final int floor_double2 = MathHelper.floor_double(this.posY - 0.20000000298023224 - this.yOffset);
-            final int floor_double3 = MathHelper.floor_double(this.posZ);
+            final int floor_double = Mth.floor_double(this.posX);
+            final int floor_double2 = Mth.floor_double(this.posY - 0.20000000298023224 - this.yOffset);
+            final int floor_double3 = Mth.floor_double(this.posZ);
             final int k = this.worldObj.getBlockId(floor_double, floor_double2, floor_double3);
             if (this.distanceWalkedModified > this.nextStepDistance && k > 0) {
                 ++this.nextStepDistance;
@@ -380,9 +380,9 @@ public abstract class Entity {
 
     public boolean isInsideOfMaterial(final Material material) {
         final double double1 = this.posY + this.getEyeHeight();
-        final int floor_double = MathHelper.floor_double(this.posX);
-        final int floor_float = MathHelper.floor_float((float) MathHelper.floor_double(double1));
-        final int floor_double2 = MathHelper.floor_double(this.posZ);
+        final int floor_double = Mth.floor_double(this.posX);
+        final int floor_float = Mth.floor_float((float) Mth.floor_double(double1));
+        final int floor_double2 = Mth.floor_double(this.posZ);
         final int blockId = this.worldObj.getBlockId(floor_double, floor_float, floor_double2);
         return blockId != 0 && Block.blocksList[blockId].blockMaterial == material && double1 < floor_float + 1 - (LiquidBlock.getPercentAir(this.worldObj.getBlockMetadata(floor_double, floor_float, floor_double2)) - 0.11111111f);
     }
@@ -396,7 +396,7 @@ public abstract class Entity {
     }
 
     public void moveFlying(float xCoord, float yCoord, final float zCoord) {
-        float sqrt_float = MathHelper.sqrt_float(xCoord * xCoord + yCoord * yCoord);
+        float sqrt_float = Mth.sqrt_float(xCoord * xCoord + yCoord * yCoord);
         if (sqrt_float < 0.01f) {
             return;
         }
@@ -406,14 +406,14 @@ public abstract class Entity {
         sqrt_float = zCoord / sqrt_float;
         xCoord *= sqrt_float;
         yCoord *= sqrt_float;
-        final float sin = MathHelper.sin(this.rotationYaw * 3.1415927f / 180.0f);
-        final float cos = MathHelper.cos(this.rotationYaw * 3.1415927f / 180.0f);
+        final float sin = Mth.sin(this.rotationYaw * 3.1415927f / 180.0f);
+        final float cos = Mth.cos(this.rotationYaw * 3.1415927f / 180.0f);
         this.motionX += xCoord * cos - yCoord * sin;
         this.motionZ += yCoord * cos + xCoord * sin;
     }
 
     public float getEntityBrightness(final float float1) {
-        return this.worldObj.getLightBrightness(MathHelper.floor_double(this.posX), MathHelper.floor_double(this.posY - this.yOffset + (this.boundingBox.maxY - this.boundingBox.minY) * 0.66), MathHelper.floor_double(this.posZ));
+        return this.worldObj.getLightBrightness(Mth.floor_double(this.posX), Mth.floor_double(this.posY - this.yOffset + (this.boundingBox.maxY - this.boundingBox.minY) * 0.66), Mth.floor_double(this.posZ));
     }
 
     public void setWorld(final World world) {
@@ -437,7 +437,7 @@ public abstract class Entity {
         final float n = (float) (this.posX - entity.posX);
         final float n2 = (float) (this.posY - entity.posY);
         final float n3 = (float) (this.posZ - entity.posZ);
-        return MathHelper.sqrt_float(n * n + n2 * n2 + n3 * n3);
+        return Mth.sqrt_float(n * n + n2 * n2 + n3 * n3);
     }
 
     public double getDistanceSq(final double xCoord, final double yCoord, final double zCoord) {
@@ -451,7 +451,7 @@ public abstract class Entity {
         final double n = this.posX - xCoord;
         final double n2 = this.posY - yCoord;
         final double n3 = this.posZ - zCoord;
-        return MathHelper.sqrt_double(n * n + n2 * n2 + n3 * n3);
+        return Mth.sqrt_double(n * n + n2 * n2 + n3 * n3);
     }
 
     public double getDistanceSqToEntity(final Entity entity) {
@@ -467,9 +467,9 @@ public abstract class Entity {
     public void applyEntityCollision(final Entity entity) {
         double n = entity.posX - this.posX;
         double n2 = entity.posZ - this.posZ;
-        double abs_max = MathHelper.abs_max(n, n2);
+        double abs_max = Mth.abs_max(n, n2);
         if (abs_max >= 0.009999999776482582) {
-            abs_max = MathHelper.sqrt_double(abs_max);
+            abs_max = Mth.sqrt_double(abs_max);
             n /= abs_max;
             n2 /= abs_max;
             double n3 = 1.0 / abs_max;
@@ -620,7 +620,7 @@ public abstract class Entity {
     }
 
     public boolean isEntityInsideOpaqueBlock() {
-        return this.worldObj.isBlockNormalCube(MathHelper.floor_double(this.posX), MathHelper.floor_double(this.posY + this.getEyeHeight()), MathHelper.floor_double(this.posZ));
+        return this.worldObj.isBlockNormalCube(Mth.floor_double(this.posX), Mth.floor_double(this.posY + this.getEyeHeight()), Mth.floor_double(this.posZ));
     }
 
     public boolean interact(final EntityPlayer entityPlayer) {

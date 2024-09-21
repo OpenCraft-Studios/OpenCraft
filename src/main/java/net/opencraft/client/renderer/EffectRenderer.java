@@ -1,35 +1,35 @@
 
 package net.opencraft.client.renderer;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import static org.joml.Math.*;
+
+import java.util.*;
+
+import org.lwjgl.opengl.GL11;
+
 import net.opencraft.block.Block;
 import net.opencraft.client.renderer.entity.RenderEngine;
-import net.opencraft.entity.Entity;
-import net.opencraft.entity.EntityDiggingFX;
-import net.opencraft.entity.EntityFX;
-import net.opencraft.util.MathHelper;
+import net.opencraft.entity.*;
+import net.opencraft.util.Mth;
 import net.opencraft.world.World;
-import org.lwjgl.opengl.GL11;
 
 public class EffectRenderer {
 
     protected World worldObj;
-    private List[] fxLayers;
+    private List<EntityFX>[] fxLayers;
     private RenderEngine renderer;
     private Random rand;
 
-    public EffectRenderer(final World fe, final RenderEngine id) {
+    @SuppressWarnings("unchecked")
+	public EffectRenderer(final World fe, final RenderEngine id) {
         this.fxLayers = new List[3];
         this.rand = new Random();
-        if (fe != null) {
+        if (fe != null)
             this.worldObj = fe;
-        }
+        
         this.renderer = id;
-        for (int i = 0; i < 3; ++i) {
-            this.fxLayers[i] = (List) new ArrayList();
-        }
+        for (int i = 0; i < 3; ++i)
+            this.fxLayers[i] = new ArrayList<>();
     }
 
     public void addEffect(final EntityFX ix) {
@@ -41,19 +41,18 @@ public class EffectRenderer {
             for (int j = 0; j < this.fxLayers[i].size(); ++j) {
                 final EntityFX entityFX = (EntityFX) this.fxLayers[i].get(j);
                 entityFX.onUpdate();
-                if (entityFX.isDead) {
+                if (entityFX.isDead)
                     this.fxLayers[i].remove(j--);
-                }
             }
         }
     }
 
     public void renderParticles(final Entity eq, final float float2) {
-        final float cos = MathHelper.cos(eq.rotationYaw * 3.1415927f / 180.0f);
-        final float sin = MathHelper.sin(eq.rotationYaw * 3.1415927f / 180.0f);
-        final float float3 = -sin * MathHelper.sin(eq.rotationPitch * 3.1415927f / 180.0f);
-        final float float4 = cos * MathHelper.sin(eq.rotationPitch * 3.1415927f / 180.0f);
-        final float cos2 = MathHelper.cos(eq.rotationPitch * 3.1415927f / 180.0f);
+        final float cos = cos(toRadians(eq.rotationYaw));
+        final float sin = sin(toRadians(eq.rotationYaw));
+        final float float3 = -sin * sin(toRadians(eq.rotationPitch));
+        final float float4 = cos * sin(toRadians(eq.rotationPitch));
+        final float cos2 = cos(toRadians(eq.rotationPitch));
         EntityFX.interpPosX = eq.lastTickPosX + (eq.posX - eq.lastTickPosX) * float2;
         EntityFX.interpPosY = eq.lastTickPosY + (eq.posY - eq.lastTickPosY) * float2;
         EntityFX.interpPosZ = eq.lastTickPosZ + (eq.posZ - eq.lastTickPosZ) * float2;
@@ -145,6 +144,6 @@ public class EffectRenderer {
     }
 
     public String getStatistics() {
-        return new StringBuilder().append("").append(this.fxLayers[0].size() + this.fxLayers[1].size() + this.fxLayers[2].size()).toString();
+        return "" + this.fxLayers[0].size() + this.fxLayers[1].size() + this.fxLayers[2].size();
     }
 }

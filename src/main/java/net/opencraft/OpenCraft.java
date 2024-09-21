@@ -791,7 +791,7 @@ public class OpenCraft implements Runnable {
                 oc.theWorld.tick();
             }
             if (!oc.isGamePaused) {
-                oc.theWorld.randomDisplayUpdates(MathHelper.floor_double(oc.thePlayer.posX), MathHelper.floor_double(oc.thePlayer.posY), MathHelper.floor_double(oc.thePlayer.posZ));
+                oc.theWorld.randomDisplayUpdates(Mth.floor_double(oc.thePlayer.posX), Mth.floor_double(oc.thePlayer.posY), Mth.floor_double(oc.thePlayer.posZ));
             }
             if (!oc.isGamePaused) {
                 oc.effectRenderer.updateEffects();

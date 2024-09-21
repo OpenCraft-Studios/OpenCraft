@@ -2,7 +2,7 @@
 package net.opencraft.entity;
 
 import net.opencraft.item.Item;
-import net.opencraft.util.MathHelper;
+import net.opencraft.util.Mth;
 import net.opencraft.world.World;
 
 public class EntityZombie extends EntityMonster {
@@ -18,7 +18,7 @@ public class EntityZombie extends EntityMonster {
     public void onLivingUpdate() {
         if (this.worldObj.isDaytime()) {
             final float entityBrightness = this.getEntityBrightness(1.0f);
-            if (entityBrightness > 0.5f && this.worldObj.canBlockSeeTheSky(MathHelper.floor_double(this.posX), MathHelper.floor_double(this.posY), MathHelper.floor_double(this.posZ)) && this.rand.nextFloat() * 30.0f < (entityBrightness - 0.4f) * 2.0f) {
+            if (entityBrightness > 0.5f && this.worldObj.canBlockSeeTheSky(Mth.floor_double(this.posX), Mth.floor_double(this.posY), Mth.floor_double(this.posZ)) && this.rand.nextFloat() * 30.0f < (entityBrightness - 0.4f) * 2.0f) {
                 this.fire = 300;
             }
         }
