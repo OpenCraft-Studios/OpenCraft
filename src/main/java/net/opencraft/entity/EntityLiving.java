@@ -2,8 +2,9 @@
 package net.opencraft.entity;
 
 import java.util.List;
-import net.opencraft.block.Block;
-import net.opencraft.block.material.Material;
+
+import net.opencraft.blocks.Block;
+import net.opencraft.blocks.material.Material;
 import net.opencraft.client.sound.StepSound;
 import net.opencraft.nbt.NBTTagCompound;
 import net.opencraft.util.Mth;

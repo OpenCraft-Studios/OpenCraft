@@ -3,7 +3,7 @@ package net.opencraft.client.sound;
 import java.io.File;
 import java.util.Random;
 
-import net.opencraft.client.settings.GameSettings;
+import net.opencraft.client.config.GameSettings;
 import net.opencraft.entity.EntityLiving;
 import net.opencraft.util.Mth;
 import paulscode.sound.SoundSystem;

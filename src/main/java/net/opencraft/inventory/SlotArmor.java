@@ -1,10 +1,10 @@
 
 package net.opencraft.inventory;
 
-import net.opencraft.client.gui.GuiContainer;
-import net.opencraft.client.gui.GuiInventory;
 import net.opencraft.item.ItemArmor;
 import net.opencraft.item.ItemStack;
+import net.opencraft.renderer.gui.GuiContainer;
+import net.opencraft.renderer.gui.GuiInventory;
 
 public class SlotArmor extends Slot {
 

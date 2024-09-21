@@ -12,17 +12,17 @@ import org.lwjgl.util.glu.GLU;
 
 import net.opencraft.OpenCraft;
 import net.opencraft.ScaledResolution;
-import net.opencraft.block.Block;
-import net.opencraft.block.material.Material;
+import net.opencraft.blocks.Block;
+import net.opencraft.blocks.material.Material;
 import net.opencraft.client.entity.PlayerControllerTest;
 import net.opencraft.client.input.MovingObjectPosition;
-import net.opencraft.client.renderer.EffectRenderer;
-import net.opencraft.client.renderer.Tessellator;
-import net.opencraft.client.renderer.culling.Frustrum;
-import net.opencraft.client.renderer.culling.Frustum;
-import net.opencraft.client.renderer.entity.RenderGlobal;
-import net.opencraft.client.renderer.entity.RenderHelper;
 import net.opencraft.item.ItemRenderer;
+import net.opencraft.renderer.EffectRenderer;
+import net.opencraft.renderer.Tessellator;
+import net.opencraft.renderer.culling.Frustrum;
+import net.opencraft.renderer.culling.Frustum;
+import net.opencraft.renderer.entity.RenderGlobal;
+import net.opencraft.renderer.entity.RenderHelper;
 import net.opencraft.util.Mth;
 import net.opencraft.util.Vec3;
 import net.opencraft.world.World;
@@ -128,7 +128,7 @@ public class EntityRenderer {
 
     private float getFOVModifier(final float float1) {
         final EntityPlayerSP thePlayer = this.mc.player;
-        float n = this.mc.gameSettings.FOV;
+        float n = this.mc.gameSettings.fov;
         if (thePlayer.isInsideOfMaterial(Material.WATER)) {
             n = 60.0f;
         }

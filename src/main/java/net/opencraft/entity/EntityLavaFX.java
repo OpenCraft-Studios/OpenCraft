@@ -1,7 +1,7 @@
 
 package net.opencraft.entity;
 
-import net.opencraft.client.renderer.Tessellator;
+import net.opencraft.renderer.Tessellator;
 import net.opencraft.world.World;
 
 public class EntityLavaFX extends EntityFX {

@@ -1,8 +1,8 @@
 
 package net.opencraft.inventory;
 
-import net.opencraft.block.Block;
-import net.opencraft.block.material.Material;
+import net.opencraft.blocks.Block;
+import net.opencraft.blocks.material.Material;
 import net.opencraft.entity.Entity;
 import net.opencraft.entity.EntityPlayer;
 import net.opencraft.item.ItemArmor;

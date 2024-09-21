@@ -3,8 +3,8 @@ package net.opencraft.client.entity;
 
 import net.opencraft.OpenCraft;
 import net.opencraft.aa;
-import net.opencraft.block.Block;
 import net.opencraft.ck;
+import net.opencraft.blocks.Block;
 import net.opencraft.entity.EntityAnimal;
 import net.opencraft.entity.EntityCreeper;
 import net.opencraft.entity.EntityMonster;

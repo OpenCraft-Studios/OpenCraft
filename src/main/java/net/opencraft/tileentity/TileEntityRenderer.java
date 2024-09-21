@@ -4,9 +4,10 @@ package net.opencraft.tileentity;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import net.opencraft.client.font.FontRenderer;
-import net.opencraft.client.renderer.entity.Renderer;
+
 import net.opencraft.entity.EntityPlayer;
+import net.opencraft.renderer.entity.Renderer;
+import net.opencraft.renderer.font.FontRenderer;
 import net.opencraft.world.World;
 import org.lwjgl.opengl.GL11;
 

@@ -1,7 +1,7 @@
 
 package net.opencraft.world;
 
-import net.opencraft.block.material.Material;
+import net.opencraft.blocks.material.Material;
 import net.opencraft.tileentity.TileEntity;
 
 public interface IBlockAccess {

@@ -1,8 +1,8 @@
 
 package net.opencraft.world.chunk;
 
-import net.opencraft.block.Block;
-import net.opencraft.block.material.Material;
+import net.opencraft.blocks.Block;
+import net.opencraft.blocks.material.Material;
 import net.opencraft.tileentity.TileEntity;
 import net.opencraft.world.IBlockAccess;
 import net.opencraft.world.World;

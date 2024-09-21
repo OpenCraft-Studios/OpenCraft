@@ -1,8 +1,8 @@
 
 package net.opencraft.inventory;
 
-import net.opencraft.client.gui.GuiContainer;
 import net.opencraft.item.ItemStack;
+import net.opencraft.renderer.gui.GuiContainer;
 
 public class SlotCrafting extends Slot {
 

@@ -1,7 +1,7 @@
 
 package net.opencraft.item;
 
-import net.opencraft.block.material.Material;
+import net.opencraft.blocks.material.Material;
 import net.opencraft.client.input.MovingObjectPosition;
 import net.opencraft.entity.EntityPlayer;
 import net.opencraft.util.Mth;

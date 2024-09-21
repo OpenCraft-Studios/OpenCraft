@@ -1,7 +1,7 @@
 
 package net.opencraft.client.input;
 
-import net.opencraft.client.settings.GameSettings;
+import net.opencraft.client.config.GameSettings;
 import net.opencraft.entity.EntityPlayer;
 
 public class MovementInputFromOptions extends MovementInput {

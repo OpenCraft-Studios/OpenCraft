@@ -2,9 +2,8 @@
 package net.opencraft.client.entity.models;
 
 import net.opencraft.PositionTextureVertex;
-import net.opencraft.client.renderer.TexturedQuad;
-import net.opencraft.client.renderer.GLAllocation;
-import net.opencraft.client.renderer.Tessellator;
+import net.opencraft.renderer.*;
+
 import org.lwjgl.opengl.GL11;
 
 public class ModelRenderer {

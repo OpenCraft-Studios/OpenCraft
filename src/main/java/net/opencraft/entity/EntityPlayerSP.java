@@ -3,16 +3,13 @@ package net.opencraft.entity;
 
 import net.opencraft.OpenCraft;
 import net.opencraft.Session;
-import net.opencraft.client.gui.GuiChest;
-import net.opencraft.client.gui.GuiCrafting;
-import net.opencraft.client.gui.GuiEditSign;
-import net.opencraft.client.gui.GuiFurnace;
 import net.opencraft.client.input.MovementInput;
 import net.opencraft.inventory.IInventory;
 import net.opencraft.item.ItemStack;
 import net.opencraft.nbt.NBTBase;
 import net.opencraft.nbt.NBTTagCompound;
 import net.opencraft.nbt.NBTTagList;
+import net.opencraft.renderer.gui.*;
 import net.opencraft.tileentity.TileEntityFurnace;
 import net.opencraft.tileentity.TileEntitySign;
 import net.opencraft.world.World;

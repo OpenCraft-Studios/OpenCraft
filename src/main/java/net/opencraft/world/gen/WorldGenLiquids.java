@@ -2,7 +2,8 @@
 package net.opencraft.world.gen;
 
 import java.util.Random;
-import net.opencraft.block.Block;
+
+import net.opencraft.blocks.Block;
 import net.opencraft.world.World;
 
 public class WorldGenLiquids extends WorldGenerator {

@@ -1,7 +1,7 @@
 
 package net.opencraft.item;
 
-import net.opencraft.block.Block;
+import net.opencraft.blocks.Block;
 import net.opencraft.entity.EntityPlayer;
 import net.opencraft.tileentity.TileEntitySign;
 import net.opencraft.util.Mth;

@@ -7,7 +7,8 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import net.opencraft.block.Block;
+
+import net.opencraft.blocks.Block;
 import net.opencraft.item.Item;
 import net.opencraft.item.ItemStack;
 

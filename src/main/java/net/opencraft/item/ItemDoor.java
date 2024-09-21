@@ -1,10 +1,10 @@
 
 package net.opencraft.item;
 
+import net.opencraft.blocks.Block;
 import net.opencraft.entity.EntityPlayer;
 import net.opencraft.util.Mth;
 import net.opencraft.world.World;
-import net.opencraft.block.Block;
 
 public class ItemDoor extends Item {
 

@@ -2,7 +2,8 @@
 package net.opencraft.tileentity;
 
 import net.opencraft.client.entity.models.SignModel;
-import net.opencraft.client.font.FontRenderer;
+import net.opencraft.renderer.font.FontRenderer;
+
 import org.lwjgl.opengl.GL11;
 
 public class TileEntitySignRenderer extends TileEntitySpecialRenderer<TileEntitySign> {

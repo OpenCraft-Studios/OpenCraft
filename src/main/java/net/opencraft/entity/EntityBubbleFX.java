@@ -1,7 +1,7 @@
 
 package net.opencraft.entity;
 
-import net.opencraft.block.material.Material;
+import net.opencraft.blocks.material.Material;
 import net.opencraft.util.Mth;
 import net.opencraft.world.World;
 

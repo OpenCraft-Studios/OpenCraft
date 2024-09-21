@@ -1,8 +1,8 @@
 
 package net.opencraft.item;
 
-import net.opencraft.block.Block;
-import net.opencraft.block.material.Material;
+import net.opencraft.blocks.Block;
+import net.opencraft.blocks.material.Material;
 
 public class ItemPickaxe extends ItemTool {
 

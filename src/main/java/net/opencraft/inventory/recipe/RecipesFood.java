@@ -1,7 +1,7 @@
 
 package net.opencraft.inventory.recipe;
 
-import net.opencraft.block.Block;
+import net.opencraft.blocks.Block;
 import net.opencraft.item.Item;
 import net.opencraft.item.ItemStack;
 

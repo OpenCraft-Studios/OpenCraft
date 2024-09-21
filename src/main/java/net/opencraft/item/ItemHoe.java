@@ -1,7 +1,7 @@
 
 package net.opencraft.item;
 
-import net.opencraft.block.Block;
+import net.opencraft.blocks.Block;
 import net.opencraft.entity.EntityItem;
 import net.opencraft.entity.EntityPlayer;
 import net.opencraft.world.World;

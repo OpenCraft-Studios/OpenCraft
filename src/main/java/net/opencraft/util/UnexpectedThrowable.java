@@ -1,4 +1,3 @@
-
 package net.opencraft.util;
 
 public class UnexpectedThrowable {

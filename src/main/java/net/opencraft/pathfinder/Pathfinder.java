@@ -3,7 +3,8 @@ package net.opencraft.pathfinder;
 
 import java.util.HashMap;
 import java.util.Map;
-import net.opencraft.block.material.Material;
+
+import net.opencraft.blocks.material.Material;
 import net.opencraft.entity.Entity;
 import net.opencraft.util.Mth;
 import net.opencraft.world.IBlockAccess;

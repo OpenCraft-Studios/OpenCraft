@@ -2,7 +2,8 @@
 package net.opencraft.item;
 
 import java.util.Random;
-import net.opencraft.block.Block;
+
+import net.opencraft.blocks.Block;
 import net.opencraft.entity.Entity;
 import net.opencraft.entity.EntityLiving;
 import net.opencraft.entity.EntityPlayer;

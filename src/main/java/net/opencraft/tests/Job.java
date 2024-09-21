@@ -1,18 +1,14 @@
 package net.opencraft.tests;
 
-public abstract class Job {
+public interface Job extends Runnable {
 
-	public abstract boolean isCompleted();
-	public abstract void markAsCompleted();
+	JobMonitor monitor();
 	
-	public abstract boolean isCancelled();
-	public abstract void cancel();
+	void cancel();
+	void start();
+	void stop();
 	
-	public abstract boolean isFinished();
-	public abstract void markAsFinished();
-	
-	public abstract boolean endedWithErrors();
-	
-	public abstract void run();
+	void exception(Exception ex);
+	void run();
 	
 }

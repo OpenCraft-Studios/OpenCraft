@@ -5,8 +5,9 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Arrays;
 import javax.imageio.ImageIO;
-import net.opencraft.block.Block;
-import net.opencraft.block.material.Material;
+
+import net.opencraft.blocks.Block;
+import net.opencraft.blocks.material.Material;
 import net.opencraft.world.World;
 
 public class TerrainTextureManager {

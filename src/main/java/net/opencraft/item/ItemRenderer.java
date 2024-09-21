@@ -2,14 +2,11 @@
 package net.opencraft.item;
 
 import net.opencraft.OpenCraft;
-import net.opencraft.block.Block;
-import net.opencraft.block.material.Material;
-import net.opencraft.client.renderer.Tessellator;
-import net.opencraft.client.renderer.entity.RenderBlocks;
-import net.opencraft.client.renderer.entity.RenderHelper;
-import net.opencraft.client.renderer.entity.RenderManager;
-import net.opencraft.client.renderer.entity.RenderPlayer;
+import net.opencraft.blocks.Block;
+import net.opencraft.blocks.material.Material;
 import net.opencraft.entity.EntityPlayerSP;
+import net.opencraft.renderer.Tessellator;
+import net.opencraft.renderer.entity.*;
 import net.opencraft.util.Mth;
 import org.lwjgl.opengl.GL11;
 

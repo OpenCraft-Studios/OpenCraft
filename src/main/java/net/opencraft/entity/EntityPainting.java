@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.opencraft.EnumArt;
-import net.opencraft.block.material.Material;
+import net.opencraft.blocks.material.Material;
 import net.opencraft.item.Item;
 import net.opencraft.item.ItemStack;
 import net.opencraft.nbt.NBTTagCompound;

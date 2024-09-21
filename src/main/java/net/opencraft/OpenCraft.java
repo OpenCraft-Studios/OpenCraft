@@ -11,23 +11,24 @@ import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.*;
 import org.lwjgl.util.glu.GLU;
 
-import net.opencraft.block.Block;
-import net.opencraft.block.SandBlock;
+import net.opencraft.blocks.Block;
+import net.opencraft.blocks.SandBlock;
+import net.opencraft.client.config.GameSettings;
 import net.opencraft.client.entity.*;
 import net.opencraft.client.entity.models.ModelBiped;
-import net.opencraft.client.font.FontRenderer;
-import net.opencraft.client.gui.*;
 import net.opencraft.client.input.*;
-import net.opencraft.client.renderer.*;
-import net.opencraft.client.renderer.entity.RenderGlobal;
-import net.opencraft.client.renderer.entity.Renderer;
-import net.opencraft.client.settings.GameSettings;
 import net.opencraft.client.sound.SoundManager;
-import net.opencraft.client.texture.*;
 import net.opencraft.entity.EntityPlayerSP;
 import net.opencraft.entity.EntityRenderer;
 import net.opencraft.item.ItemStack;
 import net.opencraft.physics.AABB;
+import net.opencraft.renderer.*;
+import net.opencraft.renderer.entity.RenderGlobal;
+import net.opencraft.renderer.entity.Renderer;
+import net.opencraft.renderer.font.FontRenderer;
+import net.opencraft.renderer.gui.*;
+import net.opencraft.renderer.texture.*;
+import net.opencraft.tests.DownloadResourcesJob;
 import net.opencraft.util.*;
 import net.opencraft.world.World;
 import net.opencraft.world.WorldRenderer;
@@ -58,7 +59,6 @@ public class OpenCraft implements Runnable {
     public GuiScreen currentScreen;
     public LoadingScreenRenderer loadingScreen;
     public EntityRenderer entityRenderer;
-    private ThreadDownloadResources downloadResourcesThread;
     private int ticksRan;
     private int leftClickCounter;
     private int tempDisplayWidth;
@@ -140,7 +140,7 @@ public class OpenCraft implements Runnable {
     public void setServer(final String string, final int integer) {
     }
 
-    public void startGame() throws LWJGLException {
+    public void init() throws LWJGLException {
         if (oc.fullscreen) {
             Display.setFullscreen(true);
             oc.width = Display.getDisplayMode().getWidth();
@@ -204,7 +204,8 @@ public class OpenCraft implements Runnable {
         oc.displayGuiScreen(new GuiMainMenu());
         oc.effectRenderer = new EffectRenderer(oc.world, oc.renderEngine);
         try {
-            (oc.downloadResourcesThread = new ThreadDownloadResources(oc.mcDataDir, oc)).start();
+        	DownloadResourcesJob job = new DownloadResourcesJob(mcDataDir);
+        	job.start();
         } catch (Exception ex4) {
             ex4.printStackTrace();
         }
@@ -284,12 +285,6 @@ public class OpenCraft implements Runnable {
 
     public void shutdownMinecraftApplet() {
         try {
-            if (oc.downloadResourcesThread != null) {
-                oc.downloadResourcesThread.closeMinecraft();
-            }
-        } catch (Exception ex) {
-        }
-        try {
             System.out.println("Stopping!");
             oc.changeWorld1(null);
             try {
@@ -311,7 +306,7 @@ public class OpenCraft implements Runnable {
     public void run() {
         oc.running = true;
         try {
-            oc.startGame();
+            oc.init();
         } catch (Exception exception) {
             exception.printStackTrace();
             oc.displayUnexpectedThrowable(new UnexpectedThrowable("Failed to start game", exception));

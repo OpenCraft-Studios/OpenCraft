@@ -1,7 +1,7 @@
 
 package net.opencraft.entity;
 
-import net.opencraft.block.Block;
+import net.opencraft.blocks.Block;
 import net.opencraft.nbt.NBTTagCompound;
 import net.opencraft.util.Mth;
 import net.opencraft.world.World;

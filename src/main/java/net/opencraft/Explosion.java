@@ -5,7 +5,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
-import net.opencraft.block.Block;
+
+import net.opencraft.blocks.Block;
 import net.opencraft.entity.Entity;
 import net.opencraft.physics.AABB;
 import net.opencraft.util.Mth;

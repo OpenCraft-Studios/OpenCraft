@@ -3,9 +3,10 @@ package net.opencraft.entity;
 
 import java.util.List;
 import java.util.Random;
-import net.opencraft.block.Block;
-import net.opencraft.block.LiquidBlock;
-import net.opencraft.block.material.Material;
+
+import net.opencraft.blocks.Block;
+import net.opencraft.blocks.LiquidBlock;
+import net.opencraft.blocks.material.Material;
 import net.opencraft.client.sound.StepSound;
 import net.opencraft.item.ItemStack;
 import net.opencraft.nbt.NBTBase;

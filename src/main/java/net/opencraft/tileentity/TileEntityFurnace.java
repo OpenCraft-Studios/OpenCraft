@@ -1,9 +1,9 @@
 
 package net.opencraft.tileentity;
 
-import net.opencraft.block.Block;
-import net.opencraft.block.FurnaceBlock;
-import net.opencraft.block.material.Material;
+import net.opencraft.blocks.Block;
+import net.opencraft.blocks.FurnaceBlock;
+import net.opencraft.blocks.material.Material;
 import net.opencraft.inventory.IInventory;
 import net.opencraft.item.Item;
 import net.opencraft.item.ItemStack;

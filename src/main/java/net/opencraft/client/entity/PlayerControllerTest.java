@@ -3,7 +3,7 @@ package net.opencraft.client.entity;
 
 import net.opencraft.OpenCraft;
 import net.opencraft.Session;
-import net.opencraft.block.Block;
+import net.opencraft.blocks.Block;
 import net.opencraft.entity.EntityPlayer;
 import net.opencraft.item.ItemStack;
 import net.opencraft.world.World;
