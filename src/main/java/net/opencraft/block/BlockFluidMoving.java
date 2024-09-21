@@ -46,10 +46,10 @@ public class BlockFluidMoving extends BlockFluid {
                     n2 = flowDecay2 + 8;
                 }
             }
-            if (this.numAdjacentSources >= 2 && this.blockMaterial == Material.water) {
+            if (this.numAdjacentSources >= 2 && this.blockMaterial == Material.WATER) {
                 n2 = 0;
             }
-            if (this.blockMaterial == Material.lava && flowDecay < 8 && n2 < 8 && n2 > flowDecay && random.nextInt(4) != 0) {
+            if (this.blockMaterial == Material.LAVA && flowDecay < 8 && n2 < 8 && n2 > flowDecay && random.nextInt(4) != 0) {
                 n2 = flowDecay;
                 b = false;
             }
@@ -102,7 +102,7 @@ public class BlockFluidMoving extends BlockFluid {
         if (this.liquidCanDisplaceBlock(world, xCoord, yCoord, zCoord)) {
             final int blockId = world.getBlockId(xCoord, yCoord, zCoord);
             if (blockId > 0) {
-                if (this.blockMaterial == Material.lava) {
+                if (this.blockMaterial == Material.LAVA) {
                     this.triggerLavaMixEffects(world, xCoord, yCoord, zCoord);
                 } else {
                     Block.blocksList[blockId].dropBlockAsItem(world, xCoord, yCoord, zCoord, world.getBlockMetadata(xCoord, yCoord, zCoord));
@@ -214,7 +214,7 @@ public class BlockFluidMoving extends BlockFluid {
 
     private boolean liquidCanDisplaceBlock(final World world, final int xCoord, final int yCoord, final int zCoord) {
         final Material blockMaterial = world.getBlockMaterial(xCoord, yCoord, zCoord);
-        return blockMaterial != this.blockMaterial && blockMaterial != Material.lava && !this.blockBlocksFlow(world, xCoord, yCoord, zCoord);
+        return blockMaterial != this.blockMaterial && blockMaterial != Material.LAVA && !this.blockBlocksFlow(world, xCoord, yCoord, zCoord);
     }
 
     @Override

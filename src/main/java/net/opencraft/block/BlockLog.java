@@ -7,7 +7,7 @@ import net.opencraft.block.material.Material;
 public class BlockLog extends Block {
 
     protected BlockLog(final int blockid) {
-        super(blockid, Material.wood);
+        super(blockid, Material.WOOD);
         this.blockIndexInTexture = 20;
     }
 

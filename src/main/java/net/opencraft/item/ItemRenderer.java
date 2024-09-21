@@ -208,7 +208,7 @@ public class ItemRenderer {
                 this.a(float1, Block.blocksList[blockId].getBlockTextureFromSide(2));
             }
         }
-        if (this.a.thePlayer.isInsideOfMaterial(Material.water)) {
+        if (this.a.thePlayer.isInsideOfMaterial(Material.WATER)) {
             final int xCoord = this.a.renderEngine.getTexture("/assets/water.png");
             GL11.glBindTexture(3553, xCoord);
             this.c(float1);

@@ -9,7 +9,7 @@ import net.opencraft.world.World;
 public class BlockTNT extends Block {
 
     public BlockTNT(final int blockid, final int blockIndexInTexture) {
-        super(blockid, blockIndexInTexture, Material.tnt);
+        super(blockid, blockIndexInTexture, Material.TNT);
     }
 
     @Override

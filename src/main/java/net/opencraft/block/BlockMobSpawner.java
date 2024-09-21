@@ -8,7 +8,7 @@ import net.opencraft.tileentity.TileEntityMobSpawner;
 public class BlockMobSpawner extends BlockContainer {
 
     protected BlockMobSpawner(final int blockid, final int blockIndexInTexture) {
-        super(blockid, blockIndexInTexture, Material.rock);
+        super(blockid, blockIndexInTexture, Material.ROCK);
     }
 
     @Override

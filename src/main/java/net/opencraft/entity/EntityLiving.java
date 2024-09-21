@@ -119,7 +119,7 @@ public class EntityLiving extends Entity {
         if (this.isEntityAlive() && this.isEntityInsideOpaqueBlock()) {
             this.attackEntityFrom(null, 1);
         }
-        if (this.isEntityAlive() && this.isInsideOfMaterial(Material.water)) {
+        if (this.isEntityAlive() && this.isInsideOfMaterial(Material.WATER)) {
             --this.air;
             if (this.air == -20) {
                 this.air = 0;

@@ -208,7 +208,7 @@ public class TileEntityFurnace extends TileEntity implements IInventory {
             return 0;
         }
         final int shiftedIndex = hw.getItem().shiftedIndex;
-        if (shiftedIndex < 256 && Block.blocksList[shiftedIndex].blockMaterial == Material.wood) {
+        if (shiftedIndex < 256 && Block.blocksList[shiftedIndex].blockMaterial == Material.WOOD) {
             return 300;
         }
         if (shiftedIndex == Item.stick.shiftedIndex) {

@@ -45,7 +45,7 @@ public class ck {
         if (fe.isBlockNormalCube(x, y, z)) {
             return 0;
         }
-        if (fe.getBlockMaterial(x, y, z) != Material.air) {
+        if (fe.getBlockMaterial(x, y, z) != Material.AIR) {
             return 0;
         }
         for (int i = 0; i < 3; ++i) {
@@ -57,7 +57,7 @@ public class ck {
                 n2 += fe.rand.nextInt(n5) - fe.rand.nextInt(n5);
                 n3 += fe.rand.nextInt(1) - fe.rand.nextInt(1);
                 n4 += fe.rand.nextInt(n5) - fe.rand.nextInt(n5);
-                if (fe.isBlockNormalCube(n2, n3 - 1, n4) && !fe.isBlockNormalCube(n2, n3, n4) && !fe.getBlockMaterial(n2, n3, n4).getIsLiquid() && !fe.isBlockNormalCube(n2, n3 + 1, n4)) {
+                if (fe.isBlockNormalCube(n2, n3 - 1, n4) && !fe.isBlockNormalCube(n2, n3, n4) && !fe.getBlockMaterial(n2, n3, n4).isLiquid() && !fe.isBlockNormalCube(n2, n3 + 1, n4)) {
                     final float n6 = n2 + 0.5f;
                     final float n7 = n3 + 1.0f;
                     final float n8 = n4 + 0.5f;

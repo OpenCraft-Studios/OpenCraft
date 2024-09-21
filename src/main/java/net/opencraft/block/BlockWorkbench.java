@@ -8,7 +8,7 @@ import net.opencraft.world.World;
 public class BlockWorkbench extends Block {
 
     protected BlockWorkbench(final int blockid) {
-        super(blockid, Material.wood);
+        super(blockid, Material.WOOD);
         this.blockIndexInTexture = 59;
     }
 

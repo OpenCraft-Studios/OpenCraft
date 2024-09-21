@@ -7,7 +7,7 @@ import net.opencraft.world.World;
 public class BlockSponge extends Block {
 
     protected BlockSponge(final int integer) {
-        super(integer, Material.sponge);
+        super(integer, Material.SPONGE);
         this.blockIndexInTexture = 48;
     }
 
@@ -16,7 +16,7 @@ public class BlockSponge extends Block {
         for (int n = 2, i = xCoord - n; i <= xCoord + n; ++i) {
             for (int j = yCoord - n; j <= yCoord + n; ++j) {
                 for (int k = zCoord - n; k <= zCoord + n; ++k) {
-                    if (world.getBlockMaterial(i, j, k) == Material.water) {
+                    if (world.getBlockMaterial(i, j, k) == Material.WATER) {
                     }
                 }
             }

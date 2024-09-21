@@ -828,7 +828,7 @@ public class RenderBlocks {
         }
         if (this.d || gs.shouldSideBeRendered(this.a, integer2, integer3 + 1, integer4, 1)) {
             float n17 = gs.getBlockBrightness(this.a, integer2, integer3 + 1, integer4);
-            if (gs.maxY != 1.0 && !gs.blockMaterial.getIsLiquid()) {
+            if (gs.maxY != 1.0 && !gs.blockMaterial.isLiquid()) {
                 n17 = blockBrightness;
             }
             if (Block.lightValue[gs.blockID] > 0) {

@@ -4,7 +4,7 @@ package net.opencraft.block.material;
 public class MaterialLiquid extends Material {
 
     @Override
-    public boolean getIsLiquid() {
+    public boolean isLiquid() {
         return true;
     }
 

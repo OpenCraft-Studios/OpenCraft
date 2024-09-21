@@ -15,7 +15,7 @@ public class BlockSand extends Block {
     }
 
     public BlockSand(final int blockid, final int blockIndexInTexture) {
-        super(blockid, blockIndexInTexture, Material.sand);
+        super(blockid, blockIndexInTexture, Material.SAND);
     }
 
     @Override
@@ -60,7 +60,7 @@ public class BlockSand extends Block {
             return true;
         }
         final Material blockMaterial = Block.blocksList[blockId].blockMaterial;
-        return blockMaterial == Material.water || blockMaterial == Material.lava;
+        return blockMaterial == Material.WATER || blockMaterial == Material.LAVA;
     }
 
 }

@@ -15,7 +15,7 @@ import net.opencraft.world.chunk.ChunkPosition;
 public class BlockRail extends Block {
 
     protected BlockRail(final int blockid, final int blockIndexIntexture) {
-        super(blockid, blockIndexIntexture, Material.circuits);
+        super(blockid, blockIndexIntexture, Material.REDSTONE);
         this.setBlockBounds(0.0f, 0.0f, 0.0f, 1.0f, 0.125f, 1.0f);
     }
 

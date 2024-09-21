@@ -13,7 +13,7 @@ public class BlockFire extends Block {
     private final int[] abilityToCatchFire;
 
     protected BlockFire(final int blockid, final int blockIndexInTexture) {
-        super(blockid, blockIndexInTexture, Material.fire);
+        super(blockid, blockIndexInTexture, Material.FIRE);
         this.chanceToEncourageFire = new int[256];
         this.abilityToCatchFire = new int[256];
         this.setBurnRate(Block.planks.blockID, 5, 20);

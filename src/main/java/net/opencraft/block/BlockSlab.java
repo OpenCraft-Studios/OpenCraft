@@ -11,7 +11,7 @@ public class BlockSlab extends Block {
     private final boolean blockType;
 
     public BlockSlab(final int blockid, final boolean doubleSlab) {
-        super(blockid, 6, Material.rock);
+        super(blockid, 6, Material.ROCK);
         if (!(this.blockType = doubleSlab)) {
             this.setBlockBounds(0.0f, 0.0f, 0.0f, 1.0f, 0.5f, 1.0f);
         }

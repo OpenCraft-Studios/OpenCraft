@@ -12,7 +12,7 @@ public class BlockSign extends BlockContainer {
     private final int isFreestanding;
 
     protected BlockSign(final int blockid, final Class class2, final int standing) {
-        super(blockid, Material.wood);
+        super(blockid, Material.WOOD);
         this.blockIndexInTexture = 4;
         this.signEntityClass = class2;
         final float n = 0.25f;

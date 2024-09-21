@@ -11,7 +11,7 @@ import net.opencraft.world.World;
 public class BlockTorch extends Block {
 
     protected BlockTorch(final int blockid, final int blockIndexInTexture) {
-        super(blockid, blockIndexInTexture, Material.circuits);
+        super(blockid, blockIndexInTexture, Material.REDSTONE);
         this.setTickOnLoad(true);
     }
 

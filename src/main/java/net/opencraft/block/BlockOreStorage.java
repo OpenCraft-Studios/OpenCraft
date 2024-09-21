@@ -6,7 +6,7 @@ import net.opencraft.block.material.Material;
 public class BlockOreStorage extends Block {
 
     public BlockOreStorage(final int blockid, final int blockIndexInTexture) {
-        super(blockid, Material.iron);
+        super(blockid, Material.METAL);
         this.blockIndexInTexture = blockIndexInTexture;
     }
 

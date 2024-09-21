@@ -3,25 +3,11 @@ package net.opencraft.block.material;
 
 public class Material {
 
-    public static final Material air;
-    public static final Material ground;
-    public static final Material wood;
-    public static final Material rock;
-    public static final Material iron;
-    public static final Material water;
-    public static final Material lava;
-    public static final Material leaves;
-    public static final Material plants;
-    public static final Material sponge;
-    public static final Material cloth;
-    public static final Material fire;
-    public static final Material sand;
-    public static final Material circuits;
-    public static final Material glass;
-    public static final Material tnt;
-    public static final Material unused;
+    public static final Material AIR, GROUND, WOOD, ROCK, METAL, WATER, LAVA,
+    							 LEAVES, PLANTS, SPONGE, CLOTH, FIRE, SAND,
+    							 REDSTONE, GLASS, TNT, UNUSED;
 
-    public boolean getIsLiquid() {
+    public boolean isLiquid() {
         return false;
     }
 
@@ -29,7 +15,7 @@ public class Material {
         return true;
     }
 
-    public boolean getCanBlockGrass() {
+    public boolean isBlockGrass() {
         return true;
     }
 
@@ -38,22 +24,22 @@ public class Material {
     }
 
     static {
-        air = new MaterialTransparent();
-        ground = new Material();
-        wood = new Material();
-        rock = new Material();
-        iron = new Material();
-        water = new MaterialLiquid();
-        lava = new MaterialLiquid();
-        leaves = new Material();
-        plants = new MaterialLogic();
-        sponge = new Material();
-        cloth = new Material();
-        fire = new MaterialTransparent();
-        sand = new Material();
-        circuits = new MaterialLogic();
-        glass = new Material();
-        tnt = new Material();
-        unused = new Material();
+        AIR = new MaterialTransparent();
+        GROUND = new Material();
+        WOOD = new Material();
+        ROCK = new Material();
+        METAL = new Material();
+        WATER = new MaterialLiquid();
+        LAVA = new MaterialLiquid();
+        LEAVES = new Material();
+        PLANTS = new MaterialLogic();
+        SPONGE = new Material();
+        CLOTH = new Material();
+        FIRE = new MaterialTransparent();
+        SAND = new Material();
+        REDSTONE = new MaterialLogic();
+        GLASS = new Material();
+        TNT = new Material();
+        UNUSED = new Material();
     }
 }

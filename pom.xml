@@ -18,12 +18,17 @@
 	</properties>
 
 	<repositories>
-	
+
+		<repository>
+			<id>BeaTunes Repo</id>
+			<url>https://www.beatunes.com/repo/maven2/</url>
+		</repository>
+
 		<repository>
 			<id>Clojars Repo</id>
 			<url>https://repo.clojars.org/</url>
 		</repository>
-	
+
 	</repositories>
 
 	<dependencies>
@@ -56,6 +61,12 @@
 			<groupId>org.clojars.aseipp</groupId>
 			<artifactId>ibxm</artifactId>
 			<version>0.0.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.jcraft</groupId>
+			<artifactId>jorbis</artifactId>
+			<version>0.0.17</version>
 		</dependency>
 
 	</dependencies>

@@ -8,7 +8,7 @@ import net.opencraft.item.Item;
 public class BlockOre extends Block {
 
     public BlockOre(final int blockid, final int blockIndexInTexture) {
-        super(blockid, blockIndexInTexture, Material.rock);
+        super(blockid, blockIndexInTexture, Material.ROCK);
     }
 
     @Override

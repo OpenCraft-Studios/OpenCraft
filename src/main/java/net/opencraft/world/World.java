@@ -298,7 +298,7 @@ public class World implements IBlockAccess {
     public Material getBlockMaterial(final int nya1, final int nya2, final int nya3) {
         final int blockId = this.getBlockId(nya1, nya2, nya3);
         if (blockId == 0) {
-            return Material.air;
+            return Material.AIR;
         }
         return Block.blocksList[blockId].blockMaterial;
     }
@@ -1010,7 +1010,7 @@ public class World implements IBlockAccess {
             for (int j = floor_double3; j < floor_double4; ++j) {
                 for (int k = floor_double5; k < floor_double6; ++k) {
                     final Block block = Block.blocksList[this.getBlockId(i, j, k)];
-                    if (block != null && block.blockMaterial.getIsLiquid()) {
+                    if (block != null && block.blockMaterial.isLiquid()) {
                         return true;
                     }
                 }

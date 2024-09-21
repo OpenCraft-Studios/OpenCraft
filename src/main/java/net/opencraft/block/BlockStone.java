@@ -7,7 +7,7 @@ import net.opencraft.block.material.Material;
 public class BlockStone extends Block {
 
     public BlockStone(final int blockid, final int blockIndexInTexture) {
-        super(blockid, blockIndexInTexture, Material.rock);
+        super(blockid, blockIndexInTexture, Material.ROCK);
     }
 
     @Override

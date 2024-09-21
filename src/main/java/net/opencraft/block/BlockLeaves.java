@@ -11,7 +11,7 @@ public class BlockLeaves extends BlockLeavesBase {
     private final int textureIndexSlot;
 
     protected BlockLeaves(final int blockid, final int blockIndexInTexture) {
-        super(blockid, blockIndexInTexture, Material.leaves, false);
+        super(blockid, blockIndexInTexture, Material.LEAVES, false);
         this.textureIndexSlot = blockIndexInTexture;
         this.setTickOnLoad(true);
     }

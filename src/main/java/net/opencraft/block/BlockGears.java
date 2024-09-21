@@ -9,7 +9,7 @@ import net.opencraft.world.World;
 public class BlockGears extends Block {
 
     protected BlockGears(final int blockid, final int blockIndexInTexture) {
-        super(blockid, blockIndexInTexture, Material.circuits);
+        super(blockid, blockIndexInTexture, Material.REDSTONE);
     }
 
     @Override

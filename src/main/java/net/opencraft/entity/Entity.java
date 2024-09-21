@@ -338,7 +338,7 @@ public abstract class Entity {
             if (this.distanceWalkedModified > this.nextStepDistance && k > 0) {
                 ++this.nextStepDistance;
                 final StepSound stepSound = Block.blocksList[k].stepSound;
-                if (!Block.blocksList[k].blockMaterial.getIsLiquid()) {
+                if (!Block.blocksList[k].blockMaterial.isLiquid()) {
                     this.worldObj.playSoundAtEntity(this, stepSound.stepSoundDir2(), stepSound.soundVolume() * 0.15f, stepSound.soundPitch());
                 }
                 Block.blocksList[k].onEntityWalking(this.worldObj, floor_double, floor_double2, floor_double3, this);
@@ -375,7 +375,7 @@ public abstract class Entity {
     }
 
     public boolean handleWaterMovement() {
-        return this.worldObj.handleMaterialAcceleration(this.boundingBox.expand(0.0, -0.4000000059604645, 0.0), Material.water, this);
+        return this.worldObj.handleMaterialAcceleration(this.boundingBox.expand(0.0, -0.4000000059604645, 0.0), Material.WATER, this);
     }
 
     public boolean isInsideOfMaterial(final Material material) {
@@ -392,7 +392,7 @@ public abstract class Entity {
     }
 
     public boolean handleLavaMovement() {
-        return this.worldObj.isMaterialInBB(this.boundingBox.expand(0.0, -0.4000000059604645, 0.0), Material.lava);
+        return this.worldObj.isMaterialInBB(this.boundingBox.expand(0.0, -0.4000000059604645, 0.0), Material.LAVA);
     }
 
     public void moveFlying(float xCoord, float yCoord, final float zCoord) {

@@ -7,7 +7,7 @@ import net.opencraft.block.material.Material;
 public class BlockBookshelf extends Block {
 
     public BlockBookshelf(final int blockid, final int blockIndexInTexture) {
-        super(blockid, blockIndexInTexture, Material.wood);
+        super(blockid, blockIndexInTexture, Material.WOOD);
     }
 
     @Override

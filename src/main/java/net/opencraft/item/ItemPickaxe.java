@@ -28,7 +28,7 @@ public class ItemPickaxe extends ItemTool {
         if (gs == Block.blockSteel || gs == Block.oreIron) {
             return this.getHarvestLevel >= 1;
         }
-        return gs.blockMaterial == Material.rock || gs.blockMaterial == Material.iron;
+        return gs.blockMaterial == Material.ROCK || gs.blockMaterial == Material.METAL;
     }
 
     static {

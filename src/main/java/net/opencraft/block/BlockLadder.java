@@ -9,7 +9,7 @@ import net.opencraft.world.World;
 public class BlockLadder extends Block {
 
     protected BlockLadder(final int blockid, final int blockIndexInTexture) {
-        super(blockid, blockIndexInTexture, Material.circuits);
+        super(blockid, blockIndexInTexture, Material.REDSTONE);
     }
 
     @Override

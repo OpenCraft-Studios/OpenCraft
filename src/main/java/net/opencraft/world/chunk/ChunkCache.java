@@ -105,7 +105,7 @@ public class ChunkCache implements IBlockAccess {
     public Material getBlockMaterial(final int nya1, final int nya2, final int nya3) {
         final int blockId = this.getBlockId(nya1, nya2, nya3);
         if (blockId == 0) {
-            return Material.air;
+            return Material.AIR;
         }
         return Block.blocksList[blockId].blockMaterial;
     }

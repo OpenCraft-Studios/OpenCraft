@@ -100,9 +100,9 @@ public class TerrainTextureManager {
                         final Block block = Block.blocksList[worldObj.getBlockId(j, k, i)];
                         if (block == null) {
                             b = false;
-                        } else if (block.blockMaterial == Material.water) {
+                        } else if (block.blockMaterial == Material.WATER) {
                             final int blockId = worldObj.getBlockId(j, k + 1, i);
-                            if (blockId == 0 || Block.blocksList[blockId].blockMaterial != Material.water) {
+                            if (blockId == 0 || Block.blocksList[blockId].blockMaterial != Material.WATER) {
                                 final float n9 = worldObj.getLightBrightness(j, k + 1, i) * (k / 127.0f * 0.6f + 0.4f);
                                 if (n8 >= 0) {
                                     if (n8 < 160) {

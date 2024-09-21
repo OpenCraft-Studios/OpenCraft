@@ -9,7 +9,7 @@ import net.opencraft.world.World;
 public class BlockFlower extends Block {
 
     protected BlockFlower(final int blockid, final int blockIndexInTexture) {
-        super(blockid, Material.plants);
+        super(blockid, Material.PLANTS);
         this.blockIndexInTexture = blockIndexInTexture;
         this.setTickOnLoad(true);
         final float n = 0.2f;

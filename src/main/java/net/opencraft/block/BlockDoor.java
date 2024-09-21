@@ -14,7 +14,7 @@ import net.opencraft.world.World;
 public class BlockDoor extends Block {
 
     protected BlockDoor(final int blockid) {
-        super(blockid, Material.wood);
+        super(blockid, Material.WOOD);
         this.blockIndexInTexture = 97;
         final float n = 0.5f;
         this.setBlockBounds(0.5f - n, 0.0f, 0.5f - n, 0.5f + n, 1.0f, 0.5f + n);

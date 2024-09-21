@@ -103,7 +103,7 @@ public class GuiIngame extends Gui {
                     this.drawTexturedModalRect(integer7, integer5, 61, 0, 9, 9);
                 }
             }
-            if (this.mc.thePlayer.isInsideOfMaterial(Material.water)) {
+            if (this.mc.thePlayer.isInsideOfMaterial(Material.WATER)) {
                 for (int j = (int) Math.ceil((this.mc.thePlayer.air - 2) * 10.0 / 300.0), integer5 = (int) Math.ceil(this.mc.thePlayer.air * 10.0 / 300.0) - j, k = 0; k < j + integer5; ++k) {
                     if (k < j) {
                         this.drawTexturedModalRect(scaledWidth / 2 - 91 + k * 8, scaledHeight - 32 - 9, 16, 18, 9, 9);

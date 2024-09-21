@@ -9,7 +9,7 @@ public class MaterialLogic extends Material {
     }
 
     @Override
-    public boolean getCanBlockGrass() {
+    public boolean isBlockGrass() {
         return false;
     }
 

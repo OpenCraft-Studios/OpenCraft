@@ -123,7 +123,7 @@ public class Pathfinder {
                 pathPoint = this.openPoint(integer2, integer3, integer4);
             }
             final Material blockMaterial = this.worldMap.getBlockMaterial(integer2, integer3 - 1, integer4);
-            if (blockMaterial == Material.water || blockMaterial == Material.lava) {
+            if (blockMaterial == Material.WATER || blockMaterial == Material.LAVA) {
                 return null;
             }
         }
@@ -148,7 +148,7 @@ public class Pathfinder {
                     if (blockMaterial.getIsSolid()) {
                         return 0;
                     }
-                    if (blockMaterial == Material.water || blockMaterial == Material.lava) {
+                    if (blockMaterial == Material.WATER || blockMaterial == Material.LAVA) {
                         return -1;
                     }
                 }

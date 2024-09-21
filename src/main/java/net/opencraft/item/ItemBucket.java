@@ -42,11 +42,11 @@ public class ItemBucket extends Item {
             int blockY = rayTraceBlocks_do_do.blockY;
             int blockZ = rayTraceBlocks_do_do.blockZ;
             if (this.isFull == 0) {
-                if (fe.getBlockMaterial(blockX, blockY, blockZ) == Material.water && fe.getBlockMetadata(blockX, blockY, blockZ) == 0) {
+                if (fe.getBlockMaterial(blockX, blockY, blockZ) == Material.WATER && fe.getBlockMetadata(blockX, blockY, blockZ) == 0) {
                     fe.setBlockWithNotify(blockX, blockY, blockZ, 0);
                     return new ItemStack(Item.bucketWater);
                 }
-                if (fe.getBlockMaterial(blockX, blockY, blockZ) == Material.lava && fe.getBlockMetadata(blockX, blockY, blockZ) == 0) {
+                if (fe.getBlockMaterial(blockX, blockY, blockZ) == Material.LAVA && fe.getBlockMetadata(blockX, blockY, blockZ) == 0) {
                     fe.setBlockWithNotify(blockX, blockY, blockZ, 0);
                     return new ItemStack(Item.bucketLava);
                 }

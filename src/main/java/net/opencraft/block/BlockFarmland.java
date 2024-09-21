@@ -10,7 +10,7 @@ import net.opencraft.world.World;
 public class BlockFarmland extends Block {
 
     protected BlockFarmland(final int blockid) {
-        super(blockid, Material.ground);
+        super(blockid, Material.GROUND);
         this.blockIndexInTexture = 87;
         this.setTickOnLoad(true);
         this.setBlockBounds(0.0f, 0.0f, 0.0f, 1.0f, 0.9375f, 1.0f);
@@ -81,7 +81,7 @@ public class BlockFarmland extends Block {
         for (int i = xCoord - 4; i <= xCoord + 4; ++i) {
             for (int j = yCoord; j <= yCoord + 1; ++j) {
                 for (int k = zCoord - 4; k <= zCoord + 4; ++k) {
-                    if (world.getBlockMaterial(i, j, k) == Material.water) {
+                    if (world.getBlockMaterial(i, j, k) == Material.WATER) {
                         return true;
                     }
                 }

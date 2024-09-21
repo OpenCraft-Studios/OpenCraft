@@ -159,7 +159,7 @@ public class EntityPlayer extends EntityLiving {
 
     public float getCurrentPlayerStrVsBlock(final Block gs) {
         float strVsBlock = this.inventory.getStrVsBlock(gs);
-        if (this.isInsideOfMaterial(Material.water)) {
+        if (this.isInsideOfMaterial(Material.WATER)) {
             strVsBlock /= 5.0f;
         }
         if (!this.onGround) {

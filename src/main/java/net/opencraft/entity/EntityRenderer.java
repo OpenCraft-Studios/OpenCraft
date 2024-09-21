@@ -129,7 +129,7 @@ public class EntityRenderer {
     private float getFOVModifier(final float float1) {
         final EntityPlayerSP thePlayer = this.mc.thePlayer;
         float n = this.mc.gameSettings.FOV;
-        if (thePlayer.isInsideOfMaterial(Material.water)) {
+        if (thePlayer.isInsideOfMaterial(Material.WATER)) {
             n = 60.0f;
         }
         if (thePlayer.health <= 0) {
@@ -349,7 +349,7 @@ public class EntityRenderer {
             RenderHelper.disableStandardItemLighting();
             this.setupFog(0);
             effectRenderer.renderParticles(thePlayer, float1);
-            if (this.mc.objectMouseOver != null && thePlayer.isInsideOfMaterial(Material.water)) {
+            if (this.mc.objectMouseOver != null && thePlayer.isInsideOfMaterial(Material.WATER)) {
                 GL11.glDisable(3008);
                 renderGlobal.drawBlockBreaking(thePlayer, this.mc.objectMouseOver, 0, thePlayer.inventory.getCurrentItem(), float1);
                 renderGlobal.drawSelectionBox(thePlayer, this.mc.objectMouseOver, 0, thePlayer.inventory.getCurrentItem(), float1);
@@ -380,7 +380,7 @@ public class EntityRenderer {
             GL11.glDepthMask(true);
             GL11.glEnable(2884);
             GL11.glDisable(3042);
-            if (this.mc.objectMouseOver != null && !thePlayer.isInsideOfMaterial(Material.water)) {
+            if (this.mc.objectMouseOver != null && !thePlayer.isInsideOfMaterial(Material.WATER)) {
                 GL11.glDisable(3008);
                 renderGlobal.drawBlockBreaking(thePlayer, this.mc.objectMouseOver, 0, thePlayer.inventory.getCurrentItem(), float1);
                 renderGlobal.drawSelectionBox(thePlayer, this.mc.objectMouseOver, 0, thePlayer.inventory.getCurrentItem(), float1);
@@ -504,11 +504,11 @@ public class EntityRenderer {
         this.fogColorRed += (n2 - this.fogColorRed) * n;
         this.fogColorGreen += (n3 - this.fogColorGreen) * n;
         this.fogColorBlue += (n4 - this.fogColorBlue) * n;
-        if (thePlayer.isInsideOfMaterial(Material.water)) {
+        if (thePlayer.isInsideOfMaterial(Material.WATER)) {
             this.fogColorRed = 0.02f;
             this.fogColorGreen = 0.02f;
             this.fogColorBlue = 0.2f;
-        } else if (thePlayer.isInsideOfMaterial(Material.lava)) {
+        } else if (thePlayer.isInsideOfMaterial(Material.LAVA)) {
             this.fogColorRed = 0.6f;
             this.fogColorGreen = 0.1f;
             this.fogColorBlue = 0.0f;
@@ -533,7 +533,7 @@ public class EntityRenderer {
         GL11.glFog(2918, this.setFogColorBuffer(this.fogColorRed, this.fogColorGreen, this.fogColorBlue, 1.0f));
         GL11.glNormal3f(0.0f, -1.0f, 0.0f);
         GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
-        if (thePlayer.isInsideOfMaterial(Material.water)) {
+        if (thePlayer.isInsideOfMaterial(Material.WATER)) {
             GL11.glFogi(2917, 2048);
             GL11.glFogf(2914, 0.1f);
             float n = 0.4f;
@@ -547,7 +547,7 @@ public class EntityRenderer {
                 n2 = n5;
                 n3 = n6;
             }
-        } else if (thePlayer.isInsideOfMaterial(Material.lava)) {
+        } else if (thePlayer.isInsideOfMaterial(Material.LAVA)) {
             GL11.glFogi(2917, 2048);
             GL11.glFogf(2914, 2.0f);
             float n = 0.4f;
