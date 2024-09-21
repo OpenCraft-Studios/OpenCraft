@@ -2,5 +2,6 @@
 /output*
 /opencraft/*
 !/opencraft/resources*
-/opencraft/saves/
-/.idea*
+/opencraft/saves
+/.idea
+*.dat
