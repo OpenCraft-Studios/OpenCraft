@@ -1,4 +1,4 @@
-music:true
+music:false
 sound:true
 invertYMouse:false
 showFrameRate:false
@@ -9,7 +9,7 @@ limitFramerate:false
 difficulty:2
 fancyGraphics:true
 FOV:85
-minimumBrightness:0.3
+minimumBrightness:0.0
 key_Forward:17
 key_Left:30
 key_Back:31
