@@ -128,7 +128,7 @@ public class GameSettings {
         }
         if (key == 6) {
             this.anaglyph = !this.anaglyph;
-            this.mc.renderEngine.refreshTextures();
+            this.mc.renderer.refreshTextures();
         }
         if (key == 7) {
             this.limitFramerate = !this.limitFramerate;

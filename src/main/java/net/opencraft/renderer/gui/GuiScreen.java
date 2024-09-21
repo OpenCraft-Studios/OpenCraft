@@ -121,7 +121,7 @@ public class GuiScreen extends GuiElement {
             GL11.glDisable(2896);
             GL11.glDisable(2912);
             final Tessellator instance = Tessellator.instance;
-            GL11.glBindTexture(3553, this.id.renderEngine.getTexture("/assets/dirt.png"));
+            GL11.glBindTexture(3553, this.id.renderer.getTexture("/assets/dirt.png"));
             GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
             final float n = 32.0f;
             instance.beginQuads();

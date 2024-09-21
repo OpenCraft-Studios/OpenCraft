@@ -17,7 +17,7 @@ public class SignBlock extends ContainerBlock {
         this.blockIndexInTexture = 4;
         this.signEntityClass = class2;
         final float n = 0.25f;
-        this.setBlockBounds(0.5f - n, 0.0f, 0.5f - n, 0.5f + n, 1.625f, 0.5f + n);
+        this.setShape(0.5f - n, 0.0f, 0.5f - n, 0.5f + n, 1.625f, 0.5f + n);
         this.isFreestanding = standing;
     }
 

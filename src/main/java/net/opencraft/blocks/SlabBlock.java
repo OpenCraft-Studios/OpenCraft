@@ -14,7 +14,7 @@ public class SlabBlock extends Block {
     public SlabBlock(final int blockid, final boolean doubleSlab) {
         super(blockid, 6, Material.ROCK);
         if (!(this.blockType = doubleSlab)) {
-            this.setBlockBounds(0.0f, 0.0f, 0.0f, 1.0f, 0.5f, 1.0f);
+            this.setShape(0.0f, 0.0f, 0.0f, 1.0f, 0.5f, 1.0f);
         }
         this.setLightOpacity(255);
     }

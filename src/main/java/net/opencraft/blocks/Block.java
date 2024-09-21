@@ -212,7 +212,7 @@ public class Block {
         this.blockMaterial = material;
         Block.blocksList[blockid] = this;
         this.blockID = blockid;
-        this.setBlockBounds(0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f);
+        this.setShape(0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f);
         Block.opaqueCubeLookup[blockid] = this.isOpaqueCube();
         Block.lightOpacity[blockid] = (this.isOpaqueCube() ? 255 : 0);
         Block.canBlockGrass[blockid] = this.getCanBlockGrass();
@@ -267,7 +267,7 @@ public class Block {
         Block.tickOnLoad[this.blockID] = tick;
     }
 
-    public void setBlockBounds(final float minXBound, final float minYBound, final float minZBound, final float maxXBound, final float maxYBound, final float maxZBound) {
+    public void setShape(final float minXBound, final float minYBound, final float minZBound, final float maxXBound, final float maxYBound, final float maxZBound) {
         this.minX = minXBound;
         this.minY = minYBound;
         this.minZ = minZBound;

@@ -25,10 +25,8 @@ public class Vec3 {
      * Notch's original name for this method
      * */
     public static Vec3 newTemp(final double double1, final double double2, final double double3) {
-        if (Vec3.nextVector >= Vec3.vectorList.size()) {
-            Vec3.vectorList.add(createVectorHelper(0.0, 0.0, 0.0));
-        }
-        return ((Vec3) Vec3.vectorList.get(Vec3.nextVector++)).setComponents(double1, double2, double3);
+    	// +75 MB of space :D
+        return createVectorHelper(double1, double2, double3);
     }
 
     private Vec3(double double1, double double2, double double3) {

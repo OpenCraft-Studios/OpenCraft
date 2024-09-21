@@ -891,7 +891,7 @@ public class RenderBlocks {
         final boolean b = false;
         float n = 0.375f;
         float n2 = 0.625f;
-        gs.setBlockBounds(n, 0.0f, n, n2, 1.0f, n2);
+        gs.setShape(n, 0.0f, n, n2, 1.0f, n2);
         this.j(gs, integer2, integer3, integer4);
         int n3 = 0;
         boolean b2 = false;
@@ -909,24 +909,24 @@ public class RenderBlocks {
         float n4 = 0.75f;
         float n5 = 0.9375f;
         if (n3 != 0) {
-            gs.setBlockBounds(0.0f, n4, n, 1.0f, n5, n2);
+            gs.setShape(0.0f, n4, n, 1.0f, n5, n2);
             this.j(gs, integer2, integer3, integer4);
         }
         if (b2) {
-            gs.setBlockBounds(n, n4, 0.0f, n2, n5, 1.0f);
+            gs.setShape(n, n4, 0.0f, n2, n5, 1.0f);
             this.j(gs, integer2, integer3, integer4);
         }
         n4 = 0.375f;
         n5 = 0.5625f;
         if (n3 != 0) {
-            gs.setBlockBounds(0.0f, n4, n, 1.0f, n5, n2);
+            gs.setShape(0.0f, n4, n, 1.0f, n5, n2);
             this.j(gs, integer2, integer3, integer4);
         }
         if (b2) {
-            gs.setBlockBounds(n, n4, 0.0f, n2, n5, 1.0f);
+            gs.setShape(n, n4, 0.0f, n2, n5, 1.0f);
             this.j(gs, integer2, integer3, integer4);
         }
-        gs.setBlockBounds(0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f);
+        gs.setShape(0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f);
         return b;
     }
 
@@ -934,27 +934,27 @@ public class RenderBlocks {
         final boolean b = false;
         final int blockMetadata = this.a.getBlockMetadata(integer2, integer3, integer4);
         if (blockMetadata == 0) {
-            gs.setBlockBounds(0.0f, 0.0f, 0.0f, 0.5f, 0.5f, 1.0f);
+            gs.setShape(0.0f, 0.0f, 0.0f, 0.5f, 0.5f, 1.0f);
             this.j(gs, integer2, integer3, integer4);
-            gs.setBlockBounds(0.5f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f);
+            gs.setShape(0.5f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f);
             this.j(gs, integer2, integer3, integer4);
         } else if (blockMetadata == 1) {
-            gs.setBlockBounds(0.0f, 0.0f, 0.0f, 0.5f, 1.0f, 1.0f);
+            gs.setShape(0.0f, 0.0f, 0.0f, 0.5f, 1.0f, 1.0f);
             this.j(gs, integer2, integer3, integer4);
-            gs.setBlockBounds(0.5f, 0.0f, 0.0f, 1.0f, 0.5f, 1.0f);
+            gs.setShape(0.5f, 0.0f, 0.0f, 1.0f, 0.5f, 1.0f);
             this.j(gs, integer2, integer3, integer4);
         } else if (blockMetadata == 2) {
-            gs.setBlockBounds(0.0f, 0.0f, 0.0f, 1.0f, 0.5f, 0.5f);
+            gs.setShape(0.0f, 0.0f, 0.0f, 1.0f, 0.5f, 0.5f);
             this.j(gs, integer2, integer3, integer4);
-            gs.setBlockBounds(0.0f, 0.0f, 0.5f, 1.0f, 1.0f, 1.0f);
+            gs.setShape(0.0f, 0.0f, 0.5f, 1.0f, 1.0f, 1.0f);
             this.j(gs, integer2, integer3, integer4);
         } else if (blockMetadata == 3) {
-            gs.setBlockBounds(0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.5f);
+            gs.setShape(0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.5f);
             this.j(gs, integer2, integer3, integer4);
-            gs.setBlockBounds(0.0f, 0.0f, 0.5f, 1.0f, 0.5f, 1.0f);
+            gs.setShape(0.0f, 0.0f, 0.5f, 1.0f, 0.5f, 1.0f);
             this.j(gs, integer2, integer3, integer4);
         }
-        gs.setBlockBounds(0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f);
+        gs.setShape(0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f);
         return b;
     }
 

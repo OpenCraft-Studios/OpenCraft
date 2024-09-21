@@ -14,7 +14,7 @@ public class FarmlandBlock extends Block {
         super(blockid, Material.GROUND);
         this.blockIndexInTexture = 87;
         this.setTickOnLoad(true);
-        this.setBlockBounds(0.0f, 0.0f, 0.0f, 1.0f, 0.9375f, 1.0f);
+        this.setShape(0.0f, 0.0f, 0.0f, 1.0f, 0.9375f, 1.0f);
         this.setLightOpacity(255);
     }
 

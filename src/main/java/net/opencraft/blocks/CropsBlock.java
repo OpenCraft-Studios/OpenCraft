@@ -14,7 +14,7 @@ public class CropsBlock extends FlowerBlock {
         this.blockIndexInTexture = blockIndexInTexture;
         this.setTickOnLoad(true);
         final float n = 0.5f;
-        this.setBlockBounds(0.5f - n, 0.0f, 0.5f - n, 0.5f + n, 0.25f, 0.5f + n);
+        this.setShape(0.5f - n, 0.0f, 0.5f - n, 0.5f + n, 0.25f, 0.5f + n);
     }
 
     @Override
