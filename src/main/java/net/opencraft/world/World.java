@@ -542,21 +542,21 @@ public class World implements IBlockAccess {
     }
 
     public MovingObjectPosition rayTraceBlocks_do_do(final Vec3 var1, final Vec3 var2, final boolean var3) {
-        if (Double.isNaN(var1.xCoord) || Double.isNaN(var1.yCoord) || Double.isNaN(var1.zCoord)) {
+        if (Double.isNaN(var1.x) || Double.isNaN(var1.y) || Double.isNaN(var1.z)) {
             return null;
         }
-        if (Double.isNaN(var2.xCoord) || Double.isNaN(var2.yCoord) || Double.isNaN(var2.zCoord)) {
+        if (Double.isNaN(var2.x) || Double.isNaN(var2.y) || Double.isNaN(var2.z)) {
             return null;
         }
-        final int floor_double = Mth.floor_double(var2.xCoord);
-        final int floor_double2 = Mth.floor_double(var2.yCoord);
-        final int floor_double3 = Mth.floor_double(var2.zCoord);
-        int floor_double4 = Mth.floor_double(var1.xCoord);
-        int floor_double5 = Mth.floor_double(var1.yCoord);
-        int floor_double6 = Mth.floor_double(var1.zCoord);
+        final int floor_double = Mth.floor_double(var2.x);
+        final int floor_double2 = Mth.floor_double(var2.y);
+        final int floor_double3 = Mth.floor_double(var2.z);
+        int floor_double4 = Mth.floor_double(var1.x);
+        int floor_double5 = Mth.floor_double(var1.y);
+        int floor_double6 = Mth.floor_double(var1.z);
         int n = 20;
         while (n-- >= 0) {
-            if (Double.isNaN(var1.xCoord) || Double.isNaN(var1.yCoord) || Double.isNaN(var1.zCoord)) {
+            if (Double.isNaN(var1.x) || Double.isNaN(var1.y) || Double.isNaN(var1.z)) {
                 return null;
             }
             if (floor_double4 == floor_double && floor_double5 == floor_double2 && floor_double6 == floor_double3) {
@@ -586,17 +586,17 @@ public class World implements IBlockAccess {
             double n2 = 999.0;
             double n3 = 999.0;
             double n4 = 999.0;
-            final double n5 = var2.xCoord - var1.xCoord;
-            final double n6 = var2.yCoord - var1.yCoord;
-            final double n7 = var2.zCoord - var1.zCoord;
+            final double n5 = var2.x - var1.x;
+            final double n6 = var2.y - var1.y;
+            final double n7 = var2.z - var1.z;
             if (xCoord != 999.0) {
-                n2 = (xCoord - var1.xCoord) / n5;
+                n2 = (xCoord - var1.x) / n5;
             }
             if (yCoord != 999.0) {
-                n3 = (yCoord - var1.yCoord) / n6;
+                n3 = (yCoord - var1.y) / n6;
             }
             if (zCoord != 999.0) {
-                n4 = (zCoord - var1.zCoord) / n7;
+                n4 = (zCoord - var1.z) / n7;
             }
             int n8;
             if (n2 < n3 && n2 < n4) {
@@ -605,55 +605,55 @@ public class World implements IBlockAccess {
                 } else {
                     n8 = 5;
                 }
-                var1.xCoord = xCoord;
-                var1.yCoord += n6 * n2;
-                var1.zCoord += n7 * n2;
+                var1.x = xCoord;
+                var1.y += n6 * n2;
+                var1.z += n7 * n2;
             } else if (n3 < n4) {
                 if (floor_double2 > floor_double5) {
                     n8 = 0;
                 } else {
                     n8 = 1;
                 }
-                var1.xCoord += n5 * n3;
-                var1.yCoord = yCoord;
-                var1.zCoord += n7 * n3;
+                var1.x += n5 * n3;
+                var1.y = yCoord;
+                var1.z += n7 * n3;
             } else {
                 if (floor_double3 > floor_double6) {
                     n8 = 2;
                 } else {
                     n8 = 3;
                 }
-                var1.xCoord += n5 * n4;
-                var1.yCoord += n6 * n4;
-                var1.zCoord = zCoord;
+                var1.x += n5 * n4;
+                var1.y += n6 * n4;
+                var1.z = zCoord;
             }
             final Vec3 vector;
-            final Vec3 vec3D = vector = Vec3.newTemp(var1.xCoord, var1.yCoord, var1.zCoord);
-            final double xCoord2 = Mth.floor_double(var1.xCoord);
-            vector.xCoord = xCoord2;
+            final Vec3 vec3D = vector = Vec3.newTemp(var1.x, var1.y, var1.z);
+            final double xCoord2 = Mth.floor_double(var1.x);
+            vector.x = xCoord2;
             floor_double4 = (int) xCoord2;
             if (n8 == 5) {
                 --floor_double4;
                 final Vec3 vec3D2 = vec3D;
-                ++vec3D2.xCoord;
+                ++vec3D2.x;
             }
             final Vec3 vec3D3 = vec3D;
-            final double yCoord2 = Mth.floor_double(var1.yCoord);
-            vec3D3.yCoord = yCoord2;
+            final double yCoord2 = Mth.floor_double(var1.y);
+            vec3D3.y = yCoord2;
             floor_double5 = (int) yCoord2;
             if (n8 == 1) {
                 --floor_double5;
                 final Vec3 vec3D4 = vec3D;
-                ++vec3D4.yCoord;
+                ++vec3D4.y;
             }
             final Vec3 vec3D5 = vec3D;
-            final double zCoord2 = Mth.floor_double(var1.zCoord);
-            vec3D5.zCoord = zCoord2;
+            final double zCoord2 = Mth.floor_double(var1.z);
+            vec3D5.z = zCoord2;
             floor_double6 = (int) zCoord2;
             if (n8 == 3) {
                 --floor_double6;
                 final Vec3 vec3D6 = vec3D;
-                ++vec3D6.zCoord;
+                ++vec3D6.z;
             }
             int n9 = this.getBlockId(floor_double4, floor_double5, floor_double6);
             int n10 = this.getBlockMetadata(floor_double4, floor_double5, floor_double6);
@@ -1059,12 +1059,12 @@ public class World implements IBlockAccess {
                 }
             }
         }
-        if (vector.lengthVector() > 0.0) {
+        if (vector.length() > 0.0) {
             final Vec3 normalize = vector.normalize();
             final double n = 0.004;
-            entity.motionX += normalize.xCoord * n;
-            entity.motionY += normalize.yCoord * n;
-            entity.motionZ += normalize.zCoord * n;
+            entity.motionX += normalize.x * n;
+            entity.motionY += normalize.y * n;
+            entity.motionZ += normalize.z * n;
         }
         return b;
     }

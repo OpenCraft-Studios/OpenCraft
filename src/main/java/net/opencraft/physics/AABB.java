@@ -3,6 +3,7 @@ package net.opencraft.physics;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import net.opencraft.client.input.MovingObjectPosition;
 import net.opencraft.util.Vec3;
 
@@ -201,22 +202,22 @@ public class AABB {
             intermediateWithZValue2 = null;
         }
         Vec3 bo = null;
-        if (intermediateWithXValue != null && (bo == null || var1.squareDistanceTo(intermediateWithXValue) < var1.squareDistanceTo(bo))) {
+        if (intermediateWithXValue != null && (bo == null || var1.distanceSquared(intermediateWithXValue) < var1.distanceSquared(bo))) {
             bo = intermediateWithXValue;
         }
-        if (intermediateWithXValue2 != null && (bo == null || var1.squareDistanceTo(intermediateWithXValue2) < var1.squareDistanceTo(bo))) {
+        if (intermediateWithXValue2 != null && (bo == null || var1.distanceSquared(intermediateWithXValue2) < var1.distanceSquared(bo))) {
             bo = intermediateWithXValue2;
         }
-        if (intermediateWithYValue != null && (bo == null || var1.squareDistanceTo(intermediateWithYValue) < var1.squareDistanceTo(bo))) {
+        if (intermediateWithYValue != null && (bo == null || var1.distanceSquared(intermediateWithYValue) < var1.distanceSquared(bo))) {
             bo = intermediateWithYValue;
         }
-        if (intermediateWithYValue2 != null && (bo == null || var1.squareDistanceTo(intermediateWithYValue2) < var1.squareDistanceTo(bo))) {
+        if (intermediateWithYValue2 != null && (bo == null || var1.distanceSquared(intermediateWithYValue2) < var1.distanceSquared(bo))) {
             bo = intermediateWithYValue2;
         }
-        if (intermediateWithZValue != null && (bo == null || var1.squareDistanceTo(intermediateWithZValue) < var1.squareDistanceTo(bo))) {
+        if (intermediateWithZValue != null && (bo == null || var1.distanceSquared(intermediateWithZValue) < var1.distanceSquared(bo))) {
             bo = intermediateWithZValue;
         }
-        if (intermediateWithZValue2 != null && (bo == null || var1.squareDistanceTo(intermediateWithZValue2) < var1.squareDistanceTo(bo))) {
+        if (intermediateWithZValue2 != null && (bo == null || var1.distanceSquared(intermediateWithZValue2) < var1.distanceSquared(bo))) {
             bo = intermediateWithZValue2;
         }
         if (bo == null) {
@@ -245,15 +246,15 @@ public class AABB {
     }
 
     private boolean isVecInYZ(final Vec3 var1) {
-        return var1 != null && var1.yCoord >= this.minY && var1.yCoord <= this.maxY && var1.zCoord >= this.minZ && var1.zCoord <= this.maxZ;
+        return var1 != null && var1.y >= this.minY && var1.y <= this.maxY && var1.z >= this.minZ && var1.z <= this.maxZ;
     }
 
     private boolean isVecInXZ(final Vec3 var1) {
-        return var1 != null && var1.xCoord >= this.minX && var1.xCoord <= this.maxX && var1.zCoord >= this.minZ && var1.zCoord <= this.maxZ;
+        return var1 != null && var1.x >= this.minX && var1.x <= this.maxX && var1.z >= this.minZ && var1.z <= this.maxZ;
     }
 
     private boolean isVecInXY(final Vec3 var1) {
-        return var1 != null && var1.xCoord >= this.minX && var1.xCoord <= this.maxX && var1.yCoord >= this.minY && var1.yCoord <= this.maxY;
+        return var1 != null && var1.x >= this.minX && var1.x <= this.maxX && var1.y >= this.minY && var1.y <= this.maxY;
     }
 
     public void setBB(final AABB aabb) {

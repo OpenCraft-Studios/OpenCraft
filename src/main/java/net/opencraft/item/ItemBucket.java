@@ -33,7 +33,7 @@ public class ItemBucket extends Item {
         final float n6 = sin2;
         final float n7 = cos * n4;
         final double n8 = 5.0;
-        final MovingObjectPosition rayTraceBlocks_do_do = fe.rayTraceBlocks_do_do(vector, vector.addVector(n5 * n8, n6 * n8, n7 * n8), this.isFull == 0);
+        final MovingObjectPosition rayTraceBlocks_do_do = fe.rayTraceBlocks_do_do(vector, vector.add(n5 * n8, n6 * n8, n7 * n8), this.isFull == 0);
         if (rayTraceBlocks_do_do == null) {
             return hw;
         }

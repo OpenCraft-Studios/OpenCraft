@@ -20,7 +20,7 @@ public class MovingObjectPosition {
         this.blockY = integer2;
         this.blockZ = integer3;
         this.sideHit = integer4;
-        this.hitVec = Vec3.newTemp(bo.xCoord, bo.yCoord, bo.zCoord);
+        this.hitVec = Vec3.newTemp(bo.x, bo.y, bo.z);
     }
 
     public MovingObjectPosition(final Entity eq) {

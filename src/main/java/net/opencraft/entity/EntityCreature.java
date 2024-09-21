@@ -71,7 +71,7 @@ public class EntityCreature extends EntityLiving {
         }
         Vec3 vec3D = this.pathToEntity.getPosition(this);
         final float n2 = this.width * 2.0f;
-        while (vec3D != null && vec3D.squareDistanceTo(this.posX, this.posY, this.posZ) < n2 * n2 && vec3D.yCoord <= floor_double) {
+        while (vec3D != null && vec3D.distanceSquared(this.posX, this.posY, this.posZ) < n2 * n2 && vec3D.y <= floor_double) {
             this.pathToEntity.incrementPathIndex();
             if (this.pathToEntity.isFinished()) {
                 vec3D = null;
@@ -82,9 +82,9 @@ public class EntityCreature extends EntityLiving {
         }
         this.isJumping = false;
         if (vec3D != null) {
-            final double n3 = vec3D.xCoord - this.posX;
-            final double n4 = vec3D.zCoord - this.posZ;
-            final double n5 = vec3D.yCoord - floor_double;
+            final double n3 = vec3D.x - this.posX;
+            final double n4 = vec3D.z - this.posZ;
+            final double n5 = vec3D.y - floor_double;
             this.rotationYaw = (float) (Math.atan2(n4, n3) * 180.0 / 3.1415927410125732) - 90.0f;
             this.moveForward = this.moveSpeed;
             if (this.hasAttacked && this.playerToAttack != null) {

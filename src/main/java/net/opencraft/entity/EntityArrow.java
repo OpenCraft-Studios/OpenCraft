@@ -108,7 +108,7 @@ public class EntityArrow extends Entity {
         final Vec3 vector = Vec3.newTemp(this.posX, this.posY, this.posZ);
         Vec3 var2 = Vec3.newTemp(this.posX + this.motionX, this.posY + this.motionY, this.posZ + this.motionZ);
         if (rayTraceBlocks != null) {
-            var2 = Vec3.newTemp(rayTraceBlocks.hitVec.xCoord, rayTraceBlocks.hitVec.yCoord, rayTraceBlocks.hitVec.zCoord);
+            var2 = Vec3.newTemp(rayTraceBlocks.hitVec.x, rayTraceBlocks.hitVec.y, rayTraceBlocks.hitVec.z);
         }
         Entity eq = null;
         final List entitiesWithinAABBExcludingEntity = this.worldObj.getEntitiesWithinAABBExcludingEntity(this, this.boundingBox.addCoord(this.motionX, this.motionY, this.motionZ).expand(1.0, 1.0, 1.0));
@@ -120,7 +120,7 @@ public class EntityArrow extends Entity {
                     final float n2 = 0.3f;
                     final MovingObjectPosition calculateIntercept = entity.boundingBox.expand(n2, n2, n2).calculateIntercept(vector, var2);
                     if (calculateIntercept != null) {
-                        final double distanceTo = vector.distanceTo(calculateIntercept.hitVec);
+                        final double distanceTo = vector.distance(calculateIntercept.hitVec);
                         if (distanceTo < n || n == 0.0) {
                             eq = entity;
                             n = distanceTo;
@@ -150,9 +150,9 @@ public class EntityArrow extends Entity {
                 this.yTile = rayTraceBlocks.blockY;
                 this.zTile = rayTraceBlocks.blockZ;
                 this.inTile = this.worldObj.getBlockId(this.xTile, this.yTile, this.zTile);
-                this.motionX = (float) (rayTraceBlocks.hitVec.xCoord - this.posX);
-                this.motionY = (float) (rayTraceBlocks.hitVec.yCoord - this.posY);
-                this.motionZ = (float) (rayTraceBlocks.hitVec.zCoord - this.posZ);
+                this.motionX = (float) (rayTraceBlocks.hitVec.x - this.posX);
+                this.motionY = (float) (rayTraceBlocks.hitVec.y - this.posY);
+                this.motionZ = (float) (rayTraceBlocks.hitVec.z - this.posZ);
                 final float n3 = Mth.sqrt_double(this.motionX * this.motionX + this.motionY * this.motionY + this.motionZ * this.motionZ);
                 this.posX -= this.motionX / n3 * 0.05000000074505806;
                 this.posY -= this.motionY / n3 * 0.05000000074505806;

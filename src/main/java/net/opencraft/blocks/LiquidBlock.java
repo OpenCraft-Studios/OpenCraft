@@ -116,11 +116,11 @@ public abstract class LiquidBlock extends Block {
                 n3 = this.getEffectiveFlowDecay(blockAccess, n, yCoord - 1, n2);
                 if (n3 >= 0) {
                     final int n4 = n3 - (effectiveFlowDecay - 8);
-                    vec3D = vec3D.addVector((n - xCoord) * n4, (yCoord - yCoord) * n4, (n2 - zCoord) * n4);
+                    vec3D = vec3D.add((n - xCoord) * n4, (yCoord - yCoord) * n4, (n2 - zCoord) * n4);
                 }
             } else if (n3 >= 0) {
                 final int n4 = n3 - effectiveFlowDecay;
-                vec3D = vec3D.addVector((n - xCoord) * n4, (yCoord - yCoord) * n4, (n2 - zCoord) * n4);
+                vec3D = vec3D.add((n - xCoord) * n4, (yCoord - yCoord) * n4, (n2 - zCoord) * n4);
             }
         }
         if (blockAccess.getBlockMetadata(xCoord, yCoord, zCoord) >= 8) {
@@ -150,7 +150,7 @@ public abstract class LiquidBlock extends Block {
                 n5 = 1;
             }
             if (n5 != 0) {
-                vec3D = vec3D.normalize().addVector(0.0, -6.0, 0.0);
+                vec3D = vec3D.normalize().add(0.0, -6.0, 0.0);
             }
         }
         return vec3D.normalize();
@@ -159,9 +159,9 @@ public abstract class LiquidBlock extends Block {
     @Override
     public void velocityToAddToEntity(final World world, final int xCoord, final int yCoord, final int zCoord, final Entity entity, final Vec3 var1) {
         final Vec3 flowVector = this.getFlowVector(world, xCoord, yCoord, zCoord);
-        var1.xCoord += flowVector.xCoord;
-        var1.yCoord += flowVector.yCoord;
-        var1.zCoord += flowVector.zCoord;
+        var1.x += flowVector.x;
+        var1.y += flowVector.y;
+        var1.z += flowVector.z;
     }
 
     @Override
@@ -271,9 +271,9 @@ public abstract class LiquidBlock extends Block {
         if (material == Material.LAVA) {
             vec3D = ((LiquidBlock) Block.lavaMoving).getFlowVector(blockAccess, xCoord, yCoord, zCoord);
         }
-        if (vec3D.xCoord == 0.0 && vec3D.zCoord == 0.0) {
+        if (vec3D.x == 0.0 && vec3D.z == 0.0) {
             return -1000.0;
         }
-        return Math.atan2(vec3D.zCoord, vec3D.xCoord) - 1.5707963267948966;
+        return Math.atan2(vec3D.z, vec3D.x) - 1.5707963267948966;
     }
 }

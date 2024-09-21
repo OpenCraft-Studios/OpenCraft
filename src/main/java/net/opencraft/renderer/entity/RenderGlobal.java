@@ -12,6 +12,7 @@ import net.opencraft.OpenCraft;
 import net.opencraft.fi;
 import net.opencraft.blocks.Block;
 import net.opencraft.client.input.MovingObjectPosition;
+<<<<<<< Updated upstream:src/main/java/net/opencraft/renderer/entity/RenderGlobal.java
 import net.opencraft.entity.*;
 import net.opencraft.item.ItemStack;
 import net.opencraft.physics.AABB;
@@ -19,6 +20,15 @@ import net.opencraft.renderer.GLAllocation;
 import net.opencraft.renderer.Tessellator;
 import net.opencraft.renderer.culling.ICamera;
 import net.opencraft.renderer.texture.Texture;
+=======
+import net.opencraft.client.renderer.GLAllocation;
+import net.opencraft.client.renderer.Tessellator;
+import net.opencraft.client.renderer.culling.ICamera;
+import net.opencraft.client.renderer.texture.Texture;
+import net.opencraft.entity.*;
+import net.opencraft.item.ItemStack;
+import net.opencraft.physics.AABB;
+>>>>>>> Stashed changes:src/main/java/net/opencraft/client/renderer/entity/RenderGlobal.java
 import net.opencraft.tileentity.TileEntity;
 import net.opencraft.tileentity.TileEntityRenderer;
 import net.opencraft.util.Mth;
@@ -524,9 +534,9 @@ public class RenderGlobal implements IWorldAccess {
 	public void renderSky(final float float1) {
 		GL11.glDisable(3553);
 		final Vec3 skyColor = this.k.getSkyColor(float1);
-		float n = (float) skyColor.xCoord;
-		float n2 = (float) skyColor.yCoord;
-		float n3 = (float) skyColor.zCoord;
+		float n = (float) skyColor.x;
+		float n2 = (float) skyColor.y;
+		float n3 = (float) skyColor.z;
 		if (this.t.options.anaglyph) {
 			final float n4 = (n * 30.0f + n2 * 59.0f + n3 * 11.0f) / 100.0f;
 			final float n5 = (n * 30.0f + n2 * 70.0f) / 100.0f;
@@ -603,9 +613,9 @@ public class RenderGlobal implements IWorldAccess {
 		GL11.glEnable(3042);
 		GL11.glBlendFunc(770, 771);
 		final Vec3 drawClouds = this.k.drawClouds(float1);
-		float float2 = (float) drawClouds.xCoord;
-		float float3 = (float) drawClouds.yCoord;
-		float float4 = (float) drawClouds.zCoord;
+		float float2 = (float) drawClouds.x;
+		float float3 = (float) drawClouds.y;
+		float float4 = (float) drawClouds.z;
 		if (this.t.options.anaglyph) {
 			final float n4 = (float2 * 30.0f + float3 * 59.0f + float4 * 11.0f) / 100.0f;
 			final float n5 = (float2 * 30.0f + float3 * 70.0f) / 100.0f;
@@ -661,9 +671,9 @@ public class RenderGlobal implements IWorldAccess {
 		GL11.glEnable(3042);
 		GL11.glBlendFunc(770, 771);
 		final Vec3 drawClouds = this.k.drawClouds(float1);
-		float float2 = (float) drawClouds.xCoord;
-		float float3 = (float) drawClouds.yCoord;
-		float float4 = (float) drawClouds.zCoord;
+		float float2 = (float) drawClouds.x;
+		float float3 = (float) drawClouds.y;
+		float float4 = (float) drawClouds.z;
 		if (this.t.options.anaglyph) {
 			final float n7 = (float2 * 30.0f + float3 * 59.0f + float4 * 11.0f) / 100.0f;
 			final float n8 = (float2 * 30.0f + float3 * 70.0f) / 100.0f;

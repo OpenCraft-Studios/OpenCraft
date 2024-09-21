@@ -313,7 +313,6 @@ public class OpenCraft implements Runnable {
 			int n = 0;
 			while (oc.running) {
 				AABB.clearBoundingBoxPool();
-				Vec3.initialize();
 				if (Display.isCloseRequested()) {
 					oc.shutdown();
 				}

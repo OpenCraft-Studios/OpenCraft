@@ -218,13 +218,13 @@ public class EntityMinecart extends Entity implements IInventory {
             }
             final Vec3 pos2 = this.getPos(this.posX, this.posY, this.posZ);
             if (pos2 != null && pos != null) {
-                final double n11 = (pos.yCoord - pos2.yCoord) * 0.05;
+                final double n11 = (pos.y - pos2.y) * 0.05;
                 n5 = Math.sqrt(this.motionX * this.motionX + this.motionZ * this.motionZ);
                 if (n5 > 0.0) {
                     this.motionX = this.motionX / n5 * (n5 + n11);
                     this.motionZ = this.motionZ / n5 * (n5 + n11);
                 }
-                this.setPosition(this.posX, pos2.yCoord, this.posZ);
+                this.setPosition(this.posX, pos2.y, this.posZ);
             }
             final int floor_double4 = Mth.floor_double(this.posX);
             final int floor_double5 = Mth.floor_double(this.posZ);
