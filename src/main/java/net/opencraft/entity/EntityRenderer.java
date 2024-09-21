@@ -211,7 +211,7 @@ public class EntityRenderer {
         if (this.mc.gameSettings.anaglyph) {
             GL11.glTranslatef(-(integer * 2 - 1) * n, 0.0f, 0.0f);
         }
-        GLU.gluPerspective(this.getFOVModifier(float1), this.mc.displayWidth / (float) this.mc.displayHeight, 0.05f, this.farPlaneDistance);
+        GLU.gluPerspective(this.getFOVModifier(float1), this.mc.width / (float) this.mc.height, 0.05f, this.farPlaneDistance);
         GL11.glMatrixMode(5888);
         GL11.glLoadIdentity();
         if (this.mc.gameSettings.anaglyph) {
@@ -282,16 +282,16 @@ public class EntityRenderer {
         if (this.mc.skipRenderWorld) {
             return;
         }
-        final ScaledResolution scaledResolution = new ScaledResolution(this.mc.displayWidth, this.mc.displayHeight);
+        final ScaledResolution scaledResolution = new ScaledResolution(this.mc.width, this.mc.height);
         final int scaledWidth = scaledResolution.getScaledWidth();
         int scaledHeight = scaledResolution.getScaledHeight();
-        final int n = Mouse.getX() * scaledWidth / this.mc.displayWidth;
-        final int n2 = scaledHeight - Mouse.getY() * scaledHeight / this.mc.displayHeight - 1;
+        final int n = Mouse.getX() * scaledWidth / this.mc.width;
+        final int n2 = scaledHeight - Mouse.getY() * scaledHeight / this.mc.height - 1;
         if (this.mc.theWorld != null) {
             this.renderWorld(float1);
             this.mc.ingameGUI.renderGameOverlay(float1, this.mc.currentScreen != null, n, n2);
         } else {
-            GL11.glViewport(0, 0, this.mc.displayWidth, this.mc.displayHeight);
+            GL11.glViewport(0, 0, this.mc.width, this.mc.height);
             GL11.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
             GL11.glClear(16640);
             GL11.glMatrixMode(5889);
@@ -322,7 +322,7 @@ public class EntityRenderer {
                     GL11.glColorMask(true, false, false, false);
                 }
             }
-            GL11.glViewport(0, 0, this.mc.displayWidth, this.mc.displayHeight);
+            GL11.glViewport(0, 0, this.mc.width, this.mc.height);
             this.updateFogColor(float1);
             GL11.glClear(16640);
             GL11.glEnable(2884);
@@ -476,7 +476,7 @@ public class EntityRenderer {
     }
 
     public void setupOverlayRendering() {
-        final ScaledResolution scaledResolution = new ScaledResolution(this.mc.displayWidth, this.mc.displayHeight);
+        final ScaledResolution scaledResolution = new ScaledResolution(this.mc.width, this.mc.height);
         final int scaledWidth = scaledResolution.getScaledWidth();
         final int scaledHeight = scaledResolution.getScaledHeight();
         GL11.glClear(256);

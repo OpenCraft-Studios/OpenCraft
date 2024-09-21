@@ -83,12 +83,12 @@ public class GuiScreen extends Gui {
 
     public void f() {
         if (Mouse.getEventButtonState()) {
-            final int n = Mouse.getEventX() * this.width / this.id.displayWidth;
-            final int n2 = this.height - Mouse.getEventY() * this.height / this.id.displayHeight - 1;
+            final int n = Mouse.getEventX() * this.width / this.id.width;
+            final int n2 = this.height - Mouse.getEventY() * this.height / this.id.height - 1;
             this.drawSlotInventory(n, n2, Mouse.getEventButton());
         } else {
-            final int n = Mouse.getEventX() * this.width / this.id.displayWidth;
-            final int n2 = this.height - Mouse.getEventY() * this.height / this.id.displayHeight - 1;
+            final int n = Mouse.getEventX() * this.width / this.id.width;
+            final int n2 = this.height - Mouse.getEventY() * this.height / this.id.height - 1;
             this.b(n, n2, Mouse.getEventButton());
         }
     }

@@ -36,7 +36,7 @@ public class GuiIngame extends Gui {
     }
 
     public void renderGameOverlay(final float float1, final boolean boolean2, final int integer3, final int integer4) {
-        final ScaledResolution scaledResolution = new ScaledResolution(this.mc.displayWidth, this.mc.displayHeight);
+        final ScaledResolution scaledResolution = new ScaledResolution(this.mc.width, this.mc.height);
         final int scaledWidth = scaledResolution.getScaledWidth();
         final int scaledHeight = scaledResolution.getScaledHeight();
         final FontRenderer fontRenderer = this.mc.fontRenderer;

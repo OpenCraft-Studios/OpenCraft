@@ -37,7 +37,7 @@ public class LoadingScreenRenderer implements IProgressUpdate {
     public void setLoadingProgress(final String string) {
         if (this.mc.running) {
             this.currentlyDisplayedText = string;
-            final ScaledResolution scaledResolution = new ScaledResolution(this.mc.displayWidth, this.mc.displayHeight);
+            final ScaledResolution scaledResolution = new ScaledResolution(this.mc.width, this.mc.height);
             final int scaledWidth = scaledResolution.getScaledWidth();
             final int scaledHeight = scaledResolution.getScaledHeight();
             GL11.glClear(256);
@@ -81,7 +81,7 @@ public class LoadingScreenRenderer implements IProgressUpdate {
                 return;
             }
             this.field_1006_d = currentTimeMillis;
-            final ScaledResolution scaledResolution = new ScaledResolution(this.mc.displayWidth, this.mc.displayHeight);
+            final ScaledResolution scaledResolution = new ScaledResolution(this.mc.width, this.mc.height);
             final int scaledWidth = scaledResolution.getScaledWidth();
             final int scaledHeight = scaledResolution.getScaledHeight();
             GL11.glClear(256);
