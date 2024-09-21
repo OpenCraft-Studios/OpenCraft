@@ -3,6 +3,4 @@
 /opencraft/*
 !/opencraft/resources*
 /opencraft/saves
-/.idea
-/.settings
 *.dat
