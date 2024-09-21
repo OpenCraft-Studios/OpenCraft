@@ -2,8 +2,8 @@
 package net.opencraft.client.renderer.entity;
 
 import net.opencraft.block.Block;
-import net.opencraft.client.entity.model.ModelBase;
-import net.opencraft.client.entity.model.ModelMinecart;
+import net.opencraft.client.entity.models.ModelBase;
+import net.opencraft.client.entity.models.ModelMinecart;
 import net.opencraft.entity.EntityMinecart;
 import net.opencraft.util.MathHelper;
 import net.opencraft.util.Vec3;

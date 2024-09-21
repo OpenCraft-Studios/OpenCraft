@@ -1,7 +1,7 @@
 
 package net.opencraft.world.chunk;
 
-import net.opencraft.block.BlockSand;
+import net.opencraft.block.SandBlock;
 import net.opencraft.client.gui.IProgressUpdate;
 import net.opencraft.world.IChunkLoader;
 import net.opencraft.world.IChunkProvider;
@@ -44,7 +44,7 @@ public class ChunkProviderLoadOrGenerate implements IChunkProvider {
         }
         final int n = (integer1 & 0x1F) + (integer2 & 0x1F) * 32;
         if (!this.chunkExists(integer1, integer2)) {
-            BlockSand.fallInstantly = true;
+            SandBlock.fallInstantly = true;
             if (this.chunks[n] != null) {
                 this.chunks[n].onChunkUnload();
                 this.saveChunk(this.chunks[n]);
@@ -74,7 +74,7 @@ public class ChunkProviderLoadOrGenerate implements IChunkProvider {
             if (this.chunkExists(integer1 - 1, integer2 - 1) && !this.provideChunk(integer1 - 1, integer2 - 1).isTerrainPopulated && this.chunkExists(integer1 - 1, integer2 - 1) && this.chunkExists(integer1, integer2 - 1) && this.chunkExists(integer1 - 1, integer2)) {
                 this.populate(this, integer1 - 1, integer2 - 1);
             }
-            BlockSand.fallInstantly = false;
+            SandBlock.fallInstantly = false;
         }
         this.lastQueriedChunkXPos = integer1;
         this.lastQueriedChunkZPos = integer2;

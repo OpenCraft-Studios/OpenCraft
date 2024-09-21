@@ -3,7 +3,7 @@ package net.opencraft.world.chunk;
 
 import net.opencraft.entity.Entity;
 import net.opencraft.physics.AABB;
-import net.opencraft.block.BlockContainer;
+import net.opencraft.block.ContainerBlock;
 import net.opencraft.block.Block;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -325,7 +325,7 @@ public class Chunk {
         final int n = xCoord + yCoord * 1024 + zCoord * 1024 * 1024;
         TileEntity tileEntity = (TileEntity) this.chunkTileEntityMap.get(n);
         if (tileEntity == null) {
-            ((BlockContainer) Block.blocksList[this.getBlockID(xCoord, yCoord, zCoord)]).onBlockAdded(this.worldObj, this.xPosition * 16 + xCoord, yCoord, this.zPosition * 16 + zCoord);
+            ((ContainerBlock) Block.blocksList[this.getBlockID(xCoord, yCoord, zCoord)]).onBlockAdded(this.worldObj, this.xPosition * 16 + xCoord, yCoord, this.zPosition * 16 + zCoord);
             tileEntity = (TileEntity) this.chunkTileEntityMap.get(n);
         }
         return tileEntity;
@@ -341,7 +341,7 @@ public class Chunk {
         tileEntity.xCoord = this.xPosition * 16 + xCoord;
         tileEntity.yCoord = yCoord;
         tileEntity.zCoord = this.zPosition * 16 + zCoord;
-        if (this.getBlockID(xCoord, yCoord, zCoord) == 0 || !(Block.blocksList[this.getBlockID(xCoord, yCoord, zCoord)] instanceof BlockContainer)) {
+        if (this.getBlockID(xCoord, yCoord, zCoord) == 0 || !(Block.blocksList[this.getBlockID(xCoord, yCoord, zCoord)] instanceof ContainerBlock)) {
             System.out.println("Attempted to place a tile entity where there was no entity tile!");
             return;
         }

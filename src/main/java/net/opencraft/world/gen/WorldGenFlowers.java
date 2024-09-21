@@ -3,7 +3,7 @@ package net.opencraft.world.gen;
 
 import java.util.Random;
 import net.opencraft.block.Block;
-import net.opencraft.block.BlockFlower;
+import net.opencraft.block.FlowerBlock;
 import net.opencraft.world.World;
 
 public class WorldGenFlowers extends WorldGenerator {
@@ -20,7 +20,7 @@ public class WorldGenFlowers extends WorldGenerator {
             final int xCoord = integer3 + random.nextInt(8) - random.nextInt(8);
             final int yCoord = integer4 + random.nextInt(4) - random.nextInt(4);
             final int zCoord = integer5 + random.nextInt(8) - random.nextInt(8);
-            if (fe.getBlockId(xCoord, yCoord, zCoord) == 0 && ((BlockFlower) Block.blocksList[this.plantBlockId]).canBlockStay(fe, xCoord, yCoord, zCoord)) {
+            if (fe.getBlockId(xCoord, yCoord, zCoord) == 0 && ((FlowerBlock) Block.blocksList[this.plantBlockId]).canBlockStay(fe, xCoord, yCoord, zCoord)) {
                 fe.setBlock(xCoord, yCoord, zCoord, this.plantBlockId);
             }
         }

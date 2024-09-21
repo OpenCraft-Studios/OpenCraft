@@ -4,7 +4,7 @@ package net.opencraft.entity;
 import java.util.List;
 import java.util.Random;
 import net.opencraft.block.Block;
-import net.opencraft.block.BlockFluid;
+import net.opencraft.block.LiquidBlock;
 import net.opencraft.block.material.Material;
 import net.opencraft.client.sound.StepSound;
 import net.opencraft.item.ItemStack;
@@ -384,7 +384,7 @@ public abstract class Entity {
         final int floor_float = MathHelper.floor_float((float) MathHelper.floor_double(double1));
         final int floor_double2 = MathHelper.floor_double(this.posZ);
         final int blockId = this.worldObj.getBlockId(floor_double, floor_float, floor_double2);
-        return blockId != 0 && Block.blocksList[blockId].blockMaterial == material && double1 < floor_float + 1 - (BlockFluid.getPercentAir(this.worldObj.getBlockMetadata(floor_double, floor_float, floor_double2)) - 0.11111111f);
+        return blockId != 0 && Block.blocksList[blockId].blockMaterial == material && double1 < floor_float + 1 - (LiquidBlock.getPercentAir(this.worldObj.getBlockMetadata(floor_double, floor_float, floor_double2)) - 0.11111111f);
     }
 
     protected float getEyeHeight() {

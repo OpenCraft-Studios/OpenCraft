@@ -1,7 +1,7 @@
 
 package net.opencraft.tileentity;
 
-import net.opencraft.client.entity.model.SignModel;
+import net.opencraft.client.entity.models.SignModel;
 import net.opencraft.client.font.FontRenderer;
 import org.lwjgl.opengl.GL11;
 

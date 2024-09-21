@@ -1,7 +1,7 @@
 
 package net.opencraft.client.renderer.entity;
 
-import net.opencraft.client.entity.model.ModelCreeper;
+import net.opencraft.client.entity.models.ModelCreeper;
 import net.opencraft.entity.EntityCreeper;
 import net.opencraft.util.MathHelper;
 import org.lwjgl.opengl.GL11;

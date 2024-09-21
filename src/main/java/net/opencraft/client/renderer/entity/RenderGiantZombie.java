@@ -1,7 +1,7 @@
 
 package net.opencraft.client.renderer.entity;
 
-import net.opencraft.client.entity.model.ModelBase;
+import net.opencraft.client.entity.models.ModelBase;
 import net.opencraft.entity.EntityGiant;
 import org.lwjgl.opengl.GL11;
 

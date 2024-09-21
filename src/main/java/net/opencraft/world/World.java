@@ -16,7 +16,7 @@ import net.opencraft.EnumSkyBlock;
 import net.opencraft.Explosion;
 import net.opencraft.NextTickListEntry;
 import net.opencraft.block.Block;
-import net.opencraft.block.BlockFluid;
+import net.opencraft.block.LiquidBlock;
 import net.opencraft.block.material.Material;
 import net.opencraft.client.gui.IProgressUpdate;
 import net.opencraft.client.input.MovingObjectPosition;
@@ -1052,7 +1052,7 @@ public class World implements IBlockAccess {
             for (int j = floor_double3; j < floor_double4; ++j) {
                 for (int k = floor_double5; k < floor_double6; ++k) {
                     final Block block = Block.blocksList[this.getBlockId(i, j, k)];
-                    if (block != null && block.blockMaterial == material && floor_double4 >= (j + 1 - BlockFluid.getPercentAir(this.getBlockMetadata(i, j, k)))) {
+                    if (block != null && block.blockMaterial == material && floor_double4 >= (j + 1 - LiquidBlock.getPercentAir(this.getBlockMetadata(i, j, k)))) {
                         b = true;
                         block.velocityToAddToEntity(this, i, j, k, entity, vector);
                     }

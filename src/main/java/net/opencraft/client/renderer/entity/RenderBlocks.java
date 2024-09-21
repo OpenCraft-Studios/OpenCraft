@@ -3,8 +3,8 @@ package net.opencraft.client.renderer.entity;
 
 import net.opencraft.OpenCraft;
 import net.opencraft.block.Block;
-import net.opencraft.block.BlockDoor;
-import net.opencraft.block.BlockFluid;
+import net.opencraft.block.DoorBlock;
+import net.opencraft.block.LiquidBlock;
 import net.opencraft.block.material.Material;
 import net.opencraft.client.renderer.Tessellator;
 import net.opencraft.util.MathHelper;
@@ -611,7 +611,7 @@ public class RenderBlocks {
         if (this.d || shouldSideBeRendered) {
             b = true;
             int i = gs.getBlockTextureFromSideAndMetadata(1, blockMetadata);
-            float n5 = (float) BlockFluid.getFlowDirection(this.a, integer2, integer3, integer4, blockMaterial);
+            float n5 = (float) LiquidBlock.getFlowDirection(this.a, integer2, integer3, integer4, blockMaterial);
             if (n5 > -999.0f) {
                 i = gs.getBlockTextureFromSideAndMetadata(2, blockMetadata);
             }
@@ -732,10 +732,10 @@ public class RenderBlocks {
             if (blockMaterial == jy) {
                 final int blockMetadata = this.a.getBlockMetadata(xCoord, integer2, zCoord);
                 if (blockMetadata >= 8 || blockMetadata == 0) {
-                    n2 += BlockFluid.getPercentAir(blockMetadata) * 10.0f;
+                    n2 += LiquidBlock.getPercentAir(blockMetadata) * 10.0f;
                     n += 10;
                 }
-                n2 += BlockFluid.getPercentAir(blockMetadata);
+                n2 += LiquidBlock.getPercentAir(blockMetadata);
                 ++n;
             } else if (!blockMaterial.isSolid()) {
                 ++n2;
@@ -962,7 +962,7 @@ public class RenderBlocks {
 
     public boolean m(final Block gs, final int integer2, final int integer3, final int integer4) {
         final Tessellator instance = Tessellator.instance;
-        final BlockDoor blockDoor = (BlockDoor) gs;
+        final DoorBlock blockDoor = (DoorBlock) gs;
         boolean b = false;
         final float n = 0.5f;
         final float n2 = 1.0f;

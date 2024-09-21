@@ -6,7 +6,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import net.opencraft.block.Block;
-import net.opencraft.block.BlockContainer;
+import net.opencraft.block.ContainerBlock;
 import net.opencraft.client.renderer.Tessellator;
 import net.opencraft.client.renderer.culling.ICamera;
 import net.opencraft.client.renderer.entity.Render;
@@ -149,7 +149,7 @@ public class WorldRenderer {
                                 WorldRenderer.tessellator.startDrawingQuads();
                                 WorldRenderer.tessellator.setTranslationD(-this.c, -this.d, -this.e);
                             }
-                            if (j == 0 && Block.blocksList[blockId] instanceof BlockContainer) {
+                            if (j == 0 && Block.blocksList[blockId] instanceof ContainerBlock) {
                                 final TileEntity blockTileEntity = iv.getBlockTileEntity(integer2, k, l);
                                 if (TileEntityRenderer.instance.a(blockTileEntity)) {
                                     this.B.add(blockTileEntity);

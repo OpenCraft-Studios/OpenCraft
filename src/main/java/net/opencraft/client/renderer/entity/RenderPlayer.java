@@ -1,7 +1,7 @@
 
 package net.opencraft.client.renderer.entity;
 
-import net.opencraft.client.entity.model.ModelBiped;
+import net.opencraft.client.entity.models.ModelBiped;
 import net.opencraft.entity.EntityPlayer;
 import net.opencraft.item.ItemStack;
 import net.opencraft.item.Item;

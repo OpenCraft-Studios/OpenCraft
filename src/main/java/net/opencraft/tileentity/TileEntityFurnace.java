@@ -2,7 +2,7 @@
 package net.opencraft.tileentity;
 
 import net.opencraft.block.Block;
-import net.opencraft.block.BlockFurnace;
+import net.opencraft.block.FurnaceBlock;
 import net.opencraft.block.material.Material;
 import net.opencraft.inventory.IInventory;
 import net.opencraft.item.Item;
@@ -148,7 +148,7 @@ public class TileEntityFurnace extends TileEntity implements IInventory {
         }
         if (b != this.furnaceBurnTime > 0) {
             b2 = true;
-            BlockFurnace.updateFurnaceBlockState(this.furnaceBurnTime > 0, this.worldObj, this.xCoord, this.yCoord, this.zCoord);
+            FurnaceBlock.updateFurnaceBlockState(this.furnaceBurnTime > 0, this.worldObj, this.xCoord, this.yCoord, this.zCoord);
         }
         if (b2) {
             this.worldObj.func_698_b(this.xCoord, this.yCoord, this.zCoord);

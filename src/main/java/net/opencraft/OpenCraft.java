@@ -3,11 +3,11 @@ package net.opencraft;
 
 import java.io.File;
 import net.opencraft.block.Block;
-import net.opencraft.block.BlockSand;
+import net.opencraft.block.SandBlock;
 import net.opencraft.client.entity.PlayerController;
 import net.opencraft.client.entity.PlayerControllerSP;
 import net.opencraft.client.entity.PlayerControllerTest;
-import net.opencraft.client.entity.model.ModelBiped;
+import net.opencraft.client.entity.models.ModelBiped;
 import net.opencraft.client.font.FontRenderer;
 import net.opencraft.client.gui.GuiGameOver;
 import net.opencraft.client.gui.GuiIngame;
@@ -885,12 +885,12 @@ public class OpenCraft implements Runnable {
         }
         oc.loadingScreen.displayLoadingString("Simulating world for a bit");
         n3 = 2000;
-        BlockSand.fallInstantly = true;
+        SandBlock.fallInstantly = true;
         for (int i = 0; i < n3; ++i) {
             oc.theWorld.TickUpdates(true);
         }
         oc.theWorld.func_656_j();
-        BlockSand.fallInstantly = false;
+        SandBlock.fallInstantly = false;
     }
 
     public void installResource(String string, final File file) {

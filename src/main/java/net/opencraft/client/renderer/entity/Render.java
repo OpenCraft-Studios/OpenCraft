@@ -2,10 +2,10 @@
 package net.opencraft.client.renderer.entity;
 
 import net.opencraft.util.MathHelper;
+import net.opencraft.client.entity.models.ModelBase;
+import net.opencraft.client.entity.models.ModelBiped;
 import net.opencraft.client.renderer.Tessellator;
 import net.opencraft.world.World;
-import net.opencraft.client.entity.model.ModelBase;
-import net.opencraft.client.entity.model.ModelBiped;
 import net.opencraft.entity.Entity;
 import net.opencraft.physics.AABB;
 import net.opencraft.block.Block;

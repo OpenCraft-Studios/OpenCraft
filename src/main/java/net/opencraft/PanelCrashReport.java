@@ -544,72 +544,8 @@ public class PanelCrashReport extends Panel {
         //  1283: aload           7
         //  1285: ldc             "Center"
         //  1287: invokevirtual   PanelCrashReport.add:(Ljava/awt/Component;Ljava/lang/Object;)V
-        //  1290: return         
-        //    MethodParameters:
-        //  Name  Flags  
-        //  ----  -----
-        //  g     
-        //    Exceptions:
-        //  Try           Handler
-        //  Start  End    Start  End    Type                 
-        //  -----  -----  -----  -----  ---------------------
-        //  64     430    433    457    Ljava/lang/Throwable;
+        //  1290: return
         // 
-        // The error that occurred was:
-        // 
-        // java.lang.ArrayIndexOutOfBoundsException: Array index out of range: 0
-        //     at java.base/java.util.Vector.get(Vector.java:750)
-        //     at com.strobel.assembler.metadata.MetadataResolver.resolve(MetadataResolver.java:82)
-        //     at com.strobel.assembler.metadata.CoreMetadataFactory$UnresolvedType.resolve(CoreMetadataFactory.java:616)
-        //     at com.strobel.assembler.metadata.MetadataHelper$8.visitClassType(MetadataHelper.java:2024)
-        //     at com.strobel.assembler.metadata.MetadataHelper$8.visitClassType(MetadataHelper.java:1994)
-        //     at com.strobel.assembler.metadata.TypeDefinition.accept(TypeDefinition.java:183)
-        //     at com.strobel.assembler.metadata.DefaultTypeVisitor.visit(DefaultTypeVisitor.java:25)
-        //     at com.strobel.assembler.metadata.MetadataHelper.asSuper(MetadataHelper.java:727)
-        //     at com.strobel.assembler.metadata.MetadataHelper$8.visitClassType(MetadataHelper.java:2017)
-        //     at com.strobel.assembler.metadata.MetadataHelper$8.visitClassType(MetadataHelper.java:1994)
-        //     at com.strobel.assembler.metadata.CoreMetadataFactory$UnresolvedType.accept(CoreMetadataFactory.java:577)
-        //     at com.strobel.assembler.metadata.DefaultTypeVisitor.visit(DefaultTypeVisitor.java:25)
-        //     at com.strobel.assembler.metadata.MetadataHelper.asSuper(MetadataHelper.java:727)
-        //     at com.strobel.assembler.metadata.MetadataHelper$11.visitClassType(MetadataHelper.java:2698)
-        //     at com.strobel.assembler.metadata.MetadataHelper$11.visitClassType(MetadataHelper.java:2691)
-        //     at com.strobel.assembler.metadata.CoreMetadataFactory$UnresolvedType.accept(CoreMetadataFactory.java:577)
-        //     at com.strobel.assembler.metadata.DefaultTypeVisitor.visit(DefaultTypeVisitor.java:25)
-        //     at com.strobel.assembler.metadata.MetadataHelper.asSubType(MetadataHelper.java:720)
-        //     at com.strobel.decompiler.ast.TypeAnalysis.doInferTypeForExpression(TypeAnalysis.java:960)
-        //     at com.strobel.decompiler.ast.TypeAnalysis.inferTypeForExpression(TypeAnalysis.java:803)
-        //     at com.strobel.decompiler.ast.TypeAnalysis.inferCall(TypeAnalysis.java:2695)
-        //     at com.strobel.decompiler.ast.TypeAnalysis.doInferTypeForExpression(TypeAnalysis.java:1029)
-        //     at com.strobel.decompiler.ast.TypeAnalysis.inferTypeForExpression(TypeAnalysis.java:803)
-        //     at com.strobel.decompiler.ast.TypeAnalysis.runInference(TypeAnalysis.java:672)
-        //     at com.strobel.decompiler.ast.TypeAnalysis.inferTypesForVariables(TypeAnalysis.java:586)
-        //     at com.strobel.decompiler.ast.TypeAnalysis.runInference(TypeAnalysis.java:397)
-        //     at com.strobel.decompiler.ast.TypeAnalysis.run(TypeAnalysis.java:96)
-        //     at com.strobel.decompiler.ast.AstOptimizer.optimize(AstOptimizer.java:109)
-        //     at com.strobel.decompiler.ast.AstOptimizer.optimize(AstOptimizer.java:42)
-        //     at com.strobel.decompiler.languages.java.ast.AstMethodBodyBuilder.createMethodBody(AstMethodBodyBuilder.java:214)
-        //     at com.strobel.decompiler.languages.java.ast.AstMethodBodyBuilder.createMethodBody(AstMethodBodyBuilder.java:99)
-        //     at com.strobel.decompiler.languages.java.ast.AstBuilder.createMethodBody(AstBuilder.java:782)
-        //     at com.strobel.decompiler.languages.java.ast.AstBuilder.createConstructor(AstBuilder.java:713)
-        //     at com.strobel.decompiler.languages.java.ast.AstBuilder.addTypeMembers(AstBuilder.java:549)
-        //     at com.strobel.decompiler.languages.java.ast.AstBuilder.createTypeCore(AstBuilder.java:519)
-        //     at com.strobel.decompiler.languages.java.ast.AstBuilder.createTypeNoCache(AstBuilder.java:161)
-        //     at com.strobel.decompiler.languages.java.ast.AstBuilder.createType(AstBuilder.java:150)
-        //     at com.strobel.decompiler.languages.java.ast.AstBuilder.addType(AstBuilder.java:125)
-        //     at cuchaz.enigma.source.procyon.ProcyonDecompiler.getSource(ProcyonDecompiler.java:77)
-        //     at cuchaz.enigma.EnigmaProject$JarExport.decompileClass(EnigmaProject.java:298)
-        //     at cuchaz.enigma.EnigmaProject$JarExport.lambda$decompileStream$1(EnigmaProject.java:274)
-        //     at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:197)
-        //     at java.base/java.util.AbstractList$RandomAccessSpliterator.forEachRemaining(AbstractList.java:720)
-        //     at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:484)
-        //     at java.base/java.util.stream.ForEachOps$ForEachTask.compute(ForEachOps.java:290)
-        //     at java.base/java.util.concurrent.CountedCompleter.exec(CountedCompleter.java:746)
-        //     at java.base/java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:295)
-        //     at java.base/java.util.concurrent.ForkJoinPool$WorkQueue.topLevelExec(ForkJoinPool.java:1016)
-        //     at java.base/java.util.concurrent.ForkJoinPool.scan(ForkJoinPool.java:1665)
-        //     at java.base/java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1598)
-        //     at java.base/java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:183)
-        // 
-        throw new IllegalStateException("An error occurred while decompiling this method.");
+        // throw new IllegalStateException("An error occurred while decompiling this method.");
     }
 }
