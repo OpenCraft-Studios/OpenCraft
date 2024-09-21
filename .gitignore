@@ -1,5 +1,6 @@
 /target*
 /output*
 /opencraft/*
-!/opencraft/resources
+!/opencraft/resources*
 /opencraft/saves/
+/.idea
