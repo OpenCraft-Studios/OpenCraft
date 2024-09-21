@@ -2,7 +2,6 @@ package net.opencraft.client;
 
 import java.io.File;
 import net.opencraft.OpenCraft;
-import net.opencraft.util.UnexpectedThrowable;
 
 /**
  *
@@ -14,13 +13,8 @@ public class Main {
         bindNatives();
         enableLegacySorting();
         
-        OpenCraft minecraft = new OpenCraft(800, 480, false) {
-            @Override
-            public void displayUnexpectedThrowable(UnexpectedThrowable g) {
-                g.exception.printStackTrace();
-            }
-        };
-        new Thread(minecraft).start();
+        OpenCraft oc = new OpenCraft(800, 480, false);
+        new Thread(oc).start();
     }
 
     private static void enableLegacySorting() {
