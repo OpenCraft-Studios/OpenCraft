@@ -49,15 +49,14 @@ public class GuiElement {
         ej.drawStringWithShadow2(string, integer3, integer4, integer5);
     }
 
-    public void drawTexturedModalRect(final int integer1, final int integer2, final int integer3, final int integer4, final int integer5, final int integer6) {
-        final float n = 0.00390625f;
-        final float n2 = 0.00390625f;
-        final Tessellator instance = Tessellator.instance;
-        instance.beginQuads();
-        instance.vertexUV(integer1 + 0, integer2 + integer6, this.zLevel, (integer3 + 0) * n, (integer4 + integer6) * n2);
-        instance.vertexUV(integer1 + integer5, integer2 + integer6, this.zLevel, (integer3 + integer5) * n, (integer4 + integer6) * n2);
-        instance.vertexUV(integer1 + integer5, integer2 + 0, this.zLevel, (integer3 + integer5) * n, (integer4 + 0) * n2);
-        instance.vertexUV(integer1 + 0, integer2 + 0, this.zLevel, (integer3 + 0) * n, (integer4 + 0) * n2);
-        instance.draw();
+    public void drawTexturedModalRect(final int x, final int y, final int u, final int v, final int width, final int height) {
+        final float texelSize = 0.00390625f;
+        final Tessellator tessellator = Tessellator.instance;
+        tessellator.beginQuads();
+        tessellator.vertexUV(x, y + height, this.zLevel, (u + 0) * texelSize, (v + height) * texelSize);
+        tessellator.vertexUV(x + width, y + height, this.zLevel, (u + width) * texelSize, (v + height) * texelSize);
+        tessellator.vertexUV(x + width, y + 0, this.zLevel, (u + width) * texelSize, (v + 0) * texelSize);
+        tessellator.vertexUV(x + 0, y + 0, this.zLevel, (u + 0) * texelSize, (v + 0) * texelSize);
+        tessellator.draw();
     }
 }
