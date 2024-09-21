@@ -9,7 +9,7 @@ limitFramerate:false
 difficulty:2
 fancyGraphics:false
 FOV:110.0
-minimumBrightness:0.0
+minimumBrightness:0.3
 key_Forward:17
 key_Left:30
 key_Back:31

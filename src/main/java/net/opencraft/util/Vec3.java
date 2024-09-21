@@ -1,11 +1,6 @@
 
 package net.opencraft.util;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.joml.Vector3f;
-
 public class Vec3 {
 
     public double x;
@@ -77,7 +72,6 @@ public class Vec3 {
         final double n = bo.x - this.x;
         final double n2 = bo.y - this.y;
         final double n3 = bo.z - this.z;
-        new Vector3f().distance(null);
         return n * n + n2 * n2 + n3 * n3;
     }
 
