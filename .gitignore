@@ -1,4 +1,5 @@
 /target*
 /output*
-/opencraft
-!/opencraft/saves
+/opencraft/*
+!/opencraft/resources
+/opencraft/saves/
