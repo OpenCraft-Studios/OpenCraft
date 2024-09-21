@@ -62,7 +62,7 @@ public class EntityRenderer {
     public void updateRenderer() {
         this.fogColor2 = this.fogColor1;
         final float lightBrightness = this.mc.world.getLightBrightness(Mth.floor_double(this.mc.player.posX), Mth.floor_double(this.mc.player.posY), Mth.floor_double(this.mc.player.posZ));
-        final float n = (3 - this.mc.gameSettings.renderDistance) / 3.0f;
+        final float n = (3 - this.mc.options.renderDistance) / 3.0f;
         this.fogColor1 += (lightBrightness * (1.0f - n) + n - this.fogColor1) * 0.1f;
         ++this.rendererUpdateCount;
         this.itemRenderer.updateEquippedItem();
@@ -128,7 +128,7 @@ public class EntityRenderer {
 
     private float getFOVModifier(final float float1) {
         final EntityPlayerSP thePlayer = this.mc.player;
-        float n = this.mc.gameSettings.fov;
+        float n = this.mc.options.fov;
         if (thePlayer.isInsideOfMaterial(Material.WATER)) {
             n = 60.0f;
         }
@@ -157,7 +157,7 @@ public class EntityRenderer {
     }
 
     private void setupViewBobbing(final float float1) {
-        if (this.mc.gameSettings.thirdPersonView) {
+        if (this.mc.options.thirdPersonView) {
             return;
         }
         final EntityPlayerSP thePlayer = this.mc.player;
@@ -175,7 +175,7 @@ public class EntityRenderer {
         final double double1 = thePlayer.prevPosX + (thePlayer.posX - thePlayer.prevPosX) * float1;
         final double double2 = thePlayer.prevPosY + (thePlayer.posY - thePlayer.prevPosY) * float1;
         final double double3 = thePlayer.prevPosZ + (thePlayer.posZ - thePlayer.prevPosZ) * float1;
-        if (this.mc.gameSettings.thirdPersonView) {
+        if (this.mc.options.thirdPersonView) {
             double n = 4.0;
             final double n2 = -Mth.sin(thePlayer.rotationYaw / 180.0f * 3.1415927f) * Mth.cos(thePlayer.rotationPitch / 180.0f * 3.1415927f) * n;
             final double n3 = Mth.cos(thePlayer.rotationYaw / 180.0f * 3.1415927f) * Mth.cos(thePlayer.rotationPitch / 180.0f * 3.1415927f) * n;
@@ -204,21 +204,21 @@ public class EntityRenderer {
     }
 
     private void orientCamera(final float float1, final int integer) {
-        this.farPlaneDistance = (float) (256 >> this.mc.gameSettings.renderDistance);
+        this.farPlaneDistance = (float) (256 >> this.mc.options.renderDistance);
         GL11.glMatrixMode(5889);
         GL11.glLoadIdentity();
         final float n = 0.07f;
-        if (this.mc.gameSettings.anaglyph) {
+        if (this.mc.options.anaglyph) {
             GL11.glTranslatef(-(integer * 2 - 1) * n, 0.0f, 0.0f);
         }
         GLU.gluPerspective(this.getFOVModifier(float1), this.mc.width / (float) this.mc.height, 0.05f, this.farPlaneDistance);
         GL11.glMatrixMode(5888);
         GL11.glLoadIdentity();
-        if (this.mc.gameSettings.anaglyph) {
+        if (this.mc.options.anaglyph) {
             GL11.glTranslatef((integer * 2 - 1) * 0.1f, 0.0f, 0.0f);
         }
         this.hurtCameraEffect(float1);
-        if (this.mc.gameSettings.viewBobbing) {
+        if (this.mc.options.viewBobbing) {
             this.setupViewBobbing(float1);
         }
         this.h(float1);
@@ -226,23 +226,23 @@ public class EntityRenderer {
 
     private void setupCameraTransform(final float float1, final int integer) {
         GL11.glLoadIdentity();
-        if (this.mc.gameSettings.anaglyph) {
+        if (this.mc.options.anaglyph) {
             GL11.glTranslatef((integer * 2 - 1) * 0.1f, 0.0f, 0.0f);
         }
         GL11.glPushMatrix();
         this.hurtCameraEffect(float1);
-        if (this.mc.gameSettings.viewBobbing) {
+        if (this.mc.options.viewBobbing) {
             this.setupViewBobbing(float1);
         }
-        if (!this.mc.gameSettings.thirdPersonView) {
+        if (!this.mc.options.thirdPersonView) {
             this.itemRenderer.renderItemInFirstPerson(float1);
         }
         GL11.glPopMatrix();
-        if (!this.mc.gameSettings.thirdPersonView) {
+        if (!this.mc.options.thirdPersonView) {
             this.itemRenderer.renderOverlays(float1);
             this.hurtCameraEffect(float1);
         }
-        if (this.mc.gameSettings.viewBobbing) {
+        if (this.mc.options.viewBobbing) {
             this.setupViewBobbing(float1);
         }
     }
@@ -257,7 +257,7 @@ public class EntityRenderer {
             final int scaledWidth = Mouse.getDY() * 1;
             this.mc.mouseHelper.mouseXYChange();
             int scaledHeight = 1;
-            if (this.mc.gameSettings.invertMouse) {
+            if (this.mc.options.invertMouse) {
                 scaledHeight = -1;
             }
             final int n = entityRendererInt1;// + this.mc.mouseHelper.deltaX;
@@ -315,7 +315,7 @@ public class EntityRenderer {
         final double yCoord = thePlayer.lastTickPosY + (thePlayer.posY - thePlayer.lastTickPosY) * float1;
         final double zCoord = thePlayer.lastTickPosZ + (thePlayer.posZ - thePlayer.lastTickPosZ) * float1;
         for (int i = 0; i < 2; ++i) {
-            if (this.mc.gameSettings.anaglyph) {
+            if (this.mc.options.anaglyph) {
                 if (i == 0) {
                     GL11.glColorMask(false, true, true, false);
                 } else {
@@ -328,7 +328,7 @@ public class EntityRenderer {
             GL11.glEnable(2884);
             this.orientCamera(float1, i);
             Frustum.getInstance();
-            if (this.mc.gameSettings.renderDistance < 2) {
+            if (this.mc.options.renderDistance < 2) {
                 this.setupFog(-1);
                 renderGlobal.renderSky(float1);
             }
@@ -360,11 +360,11 @@ public class EntityRenderer {
             GL11.glEnable(3042);
             GL11.glDisable(2884);
             GL11.glBindTexture(3553, this.mc.renderEngine.getTexture("/assets/terrain.png"));
-            if (this.mc.gameSettings.fancyGraphics) {
+            if (this.mc.options.fancyGraphics) {
                 GL11.glColorMask(false, false, false, false);
                 final int sortAndRender = renderGlobal.sortAndRender(thePlayer, 1, float1);
                 GL11.glColorMask(true, true, true, true);
-                if (this.mc.gameSettings.anaglyph) {
+                if (this.mc.options.anaglyph) {
                     if (i == 0) {
                         GL11.glColorMask(false, true, true, false);
                     } else {
@@ -399,7 +399,7 @@ public class EntityRenderer {
             this.setupFog(1);
             GL11.glClear(256);
             this.setupCameraTransform(float1, i);
-            if (!this.mc.gameSettings.anaglyph) {
+            if (!this.mc.options.anaglyph) {
                 return;
             }
         }
@@ -491,7 +491,7 @@ public class EntityRenderer {
     private void updateFogColor(final float float1) {
         final World theWorld = this.mc.world;
         final EntityPlayerSP thePlayer = this.mc.player;
-        float n = 1.0f / (4 - this.mc.gameSettings.renderDistance);
+        float n = 1.0f / (4 - this.mc.options.renderDistance);
         n = 1.0f - (float) Math.pow((double) n, 0.25);
         final Vec3 skyColor = theWorld.getSkyColor(float1);
         final float n2 = (float) skyColor.xCoord;
@@ -517,7 +517,7 @@ public class EntityRenderer {
         this.fogColorRed *= n5;
         this.fogColorGreen *= n5;
         this.fogColorBlue *= n5;
-        if (this.mc.gameSettings.anaglyph) {
+        if (this.mc.options.anaglyph) {
             final float fogColorRed = (this.fogColorRed * 30.0f + this.fogColorGreen * 59.0f + this.fogColorBlue * 11.0f) / 100.0f;
             final float fogColorGreen = (this.fogColorRed * 30.0f + this.fogColorGreen * 70.0f) / 100.0f;
             final float fogColorBlue = (this.fogColorRed * 30.0f + this.fogColorBlue * 70.0f) / 100.0f;
@@ -539,7 +539,7 @@ public class EntityRenderer {
             float n = 0.4f;
             float n2 = 0.4f;
             float n3 = 0.9f;
-            if (this.mc.gameSettings.anaglyph) {
+            if (this.mc.options.anaglyph) {
                 final float n4 = (n * 30.0f + n2 * 59.0f + n3 * 11.0f) / 100.0f;
                 final float n5 = (n * 30.0f + n2 * 70.0f) / 100.0f;
                 final float n6 = (n * 30.0f + n3 * 70.0f) / 100.0f;
@@ -553,7 +553,7 @@ public class EntityRenderer {
             float n = 0.4f;
             float n2 = 0.3f;
             float n3 = 0.3f;
-            if (this.mc.gameSettings.anaglyph) {
+            if (this.mc.options.anaglyph) {
                 final float n4 = (n * 30.0f + n2 * 59.0f + n3 * 11.0f) / 100.0f;
                 final float n5 = (n * 30.0f + n2 * 70.0f) / 100.0f;
                 final float n6 = (n * 30.0f + n3 * 70.0f) / 100.0f;

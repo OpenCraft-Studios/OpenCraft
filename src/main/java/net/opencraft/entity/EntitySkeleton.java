@@ -37,7 +37,7 @@ public class EntitySkeleton extends EntityMonster {
                 final float n2 = Mth.sqrt_double(xCoord2 * xCoord2 + zCoord * zCoord) * 0.2f;
                 this.worldObj.playSoundAtEntity((Entity) this, "random.bow", 1.0f, 1.0f / (this.rand.nextFloat() * 0.4f + 0.8f));
                 this.worldObj.entityJoinedWorld(entity2);
-                entity2.setArrowHeading(xCoord2, n + n2, zCoord, 0.6f, 12.0f);
+                entity2.shoot(xCoord2, n + n2, zCoord, 0.6f, 12.0f);
                 this.attackTime = 30;
             }
             this.rotationYaw = (float) (Math.atan2(zCoord, xCoord2) * 180.0 / 3.1415927410125732) - 90.0f;

@@ -25,7 +25,7 @@ public class GuiIngameMenu extends GuiScreen {
     @Override
     protected void actionPerformed(final GuiButton iq) {
         if (iq.buttonId == 0) {
-            this.id.displayGuiScreen(new GuiOptions(this, this.id.gameSettings));
+            this.id.displayGuiScreen(new GuiOptions(this, this.id.options));
         }
         if (iq.buttonId == 1) {
             this.id.changeWorld1(null);

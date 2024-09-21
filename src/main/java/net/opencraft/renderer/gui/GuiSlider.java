@@ -46,7 +46,7 @@ public class GuiSlider extends GuiButton {
                 if (this.decimalPlace != 0.0f) {
                     this.sliderValue = Mth.roundToDecimalPlace(this.sliderValue, this.decimalPlace);
                 }
-                this.mc.gameSettings.setOptionFloatValue(this.keyId, this.sliderValue);
+                this.mc.options.setOptionFloatValue(this.keyId, this.sliderValue);
                 this.displayString = this.displayStringName + ": " + this.sliderValue;
                 return true;
             }
@@ -64,7 +64,7 @@ public class GuiSlider extends GuiButton {
             if (this.decimalPlace != 0.0f) {
                 this.sliderValue = Mth.roundToDecimalPlace(this.sliderValue, this.decimalPlace);
             }
-            this.mc.gameSettings.setOptionFloatValue(this.keyId, this.sliderValue);
+            this.mc.options.setOptionFloatValue(this.keyId, this.sliderValue);
             this.displayString = this.displayStringName + ": " + this.sliderValue;
         }
     }

@@ -22,8 +22,8 @@ public class RenderSkyboxCube {
         GL11.glPushMatrix();
         GL11.glLoadIdentity();
         Project.gluPerspective(70.0F, (float) mc.width / (float) mc.height, 0.05F, 10.0F);
-
         GL11.glMatrixMode(GL11.GL_MODELVIEW);
+
         GL11.glPushMatrix();
         GL11.glLoadIdentity();
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);

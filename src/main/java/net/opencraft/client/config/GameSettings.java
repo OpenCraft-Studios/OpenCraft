@@ -250,23 +250,21 @@ public class GameSettings {
     }
 
     public void saveOptions() {
-        try {
-            try (PrintWriter printWriter = new PrintWriter(new FileWriter(this.optionsFile))) {
-                printWriter.println("music:" + music);
-                printWriter.println("sound:" + sound);
-                printWriter.println("invertYMouse:" + invertMouse);
-                printWriter.println("showFrameRate:" + showDebugInfo);
-                printWriter.println("viewDistance:" + renderDistance);
-                printWriter.println("bobView:" + viewBobbing);
-                printWriter.println("anaglyph3d:" + anaglyph);
-                printWriter.println("limitFramerate:" + limitFramerate);
-                printWriter.println("difficulty:" + difficulty);
-                printWriter.println("fancyGraphics:" + fancyGraphics);
-                printWriter.println("FOV:" + fov);
-                printWriter.println("minimumBrightness:" + Float.toString(this.minimumBrightness));
-                for (int i = 0; i < this.keyBindings.length; ++i) {
-                    printWriter.println(keyBindings[i].toString());
-                }
+    	try (PrintWriter s = new PrintWriter(new FileWriter(this.optionsFile))) {
+    		s.println("music:" + music);
+            s.println("sound:" + sound);
+            s.println("invertYMouse:" + invertMouse);
+            s.println("showFrameRate:" + showDebugInfo);
+            s.println("viewDistance:" + renderDistance);
+            s.println("bobView:" + viewBobbing);
+            s.println("anaglyph3d:" + anaglyph);
+            s.println("limitFramerate:" + limitFramerate);
+            s.println("difficulty:" + difficulty);
+            s.println("fancyGraphics:" + fancyGraphics);
+            s.println("FOV:" + fov);
+            s.println("minimumBrightness:" + Float.toString(this.minimumBrightness));
+            for (int i = 0; i < this.keyBindings.length; ++i) {
+            	s.println(keyBindings[i].toString());
             }
         } catch (Exception ex) {
             System.out.println("Failed to save options");

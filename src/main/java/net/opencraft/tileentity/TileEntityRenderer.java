@@ -1,19 +1,18 @@
 
 package net.opencraft.tileentity;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.*;
+
+import org.lwjgl.opengl.GL11;
 
 import net.opencraft.entity.EntityPlayer;
 import net.opencraft.renderer.entity.Renderer;
 import net.opencraft.renderer.font.FontRenderer;
 import net.opencraft.world.World;
-import org.lwjgl.opengl.GL11;
 
 public class TileEntityRenderer {
 
-    private Map m;
+    private Map<Class<?>, TileEntitySpecialRenderer<?>> m;
     public static TileEntityRenderer instance;
     private FontRenderer n;
     public static double b;
@@ -29,12 +28,11 @@ public class TileEntityRenderer {
     public double l;
 
     private TileEntityRenderer() {
-        (this.m = (Map) new HashMap()).put(TileEntitySign.class, new TileEntitySignRenderer());
+        this.m = new HashMap<>();
+        m.put(TileEntitySign.class, new TileEntitySignRenderer());
         this.m.put(TileEntityMobSpawner.class, new TileEntityMobSpawnerRenderer());
-        final Iterator iterator = this.m.values().iterator();
-        while (iterator.hasNext()) {
-            ((TileEntitySpecialRenderer) iterator.next()).setTileEntityRenderer(this);
-        }
+        for (TileEntitySpecialRenderer<?> t : this.m.values())
+            t.setTileEntityRenderer(this);
     }
 
     public TileEntitySpecialRenderer a(final Class class1) {

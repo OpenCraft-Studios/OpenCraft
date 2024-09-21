@@ -54,10 +54,10 @@ public class EntityArrow extends Entity {
         this.motionX = -Mth.sin(this.rotationYaw / 180.0f * 3.1415927f) * Mth.cos(this.rotationPitch / 180.0f * 3.1415927f);
         this.motionZ = Mth.cos(this.rotationYaw / 180.0f * 3.1415927f) * Mth.cos(this.rotationPitch / 180.0f * 3.1415927f);
         this.motionY = -Mth.sin(this.rotationPitch / 180.0f * 3.1415927f);
-        this.setArrowHeading(this.motionX, this.motionY, this.motionZ, 1.5f, 1.0f);
+        this.shoot(this.motionX, this.motionY, this.motionZ, 1.5f, 1.0f);
     }
 
-    public void setArrowHeading(double xCoord, double yCoord, double zCoord, final float yaw, final float pitch) {
+    public void shoot(double xCoord, double yCoord, double zCoord, final float yaw, final float pitch) {
         final float sqrt_double = Mth.sqrt_double(xCoord * xCoord + yCoord * yCoord + zCoord * zCoord);
         xCoord /= sqrt_double;
         yCoord /= sqrt_double;

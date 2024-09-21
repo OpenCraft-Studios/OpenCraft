@@ -43,7 +43,7 @@ public class GuiIngame extends GuiElement {
         final FontRenderer fontRenderer = this.mc.fontRenderer;
         this.mc.entityRenderer.setupOverlayRendering();
         GL11.glEnable(3042);
-        if (this.mc.gameSettings.fancyGraphics) {
+        if (this.mc.options.fancyGraphics) {
             this.renderVignette(this.mc.player.getEntityBrightness(float1), scaledWidth, scaledHeight);
         }
         GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
@@ -127,7 +127,7 @@ public class GuiIngame extends GuiElement {
         }
         RenderHelper.disableStandardItemLighting();
         GL11.glDisable(32826);
-        if (this.mc.gameSettings.showDebugInfo) {
+        if (this.mc.options.showDebugInfo) {
             fontRenderer.drawStringWithShadow2("nCraft Infdev (" + this.mc.debug + ")", 2, 2, 16777215);
             fontRenderer.drawStringWithShadow2(this.mc.debugInfoRenders(), 2, 12, 16777215);
             fontRenderer.drawStringWithShadow2(this.mc.func_6262_n(), 2, 22, 16777215);

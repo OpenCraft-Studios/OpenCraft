@@ -197,8 +197,8 @@ public class RenderGlobal implements IWorldAccess {
 	}
 
 	public void fancyGraphics() {
-		Block.leaves.setGraphicsLevel(this.t.gameSettings.fancyGraphics);
-		this.H = this.t.gameSettings.renderDistance;
+		Block.leaves.setGraphicsLevel(this.t.options.fancyGraphics);
+		this.H = this.t.options.renderDistance;
 		if (this.o != null) {
 			for (int i = 0; i < this.o.length; ++i) {
 				this.o[i].c();
@@ -257,7 +257,7 @@ public class RenderGlobal implements IWorldAccess {
 	public void renderEntities(final Vec3 bo, final ICamera jt, final float float3) {
 		TileEntityRenderer.instance.a(this.k, this.l, this.t.fontRenderer, this.t.player, float3);
 		RenderManager.instance.cacheActiveRenderInfo(this.k, this.l, this.t.fontRenderer, this.t.player,
-				this.t.gameSettings, float3);
+				this.t.options, float3);
 		this.I = 0;
 		this.J = 0;
 		this.K = 0;
@@ -273,7 +273,7 @@ public class RenderGlobal implements IWorldAccess {
 		for (int i = 0; i < loadedEntityList.size(); ++i) {
 			final Entity eq = (Entity) loadedEntityList.get(i);
 			if (eq.isInRangeToRenderVec3D(bo) && jt.isBoundingBoxInFrustum(eq.boundingBox)) {
-				if (eq != this.k.player || this.t.gameSettings.thirdPersonView) {
+				if (eq != this.k.player || this.t.options.thirdPersonView) {
 					++this.J;
 					RenderManager.instance.renderEntity(eq, float3);
 				}
@@ -354,7 +354,7 @@ public class RenderGlobal implements IWorldAccess {
 	}
 
 	public int sortAndRender(final EntityPlayer gi, final int integer, final double double3) {
-		if (this.t.gameSettings.renderDistance != this.H) {
+		if (this.t.options.renderDistance != this.H) {
 			this.fancyGraphics();
 		}
 		if (integer == 0) {
@@ -379,7 +379,7 @@ public class RenderGlobal implements IWorldAccess {
 		}
 		final int n7 = 0;
 		int n9;
-		if (this.w && !this.t.gameSettings.anaglyph && integer == 0) {
+		if (this.w && !this.t.options.anaglyph && integer == 0) {
 			final int n8 = 0;
 			int i = 16;
 			this.a(n8, i);
@@ -527,7 +527,7 @@ public class RenderGlobal implements IWorldAccess {
 		float n = (float) skyColor.xCoord;
 		float n2 = (float) skyColor.yCoord;
 		float n3 = (float) skyColor.zCoord;
-		if (this.t.gameSettings.anaglyph) {
+		if (this.t.options.anaglyph) {
 			final float n4 = (n * 30.0f + n2 * 59.0f + n3 * 11.0f) / 100.0f;
 			final float n5 = (n * 30.0f + n2 * 70.0f) / 100.0f;
 			final float n6 = (n * 30.0f + n3 * 70.0f) / 100.0f;
@@ -589,7 +589,7 @@ public class RenderGlobal implements IWorldAccess {
 	}
 
 	public void renderClouds(final float float1) {
-		if (this.t.gameSettings.fancyGraphics) {
+		if (this.t.options.fancyGraphics) {
 			this.c(float1);
 			return;
 		}
@@ -606,7 +606,7 @@ public class RenderGlobal implements IWorldAccess {
 		float float2 = (float) drawClouds.xCoord;
 		float float3 = (float) drawClouds.yCoord;
 		float float4 = (float) drawClouds.zCoord;
-		if (this.t.gameSettings.anaglyph) {
+		if (this.t.options.anaglyph) {
 			final float n4 = (float2 * 30.0f + float3 * 59.0f + float4 * 11.0f) / 100.0f;
 			final float n5 = (float2 * 30.0f + float3 * 70.0f) / 100.0f;
 			final float n6 = (float2 * 30.0f + float4 * 70.0f) / 100.0f;
@@ -664,7 +664,7 @@ public class RenderGlobal implements IWorldAccess {
 		float float2 = (float) drawClouds.xCoord;
 		float float3 = (float) drawClouds.yCoord;
 		float float4 = (float) drawClouds.zCoord;
-		if (this.t.gameSettings.anaglyph) {
+		if (this.t.options.anaglyph) {
 			final float n7 = (float2 * 30.0f + float3 * 59.0f + float4 * 11.0f) / 100.0f;
 			final float n8 = (float2 * 30.0f + float3 * 70.0f) / 100.0f;
 			final float n9 = (float2 * 30.0f + float4 * 70.0f) / 100.0f;

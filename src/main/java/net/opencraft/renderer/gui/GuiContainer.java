@@ -210,7 +210,7 @@ public abstract class GuiContainer extends GuiScreen {
 
     @Override
     protected void keyTyped(final char character, final int integer) {
-        if (integer == 1 || integer == this.id.gameSettings.keyBindInventory.keyCode) {
+        if (integer == 1 || integer == this.id.options.keyBindInventory.keyCode) {
             this.id.displayGuiScreen(null);
         }
     }
