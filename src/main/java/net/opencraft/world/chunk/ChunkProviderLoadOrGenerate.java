@@ -2,7 +2,7 @@
 package net.opencraft.world.chunk;
 
 import net.opencraft.blocks.SandBlock;
-import net.opencraft.client.renderer.gui.IProgressUpdate;
+import net.opencraft.renderer.gui.IProgressUpdate;
 import net.opencraft.world.IChunkLoader;
 import net.opencraft.world.IChunkProvider;
 import net.opencraft.world.World;

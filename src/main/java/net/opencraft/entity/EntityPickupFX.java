@@ -1,8 +1,8 @@
 
 package net.opencraft.entity;
 
-import net.opencraft.client.renderer.Tessellator;
-import net.opencraft.client.renderer.entity.RenderManager;
+import net.opencraft.renderer.Tessellator;
+import net.opencraft.renderer.entity.RenderManager;
 import net.opencraft.util.Mth;
 import net.opencraft.world.World;
 import org.lwjgl.opengl.GL11;

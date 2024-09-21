@@ -3,7 +3,7 @@ package net.opencraft.entity;
 
 import net.opencraft.blocks.LiquidBlock;
 import net.opencraft.blocks.material.Material;
-import net.opencraft.client.renderer.Tessellator;
+import net.opencraft.renderer.Tessellator;
 import net.opencraft.util.Mth;
 import net.opencraft.world.World;
 

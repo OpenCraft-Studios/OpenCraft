@@ -24,7 +24,7 @@ import net.opencraft.nbt.NBTTagCompound;
 import net.opencraft.pathfinder.PathEntity;
 import net.opencraft.pathfinder.Pathfinder;
 import net.opencraft.physics.AABB;
-import net.opencraft.client.renderer.gui.IProgressUpdate;
+import net.opencraft.renderer.gui.IProgressUpdate;
 import net.opencraft.tileentity.TileEntity;
 import net.opencraft.util.Mth;
 import net.opencraft.util.Vec3;

@@ -1,8 +1,8 @@
 
 package net.opencraft.tileentity;
 
-import net.opencraft.client.renderer.entity.Renderer;
-import net.opencraft.client.renderer.font.FontRenderer;
+import net.opencraft.renderer.entity.Renderer;
+import net.opencraft.renderer.font.FontRenderer;
 
 public abstract class TileEntitySpecialRenderer<T extends TileEntity> {
 

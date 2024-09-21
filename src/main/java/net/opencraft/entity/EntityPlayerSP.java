@@ -9,7 +9,7 @@ import net.opencraft.item.ItemStack;
 import net.opencraft.nbt.NBTBase;
 import net.opencraft.nbt.NBTTagCompound;
 import net.opencraft.nbt.NBTTagList;
-import net.opencraft.client.renderer.gui.*;
+import net.opencraft.renderer.gui.*;
 import net.opencraft.tileentity.TileEntityFurnace;
 import net.opencraft.tileentity.TileEntitySign;
 import net.opencraft.world.World;

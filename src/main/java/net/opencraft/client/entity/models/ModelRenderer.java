@@ -2,7 +2,7 @@
 package net.opencraft.client.entity.models;
 
 import net.opencraft.PositionTextureVertex;
-import net.opencraft.client.renderer.*;
+import net.opencraft.renderer.*;
 
 import org.lwjgl.opengl.GL11;
 

@@ -6,8 +6,8 @@ import java.util.*;
 import org.lwjgl.opengl.GL11;
 
 import net.opencraft.entity.EntityPlayer;
-import net.opencraft.client.renderer.entity.Renderer;
-import net.opencraft.client.renderer.font.FontRenderer;
+import net.opencraft.renderer.entity.Renderer;
+import net.opencraft.renderer.font.FontRenderer;
 import net.opencraft.world.World;
 
 public class TileEntityRenderer {

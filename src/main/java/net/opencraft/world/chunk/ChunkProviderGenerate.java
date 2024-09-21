@@ -4,7 +4,7 @@ package net.opencraft.world.chunk;
 import java.util.Random;
 
 import net.opencraft.blocks.Block;
-import net.opencraft.client.renderer.gui.IProgressUpdate;
+import net.opencraft.renderer.gui.IProgressUpdate;
 import net.opencraft.util.Mth;
 import net.opencraft.world.IChunkProvider;
 import net.opencraft.world.World;

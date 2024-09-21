@@ -5,12 +5,13 @@ import net.opencraft.OpenCraft;
 import net.opencraft.blocks.Block;
 import net.opencraft.blocks.material.Material;
 import net.opencraft.entity.EntityPlayerSP;
-import net.opencraft.client.renderer.Tessellator;
-import net.opencraft.client.renderer.entity.*;
+import net.opencraft.renderer.Tessellator;
+import net.opencraft.renderer.entity.*;
 import net.opencraft.util.Mth;
 
 import static net.opencraft.OpenCraft.*;
 
+import org.joml.Matrix4f;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.glu.Project;
 
