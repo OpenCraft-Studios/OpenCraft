@@ -2,6 +2,7 @@
 package net.opencraft.client.gui;
 
 import net.opencraft.client.renderer.Tessellator;
+import net.opencraft.SharedConstants;
 import net.opencraft.client.renderer.RenderSkybox;
 import net.opencraft.client.renderer.RenderSkyboxCube;
 import net.opencraft.util.Mth;
@@ -73,8 +74,8 @@ public class GuiMainMenu extends GuiScreen {
         GL11.glScalef(n, n, n);
         this.drawCenteredString(this.fontRenderer, this.currentSplash, 0, -8, 16776960);
         GL11.glPopMatrix();
-        final String s = "OpenCraft inf-0.0.1";
-        this.drawString(this.fontRenderer, s, this.width - this.fontRenderer.getStringWidth(s) - 2, this.height - 10, 16777215);
+        final String gameVersion = "OpenCraft ".concat(SharedConstants.VERSION_STRING);
+        this.drawString(this.fontRenderer, gameVersion, 4, this.height - 12, 0xFFFFFF);
         final long maxMemory = Runtime.getRuntime().maxMemory();
         final long totalMemory = Runtime.getRuntime().totalMemory();
         final String string = new StringBuilder().append("Free memory: ").append((maxMemory - Runtime.getRuntime().freeMemory()) * 100L / maxMemory).append("% of ").append(maxMemory / 1024L / 1024L).append("MB").toString();

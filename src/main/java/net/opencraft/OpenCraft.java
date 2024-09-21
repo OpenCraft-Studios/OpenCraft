@@ -2,37 +2,27 @@
 package net.opencraft;
 
 import java.io.File;
+
+import org.lwjgl.LWJGLException;
+import org.lwjgl.Sys;
+import org.lwjgl.input.Keyboard;
+import org.lwjgl.input.Mouse;
+import org.lwjgl.opengl.*;
+import org.lwjgl.util.glu.GLU;
+
 import net.opencraft.block.Block;
 import net.opencraft.block.SandBlock;
-import net.opencraft.client.entity.PlayerController;
-import net.opencraft.client.entity.PlayerControllerSP;
-import net.opencraft.client.entity.PlayerControllerTest;
+import net.opencraft.client.entity.*;
 import net.opencraft.client.entity.models.ModelBiped;
 import net.opencraft.client.font.FontRenderer;
-import net.opencraft.client.gui.GuiGameOver;
-import net.opencraft.client.gui.GuiIngame;
-import net.opencraft.client.gui.GuiIngameMenu;
-import net.opencraft.client.gui.GuiInventory;
-import net.opencraft.client.gui.GuiMainMenu;
-import net.opencraft.client.gui.GuiScreen;
-import net.opencraft.client.gui.GuiUnused;
-import net.opencraft.client.input.MouseHelper;
-import net.opencraft.client.input.MovementInputFromOptions;
-import net.opencraft.client.input.MovingObjectPosition;
-import net.opencraft.client.renderer.EffectRenderer;
-import net.opencraft.client.renderer.GLAllocation;
-import net.opencraft.client.renderer.LoadingScreenRenderer;
-import net.opencraft.client.renderer.Tessellator;
-import net.opencraft.client.renderer.entity.RenderEngine;
+import net.opencraft.client.gui.*;
+import net.opencraft.client.input.*;
+import net.opencraft.client.renderer.*;
+import net.opencraft.client.renderer.entity.Renderer;
 import net.opencraft.client.renderer.entity.RenderGlobal;
 import net.opencraft.client.settings.GameSettings;
 import net.opencraft.client.sound.SoundManager;
-import net.opencraft.client.texture.TextureFlamesFX;
-import net.opencraft.client.texture.TextureGearsFX;
-import net.opencraft.client.texture.TextureLavaFX;
-import net.opencraft.client.texture.TextureLavaFlowFX;
-import net.opencraft.client.texture.TextureWaterFX;
-import net.opencraft.client.texture.TextureWaterFlowFX;
+import net.opencraft.client.texture.*;
 import net.opencraft.entity.EntityPlayerSP;
 import net.opencraft.entity.EntityRenderer;
 import net.opencraft.item.ItemStack;
@@ -40,15 +30,6 @@ import net.opencraft.physics.AABB;
 import net.opencraft.util.*;
 import net.opencraft.world.World;
 import net.opencraft.world.WorldRenderer;
-import org.lwjgl.LWJGLException;
-import org.lwjgl.Sys;
-import org.lwjgl.input.Keyboard;
-import org.lwjgl.input.Mouse;
-import org.lwjgl.opengl.Display;
-import org.lwjgl.opengl.DisplayMode;
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.PixelFormat;
-import org.lwjgl.util.glu.GLU;
 
 public class OpenCraft implements Runnable {
 
@@ -71,7 +52,7 @@ public class OpenCraft implements Runnable {
     public String minecraftUri;
     public boolean hideQuitButton;
     public volatile boolean isGamePaused;
-    public RenderEngine renderEngine;
+    public Renderer renderEngine;
     public FontRenderer fontRenderer;
     public GuiScreen currentScreen;
     public LoadingScreenRenderer loadingScreen;
@@ -172,23 +153,16 @@ public class OpenCraft implements Runnable {
         } else {
             Display.setDisplayMode(new DisplayMode(oc.width, oc.height));
         }
-        Display.setTitle("nCraft");
+        Display.setTitle("OpenCraft ".concat(SharedConstants.VERSION_STRING));
         Display.setResizable(true);
         try {
-            PixelFormat pixelformat = new PixelFormat();
-            pixelformat = pixelformat.withDepthBits(24);
-            Display.create(pixelformat);
-        } catch (LWJGLException ex) {
-            ex.printStackTrace();
-            try {
-                Thread.sleep(1000L);
-            } catch (InterruptedException ex3) {
-            }
             Display.create();
+        } catch (LWJGLException ex) {
+        	System.exit(1);
         }
         oc.mcDataDir = getMinecraftDir();
         oc.gameSettings = new GameSettings(oc, oc.mcDataDir);
-        oc.renderEngine = new RenderEngine(oc.gameSettings);
+        oc.renderEngine = new Renderer(oc.gameSettings);
         oc.fontRenderer = new FontRenderer(oc.gameSettings, "/assets/default.png", oc.renderEngine);
         oc.loadScreen();
         Keyboard.create();

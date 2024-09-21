@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import net.opencraft.client.font.FontRenderer;
-import net.opencraft.client.renderer.entity.RenderEngine;
+import net.opencraft.client.renderer.entity.Renderer;
 import net.opencraft.entity.EntityPlayer;
 import net.opencraft.world.World;
 import org.lwjgl.opengl.GL11;
@@ -18,7 +18,7 @@ public class TileEntityRenderer {
     public static double b;
     public static double c;
     public static double d;
-    public RenderEngine renderEngine;
+    public Renderer renderEngine;
     public World f;
     public EntityPlayer g;
     public float h;
@@ -53,7 +53,7 @@ public class TileEntityRenderer {
         return this.a(bk.getClass());
     }
 
-    public void a(final World fe, final RenderEngine id, final FontRenderer ej, final EntityPlayer gi, final float float5) {
+    public void a(final World fe, final Renderer id, final FontRenderer ej, final EntityPlayer gi, final float float5) {
         this.f = fe;
         this.renderEngine = id;
         this.g = gi;

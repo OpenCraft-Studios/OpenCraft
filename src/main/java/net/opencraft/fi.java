@@ -2,14 +2,13 @@
 package net.opencraft;
 
 import java.nio.IntBuffer;
-import net.opencraft.client.renderer.GLAllocation;
+
+import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 
 public class fi {
 
-    private int a;
-    private int b;
-    private int c;
+    private int a, b, c;
     private float d;
     private float e;
     private float f;
@@ -18,7 +17,7 @@ public class fi {
     private boolean i;
 
     public fi() {
-        this.g = GLAllocation.createIntBuffer(65536);
+        this.g = BufferUtils.createIntBuffer(0x10000);
         this.h = false;
         this.i = false;
     }

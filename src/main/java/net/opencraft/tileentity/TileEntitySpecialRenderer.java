@@ -2,7 +2,7 @@
 package net.opencraft.tileentity;
 
 import net.opencraft.client.font.FontRenderer;
-import net.opencraft.client.renderer.entity.RenderEngine;
+import net.opencraft.client.renderer.entity.Renderer;
 
 public abstract class TileEntitySpecialRenderer<T extends TileEntity> {
 
@@ -11,7 +11,7 @@ public abstract class TileEntitySpecialRenderer<T extends TileEntity> {
     public abstract void renderTileEntityMobSpawner(final T bk, final double double2, final double double3, final double double4, final float float5);
 
     protected void bindTextureByName(final String string) {
-        final RenderEngine renderEngine = this.tileEntityRenderer.renderEngine;
+        final Renderer renderEngine = this.tileEntityRenderer.renderEngine;
         renderEngine.bindTexture(renderEngine.getTexture(string));
     }
 

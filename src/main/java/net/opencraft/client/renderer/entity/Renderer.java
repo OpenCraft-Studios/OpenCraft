@@ -10,15 +10,19 @@ import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
 import java.util.*;
+
 import javax.imageio.ImageIO;
-import net.opencraft.client.settings.GameSettings;
-import net.opencraft.client.renderer.GLAllocation;
-import net.opencraft.client.texture.TextureFX;
-import net.opencraft.ei;
-import net.opencraft.ImageProvider;
+
+import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 
-public class RenderEngine {
+import net.opencraft.ImageProvider;
+import net.opencraft.ei;
+import net.opencraft.client.renderer.GLAllocation;
+import net.opencraft.client.settings.GameSettings;
+import net.opencraft.client.texture.TextureFX;
+
+public class Renderer {
 
     private HashMap<String, Integer> a;
     private HashMap<Integer, BufferedImage> b;
@@ -30,11 +34,11 @@ public class RenderEngine {
     private boolean h;
     private Set<String> missingTextures = new HashSet<>();
 
-    public RenderEngine(final GameSettings ja) {
+    public Renderer(final GameSettings ja) {
         this.a = new HashMap();
         this.b = new HashMap();
-        this.c = GLAllocation.createIntBuffer(1);
-        this.d = GLAllocation.createDirectByteBuffer(99999999);
+        this.c = BufferUtils.createIntBuffer(1);
+        this.d = BufferUtils.createByteBuffer(99999999);
         this.e = (List) new ArrayList();
         this.f = (Map) new HashMap();
         this.h = false;
@@ -52,13 +56,13 @@ public class RenderEngine {
             final int value = this.c.get(0);
 
             if (string.startsWith("##")) {
-                this.a(this.b(ImageIO.read(RenderEngine.class.getResourceAsStream(string.substring(2)))), value);
+                this.a(this.b(ImageIO.read(Renderer.class.getResourceAsStream(string.substring(2)))), value);
             } else if (string.startsWith("%%")) {
                 this.h = true;
-                this.a(ImageIO.read(RenderEngine.class.getResourceAsStream(string.substring(2))), value);
+                this.a(ImageIO.read(Renderer.class.getResourceAsStream(string.substring(2))), value);
                 this.h = false;
             } else {
-                this.a(ImageIO.read(RenderEngine.class.getResourceAsStream(string)), value);
+                this.a(ImageIO.read(Renderer.class.getResourceAsStream(string)), value);
             }
 
             this.a.put(string, value);
@@ -76,7 +80,7 @@ public class RenderEngine {
                 this.c.clear();
                 GLAllocation.generateDisplayLists(this.c);
                 final int missingTextureValue = this.c.get(0);
-                this.a(ImageIO.read(RenderEngine.class.getResourceAsStream(missingTexturePath)), missingTextureValue);
+                this.a(ImageIO.read(Renderer.class.getResourceAsStream(missingTexturePath)), missingTextureValue);
                 this.a.put(string, missingTextureValue);
                 return missingTextureValue;
 
@@ -99,11 +103,11 @@ public class RenderEngine {
             // Try to load the texture based on different prefixes
             InputStream textureStream = null;
             if (string.startsWith("##")) {
-                textureStream = RenderEngine.class.getResourceAsStream(string.substring(2));
+                textureStream = Renderer.class.getResourceAsStream(string.substring(2));
             } else if (string.startsWith("%%")) {
-                textureStream = RenderEngine.class.getResourceAsStream(string.substring(2));
+                textureStream = Renderer.class.getResourceAsStream(string.substring(2));
             } else {
-                textureStream = RenderEngine.class.getResourceAsStream(string);
+                textureStream = Renderer.class.getResourceAsStream(string);
             }
 
             // If the texture was found, load it
@@ -145,7 +149,7 @@ public class RenderEngine {
         final String missingTexturePath = "/assets/missing.png";
 
         try {
-            InputStream missingTextureStream = RenderEngine.class.getResourceAsStream(missingTexturePath);
+            InputStream missingTextureStream = Renderer.class.getResourceAsStream(missingTexturePath);
 
             if (missingTextureStream != null) {
                 this.c.clear();
@@ -318,13 +322,13 @@ public class RenderEngine {
             try {
                 BufferedImage bufferedImage;
                 if (s.startsWith("##")) {
-                    bufferedImage = this.b(ImageIO.read(RenderEngine.class.getResourceAsStream(s.substring(2))));
+                    bufferedImage = this.b(ImageIO.read(Renderer.class.getResourceAsStream(s.substring(2))));
                 } else if (s.startsWith("%%")) {
                     this.h = true;
-                    bufferedImage = ImageIO.read(RenderEngine.class.getResourceAsStream(s.substring(2)));
+                    bufferedImage = ImageIO.read(Renderer.class.getResourceAsStream(s.substring(2)));
                     this.h = false;
                 } else {
-                    bufferedImage = ImageIO.read(RenderEngine.class.getResourceAsStream(s));
+                    bufferedImage = ImageIO.read(Renderer.class.getResourceAsStream(s));
                 }
                 this.a(bufferedImage, (int) this.a.get(s));
             } catch (IOException ex) {

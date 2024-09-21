@@ -10,7 +10,7 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 
-public class GuiScreen extends Gui {
+public class GuiScreen extends GuiElement {
 
     protected OpenCraft id;
     public int width;

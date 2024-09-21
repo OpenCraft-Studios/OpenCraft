@@ -33,7 +33,7 @@ public class RenderManager {
     public static double renderPosX;
     public static double renderPosY;
     public static double renderPosZ;
-    public RenderEngine renderEngine;
+    public Renderer renderEngine;
     public World worldObj;
     public EntityPlayer livingPlayer;
     public float playerViewY;
@@ -78,7 +78,7 @@ public class RenderManager {
         return this.getEntityClassRenderObject(eq2.getClass());
     }
 
-    public void cacheActiveRenderInfo(World fe2, RenderEngine id2, FontRenderer ej2, EntityPlayer gi2, GameSettings ja2, float f2) {
+    public void cacheActiveRenderInfo(World fe2, Renderer id2, FontRenderer ej2, EntityPlayer gi2, GameSettings ja2, float f2) {
         this.worldObj = fe2;
         this.renderEngine = id2;
         this.options = ja2;

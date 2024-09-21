@@ -1,12 +1,10 @@
 
 package net.opencraft.client.renderer;
 
-import java.nio.ByteBuffer;
-import java.nio.FloatBuffer;
-import java.nio.IntBuffer;
-import org.lwjgl.opengl.ARBVertexBufferObject;
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GLContext;
+import java.nio.*;
+
+import org.lwjgl.BufferUtils;
+import org.lwjgl.opengl.*;
 
 public class Tessellator {
 
@@ -52,13 +50,13 @@ public class Tessellator {
         this.z = 0;
         this.A = 10;
         this.B = integer;
-        this.d = GLAllocation.createDirectByteBuffer(integer * 4);
+        this.d = BufferUtils.createByteBuffer(integer * 4);
         this.e = this.d.asIntBuffer();
         this.f = this.d.asFloatBuffer();
         this.g = new int[integer];
         this.x = (Tessellator.c && GLContext.getCapabilities().GL_ARB_vertex_buffer_object);
         if (this.x) {
-            ARBVertexBufferObject.glGenBuffersARB(this.y = GLAllocation.createIntBuffer(this.A));
+            ARBVertexBufferObject.glGenBuffersARB(this.y = BufferUtils.createIntBuffer(this.A));
         }
     }
 

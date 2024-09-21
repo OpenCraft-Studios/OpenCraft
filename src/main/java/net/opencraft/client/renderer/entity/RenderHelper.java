@@ -2,9 +2,11 @@
 package net.opencraft.client.renderer.entity;
 
 import java.nio.FloatBuffer;
-import net.opencraft.client.renderer.GLAllocation;
-import net.opencraft.util.Vec3;
+
+import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
+
+import net.opencraft.util.Vec3;
 
 public class RenderHelper {
 
@@ -52,6 +54,6 @@ public class RenderHelper {
     }
 
     static {
-        RenderHelper.a = GLAllocation.createFloatBuffer(16);
+        RenderHelper.a = BufferUtils.createFloatBuffer(16);
     }
 }

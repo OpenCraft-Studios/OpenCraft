@@ -15,7 +15,7 @@ import net.opencraft.inventory.InventoryPlayer;
 import net.opencraft.item.ItemStack;
 import org.lwjgl.opengl.GL11;
 
-public class GuiIngame extends Gui {
+public class GuiIngame extends GuiElement {
 
     private static RenderItem itemRenderer = new RenderItem();
     private List<ChatLine> chatMessageList;

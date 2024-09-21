@@ -2,26 +2,29 @@
 package net.opencraft.client.renderer.culling;
 
 import java.nio.FloatBuffer;
-import net.opencraft.client.renderer.GLAllocation;
-import net.opencraft.util.Mth;
+
+import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 
-public class ClippingHelperImpl extends ClippingHelper {
+import net.opencraft.client.renderer.GLAllocation;
+import net.opencraft.util.Mth;
 
-    private static ClippingHelperImpl instance;
+public class Frustum extends ClippingHelper {
+
+    private static Frustum instance;
     private FloatBuffer projectionMatrixBuffer;
     private FloatBuffer modelviewMatrixBuffer;
     private FloatBuffer floatBuffer16;
 
-    public ClippingHelperImpl() {
-        this.projectionMatrixBuffer = GLAllocation.createFloatBuffer(16);
-        this.modelviewMatrixBuffer = GLAllocation.createFloatBuffer(16);
-        this.floatBuffer16 = GLAllocation.createFloatBuffer(16);
+    public Frustum() {
+        this.projectionMatrixBuffer = BufferUtils.createFloatBuffer(16);
+        this.modelviewMatrixBuffer = BufferUtils.createFloatBuffer(16);
+        this.floatBuffer16 = BufferUtils.createFloatBuffer(16);
     }
 
     public static ClippingHelper getInstance() {
-        ClippingHelperImpl.instance.init();
-        return ClippingHelperImpl.instance;
+        Frustum.instance.calculateFrustum();
+        return Frustum.instance;
     }
 
     private void normalize(final float[][] arr, final int integer) {
@@ -40,7 +43,7 @@ public class ClippingHelperImpl extends ClippingHelper {
         array4[n4] /= sqrt_float;
     }
 
-    private void init() {
+    private void calculateFrustum() {
         this.projectionMatrixBuffer.clear();
         this.modelviewMatrixBuffer.clear();
         this.floatBuffer16.clear();
@@ -99,6 +102,6 @@ public class ClippingHelperImpl extends ClippingHelper {
     }
 
     static {
-        ClippingHelperImpl.instance = new ClippingHelperImpl();
+        Frustum.instance = new Frustum();
     }
 }

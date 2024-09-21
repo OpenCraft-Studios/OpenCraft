@@ -95,7 +95,7 @@ public class RenderItem extends Render<EntityItem> {
         GL11.glPopMatrix();
     }
 
-    public void drawItemIntoGui(final FontRenderer ej, final RenderEngine id, final ItemStack hw, final int integer4, final int integer5) {
+    public void drawItemIntoGui(final FontRenderer ej, final Renderer id, final ItemStack hw, final int integer4, final int integer5) {
         if (hw == null) {
             return;
         }
@@ -124,7 +124,7 @@ public class RenderItem extends Render<EntityItem> {
         }
     }
 
-    public void renderItemOverlayIntoGUI(final FontRenderer ej, final RenderEngine id, final ItemStack hw, final int integer4, final int integer5) {
+    public void renderItemOverlayIntoGUI(final FontRenderer ej, final Renderer id, final ItemStack hw, final int integer4, final int integer5) {
         if (hw == null) {
             return;
         }

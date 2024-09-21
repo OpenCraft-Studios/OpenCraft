@@ -3,6 +3,7 @@ package net.opencraft.entity;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import net.opencraft.EnumArt;
 import net.opencraft.block.material.Material;
 import net.opencraft.item.Item;
@@ -28,23 +29,22 @@ public class EntityPainting extends Entity {
         this.setSize(0.5f, 0.5f);
     }
 
-    public EntityPainting(final World fe, final int integer2, final int integer3, final int integer4, final int integer5) {
-        this(fe);
-        this.xPosition = integer2;
-        this.yPosition = integer3;
-        this.zPosition = integer4;
-        final ArrayList list = new ArrayList();
+    public EntityPainting(World world, int x, int y, int z, int direction) {
+        this(world);
+        this.xPosition = x;
+        this.yPosition = y;
+        this.zPosition = z;
+        List<EnumArt> list = new ArrayList<>();
         for (final EnumArt art : EnumArt.values()) {
             this.art = art;
-            this.setDirection(integer5);
-            if (this.onValidSurface()) {
-                ((List) list).add(art);
-            }
+            this.setDirection(direction);
+            if (this.onValidSurface())
+                list.add(art);
         }
-        if (((List) list).size() > 0) {
-            this.art = (EnumArt) ((List) list).get(this.rand.nextInt(((List) list).size()));
-        }
-        this.setDirection(integer5);
+        if (list.size() > 0)
+            this.art = list.get(this.rand.nextInt(list.size()));
+        
+        this.setDirection(direction);
     }
 
     public void setDirection(final int direction) {

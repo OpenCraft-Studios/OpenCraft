@@ -4,21 +4,25 @@ package net.opencraft.client.font;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.nio.IntBuffer;
+
 import javax.imageio.ImageIO;
-import net.opencraft.client.settings.GameSettings;
+
+import org.lwjgl.BufferUtils;
+import org.lwjgl.opengl.GL11;
+
 import net.opencraft.client.renderer.GLAllocation;
 import net.opencraft.client.renderer.Tessellator;
-import net.opencraft.client.renderer.entity.RenderEngine;
-import org.lwjgl.opengl.GL11;
+import net.opencraft.client.renderer.entity.Renderer;
+import net.opencraft.client.settings.GameSettings;
 
 public class FontRenderer {
 
     private int[] charWidth = new int[256];
     private int fontTextureName = 0;
     private int fontDisplayLists;
-    private IntBuffer buffer = GLAllocation.createIntBuffer(1024);
+    private IntBuffer buffer = BufferUtils.createIntBuffer(1024);
 
-    public FontRenderer(GameSettings ja2, String string, RenderEngine id2) {
+    public FontRenderer(GameSettings ja2, String string, Renderer id2) {
         int n;
         int n2;
         int n3;
@@ -26,16 +30,16 @@ public class FontRenderer {
         int n5;
         int n6;
         int n7;
-        BufferedImage bufferedImage;
+        BufferedImage bi;
         try {
-            bufferedImage = ImageIO.read(RenderEngine.class.getResourceAsStream(string));
+            bi = ImageIO.read(Renderer.class.getResourceAsStream(string));
         } catch (IOException iOException) {
             throw new RuntimeException(iOException);
         }
-        int n8 = bufferedImage.getWidth();
-        int n9 = bufferedImage.getHeight();
+        int n8 = bi.getWidth();
+        int n9 = bi.getHeight();
         int[] nArray = new int[n8 * n9];
-        bufferedImage.getRGB(0, 0, n8, n9, nArray, 0, n8);
+        bi.getRGB(0, 0, n8, n9, nArray, 0, n8);
         for (int i = 0; i < 128; ++i) {
             n7 = i % 16;
             n6 = i / 16;

@@ -8,7 +8,7 @@ anaglyph3d:false
 limitFramerate:false
 difficulty:2
 fancyGraphics:true
-FOV:85
+FOV:70.0
 minimumBrightness:0.0
 key_Forward:17
 key_Left:30
