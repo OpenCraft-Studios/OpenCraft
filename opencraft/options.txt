@@ -1,4 +1,4 @@
-music:false
+music:true
 sound:true
 invertYMouse:false
 showFrameRate:false

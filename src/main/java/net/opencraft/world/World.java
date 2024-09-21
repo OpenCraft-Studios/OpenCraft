@@ -728,7 +728,7 @@ public class World implements IBlockAccess {
                 ((IWorldAccess) this.worldAccesses.get(i)).obtainEntitySkin(entity);
             }
         } else {
-            System.out.println(new StringBuilder().append("Failed to add entity ").append(entity).toString());
+            System.out.println("Failed to add entity " + entity);
         }
     }
 
