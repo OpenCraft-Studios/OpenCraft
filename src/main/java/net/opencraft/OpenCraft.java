@@ -54,7 +54,7 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.PixelFormat;
 import org.lwjgl.util.glu.GLU;
 
-public abstract class OpenCraft implements Runnable {
+public class OpenCraft implements Runnable {
 
 	public static OpenCraft oc;
 	
@@ -155,7 +155,9 @@ public abstract class OpenCraft implements Runnable {
         return Sys.getTime() * 1000L / Sys.getTimerResolution();
     }
 
-    public abstract void displayUnexpectedThrowable(final UnexpectedThrowable g);
+    public void displayUnexpectedThrowable(final UnexpectedThrowable t) {
+    	t.exception.printStackTrace();
+    }
 
     public void setServer(final String string, final int integer) {
     }
