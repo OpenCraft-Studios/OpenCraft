@@ -5,11 +5,11 @@ import net.opencraft.client.font.FontRenderer;
 import net.opencraft.client.renderer.Tessellator;
 import org.lwjgl.opengl.GL11;
 
-public class Gui {
+public class GuiElement {
 
     protected float zLevel;
 
-    public Gui() {
+    public GuiElement() {
         this.zLevel = 0.0f;
     }
 

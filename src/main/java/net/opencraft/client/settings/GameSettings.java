@@ -14,6 +14,7 @@ public class GameSettings {
 
     private static final String[] RENDER_DISTANCES;
     private static final String[] DIFFICULTIES;
+    
     public boolean music;
     public boolean sound;
     public boolean invertMouse;
@@ -43,15 +44,15 @@ public class GameSettings {
     public float FOV;
     public float minimumBrightness;
 
-
     static {
         RENDER_DISTANCES = new String[]{"FAR", "NORMAL", "SHORT", "TINY"};
         DIFFICULTIES = new String[]{"Peaceful", "Easy", "Normal", "Hard"};
     }
-
-
+    
     public GameSettings(final OpenCraft aw, final File file) {
-        this.music = true;
+    	setupKeybinds();
+
+    	this.music = true;
         this.sound = true;
         this.invertMouse = false;
         this.showDebugInfo = false;
@@ -60,18 +61,6 @@ public class GameSettings {
         this.anaglyph = false;
         this.limitFramerate = false;
         this.fancyGraphics = true;
-        this.keyBindForward = new KeyBinding("Forward", 17);
-        this.keyBindLeft = new KeyBinding("Left", 30);
-        this.keyBindBack = new KeyBinding("Back", 31);
-        this.keyBindRight = new KeyBinding("Right", 32);
-        this.keyBindJump = new KeyBinding("Jump", 57);
-        this.keyBindInventory = new KeyBinding("Inventory", 18);
-        this.keyBindDrop = new KeyBinding("Drop", 16);
-        this.keyBindChat = new KeyBinding("Chat", 20);
-        this.keyBindToggleFog = new KeyBinding("Toggle fog", 33);
-        this.keyBindSave = new KeyBinding("Save location", 28);
-        this.keyBindLoad = new KeyBinding("Load location", 19);
-        this.keyBindings = new KeyBinding[]{this.keyBindForward, this.keyBindLeft, this.keyBindBack, this.keyBindRight, this.keyBindJump, this.keyBindDrop, this.keyBindInventory, this.keyBindChat, this.keyBindToggleFog, this.keyBindSave, this.keyBindLoad};
         this.numberOfOptions = 10;
         this.difficulty = 2;
         this.thirdPersonView = false;
@@ -82,12 +71,37 @@ public class GameSettings {
         this.loadOptions();
     }
 
-    public String getOptionDisplayString(final int integer) {
-        return this.keyBindings[integer].keyDescription + ": " + Keyboard.getKeyName(this.keyBindings[integer].keyCode);
+	private void setupKeybinds() {
+		// Keybinds
+    	this.keyBindForward   = new KeyBinding("Forward",       Keyboard.KEY_W);
+    	this.keyBindLeft      = new KeyBinding("Left",          Keyboard.KEY_A);
+    	this.keyBindBack      = new KeyBinding("Back",          Keyboard.KEY_S);
+    	this.keyBindRight     = new KeyBinding("Right",         Keyboard.KEY_D);
+    	this.keyBindJump      = new KeyBinding("Jump",          Keyboard.KEY_SPACE);
+    	this.keyBindInventory = new KeyBinding("Inventory",     Keyboard.KEY_E);
+    	this.keyBindDrop      = new KeyBinding("Drop",          Keyboard.KEY_Q);
+    	this.keyBindChat      = new KeyBinding("Chat",          Keyboard.KEY_T);
+    	this.keyBindToggleFog = new KeyBinding("Toggle fog",    Keyboard.KEY_F);
+    	this.keyBindSave      = new KeyBinding("Save location", Keyboard.KEY_RETURN);
+    	this.keyBindLoad      = new KeyBinding("Load location", Keyboard.KEY_R);
+    	
+    	// Register keybinds
+    	this.keyBindings = new KeyBinding[] {
+    		this.keyBindForward, this.keyBindLeft,
+    		this.keyBindBack, this.keyBindRight,
+    		this.keyBindJump, this.keyBindDrop,
+    		this.keyBindInventory, this.keyBindChat,
+    		this.keyBindToggleFog, this.keyBindSave,
+    		this.keyBindLoad
+    	};
+	}
+
+    public String getOptionDisplayString(int i) {
+        return this.keyBindings[i].description + ": " + Keyboard.getKeyName(this.keyBindings[i].keyCode);
     }
 
-    public void setKeyBinding(final int integer1, final int integer2) {
-        this.keyBindings[integer1].keyCode = integer2;
+    public void setKeyBinding(final int i, final int keyCode) {
+        this.keyBindings[i].keyCode = keyCode;
         this.saveOptions();
     }
 
@@ -223,7 +237,7 @@ public class GameSettings {
                         this.minimumBrightness = Float.parseFloat(split[1]);
                     }
                     for (int i = 0; i < this.keyBindings.length; ++i) {
-                        if (split[0].equals(("key_" + this.keyBindings[i].keyDescription))) {
+                        if (split[0].equals(("key_" + this.keyBindings[i].description))) {
                             this.keyBindings[i].keyCode = Integer.parseInt(split[1]);
                         }
                     }
@@ -238,20 +252,20 @@ public class GameSettings {
     public void saveOptions() {
         try {
             try (PrintWriter printWriter = new PrintWriter(new FileWriter(this.optionsFile))) {
-                printWriter.println(new StringBuilder().append("music:").append(this.music).toString());
-                printWriter.println(new StringBuilder().append("sound:").append(this.sound).toString());
-                printWriter.println(new StringBuilder().append("invertYMouse:").append(this.invertMouse).toString());
-                printWriter.println(new StringBuilder().append("showFrameRate:").append(this.showDebugInfo).toString());
-                printWriter.println(new StringBuilder().append("viewDistance:").append(this.renderDistance).toString());
-                printWriter.println(new StringBuilder().append("bobView:").append(this.viewBobbing).toString());
-                printWriter.println(new StringBuilder().append("anaglyph3d:").append(this.anaglyph).toString());
-                printWriter.println(new StringBuilder().append("limitFramerate:").append(this.limitFramerate).toString());
-                printWriter.println(new StringBuilder().append("difficulty:").append(this.difficulty).toString());
-                printWriter.println(new StringBuilder().append("fancyGraphics:").append(this.fancyGraphics).toString());
-                printWriter.println(new StringBuilder().append("FOV:").append((int)this.FOV).toString());
-                printWriter.println(new StringBuilder().append("minimumBrightness:").append(Float.toString(this.minimumBrightness)).toString());
+                printWriter.println("music:" + music);
+                printWriter.println("sound:" + sound);
+                printWriter.println("invertYMouse:" + invertMouse);
+                printWriter.println("showFrameRate:" + showDebugInfo);
+                printWriter.println("viewDistance:" + renderDistance);
+                printWriter.println("bobView:" + viewBobbing);
+                printWriter.println("anaglyph3d:" + anaglyph);
+                printWriter.println("limitFramerate:" + limitFramerate);
+                printWriter.println("difficulty:" + difficulty);
+                printWriter.println("fancyGraphics:" + fancyGraphics);
+                printWriter.println("FOV:" + FOV);
+                printWriter.println("minimumBrightness:" + Float.toString(this.minimumBrightness));
                 for (int i = 0; i < this.keyBindings.length; ++i) {
-                    printWriter.println("key_" + this.keyBindings[i].keyDescription + ":" + this.keyBindings[i].keyCode);
+                    printWriter.println(keyBindings[i].toString());
                 }
             }
         } catch (Exception ex) {

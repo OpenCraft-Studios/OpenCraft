@@ -5,7 +5,7 @@ import net.opencraft.OpenCraft;
 import net.opencraft.client.font.FontRenderer;
 import org.lwjgl.opengl.GL11;
 
-public class GuiButton extends Gui {
+public class GuiButton extends GuiElement {
 
     int width;
     int height;
