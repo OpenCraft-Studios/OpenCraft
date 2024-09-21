@@ -11,7 +11,7 @@
 <br /><br />
 <div align="center">
   <a href="https://github.com/OpenCraft-Studios/OpenCraft">
-    <img src="https://github.com/OpenCraft-Studios/OpenCraft/blob/dev/.github/assets/images/icon.png?raw=true" alt="" height="128" width="128" />
+    <img src="https://github.com/OpenCraft-Studios/OpenCraft/blob/master/.github/assets/images/icon.png?raw=true" alt="" height="128" width="128" />
   </a>
 
   <h3 align="center">OpenCraft</h3>
@@ -119,7 +119,7 @@ java -cp OpenCraft.jar:libraries.jar: net.opencraft.OpenCraft --gameDir opcraft/
 <br />
 
 
-## 👷‍♂️ Developers
+## 👷‍♂️ masterelopers
 | [![CiroZDP](https://avatars.githubusercontent.com/u/161502824?v=4)](https://github.com/CiroZDP) | ![Community](https://cdni.iconscout.com/illustration/free/thumb/free-community-2103591-1768087.png)	|
 | :---------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------: |
 |                                         **CiroZDP**                                             |                                          **The community**                                          |
