@@ -116,7 +116,7 @@ public class EntityPlayerSP extends EntityPlayer {
 
     @Override
     public void onItemPickup(final Entity eq) {
-        this.mc.effectRenderer.addEffect(new EntityPickupFX(this.mc.theWorld, eq, this, -0.5f));
+        this.mc.effectRenderer.addEffect(new EntityPickupFX(this.mc.world, eq, this, -0.5f));
     }
 
     public int getPlayerArmorValue() {

@@ -114,7 +114,7 @@ public class GuiScreen extends GuiElement {
     }
 
     public void b(final int integer) {
-        if (this.id.theWorld != null) {
+        if (this.id.world != null) {
             this.drawGradientRect(0, 0, this.width, this.height, 1610941696, -1607454656);
         } else {
             GL11.glDisable(2896);

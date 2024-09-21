@@ -61,7 +61,7 @@ public class EntityRenderer {
 
     public void updateRenderer() {
         this.fogColor2 = this.fogColor1;
-        final float lightBrightness = this.mc.theWorld.getLightBrightness(Mth.floor_double(this.mc.thePlayer.posX), Mth.floor_double(this.mc.thePlayer.posY), Mth.floor_double(this.mc.thePlayer.posZ));
+        final float lightBrightness = this.mc.world.getLightBrightness(Mth.floor_double(this.mc.player.posX), Mth.floor_double(this.mc.player.posY), Mth.floor_double(this.mc.player.posZ));
         final float n = (3 - this.mc.gameSettings.renderDistance) / 3.0f;
         this.fogColor1 += (lightBrightness * (1.0f - n) + n - this.fogColor1) * 0.1f;
         ++this.rendererUpdateCount;
@@ -72,12 +72,12 @@ public class EntityRenderer {
     }
 
     private Vec3 orientCamera(final float float1) {
-        final EntityPlayerSP thePlayer = this.mc.thePlayer;
+        final EntityPlayerSP thePlayer = this.mc.player;
         return Vec3.newTemp(thePlayer.prevPosX + (thePlayer.posX - thePlayer.prevPosX) * float1, thePlayer.prevPosY + (thePlayer.posY - thePlayer.prevPosY) * float1, thePlayer.prevPosZ + (thePlayer.posZ - thePlayer.prevPosZ) * float1);
     }
 
     private void getMouseOver(final float float1) {
-        final EntityPlayerSP thePlayer = this.mc.thePlayer;
+        final EntityPlayerSP thePlayer = this.mc.player;
         final float n = thePlayer.prevRotationPitch + (thePlayer.rotationPitch - thePlayer.prevRotationPitch) * float1;
         final float n2 = thePlayer.prevRotationYaw + (thePlayer.rotationYaw - thePlayer.prevRotationYaw) * float1;
         final Vec3 orientCamera = this.orientCamera(float1);
@@ -89,7 +89,7 @@ public class EntityRenderer {
         final float n5 = sin2;
         final float n6 = cos * n3;
         double n7 = this.mc.playerController.getBlockReachDistance();
-        this.mc.objectMouseOver = this.mc.theWorld.rayTraceBlocks(orientCamera, orientCamera.addVector(n4 * n7, n5 * n7, n6 * n7));
+        this.mc.objectMouseOver = this.mc.world.rayTraceBlocks(orientCamera, orientCamera.addVector(n4 * n7, n5 * n7, n6 * n7));
         double distanceTo = n7;
         final Vec3 orientCamera2 = this.orientCamera(float1);
         if (this.mc.objectMouseOver != null) {
@@ -105,7 +105,7 @@ public class EntityRenderer {
         }
         final Vec3 addVector = orientCamera2.addVector(n4 * n7, n5 * n7, n6 * n7);
         this.pointedEntity = null;
-        final List entitiesWithinAABBExcludingEntity = this.mc.theWorld.getEntitiesWithinAABBExcludingEntity(thePlayer, thePlayer.boundingBox.addCoord(n4 * n7, n5 * n7, n6 * n7));
+        final List entitiesWithinAABBExcludingEntity = this.mc.world.getEntitiesWithinAABBExcludingEntity(thePlayer, thePlayer.boundingBox.addCoord(n4 * n7, n5 * n7, n6 * n7));
         double n8 = 0.0;
         for (int i = 0; i < entitiesWithinAABBExcludingEntity.size(); ++i) {
             final Entity pointedEntity = (Entity) entitiesWithinAABBExcludingEntity.get(i);
@@ -127,7 +127,7 @@ public class EntityRenderer {
     }
 
     private float getFOVModifier(final float float1) {
-        final EntityPlayerSP thePlayer = this.mc.thePlayer;
+        final EntityPlayerSP thePlayer = this.mc.player;
         float n = this.mc.gameSettings.FOV;
         if (thePlayer.isInsideOfMaterial(Material.WATER)) {
             n = 60.0f;
@@ -139,7 +139,7 @@ public class EntityRenderer {
     }
 
     private void hurtCameraEffect(final float float1) {
-        final EntityPlayerSP thePlayer = this.mc.thePlayer;
+        final EntityPlayerSP thePlayer = this.mc.player;
         float sin = thePlayer.hurtTime - float1;
         if (thePlayer.health <= 0) {
             final float attackedAtYaw = thePlayer.deathTime + float1;
@@ -160,7 +160,7 @@ public class EntityRenderer {
         if (this.mc.gameSettings.thirdPersonView) {
             return;
         }
-        final EntityPlayerSP thePlayer = this.mc.thePlayer;
+        final EntityPlayerSP thePlayer = this.mc.player;
         final float n = thePlayer.distanceWalkedModified + (thePlayer.distanceWalkedModified - thePlayer.prevDistanceWalkedModified) * float1;
         final float n2 = thePlayer.prevCameraYaw + (thePlayer.cameraYaw - thePlayer.prevCameraYaw) * float1;
         final float n3 = thePlayer.prevCameraPitch + (thePlayer.cameraPitch - thePlayer.prevCameraPitch) * float1;
@@ -171,7 +171,7 @@ public class EntityRenderer {
     }
 
     private void h(final float float1) {
-        final EntityPlayerSP thePlayer = this.mc.thePlayer;
+        final EntityPlayerSP thePlayer = this.mc.player;
         final double double1 = thePlayer.prevPosX + (thePlayer.posX - thePlayer.prevPosX) * float1;
         final double double2 = thePlayer.prevPosY + (thePlayer.posY - thePlayer.prevPosY) * float1;
         final double double3 = thePlayer.prevPosZ + (thePlayer.posZ - thePlayer.prevPosZ) * float1;
@@ -187,7 +187,7 @@ public class EntityRenderer {
                 n5 *= 0.1f;
                 n6 *= 0.1f;
                 n7 *= 0.1f;
-                final MovingObjectPosition rayTraceBlocks = this.mc.theWorld.rayTraceBlocks(Vec3.newTemp(double1 + n5, double2 + n6, double3 + n7), Vec3.newTemp(double1 - n2 + n5 + n7, double2 - n4 + n6, double3 - n3 + n7));
+                final MovingObjectPosition rayTraceBlocks = this.mc.world.rayTraceBlocks(Vec3.newTemp(double1 + n5, double2 + n6, double3 + n7), Vec3.newTemp(double1 - n2 + n5 + n7, double2 - n4 + n6, double3 - n3 + n7));
                 if (rayTraceBlocks != null) {
                     final double distanceTo = rayTraceBlocks.hitVec.distanceTo(Vec3.newTemp(double1, double2, double3));
                     if (distanceTo < n) {
@@ -277,7 +277,7 @@ public class EntityRenderer {
             if (scaledWidth != 0) {
                 this.entityRendererInt2 = scaledWidth;
             }
-            this.mc.thePlayer.setAngles((float) n, (float) (n2 * scaledHeight));
+            this.mc.player.setAngles((float) n, (float) (n2 * scaledHeight));
         }
         if (this.mc.skipRenderWorld) {
             return;
@@ -287,7 +287,7 @@ public class EntityRenderer {
         int scaledHeight = scaledResolution.getScaledHeight();
         final int n = Mouse.getX() * scaledWidth / this.mc.width;
         final int n2 = scaledHeight - Mouse.getY() * scaledHeight / this.mc.height - 1;
-        if (this.mc.theWorld != null) {
+        if (this.mc.world != null) {
             this.renderWorld(float1);
             this.mc.ingameGUI.renderGameOverlay(float1, this.mc.currentScreen != null, n, n2);
         } else {
@@ -308,7 +308,7 @@ public class EntityRenderer {
 
     public void renderWorld(final float float1) {
         this.getMouseOver(float1);
-        final EntityPlayerSP thePlayer = this.mc.thePlayer;
+        final EntityPlayerSP thePlayer = this.mc.player;
         final RenderGlobal renderGlobal = this.mc.renderGlobal;
         final EffectRenderer effectRenderer = this.mc.effectRenderer;
         final double xCoord = thePlayer.lastTickPosX + (thePlayer.posX - thePlayer.lastTickPosX) * float1;
@@ -407,8 +407,8 @@ public class EntityRenderer {
     }
 
     private void addRainParticles() {
-        final EntityPlayerSP thePlayer = this.mc.thePlayer;
-        final World theWorld = this.mc.theWorld;
+        final EntityPlayerSP thePlayer = this.mc.player;
+        final World theWorld = this.mc.world;
         final int floor_double = Mth.floor_double(thePlayer.posX);
         final int floor_double2 = Mth.floor_double(thePlayer.posY);
         final int floor_double3 = Mth.floor_double(thePlayer.posZ);
@@ -429,8 +429,8 @@ public class EntityRenderer {
     }
 
     private void renderRainSnow(final float float1) {
-        final EntityPlayerSP thePlayer = this.mc.thePlayer;
-        final World theWorld = this.mc.theWorld;
+        final EntityPlayerSP thePlayer = this.mc.player;
+        final World theWorld = this.mc.world;
         final int floor_double = Mth.floor_double(thePlayer.posX);
         final int floor_double2 = Mth.floor_double(thePlayer.posY);
         final int floor_double3 = Mth.floor_double(thePlayer.posZ);
@@ -489,8 +489,8 @@ public class EntityRenderer {
     }
 
     private void updateFogColor(final float float1) {
-        final World theWorld = this.mc.theWorld;
-        final EntityPlayerSP thePlayer = this.mc.thePlayer;
+        final World theWorld = this.mc.world;
+        final EntityPlayerSP thePlayer = this.mc.player;
         float n = 1.0f / (4 - this.mc.gameSettings.renderDistance);
         n = 1.0f - (float) Math.pow((double) n, 0.25);
         final Vec3 skyColor = theWorld.getSkyColor(float1);
@@ -529,7 +529,7 @@ public class EntityRenderer {
     }
 
     private void setupFog(final int integer) {
-        final EntityPlayerSP thePlayer = this.mc.thePlayer;
+        final EntityPlayerSP thePlayer = this.mc.player;
         GL11.glFog(2918, this.setFogColorBuffer(this.fogColorRed, this.fogColorGreen, this.fogColorBlue, 1.0f));
         GL11.glNormal3f(0.0f, -1.0f, 0.0f);
         GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);

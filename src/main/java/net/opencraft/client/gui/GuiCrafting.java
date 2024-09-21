@@ -41,7 +41,7 @@ public class GuiCrafting extends GuiContainer {
         for (int i = 0; i < 9; ++i) {
             final ItemStack stackInSlot = this.inventoryCrafting.getStackInSlot(i);
             if (stackInSlot != null) {
-                this.id.thePlayer.dropPlayerItem(stackInSlot);
+                this.id.player.dropPlayerItem(stackInSlot);
             }
         }
     }

@@ -184,7 +184,7 @@ public abstract class GuiContainer extends GuiScreen {
                 final int n = (this.width - this.xSize) / 2;
                 final int integer4 = (this.height - this.ySize) / 2;
                 if (integer1 < n || integer2 < integer4 || integer1 >= n + this.xSize || integer2 >= integer4 + this.xSize) {
-                    final EntityPlayerSP thePlayer = this.id.thePlayer;
+                    final EntityPlayerSP thePlayer = this.id.player;
                     if (integer3 == 0) {
                         thePlayer.dropPlayerItem(this.itemStack);
                         this.itemStack = null;
@@ -216,7 +216,7 @@ public abstract class GuiContainer extends GuiScreen {
     @Override
     public void onGuiClosed() {
         if (this.itemStack != null) {
-            this.id.thePlayer.dropPlayerItem(this.itemStack);
+            this.id.player.dropPlayerItem(this.itemStack);
         }
     }
 

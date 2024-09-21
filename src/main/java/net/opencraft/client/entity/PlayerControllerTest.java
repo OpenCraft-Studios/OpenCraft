@@ -23,9 +23,9 @@ public class PlayerControllerTest extends PlayerController {
     public void func_6473_b(final EntityPlayer gi) {
         for (int i = 0; i < 9; ++i) {
             if (gi.inventory.mainInventory[i] == null) {
-                this.mc.thePlayer.inventory.mainInventory[i] = new ItemStack(((Block) Session.registeredBlocksList.get(i)).blockID);
+                this.mc.player.inventory.mainInventory[i] = new ItemStack(((Block) Session.registeredBlocksList.get(i)).blockID);
             } else {
-                this.mc.thePlayer.inventory.mainInventory[i].stackSize = 1;
+                this.mc.player.inventory.mainInventory[i].stackSize = 1;
             }
         }
     }
