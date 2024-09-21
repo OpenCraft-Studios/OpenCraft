@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/nCraft.iml" filepath="$PROJECT_DIR$/nCraft.iml" />
+      <module fileurl="file://$PROJECT_DIR$/OpenCraft.iml" filepath="$PROJECT_DIR$/OpenCraft.iml" />
     </modules>
   </component>
 </project>
