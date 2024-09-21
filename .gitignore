@@ -1,4 +1,4 @@
-./build*
-./minecraft/saves*
-./minecraft/logs*
-./out*
+/build*
+/minecraft/saves*
+/minecraft/logs*
+/out*

@@ -78,9 +78,9 @@ public class GuiMainMenu extends GuiScreen {
         final long maxMemory = Runtime.getRuntime().maxMemory();
         final long totalMemory = Runtime.getRuntime().totalMemory();
         final String string = new StringBuilder().append("Free memory: ").append((maxMemory - Runtime.getRuntime().freeMemory()) * 100L / maxMemory).append("% of ").append(maxMemory / 1024L / 1024L).append("MB").toString();
-        this.drawString(this.fontRenderer, string, this.width - this.fontRenderer.getStringWidth(string) - 2, 2, 8421504);
+        this.drawString(this.fontRenderer, string, this.width - this.fontRenderer.getStringWidth(string) - 2, 2, 16777215);
         final String string2 = new StringBuilder().append("Allocated memory: ").append(totalMemory * 100L / maxMemory).append("% (").append(totalMemory / 1024L / 1024L).append("MB)").toString();
-        this.drawString(this.fontRenderer, string2, this.width - this.fontRenderer.getStringWidth(string2) - 2, 12, 8421504);
+        this.drawString(this.fontRenderer, string2, this.width - this.fontRenderer.getStringWidth(string2) - 2, 12, 16777215);
         super.drawScreen(mouseX, mouseY, partialTicks);
 
         super.id.sndManager.currentMusicTheme = "menu";
