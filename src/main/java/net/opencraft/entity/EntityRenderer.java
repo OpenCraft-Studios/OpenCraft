@@ -327,7 +327,7 @@ public class EntityRenderer {
             GL11.glClear(16640);
             GL11.glEnable(2884);
             this.orientCamera(float1, i);
-            Frustum.getInstance();
+            //Frustum.getInstance();
             if (this.mc.options.renderDistance < 2) {
                 this.setupFog(-1);
                 renderGlobal.renderSky(float1);
@@ -340,7 +340,7 @@ public class EntityRenderer {
             this.mc.renderGlobal.updateRenderers(thePlayer, false);
             this.setupFog(0);
             GL11.glEnable(2912);
-            GL11.glBindTexture(3553, this.mc.renderEngine.getTexture("/assets/terrain.png"));
+            GL11.glBindTexture(3553, this.mc.renderer.getTexture("/assets/terrain.png"));
             RenderHelper.disableStandardItemLighting();
             renderGlobal.sortAndRender(thePlayer, 0, float1);
             RenderHelper.enableStandardItemLighting();
@@ -359,7 +359,7 @@ public class EntityRenderer {
             this.setupFog(0);
             GL11.glEnable(3042);
             GL11.glDisable(2884);
-            GL11.glBindTexture(3553, this.mc.renderEngine.getTexture("/assets/terrain.png"));
+            GL11.glBindTexture(3553, this.mc.renderer.getTexture("/assets/terrain.png"));
             if (this.mc.options.fancyGraphics) {
                 GL11.glColorMask(false, false, false, false);
                 final int sortAndRender = renderGlobal.sortAndRender(thePlayer, 1, float1);
@@ -439,7 +439,7 @@ public class EntityRenderer {
         GL11.glNormal3f(0.0f, 1.0f, 0.0f);
         GL11.glEnable(3042);
         GL11.glBlendFunc(770, 771);
-        GL11.glBindTexture(3553, this.mc.renderEngine.getTexture("/assets/rain.png"));
+        GL11.glBindTexture(3553, this.mc.renderer.getTexture("/assets/rain.png"));
         for (int n = 5, i = floor_double - n; i <= floor_double + n; ++i) {
             for (int j = floor_double3 - n; j <= floor_double3 + n; ++j) {
                 final int topSolidBlock = theWorld.findTopSolidBlock(i, j);

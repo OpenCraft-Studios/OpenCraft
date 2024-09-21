@@ -57,8 +57,8 @@ public abstract class GuiContainer extends GuiScreen {
         }
         if (this.itemStack != null) {
             GL11.glTranslatef(0.0f, 0.0f, 32.0f);
-            GuiContainer.itemRenderer.drawItemIntoGui(this.fontRenderer, this.id.renderEngine, this.itemStack, integer1 - n - 8, integer2 - n2 - 8);
-            GuiContainer.itemRenderer.renderItemOverlayIntoGUI(this.fontRenderer, this.id.renderEngine, this.itemStack, integer1 - n - 8, integer2 - n2 - 8);
+            GuiContainer.itemRenderer.drawItemIntoGui(this.fontRenderer, this.id.renderer, this.itemStack, integer1 - n - 8, integer2 - n2 - 8);
+            GuiContainer.itemRenderer.renderItemOverlayIntoGUI(this.fontRenderer, this.id.renderer, this.itemStack, integer1 - n - 8, integer2 - n2 - 8);
         }
         GL11.glDisable(32826);
         RenderHelper.disableStandardItemLighting();
@@ -85,14 +85,14 @@ public abstract class GuiContainer extends GuiScreen {
             final int backgroundIconIndex = gq.getBackgroundIconIndex();
             if (backgroundIconIndex >= 0) {
                 GL11.glDisable(2896);
-                this.id.renderEngine.bindTexture(this.id.renderEngine.getTexture("/assets/gui/items.png"));
+                this.id.renderer.bindTexture(this.id.renderer.getTexture("/assets/gui/items.png"));
                 this.drawTexturedModalRect(xPos, yPos, backgroundIconIndex % 16 * 16, backgroundIconIndex / 16 * 16, 16, 16);
                 GL11.glEnable(2896);
                 return;
             }
         }
-        GuiContainer.itemRenderer.drawItemIntoGui(this.fontRenderer, this.id.renderEngine, stackInSlot, xPos, yPos);
-        GuiContainer.itemRenderer.renderItemOverlayIntoGUI(this.fontRenderer, this.id.renderEngine, stackInSlot, xPos, yPos);
+        GuiContainer.itemRenderer.drawItemIntoGui(this.fontRenderer, this.id.renderer, stackInSlot, xPos, yPos);
+        GuiContainer.itemRenderer.renderItemOverlayIntoGUI(this.fontRenderer, this.id.renderer, stackInSlot, xPos, yPos);
     }
 
     private Slot a(final int integer1, final int integer2) {

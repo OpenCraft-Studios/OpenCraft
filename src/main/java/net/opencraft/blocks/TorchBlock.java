@@ -127,16 +127,16 @@ public class TorchBlock extends Block {
         final int blockMetadata = world.getBlockMetadata(xCoord, yCoord, zCoord);
         float n = 0.15f;
         if (blockMetadata == 1) {
-            this.setBlockBounds(0.0f, 0.2f, 0.5f - n, n * 2.0f, 0.8f, 0.5f + n);
+            this.setShape(0.0f, 0.2f, 0.5f - n, n * 2.0f, 0.8f, 0.5f + n);
         } else if (blockMetadata == 2) {
-            this.setBlockBounds(1.0f - n * 2.0f, 0.2f, 0.5f - n, 1.0f, 0.8f, 0.5f + n);
+            this.setShape(1.0f - n * 2.0f, 0.2f, 0.5f - n, 1.0f, 0.8f, 0.5f + n);
         } else if (blockMetadata == 3) {
-            this.setBlockBounds(0.5f - n, 0.2f, 0.0f, 0.5f + n, 0.8f, n * 2.0f);
+            this.setShape(0.5f - n, 0.2f, 0.0f, 0.5f + n, 0.8f, n * 2.0f);
         } else if (blockMetadata == 4) {
-            this.setBlockBounds(0.5f - n, 0.2f, 1.0f - n * 2.0f, 0.5f + n, 0.8f, 1.0f);
+            this.setShape(0.5f - n, 0.2f, 1.0f - n * 2.0f, 0.5f + n, 0.8f, 1.0f);
         } else {
             n = 0.1f;
-            this.setBlockBounds(0.5f - n, 0.0f, 0.5f - n, 0.5f + n, 0.6f, 0.5f + n);
+            this.setShape(0.5f - n, 0.0f, 0.5f - n, 0.5f + n, 0.6f, 0.5f + n);
         }
         return super.collisionRayTrace(world, xCoord, yCoord, zCoord, var1, var2);
     }

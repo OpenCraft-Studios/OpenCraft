@@ -10,7 +10,7 @@ public class SaplingBlock extends FlowerBlock {
     protected SaplingBlock(final int blockid, final int blockIndexInTexture) {
         super(blockid, blockIndexInTexture);
         final float n = 0.4f;
-        this.setBlockBounds(0.5f - n, 0.0f, 0.5f - n, 0.5f + n, n * 2.0f, 0.5f + n);
+        this.setShape(0.5f - n, 0.0f, 0.5f - n, 0.5f + n, n * 2.0f, 0.5f + n);
     }
 
     @Override

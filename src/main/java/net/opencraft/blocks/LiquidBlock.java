@@ -22,7 +22,7 @@ public abstract class LiquidBlock extends Block {
         if (material == Material.LAVA) {
             this.unsure = 2;
         }
-        this.setBlockBounds(0.0f + n2, 0.0f + n, 0.0f + n2, 1.0f + n2, 1.0f + n, 1.0f + n2);
+        this.setShape(0.0f + n2, 0.0f + n, 0.0f + n2, 1.0f + n2, 1.0f + n, 1.0f + n2);
         this.setTickOnLoad(true);
     }
 

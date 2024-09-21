@@ -18,16 +18,16 @@ public class LadderBlock extends Block {
         final int blockMetadata = world.getBlockMetadata(xCoord, yCoord, zCoord);
         final float n = 0.125f;
         if (blockMetadata == 2) {
-            this.setBlockBounds(0.0f, 0.0f, 1.0f - n, 1.0f, 1.0f, 1.0f);
+            this.setShape(0.0f, 0.0f, 1.0f - n, 1.0f, 1.0f, 1.0f);
         }
         if (blockMetadata == 3) {
-            this.setBlockBounds(0.0f, 0.0f, 0.0f, 1.0f, 1.0f, n);
+            this.setShape(0.0f, 0.0f, 0.0f, 1.0f, 1.0f, n);
         }
         if (blockMetadata == 4) {
-            this.setBlockBounds(1.0f - n, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f);
+            this.setShape(1.0f - n, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f);
         }
         if (blockMetadata == 5) {
-            this.setBlockBounds(0.0f, 0.0f, 0.0f, n, 1.0f, 1.0f);
+            this.setShape(0.0f, 0.0f, 0.0f, n, 1.0f, 1.0f);
         }
         return super.getCollisionBoundingBoxFromPool(world, xCoord, yCoord, zCoord);
     }
@@ -37,16 +37,16 @@ public class LadderBlock extends Block {
         final int blockMetadata = world.getBlockMetadata(xCoord, yCoord, zCoord);
         final float n = 0.125f;
         if (blockMetadata == 2) {
-            this.setBlockBounds(0.0f, 0.0f, 1.0f - n, 1.0f, 1.0f, 1.0f);
+            this.setShape(0.0f, 0.0f, 1.0f - n, 1.0f, 1.0f, 1.0f);
         }
         if (blockMetadata == 3) {
-            this.setBlockBounds(0.0f, 0.0f, 0.0f, 1.0f, 1.0f, n);
+            this.setShape(0.0f, 0.0f, 0.0f, 1.0f, 1.0f, n);
         }
         if (blockMetadata == 4) {
-            this.setBlockBounds(1.0f - n, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f);
+            this.setShape(1.0f - n, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f);
         }
         if (blockMetadata == 5) {
-            this.setBlockBounds(0.0f, 0.0f, 0.0f, n, 1.0f, 1.0f);
+            this.setShape(0.0f, 0.0f, 0.0f, n, 1.0f, 1.0f);
         }
         return super.getSelectedBoundingBoxFromPool(world, xCoord, yCoord, zCoord);
     }

@@ -81,7 +81,7 @@ public class GuiSlider extends GuiButton {
             return;
         }
         final FontRenderer fontRenderer = mc.fontRenderer;
-        GL11.glBindTexture(3553, mc.renderEngine.getTexture("/assets/gui/gui.png"));
+        GL11.glBindTexture(3553, mc.renderer.getTexture("/assets/gui/gui.png"));
 
         int colorChange = 1;
         final boolean isHovered = mouseX >= this.xPosition && mouseY >= this.yPosition && mouseX < this.xPosition + this.width && mouseY < this.yPosition + this.height;

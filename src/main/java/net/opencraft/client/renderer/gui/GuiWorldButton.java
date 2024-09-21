@@ -38,7 +38,7 @@ public class GuiWorldButton extends GuiElement {
             return;
         }
         final FontRenderer fontRenderer = aw.fontRenderer;
-        GL11.glBindTexture(3553, aw.renderEngine.getTexture("/assets/gui/gui.png"));
+        GL11.glBindTexture(3553, aw.renderer.getTexture("/assets/gui/gui.png"));
         GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
         int n = 1;
         final boolean b = integer2 >= this.xPosition && integer3 >= this.yPosition && integer2 < this.xPosition + this.width && integer3 < this.yPosition + this.height;

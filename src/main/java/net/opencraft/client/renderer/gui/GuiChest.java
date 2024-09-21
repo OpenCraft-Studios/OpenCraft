@@ -43,9 +43,9 @@ public class GuiChest extends GuiContainer {
 
     @Override
     protected void drawGuiContainerBackgroundLayer(final float float1) {
-        final int texture = this.id.renderEngine.getTexture("/assets/gui/container.png");
+        final int texture = this.id.renderer.getTexture("/assets/gui/container.png");
         GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
-        this.id.renderEngine.bindTexture(texture);
+        this.id.renderer.bindTexture(texture);
         final int n = (this.width - this.xSize) / 2;
         final int integer2 = (this.height - this.ySize) / 2;
         this.drawTexturedModalRect(n, integer2, 0, 0, this.xSize, this.inventoryRows * 18 + 17);

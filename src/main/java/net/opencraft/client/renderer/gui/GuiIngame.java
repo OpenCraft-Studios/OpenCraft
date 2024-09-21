@@ -47,12 +47,12 @@ public class GuiIngame extends GuiElement {
             this.renderVignette(this.mc.player.getEntityBrightness(float1), scaledWidth, scaledHeight);
         }
         GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
-        GL11.glBindTexture(3553, this.mc.renderEngine.getTexture("/assets/gui/gui.png"));
+        GL11.glBindTexture(3553, this.mc.renderer.getTexture("/assets/gui/gui.png"));
         final InventoryPlayer inventory = this.mc.player.inventory;
         this.zLevel = -90.0f;
         this.drawTexturedModalRect(scaledWidth / 2 - 91, scaledHeight - 22, 0, 0, 182, 22);
         this.drawTexturedModalRect(scaledWidth / 2 - 91 - 1 + inventory.currentItem * 20, scaledHeight - 22 - 1, 0, 22, 24, 22);
-        GL11.glBindTexture(3553, this.mc.renderEngine.getTexture("/assets/gui/icons.png"));
+        GL11.glBindTexture(3553, this.mc.renderer.getTexture("/assets/gui/icons.png"));
         GL11.glEnable(3042);
         GL11.glBlendFunc(775, 769);
         this.drawTexturedModalRect(scaledWidth / 2 - 7, scaledHeight / 2 - 7, 0, 0, 16, 16);
@@ -164,7 +164,7 @@ public class GuiIngame extends GuiElement {
         GL11.glDepthMask(false);
         GL11.glBlendFunc(0, 769);
         GL11.glColor4f(this.prevVignetteBrightness, this.prevVignetteBrightness, this.prevVignetteBrightness, 1.0f);
-        GL11.glBindTexture(3553, this.mc.renderEngine.getTexture("/assets/misc/vignette.png"));
+        GL11.glBindTexture(3553, this.mc.renderer.getTexture("/assets/misc/vignette.png"));
         final Tessellator instance = Tessellator.instance;
         instance.beginQuads();
         instance.vertexUV(0.0, integer3, -90.0, 0.0, 1.0);
@@ -191,11 +191,11 @@ public class GuiIngame extends GuiElement {
             GL11.glScalef(1.0f / n2, (n2 + 1.0f) / 2.0f, 1.0f);
             GL11.glTranslatef((float) (-(integer2 + 8)), (float) (-(integer3 + 12)), 0.0f);
         }
-        GuiIngame.itemRenderer.drawItemIntoGui(this.mc.fontRenderer, this.mc.renderEngine, itemStack, integer2, integer3);
+        GuiIngame.itemRenderer.drawItemIntoGui(this.mc.fontRenderer, this.mc.renderer, itemStack, integer2, integer3);
         if (n > 0.0f) {
             GL11.glPopMatrix();
         }
-        GuiIngame.itemRenderer.renderItemOverlayIntoGUI(this.mc.fontRenderer, this.mc.renderEngine, itemStack, integer2, integer3);
+        GuiIngame.itemRenderer.renderItemOverlayIntoGUI(this.mc.fontRenderer, this.mc.renderer, itemStack, integer2, integer3);
     }
 
     public void updateTick() {

@@ -17,7 +17,7 @@ public class RailBlock extends Block {
 
     protected RailBlock(final int blockid, final int blockIndexIntexture) {
         super(blockid, blockIndexIntexture, Material.REDSTONE);
-        this.setBlockBounds(0.0f, 0.0f, 0.0f, 1.0f, 0.125f, 1.0f);
+        this.setShape(0.0f, 0.0f, 0.0f, 1.0f, 0.125f, 1.0f);
     }
 
     @Override
@@ -40,9 +40,9 @@ public class RailBlock extends Block {
     public void setBlockBoundsBasedOnState(final IBlockAccess blockAccess, final int xCoord, final int yCoord, final int zCoord) {
         final int blockMetadata = blockAccess.getBlockMetadata(xCoord, yCoord, zCoord);
         if (blockMetadata >= 2 && blockMetadata <= 5) {
-            this.setBlockBounds(0.0f, 0.0f, 0.0f, 1.0f, 0.625f, 1.0f);
+            this.setShape(0.0f, 0.0f, 0.0f, 1.0f, 0.625f, 1.0f);
         } else {
-            this.setBlockBounds(0.0f, 0.0f, 0.0f, 1.0f, 0.125f, 1.0f);
+            this.setShape(0.0f, 0.0f, 0.0f, 1.0f, 0.125f, 1.0f);
         }
     }
 

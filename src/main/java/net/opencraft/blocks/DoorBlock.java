@@ -18,7 +18,7 @@ public class DoorBlock extends Block {
         super(blockid, Material.WOOD);
         this.blockIndexInTexture = 97;
         final float n = 0.5f;
-        this.setBlockBounds(0.5f - n, 0.0f, 0.5f - n, 0.5f + n, 1.0f, 0.5f + n);
+        this.setShape(0.5f - n, 0.0f, 0.5f - n, 0.5f + n, 1.0f, 0.5f + n);
     }
 
     @Override
@@ -73,18 +73,18 @@ public class DoorBlock extends Block {
 
     public void setDoorRotation(final int metadataValue) {
         final float n = 0.1875f;
-        this.setBlockBounds(0.0f, 0.0f, 0.0f, 1.0f, 2.0f, 1.0f);
+        this.setShape(0.0f, 0.0f, 0.0f, 1.0f, 2.0f, 1.0f);
         if (metadataValue == 0) {
-            this.setBlockBounds(0.0f, 0.0f, 0.0f, 1.0f, 1.0f, n);
+            this.setShape(0.0f, 0.0f, 0.0f, 1.0f, 1.0f, n);
         }
         if (metadataValue == 1) {
-            this.setBlockBounds(1.0f - n, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f);
+            this.setShape(1.0f - n, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f);
         }
         if (metadataValue == 2) {
-            this.setBlockBounds(0.0f, 0.0f, 1.0f - n, 1.0f, 1.0f, 1.0f);
+            this.setShape(0.0f, 0.0f, 1.0f - n, 1.0f, 1.0f, 1.0f);
         }
         if (metadataValue == 3) {
-            this.setBlockBounds(0.0f, 0.0f, 0.0f, n, 1.0f, 1.0f);
+            this.setShape(0.0f, 0.0f, 0.0f, n, 1.0f, 1.0f);
         }
     }
 

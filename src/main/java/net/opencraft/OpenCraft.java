@@ -54,7 +54,7 @@ public class OpenCraft implements Runnable {
 	public String minecraftUri;
 	public boolean hideQuitButton;
 	public volatile boolean isGamePaused;
-	public Renderer renderEngine;
+	public Renderer renderer;
 	public FontRenderer fontRenderer;
 	public GuiScreen currentScreen;
 	public LoadingScreenRenderer loadingScreen;
@@ -165,8 +165,8 @@ public class OpenCraft implements Runnable {
 		}
 		oc.mcDataDir = getMinecraftDir();
 		oc.options = new GameSettings(oc, oc.mcDataDir);
-		oc.renderEngine = new Renderer(oc.options);
-		oc.fontRenderer = new FontRenderer(oc.options, "/assets/default.png", oc.renderEngine);
+		oc.renderer = new Renderer(oc.options);
+		oc.fontRenderer = new FontRenderer(oc.options, "/assets/default.png", oc.renderer);
 		oc.loadScreen();
 		Keyboard.create();
 		Mouse.create();
@@ -191,18 +191,18 @@ public class OpenCraft implements Runnable {
 		oc.checkGLError();
 		oc.glCapabilities = new OpenGlCapsChecker();
 		oc.sndManager.loadSoundSettings(oc.options);
-		oc.renderEngine.registerTextureFX(oc.textureLavaFX);
-		oc.renderEngine.registerTextureFX(oc.textureWaterFX);
-		oc.renderEngine.registerTextureFX(new TextureWaterFlowFX());
-		oc.renderEngine.registerTextureFX(new TextureLavaFlowFX());
-		oc.renderEngine.registerTextureFX(new TextureFlamesFX(0));
-		oc.renderEngine.registerTextureFX(new TextureFlamesFX(1));
-		oc.renderEngine.registerTextureFX(new TextureGearsFX(0));
-		oc.renderEngine.registerTextureFX(new TextureGearsFX(1));
-		oc.renderGlobal = new RenderGlobal(oc, oc.renderEngine);
+		oc.renderer.registerTextureFX(oc.textureLavaFX);
+		oc.renderer.registerTextureFX(oc.textureWaterFX);
+		oc.renderer.registerTextureFX(new TextureWaterFlowFX());
+		oc.renderer.registerTextureFX(new TextureLavaFlowFX());
+		oc.renderer.registerTextureFX(new TextureFlamesFX(0));
+		oc.renderer.registerTextureFX(new TextureFlamesFX(1));
+		oc.renderer.registerTextureFX(new TextureGearsFX(0));
+		oc.renderer.registerTextureFX(new TextureGearsFX(1));
+		oc.renderGlobal = new RenderGlobal(oc, oc.renderer);
 		glViewport(0, 0, oc.width, oc.height);
 		oc.displayGuiScreen(new GuiMainMenu());
-		oc.effectRenderer = new EffectRenderer(oc.world, oc.renderEngine);
+		oc.effectRenderer = new EffectRenderer(oc.world, oc.renderer);
 		try {
 			DownloadResourcesJob job = new DownloadResourcesJob(mcDataDir);
 			job.start();
@@ -230,17 +230,17 @@ public class OpenCraft implements Runnable {
 		glDisable(2896);
 		glDisable(2912);
 		glEnable(3553);
-		final Tessellator instance = Tessellator.instance;
-		glBindTexture(3553, oc.renderEngine.getTexture("/assets/dirt.png"));
+		final Tessellator t = Tessellator.instance;
+		glBindTexture(3553, oc.renderer.getTexture("/assets/dirt.png"));
 		glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 		final float n = 32.0f;
-		instance.beginQuads();
-		instance.setColorOpaque_I(4210752);
-		instance.vertexUV(0.0, oc.height, 0.0, 0.0, oc.height / n + 0.0f);
-		instance.vertexUV(oc.width, oc.height, 0.0, oc.width / n, oc.height / n + 0.0f);
-		instance.vertexUV(oc.width, 0.0, 0.0, oc.width / n, 0.0);
-		instance.vertexUV(0.0, 0.0, 0.0, 0.0, 0.0);
-		instance.draw();
+		t.beginQuads();
+		t.setColorOpaque_I(4210752);
+		t.vertexUV(0.0, oc.height, 0.0, 0.0, oc.height / n + 0.0f);
+		t.vertexUV(oc.width, oc.height, 0.0, oc.width / n, oc.height / n + 0.0f);
+		t.vertexUV(oc.width, 0.0, 0.0, oc.width / n, 0.0);
+		t.vertexUV(0.0, 0.0, 0.0, 0.0, 0.0);
+		t.draw();
 		glEnable(3008);
 		glAlphaFunc(516, 0.1f);
 		oc.fontRenderer.drawStringWithShadow2("Loading...", 8, oc.height / 2 - 16, -1);
@@ -287,7 +287,7 @@ public class OpenCraft implements Runnable {
 				GLAllocation.deleteTexturesAndDisplayLists();
 			} catch (Exception ex2) {
 			}
-			oc.sndManager.closeMinecraft();
+			oc.sndManager.shutdown();
 			Mouse.destroy();
 			Keyboard.destroy();
 		} finally {
@@ -355,7 +355,7 @@ public class OpenCraft implements Runnable {
 				
 				// Thread.yield();
 				Display.update();
-				if (!oc.fullscreen && (Display.getWidth() != oc.width || Display.getHeight() != oc.height)) {
+				if (Display.wasResized()) {
 					oc.width = Display.getWidth();
 					oc.height = Display.getHeight();
 					if (oc.width <= 0) {
@@ -644,9 +644,9 @@ public class OpenCraft implements Runnable {
 		if (!oc.isGamePaused && oc.world != null) {
 			oc.playerController.updateController();
 		}
-		glBindTexture(3553, oc.renderEngine.getTexture("/assets/terrain.png"));
+		glBindTexture(3553, oc.renderer.getTexture("/assets/terrain.png"));
 		if (!oc.isGamePaused) {
-			oc.renderEngine.updateDynamicTextures();
+			oc.renderer.updateDynamicTextures();
 		}
 		if (oc.currentScreen == null && oc.player != null && oc.player.health <= 0) {
 			oc.displayGuiScreen(null);

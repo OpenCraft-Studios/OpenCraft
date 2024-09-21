@@ -88,9 +88,9 @@ public class GuiInventory extends GuiContainer {
 
     @Override
     protected void drawGuiContainerBackgroundLayer(final float float1) {
-        final int texture = this.id.renderEngine.getTexture("/assets/gui/inventory.png");
+        final int texture = this.id.renderer.getTexture("/assets/gui/inventory.png");
         GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
-        this.id.renderEngine.bindTexture(texture);
+        this.id.renderer.bindTexture(texture);
         final int integer1 = (this.width - this.xSize) / 2;
         final int integer2 = (this.height - this.ySize) / 2;
         this.drawTexturedModalRect(integer1, integer2, 0, 0, this.xSize, this.ySize);

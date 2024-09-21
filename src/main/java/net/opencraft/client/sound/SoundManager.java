@@ -68,11 +68,11 @@ public class SoundManager {
 
     }
 
-    public void closeMinecraft() {
-        if(this.loaded) {
-            this.sndSystem.cleanup();
-        }
-
+    public void shutdown() {
+        if(!this.loaded)
+        	return;
+        
+        this.sndSystem.cleanup();
     }
 
     public void addSound(String var1, File var2) {

@@ -46,27 +46,27 @@ public class StairBlock extends Block {
     public void getCollidingBoundingBoxes(World world, int xCoord, int yCoord, final int zCoord, AABB aabb, List<AABB> arrayList) {
         final int blockMetadata = world.getBlockMetadata(xCoord, yCoord, zCoord);
         if (blockMetadata == 0) {
-            this.setBlockBounds(0.0f, 0.0f, 0.0f, 0.5f, 0.5f, 1.0f);
+            this.setShape(0.0f, 0.0f, 0.0f, 0.5f, 0.5f, 1.0f);
             super.getCollidingBoundingBoxes(world, xCoord, yCoord, zCoord, aabb, arrayList);
-            this.setBlockBounds(0.5f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f);
+            this.setShape(0.5f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f);
             super.getCollidingBoundingBoxes(world, xCoord, yCoord, zCoord, aabb, arrayList);
         } else if (blockMetadata == 1) {
-            this.setBlockBounds(0.0f, 0.0f, 0.0f, 0.5f, 1.0f, 1.0f);
+            this.setShape(0.0f, 0.0f, 0.0f, 0.5f, 1.0f, 1.0f);
             super.getCollidingBoundingBoxes(world, xCoord, yCoord, zCoord, aabb, arrayList);
-            this.setBlockBounds(0.5f, 0.0f, 0.0f, 1.0f, 0.5f, 1.0f);
+            this.setShape(0.5f, 0.0f, 0.0f, 1.0f, 0.5f, 1.0f);
             super.getCollidingBoundingBoxes(world, xCoord, yCoord, zCoord, aabb, arrayList);
         } else if (blockMetadata == 2) {
-            this.setBlockBounds(0.0f, 0.0f, 0.0f, 1.0f, 0.5f, 0.5f);
+            this.setShape(0.0f, 0.0f, 0.0f, 1.0f, 0.5f, 0.5f);
             super.getCollidingBoundingBoxes(world, xCoord, yCoord, zCoord, aabb, arrayList);
-            this.setBlockBounds(0.0f, 0.0f, 0.5f, 1.0f, 1.0f, 1.0f);
+            this.setShape(0.0f, 0.0f, 0.5f, 1.0f, 1.0f, 1.0f);
             super.getCollidingBoundingBoxes(world, xCoord, yCoord, zCoord, aabb, arrayList);
         } else if (blockMetadata == 3) {
-            this.setBlockBounds(0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.5f);
+            this.setShape(0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.5f);
             super.getCollidingBoundingBoxes(world, xCoord, yCoord, zCoord, aabb, arrayList);
-            this.setBlockBounds(0.0f, 0.0f, 0.5f, 1.0f, 0.5f, 1.0f);
+            this.setShape(0.0f, 0.0f, 0.5f, 1.0f, 0.5f, 1.0f);
             super.getCollidingBoundingBoxes(world, xCoord, yCoord, zCoord, aabb, arrayList);
         }
-        this.setBlockBounds(0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f);
+        this.setShape(0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f);
     }
 
     @Override
