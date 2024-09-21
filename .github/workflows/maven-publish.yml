@@ -1,0 +1,53 @@
+# This workflow will build a Java project with Maven, and cache/restore any dependencies to improve the workflow execution time
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-maven
+
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+
+#  - OpenCraft Studios Team
+
+name: Generate Artifacts
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+      - name: Set up Java 21
+        uses: actions/setup-java@v4
+        with:
+        # this distribution is cached by github actions
+          distribution: 'temurin'
+          # jdk version to use, specified in pom.xml
+          java-version: '21'
+          # use the github actions cached jdk if available.
+          check-latest: false
+      - name: Compile client
+        id: compile
+        run: mvn -B package --file pom.xml --no-transfer-progress
+      - name: Pack dependencies
+        id: packdep
+        run: |
+          mvn dependency:copy-dependencies -DoutputDirectory=target/dependencies --no-transfer-progress
+          cd target/dependencies
+          zip -r ../dependencies.zip .
+          cd ../..
+      - name: Publish client artifact
+        uses: ./.github/actions/upload_build
+        if: ${{ always() && steps.compile.outcome == 'success' }}
+        with:
+          SOURCE_FILE: 'target/opencraft-client.jar'
+          DEST_NAME: 'opencraft-client.jar'
+      - name: Publish dependencies artifact
+        uses: ./.github/actions/upload_build
+        if: ${{ always() && steps.packdep.outcome == 'success' }}
+        with:
+          SOURCE_FILE: 'target/dependencies.zip'
+          DEST_NAME: 'opencraft-dependencies.zip'
