@@ -4,6 +4,12 @@ package net.opencraft.entity;
 import java.nio.FloatBuffer;
 import java.util.List;
 import java.util.Random;
+
+import org.lwjgl.BufferUtils;
+import org.lwjgl.input.Mouse;
+import org.lwjgl.opengl.*;
+import org.lwjgl.util.glu.GLU;
+
 import net.opencraft.OpenCraft;
 import net.opencraft.ScaledResolution;
 import net.opencraft.block.Block;
@@ -11,21 +17,15 @@ import net.opencraft.block.material.Material;
 import net.opencraft.client.entity.PlayerControllerTest;
 import net.opencraft.client.input.MovingObjectPosition;
 import net.opencraft.client.renderer.EffectRenderer;
-import net.opencraft.client.renderer.GLAllocation;
 import net.opencraft.client.renderer.Tessellator;
-import net.opencraft.client.renderer.culling.ClippingHelperImpl;
 import net.opencraft.client.renderer.culling.Frustrum;
+import net.opencraft.client.renderer.culling.Frustum;
 import net.opencraft.client.renderer.entity.RenderGlobal;
 import net.opencraft.client.renderer.entity.RenderHelper;
 import net.opencraft.item.ItemRenderer;
 import net.opencraft.util.Mth;
 import net.opencraft.util.Vec3;
 import net.opencraft.world.World;
-import org.lwjgl.input.Mouse;
-import org.lwjgl.opengl.Display;
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GLContext;
-import org.lwjgl.util.glu.GLU;
 
 public class EntityRenderer {
 
@@ -54,7 +54,7 @@ public class EntityRenderer {
         this.random = new Random();
         this.unusedVolatile0 = 0;
         this.unusedVolatile1 = 0;
-        this.fogColorBuffer = GLAllocation.createFloatBuffer(16);
+        this.fogColorBuffer = BufferUtils.createFloatBuffer(16);
         this.mc = aw;
         this.itemRenderer = new ItemRenderer(aw);
     }
@@ -327,7 +327,7 @@ public class EntityRenderer {
             GL11.glClear(16640);
             GL11.glEnable(2884);
             this.orientCamera(float1, i);
-            ClippingHelperImpl.getInstance();
+            Frustum.getInstance();
             if (this.mc.gameSettings.renderDistance < 2) {
                 this.setupFog(-1);
                 renderGlobal.renderSky(float1);

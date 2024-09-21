@@ -8,7 +8,7 @@ import java.util.*;
 import org.lwjgl.opengl.GL11;
 
 import net.opencraft.block.Block;
-import net.opencraft.client.renderer.entity.RenderEngine;
+import net.opencraft.client.renderer.entity.Renderer;
 import net.opencraft.entity.*;
 import net.opencraft.util.Mth;
 import net.opencraft.world.World;
@@ -17,11 +17,11 @@ public class EffectRenderer {
 
     protected World worldObj;
     private List<EntityFX>[] fxLayers;
-    private RenderEngine renderer;
+    private Renderer renderer;
     private Random rand;
 
     @SuppressWarnings("unchecked")
-	public EffectRenderer(final World fe, final RenderEngine id) {
+	public EffectRenderer(final World fe, final Renderer id) {
         this.fxLayers = new List[3];
         this.rand = new Random();
         if (fe != null)

@@ -18,7 +18,7 @@ import net.opencraft.client.font.FontRenderer;
 import net.opencraft.client.gui.*;
 import net.opencraft.client.input.*;
 import net.opencraft.client.renderer.*;
-import net.opencraft.client.renderer.entity.RenderEngine;
+import net.opencraft.client.renderer.entity.Renderer;
 import net.opencraft.client.renderer.entity.RenderGlobal;
 import net.opencraft.client.settings.GameSettings;
 import net.opencraft.client.sound.SoundManager;
@@ -52,7 +52,7 @@ public class OpenCraft implements Runnable {
     public String minecraftUri;
     public boolean hideQuitButton;
     public volatile boolean isGamePaused;
-    public RenderEngine renderEngine;
+    public Renderer renderEngine;
     public FontRenderer fontRenderer;
     public GuiScreen currentScreen;
     public LoadingScreenRenderer loadingScreen;
@@ -162,7 +162,7 @@ public class OpenCraft implements Runnable {
         }
         oc.mcDataDir = getMinecraftDir();
         oc.gameSettings = new GameSettings(oc, oc.mcDataDir);
-        oc.renderEngine = new RenderEngine(oc.gameSettings);
+        oc.renderEngine = new Renderer(oc.gameSettings);
         oc.fontRenderer = new FontRenderer(oc.gameSettings, "/assets/default.png", oc.renderEngine);
         oc.loadScreen();
         Keyboard.create();

@@ -29,12 +29,12 @@ public abstract class Render<T extends Entity> {
     public abstract void doRender(final T entityLiving, final double xCoord, final double sqrt_double, final double yCoord, final float nya1, final float nya2);
 
     protected void loadTexture(final String string) {
-        final RenderEngine renderEngine = this.renderManager.renderEngine;
+        final Renderer renderEngine = this.renderManager.renderEngine;
         renderEngine.bindTexture(renderEngine.getTexture(string));
     }
 
     protected void loadDownloadableImageTexture(final String string1, final String string2) {
-        final RenderEngine renderEngine = this.renderManager.renderEngine;
+        final Renderer renderEngine = this.renderManager.renderEngine;
         renderEngine.bindTexture(renderEngine.a(string1, string2));
     }
 
@@ -79,7 +79,7 @@ public abstract class Render<T extends Entity> {
     private void renderShadow(final Entity eq, final double double2, final double double3, final double double4, final float float5, final float float6) {
         GL11.glEnable(3042);
         GL11.glBlendFunc(770, 771);
-        final RenderEngine renderEngine = this.renderManager.renderEngine;
+        final Renderer renderEngine = this.renderManager.renderEngine;
         renderEngine.bindTexture(renderEngine.getTexture("%%/assets/shadow.png"));
         final World worldFromRenderManager = this.getWorldFromRenderManager();
         GL11.glDepthMask(false);
