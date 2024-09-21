@@ -1,7 +1,7 @@
 
 package net.opencraft.client.gui;
 
-public class GuiUnused extends GuiScreen {
+public class GuiEmptyScreen extends GuiScreen {
 
     private String message1;
     private String message2;

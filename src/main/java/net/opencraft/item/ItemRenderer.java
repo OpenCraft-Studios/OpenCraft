@@ -35,13 +35,13 @@ public class ItemRenderer {
 
     public void renderItemInFirstPerson(final float float1) {
         final float n = this.d + (this.c - this.d) * float1;
-        final EntityPlayerSP thePlayer = this.a.thePlayer;
+        final EntityPlayerSP thePlayer = this.a.player;
         GL11.glPushMatrix();
         GL11.glRotatef(thePlayer.prevRotationPitch + (thePlayer.rotationPitch - thePlayer.prevRotationPitch) * float1, 1.0f, 0.0f, 0.0f);
         GL11.glRotatef(thePlayer.prevRotationYaw + (thePlayer.rotationYaw - thePlayer.prevRotationYaw) * float1, 0.0f, 1.0f, 0.0f);
         RenderHelper.enableStandardItemLighting();
         GL11.glPopMatrix();
-        final float lightBrightness = this.a.theWorld.getLightBrightness(Mth.floor_double(thePlayer.posX), Mth.floor_double(thePlayer.posY), Mth.floor_double(thePlayer.posZ));
+        final float lightBrightness = this.a.world.getLightBrightness(Mth.floor_double(thePlayer.posX), Mth.floor_double(thePlayer.posY), Mth.floor_double(thePlayer.posZ));
         GL11.glColor4f(lightBrightness, lightBrightness, lightBrightness, 1.0f);
         if (this.b != null) {
             GL11.glPushMatrix();
@@ -174,14 +174,14 @@ public class ItemRenderer {
                 GL11.glRotatef(n5 * 70.0f, 0.0f, 1.0f, 0.0f);
                 GL11.glRotatef(-n4 * 20.0f, 0.0f, 0.0f, 1.0f);
             }
-            GL11.glBindTexture(3553, this.a.renderEngine.a(this.a.thePlayer.skinUrl, this.a.thePlayer.addToPlayerScore()));
+            GL11.glBindTexture(3553, this.a.renderEngine.a(this.a.player.skinUrl, this.a.player.addToPlayerScore()));
             GL11.glTranslatef(-1.0f, 3.6f, 3.5f);
             GL11.glRotatef(120.0f, 0.0f, 0.0f, 1.0f);
             GL11.glRotatef(200.0f, 1.0f, 0.0f, 0.0f);
             GL11.glRotatef(-135.0f, 0.0f, 1.0f, 0.0f);
             GL11.glScalef(1.0f, 1.0f, 1.0f);
             GL11.glTranslatef(5.6f, 0.0f, 0.0f);
-            final RenderPlayer renderPlayer = (RenderPlayer) RenderManager.instance.getEntityRenderObject(this.a.thePlayer);
+            final RenderPlayer renderPlayer = (RenderPlayer) RenderManager.instance.getEntityRenderObject(this.a.player);
             final float n5 = 1.0f;
             GL11.glScalef(n5, n5, n5);
             renderPlayer.drawFirstPersonHand();
@@ -193,22 +193,22 @@ public class ItemRenderer {
 
     public void renderOverlays(final float float1) {
         GL11.glDisable(3008);
-        if (this.a.thePlayer.fire > 0) {
+        if (this.a.player.fire > 0) {
             final int xCoord = this.a.renderEngine.getTexture("/assets/terrain.png");
             GL11.glBindTexture(3553, xCoord);
             this.d(float1);
         }
-        if (this.a.theWorld.player.isEntityInsideOpaqueBlock()) {
-            final int xCoord = Mth.floor_double(this.a.thePlayer.posX);
-            final int floor_double = Mth.floor_double(this.a.thePlayer.posY);
-            final int floor_double2 = Mth.floor_double(this.a.thePlayer.posZ);
+        if (this.a.world.player.isEntityInsideOpaqueBlock()) {
+            final int xCoord = Mth.floor_double(this.a.player.posX);
+            final int floor_double = Mth.floor_double(this.a.player.posY);
+            final int floor_double2 = Mth.floor_double(this.a.player.posZ);
             GL11.glBindTexture(3553, this.a.renderEngine.getTexture("/assets/terrain.png"));
-            final int blockId = this.a.theWorld.getBlockId(xCoord, floor_double, floor_double2);
+            final int blockId = this.a.world.getBlockId(xCoord, floor_double, floor_double2);
             if (Block.blocksList[blockId] != null) {
                 this.a(float1, Block.blocksList[blockId].getBlockTextureFromSide(2));
             }
         }
-        if (this.a.thePlayer.isInsideOfMaterial(Material.WATER)) {
+        if (this.a.player.isInsideOfMaterial(Material.WATER)) {
             final int xCoord = this.a.renderEngine.getTexture("/assets/water.png");
             GL11.glBindTexture(3553, xCoord);
             this.c(float1);
@@ -218,7 +218,7 @@ public class ItemRenderer {
 
     private void a(final float float1, final int integer) {
         final Tessellator instance = Tessellator.instance;
-        float entityBrightness = this.a.thePlayer.getEntityBrightness(float1);
+        float entityBrightness = this.a.player.getEntityBrightness(float1);
         entityBrightness = 0.1f;
         GL11.glColor4f(entityBrightness, entityBrightness, entityBrightness, 0.5f);
         GL11.glPushMatrix();
@@ -244,7 +244,7 @@ public class ItemRenderer {
 
     private void c(final float float1) {
         final Tessellator instance = Tessellator.instance;
-        final float entityBrightness = this.a.thePlayer.getEntityBrightness(float1);
+        final float entityBrightness = this.a.player.getEntityBrightness(float1);
         GL11.glColor4f(entityBrightness, entityBrightness, entityBrightness, 0.5f);
         GL11.glEnable(3042);
         GL11.glBlendFunc(770, 771);
@@ -255,8 +255,8 @@ public class ItemRenderer {
         final float n4 = -1.0f;
         final float n5 = 1.0f;
         final float n6 = -0.5f;
-        final float n7 = -this.a.thePlayer.rotationYaw / 64.0f;
-        final float n8 = this.a.thePlayer.rotationPitch / 64.0f;
+        final float n7 = -this.a.player.rotationYaw / 64.0f;
+        final float n8 = this.a.player.rotationPitch / 64.0f;
         instance.beginQuads();
         instance.vertexUV(n2, n4, n6, n + n7, n + n8);
         instance.vertexUV(n3, n4, n6, 0.0f + n7, n + n8);
@@ -311,7 +311,7 @@ public class ItemRenderer {
                 this.f = false;
             }
         }
-        final ItemStack currentItem = this.a.thePlayer.inventory.getCurrentItem();
+        final ItemStack currentItem = this.a.player.inventory.getCurrentItem();
         final float n = 0.4f;
         float n2 = ((currentItem == this.b) ? 1.0f : 0.0f) - this.c;
         if (n2 < -n) {

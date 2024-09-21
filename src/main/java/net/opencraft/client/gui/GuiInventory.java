@@ -50,7 +50,7 @@ public class GuiInventory extends GuiContainer {
         for (int i = 0; i < this.inventoryCrafting.getSizeInventory(); ++i) {
             final ItemStack stackInSlot = this.inventoryCrafting.getStackInSlot(i);
             if (stackInSlot != null) {
-                this.id.thePlayer.dropPlayerItem(stackInSlot);
+                this.id.player.dropPlayerItem(stackInSlot);
             }
         }
     }
@@ -100,23 +100,23 @@ public class GuiInventory extends GuiContainer {
         final float n = 30.0f;
         GL11.glScalef(-n, n, n);
         GL11.glRotatef(180.0f, 0.0f, 0.0f, 1.0f);
-        final float renderYawOffset = this.id.thePlayer.renderYawOffset;
-        final float rotationYaw = this.id.thePlayer.rotationYaw;
-        final float rotationPitch = this.id.thePlayer.rotationPitch;
+        final float renderYawOffset = this.id.player.renderYawOffset;
+        final float rotationYaw = this.id.player.rotationYaw;
+        final float rotationPitch = this.id.player.rotationPitch;
         final float n2 = integer1 + 51 - this.xSize_lo;
         final float n3 = integer2 + 75 - 50 - this.ySize_lo;
         GL11.glRotatef(135.0f, 0.0f, 1.0f, 0.0f);
         RenderHelper.enableStandardItemLighting();
         GL11.glRotatef(-135.0f, 0.0f, 1.0f, 0.0f);
         GL11.glRotatef(-(float) Math.atan((double) (n3 / 40.0f)) * 20.0f, 1.0f, 0.0f, 0.0f);
-        this.id.thePlayer.renderYawOffset = (float) Math.atan((double) (n2 / 40.0f)) * 20.0f;
-        this.id.thePlayer.rotationYaw = (float) Math.atan((double) (n2 / 40.0f)) * 40.0f;
-        this.id.thePlayer.rotationPitch = -(float) Math.atan((double) (n3 / 40.0f)) * 20.0f;
+        this.id.player.renderYawOffset = (float) Math.atan((double) (n2 / 40.0f)) * 20.0f;
+        this.id.player.rotationYaw = (float) Math.atan((double) (n2 / 40.0f)) * 40.0f;
+        this.id.player.rotationPitch = -(float) Math.atan((double) (n3 / 40.0f)) * 20.0f;
         GL11.glTranslatef(0.0f, 0.0f, 0.0f);
-        RenderManager.instance.renderEntityWithPosYaw(this.id.thePlayer, 0.0, 0.0, 0.0, 0.0f, 1.0f);
-        this.id.thePlayer.renderYawOffset = renderYawOffset;
-        this.id.thePlayer.rotationYaw = rotationYaw;
-        this.id.thePlayer.rotationPitch = rotationPitch;
+        RenderManager.instance.renderEntityWithPosYaw(this.id.player, 0.0, 0.0, 0.0, 0.0f, 1.0f);
+        this.id.player.renderYawOffset = renderYawOffset;
+        this.id.player.rotationYaw = rotationYaw;
+        this.id.player.rotationPitch = rotationPitch;
         GL11.glPopMatrix();
         RenderHelper.disableStandardItemLighting();
         GL11.glDisable(32826);

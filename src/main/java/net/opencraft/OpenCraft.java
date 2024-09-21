@@ -45,9 +45,9 @@ public class OpenCraft implements Runnable {
     public int height;
     private OpenGlCapsChecker glCapabilities;
     private Timer timer;
-    public World theWorld;
+    public World world;
     public RenderGlobal renderGlobal;
-    public EntityPlayerSP thePlayer;
+    public EntityPlayerSP player;
     public EffectRenderer effectRenderer;
     public Session sessionData;
     public String minecraftUri;
@@ -202,7 +202,7 @@ public class OpenCraft implements Runnable {
         oc.renderGlobal = new RenderGlobal(oc, oc.renderEngine);
         glViewport(0, 0, oc.width, oc.height);
         oc.displayGuiScreen(new GuiMainMenu());
-        oc.effectRenderer = new EffectRenderer(oc.theWorld, oc.renderEngine);
+        oc.effectRenderer = new EffectRenderer(oc.world, oc.renderEngine);
         try {
             (oc.downloadResourcesThread = new ThreadDownloadResources(oc.mcDataDir, oc)).start();
         } catch (Exception ex4) {
@@ -247,22 +247,24 @@ public class OpenCraft implements Runnable {
     }
 
 
-    public void displayGuiScreen(GuiScreen var_1_2B) {
-        if (oc.currentScreen instanceof GuiUnused) {
+    public void displayGuiScreen(GuiScreen screen) {
+        if (oc.currentScreen instanceof GuiEmptyScreen)
             return;
-        }
-        if (oc.currentScreen != null) {
+        
+        if (oc.currentScreen != null)
             oc.currentScreen.onGuiClosed();
+        
+        if (screen == null) {
+        	if (oc.world == null)
+        		screen = new GuiMainMenu();
+        	else if (oc.player.health <= 0)
+        		screen = new GuiGameOver();
         }
-        if (var_1_2B == null && oc.theWorld == null) {
-            var_1_2B = new GuiMainMenu();
-        } else if (var_1_2B == null && oc.thePlayer.health <= 0) {
-            var_1_2B = new GuiGameOver();
-        }
-        if ((oc.currentScreen = var_1_2B) != null) {
+        
+        if ((oc.currentScreen = screen) != null) {
             oc.setIngameNotInFocus();
             final ScaledResolution scaledResolution = new ScaledResolution(oc.width, oc.height);
-            var_1_2B.setWorldAndResolution(oc, scaledResolution.getScaledWidth(), scaledResolution.getScaledHeight());
+            screen.setWorldAndResolution(oc, scaledResolution.getScaledWidth(), scaledResolution.getScaledHeight());
             oc.skipRenderWorld = false;
         } else {
             oc.setIngameFocus();
@@ -344,10 +346,10 @@ public class OpenCraft implements Runnable {
                 if (oc.isGamePaused) {
                     oc.timer.renderPartialTicks = 1.0f;
                 }
-                oc.sndManager.setListener(oc.thePlayer, oc.timer.renderPartialTicks);
+                oc.sndManager.setListener(oc.player, oc.timer.renderPartialTicks);
                 glEnable(3553);
-                if (oc.theWorld != null) {
-                    while (oc.theWorld.updatingLighting()) {
+                if (oc.world != null) {
+                    while (oc.world.updatingLighting()) {
                     }
                 }
                 if (!oc.skipRenderWorld) {
@@ -469,8 +471,8 @@ public class OpenCraft implements Runnable {
         if (!oc.inGameHasFocus) {
             return;
         }
-        if (oc.thePlayer != null) {
-            oc.thePlayer.resetPlayerKeyState();
+        if (oc.player != null) {
+            oc.player.resetPlayerKeyState();
         }
         oc.inGameHasFocus = false;
         oc.mouseHelper.ungrabMouseCursor();
@@ -514,52 +516,52 @@ public class OpenCraft implements Runnable {
             }
         } else if (oc.objectMouseOver.typeOfHit == 1) {
             if (integer == 0) {
-                oc.thePlayer.a(oc.objectMouseOver.entityHit);
+                oc.player.a(oc.objectMouseOver.entityHit);
             }
             if (integer == 1) {
-                oc.thePlayer.c(oc.objectMouseOver.entityHit);
+                oc.player.c(oc.objectMouseOver.entityHit);
             }
         } else if (oc.objectMouseOver.typeOfHit == 0) {
             final int blockX = oc.objectMouseOver.blockX;
             final int n = oc.objectMouseOver.blockY;
             final int blockZ = oc.objectMouseOver.blockZ;
             final int sideHit = oc.objectMouseOver.sideHit;
-            final Block block = Block.blocksList[oc.theWorld.getBlockId(blockX, n, blockZ)];
+            final Block block = Block.blocksList[oc.world.getBlockId(blockX, n, blockZ)];
             if (integer == 0) {
-                oc.theWorld.onBlockHit(blockX, n, blockZ, oc.objectMouseOver.sideHit);
-                if (block != Block.bedrock || oc.thePlayer.unusedByte >= 100) {
+                oc.world.onBlockHit(blockX, n, blockZ, oc.objectMouseOver.sideHit);
+                if (block != Block.bedrock || oc.player.unusedByte >= 100) {
                     oc.playerController.clickBlock(blockX, n, blockZ);
                 }
             } else {
-                final ItemStack currentItem = oc.thePlayer.inventory.getCurrentItem();
-                final int blockId = oc.theWorld.getBlockId(blockX, n, blockZ);
-                if (blockId > 0 && Block.blocksList[blockId].blockActivated(oc.theWorld, blockX, n, blockZ, oc.thePlayer)) {
+                final ItemStack currentItem = oc.player.inventory.getCurrentItem();
+                final int blockId = oc.world.getBlockId(blockX, n, blockZ);
+                if (blockId > 0 && Block.blocksList[blockId].blockActivated(oc.world, blockX, n, blockZ, oc.player)) {
                     return;
                 }
                 if (currentItem == null) {
                     return;
                 }
                 final int stackSize = currentItem.stackSize;
-                if (currentItem.useItem(oc.thePlayer, oc.theWorld, blockX, n, blockZ, sideHit)) {
+                if (currentItem.useItem(oc.player, oc.world, blockX, n, blockZ, sideHit)) {
                     oc.entityRenderer.itemRenderer.resetEquippedProgress();
                 }
                 if (currentItem.stackSize == 0) {
-                    oc.thePlayer.inventory.mainInventory[oc.thePlayer.inventory.currentItem] = null;
+                    oc.player.inventory.mainInventory[oc.player.inventory.currentItem] = null;
                 } else if (currentItem.stackSize != stackSize) {
                     oc.entityRenderer.itemRenderer.b();
                 }
             }
         }
         if (integer == 1) {
-            final ItemStack currentItem2 = oc.thePlayer.inventory.getCurrentItem();
+            final ItemStack currentItem2 = oc.player.inventory.getCurrentItem();
             if (currentItem2 != null) {
                 final int n = currentItem2.stackSize;
-                final ItemStack useItemRightClick = currentItem2.useItemRightClick(oc.theWorld, oc.thePlayer);
+                final ItemStack useItemRightClick = currentItem2.useItemRightClick(oc.world, oc.player);
                 if (useItemRightClick != currentItem2 || (useItemRightClick != null && useItemRightClick.stackSize != n)) {
-                    oc.thePlayer.inventory.mainInventory[oc.thePlayer.inventory.currentItem] = useItemRightClick;
+                    oc.player.inventory.mainInventory[oc.player.inventory.currentItem] = useItemRightClick;
                     oc.entityRenderer.itemRenderer.d();
                     if (useItemRightClick.stackSize == 0) {
-                        oc.thePlayer.inventory.mainInventory[oc.thePlayer.inventory.currentItem] = null;
+                        oc.player.inventory.mainInventory[oc.player.inventory.currentItem] = null;
                     }
                 }
             }
@@ -626,7 +628,7 @@ public class OpenCraft implements Runnable {
 
     private void clickMiddleMouseButton() {
         if (oc.objectMouseOver != null) {
-            int integer = oc.theWorld.getBlockId(oc.objectMouseOver.blockX, oc.objectMouseOver.blockY, oc.objectMouseOver.blockZ);
+            int integer = oc.world.getBlockId(oc.objectMouseOver.blockX, oc.objectMouseOver.blockY, oc.objectMouseOver.blockZ);
             if (integer == Block.grass.blockID) {
                 integer = Block.dirt.blockID;
             }
@@ -636,20 +638,20 @@ public class OpenCraft implements Runnable {
             if (integer == Block.bedrock.blockID) {
                 integer = Block.stone.blockID;
             }
-            oc.thePlayer.inventory.setCurrentItem(integer, oc.playerController instanceof PlayerControllerTest);
+            oc.player.inventory.setCurrentItem(integer, oc.playerController instanceof PlayerControllerTest);
         }
     }
 
     public void runTick() {
         oc.ingameGUI.updateTick();
-        if (!oc.isGamePaused && oc.theWorld != null) {
+        if (!oc.isGamePaused && oc.world != null) {
             oc.playerController.updateController();
         }
         glBindTexture(3553, oc.renderEngine.getTexture("/assets/terrain.png"));
         if (!oc.isGamePaused) {
             oc.renderEngine.updateDynamicTextures();
         }
-        if (oc.currentScreen == null && oc.thePlayer != null && oc.thePlayer.health <= 0) {
+        if (oc.currentScreen == null && oc.player != null && oc.player.health <= 0) {
             oc.displayGuiScreen(null);
         }
 
@@ -664,7 +666,7 @@ public class OpenCraft implements Runnable {
                 }
                 final int eventDWheel = Mouse.getEventDWheel();
                 if (eventDWheel != 0) {
-                    oc.thePlayer.inventory.changeCurrentItem(eventDWheel);
+                    oc.player.inventory.changeCurrentItem(eventDWheel);
                 }
                 if (oc.currentScreen == null) {
                     if (!oc.inGameHasFocus && Mouse.getEventButtonState()) {
@@ -692,7 +694,7 @@ public class OpenCraft implements Runnable {
             }
 
             while (Keyboard.next()) {
-                oc.thePlayer.handleKeyPress(Keyboard.getEventKey(), Keyboard.getEventKeyState());
+                oc.player.handleKeyPress(Keyboard.getEventKey(), Keyboard.getEventKeyState());
                 if (Keyboard.getEventKeyState()) {
                     if (Keyboard.getEventKey() == 87) {
                         oc.toggleFullscreen();
@@ -714,15 +716,15 @@ public class OpenCraft implements Runnable {
                                 oc.isRaining = !oc.isRaining;
                             }
                             if (Keyboard.getEventKey() == oc.gameSettings.keyBindInventory.keyCode) {
-                                oc.displayGuiScreen(new GuiInventory(oc.thePlayer.inventory));
+                                oc.displayGuiScreen(new GuiInventory(oc.player.inventory));
                             }
                             if (Keyboard.getEventKey() == oc.gameSettings.keyBindDrop.keyCode) {
-                                oc.thePlayer.dropPlayerItemWithRandomChoice(oc.thePlayer.inventory.decrStackSize(oc.thePlayer.inventory.currentItem, 1), false);
+                                oc.player.dropPlayerItemWithRandomChoice(oc.player.inventory.decrStackSize(oc.player.inventory.currentItem, 1), false);
                             }
                         }
                         for (int i = 0; i < 9; ++i) {
                             if (Keyboard.getEventKey() == 2 + i) {
-                                oc.thePlayer.inventory.currentItem = i;
+                                oc.player.inventory.currentItem = i;
                             }
                         }
                         if (Keyboard.getEventKey() != oc.gameSettings.keyBindToggleFog.keyCode) {
@@ -753,8 +755,8 @@ public class OpenCraft implements Runnable {
                 oc.currentScreen.updateScreen();
             }
         }
-        if (oc.theWorld != null) {
-            oc.theWorld.difficultySetting = oc.gameSettings.difficulty;
+        if (oc.world != null) {
+            oc.world.difficultySetting = oc.gameSettings.difficulty;
             if (!oc.isGamePaused) {
                 oc.entityRenderer.updateRenderer();
             }
@@ -762,13 +764,13 @@ public class OpenCraft implements Runnable {
                 oc.renderGlobal.updateClouds();
             }
             if (!oc.isGamePaused) {
-                oc.theWorld.updateEntities();
+                oc.world.updateEntities();
             }
             if (!oc.isGamePaused && !oc.isMultiplayerWorld()) {
-                oc.theWorld.tick();
+                oc.world.tick();
             }
             if (!oc.isGamePaused) {
-                oc.theWorld.randomDisplayUpdates(Mth.floor_double(oc.thePlayer.posX), Mth.floor_double(oc.thePlayer.posY), Mth.floor_double(oc.thePlayer.posZ));
+                oc.world.randomDisplayUpdates(Mth.floor_double(oc.player.posX), Mth.floor_double(oc.player.posY), Mth.floor_double(oc.player.posZ));
             }
             if (!oc.isGamePaused) {
                 oc.effectRenderer.updateEffects();
@@ -797,36 +799,36 @@ public class OpenCraft implements Runnable {
     }
 
     public void changeWorld2(final World fe, final String string) {
-        if (oc.theWorld != null) {
-            oc.theWorld.saveWorldIndirectly(oc.loadingScreen);
+        if (oc.world != null) {
+            oc.world.saveWorldIndirectly(oc.loadingScreen);
         }
-        if ((oc.theWorld = fe) != null) {
+        if ((oc.world = fe) != null) {
             oc.playerController.func_717_a(fe);
             fe.h = oc.fontRenderer;
             if (!oc.isMultiplayerWorld()) {
-                oc.thePlayer = (EntityPlayerSP) fe.func_4085_a(EntityPlayerSP.class);
-                fe.player = oc.thePlayer;
-            } else if (oc.thePlayer != null) {
-                oc.thePlayer.preparePlayerToSpawn();
+                oc.player = (EntityPlayerSP) fe.func_4085_a(EntityPlayerSP.class);
+                fe.player = oc.player;
+            } else if (oc.player != null) {
+                oc.player.preparePlayerToSpawn();
                 if (fe != null) {
-                    fe.player = oc.thePlayer;
-                    fe.entityJoinedWorld(oc.thePlayer);
+                    fe.player = oc.player;
+                    fe.entityJoinedWorld(oc.player);
                 }
             }
             oc.func_6255_d(string);
-            if (oc.thePlayer == null) {
-                (oc.thePlayer = new EntityPlayerSP(oc, fe, oc.sessionData)).preparePlayerToSpawn();
-                oc.playerController.flipPlayer(oc.thePlayer);
+            if (oc.player == null) {
+                (oc.player = new EntityPlayerSP(oc, fe, oc.sessionData)).preparePlayerToSpawn();
+                oc.playerController.flipPlayer(oc.player);
             }
-            oc.thePlayer.movementInput = new MovementInputFromOptions(oc.gameSettings);
+            oc.player.movementInput = new MovementInputFromOptions(oc.gameSettings);
             if (oc.renderGlobal != null) {
                 oc.renderGlobal.changeWorld(fe);
             }
             if (oc.effectRenderer != null) {
                 oc.effectRenderer.clearEffects(fe);
             }
-            oc.playerController.func_6473_b(oc.thePlayer);
-            fe.player = oc.thePlayer;
+            oc.playerController.func_6473_b(oc.player);
+            fe.player = oc.player;
             fe.spawnPlayerWithLoadedChunks();
             if (fe.isNewWorld) {
                 fe.saveWorldIndirectly(oc.loadingScreen);
@@ -847,16 +849,16 @@ public class OpenCraft implements Runnable {
         int n3 = n * 2 / 16 + 1;
         n3 *= n3;
         for (int i = -n; i <= n; i += 16) {
-            int x = oc.theWorld.x;
-            int z = oc.theWorld.z;
-            if (oc.theWorld.player != null) {
-                x = (int) oc.theWorld.player.posX;
-                z = (int) oc.theWorld.player.posZ;
+            int x = oc.world.x;
+            int z = oc.world.z;
+            if (oc.world.player != null) {
+                x = (int) oc.world.player.posX;
+                z = (int) oc.world.player.posZ;
             }
             for (int j = -n; j <= n; j += 16) {
                 oc.loadingScreen.setLoadingProgress(n2++ * 100 / n3);
-                oc.theWorld.getBlockId(x + i, 64, z + j);
-                while (oc.theWorld.updatingLighting()) {
+                oc.world.getBlockId(x + i, 64, z + j);
+                while (oc.world.updatingLighting()) {
                 }
             }
         }
@@ -864,9 +866,9 @@ public class OpenCraft implements Runnable {
         n3 = 2000;
         SandBlock.fallInstantly = true;
         for (int i = 0; i < n3; ++i) {
-            oc.theWorld.TickUpdates(true);
+            oc.world.TickUpdates(true);
         }
-        oc.theWorld.func_656_j();
+        oc.world.func_656_j();
         SandBlock.fallInstantly = false;
     }
 
@@ -900,22 +902,22 @@ public class OpenCraft implements Runnable {
     }
 
     public String debugInfoEntities() {
-        return "P: " + oc.effectRenderer.getStatistics() + ". T: " + oc.theWorld.func_687_d();
+        return "P: " + oc.effectRenderer.getStatistics() + ". T: " + oc.world.func_687_d();
     }
 
     public void respawn() {
-        if (oc.thePlayer != null && oc.theWorld != null) {
-            oc.theWorld.setEntityDead(oc.thePlayer);
+        if (oc.player != null && oc.world != null) {
+            oc.world.setEntityDead(oc.player);
         }
-        oc.theWorld.a();
-        (oc.thePlayer = new EntityPlayerSP(oc, oc.theWorld, oc.sessionData)).preparePlayerToSpawn();
-        oc.playerController.flipPlayer(oc.thePlayer);
-        if (oc.theWorld != null) {
-            oc.theWorld.player = oc.thePlayer;
-            oc.theWorld.spawnPlayerWithLoadedChunks();
+        oc.world.a();
+        (oc.player = new EntityPlayerSP(oc, oc.world, oc.sessionData)).preparePlayerToSpawn();
+        oc.playerController.flipPlayer(oc.player);
+        if (oc.world != null) {
+            oc.world.player = oc.player;
+            oc.world.spawnPlayerWithLoadedChunks();
         }
-        oc.thePlayer.movementInput = new MovementInputFromOptions(oc.gameSettings);
-        oc.playerController.func_6473_b(oc.thePlayer);
+        oc.player.movementInput = new MovementInputFromOptions(oc.gameSettings);
+        oc.playerController.func_6473_b(oc.player);
         oc.func_6255_d("Respawning");
     }
 

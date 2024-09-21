@@ -28,7 +28,7 @@ public class PlayerController {
 
     public boolean sendBlockRemoved(final int xCoord, final int yCoord, final int zCoord) {
         this.mc.effectRenderer.addBlockDestroyEffects(xCoord, yCoord, zCoord);
-        final World theWorld = this.mc.theWorld;
+        final World theWorld = this.mc.world;
         final Block block = Block.blocksList[theWorld.getBlockId(xCoord, yCoord, zCoord)];
         final int blockMetadata = theWorld.getBlockMetadata(xCoord, yCoord, zCoord);
         final boolean setBlockWithNotify = theWorld.setBlockWithNotify(xCoord, yCoord, zCoord, 0);

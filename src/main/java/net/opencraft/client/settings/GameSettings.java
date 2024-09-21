@@ -145,9 +145,9 @@ public class GameSettings {
         }
         if (key == 11) {
             this.minimumBrightness = value;
-            if (mc.theWorld != null) {
-                for (int i = 0; i < mc.theWorld.worldAccesses.size(); ++i) {
-                    ((IWorldAccess) mc.theWorld.worldAccesses.get(i)).updateAllRenderers();
+            if (mc.world != null) {
+                for (int i = 0; i < mc.world.worldAccesses.size(); ++i) {
+                    ((IWorldAccess) mc.world.worldAccesses.get(i)).updateAllRenderers();
                 }
             }
         }

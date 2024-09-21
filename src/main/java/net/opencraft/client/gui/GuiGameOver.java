@@ -40,7 +40,7 @@ public class GuiGameOver extends GuiScreen {
         GL11.glScalef(2.0f, 2.0f, 2.0f);
         this.drawCenteredString(this.fontRenderer, "Game over!", this.width / 2 / 2, 30, 16777215);
         GL11.glPopMatrix();
-        this.drawCenteredString(this.fontRenderer, new StringBuilder().append("Score: &e").append(this.id.thePlayer.getScore()).toString(), this.width / 2, 100, 16777215);
+        this.drawCenteredString(this.fontRenderer, new StringBuilder().append("Score: &e").append(this.id.player.getScore()).toString(), this.width / 2, 100, 16777215);
         super.drawScreen(integer1, integer2, float3);
     }
 

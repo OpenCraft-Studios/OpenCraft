@@ -43,11 +43,11 @@ public class GuiIngame extends GuiElement {
         this.mc.entityRenderer.setupOverlayRendering();
         GL11.glEnable(3042);
         if (this.mc.gameSettings.fancyGraphics) {
-            this.renderVignette(this.mc.thePlayer.getEntityBrightness(float1), scaledWidth, scaledHeight);
+            this.renderVignette(this.mc.player.getEntityBrightness(float1), scaledWidth, scaledHeight);
         }
         GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
         GL11.glBindTexture(3553, this.mc.renderEngine.getTexture("/assets/gui/gui.png"));
-        final InventoryPlayer inventory = this.mc.thePlayer.inventory;
+        final InventoryPlayer inventory = this.mc.player.inventory;
         this.zLevel = -90.0f;
         this.drawTexturedModalRect(scaledWidth / 2 - 91, scaledHeight - 22, 0, 0, 182, 22);
         this.drawTexturedModalRect(scaledWidth / 2 - 91 - 1 + inventory.currentItem * 20, scaledHeight - 22 - 1, 0, 22, 24, 22);
@@ -56,15 +56,15 @@ public class GuiIngame extends GuiElement {
         GL11.glBlendFunc(775, 769);
         this.drawTexturedModalRect(scaledWidth / 2 - 7, scaledHeight / 2 - 7, 0, 0, 16, 16);
         GL11.glDisable(3042);
-        boolean b = this.mc.thePlayer.heartsLife / 3 % 2 == 1;
-        if (this.mc.thePlayer.heartsLife < 10) {
+        boolean b = this.mc.player.heartsLife / 3 % 2 == 1;
+        if (this.mc.player.heartsLife < 10) {
             b = false;
         }
-        final int health = this.mc.thePlayer.health;
-        final int prevHealth = this.mc.thePlayer.prevHealth;
+        final int health = this.mc.player.health;
+        final int prevHealth = this.mc.player.prevHealth;
         this.rand.setSeed((long) (this.updateCounter * 312871));
         if (this.mc.playerController.shouldDrawHUD()) {
-            final int i = this.mc.thePlayer.getPlayerArmorValue();
+            final int i = this.mc.player.getPlayerArmorValue();
             for (int j = 0; j < 10; ++j) {
                 int integer5 = scaledHeight - 32;
                 if (i > 0) {
@@ -103,8 +103,8 @@ public class GuiIngame extends GuiElement {
                     this.drawTexturedModalRect(integer7, integer5, 61, 0, 9, 9);
                 }
             }
-            if (this.mc.thePlayer.isInsideOfMaterial(Material.WATER)) {
-                for (int j = (int) Math.ceil((this.mc.thePlayer.air - 2) * 10.0 / 300.0), integer5 = (int) Math.ceil(this.mc.thePlayer.air * 10.0 / 300.0) - j, k = 0; k < j + integer5; ++k) {
+            if (this.mc.player.isInsideOfMaterial(Material.WATER)) {
+                for (int j = (int) Math.ceil((this.mc.player.air - 2) * 10.0 / 300.0), integer5 = (int) Math.ceil(this.mc.player.air * 10.0 / 300.0) - j, k = 0; k < j + integer5; ++k) {
                     if (k < j) {
                         this.drawTexturedModalRect(scaledWidth / 2 - 91 + k * 8, scaledHeight - 32 - 9, 16, 18, 9, 9);
                     } else {
@@ -178,7 +178,7 @@ public class GuiIngame extends GuiElement {
     }
 
     private void renderInventorySlot(final int integer1, final int integer2, final int integer3, final float float4) {
-        final ItemStack itemStack = this.mc.thePlayer.inventory.mainInventory[integer1];
+        final ItemStack itemStack = this.mc.player.inventory.mainInventory[integer1];
         if (itemStack == null) {
             return;
         }

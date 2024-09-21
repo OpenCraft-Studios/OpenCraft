@@ -53,30 +53,30 @@ public class PlayerControllerSP extends PlayerController {
 
     @Override
     public boolean sendBlockRemoved(final int xCoord, final int yCoord, final int zCoord) {
-        final int blockId = this.mc.theWorld.getBlockId(xCoord, yCoord, zCoord);
-        final int blockMetadata = this.mc.theWorld.getBlockMetadata(xCoord, yCoord, zCoord);
+        final int blockId = this.mc.world.getBlockId(xCoord, yCoord, zCoord);
+        final int blockMetadata = this.mc.world.getBlockMetadata(xCoord, yCoord, zCoord);
         final boolean sendBlockRemoved = super.sendBlockRemoved(xCoord, yCoord, zCoord);
-        final ItemStack currentEquippedItem = this.mc.thePlayer.getCurrentEquippedItem();
+        final ItemStack currentEquippedItem = this.mc.player.getCurrentEquippedItem();
         if (currentEquippedItem != null) {
             currentEquippedItem.onDestroyBlock(blockId, xCoord, yCoord, zCoord);
             if (currentEquippedItem.stackSize == 0) {
-                currentEquippedItem.onItemDestroyedByUse(this.mc.thePlayer);
-                this.mc.thePlayer.displayGUIInventory();
+                currentEquippedItem.onItemDestroyedByUse(this.mc.player);
+                this.mc.player.displayGUIInventory();
             }
         }
-        if (sendBlockRemoved && this.mc.thePlayer.canHarvestBlock(Block.blocksList[blockId])) {
-            Block.blocksList[blockId].dropBlockAsItem(this.mc.theWorld, xCoord, yCoord, zCoord, blockMetadata);
+        if (sendBlockRemoved && this.mc.player.canHarvestBlock(Block.blocksList[blockId])) {
+            Block.blocksList[blockId].dropBlockAsItem(this.mc.world, xCoord, yCoord, zCoord, blockMetadata);
         }
         return sendBlockRemoved;
     }
 
     @Override
     public void clickBlock(final int xCoord, final int yCoord, final int zCoord) {
-        final int blockId = this.mc.theWorld.getBlockId(xCoord, yCoord, zCoord);
+        final int blockId = this.mc.world.getBlockId(xCoord, yCoord, zCoord);
         if (blockId > 0 && this.curBlockDamage == 0.0f) {
-            Block.blocksList[blockId].onBlockClicked(this.mc.theWorld, xCoord, yCoord, zCoord, this.mc.thePlayer);
+            Block.blocksList[blockId].onBlockClicked(this.mc.world, xCoord, yCoord, zCoord, this.mc.player);
         }
-        if (blockId > 0 && Block.blocksList[blockId].blockStrength(this.mc.thePlayer) >= 1.0f) {
+        if (blockId > 0 && Block.blocksList[blockId].blockStrength(this.mc.player) >= 1.0f) {
             this.sendBlockRemoved(xCoord, yCoord, zCoord);
         }
     }
@@ -96,12 +96,12 @@ public class PlayerControllerSP extends PlayerController {
         }
         super.sendBlockRemoving(integer1, integer2, integer3, integer4);
         if (integer1 == this.field_1074_c && integer2 == this.field_1073_d && integer3 == this.field_1072_e) {
-            final int blockId = this.mc.theWorld.getBlockId(integer1, integer2, integer3);
+            final int blockId = this.mc.world.getBlockId(integer1, integer2, integer3);
             if (blockId == 0) {
                 return;
             }
             final Block block = Block.blocksList[blockId];
-            this.curBlockDamage += block.blockStrength(this.mc.thePlayer);
+            this.curBlockDamage += block.blockStrength(this.mc.player);
             if (this.field_1069_h % 4.0f == 0.0f && block != null) {
                 this.mc.sndManager.playSound(block.stepSound.stepSoundDir2(), integer1 + 0.5f, integer2 + 0.5f, integer3 + 0.5f, (block.stepSound.soundVolume() + 1.0f) / 8.0f, block.stepSound.soundPitch() * 0.5f);
             }
@@ -148,8 +148,8 @@ public class PlayerControllerSP extends PlayerController {
     @Override
     public void updateController() {
         this.prevBlockDamage = this.curBlockDamage;
-        this.j.a(this.mc.theWorld);
-        this.k.a(this.mc.theWorld);
+        this.j.a(this.mc.world);
+        this.k.a(this.mc.world);
         this.mc.sndManager.playRandomMusicIfReady();
     }
 }

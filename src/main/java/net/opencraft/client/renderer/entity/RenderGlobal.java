@@ -255,8 +255,8 @@ public class RenderGlobal implements IWorldAccess {
 	}
 
 	public void renderEntities(final Vec3 bo, final ICamera jt, final float float3) {
-		TileEntityRenderer.instance.a(this.k, this.l, this.t.fontRenderer, this.t.thePlayer, float3);
-		RenderManager.instance.cacheActiveRenderInfo(this.k, this.l, this.t.fontRenderer, this.t.thePlayer,
+		TileEntityRenderer.instance.a(this.k, this.l, this.t.fontRenderer, this.t.player, float3);
+		RenderManager.instance.cacheActiveRenderInfo(this.k, this.l, this.t.fontRenderer, this.t.player,
 				this.t.gameSettings, float3);
 		this.I = 0;
 		this.J = 0;
@@ -485,7 +485,7 @@ public class RenderGlobal implements IWorldAccess {
 				++n;
 			}
 		}
-		final EntityPlayerSP thePlayer = this.t.thePlayer;
+		final EntityPlayerSP thePlayer = this.t.player;
 		final double double5 = thePlayer.lastTickPosX + (thePlayer.posX - thePlayer.lastTickPosX) * double4;
 		final double double6 = thePlayer.lastTickPosY + (thePlayer.posY - thePlayer.lastTickPosY) * double4;
 		final double double7 = thePlayer.lastTickPosZ + (thePlayer.posZ - thePlayer.lastTickPosZ) * double4;
@@ -594,8 +594,8 @@ public class RenderGlobal implements IWorldAccess {
 			return;
 		}
 		GL11.glDisable(2884);
-		final float n = (float) (this.t.thePlayer.lastTickPosY
-				+ (this.t.thePlayer.posY - this.t.thePlayer.lastTickPosY) * float1);
+		final float n = (float) (this.t.player.lastTickPosY
+				+ (this.t.player.posY - this.t.player.lastTickPosY) * float1);
 		final int n2 = 32;
 		final int n3 = 256 / n2;
 		final Tessellator instance = Tessellator.instance;
@@ -643,8 +643,8 @@ public class RenderGlobal implements IWorldAccess {
 
 	public void c(final float float1) {
 		GL11.glDisable(2884);
-		final float n = (float) (this.t.thePlayer.lastTickPosY
-				+ (this.t.thePlayer.posY - this.t.thePlayer.lastTickPosY) * float1);
+		final float n = (float) (this.t.player.lastTickPosY
+				+ (this.t.player.posY - this.t.player.lastTickPosY) * float1);
 		final Tessellator instance = Tessellator.instance;
 		final float n2 = 12.0f;
 		final float n3 = 4.0f;
