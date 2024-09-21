@@ -12,7 +12,6 @@ import net.opencraft.OpenCraft;
 import net.opencraft.fi;
 import net.opencraft.blocks.Block;
 import net.opencraft.client.input.MovingObjectPosition;
-<<<<<<< Updated upstream:src/main/java/net/opencraft/renderer/entity/RenderGlobal.java
 import net.opencraft.entity.*;
 import net.opencraft.item.ItemStack;
 import net.opencraft.physics.AABB;
@@ -20,15 +19,6 @@ import net.opencraft.renderer.GLAllocation;
 import net.opencraft.renderer.Tessellator;
 import net.opencraft.renderer.culling.ICamera;
 import net.opencraft.renderer.texture.Texture;
-=======
-import net.opencraft.client.renderer.GLAllocation;
-import net.opencraft.client.renderer.Tessellator;
-import net.opencraft.client.renderer.culling.ICamera;
-import net.opencraft.client.renderer.texture.Texture;
-import net.opencraft.entity.*;
-import net.opencraft.item.ItemStack;
-import net.opencraft.physics.AABB;
->>>>>>> Stashed changes:src/main/java/net/opencraft/client/renderer/entity/RenderGlobal.java
 import net.opencraft.tileentity.TileEntity;
 import net.opencraft.tileentity.TileEntityRenderer;
 import net.opencraft.util.Mth;
