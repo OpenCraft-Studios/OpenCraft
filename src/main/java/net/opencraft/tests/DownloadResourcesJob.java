@@ -3,9 +3,9 @@ package net.opencraft.tests;
 import static net.opencraft.OpenCraft.*;
 
 import java.io.*;
-import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 
 import net.opencraft.util.ThreadHelper;
 
@@ -21,10 +21,11 @@ public class DownloadResourcesJob implements Job {
 		this.resourcesFolder = new File(file, "resources/");
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public void run() {
 		try {
-			final ArrayList list = new ArrayList();
+			final List<String> list = new ArrayList<>();
 			final URL url = new URL("https://opencraft.nicolastech.xyz/resources/");
 			try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(url.openStream()))) {
 				String line;
