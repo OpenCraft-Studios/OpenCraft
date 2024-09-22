@@ -953,8 +953,7 @@ public class OpenCraft implements Runnable {
 			}
 		}
 		if (!file.exists() && !file.mkdirs()) {
-			throw new RuntimeException(
-					new StringBuilder().append("The working directory could not be created: ").append(file).toString());
+			throw new RuntimeException("The following directory couldn't be created: " + file.getPath());
 		}
 		return file;
 	}
