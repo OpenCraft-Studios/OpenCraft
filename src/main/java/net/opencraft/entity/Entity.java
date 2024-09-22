@@ -384,7 +384,7 @@ public abstract class Entity {
     public boolean isInsideOfMaterial(final Material material) {
         final double double1 = this.posY + this.getEyeHeight();
         final int floor_double = Mth.floor_double(this.posX);
-        final int floor_float = Mth.floor_float((float) Mth.floor_double(double1));
+        final int floor_float = (int) double1;
         final int floor_double2 = Mth.floor_double(this.posZ);
         final int blockId = this.world.getBlockId(floor_double, floor_float, floor_double2);
         return blockId != 0 && Block.blocksList[blockId].blockMaterial == material && double1 < floor_float + 1 - (LiquidBlock.getPercentAir(this.world.getBlockMetadata(floor_double, floor_float, floor_double2)) - 0.11111111f);

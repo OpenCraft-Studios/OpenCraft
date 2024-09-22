@@ -13,11 +13,6 @@ public class Mth {
 		return (float) Math.sqrt(double1);
 	}
 
-	public static int floor_float(final float float1) {
-		final int n = (int) float1;
-		return (float1 < n) ? (n - 1) : n;
-	}
-
 	public static int floor_double(final double double1) {
 		final int n = (int) double1;
 		return (double1 < n) ? (n - 1) : n;

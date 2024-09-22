@@ -1208,7 +1208,6 @@ public class World implements IBlockAccess {
     public void tick() {
         this.chunkProvider.unload100OldestChunks();
         if (!this.loadedEntityList.contains(this.player) && this.player != null) {
-            System.out.println("DOHASDOSHIH!");
             this.entityJoinedWorld(this.player);
         }
         final int calculateSkylightSubtracted = this.calculateSkylightSubtracted(1.0f);
