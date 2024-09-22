@@ -4,9 +4,13 @@ import static net.opencraft.OpenCraft.*;
 
 import java.io.*;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
+import net.opencraft.client.sound.SoundManager;
 import net.opencraft.util.ThreadHelper;
 
 public class DownloadResourcesJob implements Job {
@@ -19,17 +23,46 @@ public class DownloadResourcesJob implements Job {
 
 	@Override
 	public void run() {
-		loadResource(getClass().getProtectionDomain().getCodeSource().getLocation());
+		System.out.print("Loading sounds...");
+		try {
+			loadSounds();
+		} catch(IOException e) {
+			errors = true;
+			e.printStackTrace();
+		}
+		System.out.println("done!");
+	}
+
+	public void loadSounds() throws IOException {
+		loadSounds(getClass().getProtectionDomain().getCodeSource().getLocation());
 	}
 
 	/**
-	 * This is a recursive function that is building resourceURL paths, but somehow those paths are important to
-	 * the sound registration. TODO: Investigate why this is important.
+	 * Loads sounds from a URL
 	 */
-	private void loadResource(final URL resourceURL) {
-		System.out.print("Loading sounds...");
-		ZipInputStream zip = null;
-		try {
+	public void loadSounds(final URL resourceURL) throws IOException {
+		int count = 0;
+
+		if(!resourceURL.getFile().contains("jar")) {
+			File file = new File(resourceURL.getFile());
+			if(file.isDirectory()) {
+				File soundsDir = new File(file, SOUNDS_PATH);
+				if(soundsDir.exists()) {
+					List<File> filesToCheck = new ArrayList<>();
+					filesToCheck.add(soundsDir);
+					while(!filesToCheck.isEmpty()) {
+						File f = filesToCheck.removeFirst();
+						if(f.isDirectory()) {
+							Collections.addAll(filesToCheck, f.listFiles());
+						} else {
+							oc.registerSound(f.toURI().toURL());
+							count++;
+						}
+					}
+				}
+			}
+		} else {
+			ZipInputStream zip = null;
 			zip = new ZipInputStream(resourceURL.openStream());
 			while(true) {
 				ZipEntry e = zip.getNextEntry();
@@ -38,15 +71,18 @@ public class DownloadResourcesJob implements Job {
 				}
 				String name = e.getName();
 				if(name.startsWith(SOUNDS_PATH) && !e.isDirectory()) {
-					oc.registerSound(name.substring(SOUNDS_PATH.length()), getClass().getClassLoader().getResource(name));
+					oc.registerSound(getClass().getClassLoader().getResource(name));
+					count++;
+				} else {
+					System.out.println("Skipping " + name);
 				}
 			}
 			zip.close();
-		} catch(IOException e) {
-			e.printStackTrace();
-			errors = true;
 		}
-		System.out.println("done!");
+
+		if(count == 0) {
+			throw new IOException("No sounds found in resources!" + resourceURL);
+		}
 	}
 
 	@Override

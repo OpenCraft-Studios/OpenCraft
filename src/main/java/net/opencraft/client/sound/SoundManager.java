@@ -26,6 +26,10 @@ public class SoundManager {
     public int ticksBeforeMusic = this.rand.nextInt(12000);
     public String currentMusicTheme = "menu";
 
+    public boolean containsSound(String soundName) {
+        return soundPoolSounds.contains(soundName) || soundPoolStreaming.contains(soundName) || soundPoolIngameMusic.contains(soundName) || soundPoolMenuMusic.contains(soundName);
+    }
+
     public void loadSoundSettings(GameSettings var1) {
         this.soundPoolStreaming.isGetRandomSound = false;
         this.options = var1;
@@ -167,6 +171,9 @@ public class SoundManager {
 
     public void playSound(String var1, float var2, float var3, float var4, float var5, float var6) {
         if(this.loaded && this.options.sound) {
+            if(!soundPoolSounds.contains(var1)) {
+                System.err.println("Sound not found: " + var1);
+            }
             SoundPoolEntry var7 = this.soundPoolSounds.getRandomSoundFromSoundPool(var1);
             if(var7 != null && var5 > 0.0F) {
                 this.playedSoundsCount = (this.playedSoundsCount + 1) % 256;

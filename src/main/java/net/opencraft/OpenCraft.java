@@ -1,5 +1,6 @@
 package net.opencraft;
 
+import static net.opencraft.tests.DownloadResourcesJob.SOUNDS_PATH;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.util.glu.GLU.*;
 
@@ -873,23 +874,21 @@ public class OpenCraft implements Runnable {
 		SandBlock.fallInstantly = false;
 	}
 
-	public void registerSound(String string, final URL resourceURL) {
-		final int index = string.indexOf("/");
-		final String soundType = string.substring(0, index);
-		string = string.substring(index + 1);
+	public void registerSound(final URL resourceURL) {
+		String name = resourceURL.getPath().substring(resourceURL.getPath().lastIndexOf(SOUNDS_PATH) + SOUNDS_PATH.length());
+		name = name.substring(name.indexOf("/") + 1).replace("%20", " ").replace("/", ".").replaceAll("[0-9]", "");
+		final String path = resourceURL.getPath();
 
-		// System.out.println("Registering sound: " + string + " (" + soundType + ") from " + resourceURL.getPath());
-
-		if (soundType.startsWith("sound")) {
-			oc.sndManager.addSound(string, resourceURL);
-		} else if (soundType.startsWith("newsound")) {
-			oc.sndManager.addSound(string, resourceURL);
-		} else if (soundType.equalsIgnoreCase("music")) {
-			oc.sndManager.addIngameMusic(string, resourceURL);
-		} else if (soundType.equalsIgnoreCase("newmusic")) {
-			oc.sndManager.addIngameMusic(string, resourceURL);
-		} else if (soundType.equalsIgnoreCase("menumusic")) {
-			oc.sndManager.addMenuMusic(string, resourceURL);
+		if(path.contains("sound") || path.contains("newsound")) {
+			oc.sndManager.addSound(name, resourceURL);
+		} else if(path.contains("music") || path.contains("newmusic")) {
+			oc.sndManager.addIngameMusic(name, resourceURL);
+		} else if(path.contains("menumusic")) {
+			oc.sndManager.addMenuMusic(name, resourceURL);
+		} else if(path.contains("streaming")) {
+			// IGNORE IT!!
+		} else {
+			System.err.println("Unknown sound type. Will not load from " + resourceURL.getPath());
 		}
 	}
 

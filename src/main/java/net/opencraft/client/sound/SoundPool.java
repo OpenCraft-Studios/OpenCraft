@@ -1,45 +1,40 @@
 
 package net.opencraft.client.sound;
 
-import java.io.File;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.*;
 
 public class SoundPool {
     private Random rand = new Random();
-    private Map nameToSoundPoolEntriesMapping = new HashMap();
-    private List allSoundPoolEntries = new ArrayList();
+    private Map<String, ArrayList<SoundPoolEntry>> nameToSoundPoolEntriesMapping = new HashMap<>();
+    public List<SoundPoolEntry> allSoundPoolEntries = new ArrayList<>();
     public int numberOfSoundPoolEntries = 0;
     public boolean isGetRandomSound = true;
 
-    public SoundPoolEntry addSound(String var1, URL resourceURL) {
-            String var3 = var1;
-            var1 = var1.substring(0, var1.indexOf("."));
-            if(this.isGetRandomSound) {
-                while(Character.isDigit(var1.charAt(var1.length() - 1))) {
-                    var1 = var1.substring(0, var1.length() - 1);
-                }
-            }
+    public SoundPoolEntry addSound(String soundName, URL resourceURL) {
+        SoundPoolEntry sound = new SoundPoolEntry(soundName, resourceURL);
 
-            var1 = var1.replaceAll("/", ".");
-            if(!this.nameToSoundPoolEntriesMapping.containsKey(var1)) {
-                this.nameToSoundPoolEntriesMapping.put(var1, new ArrayList());
-            }
+        if(!this.nameToSoundPoolEntriesMapping.containsKey(sound.soundNameNoExt)) {
+            this.nameToSoundPoolEntriesMapping.put(sound.soundNameNoExt, new ArrayList<>());
+        }
 
-            SoundPoolEntry var4 = new SoundPoolEntry(var3, resourceURL);
-            ((List)this.nameToSoundPoolEntriesMapping.get(var1)).add(var4);
-            this.allSoundPoolEntries.add(var4);
-            ++this.numberOfSoundPoolEntries;
-            return var4;
+        this.nameToSoundPoolEntriesMapping.get(sound.soundNameNoExt).add(sound);
+        // System.out.println("Added sound: " + sound.soundNameNoExt + " (" + sound.soundName + ") from " + resourceURL + " to the sound pool.");
+        this.allSoundPoolEntries.add(sound);
+        ++this.numberOfSoundPoolEntries;
+        return sound;
+    }
+
+    public boolean contains(String soundName) {
+        return nameToSoundPoolEntriesMapping.containsKey(soundName);
     }
 
     public SoundPoolEntry getRandomSoundFromSoundPool(String var1) {
-        List var2 = (List)this.nameToSoundPoolEntriesMapping.get(var1);
-        return var2 == null ? null : (SoundPoolEntry)var2.get(this.rand.nextInt(var2.size()));
+        List<SoundPoolEntry> var2 = this.nameToSoundPoolEntriesMapping.get(var1);
+        return var2 == null ? null : var2.get(this.rand.nextInt(var2.size()));
     }
 
     public SoundPoolEntry getRandomSound() {
-        return this.allSoundPoolEntries.size() == 0 ? null : (SoundPoolEntry)this.allSoundPoolEntries.get(this.rand.nextInt(this.allSoundPoolEntries.size()));
+        return this.allSoundPoolEntries.isEmpty() ? null : this.allSoundPoolEntries.get(this.rand.nextInt(this.allSoundPoolEntries.size()));
     }
 }
