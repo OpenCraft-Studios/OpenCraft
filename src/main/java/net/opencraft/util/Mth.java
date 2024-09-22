@@ -5,9 +5,9 @@ public class Mth {
 
 	private static float[] SIN_TABLE;
 
-	public static float sin(float value) {
+	/*public static float sin(float value) {
 		return SIN_TABLE[(int) (value * 10430.378F) & 65535];
-	}
+	}*/
 
 	public static final float cos(final float float1) {
 		return Mth.SIN_TABLE[(int) (float1 * 10430.378f + 16384.0f) & 0xFFFF];

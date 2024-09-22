@@ -1,5 +1,7 @@
 package net.opencraft.client.sound;
 
+import static org.joml.Math.*;
+
 import java.io.File;
 import java.util.Random;
 
@@ -130,8 +132,8 @@ public class SoundManager {
                 double var4 = var1.prevPosX + (var1.posX - var1.prevPosX) * (double)var2;
                 double var6 = var1.prevPosY + (var1.posY - var1.prevPosY) * (double)var2;
                 double var8 = var1.prevPosZ + (var1.posZ - var1.prevPosZ) * (double)var2;
-                float var10 = Mth.cos(-var3 * ((float)Math.PI / 180.0F) - (float)Math.PI);
-                float var11 = Mth.sin(-var3 * ((float)Math.PI / 180.0F) - (float)Math.PI);
+                float var10 = Mth.cos(toRadians(-var3) - PI_f);
+                float var11 = sin(toRadians(-var3) - PI_f);
                 float var12 = -var11;
                 float var13 = 0.0F;
                 float var14 = -var10;
