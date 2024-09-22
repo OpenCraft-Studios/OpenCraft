@@ -27,9 +27,9 @@ public class DownloadResourcesJob implements Job {
 	 * the sound registration. TODO: Investigate why this is important.
 	 */
 	private void loadResource(final URL resourceURL) {
+		System.out.print("Loading sounds...");
 		ZipInputStream zip = null;
 		try {
-			System.out.println(resourceURL);
 			zip = new ZipInputStream(resourceURL.openStream());
 			while(true) {
 				ZipEntry e = zip.getNextEntry();
@@ -46,6 +46,7 @@ public class DownloadResourcesJob implements Job {
 			e.printStackTrace();
 			errors = true;
 		}
+		System.out.println("done!");
 	}
 
 	@Override
