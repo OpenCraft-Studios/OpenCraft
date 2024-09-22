@@ -4,3 +4,27 @@
 !/opencraft/resources*
 /opencraft/saves
 *.dat
+
+# compiled classes
+*.class
+
+# Maven output
+**/out
+**/gen
+**/target
+
+# IntelliJ
+**/.idea
+*.iml
+
+# Eclipse
+**/bin
+*.prefs
+*.project
+*.classpath
+
+# macOS
+**.DS_Store
+
+# VS Code
+.vscode/
