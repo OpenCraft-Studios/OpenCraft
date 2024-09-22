@@ -73,8 +73,6 @@ public class DownloadResourcesJob implements Job {
 				if(name.startsWith(SOUNDS_PATH) && !e.isDirectory()) {
 					oc.registerSound(getClass().getClassLoader().getResource(name));
 					count++;
-				} else {
-					System.out.println("Skipping " + name);
 				}
 			}
 			zip.close();
