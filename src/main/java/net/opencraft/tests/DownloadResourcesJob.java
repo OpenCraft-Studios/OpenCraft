@@ -3,87 +3,86 @@ package net.opencraft.tests;
 import static net.opencraft.OpenCraft.*;
 
 import java.io.*;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 
+import net.opencraft.client.sound.SoundManager;
 import net.opencraft.util.ThreadHelper;
 
 public class DownloadResourcesJob implements Job {
 
+	public static final String SOUNDS_PATH = "assets/opencraft/resources/";
+
 	private Thread thread;
 	private boolean cancelled = false;
 	private boolean errors = false;
-	private File resourcesFolder;
 
-	public DownloadResourcesJob(File file) {
-		this.resourcesFolder = new File(file, "resources/");
-	}
-
-	@SuppressWarnings("deprecation")
 	@Override
 	public void run() {
+		System.out.print("Loading sounds...");
+		int soundCount;
 		try {
-			final List<String> list = new ArrayList<>();
-			final URL url = new URL("http://opencraft.nicolasindustries.com/resources/");
-			try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(url.openStream()))) {
-				String line;
-				while ((line = bufferedReader.readLine()) != null) {
-					list.add(line);
+			soundCount = loadSounds();
+			System.out.println("done!" + soundCount + " sounds loaded.");
+		} catch(IOException e) {
+			errors = true;
+			e.printStackTrace();
+		}
+	}
+
+	public int loadSounds() throws IOException {
+		return loadSounds(getClass().getProtectionDomain().getCodeSource().getLocation());
+	}
+
+	/**
+	 * Loads sounds from a URL
+	 */
+	public int loadSounds(final URL resourceURL) throws IOException {
+		int count = 0;
+
+		if(!resourceURL.getFile().contains("jar")) {
+			File file = new File(resourceURL.getFile());
+			if(file.isDirectory()) {
+				File soundsDir = new File(file, SOUNDS_PATH);
+				if(soundsDir.exists()) {
+					List<File> filesToCheck = new ArrayList<>();
+					filesToCheck.add(soundsDir);
+					while(!filesToCheck.isEmpty()) {
+						File f = filesToCheck.removeFirst();
+						if(f.isDirectory()) {
+							Collections.addAll(filesToCheck, f.listFiles());
+						} else {
+							oc.registerSound(f.toURI().toURL());
+							count++;
+						}
+					}
 				}
 			}
-			for (int i = 0; i < list.size(); ++i) {
-				this.downloadAndInstallResource(url, (String) list.get(i));
+		} else {
+			ZipInputStream zip = null;
+			zip = new ZipInputStream(resourceURL.openStream());
+			while(true) {
+				ZipEntry e = zip.getNextEntry();
+				if (e == null) {
+					break;
+				}
+				String name = e.getName();
+				if(name.startsWith(SOUNDS_PATH) && !e.isDirectory()) {
+					oc.registerSound(getClass().getClassLoader().getResource(name));
+					count++;
+				}
 			}
-		} catch (Exception ex) {
-			exception(ex);
-			System.err.println("Job " + this + " finished with errors!");
+			zip.close();
 		}
-	}
 
-	public void exception(Exception ex) {
-		this.loadResource(this.resourcesFolder, "");
-		System.err.println("Cannot download resources. Using local resources instead. Error: " + ex);
-		errors = true;
-	}
-
-	private void loadResource(final File file, final String string) {
-		final File[] listFiles = file.listFiles();
-		for (int i = 0; i < listFiles.length; ++i) {
-			if (listFiles[i].isDirectory()) {
-				this.loadResource(listFiles[i], string + listFiles[i].getName() + "/");
-			} else {
-				oc.installResource(string + listFiles[i].getName(), listFiles[i]);
-			}
+		if(count == 0) {
+			throw new IOException("No sounds found in resources!" + resourceURL);
 		}
-	}
-
-	@SuppressWarnings("deprecation")
-	private void downloadAndInstallResource(final URL uRL, final String string) throws MalformedURLException, IOException {
-		final String[] split = string.split(",");
-		final String string2 = split[0];
-		final int int1 = Integer.parseInt(split[1]);
-		final File file = new File(this.resourcesFolder, string2);
-		if (!file.exists() || file.length() != int1) {
-			file.getParentFile().mkdirs();
-
-			this.downloadResource(new URL(uRL, string2.replaceAll(" ", "%20")), file, int1);
-		}
-		oc.installResource(string2, file);
-	}
-
-	private void downloadResource(final URL uRL, final File file, final int integer) throws IOException {
-		final byte[] array = new byte[4096];
-		final DataOutputStream dos;
-		try (DataInputStream dataInputStream = new DataInputStream(uRL.openStream())) {
-			dos = new DataOutputStream(new FileOutputStream(file));
-			int read;
-			while ((read = dataInputStream.read(array)) != -1) {
-				dos.write(array, 0, read);
-			}
-		}
-		dos.close();
+		return count;
 	}
 
 	@Override
@@ -92,11 +91,9 @@ public class DownloadResourcesJob implements Job {
 			public boolean isFinished() {
 				return !thread.isAlive();
 			}
-
 			public boolean isCancelled() {
 				return cancelled;
 			}
-
 			public boolean endedWithErrors() {
 				return errors;
 			}
@@ -121,8 +118,8 @@ public class DownloadResourcesJob implements Job {
 	}
 
 	@Override
-	public String toString() {
-		return getClass().getSimpleName();
+	public void exception(Exception ex) {
+
 	}
 
 }
