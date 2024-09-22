@@ -4,6 +4,9 @@ package net.opencraft.renderer.gui;
 import net.opencraft.OpenCraft;
 import net.opencraft.renderer.font.FontRenderer;
 import net.opencraft.util.Mth;
+
+import static org.joml.Math.*;
+
 import org.lwjgl.opengl.GL11;
 
 public class GuiSlider extends GuiButton {
@@ -40,7 +43,7 @@ public class GuiSlider extends GuiButton {
                 this.dragging = true;
                 // Calculate the position of the slider relative to the mouse position
                 float sliderPos = (float) (mouseX - this.xPosition - 4) / (float) (this.width - 8);
-                sliderPos = Mth.clamp(sliderPos, 0.0f, 1.0f);
+                sliderPos = clamp(0.0f, 1.0f, sliderPos);
                 // Update the slider value within the specified range
                 this.sliderValue = minValue + sliderPos * (maxValue - minValue);
                 if (this.decimalPlace != 0.0f) {
@@ -58,7 +61,7 @@ public class GuiSlider extends GuiButton {
         if (this.dragging) {
             // Calculate the position of the slider relative to the mouse position
             float sliderPos = (float) (mouseX - this.xPosition - 4) / (float) (this.width - 8);
-            sliderPos = Mth.clamp(sliderPos, 0.0f, 1.0f);
+            sliderPos = clamp(0.0f, 1.0f, sliderPos);
             // Update the slider value within the specified range
             this.sliderValue = minValue + sliderPos * (maxValue - minValue);
             if (this.decimalPlace != 0.0f) {
@@ -80,7 +83,7 @@ public class GuiSlider extends GuiButton {
         if (!this.enabled2) {
             return;
         }
-        final FontRenderer fontRenderer = mc.fontRenderer;
+        final FontRenderer fontRenderer = mc.font;
         GL11.glBindTexture(3553, mc.renderer.getTexture("/assets/gui/gui.png"));
 
         int colorChange = 1;

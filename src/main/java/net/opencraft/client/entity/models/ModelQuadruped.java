@@ -1,16 +1,12 @@
 
 package net.opencraft.client.entity.models;
 
-import net.opencraft.util.Mth;
+import static org.joml.Math.*;
 
 public class ModelQuadruped extends ModelBase {
 
-    public ModelRenderer head;
-    public ModelRenderer body;
-    public ModelRenderer leg1;
-    public ModelRenderer leg2;
-    public ModelRenderer leg3;
-    public ModelRenderer leg4;
+    public ModelRenderer head, body;
+    public ModelRenderer leg1, leg2, leg3, leg4;
 
     public ModelQuadruped(final int integer, final float float2) {
         (this.head = new ModelRenderer(0, 0)).addBox(-4.0f, -4.0f, -8.0f, 8, 8, 8, float2);
@@ -42,9 +38,9 @@ public class ModelQuadruped extends ModelBase {
     public void setRotationAngles(final float nya1, final float nya2, final float nya3, final float nya4, final float nya5, final float nya6) {
         this.head.rotateAngleY = nya4 / 57.295776f;
         this.body.rotateAngleX = 1.5707964f;
-        this.leg1.rotateAngleX = Mth.cos(nya1 * 0.6662f) * 1.4f * nya2;
-        this.leg2.rotateAngleX = Mth.cos(nya1 * 0.6662f + 3.1415927f) * 1.4f * nya2;
-        this.leg3.rotateAngleX = Mth.cos(nya1 * 0.6662f + 3.1415927f) * 1.4f * nya2;
-        this.leg4.rotateAngleX = Mth.cos(nya1 * 0.6662f) * 1.4f * nya2;
+        this.leg1.rotateAngleX = cos(nya1 * 0.6662f) * 1.4f * nya2;
+        this.leg2.rotateAngleX = cos(nya1 * 0.6662f + PI_f) * 1.4f * nya2;
+        this.leg3.rotateAngleX = cos(nya1 * 0.6662f + PI_f) * 1.4f * nya2;
+        this.leg4.rotateAngleX = cos(nya1 * 0.6662f) * 1.4f * nya2;
     }
 }

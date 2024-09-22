@@ -40,7 +40,7 @@ public class GuiIngame extends GuiElement {
         final ScaledResolution scaledResolution = new ScaledResolution(this.mc.width, this.mc.height);
         final int scaledWidth = scaledResolution.getScaledWidth();
         final int scaledHeight = scaledResolution.getScaledHeight();
-        final FontRenderer fontRenderer = this.mc.fontRenderer;
+        final FontRenderer font = this.mc.font;
         this.mc.entityRenderer.setupOverlayRendering();
         GL11.glEnable(3042);
         if (this.mc.options.fancyGraphics) {
@@ -128,25 +128,27 @@ public class GuiIngame extends GuiElement {
         RenderHelper.disableStandardItemLighting();
         GL11.glDisable(32826);
         if (this.mc.options.showDebugInfo) {
-            fontRenderer.drawStringWithShadow2("nCraft Infdev (" + this.mc.debug + ")", 2, 2, 16777215);
-            fontRenderer.drawStringWithShadow2(this.mc.debugInfoRenders(), 2, 12, 16777215);
-            fontRenderer.drawStringWithShadow2(this.mc.func_6262_n(), 2, 22, 16777215);
-            fontRenderer.drawStringWithShadow2(this.mc.debugInfoEntities(), 2, 32, 16777215);
+            font.drawStringWithShadow2("OpenCraft (" + this.mc.debug + ")", 2, 2, 16777215);
+            font.drawStringWithShadow2(this.mc.debugInfoRenders(), 2, 12, 16777215);
+            font.drawStringWithShadow2(this.mc.func_6262_n(), 2, 22, 16777215);
+            font.drawStringWithShadow2(this.mc.debugInfoEntities(), 2, 32, 16777215);
+            // display current coordinates and orientation
+            font.drawStringWithShadow2("X: " + this.mc.player.posX + " Y: " + this.mc.player.posY + " Z: " + this.mc.player.posZ, 2, 42, 16777215);
+            font.drawStringWithShadow2("Yaw: " + this.mc.player.rotationYaw + " Pitch: " + this.mc.player.rotationPitch, 2, 52, 16777215);
             final long maxMemory = Runtime.getRuntime().maxMemory();
             final long totalMemory = Runtime.getRuntime().totalMemory();
             final long n2 = totalMemory - Runtime.getRuntime().freeMemory();
             final String string = new StringBuilder().append("Used memory: ").append(n2 * 100L / maxMemory).append("% (").append(n2 / 1024L / 1024L).append("MB) of ").append(maxMemory / 1024L / 1024L).append("MB").toString();
-            this.drawString(fontRenderer, string, scaledWidth - fontRenderer.getStringWidth(string) - 2, 2, 14737632);
+            this.drawString(font, string, scaledWidth - font.getStringWidth(string) - 2, 2, 14737632);
             final String string2 = new StringBuilder().append("Allocated memory: ").append(totalMemory * 100L / maxMemory).append("% (").append(totalMemory / 1024L / 1024L).append("MB)").toString();
-            this.drawString(fontRenderer, string2, scaledWidth - fontRenderer.getStringWidth(string2) - 2, 12, 14737632);
-        } else {
-            fontRenderer.drawStringWithShadow2("nCraft Infdev", 2, 2, 16777215);
+            this.drawString(font, string2, scaledWidth - font.getStringWidth(string2) - 2, 12, 14737632);
         }
+        
         int i = 10;
         final boolean b2 = true;
         for (int integer5 = 0; integer5 < this.chatMessageList.size() && integer5 < i; ++integer5) {
             if (((ChatLine) this.chatMessageList.get(integer5)).updateCounter < 200 || b2) {
-                fontRenderer.drawStringWithShadow2(((ChatLine) this.chatMessageList.get(integer5)).message, 2, scaledHeight - 8 - integer5 * 9 - 20, 16777215);
+                font.drawStringWithShadow2(((ChatLine) this.chatMessageList.get(integer5)).message, 2, scaledHeight - 8 - integer5 * 9 - 20, 16777215);
             }
         }
     }
@@ -191,11 +193,11 @@ public class GuiIngame extends GuiElement {
             GL11.glScalef(1.0f / n2, (n2 + 1.0f) / 2.0f, 1.0f);
             GL11.glTranslatef((float) (-(integer2 + 8)), (float) (-(integer3 + 12)), 0.0f);
         }
-        GuiIngame.itemRenderer.drawItemIntoGui(this.mc.fontRenderer, this.mc.renderer, itemStack, integer2, integer3);
+        GuiIngame.itemRenderer.drawItemIntoGui(this.mc.font, this.mc.renderer, itemStack, integer2, integer3);
         if (n > 0.0f) {
             GL11.glPopMatrix();
         }
-        GuiIngame.itemRenderer.renderItemOverlayIntoGUI(this.mc.fontRenderer, this.mc.renderer, itemStack, integer2, integer3);
+        GuiIngame.itemRenderer.renderItemOverlayIntoGUI(this.mc.font, this.mc.renderer, itemStack, integer2, integer3);
     }
 
     public void updateTick() {

@@ -7,6 +7,9 @@ import net.opencraft.client.entity.models.ModelMinecart;
 import net.opencraft.entity.EntityMinecart;
 import net.opencraft.util.Mth;
 import net.opencraft.util.Vec3;
+
+import static org.joml.Math.*;
+
 import org.lwjgl.opengl.GL11;
 
 public class RenderMinecart extends Render<EntityMinecart> {
@@ -39,9 +42,9 @@ public class RenderMinecart extends Render<EntityMinecart> {
             sqrt_double += (posOffset.y + posOffset2.y) / 2.0 - double2;
             yCoord += pos.z - double3;
             final Vec3 addVector = posOffset2.add(-posOffset.x, -posOffset.y, -posOffset.z);
-            if (addVector.length() != 0.0) {
+            if (addVector.length() != 0) {
                 final Vec3 normalize = addVector.normalize();
-                nya1 = (float) (Math.atan2(normalize.z, normalize.x) * 180.0 / 3.141592653589793);
+                nya1 = (float) (toRadians(atan2(normalize.z, normalize.x)));
                 n = (float) (Math.atan(normalize.y) * 73.0);
             }
         }
@@ -54,7 +57,7 @@ public class RenderMinecart extends Render<EntityMinecart> {
             n2 = 0.0f;
         }
         if (float1 > 0.0f) {
-            GL11.glRotatef(Mth.sin(float1) * float1 * n2 / 10.0f * entityLiving.minecartRockDirection, 1.0f, 0.0f, 0.0f);
+            GL11.glRotatef(sin(float1) * float1 * n2 / 10.0f * entityLiving.minecartRockDirection, 1.0f, 0.0f, 0.0f);
         }
         this.loadTexture("/assets/terrain.png");
         final float n3 = 0.75f;

@@ -1,8 +1,9 @@
 
 package net.opencraft.entity;
 
+import static org.joml.Math.*;
+
 import net.opencraft.nbt.NBTTagCompound;
-import net.opencraft.util.Mth;
 import net.opencraft.world.World;
 
 public class EntityTNTPrimed extends Entity {
@@ -20,10 +21,10 @@ public class EntityTNTPrimed extends Entity {
     public EntityTNTPrimed(final World fe, final float xCoord, final float yCoord, final float zCoord) {
         this(fe);
         this.setPosition(xCoord, yCoord, zCoord);
-        final float n = (float) (Math.random() * 3.1415927410125732 * 2.0);
-        this.motionX = -Mth.sin(n * 3.1415927f / 180.0f) * 0.02f;
+        final float n = (float) (random() * PI_TIMES_2);
+        this.motionX = -sin(toRadians(n)) * 0.02f;
         this.motionY = 0.20000000298023224;
-        this.motionZ = -Mth.cos(n * 3.1415927f / 180.0f) * 0.02f;
+        this.motionZ = -cos(toRadians(n)) * 0.02f;
         this.canTriggerWalking = false;
         this.fuse = 80;
         this.prevPosX = xCoord;
@@ -55,12 +56,12 @@ public class EntityTNTPrimed extends Entity {
             this.setEntityDead();
             this.createExplosion();
         } else {
-            this.worldObj.spawnParticle("smoke", this.posX, this.posY + 0.5, this.posZ, 0.0, 0.0, 0.0);
+            this.world.spawnParticle("smoke", this.posX, this.posY + 0.5, this.posZ, 0.0, 0.0, 0.0);
         }
     }
 
     private void createExplosion() {
-        this.worldObj.createExplosion((Entity) null, this.posX, this.posY, this.posZ, 4.0f);
+        this.world.createExplosion((Entity) null, this.posX, this.posY, this.posZ, 4.0f);
     }
 
     @Override

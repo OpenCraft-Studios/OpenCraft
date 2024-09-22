@@ -8,6 +8,9 @@ import net.opencraft.renderer.Tessellator;
 import net.opencraft.util.Mth;
 import net.opencraft.world.IBlockAccess;
 import net.opencraft.world.World;
+
+import static org.joml.Math.*;
+
 import org.lwjgl.opengl.GL11;
 
 public class RenderBlocks {
@@ -16,22 +19,16 @@ public class RenderBlocks {
     private int b;
     private boolean c;
     private boolean d;
-    private OpenCraft mc;
 
-    public RenderBlocks(final IBlockAccess iv) {
+    public RenderBlocks(IBlockAccess iv) {
         this.b = -1;
         this.c = false;
         this.d = false;
         this.a = iv;
-        this.mc = OpenCraft.getOpenCraft();
     }
 
     public RenderBlocks() {
-        this.b = -1;
-        this.c = false;
-        this.d = false;
-        this.a = null;
-        this.mc = OpenCraft.getOpenCraft();
+        this(null);
     }
 
     public void a(final Block gs, final int integer2, final int integer3, final int integer4, final int integer5) {
@@ -623,8 +620,8 @@ public class RenderBlocks {
                 n6 = (yCoord + 16) / 256.0f;
                 n7 = (zCoord + 16) / 256.0f;
             }
-            final float n8 = Mth.sin(n5) * 8.0f / 256.0f;
-            final float n9 = Mth.cos(n5) * 8.0f / 256.0f;
+            final float n8 = sin(n5) * 8.0f / 256.0f;
+            final float n9 = cos(n5) * 8.0f / 256.0f;
             final float blockBrightness = gs.getBlockBrightness(this.a, integer2, integer3, integer4);
             instance.setColorOpaque_F(n2 * blockBrightness, n2 * blockBrightness, n2 * blockBrightness);
             instance.vertexUV(integer2 + 0, integer3 + a, integer4 + 0, n6 - n9 - n8, n7 - n9 + n8);

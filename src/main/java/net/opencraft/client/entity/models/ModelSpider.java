@@ -1,6 +1,8 @@
 
 package net.opencraft.client.entity.models;
 
+import static org.joml.Math.*;
+
 import net.opencraft.util.Mth;
 
 public class ModelSpider extends ModelBase {
@@ -83,14 +85,14 @@ public class ModelSpider extends ModelBase {
         this.spiderLeg6.rotateAngleY = n3 * 1.0f - n2;
         this.spiderLeg7.rotateAngleY = -n3 * 2.0f + n2;
         this.spiderLeg8.rotateAngleY = n3 * 2.0f - n2;
-        final float n4 = -(Mth.cos(nya1 * 0.6662f * 2.0f + 0.0f) * 0.4f) * nya2;
-        final float n5 = -(Mth.cos(nya1 * 0.6662f * 2.0f + 3.1415927f) * 0.4f) * nya2;
-        final float n6 = -(Mth.cos(nya1 * 0.6662f * 2.0f + 1.5707964f) * 0.4f) * nya2;
-        final float n7 = -(Mth.cos(nya1 * 0.6662f * 2.0f + 4.712389f) * 0.4f) * nya2;
-        final float n8 = Math.abs(Mth.sin(nya1 * 0.6662f + 0.0f) * 0.4f) * nya2;
-        final float n9 = Math.abs(Mth.sin(nya1 * 0.6662f + 3.1415927f) * 0.4f) * nya2;
-        final float n10 = Math.abs(Mth.sin(nya1 * 0.6662f + 1.5707964f) * 0.4f) * nya2;
-        final float n11 = Math.abs(Mth.sin(nya1 * 0.6662f + 4.712389f) * 0.4f) * nya2;
+        final float n4 = -(cos(nya1 * 0.6662f * 2.0f + 0.0f) * 0.4f) * nya2;
+        final float n5 = -(cos(nya1 * 0.6662f * 2.0f + PI_f) * 0.4f) * nya2;
+        final float n6 = -(cos(nya1 * 0.6662f * 2.0f + 1.5707964f) * 0.4f) * nya2;
+        final float n7 = -(cos(nya1 * 0.6662f * 2.0f + 4.712389f) * 0.4f) * nya2;
+        final float n8 = Math.abs(sin(nya1 * 0.6662f + 0.0f) * 0.4f) * nya2;
+        final float n9 = Math.abs(sin(nya1 * 0.6662f + PI_f) * 0.4f) * nya2;
+        final float n10 = Math.abs(sin(nya1 * 0.6662f + 1.5707964f) * 0.4f) * nya2;
+        final float n11 = Math.abs(sin(nya1 * 0.6662f + 4.712389f) * 0.4f) * nya2;
         final ModelRenderer spiderLeg1 = this.spiderLeg1;
         spiderLeg1.rotateAngleY += n4;
         final ModelRenderer spiderLeg2 = this.spiderLeg2;

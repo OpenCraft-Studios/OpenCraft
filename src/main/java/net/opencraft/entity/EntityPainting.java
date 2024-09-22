@@ -112,12 +112,12 @@ public class EntityPainting extends Entity {
         if (this.tickCounter1++ == 100 && !this.onValidSurface()) {
             this.tickCounter1 = 0;
             this.setEntityDead();
-            this.worldObj.entityJoinedWorld(new EntityItem(this.worldObj, this.posX, this.posY, this.posZ, new ItemStack(Item.painting)));
+            this.world.entityJoinedWorld(new EntityItem(this.world, this.posX, this.posY, this.posZ, new ItemStack(Item.painting)));
         }
     }
 
     public boolean onValidSurface() {
-        if (this.worldObj.getCollidingBoundingBoxes(this, this.boundingBox).size() > 0) {
+        if (this.world.getCollidingBoundingBoxes(this, this.boundingBox).size() > 0) {
             return false;
         }
         final int n = this.art.sizeX / 16;
@@ -142,16 +142,16 @@ public class EntityPainting extends Entity {
             for (int j = 0; j < n2; ++j) {
                 Material material;
                 if (this.direction == 0 || this.direction == 2) {
-                    material = this.worldObj.getBlockMaterial(n3 + i, n4 + j, this.zPosition);
+                    material = this.world.getBlockMaterial(n3 + i, n4 + j, this.zPosition);
                 } else {
-                    material = this.worldObj.getBlockMaterial(this.xPosition, n4 + j, n5 + i);
+                    material = this.world.getBlockMaterial(this.xPosition, n4 + j, n5 + i);
                 }
                 if (!material.isSolid()) {
                     return false;
                 }
             }
         }
-        final List entitiesWithinAABBExcludingEntity = this.worldObj.getEntitiesWithinAABBExcludingEntity(this, this.boundingBox);
+        final List entitiesWithinAABBExcludingEntity = this.world.getEntitiesWithinAABBExcludingEntity(this, this.boundingBox);
         for (int j = 0; j < entitiesWithinAABBExcludingEntity.size(); ++j) {
             if (entitiesWithinAABBExcludingEntity.get(j) instanceof EntityPainting) {
                 return false;
@@ -168,7 +168,7 @@ public class EntityPainting extends Entity {
     @Override
     public boolean attackEntityFrom(final Entity entity, final int nya1) {
         this.setEntityDead();
-        this.worldObj.entityJoinedWorld(new EntityItem(this.worldObj, this.posX, this.posY, this.posZ, new ItemStack(Item.painting)));
+        this.world.entityJoinedWorld(new EntityItem(this.world, this.posX, this.posY, this.posZ, new ItemStack(Item.painting)));
         return true;
     }
 

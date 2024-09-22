@@ -1,6 +1,8 @@
 
 package net.opencraft.entity;
 
+import static org.joml.Math.*;
+
 import java.util.List;
 
 import net.opencraft.blocks.Block;
@@ -51,8 +53,8 @@ public class EntityPlayer extends EntityLiving {
         this.yOffset = 1.62f;
         this.setSize(0.6f, 1.8f);
         super.preparePlayerToSpawn();
-        if (this.worldObj != null) {
-            this.worldObj.player = this;
+        if (this.world != null) {
+            this.world.player = this;
         }
         this.health = 20;
         this.deathTime = 0;
@@ -60,8 +62,8 @@ public class EntityPlayer extends EntityLiving {
 
     @Override
     public void onLivingUpdate() {
-        this.worldObj.playSoundEffect(this.posX, this.posY, this.posZ, "calm", 0.0f);
-        if (this.worldObj.difficultySetting == 0 && this.health < 20 && this.ticksExisted % 20 * 4 == 0) {
+        this.world.playSoundEffect(this.posX, this.posY, this.posZ, "calm", 0.0f);
+        if (this.world.difficultySetting == 0 && this.health < 20 && this.ticksExisted % 20 * 4 == 0) {
             this.heal(1);
         }
         this.inventory.decrementAnimations();
@@ -81,7 +83,7 @@ public class EntityPlayer extends EntityLiving {
         this.cameraYaw += (sqrt_double - this.cameraYaw) * 0.4f;
         this.cameraPitch += (n - this.cameraPitch) * 0.8f;
         if (this.health > 0) {
-            final List entitiesWithinAABBExcludingEntity = this.worldObj.getEntitiesWithinAABBExcludingEntity(this, this.boundingBox.expand(1.0, 0.0, 1.0));
+            final List entitiesWithinAABBExcludingEntity = this.world.getEntitiesWithinAABBExcludingEntity(this, this.boundingBox.expand(1.0, 0.0, 1.0));
             if (entitiesWithinAABBExcludingEntity != null) {
                 for (int i = 0; i < entitiesWithinAABBExcludingEntity.size(); ++i) {
                     this.collideWithPlayer((Entity) entitiesWithinAABBExcludingEntity.get(i));
@@ -108,8 +110,8 @@ public class EntityPlayer extends EntityLiving {
         }
         this.inventory.dropAllItems();
         if (entity != null) {
-            this.motionX = -Mth.cos((this.attackedAtYaw + this.rotationYaw) * 3.1415927f / 180.0f) * 0.1f;
-            this.motionZ = -Mth.sin((this.attackedAtYaw + this.rotationYaw) * 3.1415927f / 180.0f) * 0.1f;
+            this.motionX = -cos((this.attackedAtYaw + this.rotationYaw) * 3.1415927f / 180.0f) * 0.1f;
+            this.motionZ = -sin((this.attackedAtYaw + this.rotationYaw) * 3.1415927f / 180.0f) * 0.1f;
         } else {
             final double n = 0.0;
             this.motionZ = n;
@@ -131,20 +133,20 @@ public class EntityPlayer extends EntityLiving {
         if (hw == null) {
             return;
         }
-        final EntityItem entity = new EntityItem(this.worldObj, this.posX, this.posY - 0.30000001192092896, this.posZ, hw);
+        final EntityItem entity = new EntityItem(this.world, this.posX, this.posY - 0.30000001192092896, this.posZ, hw);
         entity.delayBeforeCanPickup = 40;
         float n = 0.1f;
         if (boolean2) {
             final float n2 = this.rand.nextFloat() * 0.5f;
             final float n3 = this.rand.nextFloat() * 3.1415927f * 2.0f;
-            entity.motionX = -Mth.sin(n3) * n2;
-            entity.motionZ = Mth.cos(n3) * n2;
+            entity.motionX = -sin(n3) * n2;
+            entity.motionZ = cos(n3) * n2;
             entity.motionY = 0.20000000298023224;
         } else {
             n = 0.3f;
-            entity.motionX = -Mth.sin(this.rotationYaw / 180.0f * 3.1415927f) * Mth.cos(this.rotationPitch / 180.0f * 3.1415927f) * n;
-            entity.motionZ = Mth.cos(this.rotationYaw / 180.0f * 3.1415927f) * Mth.cos(this.rotationPitch / 180.0f * 3.1415927f) * n;
-            entity.motionY = -Mth.sin(this.rotationPitch / 180.0f * 3.1415927f) * n + 0.1f;
+            entity.motionX = -sin(toRadians(rotationYaw)) * cos(toRadians(rotationPitch)) * n;
+            entity.motionZ =  cos(toRadians(rotationYaw)) * cos(toRadians(rotationPitch)) * n;
+            entity.motionY = -sin(toRadians(rotationYaw)) * n + 0.1f;
             n = 0.02f;
             final float n2 = this.rand.nextFloat() * 3.1415927f * 2.0f;
             n *= this.rand.nextFloat();
@@ -155,7 +157,7 @@ public class EntityPlayer extends EntityLiving {
             final EntityItem entityItem3 = entity;
             entityItem3.motionZ += Math.sin((double) n2) * n;
         }
-        this.worldObj.entityJoinedWorld(entity);
+        world.entityJoinedWorld(entity);
     }
 
     public float getCurrentPlayerStrVsBlock(final Block gs) {
@@ -207,13 +209,13 @@ public class EntityPlayer extends EntityLiving {
             return false;
         }
         if (entity instanceof EntityMonster || entity instanceof EntityArrow) {
-            if (this.worldObj.difficultySetting == 0) {
+            if (this.world.difficultySetting == 0) {
                 nya1 = 0;
             }
-            if (this.worldObj.difficultySetting == 1) {
+            if (this.world.difficultySetting == 1) {
                 nya1 = nya1 / 3 + 1;
             }
-            if (this.worldObj.difficultySetting == 3) {
+            if (this.world.difficultySetting == 3) {
                 nya1 = nya1 * 3 / 2;
             }
         }

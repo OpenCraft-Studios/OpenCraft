@@ -1,6 +1,8 @@
 
 package net.opencraft.renderer.entity;
 
+import static org.joml.Math.*;
+
 import java.nio.IntBuffer;
 import java.util.*;
 
@@ -255,8 +257,8 @@ public class RenderGlobal implements IWorldAccess {
 	}
 
 	public void renderEntities(final Vec3 bo, final ICamera jt, final float float3) {
-		TileEntityRenderer.instance.a(this.k, this.l, this.t.fontRenderer, this.t.player, float3);
-		RenderManager.instance.cacheActiveRenderInfo(this.k, this.l, this.t.fontRenderer, this.t.player,
+		TileEntityRenderer.instance.a(this.k, this.l, this.t.font, this.t.player, float3);
+		RenderManager.instance.cacheActiveRenderInfo(this.k, this.l, this.t.font, this.t.player,
 				this.t.options, float3);
 		this.I = 0;
 		this.J = 0;
@@ -412,7 +414,7 @@ public class RenderGlobal implements IWorldAccess {
 							this.n[k].x = true;
 						}
 						if (this.n[k].isInFrustum && !this.n[k].y) {
-							final int n14 = (int) (1.0f + Mth.sqrt_float(this.n[k].chunkIndex(gi)) / 128.0f);
+							final int n14 = (int) (1.0f + sqrt(this.n[k].chunkIndex(gi)) / 128.0f);
 							if (this.x % n14 == k % n14) {
 								final WorldRenderer worldRenderer = this.n[k];
 								final float n15 = (float) (worldRenderer.i - n);
@@ -814,7 +816,7 @@ public class RenderGlobal implements IWorldAccess {
 		GL11.glEnable(3042);
 		GL11.glEnable(3008);
 		GL11.glBlendFunc(770, 1);
-		GL11.glColor4f(1.0f, 1.0f, 1.0f, (Mth.sin(System.currentTimeMillis() / 100.0f) * 0.2f + 0.4f) * 0.5f);
+		GL11.glColor4f(1.0f, 1.0f, 1.0f, (sin(System.currentTimeMillis() / 100.0f) * 0.2f + 0.4f) * 0.5f);
 		if (integer == 0) {
 			if (this.damagePartialTime > 0.0f) {
 				GL11.glBlendFunc(774, 768);
@@ -845,11 +847,11 @@ public class RenderGlobal implements IWorldAccess {
 			}
 		} else if (hw != null) {
 			GL11.glBlendFunc(770, 771);
-			final float n2 = Mth.sin(System.currentTimeMillis() / 100.0f) * 0.2f + 0.8f;
-			GL11.glColor4f(n2, n2, n2, Mth.sin(System.currentTimeMillis() / 200.0f) * 0.2f + 0.5f);
+			final float n2 = sin(System.currentTimeMillis() / 100.0f) * 0.2f + 0.8f;
+			GL11.glColor4f(n2, n2, n2, sin(System.currentTimeMillis() / 200.0f) * 0.2f + 0.5f);
 			final int n = this.l.getTexture("/assets/terrain.png");
 			GL11.glBindTexture(3553, n);
-			int blockX = hb.blockX;
+			/*int blockX = hb.blockX;
 			int blockY = hb.blockY;
 			int blockZ = hb.blockZ;
 			if (hb.sideHit == 0) {
@@ -869,7 +871,7 @@ public class RenderGlobal implements IWorldAccess {
 			}
 			if (hb.sideHit == 5) {
 				++blockX;
-			}
+			}*/
 		}
 		GL11.glDisable(3042);
 		GL11.glDisable(3008);
@@ -928,12 +930,12 @@ public class RenderGlobal implements IWorldAccess {
 
 	public void a(final int integer1, final int integer2, final int integer3, final int integer4, final int integer5,
 			final int integer6) {
-		final int a = Mth.a(integer1, 16);
-		final int a2 = Mth.a(integer2, 16);
-		final int a3 = Mth.a(integer3, 16);
-		final int a4 = Mth.a(integer4, 16);
-		final int a5 = Mth.a(integer5, 16);
-		final int a6 = Mth.a(integer6, 16);
+		final int a = Math.floorDiv(integer1, 16);
+		final int a2 = Math.floorDiv(integer2, 16);
+		final int a3 = Math.floorDiv(integer3, 16);
+		final int a4 = Math.floorDiv(integer4, 16);
+		final int a5 = Math.floorDiv(integer5, 16);
+		final int a6 = Math.floorDiv(integer6, 16);
 		for (int i = a; i <= a4; ++i) {
 			int n = i % this.p;
 			if (n < 0) {

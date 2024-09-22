@@ -38,7 +38,7 @@ public class GuiButton extends GuiElement {
         if (!this.enabled2) {
             return;
         }
-        final FontRenderer fontRenderer = aw.fontRenderer;
+        final FontRenderer fontRenderer = aw.font;
         GL11.glBindTexture(3553, aw.renderer.getTexture("/assets/gui/gui.png"));
         GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
         int n = 1;

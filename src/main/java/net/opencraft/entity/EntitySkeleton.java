@@ -15,9 +15,9 @@ public class EntitySkeleton extends EntityMonster {
 
     @Override
     public void onLivingUpdate() {
-        if (this.worldObj.isDaytime()) {
+        if (this.world.isDaytime()) {
             final float entityBrightness = this.getEntityBrightness(1.0f);
-            if (entityBrightness > 0.5f && this.worldObj.canBlockSeeTheSky(Mth.floor_double(this.posX), Mth.floor_double(this.posY), Mth.floor_double(this.posZ)) && this.rand.nextFloat() * 30.0f < (entityBrightness - 0.4f) * 2.0f) {
+            if (entityBrightness > 0.5f && this.world.canBlockSeeTheSky(Mth.floor_double(this.posX), Mth.floor_double(this.posY), Mth.floor_double(this.posZ)) && this.rand.nextFloat() * 30.0f < (entityBrightness - 0.4f) * 2.0f) {
                 this.fire = 300;
             }
         }
@@ -31,12 +31,12 @@ public class EntitySkeleton extends EntityMonster {
             final double zCoord = entity.posZ - this.posZ;
             if (this.attackTime == 0) {
                 final EntityArrow entityArrow;
-                final EntityArrow entity2 = entityArrow = new EntityArrow(this.worldObj, this);
+                final EntityArrow entity2 = entityArrow = new EntityArrow(this.world, this);
                 entityArrow.posY += 1.399999976158142;
                 final double n = entity.posY - 0.20000000298023224 - entity2.posY;
                 final float n2 = Mth.sqrt_double(xCoord2 * xCoord2 + zCoord * zCoord) * 0.2f;
-                this.worldObj.playSoundAtEntity((Entity) this, "random.bow", 1.0f, 1.0f / (this.rand.nextFloat() * 0.4f + 0.8f));
-                this.worldObj.entityJoinedWorld(entity2);
+                this.world.playSoundAtEntity((Entity) this, "random.bow", 1.0f, 1.0f / (this.rand.nextFloat() * 0.4f + 0.8f));
+                this.world.entityJoinedWorld(entity2);
                 entity2.shoot(xCoord2, n + n2, zCoord, 0.6f, 12.0f);
                 this.attackTime = 30;
             }

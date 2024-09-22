@@ -1,17 +1,13 @@
 
 package net.opencraft.client.entity.models;
 
-import net.opencraft.util.Mth;
+import static org.joml.Math.*;
 
 public class ModelCreeper extends ModelBase {
 
-    public ModelRenderer head;
-    public ModelRenderer unusedCreeperHeadwear;
-    public ModelRenderer body;
-    public ModelRenderer leg1;
-    public ModelRenderer leg2;
-    public ModelRenderer leg3;
-    public ModelRenderer leg4;
+	public ModelRenderer unusedCreeperHeadwear;
+    public ModelRenderer head, body;
+    public ModelRenderer leg1, leg2, leg3, leg4;
 
     public ModelCreeper() {
         final float n = 0.0f;
@@ -47,9 +43,9 @@ public class ModelCreeper extends ModelBase {
     public void setRotationAngles(final float nya1, final float nya2, final float nya3, final float nya4, final float nya5, final float nya6) {
         this.head.rotateAngleY = nya4 / 57.295776f;
         this.head.rotateAngleX = nya5 / 57.295776f;
-        this.leg1.rotateAngleX = Mth.cos(nya1 * 0.6662f) * 1.4f * nya2;
-        this.leg2.rotateAngleX = Mth.cos(nya1 * 0.6662f + 3.1415927f) * 1.4f * nya2;
-        this.leg3.rotateAngleX = Mth.cos(nya1 * 0.6662f + 3.1415927f) * 1.4f * nya2;
-        this.leg4.rotateAngleX = Mth.cos(nya1 * 0.6662f) * 1.4f * nya2;
+        this.leg1.rotateAngleX = cos(nya1 * 0.6662f) * 1.4f * nya2;
+        this.leg2.rotateAngleX = cos(nya1 * 0.6662f + PI_f) * 1.4f * nya2;
+        this.leg3.rotateAngleX = cos(nya1 * 0.6662f + PI_f) * 1.4f * nya2;
+        this.leg4.rotateAngleX = cos(nya1 * 0.6662f) * 1.4f * nya2;
     }
 }

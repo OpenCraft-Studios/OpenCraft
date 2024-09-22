@@ -1,6 +1,8 @@
 
 package net.opencraft.entity;
 
+import static org.joml.Math.*;
+
 import java.util.List;
 import net.opencraft.client.input.MovingObjectPosition;
 import net.opencraft.item.Item;
@@ -46,14 +48,14 @@ public class EntityArrow extends Entity {
         this.owner = entityLiving;
         this.setSize(0.5f, 0.5f);
         this.setPositionAndRotation(entityLiving.posX, entityLiving.posY, entityLiving.posZ, entityLiving.rotationYaw, entityLiving.rotationPitch);
-        this.posX -= Mth.cos(this.rotationYaw / 180.0f * 3.1415927f) * 0.16f;
+        this.posX -= cos(toRadians(rotationYaw)) * 0.16f;
         this.posY -= 0.10000000149011612;
-        this.posZ -= Mth.sin(this.rotationYaw / 180.0f * 3.1415927f) * 0.16f;
+        this.posZ -= sin(toRadians(rotationYaw)) * 0.16f;
         this.setPosition(this.posX, this.posY, this.posZ);
         this.yOffset = 0.0f;
-        this.motionX = -Mth.sin(this.rotationYaw / 180.0f * 3.1415927f) * Mth.cos(this.rotationPitch / 180.0f * 3.1415927f);
-        this.motionZ = Mth.cos(this.rotationYaw / 180.0f * 3.1415927f) * Mth.cos(this.rotationPitch / 180.0f * 3.1415927f);
-        this.motionY = -Mth.sin(this.rotationPitch / 180.0f * 3.1415927f);
+        this.motionX = -sin(this.rotationYaw / 180.0f * 3.1415927f) * cos(this.rotationPitch / 180.0f * 3.1415927f);
+        this.motionZ = cos(this.rotationYaw / 180.0f * 3.1415927f) * cos(this.rotationPitch / 180.0f * 3.1415927f);
+        this.motionY = -sin(this.rotationPitch / 180.0f * 3.1415927f);
         this.shoot(this.motionX, this.motionY, this.motionZ, 1.5f, 1.0f);
     }
 
@@ -88,7 +90,7 @@ public class EntityArrow extends Entity {
             --this.arrowShake;
         }
         if (this.inGround) {
-            if (this.worldObj.getBlockId(this.xTile, this.yTile, this.zTile) == this.inTile) {
+            if (this.world.getBlockId(this.xTile, this.yTile, this.zTile) == this.inTile) {
                 ++this.ticksInGround;
                 if (this.ticksInGround == 1200) {
                     this.setEntityDead();
@@ -104,14 +106,14 @@ public class EntityArrow extends Entity {
         } else {
             ++this.ticksInAir;
         }
-        MovingObjectPosition rayTraceBlocks = this.worldObj.rayTraceBlocks(Vec3.newTemp(this.posX, this.posY, this.posZ), Vec3.newTemp(this.posX + this.motionX, this.posY + this.motionY, this.posZ + this.motionZ));
+        MovingObjectPosition rayTraceBlocks = this.world.rayTraceBlocks(Vec3.newTemp(this.posX, this.posY, this.posZ), Vec3.newTemp(this.posX + this.motionX, this.posY + this.motionY, this.posZ + this.motionZ));
         final Vec3 vector = Vec3.newTemp(this.posX, this.posY, this.posZ);
         Vec3 var2 = Vec3.newTemp(this.posX + this.motionX, this.posY + this.motionY, this.posZ + this.motionZ);
         if (rayTraceBlocks != null) {
             var2 = Vec3.newTemp(rayTraceBlocks.hitVec.x, rayTraceBlocks.hitVec.y, rayTraceBlocks.hitVec.z);
         }
         Entity eq = null;
-        final List entitiesWithinAABBExcludingEntity = this.worldObj.getEntitiesWithinAABBExcludingEntity(this, this.boundingBox.addCoord(this.motionX, this.motionY, this.motionZ).expand(1.0, 1.0, 1.0));
+        final List entitiesWithinAABBExcludingEntity = this.world.getEntitiesWithinAABBExcludingEntity(this, this.boundingBox.addCoord(this.motionX, this.motionY, this.motionZ).expand(1.0, 1.0, 1.0));
         double n = 0.0;
         for (int i = 0; i < entitiesWithinAABBExcludingEntity.size(); ++i) {
             final Entity entity = (Entity) entitiesWithinAABBExcludingEntity.get(i);
@@ -135,7 +137,7 @@ public class EntityArrow extends Entity {
         if (rayTraceBlocks != null) {
             if (rayTraceBlocks.entityHit != null) {
                 if (rayTraceBlocks.entityHit.attackEntityFrom(this.owner, 4)) {
-                    this.worldObj.playSoundAtEntity((Entity) this, "random.drr", 1.0f, 1.2f / (this.rand.nextFloat() * 0.2f + 0.9f));
+                    this.world.playSoundAtEntity((Entity) this, "random.drr", 1.0f, 1.2f / (this.rand.nextFloat() * 0.2f + 0.9f));
                     this.setEntityDead();
                 } else {
                     this.motionX *= -0.10000000149011612;
@@ -149,7 +151,7 @@ public class EntityArrow extends Entity {
                 this.xTile = rayTraceBlocks.blockX;
                 this.yTile = rayTraceBlocks.blockY;
                 this.zTile = rayTraceBlocks.blockZ;
-                this.inTile = this.worldObj.getBlockId(this.xTile, this.yTile, this.zTile);
+                this.inTile = this.world.getBlockId(this.xTile, this.yTile, this.zTile);
                 this.motionX = (float) (rayTraceBlocks.hitVec.x - this.posX);
                 this.motionY = (float) (rayTraceBlocks.hitVec.y - this.posY);
                 this.motionZ = (float) (rayTraceBlocks.hitVec.z - this.posZ);
@@ -157,7 +159,7 @@ public class EntityArrow extends Entity {
                 this.posX -= this.motionX / n3 * 0.05000000074505806;
                 this.posY -= this.motionY / n3 * 0.05000000074505806;
                 this.posZ -= this.motionZ / n3 * 0.05000000074505806;
-                this.worldObj.playSoundAtEntity((Entity) this, "random.drr", 1.0f, 1.2f / (this.rand.nextFloat() * 0.2f + 0.9f));
+                this.world.playSoundAtEntity((Entity) this, "random.drr", 1.0f, 1.2f / (this.rand.nextFloat() * 0.2f + 0.9f));
                 this.inGround = true;
                 this.arrowShake = 7;
             }
@@ -187,7 +189,7 @@ public class EntityArrow extends Entity {
         if (this.handleWaterMovement()) {
             for (int j = 0; j < 4; ++j) {
                 final float n5 = 0.25f;
-                this.worldObj.spawnParticle("bubble", this.posX - this.motionX * n5, this.posY - this.motionY * n5, this.posZ - this.motionZ * n5, this.motionX, this.motionY, this.motionZ);
+                this.world.spawnParticle("bubble", this.posX - this.motionX * n5, this.posY - this.motionY * n5, this.posZ - this.motionZ * n5, this.motionX, this.motionY, this.motionZ);
             }
             n4 = 0.8f;
         }
@@ -219,7 +221,7 @@ public class EntityArrow extends Entity {
     @Override
     public void onCollideWithPlayer(final EntityPlayer entityPlayer) {
         if (this.inGround && this.owner == entityPlayer && this.arrowShake <= 0 && entityPlayer.inventory.addItemStackToInventory(new ItemStack(Item.arrow.shiftedIndex, 1))) {
-            this.worldObj.playSoundAtEntity((Entity) this, "random.pop", 0.2f, ((this.rand.nextFloat() - this.rand.nextFloat()) * 0.7f + 1.0f) * 2.0f);
+            this.world.playSoundAtEntity((Entity) this, "random.pop", 0.2f, ((this.rand.nextFloat() - this.rand.nextFloat()) * 0.7f + 1.0f) * 2.0f);
             entityPlayer.onItemPickup(this);
             this.setEntityDead();
         }

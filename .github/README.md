@@ -23,7 +23,7 @@
       <b>Explore the docs »</b>
     </a>
     <br />
-    <a href="https://github.com/OpenCraft-Studios/OpenCraft/issues">
+    <a href="https://github.com/OpenCraft-Studios/OpenCraft/issues/new?assignees=&labels=&projects=&template=bug_report.md&title=">
       Report Bugs
     </a>
     ·
@@ -31,7 +31,7 @@
       Download
     </a>
     ·
-    <a href="https://github.com/OpenCraft-Studios/OpenCraft/pulls">
+    <a href="https://github.com/OpenCraft-Studios/OpenCraft/issues/new?assignees=&labels=&projects=&template=feature_request.md&title=">
       Feature Request
     </a>
   </p>
@@ -42,9 +42,6 @@
 > [!WARNING]
 > This project **IS NOT** affiliated with Mojang or other minecraft product. <br />
 > This is just a hobby and I do not take care of any uses provided to this utility.
-
-> ```FOR SUPPORT:``` https://github.com/OpenCraft-Studios/OpenCraft/issues/ <br />
-> ```FOR CONTRIBUTING:``` https://github.com/OpenCraft-Studios/OpenCraft/pulls
 
 <br />
 
@@ -67,10 +64,9 @@ I hope that you can be part of that community forking the repository or simply, 
     <img width="49%" src="assets/images/screenshot1.png" alt="PNG"/>&nbsp;
     <img width="49%" src="assets/images/screenshot2.png" alt="PNG"/>
   </p>
-<!--  <div align="center">
-    <img width="80%" src="assets/images/screenshot3.png" alt="PNG<"/>
-    <p><b>+6 languages</b></p>
-  </div>-->
+  <div align="center">
+    <img width="80%" src="assets/images/screenshot3.png" alt="PNG"/>
+  </div>
 </details>
 
 ---
@@ -78,19 +74,15 @@ I hope that you can be part of that community forking the repository or simply, 
 ## ☕ Downloading
 We already have prebuilt jars. They can be downloaded [here](https://github.com/OpenCraft-Studios/OpenCraft/actions).
 
-```bash
-java -jar opencraft-client.jar
+###### Windows
+```batch
+java -cp OpenCraft.jar; net.opencraft.OpenCraft --gameDir opcraft
 ```
 
----
-
-## 🚧 Build from source
+###### Bash
 ```bash
-git clone https://github.com/OpenCraft-Studios/OpenCraft
-cd OpenCraft
-mvn clean package
-cd target
-java -jar opencraft-client.jar
+#!/bin/bash
+java -cp OpenCraft.jar: net.opencraft.OpenCraft --gameDir opcraft/
 ```
 
 ---
@@ -124,9 +116,9 @@ java -jar opencraft-client.jar
 
 
 ## 👷‍♂️ Contributors
-| [![CiroZDP](https://avatars.githubusercontent.com/u/161502824?v=4)](https://github.com/CiroZDP) | [![CiroZDP](https://avatars.githubusercontent.com/u/74984053)](https://github.com/TheNicolasDeveloper) | ![Community](https://cdni.iconscout.com/illustration/free/thumb/free-community-2103591-1768087.png)	 |
-|:-----------------------------------------------------------------------------------------------:|:-----------------------------------------------------------------------------------------------:|:----------------------------------------------------------------------------------------------------:|
-|                                           **CiroZDP**                                           |                                           **Nicolas**                                           |                                          **The community**                                           |
+| [![CiroZDP](https://avatars.githubusercontent.com/u/161502824?v=4)](https://github.com/CiroZDP) | ![Community](https://cdni.iconscout.com/illustration/free/thumb/free-community-2103591-1768087.png)	|
+|:-----------------------------------------------------------------------------------------------:|:---------------------------------------------------------------------------------------------------:|
+|                                           **CiroZDP**                                           |                                          **The community**                                          |
 
 ---
 

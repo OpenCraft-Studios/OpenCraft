@@ -48,12 +48,12 @@ public class EntityCreeper extends EntityMonster {
     protected void attackEntity(final Entity entity, final float xCoord) {
         if ((this.creeperState <= 0 && xCoord < 3.0f) || (this.creeperState > 0 && xCoord < 7.0f)) {
             if (this.timeSinceIgnited == 0) {
-                this.worldObj.playSoundAtEntity((Entity) this, "random.fuse", 1.0f, 0.5f);
+                this.world.playSoundAtEntity((Entity) this, "random.fuse", 1.0f, 0.5f);
             }
             this.creeperState = 1;
             ++this.timeSinceIgnited;
             if (this.timeSinceIgnited == this.fuseTime) {
-                this.worldObj.createExplosion(this, this.posX, this.posY, this.posZ, 3.0f);
+                this.world.createExplosion(this, this.posX, this.posY, this.posZ, 3.0f);
                 this.setEntityDead();
             }
             this.hasAttacked = true;

@@ -1,7 +1,7 @@
 
 package net.opencraft.pathfinder;
 
-import net.opencraft.util.Mth;
+import static org.joml.Math.*;
 
 public class PathPoint {
 
@@ -29,7 +29,7 @@ public class PathPoint {
         final float n = (float) (d.xCoord - this.xCoord);
         final float n2 = (float) (d.yCoord - this.yCoord);
         final float n3 = (float) (d.zCoord - this.zCoord);
-        return Mth.sqrt_float(n * n + n2 * n2 + n3 * n3);
+        return sqrt(n * n + n2 * n2 + n3 * n3);
     }
 
     public boolean equals(final Object object) {
