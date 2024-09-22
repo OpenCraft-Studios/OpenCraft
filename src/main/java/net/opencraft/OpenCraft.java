@@ -698,35 +698,29 @@ public class OpenCraft implements Runnable {
 						if (currentScreen != null) {
 							currentScreen.handleKeyboardInput();
 						} else {
-							if (Keyboard.getEventKey() == 1) {
+							if (Keyboard.getEventKey() == Keyboard.KEY_ESCAPE)
 								displayInGameMenu();
-							}
-							if (playerController instanceof PlayerControllerTest) {
-								if (Keyboard.getEventKey() == options.keyBindLoad.keyCode) {
-								}
-								if (Keyboard.getEventKey() == options.keyBindSave.keyCode) {
-								}
-							}
-							if (Keyboard.getEventKey() == 63) {
+							
+							if (Keyboard.getEventKey() == Keyboard.KEY_F5) {
 								options.thirdPersonView = !options.thirdPersonView;
 								isRaining = !isRaining;
 							}
-							if (Keyboard.getEventKey() == options.keyBindInventory.keyCode) {
+							if (Keyboard.getEventKey() == options.keyBindInventory.keyCode)
 								displayGuiScreen(new GuiInventory(player.inventory));
-							}
-							if (Keyboard.getEventKey() == options.keyBindDrop.keyCode) {
+							
+							if (Keyboard.getEventKey() == options.keyBindDrop.keyCode)
 								player.dropPlayerItemWithRandomChoice(
 										player.inventory.decrStackSize(player.inventory.currentItem, 1), false);
-							}
+							
 						}
 						for (int i = 0; i < 9; ++i) {
 							if (Keyboard.getEventKey() == 2 + i) {
 								player.inventory.currentItem = i;
 							}
 						}
-						if (Keyboard.getEventKey() != options.keyBindToggleFog.keyCode) {
+						if (Keyboard.getEventKey() != options.keyBindToggleFog.keyCode)
 							continue;
-						}
+						
 						options.setOptionFloatValue(4,
 								(Keyboard.isKeyDown(42) || Keyboard.isKeyDown(54)) ? -1 : 1);
 					}

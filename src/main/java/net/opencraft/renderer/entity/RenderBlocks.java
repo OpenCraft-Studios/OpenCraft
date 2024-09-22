@@ -8,6 +8,9 @@ import net.opencraft.renderer.Tessellator;
 import net.opencraft.util.Mth;
 import net.opencraft.world.IBlockAccess;
 import net.opencraft.world.World;
+
+import static org.joml.Math.*;
+
 import org.lwjgl.opengl.GL11;
 
 public class RenderBlocks {
@@ -617,7 +620,7 @@ public class RenderBlocks {
                 n6 = (yCoord + 16) / 256.0f;
                 n7 = (zCoord + 16) / 256.0f;
             }
-            final float n8 = Mth.sin(n5) * 8.0f / 256.0f;
+            final float n8 = sin(n5) * 8.0f / 256.0f;
             final float n9 = Mth.cos(n5) * 8.0f / 256.0f;
             final float blockBrightness = gs.getBlockBrightness(this.a, integer2, integer3, integer4);
             instance.setColorOpaque_F(n2 * blockBrightness, n2 * blockBrightness, n2 * blockBrightness);

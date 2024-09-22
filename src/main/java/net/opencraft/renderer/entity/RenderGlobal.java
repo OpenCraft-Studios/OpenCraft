@@ -1,6 +1,8 @@
 
 package net.opencraft.renderer.entity;
 
+import static org.joml.Math.*;
+
 import java.nio.IntBuffer;
 import java.util.*;
 
@@ -814,7 +816,7 @@ public class RenderGlobal implements IWorldAccess {
 		GL11.glEnable(3042);
 		GL11.glEnable(3008);
 		GL11.glBlendFunc(770, 1);
-		GL11.glColor4f(1.0f, 1.0f, 1.0f, (Mth.sin(System.currentTimeMillis() / 100.0f) * 0.2f + 0.4f) * 0.5f);
+		GL11.glColor4f(1.0f, 1.0f, 1.0f, (sin(System.currentTimeMillis() / 100.0f) * 0.2f + 0.4f) * 0.5f);
 		if (integer == 0) {
 			if (this.damagePartialTime > 0.0f) {
 				GL11.glBlendFunc(774, 768);
@@ -845,11 +847,11 @@ public class RenderGlobal implements IWorldAccess {
 			}
 		} else if (hw != null) {
 			GL11.glBlendFunc(770, 771);
-			final float n2 = Mth.sin(System.currentTimeMillis() / 100.0f) * 0.2f + 0.8f;
-			GL11.glColor4f(n2, n2, n2, Mth.sin(System.currentTimeMillis() / 200.0f) * 0.2f + 0.5f);
+			final float n2 = sin(System.currentTimeMillis() / 100.0f) * 0.2f + 0.8f;
+			GL11.glColor4f(n2, n2, n2, sin(System.currentTimeMillis() / 200.0f) * 0.2f + 0.5f);
 			final int n = this.l.getTexture("/assets/terrain.png");
 			GL11.glBindTexture(3553, n);
-			int blockX = hb.blockX;
+			/*int blockX = hb.blockX;
 			int blockY = hb.blockY;
 			int blockZ = hb.blockZ;
 			if (hb.sideHit == 0) {
@@ -869,7 +871,7 @@ public class RenderGlobal implements IWorldAccess {
 			}
 			if (hb.sideHit == 5) {
 				++blockX;
-			}
+			}*/
 		}
 		GL11.glDisable(3042);
 		GL11.glDisable(3008);

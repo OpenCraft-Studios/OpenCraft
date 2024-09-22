@@ -4,28 +4,26 @@ package net.opencraft.renderer.entity;
 import net.opencraft.client.entity.models.ModelCreeper;
 import net.opencraft.entity.EntityCreeper;
 import net.opencraft.util.Mth;
+
+import static org.joml.Math.*;
+
 import org.lwjgl.opengl.GL11;
 
 public class RenderCreeper extends RenderLiving {
 
-//    @Override
     public RenderCreeper() {
         super(new ModelCreeper(), 0.5f);
     }
 
     protected void preRenderCallback(final EntityCreeper entityLiving, final float nya1) {
-        float setCreeperFlashTime = entityLiving.setCreeperFlashTime(nya1);
-        final float n = 1.0f + Mth.sin(setCreeperFlashTime * 100.0f) * setCreeperFlashTime * 0.01f;
-        if (setCreeperFlashTime < 0.0f) {
-            setCreeperFlashTime = 0.0f;
-        }
-        if (setCreeperFlashTime > 1.0f) {
-            setCreeperFlashTime = 1.0f;
-        }
-        setCreeperFlashTime *= setCreeperFlashTime;
-        setCreeperFlashTime *= setCreeperFlashTime;
-        final float n2 = (1.0f + setCreeperFlashTime * 0.4f) * n;
-        GL11.glScalef(n2, (1.0f + setCreeperFlashTime * 0.1f) / n, n2);
+        float creeperFlashTime = entityLiving.setCreeperFlashTime(nya1);
+        final float n = 1.0f + sin(creeperFlashTime * 100.0f) * creeperFlashTime * 0.01f;
+        creeperFlashTime = clamp(0, 1, creeperFlashTime);
+        
+        creeperFlashTime *= creeperFlashTime;
+        creeperFlashTime *= creeperFlashTime;
+        final float n2 = (1.0f + creeperFlashTime * 0.4f) * n;
+        GL11.glScalef(n2, (1.0f + creeperFlashTime * 0.1f) / n, n2);
     }
 
     protected int getColorMultiplier(final EntityCreeper entityLiving, final float nya1, final float nya2) {
