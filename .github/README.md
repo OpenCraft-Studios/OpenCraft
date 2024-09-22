@@ -37,36 +37,28 @@
   </p>
 </div>
 
-<br />
-
-> [!WARNING]
-> This project **IS NOT** affiliated with Mojang or other minecraft product. <br />
-> This is just a hobby and I do not take care of any uses provided to this utility.
-
-<br />
+---
 
 ## ✅ Getting started
 **OpenCraft** is a game programmed in Java, it has the same motor (LWJGL 2 + Java 17) that Minecraft.
-
-### Why this project? 🤔
-> I created this project because Minecraft is closed-source. I know that you can decompile it, but modification
-> and redistribution of a modified copy of Minecraft is actually illegal. So I created a clone of Minecraft that
-> allows modification and redistribution.
-
+I created this project because Minecraft is closed-source. I know that you can decompile it, but modification
+and redistribution of a modified copy of Minecraft is actually illegal. So I created a clone of Minecraft that
+allows modification and redistribution.
 I want to create a community around this project,
 I hope that you can be part of that community forking the repository or simply, bring us a star :heart:
 
+---
+
 <details open>
-  <summary>
-    <h3>Screenshots</h3>
-  </summary><br />
-  <p align="center">
-    <img width="49%" src="assets/images/screenshot1.png" alt="PNG"/>&nbsp;
-    <img width="49%" src="assets/images/screenshot2.png" alt="PNG"/>
-  </p>
-  <div align="center">
-    <img width="80%" src="assets/images/screenshot3.png" alt="PNG"/>
-  </div>
+<summary><h3>Screenshots</h3></summary>
+<br />
+<p align="center">
+<img width="49%" src="assets/images/screenshot1.png" alt="PNG"/>&nbsp;
+<img width="49%" src="assets/images/screenshot2.png" alt="PNG"/>
+</p>
+<div align="center">
+<img width="80%" src="assets/images/screenshot3.png" alt="PNG"/>
+</div>
 </details>
 
 ---
@@ -74,16 +66,19 @@ I hope that you can be part of that community forking the repository or simply, 
 ## ☕ Downloading
 We already have prebuilt jars. They can be downloaded [here](https://github.com/OpenCraft-Studios/OpenCraft/actions).
 
-###### Windows
-```batch
-java -cp OpenCraft.jar; net.opencraft.OpenCraft --gameDir opcraft
-```
+1. **Download JAR**
 
-###### Bash
-```bash
-#!/bin/bash
-java -cp OpenCraft.jar: net.opencraft.OpenCraft --gameDir opcraft/
-```
+   <details>
+   <summary>Windows</summary>
+
+   > The recommended way to install **OpenCraft** is via the install script:
+   >
+   > ```sh
+   > curl -sSfL url | cmd
+   > ```
+   >
+
+  </details>
 
 ---
 
