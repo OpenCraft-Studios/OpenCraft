@@ -1,4 +1,3 @@
-
 package net.opencraft;
 
 import java.io.DataInput;

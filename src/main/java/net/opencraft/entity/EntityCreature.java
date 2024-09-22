@@ -20,7 +20,7 @@ public class EntityCreature extends EntityLiving {
     }
 
     protected boolean canEntityBeSeen(final Entity entity) {
-        return this.worldObj.rayTraceBlocks(Vec3.newTemp(this.posX, this.posY + this.getEyeHeight(), this.posZ), Vec3.newTemp(entity.posX, entity.posY + entity.getEyeHeight(), entity.posZ)) == null;
+        return this.world.rayTraceBlocks(Vec3.newTemp(this.posX, this.posY + this.getEyeHeight(), this.posZ), Vec3.newTemp(entity.posX, entity.posY + entity.getEyeHeight(), entity.posZ)) == null;
     }
 
     @Override
@@ -30,7 +30,7 @@ public class EntityCreature extends EntityLiving {
         if (this.playerToAttack == null) {
             this.playerToAttack = this.findPlayerToAttack();
             if (this.playerToAttack != null) {
-                this.pathToEntity = this.worldObj.getPathToEntity(this, this.playerToAttack, float5);
+                this.pathToEntity = this.world.getPathToEntity(this, this.playerToAttack, float5);
             }
         } else if (!this.playerToAttack.isEntityAlive()) {
             this.playerToAttack = null;
@@ -41,7 +41,7 @@ public class EntityCreature extends EntityLiving {
             }
         }
         if (!this.hasAttacked && this.playerToAttack != null && (this.pathToEntity == null || this.rand.nextInt(20) == 0)) {
-            this.pathToEntity = this.worldObj.getPathToEntity(this, this.playerToAttack, float5);
+            this.pathToEntity = this.world.getPathToEntity(this, this.playerToAttack, float5);
         } else if (this.pathToEntity == null || this.rand.nextInt(100) == 0) {
             int floor_double = -1;
             int yCoord = -1;
@@ -60,7 +60,7 @@ public class EntityCreature extends EntityLiving {
                 }
             }
             if (floor_double > 0) {
-                this.pathToEntity = this.worldObj.getEntityPathToXYZ(this, floor_double, yCoord, zCoord, float5);
+                this.pathToEntity = this.world.getEntityPathToXYZ(this, floor_double, yCoord, zCoord, float5);
             }
         }
         int floor_double = Mth.floor_double(this.boundingBox.minY);
@@ -96,7 +96,7 @@ public class EntityCreature extends EntityLiving {
                 this.rotationYaw = (float) (Math.atan2(n7, n6) * 180.0 / 3.1415927410125732) - 90.0f;
                 final float n8 = (rotationYaw - this.rotationYaw + 90.0f) * 3.1415927f / 180.0f;
                 this.moveStrafing = -sin(n8) * this.moveForward * 1.0f;
-                this.moveForward = Mth.cos(n8) * this.moveForward * 1.0f;
+                this.moveForward = cos(n8) * this.moveForward * 1.0f;
             }
             if (n5 != 0.0) {
                 this.isJumping = true;

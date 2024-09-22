@@ -212,9 +212,9 @@ public class ChunkProviderGenerate implements IChunkProvider {
 		while (integer10 < integer11) {
 			final double n7 = 1.5 + sin(integer10 * 3.1415927f / integer11) * float7 * 1.0f;
 			final double n8 = n7 * double12;
-			final float cos = Mth.cos(float9);
+			final float cos = cos(float9);
 			final float sin = sin(float9);
-			double4 += Mth.cos(float8) * cos;
+			double4 += cos(float8) * cos;
 			double5 += sin;
 			double6 += sin(float8) * cos;
 			if (b2) {

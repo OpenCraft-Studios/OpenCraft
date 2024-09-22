@@ -23,9 +23,9 @@ public class ModelZombie extends ModelBiped {
         final ModelRenderer bipedLeftArm = this.bipedLeftArm;
         bipedLeftArm.rotateAngleX -= sin * 1.2f - sin2 * 0.4f;
         final ModelRenderer bipedRightArm2 = this.bipedRightArm;
-        bipedRightArm2.rotateAngleZ += Mth.cos(nya3 * 0.09f) * 0.05f + 0.05f;
+        bipedRightArm2.rotateAngleZ += cos(nya3 * 0.09f) * 0.05f + 0.05f;
         final ModelRenderer bipedLeftArm2 = this.bipedLeftArm;
-        bipedLeftArm2.rotateAngleZ -= Mth.cos(nya3 * 0.09f) * 0.05f + 0.05f;
+        bipedLeftArm2.rotateAngleZ -= cos(nya3 * 0.09f) * 0.05f + 0.05f;
         final ModelRenderer bipedRightArm3 = this.bipedRightArm;
         bipedRightArm3.rotateAngleX += sin(nya3 * 0.067f) * 0.05f;
         final ModelRenderer bipedLeftArm3 = this.bipedLeftArm;

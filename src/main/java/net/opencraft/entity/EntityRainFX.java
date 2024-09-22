@@ -48,8 +48,8 @@ public class EntityRainFX extends EntityFX {
             this.motionX *= 0.699999988079071;
             this.motionZ *= 0.699999988079071;
         }
-        final Material blockMaterial = this.worldObj.getBlockMaterial(Mth.floor_double(this.posX), Mth.floor_double(this.posY), Mth.floor_double(this.posZ));
-        if ((blockMaterial.isLiquid() || blockMaterial.isSolid()) && this.posY < Mth.floor_double(this.posY) + 1 - LiquidBlock.getPercentAir(this.worldObj.getBlockMetadata(Mth.floor_double(this.posX), Mth.floor_double(this.posY), Mth.floor_double(this.posZ)))) {
+        final Material blockMaterial = this.world.getBlockMaterial(Mth.floor_double(this.posX), Mth.floor_double(this.posY), Mth.floor_double(this.posZ));
+        if ((blockMaterial.isLiquid() || blockMaterial.isSolid()) && this.posY < Mth.floor_double(this.posY) + 1 - LiquidBlock.getPercentAir(this.world.getBlockMetadata(Mth.floor_double(this.posX), Mth.floor_double(this.posY), Mth.floor_double(this.posZ)))) {
             this.setEntityDead();
         }
     }

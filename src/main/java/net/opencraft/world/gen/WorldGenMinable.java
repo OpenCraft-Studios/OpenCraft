@@ -6,7 +6,6 @@ import static org.joml.Math.*;
 import java.util.Random;
 
 import net.opencraft.blocks.Block;
-import net.opencraft.util.Mth;
 import net.opencraft.world.World;
 
 public class WorldGenMinable extends WorldGenerator {
@@ -24,8 +23,8 @@ public class WorldGenMinable extends WorldGenerator {
         final float n = random.nextFloat() * PI_f;
         final double n2 = integer3 + 8 + sin(n) * this.numberOfBlocks / 8.0f;
         final double n3 = integer3 + 8 - sin(n) * this.numberOfBlocks / 8.0f;
-        final double n4 = integer5 + 8 + Mth.cos(n) * this.numberOfBlocks / 8.0f;
-        final double n5 = integer5 + 8 - Mth.cos(n) * this.numberOfBlocks / 8.0f;
+        final double n4 = integer5 + 8 + cos(n) * this.numberOfBlocks / 8.0f;
+        final double n5 = integer5 + 8 - cos(n) * this.numberOfBlocks / 8.0f;
         final double n6 = integer4 + random.nextInt(3) + 2;
         final double n7 = integer4 + random.nextInt(3) + 2;
         for (int i = 0; i <= this.numberOfBlocks; ++i) {

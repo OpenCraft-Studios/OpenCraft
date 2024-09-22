@@ -18,10 +18,10 @@ public class EntitySpider extends EntityMonster {
     @Override
     protected Entity findPlayerToAttack() {
         if (this.getEntityBrightness(1.0f) < 0.5f) {
-            final double distanceSqToEntity = this.worldObj.player.getDistanceSqToEntity(this);
+            final double distanceSqToEntity = this.world.player.getDistanceSqToEntity(this);
             final double n = 16.0;
             if (distanceSqToEntity < n * n) {
-                return this.worldObj.player;
+                return this.world.player;
             }
         }
         return null;

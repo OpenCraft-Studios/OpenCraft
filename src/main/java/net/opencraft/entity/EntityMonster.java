@@ -26,17 +26,17 @@ public class EntityMonster extends EntityCreature {
     @Override
     public void onUpdate() {
         super.onUpdate();
-        if (this.worldObj.difficultySetting == 0) {
+        if (this.world.difficultySetting == 0) {
             this.setEntityDead();
         }
     }
 
     @Override
     protected Entity findPlayerToAttack() {
-        final double distanceSqToEntity = this.worldObj.player.getDistanceSqToEntity(this);
+        final double distanceSqToEntity = this.world.player.getDistanceSqToEntity(this);
         final double n = 16.0;
-        if (distanceSqToEntity < n * n && this.canEntityBeSeen(this.worldObj.player)) {
-            return this.worldObj.player;
+        if (distanceSqToEntity < n * n && this.canEntityBeSeen(this.world.player)) {
+            return this.world.player;
         }
         return null;
     }
@@ -62,7 +62,7 @@ public class EntityMonster extends EntityCreature {
 
     @Override
     protected float getBlockPathWeight(final int xCoord, final int yCoord, final int zCoord) {
-        return 0.5f - this.worldObj.getLightBrightness(xCoord, yCoord, zCoord);
+        return 0.5f - this.world.getLightBrightness(xCoord, yCoord, zCoord);
     }
 
     @Override
@@ -77,6 +77,6 @@ public class EntityMonster extends EntityCreature {
 
     @Override
     public boolean getCanSpawnHere(final double nya1, final double nya2, final double nya3) {
-        return this.worldObj.getBlockLightValue(Mth.floor_double(nya1), Mth.floor_double(nya2), Mth.floor_double(nya3)) <= this.rand.nextInt(8) && super.getCanSpawnHere(nya1, nya2, nya3);
+        return this.world.getBlockLightValue(Mth.floor_double(nya1), Mth.floor_double(nya2), Mth.floor_double(nya3)) <= this.rand.nextInt(8) && super.getCanSpawnHere(nya1, nya2, nya3);
     }
 }

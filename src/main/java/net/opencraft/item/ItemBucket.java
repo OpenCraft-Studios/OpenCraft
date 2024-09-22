@@ -27,9 +27,9 @@ public class ItemBucket extends Item {
         final float n2 = gi.prevRotationPitch + (gi.rotationPitch - gi.prevRotationPitch) * n;
         final float n3 = gi.prevRotationYaw + (gi.rotationYaw - gi.prevRotationYaw) * n;
         final Vec3 vector = Vec3.newTemp(gi.prevPosX + (gi.posX - gi.prevPosX) * n, gi.prevPosY + (gi.posY - gi.prevPosY) * n, gi.prevPosZ + (gi.posZ - gi.prevPosZ) * n);
-        final float cos = Mth.cos(-n3 * 0.017453292f - PI_f);
+        final float cos = cos(-n3 * 0.017453292f - PI_f);
         final float sin = sin(-n3 * 0.017453292f - PI_f);
-        final float n4 = -Mth.cos(-n2 * 0.017453292f);
+        final float n4 = -cos(-n2 * 0.017453292f);
         final float sin2 = sin(-n2 * 0.017453292f);
         final float n5 = sin * n4;
         final float n6 = sin2;

@@ -14,10 +14,10 @@ public abstract class EntityAnimal extends EntityCreature {
 
     @Override
     protected float getBlockPathWeight(final int xCoord, final int yCoord, final int zCoord) {
-        if (this.worldObj.getBlockId(xCoord, yCoord - 1, zCoord) == Block.grass.blockID) {
+        if (this.world.getBlockId(xCoord, yCoord - 1, zCoord) == Block.grass.blockID) {
             return 10.0f;
         }
-        return this.worldObj.getLightBrightness(xCoord, yCoord, zCoord) - 0.5f;
+        return this.world.getLightBrightness(xCoord, yCoord, zCoord) - 0.5f;
     }
 
     @Override
@@ -32,6 +32,6 @@ public abstract class EntityAnimal extends EntityCreature {
 
     @Override
     public boolean getCanSpawnHere(final double nya1, final double nya2, final double nya3) {
-        return this.worldObj.getBlockLightValue(Mth.floor_double(nya1), Mth.floor_double(nya2), Mth.floor_double(nya3)) > 8 && super.getCanSpawnHere(nya1, nya2, nya3);
+        return this.world.getBlockLightValue(Mth.floor_double(nya1), Mth.floor_double(nya2), Mth.floor_double(nya3)) > 8 && super.getCanSpawnHere(nya1, nya2, nya3);
     }
 }

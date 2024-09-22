@@ -3,6 +3,7 @@ package net.opencraft.tests;
 import static net.opencraft.OpenCraft.*;
 
 import java.io.*;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +15,6 @@ public class DownloadResourcesJob implements Job {
 	private Thread thread;
 	private boolean cancelled = false;
 	private boolean errors = false;
-	private boolean closing = false;
 	private File resourcesFolder;
 
 	public DownloadResourcesJob(File file) {
@@ -26,7 +26,7 @@ public class DownloadResourcesJob implements Job {
 	public void run() {
 		try {
 			final List<String> list = new ArrayList<>();
-			final URL url = new URL("https://opencraft.nicolastech.xyz/resources/");
+			final URL url = new URL("http://opencraft.nicolasindustries.com/resources/");
 			try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(url.openStream()))) {
 				String line;
 				while ((line = bufferedReader.readLine()) != null) {
@@ -35,12 +35,10 @@ public class DownloadResourcesJob implements Job {
 			}
 			for (int i = 0; i < list.size(); ++i) {
 				this.downloadAndInstallResource(url, (String) list.get(i));
-				if (this.closing) {
-					return;
-				}
 			}
-		} catch (IOException ex) {
+		} catch (Exception ex) {
 			exception(ex);
+			System.err.println("Job " + this + " finished with errors!");
 		}
 	}
 
@@ -62,23 +60,17 @@ public class DownloadResourcesJob implements Job {
 	}
 
 	@SuppressWarnings("deprecation")
-	private void downloadAndInstallResource(final URL uRL, final String string) {
-		try {
-			final String[] split = string.split(",");
-			final String string2 = split[0];
-			final int int1 = Integer.parseInt(split[1]);
-			final File file = new File(this.resourcesFolder, string2);
-			if (!file.exists() || file.length() != int1) {
-				file.getParentFile().mkdirs();
-				
-				this.downloadResource(new URL(uRL, string2.replaceAll(" ", "%20")), file, int1);
-				if (this.closing) 
-					return;
-			}
-			oc.installResource(string2, file);
-		} catch (Exception ex) {
-			ex.printStackTrace();
+	private void downloadAndInstallResource(final URL uRL, final String string) throws MalformedURLException, IOException {
+		final String[] split = string.split(",");
+		final String string2 = split[0];
+		final int int1 = Integer.parseInt(split[1]);
+		final File file = new File(this.resourcesFolder, string2);
+		if (!file.exists() || file.length() != int1) {
+			file.getParentFile().mkdirs();
+
+			this.downloadResource(new URL(uRL, string2.replaceAll(" ", "%20")), file, int1);
 		}
+		oc.installResource(string2, file);
 	}
 
 	private void downloadResource(final URL uRL, final File file, final int integer) throws IOException {
@@ -100,9 +92,11 @@ public class DownloadResourcesJob implements Job {
 			public boolean isFinished() {
 				return !thread.isAlive();
 			}
+
 			public boolean isCancelled() {
 				return cancelled;
 			}
+
 			public boolean endedWithErrors() {
 				return errors;
 			}
@@ -124,6 +118,11 @@ public class DownloadResourcesJob implements Job {
 	@Override
 	public void stop() {
 		ThreadHelper.stopThread(thread);
+	}
+
+	@Override
+	public String toString() {
+		return getClass().getSimpleName();
 	}
 
 }

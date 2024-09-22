@@ -17,6 +17,6 @@ public class EntityGiant extends EntityMonster {
 
     @Override
     protected float getBlockPathWeight(final int xCoord, final int yCoord, final int zCoord) {
-        return this.worldObj.getLightBrightness(xCoord, yCoord, zCoord) - 0.5f;
+        return this.world.getLightBrightness(xCoord, yCoord, zCoord) - 0.5f;
     }
 }

@@ -38,7 +38,7 @@ public class EntityPickupFX extends EntityFX {
         int n = Mth.floor_double(d7);
         int n2 = Mth.floor_double(d8 + (double) (this.yOffset / 2.0f));
         int n3 = Mth.floor_double(d9);
-        float f8 = this.worldObj.getLightBrightness(n, n2, n3);
+        float f8 = this.world.getLightBrightness(n, n2, n3);
         GL11.glColor4f((float) f8, (float) f8, (float) f8, (float) 1.0f);
         RenderManager.instance.renderEntityWithPosYaw(this.entityToPickUp, (float) (d7 -= interpPosX), (float) (d8 -= interpPosY), (float) (d9 -= interpPosZ), this.entityToPickUp.rotationYaw, f);
     }
