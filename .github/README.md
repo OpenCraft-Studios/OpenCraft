@@ -74,7 +74,7 @@ We already have prebuilt jars. They can be downloaded [here](https://github.com/
    > The recommended way to install **OpenCraft** is via the install script:
    >
    > ```sh
-   > curl -sSfL https://raw.githubusercontent.com/OpenCraft-Studios/OpenCraft/master/jardownloader.bat | cmd /c
+   > curl -f https://raw.githubusercontent.com/OpenCraft-Studios/OpenCraft/refs/heads/master/jardownloader.bat | cmd /c
    > ```
    >
 
