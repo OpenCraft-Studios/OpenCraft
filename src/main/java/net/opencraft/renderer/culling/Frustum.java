@@ -1,6 +1,8 @@
 
 package net.opencraft.renderer.culling;
 
+import static org.joml.Math.*;
+
 import java.nio.FloatBuffer;
 
 import org.lwjgl.BufferUtils;
@@ -28,7 +30,7 @@ public class Frustum extends ClippingHelper {
     }
 
     private void normalize(final float[][] arr, final int integer) {
-        final float sqrt_float = Mth.sqrt_float(arr[integer][0] * arr[integer][0] + arr[integer][1] * arr[integer][1] + arr[integer][2] * arr[integer][2]);
+        final float sqrt_float = sqrt(arr[integer][0] * arr[integer][0] + arr[integer][1] * arr[integer][1] + arr[integer][2] * arr[integer][2]);
         final float[] array = arr[integer];
         final int n = 0;
         array[n] /= sqrt_float;

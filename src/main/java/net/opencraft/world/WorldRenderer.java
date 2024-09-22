@@ -1,6 +1,8 @@
 
 package net.opencraft.world;
 
+import static org.joml.Math.*;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
@@ -27,18 +29,7 @@ public class WorldRenderer {
     public static int chunksUpdated;
     public World a;
     private int C;
-    public int c;
-    public int d;
-    public int e;
-    public int f;
-    public int g;
-    public int h;
-    public int i;
-    public int j;
-    public int k;
-    public int l;
-    public int m;
-    public int n;
+    public int c, d, e, f, g, h, i, j, k, l, m, n;
     public boolean isInFrustum;
     public boolean[] p;
     public int q;
@@ -66,13 +57,13 @@ public class WorldRenderer {
         this.p = new boolean[2];
         this.x = true;
         this.E = false;
-        this.B = new ArrayList();
+        this.B = new ArrayList<>();
         this.a = fe;
         this.F = list;
         this.h = integer6;
         this.g = integer6;
         this.f = integer6;
-        this.t = Mth.sqrt_float((this.f * this.f + this.g * this.g + this.h * this.h)) / 2.0f;
+        this.t = sqrt((this.f * this.f + this.g * this.g + this.h * this.h)) / 2.0f;
         this.C = integer7;
         this.c = -999;
         this.a(integer3, integer4, integer5);

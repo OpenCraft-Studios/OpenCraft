@@ -182,7 +182,7 @@ public abstract class Entity {
         this.prevRotationYaw = this.rotationYaw;
         if (this.handleWaterMovement()) {
             if (!this.inWater && !this.isFirstUpdate) {
-                float volume = Mth.sqrt_double(this.motionX * this.motionX * 0.20000000298023224 + this.motionY * this.motionY + this.motionZ * this.motionZ * 0.20000000298023224) * 0.2f;
+                float volume = (float) (sqrt(this.motionX * this.motionX * 0.20000000298023224 + this.motionY * this.motionY + this.motionZ * this.motionZ * 0.20000000298023224) * 0.2f);
                 if (volume > 1.0f) {
                     volume = 1.0f;
                 }
@@ -332,7 +332,7 @@ public abstract class Entity {
         }
         final double n4 = this.posX - posX;
         final double n5 = this.posZ - posZ;
-        this.distanceWalkedModified += (float) (Mth.sqrt_double(n4 * n4 + n5 * n5) * 0.6);
+        this.distanceWalkedModified += (float) (sqrt(n4 * n4 + n5 * n5) * 0.6);
         if (this.canTriggerWalking) {
             final int floor_double = Mth.floor_double(this.posX);
             final int floor_double2 = Mth.floor_double(this.posY - 0.20000000298023224 - this.yOffset);
@@ -399,18 +399,16 @@ public abstract class Entity {
     }
 
     public void moveFlying(float xCoord, float yCoord, final float zCoord) {
-        float sqrt_float = Mth.sqrt_float(xCoord * xCoord + yCoord * yCoord);
-        if (sqrt_float < 0.01f) {
-            return;
-        }
-        if (sqrt_float < 1.0f) {
-            sqrt_float = 1.0f;
-        }
-        sqrt_float = zCoord / sqrt_float;
-        xCoord *= sqrt_float;
-        yCoord *= sqrt_float;
-        final float sin = sin(toRadians(this.rotationYaw));
-        final float cos = cos(toRadians(this.rotationYaw));
+        float sqrt_f = sqrt(xCoord * xCoord + yCoord * yCoord);
+        sqrt_f = clamp(0.01f, 1, sqrt_f);
+        sqrt_f = zCoord / sqrt_f;
+        
+        xCoord *= sqrt_f;
+        yCoord *= sqrt_f;
+        
+        final float sin = sin(toRadians(rotationYaw));
+        final float cos = cos(toRadians(rotationYaw));
+        
         this.motionX += xCoord * cos - yCoord * sin;
         this.motionZ += yCoord * cos + xCoord * sin;
     }
@@ -440,7 +438,7 @@ public abstract class Entity {
         final float n = (float) (this.posX - entity.posX);
         final float n2 = (float) (this.posY - entity.posY);
         final float n3 = (float) (this.posZ - entity.posZ);
-        return Mth.sqrt_float(n * n + n2 * n2 + n3 * n3);
+        return sqrt(n * n + n2 * n2 + n3 * n3);
     }
 
     public double getDistanceSq(final double xCoord, final double yCoord, final double zCoord) {
@@ -454,7 +452,7 @@ public abstract class Entity {
         final double n = this.posX - xCoord;
         final double n2 = this.posY - yCoord;
         final double n3 = this.posZ - zCoord;
-        return Mth.sqrt_double(n * n + n2 * n2 + n3 * n3);
+        return sqrt(n * n + n2 * n2 + n3 * n3);
     }
 
     public double getDistanceSqToEntity(final Entity entity) {
@@ -472,7 +470,7 @@ public abstract class Entity {
         double n2 = entity.posZ - this.posZ;
         double abs_max = max(abs(n), abs(n2));
         if (abs_max >= 0.009999999776482582) {
-            abs_max = Mth.sqrt_double(abs_max);
+            abs_max = sqrt(abs_max);
             n /= abs_max;
             n2 /= abs_max;
             double n3 = 1.0 / abs_max;

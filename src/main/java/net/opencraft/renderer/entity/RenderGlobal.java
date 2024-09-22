@@ -414,7 +414,7 @@ public class RenderGlobal implements IWorldAccess {
 							this.n[k].x = true;
 						}
 						if (this.n[k].isInFrustum && !this.n[k].y) {
-							final int n14 = (int) (1.0f + Mth.sqrt_float(this.n[k].chunkIndex(gi)) / 128.0f);
+							final int n14 = (int) (1.0f + sqrt(this.n[k].chunkIndex(gi)) / 128.0f);
 							if (this.x % n14 == k % n14) {
 								final WorldRenderer worldRenderer = this.n[k];
 								final float n15 = (float) (worldRenderer.i - n);
@@ -930,12 +930,12 @@ public class RenderGlobal implements IWorldAccess {
 
 	public void a(final int integer1, final int integer2, final int integer3, final int integer4, final int integer5,
 			final int integer6) {
-		final int a = Mth.a(integer1, 16);
-		final int a2 = Mth.a(integer2, 16);
-		final int a3 = Mth.a(integer3, 16);
-		final int a4 = Mth.a(integer4, 16);
-		final int a5 = Mth.a(integer5, 16);
-		final int a6 = Mth.a(integer6, 16);
+		final int a = Math.floorDiv(integer1, 16);
+		final int a2 = Math.floorDiv(integer2, 16);
+		final int a3 = Math.floorDiv(integer3, 16);
+		final int a4 = Math.floorDiv(integer4, 16);
+		final int a5 = Math.floorDiv(integer5, 16);
+		final int a6 = Math.floorDiv(integer6, 16);
 		for (int i = a; i <= a4; ++i) {
 			int n = i % this.p;
 			if (n < 0) {
