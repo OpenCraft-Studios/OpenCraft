@@ -23,7 +23,7 @@
       <b>Explore the docs »</b>
     </a>
     <br />
-    <a href="https://github.com/OpenCraft-Studios/OpenCraft/issues">
+    <a href="https://github.com/OpenCraft-Studios/OpenCraft/issues/new?assignees=&labels=&projects=&template=bug_report.md&title=">
       Report Bugs
     </a>
     ·
@@ -31,7 +31,7 @@
       Download
     </a>
     ·
-    <a href="https://github.com/OpenCraft-Studios/OpenCraft/pulls">
+    <a href="https://github.com/OpenCraft-Studios/OpenCraft/issues/new?assignees=&labels=&projects=&template=feature_request.md&title=">
       Feature Request
     </a>
   </p>
@@ -42,9 +42,6 @@
 > [!WARNING]
 > This project **IS NOT** affiliated with Mojang or other minecraft product. <br />
 > This is just a hobby and I do not take care of any uses provided to this utility.
-
-> ```FOR SUPPORT:``` https://github.com/OpenCraft-Studios/OpenCraft/issues/ <br />
-> ```FOR CONTRIBUTING:``` https://github.com/OpenCraft-Studios/OpenCraft/pulls
 
 <br />
 
@@ -67,10 +64,9 @@ I hope that you can be part of that community forking the repository or simply, 
     <img width="49%" src="assets/images/screenshot1.png" alt="PNG"/>&nbsp;
     <img width="49%" src="assets/images/screenshot2.png" alt="PNG"/>
   </p>
-<!--  <div align="center">
-    <img width="80%" src="assets/images/screenshot3.png" alt="PNG<"/>
-    <p><b>+6 languages</b></p>
-  </div>-->
+  <div align="center">
+    <img width="80%" src="assets/images/screenshot3.png" alt="PNG"/>
+  </div>
 </details>
 
 ---
