@@ -23,7 +23,7 @@ import java.util.List;
 import net.opencraft.IsoImageBuffer;
 import net.opencraft.TerrainTextureManager;
 import net.opencraft.ThreadRunIsoClient;
-import net.opencraft.util.Platform;
+import net.opencraft.util.EnumOS1;
 import net.opencraft.util.OsMap;
 import net.opencraft.world.World;
 import net.opencraft.world.chunk.storage.SaveHandler;
@@ -83,27 +83,27 @@ public class CanvasIsomPreview extends Canvas implements KeyListener, MouseListe
         return file;
     }
 
-    private static Platform getOs() {
+    private static EnumOS1 getOs() {
         final String lowerCase = System.getProperty("os.name").toLowerCase();
         if (lowerCase.contains("win")) {
-            return Platform.WINDOWS;
+            return EnumOS1.windows;
         }
         if (lowerCase.contains("mac")) {
-            return Platform.MACOS;
+            return EnumOS1.macos;
         }
         if (lowerCase.contains("solaris")) {
-            return Platform.SOLARIS;
+            return EnumOS1.solaris;
         }
         if (lowerCase.contains("sunos")) {
-            return Platform.SOLARIS;
+            return EnumOS1.solaris;
         }
         if (lowerCase.contains("linux")) {
-            return Platform.LINUX;
+            return EnumOS1.linux;
         }
         if (lowerCase.contains("unix")) {
-            return Platform.LINUX;
+            return EnumOS1.linux;
         }
-        return Platform.UNKNOWN;
+        return EnumOS1.unknown;
     }
 
     public CanvasIsomPreview() {

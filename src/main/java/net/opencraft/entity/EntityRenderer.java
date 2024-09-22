@@ -248,7 +248,6 @@ public class EntityRenderer {
     }
 
     public void updateCameraAndRender(final float float1) {
-    	// TODO: this 
         if (this.anaglyphEnable && !Display.isActive()) {
             this.mc.displayInGameMenu();
         }

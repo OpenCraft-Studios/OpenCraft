@@ -34,14 +34,14 @@ public class Vec3 {
         this.z = double3;
     }
 
-    private Vec3 set(final double double1, final double double2, final double double3) {
+    private Vec3 setComponents(final double double1, final double double2, final double double3) {
         this.x = double1;
         this.y = double2;
         this.z = double3;
         return this;
     }
 
-    public Vec3 sub(final Vec3 bo) {
+    public Vec3 subtract(final Vec3 bo) {
         return newTemp(bo.x - this.x, bo.y - this.y, bo.z - this.z);
     }
 

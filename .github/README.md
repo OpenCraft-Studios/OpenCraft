@@ -78,19 +78,15 @@ I hope that you can be part of that community forking the repository or simply, 
 ## ☕ Downloading
 We already have prebuilt jars. They can be downloaded [here](https://github.com/OpenCraft-Studios/OpenCraft/actions).
 
-```bash
-java -jar opencraft-client.jar
+###### Windows
+```batch
+java -cp OpenCraft.jar; net.opencraft.OpenCraft --gameDir opcraft
 ```
 
----
-
-## 🚧 Build from source
+###### Bash
 ```bash
-git clone https://github.com/OpenCraft-Studios/OpenCraft
-cd OpenCraft
-mvn clean package
-cd target
-java -jar opencraft-client.jar
+#!/bin/bash
+java -cp OpenCraft.jar: net.opencraft.OpenCraft --gameDir opcraft/
 ```
 
 ---

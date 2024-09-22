@@ -6,24 +6,24 @@ public class EnumOSMappingHelper {
     public static final /* synthetic */ int[] enumOSMappingArray;
 
     static {
-        enumOSMappingArray = new int[Platform.values().length];
+        enumOSMappingArray = new int[EnumOS2.values().length];
         try {
-            EnumOSMappingHelper.enumOSMappingArray[Platform.LINUX.ordinal()] = 1;
+            EnumOSMappingHelper.enumOSMappingArray[EnumOS2.linux.ordinal()] = 1;
         } catch (NoSuchFieldError noSuchFieldError) {
             // empty catch block
         }
         try {
-            EnumOSMappingHelper.enumOSMappingArray[Platform.SOLARIS.ordinal()] = 2;
+            EnumOSMappingHelper.enumOSMappingArray[EnumOS2.solaris.ordinal()] = 2;
         } catch (NoSuchFieldError noSuchFieldError) {
             // empty catch block
         }
         try {
-            EnumOSMappingHelper.enumOSMappingArray[Platform.WINDOWS.ordinal()] = 3;
+            EnumOSMappingHelper.enumOSMappingArray[EnumOS2.windows.ordinal()] = 3;
         } catch (NoSuchFieldError noSuchFieldError) {
             // empty catch block
         }
         try {
-            EnumOSMappingHelper.enumOSMappingArray[Platform.MACOS.ordinal()] = 4;
+            EnumOSMappingHelper.enumOSMappingArray[EnumOS2.macos.ordinal()] = 4;
         } catch (NoSuchFieldError noSuchFieldError) {
             // empty catch block
         }

@@ -1,11 +1,9 @@
 package net.opencraft;
 
-import static org.joml.Math.*;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.util.glu.GLU.*;
 
 import java.io.File;
-import java.net.URL;
 
 import org.lwjgl.LWJGLException;
 import org.lwjgl.Sys;
@@ -125,7 +123,7 @@ public class OpenCraft implements Runnable {
 		this.tempDisplayWidth = width;
 		this.tempDisplayHeight = height;
 		this.fullscreen = boolean6;
-		//(new SleepingForeverThread("Timer hack thread")).start();
+		(new SleepingForeverThread("Timer hack thread")).start();
 		this.width = width;
 		this.height = height;
 		this.fullscreen = boolean6;
@@ -143,18 +141,18 @@ public class OpenCraft implements Runnable {
 	}
 
 	public void init() throws LWJGLException {
-		if (fullscreen) {
+		if (oc.fullscreen) {
 			Display.setFullscreen(true);
-			width = Display.getDisplayMode().getWidth();
-			height = Display.getDisplayMode().getHeight();
-			if (width <= 0) {
-				width = 1;
+			oc.width = Display.getDisplayMode().getWidth();
+			oc.height = Display.getDisplayMode().getHeight();
+			if (oc.width <= 0) {
+				oc.width = 1;
 			}
-			if (height <= 0) {
-				height = 1;
+			if (oc.height <= 0) {
+				oc.height = 1;
 			}
 		} else {
-			Display.setDisplayMode(new DisplayMode(width, height));
+			Display.setDisplayMode(new DisplayMode(oc.width, oc.height));
 		}
 		Display.setTitle("OpenCraft ".concat(SharedConstants.VERSION_STRING));
 		Display.setResizable(true);
@@ -165,21 +163,20 @@ public class OpenCraft implements Runnable {
 		} catch (LWJGLException ex) {
 			System.exit(1);
 		}
-		mcDataDir = getMinecraftDir();
-		options = new GameSettings(oc, mcDataDir);
-		renderer = new Renderer(options);
-		fontRenderer = new FontRenderer(options, "/assets/default.png", renderer);
-		//loadScreen();
-		System.out.println("waos");
+		oc.mcDataDir = getMinecraftDir();
+		oc.options = new GameSettings(oc, oc.mcDataDir);
+		oc.renderer = new Renderer(oc.options);
+		oc.fontRenderer = new FontRenderer(oc.options, "/assets/default.png", oc.renderer);
+		oc.loadScreen();
 		Keyboard.create();
 		Mouse.create();
-		mouseHelper = new MouseHelper(null);
+		oc.mouseHelper = new MouseHelper(null);
 		try {
 //            Controllers.create();
 		} catch (Exception ex2) {
 			ex2.printStackTrace();
 		}
-		checkGLError();
+		oc.checkGLError();
 		glEnable(GL_TEXTURE_2D);
 		glShadeModel(7425);
 		glClearDepth(1.0);
@@ -191,33 +188,34 @@ public class OpenCraft implements Runnable {
 		glMatrixMode(5889);
 		glLoadIdentity();
 		glMatrixMode(5888);
-		checkGLError();
-		glCapabilities = new OpenGlCapsChecker();
-		sndManager.loadSoundSettings(options);
-		renderer.registerTextureFX(textureLavaFX);
-		renderer.registerTextureFX(textureWaterFX);
-		renderer.registerTextureFX(new TextureWaterFlowFX());
-		renderer.registerTextureFX(new TextureLavaFlowFX());
-		renderer.registerTextureFX(new TextureFlamesFX(0));
-		renderer.registerTextureFX(new TextureFlamesFX(1));
-		renderer.registerTextureFX(new TextureGearsFX(0));
-		renderer.registerTextureFX(new TextureGearsFX(1));
-		renderGlobal = new RenderGlobal(oc, renderer);
-		glViewport(0, 0, width, height);
-		displayGuiScreen(new GuiMainMenu());
-		effectRenderer = new EffectRenderer(world, renderer);
+		oc.checkGLError();
+		oc.glCapabilities = new OpenGlCapsChecker();
+		oc.sndManager.loadSoundSettings(oc.options);
+		oc.renderer.registerTextureFX(oc.textureLavaFX);
+		oc.renderer.registerTextureFX(oc.textureWaterFX);
+		oc.renderer.registerTextureFX(new TextureWaterFlowFX());
+		oc.renderer.registerTextureFX(new TextureLavaFlowFX());
+		oc.renderer.registerTextureFX(new TextureFlamesFX(0));
+		oc.renderer.registerTextureFX(new TextureFlamesFX(1));
+		oc.renderer.registerTextureFX(new TextureGearsFX(0));
+		oc.renderer.registerTextureFX(new TextureGearsFX(1));
+		oc.renderGlobal = new RenderGlobal(oc, oc.renderer);
+		glViewport(0, 0, oc.width, oc.height);
+		oc.displayGuiScreen(new GuiMainMenu());
+		oc.effectRenderer = new EffectRenderer(oc.world, oc.renderer);
 		try {
-			new DownloadResourcesJob().start();
+			DownloadResourcesJob job = new DownloadResourcesJob(mcDataDir);
+			job.start();
 		} catch (Exception ex4) {
 			ex4.printStackTrace();
 		}
-		checkGLError();
-		ingameGUI = new GuiIngame(oc);
-		playerController.a();
+		oc.checkGLError();
+		oc.ingameGUI = new GuiIngame(oc);
+		oc.playerController.a();
 	}
 
 	private void loadScreen() throws LWJGLException {
-		final ScaledResolution scaledResolution = new ScaledResolution(width, height);
+		final ScaledResolution scaledResolution = new ScaledResolution(oc.width, oc.height);
 		final int scaledWidth = scaledResolution.getScaledWidth();
 		final int scaledHeight = scaledResolution.getScaledHeight();
 		glClear(16640);
@@ -227,49 +225,49 @@ public class OpenCraft implements Runnable {
 		glMatrixMode(5888);
 		glLoadIdentity();
 		glTranslatef(0.0f, 0.0f, -2000.0f);
-		glViewport(0, 0, width, height);
+		glViewport(0, 0, oc.width, oc.height);
 		glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 		glDisable(2896);
 		glDisable(2912);
 		glEnable(3553);
 		final Tessellator t = Tessellator.instance;
-		glBindTexture(3553, renderer.getTexture("/assets/dirt.png"));
+		glBindTexture(3553, oc.renderer.getTexture("/assets/dirt.png"));
 		glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 		final float n = 32.0f;
 		t.beginQuads();
 		t.setColorOpaque_I(4210752);
-		t.vertexUV(0.0, height, 0.0, 0.0, height / n + 0.0f);
-		t.vertexUV(width, height, 0.0, width / n, height / n + 0.0f);
-		t.vertexUV(width, 0.0, 0.0, width / n, 0.0);
+		t.vertexUV(0.0, oc.height, 0.0, 0.0, oc.height / n + 0.0f);
+		t.vertexUV(oc.width, oc.height, 0.0, oc.width / n, oc.height / n + 0.0f);
+		t.vertexUV(oc.width, 0.0, 0.0, oc.width / n, 0.0);
 		t.vertexUV(0.0, 0.0, 0.0, 0.0, 0.0);
 		t.draw();
 		glEnable(3008);
 		glAlphaFunc(516, 0.1f);
-		fontRenderer.drawShadow("Loading...", 8, height / 2 - 16, -1);
+		oc.fontRenderer.drawStringWithShadow2("Loading...", 8, oc.height / 2 - 16, -1);
 		Display.swapBuffers();
 	}
 
 	public void displayGuiScreen(GuiScreen screen) {
-		if (currentScreen instanceof GuiEmptyScreen)
+		if (oc.currentScreen instanceof GuiEmptyScreen)
 			return;
 
-		if (currentScreen != null)
-			currentScreen.onGuiClosed();
+		if (oc.currentScreen != null)
+			oc.currentScreen.onGuiClosed();
 
 		if (screen == null) {
-			if (world == null)
+			if (oc.world == null)
 				screen = new GuiMainMenu();
-			else if (player.health <= 0)
+			else if (oc.player.health <= 0)
 				screen = new GuiGameOver();
 		}
 
-		if ((currentScreen = screen) != null) {
-			setIngameNotInFocus();
-			final ScaledResolution scaledResolution = new ScaledResolution(width, height);
+		if ((oc.currentScreen = screen) != null) {
+			oc.setIngameNotInFocus();
+			final ScaledResolution scaledResolution = new ScaledResolution(oc.width, oc.height);
 			screen.setWorldAndResolution(oc, scaledResolution.getScaledWidth(), scaledResolution.getScaledHeight());
-			skipRenderWorld = false;
+			oc.skipRenderWorld = false;
 		} else {
-			setIngameFocus();
+			oc.setIngameFocus();
 		}
 	}
 
@@ -284,12 +282,12 @@ public class OpenCraft implements Runnable {
 	public void stop() {
 		try {
 			System.out.println("Stopping!");
-			changeWorld1(null);
+			oc.changeWorld1(null);
 			try {
 				GLAllocation.deleteTexturesAndDisplayLists();
 			} catch (Exception ex2) {
 			}
-			sndManager.shutdown();
+			oc.sndManager.shutdown();
 			Mouse.destroy();
 			Keyboard.destroy();
 		} finally {
@@ -302,73 +300,80 @@ public class OpenCraft implements Runnable {
 
 	@Override
 	public void run() {
-		running = true;
+		oc.running = true;
 		try {
-			init();
-			System.out.println("alr");
+			oc.init();
 		} catch (Exception exception) {
 			exception.printStackTrace();
-			displayUnexpectedThrowable(new UnexpectedThrowable("Failed to start game", exception));
+			oc.displayUnexpectedThrowable(new UnexpectedThrowable("Failed to start game", exception));
 			return;
 		}
 		try {
 			long currentTimeMillis = System.currentTimeMillis();
 			int n = 0;
-			while (running) {
+			while (oc.running) {
 				AABB.clearBoundingBoxPool();
-				if (Display.isCloseRequested())
-					shutdown();
-				
-				if (isGamePaused) {
-					final float renderPartialTicks = timer.renderPartialTicks;
-					timer.updateTimer();
-					timer.renderPartialTicks = renderPartialTicks;
+				if (Display.isCloseRequested()) {
+					oc.shutdown();
+				}
+				if (oc.isGamePaused) {
+					final float renderPartialTicks = oc.timer.renderPartialTicks;
+					oc.timer.updateTimer();
+					oc.timer.renderPartialTicks = renderPartialTicks;
 				} else {
-					timer.updateTimer();
+					oc.timer.updateTimer();
 				}
 				// for (int i = 0; i < minecraft.timer.elapsedTicks; ++i) {
 				// ++minecraft.ticksRan;
 				// minecraft.runTick();
 				// }
 				for (int j = 0; j < Math.min(10, this.timer.elapsedTicks); ++j) {
-					++ticksRan;
+					++oc.ticksRan;
 					this.runTick();
 				}
-				checkGLError();
-				if (isGamePaused)
-					timer.renderPartialTicks = 1.0f;
+				oc.checkGLError();
+				if (oc.isGamePaused)
+					oc.timer.renderPartialTicks = 1.0f;
 
-				sndManager.setListener(player, timer.renderPartialTicks);
+				oc.sndManager.setListener(oc.player, oc.timer.renderPartialTicks);
 				glEnable(GL_TEXTURE_2D);
-				if (world != null)
-					while (world.updatingLighting());
+				if (oc.world != null)
+					while (oc.world.updatingLighting());
 				
-				if (!skipRenderWorld) {
-					playerController.setPartialTime(timer.renderPartialTicks);
-					entityRenderer.updateCameraAndRender(timer.renderPartialTicks);
+				if (!oc.skipRenderWorld) {
+					oc.playerController.setPartialTime(oc.timer.renderPartialTicks);
+					oc.entityRenderer.updateCameraAndRender(oc.timer.renderPartialTicks);
 				}
-				if (!Display.isActive() && fullscreen)
-					toggleFullscreen();
+				if (!Display.isActive() && oc.fullscreen)
+					oc.toggleFullscreen();
 				
 				if (Keyboard.isKeyDown(64))
-					displayDebugInfo();
+					oc.displayDebugInfo();
 				else
-					prevFrameTime = System.nanoTime();
+					oc.prevFrameTime = System.nanoTime();
 				
-				Thread.yield();
+				// Thread.yield();
 				Display.update();
-				if (Display.wasResized())
-					resize();
-				
-				if (options.limitFramerate)
+				if (Display.wasResized()) {
+					oc.width = Display.getWidth();
+					oc.height = Display.getHeight();
+					if (oc.width <= 0) {
+						oc.width = 1;
+					}
+					if (oc.height <= 0) {
+						oc.height = 1;
+					}
+					oc.resize(oc.width, oc.height);
+				}
+				if (oc.options.limitFramerate)
 					Thread.sleep(5L);
 				
-				checkGLError();
+				oc.checkGLError();
 				++n;
-				isGamePaused = (!isMultiplayerWorld() && currentScreen != null
-						&& currentScreen.doesGuiPauseGame());
+				oc.isGamePaused = (!oc.isMultiplayerWorld() && oc.currentScreen != null
+						&& oc.currentScreen.doesGuiPauseGame());
 				while (System.currentTimeMillis() >= currentTimeMillis + 1000L) {
-					debug = new StringBuilder().append(n).append(" fps, ").append(WorldRenderer.chunksUpdated)
+					oc.debug = new StringBuilder().append(n).append(" fps, ").append(WorldRenderer.chunksUpdated)
 							.append(" chunk updates").toString();
 					WorldRenderer.chunksUpdated = 0;
 					currentTimeMillis += 1000L;
@@ -378,24 +383,24 @@ public class OpenCraft implements Runnable {
 		} catch (OpenCraftError openCraftError) {
 		} catch (Exception exception2) {
 			exception2.printStackTrace();
-			displayUnexpectedThrowable(new UnexpectedThrowable("Unexpected error", exception2));
+			oc.displayUnexpectedThrowable(new UnexpectedThrowable("Unexpected error", exception2));
 		} finally {
-			stop();
+			oc.stop();
 		}
 	}
 
 	private void displayDebugInfo() {
-		if (prevFrameTime == -1L) {
-			prevFrameTime = System.nanoTime();
+		if (oc.prevFrameTime == -1L) {
+			oc.prevFrameTime = System.nanoTime();
 		}
 		final long nanoTime = System.nanoTime();
 		OpenCraft.tickTimes[OpenCraft.numRecordedFrameTimes++ & OpenCraft.tickTimes.length - 1] = nanoTime
-				- prevFrameTime;
-		prevFrameTime = nanoTime;
+				- oc.prevFrameTime;
+		oc.prevFrameTime = nanoTime;
 		glClear(256);
 		glMatrixMode(5889);
 		glLoadIdentity();
-		glOrtho(0.0, width, height, 0.0, 1000.0, 3000.0);
+		glOrtho(0.0, oc.width, oc.height, 0.0, 1000.0, 3000.0);
 		glMatrixMode(5888);
 		glLoadIdentity();
 		glTranslatef(0.0f, 0.0f, -2000.0f);
@@ -404,10 +409,10 @@ public class OpenCraft implements Runnable {
 		final Tessellator instance = Tessellator.instance;
 		instance.begin(7);
 		instance.setColorOpaque_I(538968064);
-		instance.vertex(0.0, height - 100, 0.0);
-		instance.vertex(0.0, height, 0.0);
-		instance.vertex(OpenCraft.tickTimes.length, height, 0.0);
-		instance.vertex(OpenCraft.tickTimes.length, height - 100, 0.0);
+		instance.vertex(0.0, oc.height - 100, 0.0);
+		instance.vertex(0.0, oc.height, 0.0);
+		instance.vertex(OpenCraft.tickTimes.length, oc.height, 0.0);
+		instance.vertex(OpenCraft.tickTimes.length, oc.height - 100, 0.0);
 		instance.draw();
 		long n = 0L;
 		for (int i = 0; i < OpenCraft.tickTimes.length; ++i) {
@@ -416,10 +421,10 @@ public class OpenCraft implements Runnable {
 		int i = (int) (n / 200000L / OpenCraft.tickTimes.length);
 		instance.begin(7);
 		instance.setColorOpaque_I(541065216);
-		instance.vertex(0.0, height - i, 0.0);
-		instance.vertex(0.0, height, 0.0);
-		instance.vertex(OpenCraft.tickTimes.length, height, 0.0);
-		instance.vertex(OpenCraft.tickTimes.length, height - i, 0.0);
+		instance.vertex(0.0, oc.height - i, 0.0);
+		instance.vertex(0.0, oc.height, 0.0);
+		instance.vertex(OpenCraft.tickTimes.length, oc.height, 0.0);
+		instance.vertex(OpenCraft.tickTimes.length, oc.height - i, 0.0);
 		instance.draw();
 		instance.begin(1);
 		for (int j = 0; j < OpenCraft.tickTimes.length; ++j) {
@@ -430,126 +435,126 @@ public class OpenCraft implements Runnable {
 			int n4 = n3 * n3 / 255;
 			n4 = n4 * n4 / 255;
 			instance.setColorOpaque_I(-16777216 + n4 + n3 * 256 + n2 * 65536);
-			instance.vertex(j + 0.5f, height - OpenCraft.tickTimes[j] / 200000L + 0.5f, 0.0);
-			instance.vertex(j + 0.5f, height + 0.5f, 0.0);
+			instance.vertex(j + 0.5f, oc.height - OpenCraft.tickTimes[j] / 200000L + 0.5f, 0.0);
+			instance.vertex(j + 0.5f, oc.height + 0.5f, 0.0);
 		}
 		instance.draw();
 		glEnable(3553);
 	}
 
 	public void shutdown() {
-		running = false;
+		oc.running = false;
 	}
 
 	public void setIngameFocus() {
 		if (!Display.isActive()) {
 			return;
 		}
-		if (inGameHasFocus) {
+		if (oc.inGameHasFocus) {
 			return;
 		}
-		inGameHasFocus = true;
-		mouseHelper.grabMouse();
-		displayGuiScreen(null);
-		mouseTicksRan = ticksRan + 10000;
+		oc.inGameHasFocus = true;
+		oc.mouseHelper.grabMouse();
+		oc.displayGuiScreen(null);
+		oc.mouseTicksRan = oc.ticksRan + 10000;
 	}
 
 	public void setIngameNotInFocus() {
-		if (!inGameHasFocus) {
+		if (!oc.inGameHasFocus) {
 			return;
 		}
-		if (player != null) {
-			player.resetPlayerKeyState();
+		if (oc.player != null) {
+			oc.player.resetPlayerKeyState();
 		}
-		inGameHasFocus = false;
-		mouseHelper.ungrabMouseCursor();
+		oc.inGameHasFocus = false;
+		oc.mouseHelper.ungrabMouseCursor();
 	}
 
 	public void displayInGameMenu() {
-		if (currentScreen != null) {
+		if (oc.currentScreen != null) {
 			return;
 		}
-		displayGuiScreen(new GuiIngameMenu());
+		oc.displayGuiScreen(new GuiIngameMenu());
 	}
 
 	private void func_6254_a(final int integer, final boolean boolean2) {
-		if (playerController.field_1064_b) {
+		if (oc.playerController.field_1064_b) {
 			return;
 		}
-		if (integer == 0 && leftClickCounter > 0) {
+		if (integer == 0 && oc.leftClickCounter > 0) {
 			return;
 		}
-		if (boolean2 && objectMouseOver != null && objectMouseOver.typeOfHit == 0 && integer == 0) {
-			final int blockX = objectMouseOver.blockX;
-			final int blockY = objectMouseOver.blockY;
-			final int blockZ = objectMouseOver.blockZ;
-			playerController.sendBlockRemoving(blockX, blockY, blockZ, objectMouseOver.sideHit);
-			effectRenderer.addBlockHitEffects(blockX, blockY, blockZ, objectMouseOver.sideHit);
+		if (boolean2 && oc.objectMouseOver != null && oc.objectMouseOver.typeOfHit == 0 && integer == 0) {
+			final int blockX = oc.objectMouseOver.blockX;
+			final int blockY = oc.objectMouseOver.blockY;
+			final int blockZ = oc.objectMouseOver.blockZ;
+			oc.playerController.sendBlockRemoving(blockX, blockY, blockZ, oc.objectMouseOver.sideHit);
+			oc.effectRenderer.addBlockHitEffects(blockX, blockY, blockZ, oc.objectMouseOver.sideHit);
 		} else {
-			playerController.resetBlockRemoving();
+			oc.playerController.resetBlockRemoving();
 		}
 	}
 
 	private void clickMouse(final int integer) {
-		if (integer == 0 && leftClickCounter > 0) {
+		if (integer == 0 && oc.leftClickCounter > 0) {
 			return;
 		}
 		if (integer == 0) {
-			entityRenderer.itemRenderer.resetEquippedProgress();
+			oc.entityRenderer.itemRenderer.resetEquippedProgress();
 		}
-		if (objectMouseOver == null) {
-			if (integer == 0 && !(playerController instanceof PlayerControllerTest)) {
-				leftClickCounter = 10;
+		if (oc.objectMouseOver == null) {
+			if (integer == 0 && !(oc.playerController instanceof PlayerControllerTest)) {
+				oc.leftClickCounter = 10;
 			}
-		} else if (objectMouseOver.typeOfHit == 1) {
+		} else if (oc.objectMouseOver.typeOfHit == 1) {
 			if (integer == 0) {
-				player.a(objectMouseOver.entityHit);
+				oc.player.a(oc.objectMouseOver.entityHit);
 			}
 			if (integer == 1) {
-				player.c(objectMouseOver.entityHit);
+				oc.player.c(oc.objectMouseOver.entityHit);
 			}
-		} else if (objectMouseOver.typeOfHit == 0) {
-			final int blockX = objectMouseOver.blockX;
-			final int n = objectMouseOver.blockY;
-			final int blockZ = objectMouseOver.blockZ;
-			final int sideHit = objectMouseOver.sideHit;
-			final Block block = Block.blocksList[world.getBlockId(blockX, n, blockZ)];
+		} else if (oc.objectMouseOver.typeOfHit == 0) {
+			final int blockX = oc.objectMouseOver.blockX;
+			final int n = oc.objectMouseOver.blockY;
+			final int blockZ = oc.objectMouseOver.blockZ;
+			final int sideHit = oc.objectMouseOver.sideHit;
+			final Block block = Block.blocksList[oc.world.getBlockId(blockX, n, blockZ)];
 			if (integer == 0) {
-				world.onBlockHit(blockX, n, blockZ, objectMouseOver.sideHit);
-				if (block != Block.bedrock || player.unusedByte >= 100) {
-					playerController.clickBlock(blockX, n, blockZ);
+				oc.world.onBlockHit(blockX, n, blockZ, oc.objectMouseOver.sideHit);
+				if (block != Block.bedrock || oc.player.unusedByte >= 100) {
+					oc.playerController.clickBlock(blockX, n, blockZ);
 				}
 			} else {
-				final ItemStack currentItem = player.inventory.getCurrentItem();
-				final int blockId = world.getBlockId(blockX, n, blockZ);
-				if (blockId > 0 && Block.blocksList[blockId].blockActivated(world, blockX, n, blockZ, player)) {
+				final ItemStack currentItem = oc.player.inventory.getCurrentItem();
+				final int blockId = oc.world.getBlockId(blockX, n, blockZ);
+				if (blockId > 0 && Block.blocksList[blockId].blockActivated(oc.world, blockX, n, blockZ, oc.player)) {
 					return;
 				}
 				if (currentItem == null) {
 					return;
 				}
 				final int stackSize = currentItem.stackSize;
-				if (currentItem.useItem(player, world, blockX, n, blockZ, sideHit)) {
-					entityRenderer.itemRenderer.resetEquippedProgress();
+				if (currentItem.useItem(oc.player, oc.world, blockX, n, blockZ, sideHit)) {
+					oc.entityRenderer.itemRenderer.resetEquippedProgress();
 				}
 				if (currentItem.stackSize == 0) {
-					player.inventory.mainInventory[player.inventory.currentItem] = null;
+					oc.player.inventory.mainInventory[oc.player.inventory.currentItem] = null;
 				} else if (currentItem.stackSize != stackSize) {
-					entityRenderer.itemRenderer.b();
+					oc.entityRenderer.itemRenderer.b();
 				}
 			}
 		}
 		if (integer == 1) {
-			final ItemStack currentItem2 = player.inventory.getCurrentItem();
+			final ItemStack currentItem2 = oc.player.inventory.getCurrentItem();
 			if (currentItem2 != null) {
 				final int n = currentItem2.stackSize;
-				final ItemStack useItemRightClick = currentItem2.useItemRightClick(world, player);
+				final ItemStack useItemRightClick = currentItem2.useItemRightClick(oc.world, oc.player);
 				if (useItemRightClick != currentItem2
 						|| (useItemRightClick != null && useItemRightClick.stackSize != n)) {
-					player.inventory.mainInventory[player.inventory.currentItem] = useItemRightClick;
-					entityRenderer.itemRenderer.d();
+					oc.player.inventory.mainInventory[oc.player.inventory.currentItem] = useItemRightClick;
+					oc.entityRenderer.itemRenderer.d();
 					if (useItemRightClick.stackSize == 0) {
-						player.inventory.mainInventory[player.inventory.currentItem] = null;
+						oc.player.inventory.mainInventory[oc.player.inventory.currentItem] = null;
 					}
 				}
 			}
@@ -558,63 +563,68 @@ public class OpenCraft implements Runnable {
 
 	public void toggleFullscreen() {
 		try {
-			fullscreen = !fullscreen;
+			oc.fullscreen = !oc.fullscreen;
 			System.out.println("Toggle fullscreen!");
-			if (fullscreen) {
+			if (oc.fullscreen) {
 				Display.setDisplayMode(Display.getDesktopDisplayMode());
-				width = Display.getDisplayMode().getWidth();
-				height = Display.getDisplayMode().getHeight();
-				if (width <= 0) {
-					width = 1;
+				oc.width = Display.getDisplayMode().getWidth();
+				oc.height = Display.getDisplayMode().getHeight();
+				if (oc.width <= 0) {
+					oc.width = 1;
 				}
-				if (height <= 0) {
-					height = 1;
+				if (oc.height <= 0) {
+					oc.height = 1;
 				}
 			} else {
 
-				width = tempDisplayWidth = Display.getWidth();
-				height = tempDisplayHeight = Display.getHeight();
-				if (width <= 0) {
-					width = 1;
+				oc.width = oc.tempDisplayWidth = Display.getWidth();
+				oc.height = oc.tempDisplayHeight = Display.getHeight();
+				if (oc.width <= 0) {
+					oc.width = 1;
 				}
-				if (height <= 0) {
-					height = 1;
+				if (oc.height <= 0) {
+					oc.height = 1;
 				}
-				Display.setDisplayMode(new DisplayMode(tempDisplayWidth, tempDisplayHeight));
+				Display.setDisplayMode(new DisplayMode(oc.tempDisplayWidth, oc.tempDisplayHeight));
 			}
-			setIngameNotInFocus();
-			Display.setFullscreen(fullscreen);
+			oc.setIngameNotInFocus();
+			Display.setFullscreen(oc.fullscreen);
 			Display.update();
 			Thread.sleep(1000L);
-			if (fullscreen) {
-				setIngameFocus();
+			if (oc.fullscreen) {
+				oc.setIngameFocus();
 			}
-			if (currentScreen != null) {
-				setIngameNotInFocus();
-				resize();
+			if (oc.currentScreen != null) {
+				oc.setIngameNotInFocus();
+				oc.resize(oc.width, oc.height);
 			}
 			System.out.println(
-					new StringBuilder().append("Size: ").append(width).append(", ").append(height).toString());
+					new StringBuilder().append("Size: ").append(oc.width).append(", ").append(oc.height).toString());
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
 	}
 
-	private void resize() {
-		width = max(1, Display.getWidth());
-		height = max(1, Display.getHeight());
-		
-		if (currentScreen != null) {
-			final ScaledResolution scaledResolution = new ScaledResolution(width, height);
-			currentScreen.setWorldAndResolution(oc, scaledResolution.getScaledWidth(),
+	private void resize(int integer1, int integer2) {
+		if (integer1 <= 0) {
+			integer1 = 1;
+		}
+		if (integer2 <= 0) {
+			integer2 = 1;
+		}
+		oc.width = integer1;
+		oc.height = integer2;
+		if (oc.currentScreen != null) {
+			final ScaledResolution scaledResolution = new ScaledResolution(integer1, integer2);
+			oc.currentScreen.setWorldAndResolution(oc, scaledResolution.getScaledWidth(),
 					scaledResolution.getScaledHeight());
 		}
 	}
 
 	private void clickMiddleMouseButton() {
-		if (objectMouseOver != null) {
-			int integer = world.getBlockId(objectMouseOver.blockX, objectMouseOver.blockY,
-					objectMouseOver.blockZ);
+		if (oc.objectMouseOver != null) {
+			int integer = oc.world.getBlockId(oc.objectMouseOver.blockX, oc.objectMouseOver.blockY,
+					oc.objectMouseOver.blockZ);
 			if (integer == Block.grass.blockID) {
 				integer = Block.dirt.blockID;
 			}
@@ -624,150 +634,150 @@ public class OpenCraft implements Runnable {
 			if (integer == Block.bedrock.blockID) {
 				integer = Block.stone.blockID;
 			}
-			player.inventory.setCurrentItem(integer, playerController instanceof PlayerControllerTest);
+			oc.player.inventory.setCurrentItem(integer, oc.playerController instanceof PlayerControllerTest);
 		}
 	}
 
 	public void runTick() {
-		ingameGUI.updateTick();
-		if (!isGamePaused && world != null) {
-			playerController.updateController();
+		oc.ingameGUI.updateTick();
+		if (!oc.isGamePaused && oc.world != null) {
+			oc.playerController.updateController();
 		}
-		glBindTexture(3553, renderer.getTexture("/assets/terrain.png"));
-		if (!isGamePaused) {
-			renderer.updateDynamicTextures();
+		glBindTexture(3553, oc.renderer.getTexture("/assets/terrain.png"));
+		if (!oc.isGamePaused) {
+			oc.renderer.updateDynamicTextures();
 		}
-		if (currentScreen == null && player != null && player.health <= 0) {
-			displayGuiScreen(null);
-		}
-
-		if (leftClickCounter > 0) {
-			--leftClickCounter;
+		if (oc.currentScreen == null && oc.player != null && oc.player.health <= 0) {
+			oc.displayGuiScreen(null);
 		}
 
-		if (currentScreen == null || currentScreen.allowUserInput) {
+		if (oc.leftClickCounter > 0) {
+			--oc.leftClickCounter;
+		}
+
+		if (oc.currentScreen == null || oc.currentScreen.allowUserInput) {
 			while (Mouse.next()) {
-				if (System.currentTimeMillis() - systemTime > 200L) {
+				if (System.currentTimeMillis() - oc.systemTime > 200L) {
 					continue;
 				}
 				final int eventDWheel = Mouse.getEventDWheel();
 				if (eventDWheel != 0) {
-					player.inventory.changeCurrentItem(eventDWheel);
+					oc.player.inventory.changeCurrentItem(eventDWheel);
 				}
-				if (currentScreen == null) {
-					if (!inGameHasFocus && Mouse.getEventButtonState()) {
-						setIngameFocus();
+				if (oc.currentScreen == null) {
+					if (!oc.inGameHasFocus && Mouse.getEventButtonState()) {
+						oc.setIngameFocus();
 					} else {
 						if (Mouse.getEventButton() == 0 && Mouse.getEventButtonState()) {
-							clickMouse(0);
-							mouseTicksRan = ticksRan;
+							oc.clickMouse(0);
+							oc.mouseTicksRan = oc.ticksRan;
 						}
 						if (Mouse.getEventButton() == 1 && Mouse.getEventButtonState()) {
-							clickMouse(1);
-							mouseTicksRan = ticksRan;
+							oc.clickMouse(1);
+							oc.mouseTicksRan = oc.ticksRan;
 						}
 						if (Mouse.getEventButton() != 2 || !Mouse.getEventButtonState()) {
 							continue;
 						}
-						clickMiddleMouseButton();
+						oc.clickMiddleMouseButton();
 					}
 				} else {
-					if (currentScreen == null) {
+					if (oc.currentScreen == null) {
 						continue;
 					}
-					currentScreen.f();
+					oc.currentScreen.f();
 				}
 			}
 
 			while (Keyboard.next()) {
-				player.handleKeyPress(Keyboard.getEventKey(), Keyboard.getEventKeyState());
+				oc.player.handleKeyPress(Keyboard.getEventKey(), Keyboard.getEventKeyState());
 				if (Keyboard.getEventKeyState()) {
 					if (Keyboard.getEventKey() == 87) {
-						toggleFullscreen();
+						oc.toggleFullscreen();
 					} else {
-						if (currentScreen != null) {
-							currentScreen.handleKeyboardInput();
+						if (oc.currentScreen != null) {
+							oc.currentScreen.handleKeyboardInput();
 						} else {
 							if (Keyboard.getEventKey() == 1) {
-								displayInGameMenu();
+								oc.displayInGameMenu();
 							}
-							if (playerController instanceof PlayerControllerTest) {
-								if (Keyboard.getEventKey() == options.keyBindLoad.keyCode) {
+							if (oc.playerController instanceof PlayerControllerTest) {
+								if (Keyboard.getEventKey() == oc.options.keyBindLoad.keyCode) {
 								}
-								if (Keyboard.getEventKey() == options.keyBindSave.keyCode) {
+								if (Keyboard.getEventKey() == oc.options.keyBindSave.keyCode) {
 								}
 							}
 							if (Keyboard.getEventKey() == 63) {
-								options.thirdPersonView = !options.thirdPersonView;
-								isRaining = !isRaining;
+								oc.options.thirdPersonView = !oc.options.thirdPersonView;
+								oc.isRaining = !oc.isRaining;
 							}
-							if (Keyboard.getEventKey() == options.keyBindInventory.keyCode) {
-								displayGuiScreen(new GuiInventory(player.inventory));
+							if (Keyboard.getEventKey() == oc.options.keyBindInventory.keyCode) {
+								oc.displayGuiScreen(new GuiInventory(oc.player.inventory));
 							}
-							if (Keyboard.getEventKey() == options.keyBindDrop.keyCode) {
-								player.dropPlayerItemWithRandomChoice(
-										player.inventory.decrStackSize(player.inventory.currentItem, 1), false);
+							if (Keyboard.getEventKey() == oc.options.keyBindDrop.keyCode) {
+								oc.player.dropPlayerItemWithRandomChoice(
+										oc.player.inventory.decrStackSize(oc.player.inventory.currentItem, 1), false);
 							}
 						}
 						for (int i = 0; i < 9; ++i) {
 							if (Keyboard.getEventKey() == 2 + i) {
-								player.inventory.currentItem = i;
+								oc.player.inventory.currentItem = i;
 							}
 						}
-						if (Keyboard.getEventKey() != options.keyBindToggleFog.keyCode) {
+						if (Keyboard.getEventKey() != oc.options.keyBindToggleFog.keyCode) {
 							continue;
 						}
-						options.setOptionFloatValue(4,
+						oc.options.setOptionFloatValue(4,
 								(Keyboard.isKeyDown(42) || Keyboard.isKeyDown(54)) ? -1 : 1);
 					}
 				}
 			}
-			if (currentScreen == null) {
-				if (Mouse.isButtonDown(0) && ticksRan - mouseTicksRan >= timer.tps / 4.0f
-						&& inGameHasFocus) {
-					clickMouse(0);
-					mouseTicksRan = ticksRan;
+			if (oc.currentScreen == null) {
+				if (Mouse.isButtonDown(0) && oc.ticksRan - oc.mouseTicksRan >= oc.timer.tps / 4.0f
+						&& oc.inGameHasFocus) {
+					oc.clickMouse(0);
+					oc.mouseTicksRan = oc.ticksRan;
 				}
-				if (Mouse.isButtonDown(1) && ticksRan - mouseTicksRan >= timer.tps / 4.0f
-						&& inGameHasFocus) {
-					clickMouse(1);
-					mouseTicksRan = ticksRan;
+				if (Mouse.isButtonDown(1) && oc.ticksRan - oc.mouseTicksRan >= oc.timer.tps / 4.0f
+						&& oc.inGameHasFocus) {
+					oc.clickMouse(1);
+					oc.mouseTicksRan = oc.ticksRan;
 				}
 			}
-			func_6254_a(0, currentScreen == null && Mouse.isButtonDown(0) && inGameHasFocus);
+			oc.func_6254_a(0, oc.currentScreen == null && Mouse.isButtonDown(0) && oc.inGameHasFocus);
 		}
-		if (currentScreen != null) {
-			mouseTicksRan = ticksRan + 10000;
+		if (oc.currentScreen != null) {
+			oc.mouseTicksRan = oc.ticksRan + 10000;
 		}
-		if (currentScreen != null) {
-			currentScreen.e();
-			if (currentScreen != null) {
-				currentScreen.updateScreen();
-			}
-		}
-		if (world != null) {
-			world.difficultySetting = options.difficulty;
-			if (!isGamePaused) {
-				entityRenderer.updateRenderer();
-			}
-			if (!isGamePaused) {
-				renderGlobal.updateClouds();
-			}
-			if (!isGamePaused) {
-				world.updateEntities();
-			}
-			if (!isGamePaused && !isMultiplayerWorld()) {
-				world.tick();
-			}
-			if (!isGamePaused) {
-				world.randomDisplayUpdates(Mth.floor_double(player.posX), Mth.floor_double(player.posY),
-						Mth.floor_double(player.posZ));
-			}
-			if (!isGamePaused) {
-				effectRenderer.updateEffects();
+		if (oc.currentScreen != null) {
+			oc.currentScreen.e();
+			if (oc.currentScreen != null) {
+				oc.currentScreen.updateScreen();
 			}
 		}
-		systemTime = System.currentTimeMillis();
+		if (oc.world != null) {
+			oc.world.difficultySetting = oc.options.difficulty;
+			if (!oc.isGamePaused) {
+				oc.entityRenderer.updateRenderer();
+			}
+			if (!oc.isGamePaused) {
+				oc.renderGlobal.updateClouds();
+			}
+			if (!oc.isGamePaused) {
+				oc.world.updateEntities();
+			}
+			if (!oc.isGamePaused && !oc.isMultiplayerWorld()) {
+				oc.world.tick();
+			}
+			if (!oc.isGamePaused) {
+				oc.world.randomDisplayUpdates(Mth.floor_double(oc.player.posX), Mth.floor_double(oc.player.posY),
+						Mth.floor_double(oc.player.posZ));
+			}
+			if (!oc.isGamePaused) {
+				oc.effectRenderer.updateEffects();
+			}
+		}
+		oc.systemTime = System.currentTimeMillis();
 	}
 
 	public boolean isMultiplayerWorld() {
@@ -775,144 +785,141 @@ public class OpenCraft implements Runnable {
 	}
 
 	public void startWorld(final String string) {
-		changeWorld1(null);
+		oc.changeWorld1(null);
 		System.gc();
 		final World world = new World(new File(getMinecraftDir(), "saves"), string);
 		if (world.isNewWorld) {
-			changeWorld2(world, "Generating level");
+			oc.changeWorld2(world, "Generating level");
 		} else {
-			changeWorld2(world, "Loading level");
+			oc.changeWorld2(world, "Loading level");
 		}
 	}
 
 	public void changeWorld1(final World fe) {
-		changeWorld2(fe, "");
+		oc.changeWorld2(fe, "");
 	}
 
 	public void changeWorld2(final World fe, final String string) {
-		if (world != null) {
-			world.saveWorldIndirectly(loadingScreen);
+		if (oc.world != null) {
+			oc.world.saveWorldIndirectly(oc.loadingScreen);
 		}
-		if ((world = fe) != null) {
-			playerController.func_717_a(fe);
-			fe.h = fontRenderer;
-			if (!isMultiplayerWorld()) {
-				player = (EntityPlayerSP) fe.func_4085_a(EntityPlayerSP.class);
-				fe.player = player;
-			} else if (player != null) {
-				player.preparePlayerToSpawn();
+		if ((oc.world = fe) != null) {
+			oc.playerController.func_717_a(fe);
+			fe.h = oc.fontRenderer;
+			if (!oc.isMultiplayerWorld()) {
+				oc.player = (EntityPlayerSP) fe.func_4085_a(EntityPlayerSP.class);
+				fe.player = oc.player;
+			} else if (oc.player != null) {
+				oc.player.preparePlayerToSpawn();
 				if (fe != null) {
-					fe.player = player;
-					fe.entityJoinedWorld(player);
+					fe.player = oc.player;
+					fe.entityJoinedWorld(oc.player);
 				}
 			}
-			func_6255_d(string);
-			if (player == null) {
-				(player = new EntityPlayerSP(oc, fe, sessionData)).preparePlayerToSpawn();
-				playerController.flipPlayer(player);
+			oc.func_6255_d(string);
+			if (oc.player == null) {
+				(oc.player = new EntityPlayerSP(oc, fe, oc.sessionData)).preparePlayerToSpawn();
+				oc.playerController.flipPlayer(oc.player);
 			}
-			player.movementInput = new MovementInputFromOptions(options);
-			if (renderGlobal != null) {
-				renderGlobal.changeWorld(fe);
+			oc.player.movementInput = new MovementInputFromOptions(oc.options);
+			if (oc.renderGlobal != null) {
+				oc.renderGlobal.changeWorld(fe);
 			}
-			if (effectRenderer != null) {
-				effectRenderer.clearEffects(fe);
+			if (oc.effectRenderer != null) {
+				oc.effectRenderer.clearEffects(fe);
 			}
-			playerController.func_6473_b(player);
-			fe.player = player;
+			oc.playerController.func_6473_b(oc.player);
+			fe.player = oc.player;
 			fe.spawnPlayerWithLoadedChunks();
 			if (fe.isNewWorld) {
-				fe.saveWorldIndirectly(loadingScreen);
+				fe.saveWorldIndirectly(oc.loadingScreen);
 			}
 		}
 		System.gc();
-		systemTime = 0L;
+		oc.systemTime = 0L;
 		this.sndManager.currentMusicTheme = "ingame";
 		this.sndManager.ticksBeforeMusic = 0;
 		this.sndManager.stopSound("BgMusic");
 	}
 
 	private void func_6255_d(final String string) {
-		loadingScreen.printText(string);
-		loadingScreen.displayLoadingString("Building terrain");
+		oc.loadingScreen.printText(string);
+		oc.loadingScreen.displayLoadingString("Building terrain");
 		final int n = 128;
 		int n2 = 0;
 		int n3 = n * 2 / 16 + 1;
 		n3 *= n3;
 		for (int i = -n; i <= n; i += 16) {
-			int x = world.x;
-			int z = world.z;
-			if (world.player != null) {
-				x = (int) world.player.posX;
-				z = (int) world.player.posZ;
+			int x = oc.world.x;
+			int z = oc.world.z;
+			if (oc.world.player != null) {
+				x = (int) oc.world.player.posX;
+				z = (int) oc.world.player.posZ;
 			}
 			for (int j = -n; j <= n; j += 16) {
-				loadingScreen.setLoadingProgress(n2++ * 100 / n3);
-				world.getBlockId(x + i, 64, z + j);
-				while (world.updatingLighting()) {
+				oc.loadingScreen.setLoadingProgress(n2++ * 100 / n3);
+				oc.world.getBlockId(x + i, 64, z + j);
+				while (oc.world.updatingLighting()) {
 				}
 			}
 		}
-		loadingScreen.displayLoadingString("Simulating world for a bit");
+		oc.loadingScreen.displayLoadingString("Simulating world for a bit");
 		n3 = 2000;
 		SandBlock.fallInstantly = true;
 		for (int i = 0; i < n3; ++i) {
-			world.TickUpdates(true);
+			oc.world.TickUpdates(true);
 		}
-		world.func_656_j();
+		oc.world.func_656_j();
 		SandBlock.fallInstantly = false;
 	}
 
-	public void registerSound(String string, final URL resourceURL) {
+	public void installResource(String string, final File file) {
 		final int index = string.indexOf("/");
-		final String soundType = string.substring(0, index);
+		final String substring = string.substring(0, index);
 		string = string.substring(index + 1);
-
-		System.out.println("Registering sound: " + string + " (" + soundType + ") from " + resourceURL.getPath());
-
-		if (soundType.startsWith("sound")) {
-			sndManager.addSound(string, resourceURL);
-		} else if (soundType.startsWith("newsound")) {
-			sndManager.addSound(string, resourceURL);
-		} else if (soundType.equalsIgnoreCase("music")) {
-			sndManager.addIngameMusic(string, resourceURL);
-		} else if (soundType.equalsIgnoreCase("newmusic")) {
-			sndManager.addIngameMusic(string, resourceURL);
-		} else if (soundType.equalsIgnoreCase("menumusic")) {
-			sndManager.addMenuMusic(string, resourceURL);
+		if (substring.equalsIgnoreCase("sound")) {
+			oc.sndManager.addSound(string, file);
+		} else if (substring.equalsIgnoreCase("newsound")) {
+			oc.sndManager.addSound(string, file);
+		} else if (substring.equalsIgnoreCase("music")) {
+			oc.sndManager.addIngameMusic(string, file);
+		} else if (substring.equalsIgnoreCase("newmusic")) {
+			oc.sndManager.addIngameMusic(string, file);
+		} else if (substring.equalsIgnoreCase("menumusic")) {
+			oc.sndManager.addMenuMusic(string, file);
 		}
 	}
 
 	public OpenGlCapsChecker getOpenGlCapsChecker() {
-		return glCapabilities;
+		return oc.glCapabilities;
 	}
 
 	public String debugInfoRenders() {
-		return renderGlobal.getDebugInfoRenders();
+		return oc.renderGlobal.getDebugInfoRenders();
 	}
 
 	public String func_6262_n() {
-		return renderGlobal.getDebugInfoEntities();
+		return oc.renderGlobal.getDebugInfoEntities();
 	}
 
 	public String debugInfoEntities() {
-		return "P: " + effectRenderer.getStatistics() + ". T: " + world.func_687_d();
+		return "P: " + oc.effectRenderer.getStatistics() + ". T: " + oc.world.func_687_d();
 	}
 
 	public void respawn() {
-		if (player != null && world != null) {
-			world.setEntityDead(player);
+		if (oc.player != null && oc.world != null) {
+			oc.world.setEntityDead(oc.player);
 		}
-		world.a();
-		(player = new EntityPlayerSP(oc, world, sessionData)).preparePlayerToSpawn();
-		playerController.flipPlayer(player);
-		if (world != null) {
-			world.player = player;
-			world.spawnPlayerWithLoadedChunks();
+		oc.world.a();
+		(oc.player = new EntityPlayerSP(oc, oc.world, oc.sessionData)).preparePlayerToSpawn();
+		oc.playerController.flipPlayer(oc.player);
+		if (oc.world != null) {
+			oc.world.player = oc.player;
+			oc.world.spawnPlayerWithLoadedChunks();
 		}
-		player.movementInput = new MovementInputFromOptions(options);
-		playerController.func_6473_b(player);
-		func_6255_d("Respawning");
+		oc.player.movementInput = new MovementInputFromOptions(oc.options);
+		oc.playerController.func_6473_b(oc.player);
+		oc.func_6255_d("Respawning");
 	}
 
 	public static File getMinecraftDir() {
@@ -925,7 +932,7 @@ public class OpenCraft implements Runnable {
 	public static File getAppDir(final String string) {
 		final String property = System.getProperty("user.home", ".");
 		File file = null;
-		switch (EnumOSMappingHelper.enumOSMappingArray[Platform.getOs().ordinal()]) {
+		switch (EnumOSMappingHelper.enumOSMappingArray[getOs().ordinal()]) {
 			case 1:
 			case 2: {
 				file = new File(property, '.' + string + '/');
@@ -957,6 +964,33 @@ public class OpenCraft implements Runnable {
 					new StringBuilder().append("The working directory could not be created: ").append(file).toString());
 		}
 		return file;
+	}
+
+	private static EnumOS2 getOs() {
+		final String lowerCase = System.getProperty("os.name").toLowerCase();
+		if (lowerCase.contains("win")) {
+			return EnumOS2.windows;
+		}
+		if (lowerCase.contains("mac")) {
+			return EnumOS2.macos;
+		}
+		if (lowerCase.contains("solaris")) {
+			return EnumOS2.solaris;
+		}
+		if (lowerCase.contains("sunos")) {
+			return EnumOS2.solaris;
+		}
+		if (lowerCase.contains("linux")) {
+			return EnumOS2.linux;
+		}
+		if (lowerCase.contains("unix")) {
+			return EnumOS2.linux;
+		}
+		return EnumOS2.unknown;
+	}
+
+	public static OpenCraft getOpenCraft() {
+		return OpenCraft.oc;
 	}
 
 	public float getTickDelta() {

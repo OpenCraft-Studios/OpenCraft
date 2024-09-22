@@ -102,16 +102,16 @@ public class FontRenderer {
         }
     }
 
-    public void drawShadow(final String string, final int integer2, final int integer3, final int color) {
-        this.draw(string, integer2 + 1, integer3 + 1, color, true);
-        this.drawString2(string, integer2, integer3, color);
+    public void drawStringWithShadow2(final String string, final int integer2, final int integer3, final int integer4) {
+        this.renderString2(string, integer2 + 1, integer3 + 1, integer4, true);
+        this.drawString2(string, integer2, integer3, integer4);
     }
 
-    public void drawString2(final String string, final int integer2, final int integer3, final int color) {
-        this.draw(string, integer2, integer3, color, false);
+    public void drawString2(final String string, final int integer2, final int integer3, final int integer4) {
+        this.renderString2(string, integer2, integer3, integer4, false);
     }
 
-    public void draw(final String string, final int integer2, final int integer3, int integer4, final boolean boolean5) {
+    public void renderString2(final String string, final int integer2, final int integer3, int integer4, final boolean boolean5) {
         if (string == null) {
             return;
         }

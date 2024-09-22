@@ -34,7 +34,7 @@ public class TexturedQuad {
     }
 
     public void draw(final Tessellator ag, final float float2) {
-        final Vec3 normalize = this.vertexPositions[1].vec.sub(this.vertexPositions[2].vec).cross(this.vertexPositions[1].vec.sub(this.vertexPositions[0].vec)).normalize();
+        final Vec3 normalize = this.vertexPositions[1].vec.subtract(this.vertexPositions[2].vec).cross(this.vertexPositions[1].vec.subtract(this.vertexPositions[0].vec)).normalize();
         ag.beginQuads();
         ag.setNormal((float) normalize.x, (float) normalize.y, (float) normalize.z);
         for (int i = 0; i < 4; ++i) {

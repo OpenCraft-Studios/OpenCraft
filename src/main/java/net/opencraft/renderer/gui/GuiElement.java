@@ -42,11 +42,11 @@ public class GuiElement {
     }
 
     public void drawCenteredString(final FontRenderer ej, final String string, final int integer3, final int integer4, final int integer5) {
-        ej.drawShadow(string, integer3 - ej.getStringWidth(string) / 2, integer4, integer5);
+        ej.drawStringWithShadow2(string, integer3 - ej.getStringWidth(string) / 2, integer4, integer5);
     }
 
     public void drawString(final FontRenderer ej, final String string, final int integer3, final int integer4, final int integer5) {
-        ej.drawShadow(string, integer3, integer4, integer5);
+        ej.drawStringWithShadow2(string, integer3, integer4, integer5);
     }
 
     public void drawTexturedModalRect(final int x, final int y, final int u, final int v, final int width, final int height) {

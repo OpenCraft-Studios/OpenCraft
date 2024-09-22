@@ -1,7 +1,6 @@
 package net.opencraft.client.sound;
 
 import java.io.File;
-import java.net.URL;
 import java.util.Random;
 
 import net.opencraft.client.config.GameSettings;
@@ -76,16 +75,20 @@ public class SoundManager {
         this.sndSystem.cleanup();
     }
 
-    public void addSound(String var1, URL resourceURL) {
-        this.soundPoolSounds.addSound(var1, resourceURL);
+    public void addSound(String var1, File var2) {
+        this.soundPoolSounds.addSound(var1, var2);
     }
 
-    public void addIngameMusic(String var1, URL resourceURL) {
-        this.soundPoolIngameMusic.addSound(var1, resourceURL);
+    public void addStreaming(String var1, File var2) {
+        this.soundPoolStreaming.addSound(var1, var2);
     }
 
-    public void addMenuMusic(String var1, URL resourceURL) {
-        this.soundPoolMenuMusic.addSound(var1, resourceURL);
+    public void addIngameMusic(String var1, File var2) {
+        this.soundPoolIngameMusic.addSound(var1, var2);
+    }
+
+    public void addMenuMusic(String var1, File var2) {
+        this.soundPoolMenuMusic.addSound(var1, var2);
     }
 
     public void playRandomMusicIfReady() {

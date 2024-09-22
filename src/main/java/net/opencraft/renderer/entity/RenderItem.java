@@ -134,7 +134,7 @@ public class RenderItem extends Render<EntityItem> {
             final String string = new StringBuilder().append("").append(hw.stackSize).toString();
             GL11.glDisable(2896);
             GL11.glDisable(2929);
-            ej.drawShadow(string, integer4 + 19 - 2 - ej.getStringWidth(string), integer5 + 6 + 3, 16777215);
+            ej.drawStringWithShadow2(string, integer4 + 19 - 2 - ej.getStringWidth(string), integer5 + 6 + 3, 16777215);
             GL11.glEnable(2896);
             GL11.glEnable(2929);
         }
