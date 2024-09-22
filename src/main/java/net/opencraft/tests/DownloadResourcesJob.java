@@ -24,23 +24,24 @@ public class DownloadResourcesJob implements Job {
 	@Override
 	public void run() {
 		System.out.print("Loading sounds...");
+		int soundCount;
 		try {
-			loadSounds();
+			soundCount = loadSounds();
+			System.out.println("done!" + soundCount + " sounds loaded.");
 		} catch(IOException e) {
 			errors = true;
 			e.printStackTrace();
 		}
-		System.out.println("done!");
 	}
 
-	public void loadSounds() throws IOException {
-		loadSounds(getClass().getProtectionDomain().getCodeSource().getLocation());
+	public int loadSounds() throws IOException {
+		return loadSounds(getClass().getProtectionDomain().getCodeSource().getLocation());
 	}
 
 	/**
 	 * Loads sounds from a URL
 	 */
-	public void loadSounds(final URL resourceURL) throws IOException {
+	public int loadSounds(final URL resourceURL) throws IOException {
 		int count = 0;
 
 		if(!resourceURL.getFile().contains("jar")) {
@@ -81,6 +82,7 @@ public class DownloadResourcesJob implements Job {
 		if(count == 0) {
 			throw new IOException("No sounds found in resources!" + resourceURL);
 		}
+		return count;
 	}
 
 	@Override
