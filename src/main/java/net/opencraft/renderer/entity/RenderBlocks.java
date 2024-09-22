@@ -1,14 +1,14 @@
 
 package net.opencraft.renderer.entity;
 
-import net.opencraft.OpenCraft;
+import org.lwjgl.opengl.GL11;
+
 import net.opencraft.blocks.*;
 import net.opencraft.blocks.material.Material;
 import net.opencraft.renderer.Tessellator;
 import net.opencraft.util.Mth;
 import net.opencraft.world.IBlockAccess;
 import net.opencraft.world.World;
-import org.lwjgl.opengl.GL11;
 
 public class RenderBlocks {
 
@@ -16,22 +16,16 @@ public class RenderBlocks {
     private int b;
     private boolean c;
     private boolean d;
-    private OpenCraft mc;
 
-    public RenderBlocks(final IBlockAccess iv) {
+    public RenderBlocks(IBlockAccess iv) {
         this.b = -1;
         this.c = false;
         this.d = false;
         this.a = iv;
-        this.mc = OpenCraft.getOpenCraft();
     }
 
     public RenderBlocks() {
-        this.b = -1;
-        this.c = false;
-        this.d = false;
-        this.a = null;
-        this.mc = OpenCraft.getOpenCraft();
+        this(null);
     }
 
     public void a(final Block gs, final int integer2, final int integer3, final int integer4, final int integer5) {
