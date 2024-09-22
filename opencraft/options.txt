@@ -2,13 +2,13 @@ music:true
 sound:true
 invertYMouse:false
 showFrameRate:false
-viewDistance:1
+viewDistance:0
 bobView:true
 anaglyph3d:false
 limitFramerate:false
 difficulty:2
-fancyGraphics:false
-FOV:110.0
+fancyGraphics:true
+FOV:86.0
 minimumBrightness:0.3
 key_Forward:17
 key_Left:30
