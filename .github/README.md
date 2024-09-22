@@ -79,6 +79,8 @@ We already have prebuilt jars. They can be downloaded [here](https://github.com/
 
   </details>
 
+<div align="right">[ <a href="#-getting-started">↑ Back to top ↑</a> ]</div>
+
 ---
 
 ## ⚖️ License
@@ -106,6 +108,8 @@ We already have prebuilt jars. They can be downloaded [here](https://github.com/
 
 **The full license is at [BSL 1.0][license-url].**
 
+<div align="right">[ <a href="#-getting-started">↑ Back to top ↑</a> ]</div>
+
 <br />
 
 
@@ -113,6 +117,8 @@ We already have prebuilt jars. They can be downloaded [here](https://github.com/
 | [![CiroZDP](https://avatars.githubusercontent.com/u/161502824?v=4)](https://github.com/CiroZDP) | ![Community](https://cdni.iconscout.com/illustration/free/thumb/free-community-2103591-1768087.png)	|
 |:-----------------------------------------------------------------------------------------------:|:---------------------------------------------------------------------------------------------------:|
 |                                           **CiroZDP**                                           |                                          **The community**                                          |
+
+<div align="right">[ <a href="#-getting-started">↑ Back to top ↑</a> ]</div>
 
 ---
 
