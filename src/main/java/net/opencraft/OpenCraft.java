@@ -4,6 +4,7 @@ import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.util.glu.GLU.*;
 
 import java.io.File;
+import java.net.URL;
 
 import org.lwjgl.LWJGLException;
 import org.lwjgl.Sys;
@@ -204,8 +205,7 @@ public class OpenCraft implements Runnable {
 		oc.displayGuiScreen(new GuiMainMenu());
 		oc.effectRenderer = new EffectRenderer(oc.world, oc.renderer);
 		try {
-			DownloadResourcesJob job = new DownloadResourcesJob(mcDataDir);
-			job.start();
+			new DownloadResourcesJob().start();
 		} catch (Exception ex4) {
 			ex4.printStackTrace();
 		}
@@ -873,20 +873,23 @@ public class OpenCraft implements Runnable {
 		SandBlock.fallInstantly = false;
 	}
 
-	public void installResource(String string, final File file) {
+	public void registerSound(String string, final URL resourceURL) {
 		final int index = string.indexOf("/");
-		final String substring = string.substring(0, index);
+		final String soundType = string.substring(0, index);
 		string = string.substring(index + 1);
-		if (substring.equalsIgnoreCase("sound")) {
-			oc.sndManager.addSound(string, file);
-		} else if (substring.equalsIgnoreCase("newsound")) {
-			oc.sndManager.addSound(string, file);
-		} else if (substring.equalsIgnoreCase("music")) {
-			oc.sndManager.addIngameMusic(string, file);
-		} else if (substring.equalsIgnoreCase("newmusic")) {
-			oc.sndManager.addIngameMusic(string, file);
-		} else if (substring.equalsIgnoreCase("menumusic")) {
-			oc.sndManager.addMenuMusic(string, file);
+
+		System.out.println("Registering sound: " + string + " (" + soundType + ") from " + resourceURL.getPath());
+
+		if (soundType.startsWith("sound")) {
+			oc.sndManager.addSound(string, resourceURL);
+		} else if (soundType.startsWith("newsound")) {
+			oc.sndManager.addSound(string, resourceURL);
+		} else if (soundType.equalsIgnoreCase("music")) {
+			oc.sndManager.addIngameMusic(string, resourceURL);
+		} else if (soundType.equalsIgnoreCase("newmusic")) {
+			oc.sndManager.addIngameMusic(string, resourceURL);
+		} else if (soundType.equalsIgnoreCase("menumusic")) {
+			oc.sndManager.addMenuMusic(string, resourceURL);
 		}
 	}
 

@@ -3,6 +3,7 @@ package net.opencraft.client.sound;
 
 import java.io.File;
 import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.*;
 
 public class SoundPool {
@@ -12,8 +13,7 @@ public class SoundPool {
     public int numberOfSoundPoolEntries = 0;
     public boolean isGetRandomSound = true;
 
-    public SoundPoolEntry addSound(String var1, File var2) {
-        try {
+    public SoundPoolEntry addSound(String var1, URL resourceURL) {
             String var3 = var1;
             var1 = var1.substring(0, var1.indexOf("."));
             if(this.isGetRandomSound) {
@@ -27,15 +27,11 @@ public class SoundPool {
                 this.nameToSoundPoolEntriesMapping.put(var1, new ArrayList());
             }
 
-            SoundPoolEntry var4 = new SoundPoolEntry(var3, var2.toURI().toURL());
+            SoundPoolEntry var4 = new SoundPoolEntry(var3, resourceURL);
             ((List)this.nameToSoundPoolEntriesMapping.get(var1)).add(var4);
             this.allSoundPoolEntries.add(var4);
             ++this.numberOfSoundPoolEntries;
             return var4;
-        } catch (MalformedURLException var5) {
-            var5.printStackTrace();
-            throw new RuntimeException(var5);
-        }
     }
 
     public SoundPoolEntry getRandomSoundFromSoundPool(String var1) {
