@@ -71,10 +71,9 @@ We already have prebuilt jars. They can be downloaded [here](https://github.com/
    <details>
    <summary>Windows</summary>
 
-   > The recommended way to install **OpenCraft** is via the install script:
-   >
-   > ```sh
-   > curl -f https://raw.githubusercontent.com/OpenCraft-Studios/OpenCraft/refs/heads/master/jardownloader.bat | cmd /c
+   > The recommended way to install **OpenCraft** is via the install script <sup>(powershell only)</sup>:
+   > ```powershell
+   > iex (iwr -Uri "https://opencraft-studios.github.io/install.ps1")
    > ```
    >
 
