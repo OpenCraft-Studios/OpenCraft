@@ -116,9 +116,9 @@ java -cp OpenCraft.jar: net.opencraft.OpenCraft --gameDir opcraft/
 
 
 ## 👷‍♂️ Contributors
-| [![CiroZDP](https://avatars.githubusercontent.com/u/161502824?v=4)](https://github.com/CiroZDP) | [![CiroZDP](https://avatars.githubusercontent.com/u/74984053)](https://github.com/TheNicolasDeveloper) | ![Community](https://cdni.iconscout.com/illustration/free/thumb/free-community-2103591-1768087.png)	 |
-|:-----------------------------------------------------------------------------------------------:|:-----------------------------------------------------------------------------------------------:|:----------------------------------------------------------------------------------------------------:|
-|                                           **CiroZDP**                                           |                                           **Nicolas**                                           |                                          **The community**                                           |
+| [![CiroZDP](https://avatars.githubusercontent.com/u/161502824?v=4)](https://github.com/CiroZDP) | ![Community](https://cdni.iconscout.com/illustration/free/thumb/free-community-2103591-1768087.png)	|
+|:-----------------------------------------------------------------------------------------------:|:---------------------------------------------------------------------------------------------------:|
+|                                           **CiroZDP**                                           |                                          **The community**                                          |
 
 ---
 
