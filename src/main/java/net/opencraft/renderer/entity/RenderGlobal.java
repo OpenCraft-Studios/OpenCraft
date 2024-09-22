@@ -255,8 +255,8 @@ public class RenderGlobal implements IWorldAccess {
 	}
 
 	public void renderEntities(final Vec3 bo, final ICamera jt, final float float3) {
-		TileEntityRenderer.instance.a(this.k, this.l, this.t.fontRenderer, this.t.player, float3);
-		RenderManager.instance.cacheActiveRenderInfo(this.k, this.l, this.t.fontRenderer, this.t.player,
+		TileEntityRenderer.instance.a(this.k, this.l, this.t.font, this.t.player, float3);
+		RenderManager.instance.cacheActiveRenderInfo(this.k, this.l, this.t.font, this.t.player,
 				this.t.options, float3);
 		this.I = 0;
 		this.J = 0;

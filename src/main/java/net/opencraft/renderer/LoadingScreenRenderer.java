@@ -123,8 +123,8 @@ public class LoadingScreenRenderer implements IProgressUpdate {
                 instance.draw();
                 GL11.glEnable(3553);
             }
-            this.mc.fontRenderer.drawStringWithShadow2(this.currentlyDisplayedText, (scaledWidth - this.mc.fontRenderer.getStringWidth(this.currentlyDisplayedText)) / 2, scaledHeight / 2 - 4 - 16, 16777215);
-            this.mc.fontRenderer.drawStringWithShadow2(this.field_1004_a, (scaledWidth - this.mc.fontRenderer.getStringWidth(this.field_1004_a)) / 2, scaledHeight / 2 - 4 + 8, 16777215);
+            this.mc.font.drawStringWithShadow2(this.currentlyDisplayedText, (scaledWidth - this.mc.font.getStringWidth(this.currentlyDisplayedText)) / 2, scaledHeight / 2 - 4 - 16, 16777215);
+            this.mc.font.drawStringWithShadow2(this.field_1004_a, (scaledWidth - this.mc.font.getStringWidth(this.field_1004_a)) / 2, scaledHeight / 2 - 4 + 8, 16777215);
             Display.update();
             try {
                 Thread.yield();

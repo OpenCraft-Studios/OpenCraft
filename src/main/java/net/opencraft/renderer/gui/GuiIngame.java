@@ -40,7 +40,7 @@ public class GuiIngame extends GuiElement {
         final ScaledResolution scaledResolution = new ScaledResolution(this.mc.width, this.mc.height);
         final int scaledWidth = scaledResolution.getScaledWidth();
         final int scaledHeight = scaledResolution.getScaledHeight();
-        final FontRenderer fontRenderer = this.mc.fontRenderer;
+        final FontRenderer fontRenderer = this.mc.font;
         this.mc.entityRenderer.setupOverlayRendering();
         GL11.glEnable(3042);
         if (this.mc.options.fancyGraphics) {
@@ -191,11 +191,11 @@ public class GuiIngame extends GuiElement {
             GL11.glScalef(1.0f / n2, (n2 + 1.0f) / 2.0f, 1.0f);
             GL11.glTranslatef((float) (-(integer2 + 8)), (float) (-(integer3 + 12)), 0.0f);
         }
-        GuiIngame.itemRenderer.drawItemIntoGui(this.mc.fontRenderer, this.mc.renderer, itemStack, integer2, integer3);
+        GuiIngame.itemRenderer.drawItemIntoGui(this.mc.font, this.mc.renderer, itemStack, integer2, integer3);
         if (n > 0.0f) {
             GL11.glPopMatrix();
         }
-        GuiIngame.itemRenderer.renderItemOverlayIntoGUI(this.mc.fontRenderer, this.mc.renderer, itemStack, integer2, integer3);
+        GuiIngame.itemRenderer.renderItemOverlayIntoGUI(this.mc.font, this.mc.renderer, itemStack, integer2, integer3);
     }
 
     public void updateTick() {

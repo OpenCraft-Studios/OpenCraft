@@ -64,7 +64,7 @@ public class GuiScreen extends GuiElement {
 
     public void setWorldAndResolution(final OpenCraft aw, final int integer2, final int integer3) {
         this.id = aw;
-        this.fontRenderer = aw.fontRenderer;
+        this.fontRenderer = aw.font;
         this.width = integer2;
         this.height = integer3;
         this.initGui();

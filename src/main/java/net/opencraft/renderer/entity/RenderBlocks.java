@@ -16,22 +16,16 @@ public class RenderBlocks {
     private int b;
     private boolean c;
     private boolean d;
-    private OpenCraft mc;
 
-    public RenderBlocks(final IBlockAccess iv) {
+    public RenderBlocks(IBlockAccess iv) {
         this.b = -1;
         this.c = false;
         this.d = false;
         this.a = iv;
-        this.mc = OpenCraft.getOpenCraft();
     }
 
     public RenderBlocks() {
-        this.b = -1;
-        this.c = false;
-        this.d = false;
-        this.a = null;
-        this.mc = OpenCraft.getOpenCraft();
+        this(null);
     }
 
     public void a(final Block gs, final int integer2, final int integer3, final int integer4, final int integer5) {

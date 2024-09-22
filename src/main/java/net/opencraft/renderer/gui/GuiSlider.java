@@ -80,7 +80,7 @@ public class GuiSlider extends GuiButton {
         if (!this.enabled2) {
             return;
         }
-        final FontRenderer fontRenderer = mc.fontRenderer;
+        final FontRenderer fontRenderer = mc.font;
         GL11.glBindTexture(3553, mc.renderer.getTexture("/assets/gui/gui.png"));
 
         int colorChange = 1;
