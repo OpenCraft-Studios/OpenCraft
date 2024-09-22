@@ -882,7 +882,7 @@ public class OpenCraft implements Runnable {
 		final String soundType = string.substring(0, index);
 		string = string.substring(index + 1);
 
-		// System.out.println("Registering sound: " + string + " (" + soundType + ") from " + resourceURL.getPath());
+		System.out.println("Registering sound: " + string + " (" + soundType + ") from " + resourceURL.getPath());
 
 		if (soundType.startsWith("sound")) {
 			oc.sndManager.addSound(string, resourceURL);
