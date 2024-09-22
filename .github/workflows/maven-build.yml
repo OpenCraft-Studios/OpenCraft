@@ -42,11 +42,17 @@ jobs:
         uses: ./.github/actions/upload_build
         if: ${{ always() && steps.compile.outcome == 'success' }}
         with:
-          SOURCE_FILE: 'target/opencraft-client.jar'
-          DEST_NAME: 'opencraft-client.jar'
+          SOURCE_FILE: 'target/client.jar'
+          DEST_NAME: 'client.jar'
+      - name: Publish standalone client artifact
+        uses: ./.github/actions/upload_build
+        if: ${{ always() && steps.compile.outcome == 'success' }}
+        with:
+          SOURCE_FILE: 'target/standalone-client.jar'
+          DEST_NAME: 'standalone-client.jar'
       - name: Publish dependencies artifact
         uses: ./.github/actions/upload_build
         if: ${{ always() && steps.packdep.outcome == 'success' }}
         with:
           SOURCE_FILE: 'target/dependencies.zip'
-          DEST_NAME: 'opencraft-dependencies.zip'
+          DEST_NAME: 'dependencies.zip'
