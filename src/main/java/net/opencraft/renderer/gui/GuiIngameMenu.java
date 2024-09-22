@@ -1,6 +1,8 @@
 
 package net.opencraft.renderer.gui;
 
+import static org.joml.Math.*;
+
 import net.opencraft.util.Mth;
 
 public class GuiIngameMenu extends GuiScreen {
@@ -48,7 +50,7 @@ public class GuiIngameMenu extends GuiScreen {
         this.drawDefaultBackground();
         if (!this.id.world.quickSaveWorld(this.updateCounter2++) || this.updateCounter1 < 20) {
             float n = (this.updateCounter1 % 10 + float3) / 10.0f;
-            n = Mth.sin(n * 3.1415927f * 2.0f) * 0.2f + 0.8f;
+            n = sin(toRadians(n) * 2.0f) * 0.2f + 0.8f;
             final int n2 = (int) (255.0f * n);
             this.drawString(this.fontRenderer, "Saving level..", 8, this.height - 16, n2 << 16 | n2 << 8 | n2);
         }

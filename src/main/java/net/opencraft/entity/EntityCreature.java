@@ -1,6 +1,8 @@
 
 package net.opencraft.entity;
 
+import static org.joml.Math.*;
+
 import net.opencraft.pathfinder.PathEntity;
 import net.opencraft.util.Mth;
 import net.opencraft.util.Vec3;
@@ -93,7 +95,7 @@ public class EntityCreature extends EntityLiving {
                 final float rotationYaw = this.rotationYaw;
                 this.rotationYaw = (float) (Math.atan2(n7, n6) * 180.0 / 3.1415927410125732) - 90.0f;
                 final float n8 = (rotationYaw - this.rotationYaw + 90.0f) * 3.1415927f / 180.0f;
-                this.moveStrafing = -Mth.sin(n8) * this.moveForward * 1.0f;
+                this.moveStrafing = -sin(n8) * this.moveForward * 1.0f;
                 this.moveForward = Mth.cos(n8) * this.moveForward * 1.0f;
             }
             if (n5 != 0.0) {

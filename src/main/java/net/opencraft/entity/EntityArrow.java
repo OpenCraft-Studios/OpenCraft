@@ -1,6 +1,9 @@
 
 package net.opencraft.entity;
 
+import static net.opencraft.util.Mth.cos;
+import static org.joml.Math.*;
+
 import java.util.List;
 import net.opencraft.client.input.MovingObjectPosition;
 import net.opencraft.item.Item;
@@ -46,14 +49,14 @@ public class EntityArrow extends Entity {
         this.owner = entityLiving;
         this.setSize(0.5f, 0.5f);
         this.setPositionAndRotation(entityLiving.posX, entityLiving.posY, entityLiving.posZ, entityLiving.rotationYaw, entityLiving.rotationPitch);
-        this.posX -= Mth.cos(this.rotationYaw / 180.0f * 3.1415927f) * 0.16f;
+        this.posX -= cos(toRadians(rotationYaw)) * 0.16f;
         this.posY -= 0.10000000149011612;
-        this.posZ -= Mth.sin(this.rotationYaw / 180.0f * 3.1415927f) * 0.16f;
+        this.posZ -= sin(toRadians(rotationYaw)) * 0.16f;
         this.setPosition(this.posX, this.posY, this.posZ);
         this.yOffset = 0.0f;
-        this.motionX = -Mth.sin(this.rotationYaw / 180.0f * 3.1415927f) * Mth.cos(this.rotationPitch / 180.0f * 3.1415927f);
-        this.motionZ = Mth.cos(this.rotationYaw / 180.0f * 3.1415927f) * Mth.cos(this.rotationPitch / 180.0f * 3.1415927f);
-        this.motionY = -Mth.sin(this.rotationPitch / 180.0f * 3.1415927f);
+        this.motionX = -sin(this.rotationYaw / 180.0f * 3.1415927f) * cos(this.rotationPitch / 180.0f * 3.1415927f);
+        this.motionZ = cos(this.rotationYaw / 180.0f * 3.1415927f) * cos(this.rotationPitch / 180.0f * 3.1415927f);
+        this.motionY = -sin(this.rotationPitch / 180.0f * 3.1415927f);
         this.shoot(this.motionX, this.motionY, this.motionZ, 1.5f, 1.0f);
     }
 

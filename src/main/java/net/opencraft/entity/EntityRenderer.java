@@ -1,6 +1,8 @@
 
 package net.opencraft.entity;
 
+import static org.joml.Math.*;
+
 import java.nio.FloatBuffer;
 import java.util.List;
 import java.util.Random;
@@ -82,9 +84,9 @@ public class EntityRenderer {
         final float n2 = thePlayer.prevRotationYaw + (thePlayer.rotationYaw - thePlayer.prevRotationYaw) * float1;
         final Vec3 orientCamera = this.orientCamera(float1);
         final float cos = Mth.cos(-n2 * 0.017453292f - 3.1415927f);
-        final float sin = Mth.sin(-n2 * 0.017453292f - 3.1415927f);
+        final float sin = sin(-n2 * 0.017453292f - 3.1415927f);
         final float n3 = -Mth.cos(-n * 0.017453292f);
-        final float sin2 = Mth.sin(-n * 0.017453292f);
+        final float sin2 = sin(-n * 0.017453292f);
         final float n4 = sin * n3;
         final float n5 = sin2;
         final float n6 = cos * n3;
@@ -149,7 +151,7 @@ public class EntityRenderer {
             return;
         }
         sin /= thePlayer.maxHurtTime;
-        sin = Mth.sin(sin * sin * sin * sin * 3.1415927f);
+        sin = sin(sin * sin * sin * sin * 3.1415927f);
         final float attackedAtYaw = thePlayer.attackedAtYaw;
         GL11.glRotatef(-attackedAtYaw, 0.0f, 1.0f, 0.0f);
         GL11.glRotatef(-sin * 14.0f, 0.0f, 0.0f, 1.0f);
@@ -164,8 +166,8 @@ public class EntityRenderer {
         final float n = thePlayer.distanceWalkedModified + (thePlayer.distanceWalkedModified - thePlayer.prevDistanceWalkedModified) * float1;
         final float n2 = thePlayer.prevCameraYaw + (thePlayer.cameraYaw - thePlayer.prevCameraYaw) * float1;
         final float n3 = thePlayer.prevCameraPitch + (thePlayer.cameraPitch - thePlayer.prevCameraPitch) * float1;
-        GL11.glTranslatef(Mth.sin(n * 3.1415927f) * n2 * 0.5f, -Math.abs(Mth.cos(n * 3.1415927f) * n2), 0.0f);
-        GL11.glRotatef(Mth.sin(n * 3.1415927f) * n2 * 3.0f, 0.0f, 0.0f, 1.0f);
+        GL11.glTranslatef(sin(n * 3.1415927f) * n2 * 0.5f, -Math.abs(Mth.cos(n * 3.1415927f) * n2), 0.0f);
+        GL11.glRotatef(sin(n * 3.1415927f) * n2 * 3.0f, 0.0f, 0.0f, 1.0f);
         GL11.glRotatef(Math.abs(Mth.cos(n * 3.1415927f + 0.2f) * n2) * 5.0f, 1.0f, 0.0f, 0.0f);
         GL11.glRotatef(n3, 1.0f, 0.0f, 0.0f);
     }
@@ -177,9 +179,9 @@ public class EntityRenderer {
         final double double3 = thePlayer.prevPosZ + (thePlayer.posZ - thePlayer.prevPosZ) * float1;
         if (this.mc.options.thirdPersonView) {
             double n = 4.0;
-            final double n2 = -Mth.sin(thePlayer.rotationYaw / 180.0f * 3.1415927f) * Mth.cos(thePlayer.rotationPitch / 180.0f * 3.1415927f) * n;
+            final double n2 = -sin(thePlayer.rotationYaw / 180.0f * 3.1415927f) * Mth.cos(thePlayer.rotationPitch / 180.0f * 3.1415927f) * n;
             final double n3 = Mth.cos(thePlayer.rotationYaw / 180.0f * 3.1415927f) * Mth.cos(thePlayer.rotationPitch / 180.0f * 3.1415927f) * n;
-            final double n4 = -Mth.sin(thePlayer.rotationPitch / 180.0f * 3.1415927f) * n;
+            final double n4 = -sin(thePlayer.rotationPitch / 180.0f * 3.1415927f) * n;
             for (int i = 0; i < 8; ++i) {
                 float n5 = (float) ((i & 0x1) * 2 - 1);
                 float n6 = (float) ((i >> 1 & 0x1) * 2 - 1);

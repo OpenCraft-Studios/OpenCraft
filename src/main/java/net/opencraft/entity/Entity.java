@@ -1,6 +1,8 @@
 
 package net.opencraft.entity;
 
+import static org.joml.Math.*;
+
 import java.util.List;
 import java.util.Random;
 
@@ -407,8 +409,8 @@ public abstract class Entity {
         sqrt_float = zCoord / sqrt_float;
         xCoord *= sqrt_float;
         yCoord *= sqrt_float;
-        final float sin = Mth.sin(this.rotationYaw * 3.1415927f / 180.0f);
-        final float cos = Mth.cos(this.rotationYaw * 3.1415927f / 180.0f);
+        final float sin = sin(toRadians(this.rotationYaw));
+        final float cos = cos(toRadians(this.rotationYaw));
         this.motionX += xCoord * cos - yCoord * sin;
         this.motionZ += yCoord * cos + xCoord * sin;
     }

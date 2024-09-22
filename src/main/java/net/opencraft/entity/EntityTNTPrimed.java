@@ -1,6 +1,8 @@
 
 package net.opencraft.entity;
 
+import static org.joml.Math.*;
+
 import net.opencraft.nbt.NBTTagCompound;
 import net.opencraft.util.Mth;
 import net.opencraft.world.World;
@@ -21,7 +23,7 @@ public class EntityTNTPrimed extends Entity {
         this(fe);
         this.setPosition(xCoord, yCoord, zCoord);
         final float n = (float) (Math.random() * 3.1415927410125732 * 2.0);
-        this.motionX = -Mth.sin(n * 3.1415927f / 180.0f) * 0.02f;
+        this.motionX = -sin(toRadians(n)) * 0.02f;
         this.motionY = 0.20000000298023224;
         this.motionZ = -Mth.cos(n * 3.1415927f / 180.0f) * 0.02f;
         this.canTriggerWalking = false;
