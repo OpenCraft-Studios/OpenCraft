@@ -128,9 +128,13 @@ public class GuiIngame extends GuiElement {
         RenderHelper.disableStandardItemLighting();
         GL11.glDisable(32826);
         if (this.mc.options.showDebugInfo) {
+            fontRenderer.drawStringWithShadow2("OpenCraft (" + this.mc.debug + ")", 2, 2, 16777215);
             fontRenderer.drawStringWithShadow2(this.mc.debugInfoRenders(), 2, 12, 16777215);
             fontRenderer.drawStringWithShadow2(this.mc.func_6262_n(), 2, 22, 16777215);
             fontRenderer.drawStringWithShadow2(this.mc.debugInfoEntities(), 2, 32, 16777215);
+            // display current coordinates and orientation
+            fontRenderer.drawStringWithShadow2("X: " + this.mc.player.posX + " Y: " + this.mc.player.posY + " Z: " + this.mc.player.posZ, 2, 42, 16777215);
+            fontRenderer.drawStringWithShadow2("Yaw: " + this.mc.player.rotationYaw + " Pitch: " + this.mc.player.rotationPitch, 2, 72, 16777215);
             final long maxMemory = Runtime.getRuntime().maxMemory();
             final long totalMemory = Runtime.getRuntime().totalMemory();
             final long n2 = totalMemory - Runtime.getRuntime().freeMemory();
