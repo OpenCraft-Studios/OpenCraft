@@ -128,7 +128,6 @@ public class GuiIngame extends GuiElement {
         RenderHelper.disableStandardItemLighting();
         GL11.glDisable(32826);
         if (this.mc.options.showDebugInfo) {
-            fontRenderer.drawStringWithShadow2("OpenCraft Infdev (" + this.mc.debug + ")", 2, 2, 16777215);
             fontRenderer.drawStringWithShadow2(this.mc.debugInfoRenders(), 2, 12, 16777215);
             fontRenderer.drawStringWithShadow2(this.mc.func_6262_n(), 2, 22, 16777215);
             fontRenderer.drawStringWithShadow2(this.mc.debugInfoEntities(), 2, 32, 16777215);
@@ -139,9 +138,8 @@ public class GuiIngame extends GuiElement {
             this.drawString(fontRenderer, string, scaledWidth - fontRenderer.getStringWidth(string) - 2, 2, 14737632);
             final String string2 = new StringBuilder().append("Allocated memory: ").append(totalMemory * 100L / maxMemory).append("% (").append(totalMemory / 1024L / 1024L).append("MB)").toString();
             this.drawString(fontRenderer, string2, scaledWidth - fontRenderer.getStringWidth(string2) - 2, 12, 14737632);
-        } else {
-            fontRenderer.drawStringWithShadow2("OpenCraft Infdev", 2, 2, 16777215);
         }
+        
         int i = 10;
         final boolean b2 = true;
         for (int integer5 = 0; integer5 < this.chatMessageList.size() && integer5 < i; ++integer5) {

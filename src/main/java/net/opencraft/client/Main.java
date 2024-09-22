@@ -3,10 +3,6 @@ package net.opencraft.client;
 import java.io.File;
 import net.opencraft.OpenCraft;
 
-/**
- *
- * @author LWJGL2
- */
 public class Main {
 
     public static void main(String[] args) throws Exception {
