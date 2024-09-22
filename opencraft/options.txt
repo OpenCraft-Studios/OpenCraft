@@ -2,7 +2,7 @@ music:true
 sound:true
 invertYMouse:false
 showFrameRate:false
-viewDistance:3
+viewDistance:1
 bobView:true
 anaglyph3d:false
 limitFramerate:false

@@ -124,7 +124,7 @@ public class OpenCraft implements Runnable {
 		this.tempDisplayWidth = width;
 		this.tempDisplayHeight = height;
 		this.fullscreen = boolean6;
-		(new SleepingForeverThread("Timer hack thread")).start();
+		//(new SleepingForeverThread("Timer hack thread")).start();
 		this.width = width;
 		this.height = height;
 		this.fullscreen = boolean6;
@@ -168,7 +168,8 @@ public class OpenCraft implements Runnable {
 		oc.options = new GameSettings(oc, oc.mcDataDir);
 		oc.renderer = new Renderer(oc.options);
 		oc.fontRenderer = new FontRenderer(oc.options, "/assets/default.png", oc.renderer);
-		oc.loadScreen();
+		//oc.loadScreen();
+		System.out.println("waos");
 		Keyboard.create();
 		Mouse.create();
 		oc.mouseHelper = new MouseHelper(null);
@@ -243,7 +244,7 @@ public class OpenCraft implements Runnable {
 		t.draw();
 		glEnable(3008);
 		glAlphaFunc(516, 0.1f);
-		oc.fontRenderer.drawStringWithShadow2("Loading...", 8, oc.height / 2 - 16, -1);
+		oc.fontRenderer.drawShadow("Loading...", 8, oc.height / 2 - 16, -1);
 		Display.swapBuffers();
 	}
 
@@ -303,6 +304,7 @@ public class OpenCraft implements Runnable {
 		oc.running = true;
 		try {
 			oc.init();
+			System.out.println("alr");
 		} catch (Exception exception) {
 			exception.printStackTrace();
 			oc.displayUnexpectedThrowable(new UnexpectedThrowable("Failed to start game", exception));
@@ -313,9 +315,9 @@ public class OpenCraft implements Runnable {
 			int n = 0;
 			while (oc.running) {
 				AABB.clearBoundingBoxPool();
-				if (Display.isCloseRequested()) {
+				if (Display.isCloseRequested())
 					oc.shutdown();
-				}
+				
 				if (oc.isGamePaused) {
 					final float renderPartialTicks = oc.timer.renderPartialTicks;
 					oc.timer.updateTimer();
@@ -340,10 +342,12 @@ public class OpenCraft implements Runnable {
 				if (oc.world != null)
 					while (oc.world.updatingLighting());
 				
+				System.out.println("fst c");
 				if (!oc.skipRenderWorld) {
 					oc.playerController.setPartialTime(oc.timer.renderPartialTicks);
 					oc.entityRenderer.updateCameraAndRender(oc.timer.renderPartialTicks);
 				}
+				System.out.println("sec c");
 				if (!Display.isActive() && oc.fullscreen)
 					oc.toggleFullscreen();
 				
@@ -352,7 +356,7 @@ public class OpenCraft implements Runnable {
 				else
 					oc.prevFrameTime = System.nanoTime();
 				
-				// Thread.yield();
+				Thread.yield();
 				Display.update();
 				if (Display.wasResized()) {
 					oc.width = Display.getWidth();
@@ -935,7 +939,7 @@ public class OpenCraft implements Runnable {
 	public static File getAppDir(final String string) {
 		final String property = System.getProperty("user.home", ".");
 		File file = null;
-		switch (EnumOSMappingHelper.enumOSMappingArray[getOs().ordinal()]) {
+		switch (EnumOSMappingHelper.enumOSMappingArray[Platform.getOs().ordinal()]) {
 			case 1:
 			case 2: {
 				file = new File(property, '.' + string + '/');
@@ -967,29 +971,6 @@ public class OpenCraft implements Runnable {
 					new StringBuilder().append("The working directory could not be created: ").append(file).toString());
 		}
 		return file;
-	}
-
-	private static EnumOS2 getOs() {
-		final String lowerCase = System.getProperty("os.name").toLowerCase();
-		if (lowerCase.contains("win")) {
-			return EnumOS2.windows;
-		}
-		if (lowerCase.contains("mac")) {
-			return EnumOS2.macos;
-		}
-		if (lowerCase.contains("solaris")) {
-			return EnumOS2.solaris;
-		}
-		if (lowerCase.contains("sunos")) {
-			return EnumOS2.solaris;
-		}
-		if (lowerCase.contains("linux")) {
-			return EnumOS2.linux;
-		}
-		if (lowerCase.contains("unix")) {
-			return EnumOS2.linux;
-		}
-		return EnumOS2.unknown;
 	}
 
 	public static OpenCraft getOpenCraft() {
