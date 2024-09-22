@@ -1,9 +1,11 @@
 package net.opencraft;
 
+import static net.opencraft.tests.DownloadResourcesJob.SOUNDS_PATH;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.util.glu.GLU.*;
 
 import java.io.File;
+import java.net.URL;
 
 import org.lwjgl.LWJGLException;
 import org.lwjgl.Sys;
@@ -204,7 +206,7 @@ public class OpenCraft implements Runnable {
 		displayGuiScreen(new GuiMainMenu());
 		effectRenderer = new EffectRenderer(world, renderer);
 		try {
-			DownloadResourcesJob job = new DownloadResourcesJob(mcDataDir);
+			DownloadResourcesJob job = new DownloadResourcesJob();
 			job.start();
 		} catch (Exception ex4) {
 			ex4.printStackTrace();
@@ -867,20 +869,21 @@ public class OpenCraft implements Runnable {
 		SandBlock.fallInstantly = false;
 	}
 
-	public void installResource(String string, final File file) {
-		final int index = string.indexOf("/");
-		final String substring = string.substring(0, index);
-		string = string.substring(index + 1);
-		if (substring.equalsIgnoreCase("sound")) {
-			sndManager.addSound(string, file);
-		} else if (substring.equalsIgnoreCase("newsound")) {
-			sndManager.addSound(string, file);
-		} else if (substring.equalsIgnoreCase("music")) {
-			sndManager.addIngameMusic(string, file);
-		} else if (substring.equalsIgnoreCase("newmusic")) {
-			sndManager.addIngameMusic(string, file);
-		} else if (substring.equalsIgnoreCase("menumusic")) {
-			sndManager.addMenuMusic(string, file);
+	public void registerSound(final URL resourceURL) {
+		String name = resourceURL.getPath().substring(resourceURL.getPath().lastIndexOf(SOUNDS_PATH) + SOUNDS_PATH.length());
+		name = name.substring(name.indexOf("/") + 1).replace("%20", " ").replace("/", ".").replaceAll("[0-9]", "");
+		final String path = resourceURL.getPath();
+
+		if(path.contains("sound") || path.contains("newsound")) {
+			oc.sndManager.addSound(name, resourceURL);
+		} else if(path.contains("music") || path.contains("newmusic")) {
+			oc.sndManager.addIngameMusic(name, resourceURL);
+		} else if(path.contains("menumusic")) {
+			oc.sndManager.addMenuMusic(name, resourceURL);
+		} else if(path.contains("streaming")) {
+			// IGNORE IT!!
+		} else {
+			System.err.println("Unknown sound type. Will not load from " + resourceURL.getPath());
 		}
 	}
 
