@@ -4,7 +4,16 @@ package net.opencraft.util;
 public enum Platform {
 	LINUX, SOLARIS, WINDOWS, MACOS, UNKNOWN;
 
+	private static Platform os = null;
+	
 	public static Platform getOs() {
+		if (Platform.os == null)
+			return os = getOs0();
+		
+		return os;
+	}
+	
+	private static Platform getOs0() {
 		final String lowerCase = System.getProperty("os.name").toLowerCase();
 		if (lowerCase.contains("win"))
 			return Platform.WINDOWS;
@@ -20,6 +29,5 @@ public enum Platform {
 			return Platform.LINUX;
 
 		return Platform.UNKNOWN;
-
 	}
 }
