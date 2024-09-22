@@ -932,7 +932,7 @@ public class OpenCraft implements Runnable {
 	public static File getAppDir(final String string) {
 		final String property = System.getProperty("user.home", ".");
 		File file = null;
-		switch (EnumOSMappingHelper.enumOSMappingArray[getOs().ordinal()]) {
+		switch (EnumOSMappingHelper.enumOSMappingArray[Platform.getOs().ordinal()]) {
 			case 1:
 			case 2: {
 				file = new File(property, '.' + string + '/');
@@ -964,29 +964,6 @@ public class OpenCraft implements Runnable {
 					new StringBuilder().append("The working directory could not be created: ").append(file).toString());
 		}
 		return file;
-	}
-
-	private static EnumOS2 getOs() {
-		final String lowerCase = System.getProperty("os.name").toLowerCase();
-		if (lowerCase.contains("win")) {
-			return EnumOS2.windows;
-		}
-		if (lowerCase.contains("mac")) {
-			return EnumOS2.macos;
-		}
-		if (lowerCase.contains("solaris")) {
-			return EnumOS2.solaris;
-		}
-		if (lowerCase.contains("sunos")) {
-			return EnumOS2.solaris;
-		}
-		if (lowerCase.contains("linux")) {
-			return EnumOS2.linux;
-		}
-		if (lowerCase.contains("unix")) {
-			return EnumOS2.linux;
-		}
-		return EnumOS2.unknown;
 	}
 
 	public static OpenCraft getOpenCraft() {
