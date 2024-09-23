@@ -8,7 +8,7 @@ import net.opencraft.blocks.Block;
 
 public class Session {
 
-    public static List registeredBlocksList;
+    public static List<Block> registeredBlocksList;
     public String username;
     public String sessionId;
     public String mpPassParameter;
@@ -45,9 +45,9 @@ public class Session {
         System.out.println(Session.registeredBlocksList.size());
     }
 
-    public Session(final String string1, final String string2) {
-        this.username = string1;
-        this.sessionId = string2;
+    public Session(final String username, final String sessionID) {
+        this.username = username;
+        this.sessionId = sessionID;
     }
 
 }

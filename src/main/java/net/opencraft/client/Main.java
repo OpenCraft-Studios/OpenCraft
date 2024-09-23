@@ -2,20 +2,15 @@ package net.opencraft.client;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.JarURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.regex.Pattern;
+import java.util.*;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
 import net.opencraft.OpenCraft;
-
-import static net.opencraft.OpenCraft.oc;
 
 /**
  *
@@ -23,20 +18,53 @@ import static net.opencraft.OpenCraft.oc;
  */
 public class Main {
 
-	public static final URL RESOURCE_URL = Main.class.getProtectionDomain().getCodeSource().getLocation();
-	public static final File RESOURCE_FILE = new File(RESOURCE_URL.getFile());
+	public static final ResourcesDescriptor RESOURCES = describeResources();
 	public static final String NATIVES_PATH = "natives/";
+	public static final int EXPECTED_NATIVES_COUNT = 10;
+
+	public static ResourcesDescriptor describeResources() {
+		final String classPath = "/" + Main.class.getName().replace('.', '/') + ".class";
+		final File root;
+		final File jarFile;
+		URL classURL = Main.class.getResource(classPath);
+		if (classURL.getProtocol().equals("jar")) {
+			JarURLConnection jarConn = null;
+			try {
+				jarConn = (JarURLConnection)classURL.openConnection();
+			} catch(IOException e) {
+				throw new RuntimeException(e);
+			}
+			jarFile = new File(jarConn.getJarFileURL().getFile());
+			root = jarFile.getParentFile();
+		}
+		else if (classURL.getProtocol().equals("file")) {
+			root = new File(classURL.getFile().replace(classPath, ""));
+			jarFile = null;
+		} else {
+			throw new IllegalStateException("Unsupported URL protocol: " + classURL.getProtocol());
+		}
+		return new ResourcesDescriptor(root, jarFile);
+	}
 
 	public static void main(String[] args) throws Exception {
+		System.out.println("Starting...");
+		System.setProperty("user.dir", RESOURCES.resourcesRoot.getAbsolutePath());
+
 		System.out.print("Extracting Native Libraries...");
-		// TODO: close resource input streams
-		for(URL resource : resourcesAt(NATIVES_PATH)) {
-			String filename = new File(resource.getFile()).getName();
-			final File destination = new File(RESOURCE_FILE.getParent(),  NATIVES_PATH + filename);
-			destination.getParentFile().mkdirs();
-			Files.write(destination.toPath(), resource.openStream().readAllBytes());
+		File nativesDir = new File(RESOURCES.resourcesRoot, NATIVES_PATH);
+		System.out.println(nativesDir.getAbsolutePath());
+		if(nativesDir.exists() && Objects.requireNonNull(nativesDir.listFiles()).length == EXPECTED_NATIVES_COUNT) {
+				System.out.println("already extracted!");
+		} else {
+			// TODO: close resource input streams
+			for(URL resource : resourcesAt(NATIVES_PATH)) {
+				String filename = new File(resource.getFile()).getName();
+				final File destination = new File(RESOURCES.resourcesRoot, NATIVES_PATH + filename);
+				destination.getParentFile().mkdirs();
+				Files.write(destination.toPath(), resource.openStream().readAllBytes());
+			}
+			System.out.println("done!");
 		}
-		System.out.println("done!");
 
 		bindNatives();
 		enableLegacySorting();
@@ -49,7 +77,7 @@ public class Main {
 	// A lambda might be appropriate
 	public static List<URL> resourcesAt(String prefix) throws IOException {
 		ZipInputStream zip = null;
-		zip = new ZipInputStream(RESOURCE_URL.openStream());
+		zip = new ZipInputStream(RESOURCES.jarFile.toURI().toURL().openStream());
 		List<URL> resources = new ArrayList<>();
 		while(true) {
 			ZipEntry entry = zip.getNextEntry();
@@ -70,7 +98,7 @@ public class Main {
 	}
 
 	private static void bindNatives() {
-		System.setProperty("org.lwjgl.librarypath", new File("./natives").getAbsolutePath());
+		System.setProperty("org.lwjgl.librarypath", new File(RESOURCES.resourcesRoot, NATIVES_PATH).getAbsolutePath());
 	}
 
 }

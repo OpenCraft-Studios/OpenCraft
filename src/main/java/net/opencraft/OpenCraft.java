@@ -206,8 +206,7 @@ public class OpenCraft implements Runnable {
 		displayGuiScreen(new GuiMainMenu());
 		effectRenderer = new EffectRenderer(world, renderer);
 		try {
-			DownloadResourcesJob job = new DownloadResourcesJob();
-			job.start();
+			new DownloadResourcesJob().run();
 		} catch (Exception ex4) {
 			ex4.printStackTrace();
 		}
@@ -920,9 +919,8 @@ public class OpenCraft implements Runnable {
 	}
 
 	public static File getMinecraftDir() {
-		if (OpenCraft.gameDir == null) {
-			OpenCraft.gameDir = getAppDir("minecraft");
-		}
+		if(gameDir == null)
+			gameDir = new File("opencraft");
 		return OpenCraft.gameDir;
 	}
 
