@@ -6,7 +6,7 @@ import java.nio.FloatBuffer;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 
-import net.opencraft.util.Vec3;
+import net.opencraft.util.Vector3d;
 
 public class RenderHelper {
 
@@ -28,12 +28,12 @@ public class RenderHelper {
         final float n = 0.4f;
         final float n2 = 0.6f;
         final float n3 = 0.0f;
-        final Vec3 normalize = Vec3.newTemp(0.699999988079071, 1.0, -0.20000000298023224).normalize();
+        final Vector3d normalize = new Vector3d(0.699999988079071, 1.0, -0.20000000298023224).normalize();
         GL11.glLight(16384, 4611, a(normalize.x, normalize.y, normalize.z, 0.0));
         GL11.glLight(16384, 4609, a(n2, n2, n2, 1.0f));
         GL11.glLight(16384, 4608, a(0.0f, 0.0f, 0.0f, 1.0f));
         GL11.glLight(16384, 4610, a(n3, n3, n3, 1.0f));
-        final Vec3 normalize2 = Vec3.newTemp(-0.699999988079071, 1.0, 0.20000000298023224).normalize();
+        final Vector3d normalize2 = new Vector3d(-0.699999988079071, 1.0, 0.20000000298023224).normalize();
         GL11.glLight(16385, 4611, a(normalize2.x, normalize2.y, normalize2.z, 0.0));
         GL11.glLight(16385, 4609, a(n2, n2, n2, 1.0f));
         GL11.glLight(16385, 4608, a(0.0f, 0.0f, 0.0f, 1.0f));

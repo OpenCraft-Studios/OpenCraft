@@ -8,7 +8,7 @@ import net.opencraft.client.input.MovingObjectPosition;
 import net.opencraft.entity.EntityPlayer;
 import net.opencraft.item.Item;
 import net.opencraft.physics.AABB;
-import net.opencraft.util.Vec3;
+import net.opencraft.util.Vector3d;
 import net.opencraft.world.IBlockAccess;
 import net.opencraft.world.World;
 
@@ -150,7 +150,7 @@ public class DoorBlock extends Block {
     }
 
     @Override
-    public MovingObjectPosition collisionRayTrace(final World world, final int xCoord, final int yCoord, final int zCoord, final Vec3 var1, final Vec3 var2) {
+    public MovingObjectPosition collisionRayTrace(final World world, final int xCoord, final int yCoord, final int zCoord, final Vector3d var1, final Vector3d var2) {
         this.setBlockBoundsBasedOnState(world, xCoord, yCoord, zCoord);
         return super.collisionRayTrace(world, xCoord, yCoord, zCoord, var1, var2);
     }

@@ -1,25 +1,13 @@
 
 package net.opencraft.util;
 
-public class Vec3 {
+public class Vector3d {
 
     public double x;
     public double y;
     public double z;
 
-    public static Vec3 createVectorHelper(final double double1, final double double2, final double double3) {
-        return new Vec3(double1, double2, double3);
-    }
-
-    /**
-     * Notch's original name for this method
-     * */
-    public static Vec3 newTemp(final double double1, final double double2, final double double3) {
-    	// +75 MB of space :D
-        return createVectorHelper(double1, double2, double3);
-    }
-
-    private Vec3(double double1, double double2, double double3) {
+    public Vector3d(double double1, double double2, double double3) {
         if (double1 == -0.0) {
             double1 = 0.0;
         }
@@ -34,41 +22,34 @@ public class Vec3 {
         this.z = double3;
     }
 
-    private Vec3 setComponents(final double double1, final double double2, final double double3) {
-        this.x = double1;
-        this.y = double2;
-        this.z = double3;
-        return this;
+    public Vector3d sub(Vector3d bo) {
+        return new Vector3d(bo.x - this.x, bo.y - this.y, bo.z - this.z);
     }
 
-    public Vec3 subtract(final Vec3 bo) {
-        return newTemp(bo.x - this.x, bo.y - this.y, bo.z - this.z);
-    }
-
-    public Vec3 normalize() {
+    public Vector3d normalize() {
         final double n = Mth.sqrt_double(this.x * this.x + this.y * this.y + this.z * this.z);
         if (n < 1.0E-4) {
-            return newTemp(0.0, 0.0, 0.0);
+            return new Vector3d(0.0, 0.0, 0.0);
         }
-        return newTemp(this.x / n, this.y / n, this.z / n);
+        return new Vector3d(this.x / n, this.y / n, this.z / n);
     }
 
-    public Vec3 cross(final Vec3 bo) {
-        return newTemp(this.y * bo.z - this.z * bo.y, this.z * bo.x - this.x * bo.z, this.x * bo.y - this.y * bo.x);
+    public Vector3d cross(final Vector3d bo) {
+        return new Vector3d(this.y * bo.z - this.z * bo.y, this.z * bo.x - this.x * bo.z, this.x * bo.y - this.y * bo.x);
     }
 
-    public Vec3 add(final double double1, final double double2, final double double3) {
-        return newTemp(this.x + double1, this.y + double2, this.z + double3);
+    public Vector3d add(final double double1, final double double2, final double double3) {
+        return new Vector3d(this.x + double1, this.y + double2, this.z + double3);
     }
 
-    public double distance(final Vec3 bo) {
+    public double distance(final Vector3d bo) {
         final double n = bo.x - this.x;
         final double n2 = bo.y - this.y;
         final double n3 = bo.z - this.z;
         return Mth.sqrt_double(n * n + n2 * n2 + n3 * n3);
     }
 
-    public double distanceSquared(final Vec3 bo) {
+    public double distanceSquared(final Vector3d bo) {
         final double n = bo.x - this.x;
         final double n2 = bo.y - this.y;
         final double n3 = bo.z - this.z;
@@ -86,7 +67,7 @@ public class Vec3 {
         return Mth.sqrt_double(this.x * this.x + this.y * this.y + this.z * this.z);
     }
 
-    public Vec3 getIntermediateWithXValue(final Vec3 bo, final double double2) {
+    public Vector3d getIntermediateWithXValue(final Vector3d bo, final double double2) {
         final double n = bo.x - this.x;
         final double n2 = bo.y - this.y;
         final double n3 = bo.z - this.z;
@@ -97,10 +78,10 @@ public class Vec3 {
         if (n4 < 0.0 || n4 > 1.0) {
             return null;
         }
-        return newTemp(this.x + n * n4, this.y + n2 * n4, this.z + n3 * n4);
+        return new Vector3d(this.x + n * n4, this.y + n2 * n4, this.z + n3 * n4);
     }
 
-    public Vec3 getIntermediateWithYValue(final Vec3 bo, final double double2) {
+    public Vector3d getIntermediateWithYValue(final Vector3d bo, final double double2) {
         final double n = bo.x - this.x;
         final double n2 = bo.y - this.y;
         final double n3 = bo.z - this.z;
@@ -111,10 +92,10 @@ public class Vec3 {
         if (n4 < 0.0 || n4 > 1.0) {
             return null;
         }
-        return newTemp(this.x + n * n4, this.y + n2 * n4, this.z + n3 * n4);
+        return new Vector3d(this.x + n * n4, this.y + n2 * n4, this.z + n3 * n4);
     }
 
-    public Vec3 getIntermediateWithZValue(final Vec3 bo, final double double2) {
+    public Vector3d getIntermediateWithZValue(final Vector3d bo, final double double2) {
         final double n = bo.x - this.x;
         final double n2 = bo.y - this.y;
         final double n3 = bo.z - this.z;
@@ -125,7 +106,7 @@ public class Vec3 {
         if (n4 < 0.0 || n4 > 1.0) {
             return null;
         }
-        return newTemp(this.x + n * n4, this.y + n2 * n4, this.z + n3 * n4);
+        return new Vector3d(this.x + n * n4, this.y + n2 * n4, this.z + n3 * n4);
     }
 
     public String toString() {

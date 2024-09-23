@@ -11,7 +11,7 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
 import net.opencraft.client.sound.SoundManager;
-import net.opencraft.util.ThreadHelper;
+import net.opencraft.util.helpers.ThreadHelper;
 
 public class DownloadResourcesJob implements Job {
 
@@ -23,11 +23,10 @@ public class DownloadResourcesJob implements Job {
 
 	@Override
 	public void run() {
-		System.out.print("Loading sounds...");
 		int soundCount;
 		try {
 			soundCount = loadSounds();
-			System.out.println("done!" + soundCount + " sounds loaded.");
+			System.out.println(soundCount + " sounds loaded correctly!");
 		} catch(IOException e) {
 			errors = true;
 			e.printStackTrace();
@@ -52,6 +51,8 @@ public class DownloadResourcesJob implements Job {
 					List<File> filesToCheck = new ArrayList<>();
 					filesToCheck.add(soundsDir);
 					while(!filesToCheck.isEmpty()) {
+						printSpinningBarAnimation("Loading sounds");
+						
 						File f = filesToCheck.removeFirst();
 						if(f.isDirectory()) {
 							Collections.addAll(filesToCheck, f.listFiles());
@@ -83,6 +84,12 @@ public class DownloadResourcesJob implements Job {
 			throw new IOException("No sounds found in resources!" + resourceURL);
 		}
 		return count;
+	}
+
+	private void printSpinningBarAnimation(String msg) {
+	    String bars = "|/-\\";
+	    int i = (int) ((System.currentTimeMillis() / 50) % bars.length());
+	    System.out.print(msg + " " + bars.charAt(i) + "\r");
 	}
 
 	@Override

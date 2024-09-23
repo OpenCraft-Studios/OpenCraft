@@ -11,7 +11,7 @@ import net.opencraft.entity.*;
 import net.opencraft.item.*;
 import net.opencraft.physics.AABB;
 import net.opencraft.tileentity.TileEntitySign;
-import net.opencraft.util.Vec3;
+import net.opencraft.util.Vector3d;
 import net.opencraft.world.IBlockAccess;
 import net.opencraft.world.World;
 
@@ -385,15 +385,15 @@ public class Block {
         return this.blockResistance / 5.0f;
     }
 
-    public MovingObjectPosition collisionRayTrace(final World world, final int xCoord, final int yCoord, final int zCoord, Vec3 var1, Vec3 var2) {
+    public MovingObjectPosition collisionRayTrace(final World world, final int xCoord, final int yCoord, final int zCoord, Vector3d var1, Vector3d var2) {
         var1 = var1.add(-xCoord, -yCoord, -zCoord);
         var2 = var2.add(-xCoord, -yCoord, -zCoord);
-        Vec3 intermediateWithXValue = var1.getIntermediateWithXValue(var2, this.minX);
-        Vec3 intermediateWithXValue2 = var1.getIntermediateWithXValue(var2, this.maxX);
-        Vec3 intermediateWithYValue = var1.getIntermediateWithYValue(var2, this.minY);
-        Vec3 intermediateWithYValue2 = var1.getIntermediateWithYValue(var2, this.maxY);
-        Vec3 intermediateWithZValue = var1.getIntermediateWithZValue(var2, this.minZ);
-        Vec3 intermediateWithZValue2 = var1.getIntermediateWithZValue(var2, this.maxZ);
+        Vector3d intermediateWithXValue = var1.getIntermediateWithXValue(var2, this.minX);
+        Vector3d intermediateWithXValue2 = var1.getIntermediateWithXValue(var2, this.maxX);
+        Vector3d intermediateWithYValue = var1.getIntermediateWithYValue(var2, this.minY);
+        Vector3d intermediateWithYValue2 = var1.getIntermediateWithYValue(var2, this.maxY);
+        Vector3d intermediateWithZValue = var1.getIntermediateWithZValue(var2, this.minZ);
+        Vector3d intermediateWithZValue2 = var1.getIntermediateWithZValue(var2, this.maxZ);
         if (!this.isVecInsideYZBounds(intermediateWithXValue)) {
             intermediateWithXValue = null;
         }
@@ -412,7 +412,7 @@ public class Block {
         if (!this.isVecInsideXYBounds(intermediateWithZValue2)) {
             intermediateWithZValue2 = null;
         }
-        Vec3 vec3D = null;
+        Vector3d vec3D = null;
         if (intermediateWithXValue != null && (vec3D == null || var1.distance(intermediateWithXValue) < var1.distance(vec3D))) {
             vec3D = intermediateWithXValue;
         }
@@ -456,15 +456,15 @@ public class Block {
         return new MovingObjectPosition(xCoord, yCoord, zCoord, integer4, vec3D.add(xCoord, yCoord, zCoord));
     }
 
-    private boolean isVecInsideYZBounds(final Vec3 var1) {
+    private boolean isVecInsideYZBounds(final Vector3d var1) {
         return var1 != null && var1.y >= this.minY && var1.y <= this.maxY && var1.z >= this.minZ && var1.z <= this.maxZ;
     }
 
-    private boolean isVecInsideXZBounds(final Vec3 var1) {
+    private boolean isVecInsideXZBounds(final Vector3d var1) {
         return var1 != null && var1.x >= this.minX && var1.x <= this.maxX && var1.z >= this.minZ && var1.z <= this.maxZ;
     }
 
-    private boolean isVecInsideXYBounds(final Vec3 var1) {
+    private boolean isVecInsideXYBounds(final Vector3d var1) {
         return var1 != null && var1.x >= this.minX && var1.x <= this.maxX && var1.y >= this.minY && var1.y <= this.maxY;
     }
 
@@ -492,7 +492,7 @@ public class Block {
     public void onBlockClicked(final World world, final int xCoord, final int yCoord, final int zCoord, final EntityPlayer entityPlayer) {
     }
 
-    public void velocityToAddToEntity(final World world, final int xCoord, final int yCoord, final int zCoord, final Entity entity, final Vec3 var1) {
+    public void velocityToAddToEntity(final World world, final int xCoord, final int yCoord, final int zCoord, final Entity entity, final Vector3d var1) {
     }
 
     public void setBlockBoundsBasedOnState(final IBlockAccess blockAccess, final int xCoord, final int yCoord, final int zCoord) {

@@ -10,7 +10,7 @@ import net.opencraft.blocks.Block;
 import net.opencraft.entity.Entity;
 import net.opencraft.physics.AABB;
 import net.opencraft.util.Mth;
-import net.opencraft.util.Vec3;
+import net.opencraft.util.Vector3d;
 import net.opencraft.world.World;
 import net.opencraft.world.chunk.ChunkPosition;
 
@@ -59,7 +59,7 @@ public class Explosion {
         int j = Mth.floor_double(double3 + float6 + 1.0);
         int k = Mth.floor_double(double4 - float6 - 1.0);
         final List entitiesWithinAABBExcludingEntity = fe.getEntitiesWithinAABBExcludingEntity(eq, AABB.getBoundingBoxFromPool(i, k, Mth.floor_double(double5 - float6 - 1.0), j, Mth.floor_double(double4 + float6 + 1.0), Mth.floor_double(double5 + float6 + 1.0)));
-        final Vec3 vector = Vec3.newTemp(double3, double4, double5);
+        final Vector3d vector = new Vector3d(double3, double4, double5);
         for (int l = 0; l < entitiesWithinAABBExcludingEntity.size(); ++l) {
             final Entity entity = (Entity) entitiesWithinAABBExcludingEntity.get(l);
             final double n9 = entity.getDistance(double3, double4, double5) / float6;

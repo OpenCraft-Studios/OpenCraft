@@ -6,7 +6,7 @@ import java.util.Random;
 import net.opencraft.blocks.material.Material;
 import net.opencraft.entity.Entity;
 import net.opencraft.physics.AABB;
-import net.opencraft.util.Vec3;
+import net.opencraft.util.Vector3d;
 import net.opencraft.world.IBlockAccess;
 import net.opencraft.world.World;
 
@@ -93,8 +93,8 @@ public abstract class LiquidBlock extends Block {
         return 0;
     }
 
-    private Vec3 getFlowVector(final IBlockAccess blockAccess, final int xCoord, final int yCoord, final int zCoord) {
-        Vec3 vec3D = Vec3.newTemp(0.0, 0.0, 0.0);
+    private Vector3d getFlowVector(final IBlockAccess blockAccess, final int xCoord, final int yCoord, final int zCoord) {
+        Vector3d vec3D = new Vector3d(0.0, 0.0, 0.0);
         final int effectiveFlowDecay = this.getEffectiveFlowDecay(blockAccess, xCoord, yCoord, zCoord);
         for (int i = 0; i < 4; ++i) {
             int n = xCoord;
@@ -157,8 +157,8 @@ public abstract class LiquidBlock extends Block {
     }
 
     @Override
-    public void velocityToAddToEntity(final World world, final int xCoord, final int yCoord, final int zCoord, final Entity entity, final Vec3 var1) {
-        final Vec3 flowVector = this.getFlowVector(world, xCoord, yCoord, zCoord);
+    public void velocityToAddToEntity(final World world, final int xCoord, final int yCoord, final int zCoord, final Entity entity, final Vector3d var1) {
+        final Vector3d flowVector = this.getFlowVector(world, xCoord, yCoord, zCoord);
         var1.x += flowVector.x;
         var1.y += flowVector.y;
         var1.z += flowVector.z;
@@ -264,7 +264,7 @@ public abstract class LiquidBlock extends Block {
     }
 
     public static double getFlowDirection(final IBlockAccess blockAccess, final int xCoord, final int yCoord, final int zCoord, final Material material) {
-        Vec3 vec3D = null;
+        Vector3d vec3D = null;
         if (material == Material.WATER) {
             vec3D = ((LiquidBlock) Block.waterMoving).getFlowVector(blockAccess, xCoord, yCoord, zCoord);
         }

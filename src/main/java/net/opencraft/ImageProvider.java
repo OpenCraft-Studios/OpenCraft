@@ -5,5 +5,5 @@ import java.awt.image.BufferedImage;
 
 public interface ImageProvider {
 
-    BufferedImage a(final BufferedImage bufferedImage);
+    BufferedImage getImage(BufferedImage bi);
 }

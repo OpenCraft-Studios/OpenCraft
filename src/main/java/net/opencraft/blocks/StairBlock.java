@@ -6,7 +6,7 @@ import java.util.*;
 import net.opencraft.entity.Entity;
 import net.opencraft.entity.EntityPlayer;
 import net.opencraft.physics.AABB;
-import net.opencraft.util.Vec3;
+import net.opencraft.util.Vector3d;
 import net.opencraft.world.IBlockAccess;
 import net.opencraft.world.World;
 
@@ -212,7 +212,7 @@ public class StairBlock extends Block {
     }
 
     @Override
-    public void velocityToAddToEntity(final World world, final int xCoord, final int yCoord, final int zCoord, final Entity entity, final Vec3 var1) {
+    public void velocityToAddToEntity(final World world, final int xCoord, final int yCoord, final int zCoord, final Entity entity, final Vector3d var1) {
         this.modelBlock.velocityToAddToEntity(world, xCoord, yCoord, zCoord, entity, var1);
     }
 

@@ -14,7 +14,7 @@ public class Texture implements ImageProvider {
     private int b;
     private int c;
 
-    public BufferedImage a(final BufferedImage bufferedImage) {
+    public BufferedImage getImage(final BufferedImage bufferedImage) {
         if (bufferedImage == null) {
             return null;
         }

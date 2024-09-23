@@ -1,13 +1,12 @@
 
 package net.opencraft.renderer;
 
-import net.opencraft.OpenCraft;
-import net.opencraft.OpenCraftError;
-import net.opencraft.ScaledResolution;
-import net.opencraft.renderer.gui.IProgressUpdate;
-
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
+
+import net.opencraft.OpenCraft;
+import net.opencraft.ScaledResolution;
+import net.opencraft.renderer.gui.IProgressUpdate;
 
 public class LoadingScreenRenderer implements IProgressUpdate {
 
@@ -53,7 +52,7 @@ public class LoadingScreenRenderer implements IProgressUpdate {
         if (this.field_1005_e) {
             return;
         }
-        throw new OpenCraftError();
+        throw new IllegalStateException();
     }
 
     public void displayLoadingString(final String string) {
@@ -64,18 +63,14 @@ public class LoadingScreenRenderer implements IProgressUpdate {
             this.field_1006_d = 0L;
             return;
         }
-        if (this.field_1005_e) {
-            return;
-        }
-        throw new OpenCraftError();
+        if (!this.field_1005_e)
+        	throw new IllegalStateException();
     }
 
     public void setLoadingProgress(final int integer) {
         if (!this.mc.running) {
-            if (this.field_1005_e) {
-                return;
-            }
-            throw new OpenCraftError();
+            if (!this.field_1005_e)
+            	throw new IllegalStateException();
         } else {
             final long currentTimeMillis = System.currentTimeMillis();
             if (currentTimeMillis - this.field_1006_d < 20L) {

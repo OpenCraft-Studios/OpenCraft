@@ -31,7 +31,7 @@ public class fm extends Thread {
             if (this.b == null) {
                 this.c.a = ImageIO.read(httpURLConnection.getInputStream());
             } else {
-                this.c.a = this.b.a(ImageIO.read(httpURLConnection.getInputStream()));
+                this.c.a = this.b.getImage(ImageIO.read(httpURLConnection.getInputStream()));
             }
         } catch (Exception ex) {
             ex.printStackTrace();

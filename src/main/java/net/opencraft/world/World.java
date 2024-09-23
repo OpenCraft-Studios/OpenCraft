@@ -19,7 +19,7 @@ import net.opencraft.physics.AABB;
 import net.opencraft.renderer.gui.IProgressUpdate;
 import net.opencraft.tileentity.TileEntity;
 import net.opencraft.util.Mth;
-import net.opencraft.util.Vec3;
+import net.opencraft.util.Vector3d;
 import net.opencraft.world.chunk.*;
 import net.opencraft.world.chunk.storage.ChunkLoader;
 
@@ -526,11 +526,11 @@ public class World implements IBlockAccess {
         return this.skylightSubtracted < 4;
     }
 
-    public MovingObjectPosition rayTraceBlocks(final Vec3 var1, final Vec3 var2) {
+    public MovingObjectPosition rayTraceBlocks(final Vector3d var1, final Vector3d var2) {
         return this.rayTraceBlocks_do_do(var1, var2, false);
     }
 
-    public MovingObjectPosition rayTraceBlocks_do_do(final Vec3 var1, final Vec3 var2, final boolean var3) {
+    public MovingObjectPosition rayTraceBlocks_do_do(final Vector3d var1, final Vector3d var2, final boolean var3) {
         if (Double.isNaN(var1.x) || Double.isNaN(var1.y) || Double.isNaN(var1.z)) {
             return null;
         }
@@ -616,32 +616,32 @@ public class World implements IBlockAccess {
                 var1.y += n6 * n4;
                 var1.z = zCoord;
             }
-            final Vec3 vector;
-            final Vec3 vec3D = vector = Vec3.newTemp(var1.x, var1.y, var1.z);
+            final Vector3d vector;
+            final Vector3d vec3D = vector = new Vector3d(var1.x, var1.y, var1.z);
             final double xCoord2 = Mth.floor_double(var1.x);
             vector.x = xCoord2;
             floor_double4 = (int) xCoord2;
             if (n8 == 5) {
                 --floor_double4;
-                final Vec3 vec3D2 = vec3D;
+                final Vector3d vec3D2 = vec3D;
                 ++vec3D2.x;
             }
-            final Vec3 vec3D3 = vec3D;
+            final Vector3d vec3D3 = vec3D;
             final double yCoord2 = Mth.floor_double(var1.y);
             vec3D3.y = yCoord2;
             floor_double5 = (int) yCoord2;
             if (n8 == 1) {
                 --floor_double5;
-                final Vec3 vec3D4 = vec3D;
+                final Vector3d vec3D4 = vec3D;
                 ++vec3D4.y;
             }
-            final Vec3 vec3D5 = vec3D;
+            final Vector3d vec3D5 = vec3D;
             final double zCoord2 = Mth.floor_double(var1.z);
             vec3D5.z = zCoord2;
             floor_double6 = (int) zCoord2;
             if (n8 == 3) {
                 --floor_double6;
-                final Vec3 vec3D6 = vec3D;
+                final Vector3d vec3D6 = vec3D;
                 ++vec3D6.z;
             }
             int n9 = this.getBlockId(floor_double4, floor_double5, floor_double6);
@@ -717,7 +717,7 @@ public class World implements IBlockAccess {
                 ((IWorldAccess) this.worldAccesses.get(i)).obtainEntitySkin(entity);
             }
         } else {
-            System.out.println("Failed to add entity " + entity + ", Can't find chunk x: " + floor_double + " z: " + floor_double2);
+            System.err.printf("Loading Chunk(x=%d,z=%d)...%n", floor_double, floor_double2);
         }
     }
 
@@ -773,7 +773,7 @@ public class World implements IBlockAccess {
         return (int) (n * 11.0f);
     }
 
-    public Vec3 getSkyColor(final float float1) {
+    public Vector3d getSkyColor(final float float1) {
         float n = cos(this.getCelestialAngle(float1) * PI_TIMES_2_f) * 2.0f + 0.5f;
         if (n < 0.0f) {
             n = 0.0f;
@@ -787,7 +787,7 @@ public class World implements IBlockAccess {
         n2 *= n;
         n3 *= n;
         n4 *= n;
-        return Vec3.newTemp(n2, n3, n4);
+        return new Vector3d(n2, n3, n4);
     }
 
     public float getCelestialAngle(final float float1) {
@@ -804,7 +804,7 @@ public class World implements IBlockAccess {
         return n;
     }
 
-    public Vec3 drawClouds(final float float1) {
+    public Vector3d drawClouds(final float float1) {
         float n = cos(this.getCelestialAngle(float1) * PI_TIMES_2_f) * 2.0f + 0.5f;
         if (n < 0.0f) {
             n = 0.0f;
@@ -818,10 +818,10 @@ public class World implements IBlockAccess {
         n2 *= n * 0.9f + 0.1f;
         n3 *= n * 0.9f + 0.1f;
         n4 *= n * 0.85f + 0.15f;
-        return Vec3.newTemp(n2, n3, n4);
+        return new Vector3d(n2, n3, n4);
     }
 
-    public Vec3 getFogColor(final float float1) {
+    public Vector3d getFogColor(final float float1) {
         float n = cos(this.getCelestialAngle(float1) * PI_TIMES_2_f) * 2.0f + 0.5f;
         if (n < 0.0f) {
             n = 0.0f;
@@ -835,7 +835,7 @@ public class World implements IBlockAccess {
         n2 *= n * 0.94f + 0.06f;
         n3 *= n * 0.94f + 0.06f;
         n4 *= n * 0.91f + 0.09f;
-        return Vec3.newTemp(n2, n3, n4);
+        return new Vector3d(n2, n3, n4);
     }
 
     public int findTopSolidBlock(final int integer1, final int integer2) {
@@ -1032,7 +1032,7 @@ public class World implements IBlockAccess {
         final int floor_double5 = Mth.floor_double(aabb.minZ);
         final int floor_double6 = Mth.floor_double(aabb.maxZ + 1.0);
         boolean b = false;
-        final Vec3 vector = Vec3.newTemp(0.0, 0.0, 0.0);
+        final Vector3d vector = new Vector3d(0.0, 0.0, 0.0);
         for (int i = floor_double; i < floor_double2; ++i) {
             for (int j = floor_double3; j < floor_double4; ++j) {
                 for (int k = floor_double5; k < floor_double6; ++k) {
@@ -1045,7 +1045,7 @@ public class World implements IBlockAccess {
             }
         }
         if (vector.length() > 0.0) {
-            final Vec3 normalize = vector.normalize();
+            final Vector3d normalize = vector.normalize();
             final double n = 0.004;
             entity.motionX += normalize.x * n;
             entity.motionY += normalize.y * n;
@@ -1078,7 +1078,7 @@ public class World implements IBlockAccess {
         new Explosion().doExplosion(this, entity, double2, double3, double4, float5);
     }
 
-    public float getBlockDensity(final Vec3 var1, final AABB aabb) {
+    public float getBlockDensity(final Vector3d var1, final AABB aabb) {
         final double n = 1.0 / ((aabb.maxX - aabb.minX) * 2.0 + 1.0);
         final double n2 = 1.0 / ((aabb.maxY - aabb.minY) * 2.0 + 1.0);
         final double n3 = 1.0 / ((aabb.maxZ - aabb.minZ) * 2.0 + 1.0);
@@ -1087,7 +1087,7 @@ public class World implements IBlockAccess {
         for (float n6 = 0.0f; n6 <= 1.0f; n6 += (float) n) {
             for (float n7 = 0.0f; n7 <= 1.0f; n7 += (float) n2) {
                 for (float n8 = 0.0f; n8 <= 1.0f; n8 += (float) n3) {
-                    if (this.rayTraceBlocks(Vec3.newTemp(aabb.minX + (aabb.maxX - aabb.minX) * n6, aabb.minY + (aabb.maxY - aabb.minY) * n7, aabb.minZ + (aabb.maxZ - aabb.minZ) * n8), var1) == null) {
+                    if (this.rayTraceBlocks(new Vector3d(aabb.minX + (aabb.maxX - aabb.minX) * n6, aabb.minY + (aabb.maxY - aabb.minY) * n7, aabb.minZ + (aabb.maxZ - aabb.minZ) * n8), var1) == null) {
                         ++n4;
                     }
                     ++n5;

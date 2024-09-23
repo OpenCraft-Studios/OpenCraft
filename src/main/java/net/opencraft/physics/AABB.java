@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.opencraft.client.input.MovingObjectPosition;
-import net.opencraft.util.Vec3;
+import net.opencraft.util.Vector3d;
 
 public class AABB {
 
@@ -176,13 +176,13 @@ public class AABB {
         return getBoundingBoxFromPool(this.minX, this.minY, this.minZ, this.maxX, this.maxY, this.maxZ);
     }
 
-    public MovingObjectPosition calculateIntercept(final Vec3 var1, final Vec3 var2) {
-        Vec3 intermediateWithXValue = var1.getIntermediateWithXValue(var2, this.minX);
-        Vec3 intermediateWithXValue2 = var1.getIntermediateWithXValue(var2, this.maxX);
-        Vec3 intermediateWithYValue = var1.getIntermediateWithYValue(var2, this.minY);
-        Vec3 intermediateWithYValue2 = var1.getIntermediateWithYValue(var2, this.maxY);
-        Vec3 intermediateWithZValue = var1.getIntermediateWithZValue(var2, this.minZ);
-        Vec3 intermediateWithZValue2 = var1.getIntermediateWithZValue(var2, this.maxZ);
+    public MovingObjectPosition calculateIntercept(final Vector3d var1, final Vector3d var2) {
+        Vector3d intermediateWithXValue = var1.getIntermediateWithXValue(var2, this.minX);
+        Vector3d intermediateWithXValue2 = var1.getIntermediateWithXValue(var2, this.maxX);
+        Vector3d intermediateWithYValue = var1.getIntermediateWithYValue(var2, this.minY);
+        Vector3d intermediateWithYValue2 = var1.getIntermediateWithYValue(var2, this.maxY);
+        Vector3d intermediateWithZValue = var1.getIntermediateWithZValue(var2, this.minZ);
+        Vector3d intermediateWithZValue2 = var1.getIntermediateWithZValue(var2, this.maxZ);
         if (!this.isVecInYZ(intermediateWithXValue)) {
             intermediateWithXValue = null;
         }
@@ -201,7 +201,7 @@ public class AABB {
         if (!this.isVecInXY(intermediateWithZValue2)) {
             intermediateWithZValue2 = null;
         }
-        Vec3 bo = null;
+        Vector3d bo = null;
         if (intermediateWithXValue != null && (bo == null || var1.distanceSquared(intermediateWithXValue) < var1.distanceSquared(bo))) {
             bo = intermediateWithXValue;
         }
@@ -245,15 +245,15 @@ public class AABB {
         return new MovingObjectPosition(0, 0, 0, integer4, bo);
     }
 
-    private boolean isVecInYZ(final Vec3 var1) {
+    private boolean isVecInYZ(final Vector3d var1) {
         return var1 != null && var1.y >= this.minY && var1.y <= this.maxY && var1.z >= this.minZ && var1.z <= this.maxZ;
     }
 
-    private boolean isVecInXZ(final Vec3 var1) {
+    private boolean isVecInXZ(final Vector3d var1) {
         return var1 != null && var1.x >= this.minX && var1.x <= this.maxX && var1.z >= this.minZ && var1.z <= this.maxZ;
     }
 
-    private boolean isVecInXY(final Vec3 var1) {
+    private boolean isVecInXY(final Vector3d var1) {
         return var1 != null && var1.x >= this.minX && var1.x <= this.maxX && var1.y >= this.minY && var1.y <= this.maxY;
     }
 

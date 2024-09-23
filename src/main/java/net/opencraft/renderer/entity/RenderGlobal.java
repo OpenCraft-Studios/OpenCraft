@@ -24,7 +24,7 @@ import net.opencraft.renderer.texture.Texture;
 import net.opencraft.tileentity.TileEntity;
 import net.opencraft.tileentity.TileEntityRenderer;
 import net.opencraft.util.Mth;
-import net.opencraft.util.Vec3;
+import net.opencraft.util.Vector3d;
 import net.opencraft.world.*;
 
 public class RenderGlobal implements IWorldAccess {
@@ -256,7 +256,7 @@ public class RenderGlobal implements IWorldAccess {
 		}
 	}
 
-	public void renderEntities(final Vec3 bo, final ICamera jt, final float float3) {
+	public void renderEntities(final Vector3d bo, final ICamera jt, final float float3) {
 		TileEntityRenderer.instance.a(this.k, this.l, this.t.font, this.t.player, float3);
 		RenderManager.instance.cacheActiveRenderInfo(this.k, this.l, this.t.font, this.t.player,
 				this.t.options, float3);
@@ -525,7 +525,7 @@ public class RenderGlobal implements IWorldAccess {
 
 	public void renderSky(final float float1) {
 		GL11.glDisable(3553);
-		final Vec3 skyColor = this.k.getSkyColor(float1);
+		final Vector3d skyColor = this.k.getSkyColor(float1);
 		float n = (float) skyColor.x;
 		float n2 = (float) skyColor.y;
 		float n3 = (float) skyColor.z;
@@ -604,7 +604,7 @@ public class RenderGlobal implements IWorldAccess {
 		GL11.glBindTexture(3553, this.l.getTexture("/assets/clouds.png"));
 		GL11.glEnable(3042);
 		GL11.glBlendFunc(770, 771);
-		final Vec3 drawClouds = this.k.drawClouds(float1);
+		final Vector3d drawClouds = this.k.drawClouds(float1);
 		float float2 = (float) drawClouds.x;
 		float float3 = (float) drawClouds.y;
 		float float4 = (float) drawClouds.z;
@@ -662,7 +662,7 @@ public class RenderGlobal implements IWorldAccess {
 		GL11.glBindTexture(3553, this.l.getTexture("/assets/clouds.png"));
 		GL11.glEnable(3042);
 		GL11.glBlendFunc(770, 771);
-		final Vec3 drawClouds = this.k.drawClouds(float1);
+		final Vector3d drawClouds = this.k.drawClouds(float1);
 		float float2 = (float) drawClouds.x;
 		float float3 = (float) drawClouds.y;
 		float float4 = (float) drawClouds.z;

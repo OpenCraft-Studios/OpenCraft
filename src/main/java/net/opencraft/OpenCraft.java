@@ -1,6 +1,6 @@
 package net.opencraft;
 
-import static net.opencraft.tests.DownloadResourcesJob.SOUNDS_PATH;
+import static net.opencraft.tests.DownloadResourcesJob.*;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.util.glu.GLU.*;
 
@@ -382,7 +382,7 @@ public class OpenCraft implements Runnable {
 					n = 0;
 				}
 			}
-		} catch (OpenCraftError openCraftError) {
+		} catch (IllegalStateException ignored) {
 		} catch (Exception exception2) {
 			exception2.printStackTrace();
 			displayUnexpectedThrowable(new UnexpectedThrowable("Unexpected error", exception2));

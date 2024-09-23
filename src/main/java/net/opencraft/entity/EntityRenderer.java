@@ -26,7 +26,7 @@ import net.opencraft.renderer.culling.Frustum;
 import net.opencraft.renderer.entity.RenderGlobal;
 import net.opencraft.renderer.entity.RenderHelper;
 import net.opencraft.util.Mth;
-import net.opencraft.util.Vec3;
+import net.opencraft.util.Vector3d;
 import net.opencraft.world.World;
 
 public class EntityRenderer {
@@ -73,16 +73,16 @@ public class EntityRenderer {
         }
     }
 
-    private Vec3 orientCamera(final float float1) {
+    private Vector3d orientCamera(final float float1) {
         final EntityPlayerSP thePlayer = this.mc.player;
-        return Vec3.newTemp(thePlayer.prevPosX + (thePlayer.posX - thePlayer.prevPosX) * float1, thePlayer.prevPosY + (thePlayer.posY - thePlayer.prevPosY) * float1, thePlayer.prevPosZ + (thePlayer.posZ - thePlayer.prevPosZ) * float1);
+        return new Vector3d(thePlayer.prevPosX + (thePlayer.posX - thePlayer.prevPosX) * float1, thePlayer.prevPosY + (thePlayer.posY - thePlayer.prevPosY) * float1, thePlayer.prevPosZ + (thePlayer.posZ - thePlayer.prevPosZ) * float1);
     }
 
     private void getMouseOver(final float float1) {
         final EntityPlayerSP thePlayer = this.mc.player;
         final float n = thePlayer.prevRotationPitch + (thePlayer.rotationPitch - thePlayer.prevRotationPitch) * float1;
         final float n2 = thePlayer.prevRotationYaw + (thePlayer.rotationYaw - thePlayer.prevRotationYaw) * float1;
-        final Vec3 orientCamera = this.orientCamera(float1);
+        final Vector3d orientCamera = this.orientCamera(float1);
         final float cos = cos(-n2 * 0.017453292f - PI_f);
         final float sin = sin(-n2 * 0.017453292f - PI_f);
         final float n3 = -cos(-n * 0.017453292f);
@@ -93,7 +93,7 @@ public class EntityRenderer {
         double n7 = this.mc.playerController.getBlockReachDistance();
         this.mc.objectMouseOver = this.mc.world.rayTraceBlocks(orientCamera, orientCamera.add(n4 * n7, n5 * n7, n6 * n7));
         double distanceTo = n7;
-        final Vec3 orientCamera2 = this.orientCamera(float1);
+        final Vector3d orientCamera2 = this.orientCamera(float1);
         if (this.mc.objectMouseOver != null) {
             distanceTo = this.mc.objectMouseOver.hitVec.distance(orientCamera2);
         }
@@ -105,7 +105,7 @@ public class EntityRenderer {
             }
             n7 = distanceTo;
         }
-        final Vec3 addVector = orientCamera2.add(n4 * n7, n5 * n7, n6 * n7);
+        final Vector3d addVector = orientCamera2.add(n4 * n7, n5 * n7, n6 * n7);
         this.pointedEntity = null;
         final List entitiesWithinAABBExcludingEntity = this.mc.world.getEntitiesWithinAABBExcludingEntity(thePlayer, thePlayer.boundingBox.addCoord(n4 * n7, n5 * n7, n6 * n7));
         double n8 = 0.0;
@@ -189,9 +189,9 @@ public class EntityRenderer {
                 n5 *= 0.1f;
                 n6 *= 0.1f;
                 n7 *= 0.1f;
-                final MovingObjectPosition rayTraceBlocks = this.mc.world.rayTraceBlocks(Vec3.newTemp(double1 + n5, double2 + n6, double3 + n7), Vec3.newTemp(double1 - n2 + n5 + n7, double2 - n4 + n6, double3 - n3 + n7));
+                final MovingObjectPosition rayTraceBlocks = this.mc.world.rayTraceBlocks(new Vector3d(double1 + n5, double2 + n6, double3 + n7), new Vector3d(double1 - n2 + n5 + n7, double2 - n4 + n6, double3 - n3 + n7));
                 if (rayTraceBlocks != null) {
-                    final double distanceTo = rayTraceBlocks.hitVec.distance(Vec3.newTemp(double1, double2, double3));
+                    final double distanceTo = rayTraceBlocks.hitVec.distance(new Vector3d(double1, double2, double3));
                     if (distanceTo < n) {
                         n = distanceTo;
                     }
@@ -495,11 +495,11 @@ public class EntityRenderer {
         final EntityPlayerSP thePlayer = this.mc.player;
         float n = 1.0f / (4 - this.mc.options.renderDistance);
         n = 1.0f - (float) Math.pow((double) n, 0.25);
-        final Vec3 skyColor = theWorld.getSkyColor(float1);
+        final Vector3d skyColor = theWorld.getSkyColor(float1);
         final float n2 = (float) skyColor.x;
         final float n3 = (float) skyColor.y;
         final float n4 = (float) skyColor.z;
-        final Vec3 fogColor = theWorld.getFogColor(float1);
+        final Vector3d fogColor = theWorld.getFogColor(float1);
         this.fogColorRed = (float) fogColor.x;
         this.fogColorGreen = (float) fogColor.y;
         this.fogColorBlue = (float) fogColor.z;

@@ -42,7 +42,7 @@ public class Session {
         Session.registeredBlocksList.add(Block.bookshelf);
         Session.registeredBlocksList.add(Block.tnt);
         Session.registeredBlocksList.add(Block.obsidian);
-        System.out.println(Session.registeredBlocksList.size());
+        System.out.printf("Registered %d blocks.%n", Session.registeredBlocksList.size());
     }
 
     public Session(final String string1, final String string2) {

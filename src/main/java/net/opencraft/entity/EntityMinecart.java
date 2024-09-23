@@ -12,7 +12,7 @@ import net.opencraft.nbt.NBTTagCompound;
 import net.opencraft.nbt.NBTTagList;
 import net.opencraft.physics.AABB;
 import net.opencraft.util.Mth;
-import net.opencraft.util.Vec3;
+import net.opencraft.util.Vector3d;
 import net.opencraft.world.World;
 
 public class EntityMinecart extends Entity implements IInventory {
@@ -133,7 +133,7 @@ public class EntityMinecart extends Entity implements IInventory {
         final double n = 0.4;
         final double n2 = 0.0078125;
         if (this.world.getBlockId(floor_double, floor_double2, floor_double3) == Block.rail.blockID) {
-            final Vec3 pos = this.getPos(this.posX, this.posY, this.posZ);
+            final Vector3d pos = this.getPos(this.posX, this.posY, this.posZ);
             final int blockMetadata = this.world.getBlockMetadata(floor_double, floor_double2, floor_double3);
             this.posY = floor_double2;
             if (blockMetadata >= 2 && blockMetadata <= 5) {
@@ -216,7 +216,7 @@ public class EntityMinecart extends Entity implements IInventory {
                 this.motionY *= 0.0;
                 this.motionZ *= 0.9599999785423279;
             }
-            final Vec3 pos2 = this.getPos(this.posX, this.posY, this.posZ);
+            final Vector3d pos2 = this.getPos(this.posX, this.posY, this.posZ);
             if (pos2 != null && pos != null) {
                 final double n11 = (pos.y - pos2.y) * 0.05;
                 n5 = Math.sqrt(this.motionX * this.motionX + this.motionZ * this.motionZ);
@@ -292,7 +292,7 @@ public class EntityMinecart extends Entity implements IInventory {
         }
     }
 
-    public Vec3 getPosOffset(double double1, double double2, double double3, final double double4) {
+    public Vector3d getPosOffset(double double1, double double2, double double3, final double double4) {
         final int floor_double = Mth.floor_double(double1);
         int floor_double2 = Mth.floor_double(double2);
         final int floor_double3 = Mth.floor_double(double3);
@@ -323,7 +323,7 @@ public class EntityMinecart extends Entity implements IInventory {
         return null;
     }
 
-    public Vec3 getPos(double double1, double double2, double double3) {
+    public Vector3d getPos(double double1, double double2, double double3) {
         final int floor_double = Mth.floor_double(double1);
         int floor_double2 = Mth.floor_double(double2);
         final int floor_double3 = Mth.floor_double(double3);
@@ -365,7 +365,7 @@ public class EntityMinecart extends Entity implements IInventory {
             if (n9 > 0.0) {
                 double2 += 0.5;
             }
-            return Vec3.newTemp(double1, double2, double3);
+            return new Vector3d(double1, double2, double3);
         }
         return null;
     }

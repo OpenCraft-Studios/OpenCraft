@@ -18,7 +18,7 @@ import net.opencraft.nbt.NBTTagFloat;
 import net.opencraft.nbt.NBTTagList;
 import net.opencraft.physics.AABB;
 import net.opencraft.util.Mth;
-import net.opencraft.util.Vec3;
+import net.opencraft.util.Vector3d;
 import net.opencraft.world.World;
 
 public abstract class Entity {
@@ -509,7 +509,7 @@ public abstract class Entity {
     public void addToPlayerScore(final Entity entity, final int score) {
     }
 
-    public boolean isInRangeToRenderVec3D(final Vec3 var1) {
+    public boolean isInRangeToRenderVec3D(final Vector3d var1) {
         final double n = this.posX - var1.x;
         final double n2 = this.posY - var1.y;
         final double n3 = this.posZ - var1.z;

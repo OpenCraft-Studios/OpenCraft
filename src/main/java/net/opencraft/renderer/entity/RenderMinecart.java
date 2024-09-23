@@ -6,7 +6,7 @@ import net.opencraft.client.entity.models.ModelBase;
 import net.opencraft.client.entity.models.ModelMinecart;
 import net.opencraft.entity.EntityMinecart;
 import net.opencraft.util.Mth;
-import net.opencraft.util.Vec3;
+import net.opencraft.util.Vector3d;
 
 import static org.joml.Math.*;
 
@@ -27,11 +27,11 @@ public class RenderMinecart extends Render<EntityMinecart> {
         final double double2 = entityLiving.lastTickPosY + (entityLiving.posY - entityLiving.lastTickPosY) * nya2;
         final double double3 = entityLiving.lastTickPosZ + (entityLiving.posZ - entityLiving.lastTickPosZ) * nya2;
         final double double4 = 0.30000001192092896;
-        final Vec3 pos = entityLiving.getPos(double1, double2, double3);
+        final Vector3d pos = entityLiving.getPos(double1, double2, double3);
         float n = entityLiving.prevRotationPitch + (entityLiving.rotationPitch - entityLiving.prevRotationPitch) * nya2;
         if (pos != null) {
-            Vec3 posOffset = entityLiving.getPosOffset(double1, double2, double3, double4);
-            Vec3 posOffset2 = entityLiving.getPosOffset(double1, double2, double3, -double4);
+            Vector3d posOffset = entityLiving.getPosOffset(double1, double2, double3, double4);
+            Vector3d posOffset2 = entityLiving.getPosOffset(double1, double2, double3, -double4);
             if (posOffset == null) {
                 posOffset = pos;
             }
@@ -41,9 +41,9 @@ public class RenderMinecart extends Render<EntityMinecart> {
             xCoord += pos.x - double1;
             sqrt_double += (posOffset.y + posOffset2.y) / 2.0 - double2;
             yCoord += pos.z - double3;
-            final Vec3 addVector = posOffset2.add(-posOffset.x, -posOffset.y, -posOffset.z);
+            final Vector3d addVector = posOffset2.add(-posOffset.x, -posOffset.y, -posOffset.z);
             if (addVector.length() != 0) {
-                final Vec3 normalize = addVector.normalize();
+                final Vector3d normalize = addVector.normalize();
                 nya1 = (float) (toRadians(atan2(normalize.z, normalize.x)));
                 n = (float) (Math.atan(normalize.y) * 73.0);
             }

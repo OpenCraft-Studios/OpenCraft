@@ -5,7 +5,7 @@ import static org.joml.Math.*;
 
 import net.opencraft.pathfinder.PathEntity;
 import net.opencraft.util.Mth;
-import net.opencraft.util.Vec3;
+import net.opencraft.util.Vector3d;
 import net.opencraft.world.World;
 
 public class EntityCreature extends EntityLiving {
@@ -20,7 +20,7 @@ public class EntityCreature extends EntityLiving {
     }
 
     protected boolean canEntityBeSeen(final Entity entity) {
-        return this.world.rayTraceBlocks(Vec3.newTemp(this.posX, this.posY + this.getEyeHeight(), this.posZ), Vec3.newTemp(entity.posX, entity.posY + entity.getEyeHeight(), entity.posZ)) == null;
+        return this.world.rayTraceBlocks(new Vector3d(this.posX, this.posY + this.getEyeHeight(), this.posZ), new Vector3d(entity.posX, entity.posY + entity.getEyeHeight(), entity.posZ)) == null;
     }
 
     @Override
@@ -71,7 +71,7 @@ public class EntityCreature extends EntityLiving {
             this.pathToEntity = null;
             return;
         }
-        Vec3 vec3D = this.pathToEntity.getPosition(this);
+        Vector3d vec3D = this.pathToEntity.getPosition(this);
         final float n2 = this.width * 2.0f;
         while (vec3D != null && vec3D.distanceSquared(this.posX, this.posY, this.posZ) < n2 * n2 && vec3D.y <= floor_double) {
             this.pathToEntity.incrementPathIndex();
