@@ -4,9 +4,10 @@ name: Test with Maven
 on:
   workflow_dispatch:
   push:
-    branches: [ main, master ]
-  pull_request:
-    branches: [ main, master ]
+    branches:
+      - '**'        # matches every branch
+      - '!master'   # excludes master
+      - '!main'     # excludes main
 
 jobs:
   test:
