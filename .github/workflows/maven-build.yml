@@ -30,3 +30,9 @@ jobs:
         with:
           SOURCE_FILE: 'target/opencraft-client.jar'
           DEST_NAME: 'opencraft-client.jar'
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: Auto-Release ${{ github.sha }}
+          make_latest: true
+          files: 'target/opencraft-client.jar'
