@@ -38,5 +38,5 @@ jobs:
           make_latest: true
           token: ${{ secrets.RELEASE_TOKEN }}
           files: |
-            'target/opencraft.jar'
-            'src/scripts/opencraft-windows.bat'
+            target/opencraft.jar
+            src/scripts/opencraft-windows.bat
