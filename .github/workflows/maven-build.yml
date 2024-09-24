@@ -3,8 +3,8 @@ name: Build with Maven
 # Build every time we push to main or master, or manually trigger the workflow
 on:
   workflow_dispatch:
-  release:
-    types: [published]
+  push:
+    branches: [ main, master ]
 
 jobs:
   build:
