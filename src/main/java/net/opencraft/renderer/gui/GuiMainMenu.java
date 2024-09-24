@@ -2,6 +2,7 @@
 package net.opencraft.renderer.gui;
 
 import net.opencraft.SharedConstants;
+import net.opencraft.client.Main;
 import net.opencraft.renderer.*;
 import net.opencraft.util.Mth;
 
@@ -75,7 +76,7 @@ public class GuiMainMenu extends GuiScreen {
         GL11.glScalef(n, n, n);
         this.drawCenteredString(this.fontRenderer, this.currentSplash, 0, -8, 16776960);
         GL11.glPopMatrix();
-        final String gameVersion = "OpenCraft ".concat(SharedConstants.VERSION_STRING);
+        final String gameVersion = Main.TITLE;
         this.drawString(this.fontRenderer, gameVersion, 4, this.height - 12, 0xFFFFFF);
         final long maxMemory = Runtime.getRuntime().maxMemory();
         final long totalMemory = Runtime.getRuntime().totalMemory();

@@ -5,6 +5,7 @@ import static org.lwjgl.util.glu.GLU.*;
 
 import java.io.File;
 
+import net.opencraft.client.Main;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.Sys;
 import org.lwjgl.input.Keyboard;
@@ -154,7 +155,7 @@ public class OpenCraft implements Runnable {
 		} else {
 			Display.setDisplayMode(new DisplayMode(width, height));
 		}
-		Display.setTitle("OpenCraft ".concat(SharedConstants.VERSION_STRING));
+		Display.setTitle(Main.TITLE);
 		Display.setResizable(true);
 		try {
 			PixelFormat pixelformat = new PixelFormat();

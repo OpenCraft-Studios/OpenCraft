@@ -1,14 +1,17 @@
 package net.opencraft.client;
 
 import java.awt.*;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.JarURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.util.*;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
@@ -24,6 +27,9 @@ public class Main {
 	public static final String NATIVES_PATH = "natives/";
 	public static final int EXPECTED_NATIVES_COUNT = 10;
 	public static final float INITIAL_WINDOW_SIZE_FACTOR = 0.8f;
+	public static final String GIT_INFO = "git.properties";
+	public static final String VERSION = version();
+	public static final String TITLE = "OpenCraft " + VERSION;
 
 	public static ResourcesDescriptor describeResources() {
 		final String classPath = "/" + Main.class.getName().replace('.', '/') + ".class";
@@ -75,6 +81,41 @@ public class Main {
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		OpenCraft oc = new OpenCraft((int) (screenSize.width * INITIAL_WINDOW_SIZE_FACTOR), (int) (screenSize.height * INITIAL_WINDOW_SIZE_FACTOR), false);
 		new Thread(oc).start();
+	}
+
+	public static String version() {
+		String commitId = "COMMIT_ID_UNKNOWN";
+		if(RESOURCES.jarFile != null) {
+			try {
+				String result = new BufferedReader(new InputStreamReader(resourcesAt(GIT_INFO).getFirst().openStream())).lines().collect(Collectors.joining("\n"));
+				for(String line : result.split("\n")) {
+					commitId = updateVersionIfInString(commitId, line);
+				}
+			} catch(IOException e) {
+				e.printStackTrace();
+			}
+		} else {
+			File gitProperties = new File(RESOURCES.resourcesRoot, GIT_INFO);
+			if(gitProperties.exists()) {
+				try {
+					List<String> lines = Files.readAllLines(gitProperties.toPath());
+					for(String line : lines) {
+						commitId = updateVersionIfInString(commitId, line);
+					}
+				} catch(IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return commitId;
+	}
+
+	public static String updateVersionIfInString(String version, String line) {
+		if(line.startsWith("git.commit.id.abbrev")) {
+			return line.split("=")[1];
+		} else {
+			return version;
+		}
 	}
 
 	// TODO: deduplicate this method with the one in DownloadResourcesJob
