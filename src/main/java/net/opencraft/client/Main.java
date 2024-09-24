@@ -1,5 +1,6 @@
 package net.opencraft.client;
 
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.net.JarURLConnection;
@@ -7,6 +8,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.util.*;
+import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
@@ -21,6 +23,7 @@ public class Main {
 	public static final ResourcesDescriptor RESOURCES = describeResources();
 	public static final String NATIVES_PATH = "natives/";
 	public static final int EXPECTED_NATIVES_COUNT = 10;
+	public static final float INITIAL_WINDOW_SIZE_FACTOR = 0.8f;
 
 	public static ResourcesDescriptor describeResources() {
 		final String classPath = "/" + Main.class.getName().replace('.', '/') + ".class";
@@ -69,7 +72,8 @@ public class Main {
 		bindNatives();
 		enableLegacySorting();
 
-		OpenCraft oc = new OpenCraft(800, 480, false);
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		OpenCraft oc = new OpenCraft((int) (screenSize.width * INITIAL_WINDOW_SIZE_FACTOR), (int) (screenSize.height * INITIAL_WINDOW_SIZE_FACTOR), false);
 		new Thread(oc).start();
 	}
 
