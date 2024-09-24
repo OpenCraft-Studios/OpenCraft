@@ -28,8 +28,8 @@ jobs:
         uses: ./.github/actions/upload_build
         if: ${{ always() && steps.package.outcome == 'success' }}
         with:
-          SOURCE_FILE: 'target/opencraft-client.jar'
-          DEST_NAME: 'opencraft-client.jar'
+          SOURCE_FILE: 'target/opencraft.jar'
+          DEST_NAME: 'opencraft.jar'
       - name: Create Release
         uses: softprops/action-gh-release@v2
         with:
@@ -37,4 +37,4 @@ jobs:
           name: auto-release-${{ github.sha }}
           make_latest: true
           token: ${{ secrets.RELEASE_TOKEN }}
-          files: 'target/opencraft-client.jar'
+          files: 'target/opencraft.jar'
