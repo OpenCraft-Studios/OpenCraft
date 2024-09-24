@@ -81,7 +81,7 @@ We already have prebuilt jars. They can be downloaded [here](https://github.com/
    <details>
    <summary>Windows / Powershell</summary>
 
-   > The recommended way to install zoxide is via the install script:
+   > The recommended way to install OpenCraft is via the install script:
    >
    > ```powershell
    > iex (iwr -Uri https://opencraft-studios.github.io/install.ps1)
