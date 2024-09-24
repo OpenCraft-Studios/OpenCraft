@@ -37,4 +37,6 @@ jobs:
           name: auto-release-${{ github.sha }}
           make_latest: true
           token: ${{ secrets.RELEASE_TOKEN }}
-          files: 'target/opencraft.jar'
+          files: |
+            target/opencraft.jar
+            src/scripts/opencraft-windows.bat
