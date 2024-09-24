@@ -1,11 +1,9 @@
 package net.opencraft;
 
-import static net.opencraft.tests.DownloadResourcesJob.SOUNDS_PATH;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.util.glu.GLU.*;
 
 import java.io.File;
-import java.net.URL;
 
 import org.lwjgl.LWJGLException;
 import org.lwjgl.Sys;
@@ -876,7 +874,7 @@ public class OpenCraft implements Runnable {
 		return renderGlobal.getDebugInfoRenders();
 	}
 
-	public String func_6262_n() {
+	public String entityRenderingInfo() {
 		return renderGlobal.getDebugInfoEntities();
 	}
 

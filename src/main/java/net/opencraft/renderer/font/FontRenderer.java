@@ -102,39 +102,39 @@ public class FontRenderer {
         }
     }
 
-    public void drawStringWithShadow2(final String string, final int integer2, final int integer3, final int integer4) {
-        this.renderString2(string, integer2 + 1, integer3 + 1, integer4, true);
-        this.drawString2(string, integer2, integer3, integer4);
+    public void drawStringWithShadow2(final String string, final int xCoord, final int yCoord, final int combinedColor) {
+        this.renderString2(string, xCoord + 1, yCoord + 1, combinedColor, true);
+        this.drawString2(string, xCoord, yCoord, combinedColor);
     }
 
     public void drawString2(final String string, final int integer2, final int integer3, final int integer4) {
         this.renderString2(string, integer2, integer3, integer4, false);
     }
 
-    public void renderString2(final String string, final int integer2, final int integer3, int integer4, final boolean boolean5) {
+    public void renderString2(final String string, final int xCoord, final int yCoord, int combinedColor, final boolean isShadow) {
         if (string == null) {
             return;
         }
-        if (boolean5) {
-            integer4 = (integer4 & 0xFCFCFC) >> 2;
+        if(isShadow) {
+            combinedColor = (combinedColor & 0xFCFCFC) >> 2;
         }
         GL11.glBindTexture(3553, this.fontTextureName);
-        final float n = (integer4 >> 16 & 0xFF) / 255.0f;
-        final float n2 = (integer4 >> 8 & 0xFF) / 255.0f;
-        final float n3 = (integer4 & 0xFF) / 255.0f;
-        float n4 = (integer4 >> 24 & 0xFF) / 255.0f;
-        n4 = 1.0f;
-        GL11.glColor4f(n, n2, n3, n4);
+        final float red = (combinedColor >> 16 & 0xFF) / 255.0f;
+        final float green = (combinedColor >> 8 & 0xFF) / 255.0f;
+        final float blue = (combinedColor & 0xFF) / 255.0f;
+        float alpha = (combinedColor >> 24 & 0xFF) / 255.0f;
+        alpha = 1.0f;
+        GL11.glColor4f(red, green, blue, alpha);
         this.buffer.clear();
         GL11.glPushMatrix();
-        GL11.glTranslatef((float) integer2, (float) integer3, 0.0f);
+        GL11.glTranslatef((float) xCoord, (float) yCoord, 0.0f);
         for (int i = 0; i < string.length(); ++i) {
             while (string.charAt(i) == '&' && string.length() > i + 1) {
                 int index = "0123456789abcdef".indexOf((int) string.charAt(i + 1));
                 if (index < 0 || index > 15) {
                     index = 15;
                 }
-                this.buffer.put(this.fontDisplayLists + 256 + index + (boolean5 ? 16 : 0));
+                this.buffer.put(this.fontDisplayLists + 256 + index + (isShadow ? 16 : 0));
                 if (this.buffer.remaining() == 0) {
                     this.buffer.flip();
                     GL11.glCallLists(this.buffer);

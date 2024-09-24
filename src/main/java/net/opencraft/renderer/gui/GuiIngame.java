@@ -17,6 +17,8 @@ import net.opencraft.renderer.font.FontRenderer;
 import org.lwjgl.opengl.GL11;
 
 public class GuiIngame extends GuiElement {
+    // probably not the right name, but this is the effect
+    public static final int GL_FULLBRIGHT_RENDERING = 32826;
 
     private static RenderItem itemRenderer = new RenderItem();
     private List<ChatLine> chatMessageList;
@@ -63,7 +65,7 @@ public class GuiIngame extends GuiElement {
         }
         final int health = this.mc.player.health;
         final int prevHealth = this.mc.player.prevHealth;
-        this.rand.setSeed((long) (this.updateCounter * 312871));
+        this.rand.setSeed((long) (this.updateCounter * 312871L));
         if (this.mc.playerController.shouldDrawHUD()) {
             final int i = this.mc.player.getPlayerArmorValue();
             for (int j = 0; j < 10; ++j) {
@@ -114,8 +116,8 @@ public class GuiIngame extends GuiElement {
                 }
             }
         }
-        GL11.glDisable(3042);
-        GL11.glEnable(32826);
+        GL11.glDisable(GL11.GL_BLEND);
+        GL11.glEnable(GL_FULLBRIGHT_RENDERING);
         GL11.glPushMatrix();
         GL11.glRotatef(180.0f, 1.0f, 0.0f, 0.0f);
         RenderHelper.enableStandardItemLighting();
@@ -126,28 +128,28 @@ public class GuiIngame extends GuiElement {
             this.renderInventorySlot(i, j, integer5, float1);
         }
         RenderHelper.disableStandardItemLighting();
-        GL11.glDisable(32826);
+        GL11.glDisable(GL_FULLBRIGHT_RENDERING);
         if (this.mc.options.showDebugInfo) {
             font.drawStringWithShadow2("OpenCraft (" + this.mc.debug + ")", 2, 2, 16777215);
             font.drawStringWithShadow2(this.mc.debugInfoRenders(), 2, 12, 16777215);
-            font.drawStringWithShadow2(this.mc.func_6262_n(), 2, 22, 16777215);
+            font.drawStringWithShadow2(this.mc.entityRenderingInfo(), 2, 22, 16777215);
             font.drawStringWithShadow2(this.mc.debugInfoEntities(), 2, 32, 16777215);
             // display current coordinates and orientation
             font.drawStringWithShadow2("X: " + this.mc.player.posX + " Y: " + this.mc.player.posY + " Z: " + this.mc.player.posZ, 2, 42, 16777215);
             font.drawStringWithShadow2("Yaw: " + this.mc.player.rotationYaw + " Pitch: " + this.mc.player.rotationPitch, 2, 52, 16777215);
             final long maxMemory = Runtime.getRuntime().maxMemory();
             final long totalMemory = Runtime.getRuntime().totalMemory();
-            final long n2 = totalMemory - Runtime.getRuntime().freeMemory();
-            final String string = new StringBuilder().append("Used memory: ").append(n2 * 100L / maxMemory).append("% (").append(n2 / 1024L / 1024L).append("MB) of ").append(maxMemory / 1024L / 1024L).append("MB").toString();
+            final long allocatedMemory = totalMemory - Runtime.getRuntime().freeMemory();
+            final String string = "Used memory: " + allocatedMemory * 100L / maxMemory + "% (" + allocatedMemory / 1024L / 1024L + "MB) of " + maxMemory / 1024L / 1024L + "MB";
             this.drawString(font, string, scaledWidth - font.getStringWidth(string) - 2, 2, 14737632);
-            final String string2 = new StringBuilder().append("Allocated memory: ").append(totalMemory * 100L / maxMemory).append("% (").append(totalMemory / 1024L / 1024L).append("MB)").toString();
+            final String string2 = "Allocated memory: " + totalMemory * 100L / maxMemory + "% (" + totalMemory / 1024L / 1024L + "MB)";
             this.drawString(font, string2, scaledWidth - font.getStringWidth(string2) - 2, 12, 14737632);
         }
         
         int i = 10;
         final boolean b2 = true;
         for (int integer5 = 0; integer5 < this.chatMessageList.size() && integer5 < i; ++integer5) {
-            if (((ChatLine) this.chatMessageList.get(integer5)).updateCounter < 200 || b2) {
+            if ((chatMessageList.get(integer5)).updateCounter < 200 || b2) {
                 font.drawStringWithShadow2(((ChatLine) this.chatMessageList.get(integer5)).message, 2, scaledHeight - 8 - integer5 * 9 - 20, 16777215);
             }
         }
