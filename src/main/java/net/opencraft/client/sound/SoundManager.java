@@ -1,5 +1,6 @@
 package net.opencraft.client.sound;
 
+import static net.opencraft.tests.DownloadResourcesJob.SOUNDS_PATH;
 import static org.joml.Math.*;
 
 import net.opencraft.client.config.GameSettings;
@@ -25,6 +26,37 @@ public class SoundManager {
     private Random rand = new Random();
     public int ticksBeforeMusic = this.rand.nextInt(12000);
     public String currentMusicTheme = "menu";
+
+    public enum SoundType {
+        MENUMUSIC,
+        SOUND("newsound", "sound3"),
+        MUSIC("newmusic"),
+        STREAMING;
+
+        public final String[] alternateNames;
+
+        SoundType(String...alternateNames) {
+            if(alternateNames == null) {
+                this.alternateNames = new String[0];
+            } else {
+                this.alternateNames = alternateNames;
+            }
+        }
+
+        public static SoundType fromString(String name) {
+            for(SoundType type : values()) {
+                if(name.contains(type.name().toLowerCase())) {
+                    return type;
+                }
+                for(String alternateName : type.alternateNames) {
+                    if(name.contains(alternateName)) {
+                        return type;
+                    }
+                }
+            }
+            return null;
+        }
+    }
 
     public boolean containsSound(String soundName) {
         return soundPoolSounds.contains(soundName) || soundPoolStreaming.contains(soundName) || soundPoolIngameMusic.contains(soundName) || soundPoolMenuMusic.contains(soundName);
@@ -80,16 +112,35 @@ public class SoundManager {
         this.sndSystem.cleanup();
     }
 
-    public void addSound(String var1, URL resourceURL) {
-        this.soundPoolSounds.addSound(var1, resourceURL);
+    public void registerSound(final URL resourceURL) {
+        String name = resourceURL.getPath().substring(resourceURL.getPath().lastIndexOf(SOUNDS_PATH) + SOUNDS_PATH.length());
+        name = name.substring(name.indexOf("/") + 1).replace("%20", " ").replace("/", ".").replaceAll("[0-9]", "");
+        final String path = resourceURL.getPath();
+
+        if(!switch(SoundType.fromString(path)) {
+            case MENUMUSIC -> addMenuMusic(name, resourceURL);
+            case SOUND -> addSound(name, resourceURL);
+            case MUSIC -> addIngameMusic(name, resourceURL);
+            case STREAMING -> true; // TODO: investigate streaming sounds
+            case null, default -> {
+                System.err.println("Unknown sound type: " + path);
+                yield false;
+            }
+        }) {
+            System.err.println("Failed to load sound from " + resourceURL.getPath());
+        }
     }
 
-    public void addIngameMusic(String var1, URL resourceURL) {
-        this.soundPoolIngameMusic.addSound(var1, resourceURL);
+    public boolean addSound(String name, URL resourceURL) {
+        return soundPoolSounds.addSound(name, resourceURL) != null;
     }
 
-    public void addMenuMusic(String var1, URL resourceURL) {
-        this.soundPoolMenuMusic.addSound(var1, resourceURL);
+    public boolean addIngameMusic(String name, URL resourceURL) {
+        return soundPoolIngameMusic.addSound(name, resourceURL) != null;
+    }
+
+    public boolean addMenuMusic(String name, URL resourceURL) {
+        return soundPoolMenuMusic.addSound(name, resourceURL) != null;
     }
 
     public void playRandomMusicIfReady() {
@@ -102,6 +153,8 @@ public class SoundManager {
                         this.sndSystem.stop("BgMusic");
                         this.sndSystem.backgroundMusic("BgMusic", var1.soundUrl, var1.soundName, false);
                         this.sndSystem.play("BgMusic");
+                    } else {
+                        System.err.println("No menu music found!");
                     }
                 } else if (this.currentMusicTheme.equals("ingame")) {
                     if (this.ticksBeforeMusic > 0) {

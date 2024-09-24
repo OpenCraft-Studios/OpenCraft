@@ -5,7 +5,7 @@ import java.net.URL;
 import java.util.*;
 
 public class SoundPool {
-    private Random rand = new Random();
+    private static Random RANDOM = new Random();
     private Map<String, ArrayList<SoundPoolEntry>> nameToSoundPoolEntriesMapping = new HashMap<>();
     public List<SoundPoolEntry> allSoundPoolEntries = new ArrayList<>();
     public int numberOfSoundPoolEntries = 0;
@@ -29,12 +29,26 @@ public class SoundPool {
         return nameToSoundPoolEntriesMapping.containsKey(soundName);
     }
 
-    public SoundPoolEntry getRandomSoundFromSoundPool(String var1) {
-        List<SoundPoolEntry> var2 = this.nameToSoundPoolEntriesMapping.get(var1);
-        return var2 == null ? null : var2.get(this.rand.nextInt(var2.size()));
+    /**
+     * Gets a sound that matches the given name
+     * @return null if sound not found
+     */
+    public SoundPoolEntry getRandomSoundFromSoundPool(String name) {
+        List<SoundPoolEntry> entriesMatchingName = this.nameToSoundPoolEntriesMapping.get(name);
+        if(entriesMatchingName == null) {
+            System.err.println("Can't play random sound" + name + "! sound pool is empty!");
+            return null;
+        } else {
+            return entriesMatchingName.get(RANDOM.nextInt(entriesMatchingName.size()));
+        }
     }
 
     public SoundPoolEntry getRandomSound() {
-        return this.allSoundPoolEntries.isEmpty() ? null : this.allSoundPoolEntries.get(this.rand.nextInt(this.allSoundPoolEntries.size()));
+        if(allSoundPoolEntries.isEmpty()) {
+            System.err.println("Can't play random sound! sound pool is empty!");
+            return null;
+        } else {
+            return allSoundPoolEntries.get(RANDOM.nextInt(allSoundPoolEntries.size()));
+        }
     }
 }

@@ -56,7 +56,7 @@ public class DownloadResourcesJob implements Job {
 						if(f.isDirectory()) {
 							Collections.addAll(filesToCheck, f.listFiles());
 						} else {
-							oc.registerSound(f.toURI().toURL());
+							oc.sndManager.registerSound(f.toURI().toURL());
 							count++;
 						}
 					}
@@ -72,7 +72,7 @@ public class DownloadResourcesJob implements Job {
 				}
 				String name = e.getName();
 				if(name.startsWith(SOUNDS_PATH) && !e.isDirectory()) {
-					oc.registerSound(getClass().getClassLoader().getResource(name));
+					oc.sndManager.registerSound(getClass().getClassLoader().getResource(name));
 					count++;
 				}
 			}

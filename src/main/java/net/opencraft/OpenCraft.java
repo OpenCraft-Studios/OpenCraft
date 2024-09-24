@@ -868,24 +868,6 @@ public class OpenCraft implements Runnable {
 		SandBlock.fallInstantly = false;
 	}
 
-	public void registerSound(final URL resourceURL) {
-		String name = resourceURL.getPath().substring(resourceURL.getPath().lastIndexOf(SOUNDS_PATH) + SOUNDS_PATH.length());
-		name = name.substring(name.indexOf("/") + 1).replace("%20", " ").replace("/", ".").replaceAll("[0-9]", "");
-		final String path = resourceURL.getPath();
-
-		if(path.contains("sound") || path.contains("newsound")) {
-			oc.sndManager.addSound(name, resourceURL);
-		} else if(path.contains("music") || path.contains("newmusic")) {
-			oc.sndManager.addIngameMusic(name, resourceURL);
-		} else if(path.contains("menumusic")) {
-			oc.sndManager.addMenuMusic(name, resourceURL);
-		} else if(path.contains("streaming")) {
-			// IGNORE IT!!
-		} else {
-			System.err.println("Unknown sound type. Will not load from " + resourceURL.getPath());
-		}
-	}
-
 	public OpenGlCapsChecker getOpenGlCapsChecker() {
 		return glCapabilities;
 	}
