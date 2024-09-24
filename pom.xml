@@ -44,7 +44,7 @@
 							<goal>single</goal>
 						</goals>
 						<configuration>
-							<finalName>opencraft-client</finalName>
+							<finalName>opencraft</finalName>
 							<archive>
 								<manifest>
 									<mainClass>net.opencraft.client.Main</mainClass>
