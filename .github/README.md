@@ -11,7 +11,7 @@
 <br /><br />
 <div align="center">
   <a href="https://github.com/OpenCraft-Studios/OpenCraft">
-    <img src="https://github.com/OpenCraft-Studios/OpenCraft/blob/master/.github/assets/images/icon.png?raw=true" alt="" height="128" width="128" />
+    <img src="https://github.com/OpenCraft-Studios/OpenCraft/blob/main/.github/assets/images/icon.png?raw=true" alt="" height="128" width="128" />
   </a>
 
   <h3 align="center">OpenCraft</h3>
@@ -49,12 +49,12 @@
 **OpenCraft** is a game programmed in Java, it has the same motor (LWJGL 2 + Java 17) that Minecraft.
 
 ### Why this project? 🤔
-> I created this project because Minecraft is closed-source. I know that you can decompile it, but modification
-> and redistribution of a modified copy of Minecraft is actually illegal. So I created a clone of Minecraft that
-> allows modification and redistribution.
-
-I want to create a community around this project,
+I created this project because Minecraft is closed-source. I know that you can decompile it, but modification
+and redistribution of a modified copy of Minecraft is actually illegal. So I created a clone of Minecraft that
+allows modification and redistribution. I want to create a community around this project,
 I hope that you can be part of that community forking the repository or simply, bring us a star :heart:
+
+---
 
 <details open>
   <summary>
@@ -69,21 +69,28 @@ I hope that you can be part of that community forking the repository or simply, 
   </div>
 </details>
 
+<div align="right">[ <a href="#-getting-started">↑ Back to top ↑</a> ]</div>
+
 ---
 
 ## ☕ Downloading
 We already have prebuilt jars. They can be downloaded [here](https://github.com/OpenCraft-Studios/OpenCraft/actions).
 
-###### Windows
-```batch
-java -cp OpenCraft.jar; net.opencraft.OpenCraft --gameDir opcraft
-```
+1. Execute OpenCraft
 
-###### Bash
-```bash
-#!/bin/bash
-java -cp OpenCraft.jar: net.opencraft.OpenCraft --gameDir opcraft/
-```
+   <details>
+   <summary>Windows / Powershell</summary>
+
+   > The recommended way to install OpenCraft is via the install script:
+   >
+   > ```powershell
+   > iex (iwr -Uri https://opencraft-studios.github.io/install.ps1)
+   > ```
+   >
+
+   </details>
+
+<div align="right">[ <a href="#-getting-started">↑ Back to top ↑</a> ]</div>
 
 ---
 
@@ -112,13 +119,16 @@ java -cp OpenCraft.jar: net.opencraft.OpenCraft --gameDir opcraft/
 
 **The full license is at [BSL 1.0][license-url].**
 
-<br />
+<div align="right">[ <a href="#-getting-started">↑ Back to top ↑</a> ]</div>
 
+<br />
 
 ## 👷‍♂️ Contributors
 | [![CiroZDP](https://avatars.githubusercontent.com/u/161502824?v=4)](https://github.com/CiroZDP) | ![Community](https://cdni.iconscout.com/illustration/free/thumb/free-community-2103591-1768087.png)	|
 |:-----------------------------------------------------------------------------------------------:|:---------------------------------------------------------------------------------------------------:|
 |                                           **CiroZDP**                                           |                                          **The community**                                          |
+
+<div align="right">[ <a href="#-getting-started">↑ Back to top ↑</a> ]</div>
 
 ---
 
