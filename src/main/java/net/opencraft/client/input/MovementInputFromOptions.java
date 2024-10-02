@@ -48,6 +48,7 @@ public class MovementInputFromOptions extends MovementInput {
     public void updatePlayerMoveState(final EntityPlayer gi) {
         this.moveStrafe = 0.0f;
         this.moveForward = 0.0f;
+        
         if (this.e[0]) {
             ++this.moveForward;
         }
@@ -60,6 +61,13 @@ public class MovementInputFromOptions extends MovementInput {
         if (this.e[3]) {
             --this.moveStrafe;
         }
+
+        if (this.moveForward != 0.0f && this.moveStrafe != 0.0f) {
+            float diagonalFactor = (float) Math.sqrt(2) / 2;
+            this.moveForward *= diagonalFactor;
+            this.moveStrafe *= diagonalFactor;
+        }
+
         this.jump = this.e[4];
     }
 }
