@@ -1,6 +1,8 @@
 
 package net.opencraft.client.input;
 
+import org.joml.Vector2f;
+
 import net.opencraft.client.config.GameSettings;
 import net.opencraft.entity.EntityPlayer;
 
@@ -46,27 +48,28 @@ public class MovementInputFromOptions extends MovementInput {
 
     @Override
     public void updatePlayerMoveState(final EntityPlayer gi) {
-        this.moveStrafe = 0.0f;
-        this.moveForward = 0.0f;
-        
+        Vector2f movement = new Vector2f(0.0f, 0.0f);
+
         if (this.e[0]) {
-            ++this.moveForward;
+            movement.x += 1.0f;
         }
         if (this.e[1]) {
-            --this.moveForward;
+            movement.x -= 1.0f;
         }
         if (this.e[2]) {
-            ++this.moveStrafe;
+            movement.y += 1.0f;
         }
         if (this.e[3]) {
-            --this.moveStrafe;
+            movement.y -= 1.0f;
         }
 
-        if (this.moveForward != 0.0f && this.moveStrafe != 0.0f) {
-            float diagonalFactor = (float) Math.sqrt(2) / 2;
-            this.moveForward *= diagonalFactor;
-            this.moveStrafe *= diagonalFactor;
+        if (movement.lengthSquared() > 0) {
+            movement.normalize();
+            System.out.println("normalizing movement");
         }
+
+        this.moveForward = movement.x;
+        this.moveStrafe = movement.y;
 
         this.jump = this.e[4];
     }
