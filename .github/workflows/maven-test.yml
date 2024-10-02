@@ -3,6 +3,8 @@ name: Test with Maven
 # Do lots of tests :)
 on:
   workflow_dispatch:
+  pull_request:
+    branches: [ main, master ]
   push:
     branches:
       - '**'        # matches every branch
