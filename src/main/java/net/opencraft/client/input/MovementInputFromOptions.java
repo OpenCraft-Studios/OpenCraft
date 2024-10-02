@@ -65,7 +65,6 @@ public class MovementInputFromOptions extends MovementInput {
 
         if (movement.lengthSquared() > 0) {
             movement.normalize();
-            System.out.println("normalizing movement");
         }
 
         this.moveForward = movement.x;
