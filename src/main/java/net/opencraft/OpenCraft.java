@@ -1,15 +1,13 @@
 package net.opencraft;
 
+import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.util.glu.GLU.*;
 
 import java.io.File;
 
 import net.opencraft.client.Main;
-import org.lwjgl.LWJGLException;
-import org.lwjgl.Sys;
-import org.lwjgl.input.Keyboard;
-import org.lwjgl.input.Mouse;
+import org.lwjgl.glfw.GLFWFramebufferSizeCallback;
+import org.lwjgl.glfw.GLFWWindowFocusCallback;
 import org.lwjgl.opengl.*;
 
 import net.opencraft.blocks.Block;
@@ -41,6 +39,7 @@ public class OpenCraft implements Runnable {
 	public static long[] tickTimes;
 	public static int numRecordedFrameTimes;
 	private static File gameDir;
+	public long window;
 	public PlayerController playerController;
 	private boolean fullscreen;
 	public int width;
@@ -72,7 +71,6 @@ public class OpenCraft implements Runnable {
 	public MovingObjectPosition objectMouseOver;
 	public GameSettings options;
 	public SoundManager sndManager;
-	public MouseHelper mouseHelper;
 	public File mcDataDir;
 	private TextureWaterFX textureWaterFX;
 	private TextureLavaFX textureLavaFX;
@@ -83,6 +81,12 @@ public class OpenCraft implements Runnable {
 	private int mouseTicksRan;
 	public boolean isRaining;
 	long systemTime;
+
+	/** Holds the function called when the window is resized, otherwise the function would be garbage collected */
+	private GLFWFramebufferSizeCallback frameBufferResizeCallback;
+	private GLFWWindowFocusCallback windowFocusCallback;
+	public MouseInput mouse;
+	public KeyboardInput keyboard;
 
 	static {
 		OpenCraft.tickTimes = new long[512];
@@ -97,7 +101,7 @@ public class OpenCraft implements Runnable {
 		oc = this;
 		this.playerController = new PlayerControllerSP(oc);
 		this.fullscreen = false;
-		this.timer = new Timer(20.0f);
+		this.timer = null;
 		this.sessionData = new Session("Notch", "1488228");
 		this.hideQuitButton = true;
 		this.isGamePaused = false;
@@ -131,7 +135,7 @@ public class OpenCraft implements Runnable {
 	}
 
 	public static long getSystemTime() {
-		return Sys.getTime() * 1000L / Sys.getTimerResolution();
+		return glfwGetTimerValue() * 1000L / glfwGetTimerFrequency();
 	}
 
 	public void displayUnexpectedThrowable(final UnexpectedThrowable t) {
@@ -141,37 +145,40 @@ public class OpenCraft implements Runnable {
 	public void setServer(final String string, final int integer) {
 	}
 
-	public void init() throws LWJGLException {
-		if (fullscreen) {
-			Display.setFullscreen(true);
-			width = Display.getDisplayMode().getWidth();
-			height = Display.getDisplayMode().getHeight();
-			if (width <= 0) {
-				width = 1;
-			}
-			if (height <= 0) {
-				height = 1;
-			}
-		} else {
-			Display.setDisplayMode(new DisplayMode(width, height));
+	public void init() {
+		glfwInit();
+		glfwWindowHint(GLFW_RESIZABLE, GL_TRUE);
+		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
+		window = glfwCreateWindow(width, height, Main.TITLE, 0, 0);
+		if(window == 0) {
+			throw new RuntimeException("Failed to create the GLFW window");
 		}
-		Display.setTitle(Main.TITLE);
-		Display.setResizable(true);
-		try {
-			PixelFormat pixelformat = new PixelFormat();
-			pixelformat = pixelformat.withDepthBits(24);
-			Display.create(pixelformat);
-		} catch (LWJGLException ex) {
-			System.exit(1);
-		}
+		glfwMakeContextCurrent(window);
+		if(GL.createCapabilities() == null)
+			throw new RuntimeException("Failed to create OpenGL capabilities");
+		glfwShowWindow(window);
+
+		glfwSetFramebufferSizeCallback(window, frameBufferResizeCallback = new GLFWFramebufferSizeCallback() {
+			@Override
+			public void invoke(long window, int width, int height) {
+				width = Math.max(1, width);
+				height = Math.max(1, height);
+				resize(width, height);
+			}
+		});
+		GLUtil.setupDebugMessageCallback();
+
+		mouse = new MouseInput(window);
+		keyboard = new KeyboardInput(window);
+
+		timer = new Timer(20.0f);
+		resize(width, height);
 		mcDataDir = getMinecraftDir();
 		options = new GameSettings(oc, mcDataDir);
 		renderer = new Renderer(options);
 		font = new FontRenderer(options, "/assets/default.png", renderer);
 		loadScreen();
-		Keyboard.create();
-		Mouse.create();
-		mouseHelper = new MouseHelper(null);
 		try {
 //            Controllers.create();
 		} catch (Exception ex2) {
@@ -214,7 +221,7 @@ public class OpenCraft implements Runnable {
 		playerController.a();
 	}
 
-	private void loadScreen() throws LWJGLException {
+	private void loadScreen() {
 		final ScaledResolution scaledResolution = new ScaledResolution(width, height);
 		final int scaledWidth = scaledResolution.getScaledWidth();
 		final int scaledHeight = scaledResolution.getScaledHeight();
@@ -230,6 +237,8 @@ public class OpenCraft implements Runnable {
 		glDisable(2896);
 		glDisable(2912);
 		glEnable(3553);
+		assert glGetError() == 0;
+		int error = glGetError();
 		final Tessellator t = Tessellator.instance;
 		glBindTexture(3553, renderer.getTexture("/assets/dirt.png"));
 		glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
@@ -244,7 +253,7 @@ public class OpenCraft implements Runnable {
 		glEnable(3008);
 		glAlphaFunc(516, 0.1f);
 		font.drawStringWithShadow2("Loading...", 8, height / 2 - 16, -1);
-		Display.swapBuffers();
+		glfwSwapBuffers(window);
 	}
 
 	public void displayGuiScreen(GuiScreen screen) {
@@ -276,7 +285,7 @@ public class OpenCraft implements Runnable {
 		if (err == 0)
 			return;
 
-		throw new IllegalStateException("GL ERROR: ".concat(gluErrorString(err)));
+		throw new IllegalStateException("GL ERROR: " + glGetError());
 	}
 
 	public void stop() {
@@ -288,10 +297,10 @@ public class OpenCraft implements Runnable {
 			} catch (Exception ex2) {
 			}
 			sndManager.shutdown();
-			Mouse.destroy();
-			Keyboard.destroy();
+			// Mouse.destroy();
+			// Keyboard.destroy();
 		} finally {
-			Display.destroy();
+			glfwDestroyWindow(window);
 		}
 		Thread.currentThread().interrupt();
 		System.gc();
@@ -313,7 +322,7 @@ public class OpenCraft implements Runnable {
 			int n = 0;
 			while (running) {
 				AABB.clearBoundingBoxPool();
-				if (Display.isCloseRequested()) {
+				if (glfwWindowShouldClose(window)) {
 					shutdown();
 				}
 				if (isGamePaused) {
@@ -344,27 +353,15 @@ public class OpenCraft implements Runnable {
 					playerController.setPartialTime(timer.renderPartialTicks);
 					entityRenderer.updateCameraAndRender(timer.renderPartialTicks);
 				}
-				if (!Display.isActive() && fullscreen)
-					toggleFullscreen();
-				
-				if (Keyboard.isKeyDown(64))
-					displayDebugInfo();
-				else
-					prevFrameTime = System.nanoTime();
+
+				prevFrameTime = System.nanoTime();
 				
 				// Thread.yield();
-				Display.update();
-				if (Display.wasResized()) {
-					width = Display.getWidth();
-					height = Display.getHeight();
-					if (width <= 0) {
-						width = 1;
-					}
-					if (height <= 0) {
-						height = 1;
-					}
-					resize(width, height);
-				}
+				mouse.reset();
+				keyboard.reset();
+				glfwPollEvents();
+				glfwSwapBuffers(window);
+
 				if (options.limitFramerate)
 					Thread.sleep(5L);
 				
@@ -447,14 +444,10 @@ public class OpenCraft implements Runnable {
 	}
 
 	public void setIngameFocus() {
-		if (!Display.isActive()) {
-			return;
-		}
 		if (inGameHasFocus) {
 			return;
 		}
 		inGameHasFocus = true;
-		mouseHelper.grabMouse();
 		displayGuiScreen(null);
 		mouseTicksRan = ticksRan + 10000;
 	}
@@ -467,7 +460,6 @@ public class OpenCraft implements Runnable {
 			player.resetPlayerKeyState();
 		}
 		inGameHasFocus = false;
-		mouseHelper.ungrabMouseCursor();
 	}
 
 	public void displayInGameMenu() {
@@ -561,50 +553,6 @@ public class OpenCraft implements Runnable {
 		}
 	}
 
-	public void toggleFullscreen() {
-		try {
-			fullscreen = !fullscreen;
-			System.out.println("Toggle fullscreen!");
-			if (fullscreen) {
-				Display.setDisplayMode(Display.getDesktopDisplayMode());
-				width = Display.getDisplayMode().getWidth();
-				height = Display.getDisplayMode().getHeight();
-				if (width <= 0) {
-					width = 1;
-				}
-				if (height <= 0) {
-					height = 1;
-				}
-			} else {
-
-				width = tempDisplayWidth = Display.getWidth();
-				height = tempDisplayHeight = Display.getHeight();
-				if (width <= 0) {
-					width = 1;
-				}
-				if (height <= 0) {
-					height = 1;
-				}
-				Display.setDisplayMode(new DisplayMode(tempDisplayWidth, tempDisplayHeight));
-			}
-			setIngameNotInFocus();
-			Display.setFullscreen(fullscreen);
-			Display.update();
-			Thread.sleep(1000L);
-			if (fullscreen) {
-				setIngameFocus();
-			}
-			if (currentScreen != null) {
-				setIngameNotInFocus();
-				resize(width, height);
-			}
-			System.out.println(
-					new StringBuilder().append("Size: ").append(width).append(", ").append(height).toString());
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
-	}
-
 	private void resize(int integer1, int integer2) {
 		if (integer1 <= 0) {
 			integer1 = 1;
@@ -656,95 +604,81 @@ public class OpenCraft implements Runnable {
 		}
 
 		if (currentScreen == null || currentScreen.allowUserInput) {
-			while (Mouse.next()) {
+			for(MouseInput.ButtonEvent event : mouse.buttons.events) {
 				if (System.currentTimeMillis() - systemTime > 200L) {
 					continue;
 				}
-				final int eventDWheel = Mouse.getEventDWheel();
+				final int eventDWheel = (int) mouse.scroll.y;
 				if (eventDWheel != 0) {
 					player.inventory.changeCurrentItem(eventDWheel);
 				}
 				if (currentScreen == null) {
-					if (!inGameHasFocus && Mouse.getEventButtonState()) {
+					if (!inGameHasFocus && event.isPress()) {
 						setIngameFocus();
 					} else {
-						if (Mouse.getEventButton() == 0 && Mouse.getEventButtonState()) {
-							clickMouse(0);
+						if (event.isPress()) {
+							clickMouse(event.buttonNumber());
 							mouseTicksRan = ticksRan;
 						}
-						if (Mouse.getEventButton() == 1 && Mouse.getEventButtonState()) {
-							clickMouse(1);
-							mouseTicksRan = ticksRan;
-						}
-						if (Mouse.getEventButton() != 2 || !Mouse.getEventButtonState()) {
-							continue;
-						}
-						clickMiddleMouseButton();
 					}
 				} else {
 					if (currentScreen == null) {
 						continue;
 					}
-					currentScreen.f();
+					currentScreen.handleMouseEvent(event);
 				}
 			}
 
-			while (Keyboard.next()) {
-				player.handleKeyPress(Keyboard.getEventKey(), Keyboard.getEventKeyState());
-				if (Keyboard.getEventKeyState()) {
-					if (Keyboard.getEventKey() == 87) {
-						toggleFullscreen();
-					} else {
-						if (currentScreen != null) {
-							currentScreen.handleKeyboardInput();
-						} else {
-							if (Keyboard.getEventKey() == Keyboard.KEY_ESCAPE)
-								displayInGameMenu();
-							
-							if (Keyboard.getEventKey() == Keyboard.KEY_F5) {
-								options.thirdPersonView = !options.thirdPersonView;
-								isRaining = !isRaining;
-							}
-							if (Keyboard.getEventKey() == options.keyBindInventory.keyCode)
-								displayGuiScreen(new GuiInventory(player.inventory));
-							
-							if (Keyboard.getEventKey() == options.keyBindDrop.keyCode)
-								player.dropPlayerItemWithRandomChoice(
-										player.inventory.decrStackSize(player.inventory.currentItem, 1), false);
-							
+			for(KeyboardInput.KeyEvent keyEvent : keyboard.events) {
+				player.handleKeyPress(keyEvent.key, keyEvent.isDown());
+
+				if(currentScreen != null) {
+					currentScreen.handleKeyboardInput(keyEvent);
+				} else {
+					if(keyEvent.isPress()) {
+						if(keyEvent.key == GLFW_KEY_ESCAPE) {
+							displayInGameMenu();
 						}
-						for (int i = 0; i < 9; ++i) {
-							if (Keyboard.getEventKey() == 2 + i) {
+
+						if(keyEvent.key == GLFW_KEY_F5) {
+							options.thirdPersonView = !options.thirdPersonView;
+							isRaining = !isRaining;
+						}
+
+						if(keyEvent.key == options.keyBindInventory.keyCode)
+							displayGuiScreen(new GuiInventory(player.inventory));
+
+						if(keyEvent.key == options.keyBindDrop.keyCode)
+							player.dropPlayerItemWithRandomChoice(player.inventory.decrStackSize(player.inventory.currentItem, 1), false);
+
+						for(int i = 0; i < 9; ++i) {
+							if(keyEvent.key == GLFW_KEY_0 + i) {
 								player.inventory.currentItem = i;
 							}
 						}
-						if (Keyboard.getEventKey() != options.keyBindToggleFog.keyCode)
-							continue;
-						
-						options.setOptionFloatValue(4,
-								(Keyboard.isKeyDown(42) || Keyboard.isKeyDown(54)) ? -1 : 1);
 					}
 				}
 			}
+
 			if (currentScreen == null) {
-				if (Mouse.isButtonDown(0) && ticksRan - mouseTicksRan >= timer.tps / 4.0f
+				if (mouse.isButton1Pressed() && ticksRan - mouseTicksRan >= timer.tps / 4.0f
 						&& inGameHasFocus) {
 					clickMouse(0);
 					mouseTicksRan = ticksRan;
 				}
-				if (Mouse.isButtonDown(1) && ticksRan - mouseTicksRan >= timer.tps / 4.0f
+				if(mouse.isButton2Pressed() && ticksRan - mouseTicksRan >= timer.tps / 4.0f
 						&& inGameHasFocus) {
 					clickMouse(1);
 					mouseTicksRan = ticksRan;
 				}
 			}
-			func_6254_a(0, currentScreen == null && Mouse.isButtonDown(0) && inGameHasFocus);
+			func_6254_a(0, currentScreen == null && mouse.isButton1Pressed() && inGameHasFocus);
 		}
 		if (currentScreen != null) {
 			mouseTicksRan = ticksRan + 10000;
 		}
 		if (currentScreen != null) {
-			currentScreen.e();
+			currentScreen.handleInputEvents();
 			if (currentScreen != null) {
 				currentScreen.updateScreen();
 			}

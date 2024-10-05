@@ -8,12 +8,14 @@ import java.nio.IntBuffer;
 import javax.imageio.ImageIO;
 
 import org.lwjgl.BufferUtils;
+import org.lwjgl.opengl.GL;
 import org.lwjgl.opengl.GL11;
 
 import net.opencraft.client.config.GameSettings;
 import net.opencraft.renderer.GLAllocation;
 import net.opencraft.renderer.Tessellator;
 import net.opencraft.renderer.entity.Renderer;
+import org.lwjgl.opengl.GLCapabilities;
 
 public class FontRenderer {
 

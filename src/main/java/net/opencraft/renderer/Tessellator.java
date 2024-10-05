@@ -1,13 +1,13 @@
 
 package net.opencraft.renderer;
 
-import static org.lwjgl.opengl.ARBBufferObject.*;
+import static org.lwjgl.opengl.ARBVertexBufferObject.*;
 import static org.lwjgl.opengl.GL11.*;
 
 import java.nio.*;
 
 import org.lwjgl.BufferUtils;
-import org.lwjgl.opengl.GLContext;
+import org.lwjgl.opengl.GL;
 
 public class Tessellator {
 
@@ -22,7 +22,7 @@ public class Tessellator {
     private boolean l, m, n, q;
     private double i, j, s, t, u;
     private boolean drawing;
-    private boolean x;
+    private boolean isARBCapable;
     private int z, A, B;
     private IntBuffer y;
 
@@ -35,7 +35,7 @@ public class Tessellator {
         this.p = 0;
         this.q = false;
         this.drawing = false;
-        this.x = false;
+        this.isARBCapable = false;
         this.z = 0;
         this.A = 10;
         this.B = integer;
@@ -43,8 +43,8 @@ public class Tessellator {
         this.e = this.d.asIntBuffer();
         this.f = this.d.asFloatBuffer();
         this.g = new int[integer];
-        this.x = (Tessellator.c && GLContext.getCapabilities().GL_ARB_vertex_buffer_object);
-        if (this.x) {
+        this.isARBCapable = (Tessellator.c && GL.getCapabilities().GL_ARB_vertex_buffer_object);
+        if (this.isARBCapable) {
             glGenBuffersARB(this.y = BufferUtils.createIntBuffer(this.A));
         }
     }
@@ -52,52 +52,70 @@ public class Tessellator {
     public void draw() {
         if (!this.drawing)
             throw new IllegalStateException("Not tesselating!");
-        
+
+        int error = glGetError();
         this.drawing = false;
         if (this.h > 0) {
             this.e.clear();
             this.e.put(this.g, 0, this.o);
             this.d.position(0);
             this.d.limit(this.o * 4);
-            if (this.x) {
+            error = glGetError();
+            if (this.isARBCapable) {
                 this.z = (this.z + 1) % this.A;
                 glBindBufferARB(34962, this.y.get(this.z));
+                error = glGetError();
                 glBufferDataARB(34962, this.d, GL_STREAM_DRAW_ARB);
+                error = glGetError();
             }
             if (this.m) {
-                if (this.x) {
+                if (this.isARBCapable) {
                     glTexCoordPointer(2, 5126, 32, 12L);
+                    error = glGetError();
                 } else {
                     this.f.position(3);
-                    glTexCoordPointer(2, 32, this.f);
+                    glTexCoordPointer(2,5126, 32, this.f);
+                    error = glGetError();
                 }
                 glEnableClientState(32888);
+                error = glGetError();
             }
             if (this.l) {
-                if (this.x) {
+                if (this.isARBCapable) {
                     glColorPointer(4, 5121, 32, 20L);
+                    error = glGetError();
                 } else {
                     this.d.position(20);
-                    glColorPointer(4, true, 32, this.d);
+                    // TODO: investigate
+                    glColorPointer(4, GL_UNSIGNED_BYTE, 32, this.d);
+                    error = glGetError();
                 }
                 glEnableClientState(32886);
+                error = glGetError();
             }
             if (this.n) {
-                if (this.x) {
+                if (this.isARBCapable) {
                     glNormalPointer(5120, 32, 24L);
+                    error = glGetError();
                 } else {
                     this.d.position(24);
-                    glNormalPointer(32, this.d);
+                    glNormalPointer(5120, 32, this.d);
+                    error = glGetError();
                 }
                 glEnableClientState(32885);
+                error = glGetError();
             }
-            if (this.x) {
+            if (this.isARBCapable) {
                 glVertexPointer(3, 5126, 32, 0L);
+                error = glGetError();
             } else {
                 this.f.position(0);
-                glVertexPointer(3, 32, this.f);
+                glVertexPointer(3, 5126, 32, this.f);
+                error = glGetError();
             }
+            error = glGetError();
             glEnableClientState(32884);
+            error = glGetError();
             if (this.mode == GL_QUADS && Tessellator.TRIANGLE_TESSELATION) {
                 glDrawArrays(GL_TRIANGLES, 0, this.h);
             } else {

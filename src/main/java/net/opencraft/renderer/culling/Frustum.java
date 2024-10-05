@@ -49,8 +49,8 @@ public class Frustum extends ClippingHelper {
         this.projectionMatrixBuffer.clear();
         this.modelviewMatrixBuffer.clear();
         this.floatBuffer16.clear();
-        GL11.glGetFloat(2983, this.projectionMatrixBuffer);
-        GL11.glGetFloat(2982, this.modelviewMatrixBuffer);
+        GL11.glGetFloatv(2983, this.projectionMatrixBuffer);
+        GL11.glGetFloatv(2982, this.modelviewMatrixBuffer);
         this.projectionMatrixBuffer.flip().limit(16);
         this.projectionMatrixBuffer.get(this.projectionMatrix);
         this.modelviewMatrixBuffer.flip().limit(16);

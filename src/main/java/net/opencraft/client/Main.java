@@ -15,6 +15,20 @@ import java.util.stream.Collectors;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
+import org.lwjgl.BufferUtils;
+import static org.lwjgl.glfw.GLFW.*;
+import org.lwjgl.glfw.GLFWCursorPosCallback;
+import org.lwjgl.glfw.GLFWErrorCallback;
+import org.lwjgl.glfw.GLFWFramebufferSizeCallback;
+import org.lwjgl.glfw.GLFWKeyCallback;
+import org.lwjgl.glfw.GLFWMouseButtonCallback;
+import org.lwjgl.glfw.GLFWVidMode;
+import org.lwjgl.opengl.GL;
+import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL15.*;
+import static org.lwjgl.opengl.GL20.*;
+import static org.lwjgl.opengl.GL30.*;
+
 import net.opencraft.OpenCraft;
 
 /**
@@ -30,6 +44,8 @@ public class Main {
 	public static final String GIT_INFO = "git.properties";
 	public static final String VERSION = version();
 	public static final String TITLE = "OpenCraft " + VERSION;
+
+	private static GLFWErrorCallback errorCallback;
 
 	public static ResourcesDescriptor describeResources() {
 		final String classPath = "/" + Main.class.getName().replace('.', '/') + ".class";
@@ -59,6 +75,9 @@ public class Main {
 		System.out.println("Starting...");
 		System.setProperty("user.dir", RESOURCES.resourcesRoot.getAbsolutePath());
 
+		glfwSetErrorCallback(errorCallback = GLFWErrorCallback.createPrint(System.err));
+
+		/*
 		System.out.print("Extracting Native Libraries...");
 		File nativesDir = new File(RESOURCES.resourcesRoot, NATIVES_PATH);
 		System.out.println(nativesDir.getAbsolutePath());
@@ -74,6 +93,7 @@ public class Main {
 			}
 			System.out.println("done!");
 		}
+		 */
 
 		bindNatives();
 		enableLegacySorting();

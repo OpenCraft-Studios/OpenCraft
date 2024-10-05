@@ -2,7 +2,8 @@ package net.opencraft.renderer;
 
 import net.opencraft.OpenCraft;
 import org.lwjgl.opengl.GL11;
-import org.lwjgl.util.glu.Project;
+
+import static net.opencraft.entity.EntityRenderer.gluPerspective;
 
 public class RenderSkyboxCube {
     private final String[] locations = new String[6];
@@ -21,7 +22,7 @@ public class RenderSkyboxCube {
         GL11.glMatrixMode(GL11.GL_PROJECTION);
         GL11.glPushMatrix();
         GL11.glLoadIdentity();
-        Project.gluPerspective(70.0F, (float) mc.width / (float) mc.height, 0.05F, 10.0F);
+        gluPerspective(70.0F, (float) mc.width / (float) mc.height, 0.05F, 10.0F);
         GL11.glMatrixMode(GL11.GL_MODELVIEW);
 
         GL11.glPushMatrix();

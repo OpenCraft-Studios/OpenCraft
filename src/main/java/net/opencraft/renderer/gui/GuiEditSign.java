@@ -3,7 +3,6 @@ package net.opencraft.renderer.gui;
 
 import net.opencraft.tileentity.TileEntityRenderer;
 import net.opencraft.tileentity.TileEntitySign;
-import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 
 public class GuiEditSign extends GuiScreen {
@@ -22,13 +21,13 @@ public class GuiEditSign extends GuiScreen {
     @Override
     public void initGui() {
         this.controlList.clear();
-        Keyboard.enableRepeatEvents(true);
+        // Keyboard.enableRepeatEvents(true);
         this.controlList.add(new GuiButton(0, this.width / 2 - 100, this.height / 4 + 120, "Done", 200, 20));
     }
 
     @Override
     public void onGuiClosed() {
-        Keyboard.enableRepeatEvents(false);
+        // Keyboard.enableRepeatEvents(false);
     }
 
     @Override

@@ -455,11 +455,11 @@ public class RenderGlobal implements IWorldAccess {
 		for (int i = integer1; i < integer2; ++i) {
 			if (this.n[i].y) {
 				this.c.clear();
-				ARBOcclusionQuery.glGetQueryObjectuARB(this.n[i].z, 34919, this.c);
+				ARBOcclusionQuery.glGetQueryObjectuivARB(this.n[i].z, 34919, this.c);
 				if (this.c.get(0) != 0) {
 					this.n[i].y = false;
 					this.c.clear();
-					ARBOcclusionQuery.glGetQueryObjectuARB(this.n[i].z, 34918, this.c);
+					ARBOcclusionQuery.glGetQueryObjectuivARB(this.n[i].z, 34918, this.c);
 					this.n[i].x = (this.c.get(0) != 0);
 				}
 			}

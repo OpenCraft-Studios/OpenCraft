@@ -6,8 +6,9 @@ import net.opencraft.OpenCraftError;
 import net.opencraft.ScaledResolution;
 import net.opencraft.renderer.gui.IProgressUpdate;
 
-import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
+
+import static org.lwjgl.glfw.GLFW.glfwSwapBuffers;
 
 public class LoadingScreenRenderer implements IProgressUpdate {
 
@@ -125,7 +126,7 @@ public class LoadingScreenRenderer implements IProgressUpdate {
             }
             this.mc.font.drawStringWithShadow2(this.currentlyDisplayedText, (scaledWidth - this.mc.font.getStringWidth(this.currentlyDisplayedText)) / 2, scaledHeight / 2 - 4 - 16, 16777215);
             this.mc.font.drawStringWithShadow2(this.field_1004_a, (scaledWidth - this.mc.font.getStringWidth(this.field_1004_a)) / 2, scaledHeight / 2 - 4 + 8, 16777215);
-            Display.update();
+            glfwSwapBuffers(this.mc.window);
             try {
                 Thread.yield();
             } catch (Exception ex) {

@@ -1,11 +1,11 @@
 
 package net.opencraft;
 
-import org.lwjgl.opengl.GLContext;
+import org.lwjgl.opengl.GL;
 
 public class OpenGlCapsChecker {
 
     public boolean checkARBOcclusion() {
-        return false & GLContext.getCapabilities().GL_ARB_occlusion_query;
+        return GL.getCapabilities().GL_ARB_occlusion_query;
     }
 }

@@ -2,15 +2,15 @@
 package net.opencraft.entity;
 
 import static org.joml.Math.*;
+import static org.lwjgl.glfw.GLFW.*;
 
 import java.nio.FloatBuffer;
 import java.util.List;
 import java.util.Random;
 
+import net.opencraft.client.input.MouseInput;
 import org.lwjgl.BufferUtils;
-import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.*;
-import org.lwjgl.util.glu.GLU;
 
 import net.opencraft.OpenCraft;
 import net.opencraft.ScaledResolution;
@@ -213,7 +213,7 @@ public class EntityRenderer {
         if (this.mc.options.anaglyph) {
             GL11.glTranslatef(-(integer * 2 - 1) * n, 0.0f, 0.0f);
         }
-        GLU.gluPerspective(this.getFOVModifier(float1), this.mc.width / (float) this.mc.height, 0.05f, this.farPlaneDistance);
+        gluPerspective(this.getFOVModifier(float1), this.mc.width / (float) this.mc.height, 0.05f, this.farPlaneDistance);
         GL11.glMatrixMode(5888);
         GL11.glLoadIdentity();
         if (this.mc.options.anaglyph) {
@@ -224,6 +224,15 @@ public class EntityRenderer {
             this.setupViewBobbing(float1);
         }
         this.h(float1);
+    }
+
+    // TODO: use joml and upload a view matrix instead of using the GL11 frustum call here
+    public static void gluPerspective(float fovy, float aspect, float near, float far) {
+        float bottom = -near * (float) Math.tan(fovy / 2);
+        float top = -bottom;
+        float left = aspect * bottom;
+        float right = -left;
+        GL11.glFrustum(left, right, bottom, top, near, far);
     }
 
     private void setupCameraTransform(final float float1, final int integer) {
@@ -250,21 +259,22 @@ public class EntityRenderer {
     }
 
     public void updateCameraAndRender(final float float1) {
+        /* TODO: reimplement whatever this does. I think it shows the pause menu when the window is not focused
         if (this.anaglyphEnable && !Display.isActive()) {
             this.mc.displayInGameMenu();
         }
-        this.anaglyphEnable = Display.isActive();
+        */
+        this.anaglyphEnable = glfwGetWindowAttrib(this.mc.window, GLFW_FOCUSED) == GLFW_TRUE;
         if (this.mc.inGameHasFocus) {
-            final int entityRendererInt1 = Mouse.getDX() * 1;
-            final int scaledWidth = Mouse.getDY() * 1;
-            this.mc.mouseHelper.mouseXYChange();
-            int scaledHeight = 1;
+            final int scaledHeight = (int) (mc.mouse.position.deltaX() * 1);
+            final int scaledWidth = (int) (mc.mouse.position.deltaY() * 1);
+            int invertVerticalMouse = 1;
             if (this.mc.options.invertMouse) {
-                scaledHeight = -1;
+                invertVerticalMouse = -1;
             }
-            final int n = entityRendererInt1;// + this.mc.mouseHelper.deltaX;
+            final int n = scaledHeight;// + this.mc.mouseHelper.deltaX;
             final int n2 = scaledWidth;// - this.mc.mouseHelper.deltaY;
-            if (entityRendererInt1 != 0 || this.entityRendererInt1 != 0) {
+            if (scaledHeight != 0 || this.entityRendererInt1 != 0) {
 //                System.out.println(new StringBuilder().append("xxo: ").append(entityRendererInt1).append(", ").append(this.entityRendererInt1).append(": ").append(this.entityRendererInt1).append(", xo: ").append(n).toString());
             }
             if (this.entityRendererInt1 != 0) {
@@ -273,13 +283,13 @@ public class EntityRenderer {
             if (this.entityRendererInt2 != 0) {
                 this.entityRendererInt2 = 0;
             }
-            if (entityRendererInt1 != 0) {
-                this.entityRendererInt1 = entityRendererInt1;
+            if (scaledHeight != 0) {
+                this.entityRendererInt1 = scaledHeight;
             }
             if (scaledWidth != 0) {
                 this.entityRendererInt2 = scaledWidth;
             }
-            this.mc.player.setAngles((float) n, (float) (n2 * scaledHeight));
+            this.mc.player.setAngles((float) n, (float) (n2 * invertVerticalMouse));
         }
         if (this.mc.skipRenderWorld) {
             return;
@@ -287,8 +297,8 @@ public class EntityRenderer {
         final ScaledResolution scaledResolution = new ScaledResolution(this.mc.width, this.mc.height);
         final int scaledWidth = scaledResolution.getScaledWidth();
         int scaledHeight = scaledResolution.getScaledHeight();
-        final int n = Mouse.getX() * scaledWidth / this.mc.width;
-        final int n2 = scaledHeight - Mouse.getY() * scaledHeight / this.mc.height - 1;
+        final int n = (int) (mc.mouse.position.x * scaledWidth / this.mc.width);
+        final int n2 = (int) (scaledHeight - mc.mouse.position.y * scaledHeight / this.mc.height - 1);
         if (this.mc.world != null) {
             this.renderWorld(float1);
             this.mc.ingameGUI.renderGameOverlay(float1, this.mc.currentScreen != null, n, n2);
@@ -532,12 +542,12 @@ public class EntityRenderer {
 
     private void setupFog(final int integer) {
         final EntityPlayerSP thePlayer = this.mc.player;
-        GL11.glFog(2918, this.setFogColorBuffer(this.fogColorRed, this.fogColorGreen, this.fogColorBlue, 1.0f));
+        GL11.glFogfv(GL11.GL_FOG_COLOR, this.setFogColorBuffer(this.fogColorRed, this.fogColorGreen, this.fogColorBlue, 1.0f));
         GL11.glNormal3f(0.0f, -1.0f, 0.0f);
         GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
         if (thePlayer.isInsideOfMaterial(Material.WATER)) {
-            GL11.glFogi(2917, 2048);
-            GL11.glFogf(2914, 0.1f);
+            GL11.glFogi(GL11.GL_FOG_MODE, GL11.GL_EXP);
+            GL11.glFogf(GL11.GL_FOG_DENSITY, 0.1f);
             float n = 0.4f;
             float n2 = 0.4f;
             float n3 = 0.9f;
@@ -550,8 +560,8 @@ public class EntityRenderer {
                 n3 = n6;
             }
         } else if (thePlayer.isInsideOfMaterial(Material.LAVA)) {
-            GL11.glFogi(2917, 2048);
-            GL11.glFogf(2914, 2.0f);
+            GL11.glFogi(GL11.GL_FOG_MODE, GL11.GL_EXP);
+            GL11.glFogf(GL11.GL_FOG_DENSITY, 2.0f);
             float n = 0.4f;
             float n2 = 0.3f;
             float n3 = 0.3f;
@@ -571,7 +581,7 @@ public class EntityRenderer {
                 GL11.glFogf(2915, 0.0f);
                 GL11.glFogf(2916, this.farPlaneDistance * 0.8f);
             }
-            if (GLContext.getCapabilities().GL_NV_fog_distance) {
+            if (GL.getCapabilities().GL_NV_fog_distance) {
                 GL11.glFogi(34138, 34139);
             }
         }

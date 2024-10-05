@@ -10,11 +10,11 @@ import net.opencraft.renderer.entity.*;
 import net.opencraft.util.Mth;
 
 import static net.opencraft.OpenCraft.*;
+import static net.opencraft.entity.EntityRenderer.gluPerspective;
 import static org.joml.Math.*;
 
 import org.joml.Matrix4f;
 import org.lwjgl.opengl.GL11;
-import org.lwjgl.util.glu.Project;
 
 public class ItemRenderer {
 
@@ -39,7 +39,7 @@ public class ItemRenderer {
     public void renderItemInFirstPerson(final float float1) {
     	GL11.glMatrixMode(GL11.GL_PROJECTION);
         GL11.glLoadIdentity();
-        Project.gluPerspective(70.0F, (float) oc.width / (float) oc.height, 0.05F, 10.0F);
+        gluPerspective(70.0F, (float) oc.width / (float) oc.height, 0.05F, 10.0F);
         GL11.glMatrixMode(GL11.GL_MODELVIEW);
     	
         final float n = this.d + (this.c - this.d) * float1;

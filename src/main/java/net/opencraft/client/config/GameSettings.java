@@ -8,7 +8,8 @@ import java.io.FileWriter;
 import java.io.PrintWriter;
 import net.opencraft.OpenCraft;
 import net.opencraft.world.IWorldAccess;
-import org.lwjgl.input.Keyboard;
+
+import static org.lwjgl.glfw.GLFW.*;
 
 public class GameSettings {
 
@@ -73,17 +74,17 @@ public class GameSettings {
 
 	private void setupKeybinds() {
 		// Keybinds
-    	this.keyBindForward   = new KeyBinding("Forward",       Keyboard.KEY_W);
-    	this.keyBindLeft      = new KeyBinding("Left",          Keyboard.KEY_A);
-    	this.keyBindBack      = new KeyBinding("Back",          Keyboard.KEY_S);
-    	this.keyBindRight     = new KeyBinding("Right",         Keyboard.KEY_D);
-    	this.keyBindJump      = new KeyBinding("Jump",          Keyboard.KEY_SPACE);
-    	this.keyBindInventory = new KeyBinding("Inventory",     Keyboard.KEY_E);
-    	this.keyBindDrop      = new KeyBinding("Drop",          Keyboard.KEY_Q);
-    	this.keyBindChat      = new KeyBinding("Chat",          Keyboard.KEY_T);
-    	this.keyBindToggleFog = new KeyBinding("Toggle fog",    Keyboard.KEY_F);
-    	this.keyBindSave      = new KeyBinding("Save location", Keyboard.KEY_RETURN);
-    	this.keyBindLoad      = new KeyBinding("Load location", Keyboard.KEY_R);
+    	this.keyBindForward   = new KeyBinding("Forward",       GLFW_KEY_W);
+    	this.keyBindLeft      = new KeyBinding("Left",          GLFW_KEY_A);
+    	this.keyBindBack      = new KeyBinding("Back",          GLFW_KEY_S);
+    	this.keyBindRight     = new KeyBinding("Right",         GLFW_KEY_D);
+    	this.keyBindJump      = new KeyBinding("Jump",          GLFW_KEY_SPACE);
+    	this.keyBindInventory = new KeyBinding("Inventory",     GLFW_KEY_E);
+    	this.keyBindDrop      = new KeyBinding("Drop",          GLFW_KEY_Q);
+    	this.keyBindChat      = new KeyBinding("Chat",          GLFW_KEY_T);
+    	this.keyBindToggleFog = new KeyBinding("Toggle fog",    GLFW_KEY_F);
+    	this.keyBindSave      = new KeyBinding("Save location", GLFW_KEY_ENTER);
+    	this.keyBindLoad      = new KeyBinding("Load location", GLFW_KEY_R);
     	
     	// Register keybinds
     	this.keyBindings = new KeyBinding[] {
@@ -97,7 +98,7 @@ public class GameSettings {
 	}
 
     public String getOptionDisplayString(int i) {
-        return this.keyBindings[i].description + ": " + Keyboard.getKeyName(this.keyBindings[i].keyCode);
+        return this.keyBindings[i].description + ": " + glfwGetKeyName(this.keyBindings[i].keyCode, glfwGetKeyScancode(this.keyBindings[i].keyCode));
     }
 
     public void setKeyBinding(final int i, final int keyCode) {
