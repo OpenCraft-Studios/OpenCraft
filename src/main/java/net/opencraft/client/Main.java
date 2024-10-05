@@ -57,10 +57,10 @@ public class Main {
 
 	public static void main(String[] args) throws Exception {
 		System.out.println("Starting...");
-		System.setProperty("user.dir", RESOURCES.resourcesRoot.getAbsolutePath());
+		System.setProperty("user.dir", RESOURCES.resourcesRoot.get().getAbsolutePath());
 
 		System.out.print("Extracting Native Libraries...");
-		File nativesDir = new File(RESOURCES.resourcesRoot, NATIVES_PATH);
+		File nativesDir = new File(RESOURCES.resourcesRoot.get(), NATIVES_PATH);
 		System.out.println(nativesDir.getAbsolutePath());
 		if(nativesDir.exists() && Objects.requireNonNull(nativesDir.listFiles()).length == EXPECTED_NATIVES_COUNT) {
 				System.out.println("already extracted!");
@@ -68,7 +68,7 @@ public class Main {
 			// TODO: close resource input streams
 			for(URL resource : resourcesAt(NATIVES_PATH)) {
 				String filename = new File(resource.getFile()).getName();
-				final File destination = new File(RESOURCES.resourcesRoot, NATIVES_PATH + filename);
+				final File destination = new File(RESOURCES.resourcesRoot.get(), NATIVES_PATH + filename);
 				destination.getParentFile().mkdirs();
 				Files.write(destination.toPath(), resource.openStream().readAllBytes());
 			}
@@ -95,7 +95,7 @@ public class Main {
 				e.printStackTrace();
 			}
 		} else {
-			File gitProperties = new File(RESOURCES.resourcesRoot, GIT_INFO);
+			File gitProperties = new File(RESOURCES.resourcesRoot.get(), GIT_INFO);
 			if(gitProperties.exists()) {
 				try {
 					List<String> lines = Files.readAllLines(gitProperties.toPath());
@@ -122,7 +122,7 @@ public class Main {
 	// A lambda might be appropriate
 	public static List<URL> resourcesAt(String prefix) throws IOException {
 		ZipInputStream zip = null;
-		zip = new ZipInputStream(RESOURCES.jarFile.toURI().toURL().openStream());
+		zip = new ZipInputStream(RESOURCES.jarFile.get().toURI().toURL().openStream());
 		List<URL> resources = new ArrayList<>();
 		while(true) {
 			ZipEntry entry = zip.getNextEntry();
@@ -143,7 +143,7 @@ public class Main {
 	}
 
 	private static void bindNatives() {
-		System.setProperty("org.lwjgl.librarypath", new File(RESOURCES.resourcesRoot, NATIVES_PATH).getAbsolutePath());
+		System.setProperty("org.lwjgl.librarypath", new File(RESOURCES.resourcesRoot.get(), NATIVES_PATH).getAbsolutePath());
 	}
 
 }
