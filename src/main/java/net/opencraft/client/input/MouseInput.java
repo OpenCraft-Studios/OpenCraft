@@ -91,7 +91,9 @@ public class MouseInput {
 		@Override
 		public void invoke(long window, double xpos, double ypos) {
 			x = xpos;
-			y = ypos;
+			int[] heightBuffer = new int[1];
+			GLFW.glfwGetWindowSize(window, null, heightBuffer);
+			y = heightBuffer[0] - ypos;
 		}
 
 		public double deltaX() {
