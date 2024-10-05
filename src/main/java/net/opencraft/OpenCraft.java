@@ -237,8 +237,6 @@ public class OpenCraft implements Runnable {
 		glDisable(2896);
 		glDisable(2912);
 		glEnable(3553);
-		assert glGetError() == 0;
-		int error = glGetError();
 		final Tessellator t = Tessellator.instance;
 		glBindTexture(3553, renderer.getTexture("/assets/dirt.png"));
 		glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
@@ -252,7 +250,8 @@ public class OpenCraft implements Runnable {
 		t.draw();
 		glEnable(3008);
 		glAlphaFunc(516, 0.1f);
-		font.drawStringWithShadow2("Loading...", 8, height / 2 - 16, -1);
+		// magic numbers for x and y coordinates because I have no idea how to calculate it
+		font.drawStringWithShadow2("Loading...", 32, 32, 0xFFFFFF);
 		glfwSwapBuffers(window);
 	}
 
@@ -553,17 +552,17 @@ public class OpenCraft implements Runnable {
 		}
 	}
 
-	private void resize(int integer1, int integer2) {
-		if (integer1 <= 0) {
-			integer1 = 1;
+	private void resize(int width, int height) {
+		if (width <= 0) {
+			width = 1;
 		}
-		if (integer2 <= 0) {
-			integer2 = 1;
+		if (height <= 0) {
+			height = 1;
 		}
-		width = integer1;
-		height = integer2;
+		this.width = width;
+		this.height = height;
 		if (currentScreen != null) {
-			final ScaledResolution scaledResolution = new ScaledResolution(integer1, integer2);
+			final ScaledResolution scaledResolution = new ScaledResolution(width, height);
 			currentScreen.setWorldAndResolution(oc, scaledResolution.getScaledWidth(),
 					scaledResolution.getScaledHeight());
 		}
