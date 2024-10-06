@@ -4,6 +4,7 @@ package net.opencraft.renderer.gui;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.opencraft.client.config.GameSettings;
 import net.opencraft.entity.EntityPlayerSP;
 import net.opencraft.inventory.IInventory;
 import net.opencraft.inventory.Slot;
@@ -210,7 +211,7 @@ public abstract class GuiContainer extends GuiScreen {
 
     @Override
     protected void keyTyped(final char character, final int integer) {
-        if (integer == 1 || integer == this.id.options.keyBindInventory.keyCode) {
+        if (integer == 1 || integer == this.id.options.keyBindings.get(GameSettings.PlayerInput.INVENTORY)) {
             this.id.displayGuiScreen(null);
         }
     }

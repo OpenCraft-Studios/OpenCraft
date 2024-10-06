@@ -6,8 +6,15 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.PrintWriter;
+
+import com.google.common.collect.BiMap;
+import com.google.common.collect.EnumBiMap;
+import com.google.common.collect.EnumHashBiMap;
 import net.opencraft.OpenCraft;
+import net.opencraft.client.input.MovementInput;
 import net.opencraft.world.IWorldAccess;
+
+import javax.swing.text.JTextComponent;
 
 import static org.lwjgl.glfw.GLFW.*;
 
@@ -25,18 +32,7 @@ public class GameSettings {
     public boolean anaglyph;
     public boolean limitFramerate;
     public boolean fancyGraphics;
-    public KeyBinding keyBindForward;
-    public KeyBinding keyBindLeft;
-    public KeyBinding keyBindBack;
-    public KeyBinding keyBindRight;
-    public KeyBinding keyBindJump;
-    public KeyBinding keyBindInventory;
-    public KeyBinding keyBindDrop;
-    public KeyBinding keyBindChat;
-    public KeyBinding keyBindToggleFog;
-    public KeyBinding keyBindSave;
-    public KeyBinding keyBindLoad;
-    public KeyBinding[] keyBindings;
+    public BiMap<PlayerInput, Integer> keyBindings = EnumHashBiMap.create(PlayerInput.class);
     protected OpenCraft mc;
     private final File optionsFile;
     public int numberOfOptions;
@@ -48,6 +44,18 @@ public class GameSettings {
     static {
         RENDER_DISTANCES = new String[]{"FAR", "NORMAL", "SHORT", "TINY"};
         DIFFICULTIES = new String[]{"Peaceful", "Easy", "Normal", "Hard"};
+    }
+
+    public enum PlayerInput {
+    	FORWARD,
+    	BACKWARD,
+        LEFT,
+    	RIGHT,
+    	JUMP,
+    	INVENTORY,
+    	DROP,
+    	CHAT,
+    	TOGGLE_FOG
     }
     
     public GameSettings(final OpenCraft aw, final File file) {
@@ -65,7 +73,7 @@ public class GameSettings {
         this.numberOfOptions = 10;
         this.difficulty = 2;
         this.thirdPersonView = false;
-        this.fov = 70.0F;
+        this.fov = 100.0F;
         this.minimumBrightness = 0.0F;
         this.mc = aw;
         this.optionsFile = new File(file, "options.txt");
@@ -74,35 +82,31 @@ public class GameSettings {
 
 	private void setupKeybinds() {
 		// Keybinds
-    	this.keyBindForward   = new KeyBinding("Forward",       GLFW_KEY_W);
-    	this.keyBindLeft      = new KeyBinding("Left",          GLFW_KEY_A);
-    	this.keyBindBack      = new KeyBinding("Back",          GLFW_KEY_S);
-    	this.keyBindRight     = new KeyBinding("Right",         GLFW_KEY_D);
-    	this.keyBindJump      = new KeyBinding("Jump",          GLFW_KEY_SPACE);
-    	this.keyBindInventory = new KeyBinding("Inventory",     GLFW_KEY_E);
-    	this.keyBindDrop      = new KeyBinding("Drop",          GLFW_KEY_Q);
-    	this.keyBindChat      = new KeyBinding("Chat",          GLFW_KEY_T);
-    	this.keyBindToggleFog = new KeyBinding("Toggle fog",    GLFW_KEY_F);
-    	this.keyBindSave      = new KeyBinding("Save location", GLFW_KEY_ENTER);
-    	this.keyBindLoad      = new KeyBinding("Load location", GLFW_KEY_R);
-    	
-    	// Register keybinds
-    	this.keyBindings = new KeyBinding[] {
-    		this.keyBindForward, this.keyBindLeft,
-    		this.keyBindBack, this.keyBindRight,
-    		this.keyBindJump, this.keyBindDrop,
-    		this.keyBindInventory, this.keyBindChat,
-    		this.keyBindToggleFog, this.keyBindSave,
-    		this.keyBindLoad
-    	};
+        keyBindings.put(PlayerInput.FORWARD, GLFW_KEY_W);
+        keyBindings.put(PlayerInput.BACKWARD, GLFW_KEY_S);
+        keyBindings.put(PlayerInput.LEFT, GLFW_KEY_A);
+        keyBindings.put(PlayerInput.RIGHT, GLFW_KEY_D);
+        keyBindings.put(PlayerInput.JUMP, GLFW_KEY_SPACE);
+        keyBindings.put(PlayerInput.INVENTORY, GLFW_KEY_E);
+        keyBindings.put(PlayerInput.DROP, GLFW_KEY_Q);
+        keyBindings.put(PlayerInput.CHAT, GLFW_KEY_T);
+        keyBindings.put(PlayerInput.TOGGLE_FOG, GLFW_KEY_F);
 	}
 
-    public String getOptionDisplayString(int i) {
-        return this.keyBindings[i].description + ": " + glfwGetKeyName(this.keyBindings[i].keyCode, glfwGetKeyScancode(this.keyBindings[i].keyCode));
+    public String getOptionDisplayString(PlayerInput input) {
+        return input.name() + ": " + glfwGetKeyName(keyBindings.get(input), glfwGetKeyScancode(keyBindings.get(input)));
     }
 
-    public void setKeyBinding(final int i, final int keyCode) {
-        this.keyBindings[i].keyCode = keyCode;
+    public String getOptionDisplayString(final int integer) {
+        return getOptionDisplayString(PlayerInput.values()[integer]);
+    }
+
+    public void setKeyBinding(final int integer, final int keyCode) {
+        setKeyBinding(PlayerInput.values()[integer], keyCode);
+    }
+
+    public void setKeyBinding(PlayerInput input, final int keyCode) {
+        this.keyBindings.forcePut(input, keyCode);
         this.saveOptions();
     }
 
@@ -193,58 +197,56 @@ public class GameSettings {
     }
 
     public void loadOptions() {
-        try {
-            if (!this.optionsFile.exists()) {
-                return;
-            }
-            try (BufferedReader bufferedReader = new BufferedReader(new FileReader(this.optionsFile))) {
-                String line;
-                while ((line = bufferedReader.readLine()) != null) {
-                    final String[] split = line.split(":");
-                    if (split[0].equals("music")) {
-                        this.music = split[1].equals("true");
-                    }
-                    if (split[0].equals("sound")) {
-                        this.sound = split[1].equals("true");
-                    }
-                    if (split[0].equals("invertYMouse")) {
-                        this.invertMouse = split[1].equals("true");
-                    }
-                    if (split[0].equals("showFrameRate")) {
-                        this.showDebugInfo = split[1].equals("true");
-                    }
-                    if (split[0].equals("viewDistance")) {
-                        this.renderDistance = Integer.parseInt(split[1]);
-                    }
-                    if (split[0].equals("bobView")) {
-                        this.viewBobbing = split[1].equals("true");
-                    }
-                    if (split[0].equals("anaglyph3d")) {
-                        this.anaglyph = split[1].equals("true");
-                    }
-                    if (split[0].equals("limitFramerate")) {
-                        this.limitFramerate = split[1].equals("true");
-                    }
-                    if (split[0].equals("difficulty")) {
-                        this.difficulty = Integer.parseInt(split[1]);
-                    }
-                    if (split[0].equals("fancyGraphics")) {
-                        this.fancyGraphics = split[1].equals("true");
-                    }
-                    if (split[0].equals("FOV")) {
-                        this.fov = Float.parseFloat(split[1]);
-                    }
-                    if (split[0].equals("minimumBrightness")) {
-                        this.minimumBrightness = Float.parseFloat(split[1]);
-                    }
-                    for (int i = 0; i < this.keyBindings.length; ++i) {
-                        if (split[0].equals(("key_" + this.keyBindings[i].description))) {
-                            this.keyBindings[i].keyCode = Integer.parseInt(split[1]);
-                        }
+        if(!this.optionsFile.exists()) {
+            return;
+        }
+        try(BufferedReader bufferedReader = new BufferedReader(new FileReader(this.optionsFile))) {
+            String line;
+            while((line = bufferedReader.readLine()) != null) {
+                final String[] split = line.split(":");
+                if(split[0].equals("music")) {
+                    this.music = split[1].equals("true");
+                }
+                if(split[0].equals("sound")) {
+                    this.sound = split[1].equals("true");
+                }
+                if(split[0].equals("invertYMouse")) {
+                    this.invertMouse = split[1].equals("true");
+                }
+                if(split[0].equals("showFrameRate")) {
+                    this.showDebugInfo = split[1].equals("true");
+                }
+                if(split[0].equals("viewDistance")) {
+                    this.renderDistance = Integer.parseInt(split[1]);
+                }
+                if(split[0].equals("bobView")) {
+                    this.viewBobbing = split[1].equals("true");
+                }
+                if(split[0].equals("anaglyph3d")) {
+                    this.anaglyph = split[1].equals("true");
+                }
+                if(split[0].equals("limitFramerate")) {
+                    this.limitFramerate = split[1].equals("true");
+                }
+                if(split[0].equals("difficulty")) {
+                    this.difficulty = Integer.parseInt(split[1]);
+                }
+                if(split[0].equals("fancyGraphics")) {
+                    this.fancyGraphics = split[1].equals("true");
+                }
+                if(split[0].equals("FOV")) {
+                    this.fov = Float.parseFloat(split[1]);
+                }
+                if(split[0].equals("minimumBrightness")) {
+                    this.minimumBrightness = Float.parseFloat(split[1]);
+                }
+                for(PlayerInput input : PlayerInput.values()) {
+                    if(split[0].equals("key_" + input.name())) {
+                        this.keyBindings.put(input, Integer.parseInt(split[1]));
                     }
                 }
             }
-        } catch (Exception ex) {
+        } catch(Exception ex) {
             System.out.println("Failed to load options");
             ex.printStackTrace();
         }
@@ -263,9 +265,9 @@ public class GameSettings {
             s.println("difficulty:" + difficulty);
             s.println("fancyGraphics:" + fancyGraphics);
             s.println("FOV:" + fov);
-            s.println("minimumBrightness:" + Float.toString(this.minimumBrightness));
-            for (int i = 0; i < this.keyBindings.length; ++i) {
-            	s.println(keyBindings[i].toString());
+            s.println("minimumBrightness:" + this.minimumBrightness);
+            for(PlayerInput input : PlayerInput.values()) {
+                s.println("key_" + input.name() + ":" + keyBindings.get(input));
             }
         } catch (Exception ex) {
             System.out.println("Failed to save options");

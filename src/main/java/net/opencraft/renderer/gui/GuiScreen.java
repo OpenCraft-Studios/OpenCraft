@@ -3,15 +3,18 @@ package net.opencraft.renderer.gui;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+
 import net.opencraft.OpenCraft;
 import net.opencraft.client.input.KeyboardInput;
 import net.opencraft.client.input.MouseInput;
 import net.opencraft.renderer.Tessellator;
 import net.opencraft.renderer.font.FontRenderer;
 
+import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL11;
 
-public class GuiScreen extends GuiElement {
+public abstract class GuiScreen extends GuiElement {
 
     protected OpenCraft id;
     public int width;
@@ -77,8 +80,10 @@ public class GuiScreen extends GuiElement {
         for(MouseInput.ButtonEvent event : this.id.mouse.buttons.events) {
             this.handleMouseEvent(event);
         }
-        for(KeyboardInput.KeyEvent event : this.id.keyboard.events) {
-            this.handleKeyboardInput(event);
+        // TODO plz fix
+        for(Integer key : this.id.keyboard.pressedKeys) {
+            if(GLFW.glfwGetKeyName(key, GLFW.glfwGetKeyScancode(key)) != null)
+                this.handleKeyboardInput(GLFW.glfwGetKeyName(key, GLFW.glfwGetKeyScancode(key)).charAt(0), key);
         }
     }
 
@@ -92,8 +97,8 @@ public class GuiScreen extends GuiElement {
         }
     }
 
-    public void handleKeyboardInput(KeyboardInput.KeyEvent event) {
-        this.keyTyped(event.getCharacter(), event.key);
+    public void handleKeyboardInput(char c, int key) {
+        this.keyTyped(c, key);
     }
 
     public void updateScreen() {

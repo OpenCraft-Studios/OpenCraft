@@ -3,6 +3,7 @@ package net.opencraft.entity;
 
 import net.opencraft.OpenCraft;
 import net.opencraft.Session;
+import net.opencraft.client.input.KeyboardInput;
 import net.opencraft.client.input.MovementInput;
 import net.opencraft.inventory.IInventory;
 import net.opencraft.item.ItemStack;
@@ -35,6 +36,7 @@ public class EntityPlayerSP extends EntityPlayer {
     }
 
     public void updatePlayerActionState() {
+        movementInput.updatePlayerMoveState();
         this.moveStrafing = this.movementInput.moveStrafe;
         this.moveForward = this.movementInput.moveForward;
         this.isJumping = this.movementInput.jump;
@@ -42,16 +44,8 @@ public class EntityPlayerSP extends EntityPlayer {
 
     @Override
     public void onLivingUpdate() {
-        this.movementInput.updatePlayerMoveState(this);
+        this.movementInput.updatePlayerMoveState();
         super.onLivingUpdate();
-    }
-
-    public void resetPlayerKeyState() {
-        this.movementInput.resetKeyState();
-    }
-
-    public void handleKeyPress(final int integer, final boolean boolean2) {
-        this.movementInput.checkKeyForMovementInput(integer, boolean2);
     }
 
     @Override

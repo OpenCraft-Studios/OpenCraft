@@ -21,7 +21,7 @@ public class GuiControls extends GuiScreen {
     @Override
     public void initGui() {
         this.controlList.clear();
-        for (int i = 0; i < this.options.keyBindings.length; ++i) {
+        for (int i = 0; i < GameSettings.PlayerInput.values().length; i++) {
             this.controlList.add(new GuiSmallButton(i, this.width / 2 - 155 + i % 2 * 160, this.height / 6 + 24 * (i >> 1), this.options.getOptionDisplayString(i)));
         }
         this.controlList.add(new GuiButton(200, this.width / 2 - 100, this.height / 6 + 168, "Done", 200, 20));
@@ -29,7 +29,7 @@ public class GuiControls extends GuiScreen {
 
     @Override
     protected void actionPerformed(final GuiButton iq) {
-        for (int i = 0; i < this.options.keyBindings.length; ++i) {
+        for (int i = 0; i < GameSettings.PlayerInput.values().length; i++) {
             ((GuiButton) this.controlList.get(i)).displayString = this.options.getOptionDisplayString(i);
         }
         if (iq.buttonId == 200) {

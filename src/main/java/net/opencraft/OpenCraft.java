@@ -357,12 +357,10 @@ public class OpenCraft implements Runnable {
 				
 				// Thread.yield();
 				mouse.reset();
-				keyboard.reset();
-				glfwPollEvents();
+
 				glfwSwapBuffers(window);
 
-				if (options.limitFramerate)
-					Thread.sleep(5L);
+				glfwPollEvents();
 				
 				checkGLError();
 				++n;
@@ -447,6 +445,7 @@ public class OpenCraft implements Runnable {
 			return;
 		}
 		inGameHasFocus = true;
+		glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 		displayGuiScreen(null);
 		mouseTicksRan = ticksRan + 10000;
 	}
@@ -455,9 +454,7 @@ public class OpenCraft implements Runnable {
 		if (!inGameHasFocus) {
 			return;
 		}
-		if (player != null) {
-			player.resetPlayerKeyState();
-		}
+		glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 		inGameHasFocus = false;
 	}
 
@@ -628,34 +625,28 @@ public class OpenCraft implements Runnable {
 				}
 			}
 
-			for(KeyboardInput.KeyEvent keyEvent : keyboard.events) {
-				player.handleKeyPress(keyEvent.key, keyEvent.isDown());
-
-				if(currentScreen != null) {
-					currentScreen.handleKeyboardInput(keyEvent);
-				} else {
-					if(keyEvent.isPress()) {
-						if(keyEvent.key == GLFW_KEY_ESCAPE) {
+			if(currentScreen == null) {
+				for(Integer key : keyboard.pressedKeys) {
+						if(key == GLFW_KEY_ESCAPE) {
 							displayInGameMenu();
 						}
 
-						if(keyEvent.key == GLFW_KEY_F5) {
+						if(key == GLFW_KEY_F5) {
 							options.thirdPersonView = !options.thirdPersonView;
 							isRaining = !isRaining;
 						}
 
-						if(keyEvent.key == options.keyBindInventory.keyCode)
+						if(key == options.keyBindings.get(GameSettings.PlayerInput.INVENTORY))
 							displayGuiScreen(new GuiInventory(player.inventory));
 
-						if(keyEvent.key == options.keyBindDrop.keyCode)
+						if(key == options.keyBindings.get(GameSettings.PlayerInput.DROP))
 							player.dropPlayerItemWithRandomChoice(player.inventory.decrStackSize(player.inventory.currentItem, 1), false);
 
 						for(int i = 0; i < 9; ++i) {
-							if(keyEvent.key == GLFW_KEY_0 + i) {
+							if(key == GLFW_KEY_0 + i) {
 								player.inventory.currentItem = i;
 							}
 						}
-					}
 				}
 			}
 
@@ -748,7 +739,7 @@ public class OpenCraft implements Runnable {
 				(player = new EntityPlayerSP(oc, fe, sessionData)).preparePlayerToSpawn();
 				playerController.flipPlayer(player);
 			}
-			player.movementInput = new MovementInputFromOptions(options);
+			player.movementInput = new MovementInput(options, keyboard);
 			if (renderGlobal != null) {
 				renderGlobal.changeWorld(fe);
 			}
@@ -827,7 +818,7 @@ public class OpenCraft implements Runnable {
 			world.player = player;
 			world.spawnPlayerWithLoadedChunks();
 		}
-		player.movementInput = new MovementInputFromOptions(options);
+		player.movementInput = new MovementInput(options, keyboard);
 		playerController.func_6473_b(player);
 		func_6255_d("Respawning");
 	}
