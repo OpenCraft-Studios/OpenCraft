@@ -11,38 +11,37 @@ public class Session {
     public static List<Block> registeredBlocksList;
     public String username;
     public String sessionId;
-    public String mpPassParameter;
 
     static {
-        (Session.registeredBlocksList = new ArrayList()).add(Block.stone);
-        Session.registeredBlocksList.add(Block.cobblestone);
-        Session.registeredBlocksList.add(Block.brick);
-        Session.registeredBlocksList.add(Block.dirt);
-        Session.registeredBlocksList.add(Block.planks);
-        Session.registeredBlocksList.add(Block.wood);
-        Session.registeredBlocksList.add(Block.leaves);
-        Session.registeredBlocksList.add(Block.torch);
-        Session.registeredBlocksList.add(Block.slabSingle);
-        Session.registeredBlocksList.add(Block.glass);
-        Session.registeredBlocksList.add(Block.mossyCobblestone);
-        Session.registeredBlocksList.add(Block.sapling);
-        Session.registeredBlocksList.add(Block.plantYellow);
-        Session.registeredBlocksList.add(Block.plantRed);
-        Session.registeredBlocksList.add(Block.mushroomBrown);
-        Session.registeredBlocksList.add(Block.mushroomRed);
-        Session.registeredBlocksList.add(Block.sand);
-        Session.registeredBlocksList.add(Block.gravel);
-        Session.registeredBlocksList.add(Block.sponge);
-        Session.registeredBlocksList.add(Block.woolGray);
-        Session.registeredBlocksList.add(Block.oreCoal);
-        Session.registeredBlocksList.add(Block.oreIron);
-        Session.registeredBlocksList.add(Block.oreGold);
-        Session.registeredBlocksList.add(Block.blockSteel);
-        Session.registeredBlocksList.add(Block.blockGold);
-        Session.registeredBlocksList.add(Block.bookshelf);
-        Session.registeredBlocksList.add(Block.tnt);
-        Session.registeredBlocksList.add(Block.obsidian);
-        System.out.println(Session.registeredBlocksList.size());
+        registeredBlocksList = new ArrayList<>();
+        registeredBlocksList.add(Block.stone);
+        registeredBlocksList.add(Block.cobblestone);
+        registeredBlocksList.add(Block.brick);
+        registeredBlocksList.add(Block.dirt);
+        registeredBlocksList.add(Block.planks);
+        registeredBlocksList.add(Block.wood);
+        registeredBlocksList.add(Block.leaves);
+        registeredBlocksList.add(Block.torch);
+        registeredBlocksList.add(Block.slabSingle);
+        registeredBlocksList.add(Block.glass);
+        registeredBlocksList.add(Block.mossyCobblestone);
+        registeredBlocksList.add(Block.sapling);
+        registeredBlocksList.add(Block.plantYellow);
+        registeredBlocksList.add(Block.plantRed);
+        registeredBlocksList.add(Block.mushroomBrown);
+        registeredBlocksList.add(Block.mushroomRed);
+        registeredBlocksList.add(Block.sand);
+        registeredBlocksList.add(Block.gravel);
+        registeredBlocksList.add(Block.sponge);
+        registeredBlocksList.add(Block.woolGray);
+        registeredBlocksList.add(Block.oreCoal);
+        registeredBlocksList.add(Block.oreIron);
+        registeredBlocksList.add(Block.oreGold);
+        registeredBlocksList.add(Block.blockSteel);
+        registeredBlocksList.add(Block.blockGold);
+        registeredBlocksList.add(Block.bookshelf);
+        registeredBlocksList.add(Block.tnt);
+        registeredBlocksList.add(Block.obsidian);
     }
 
     public Session(final String username, final String sessionID) {

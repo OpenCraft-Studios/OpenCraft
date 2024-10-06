@@ -6,7 +6,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.JarURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.util.*;
@@ -15,19 +14,9 @@ import java.util.stream.Collectors;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
-import org.lwjgl.BufferUtils;
 import static org.lwjgl.glfw.GLFW.*;
-import org.lwjgl.glfw.GLFWCursorPosCallback;
+
 import org.lwjgl.glfw.GLFWErrorCallback;
-import org.lwjgl.glfw.GLFWFramebufferSizeCallback;
-import org.lwjgl.glfw.GLFWKeyCallback;
-import org.lwjgl.glfw.GLFWMouseButtonCallback;
-import org.lwjgl.glfw.GLFWVidMode;
-import org.lwjgl.opengl.GL;
-import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.opengl.GL15.*;
-import static org.lwjgl.opengl.GL20.*;
-import static org.lwjgl.opengl.GL30.*;
 
 import net.opencraft.OpenCraft;
 
@@ -77,30 +66,10 @@ public class Main {
 
 		glfwSetErrorCallback(errorCallback = GLFWErrorCallback.createPrint(System.err));
 
-		/*
-		System.out.print("Extracting Native Libraries...");
-		File nativesDir = new File(RESOURCES.resourcesRoot, NATIVES_PATH);
-		System.out.println(nativesDir.getAbsolutePath());
-		if(nativesDir.exists() && Objects.requireNonNull(nativesDir.listFiles()).length == EXPECTED_NATIVES_COUNT) {
-				System.out.println("already extracted!");
-		} else {
-			// TODO: close resource input streams
-			for(URL resource : resourcesAt(NATIVES_PATH)) {
-				String filename = new File(resource.getFile()).getName();
-				final File destination = new File(RESOURCES.resourcesRoot, NATIVES_PATH + filename);
-				destination.getParentFile().mkdirs();
-				Files.write(destination.toPath(), resource.openStream().readAllBytes());
-			}
-			System.out.println("done!");
-		}
-		 */
-
-		bindNatives();
-		enableLegacySorting();
-
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		OpenCraft oc = new OpenCraft((int) (screenSize.width * INITIAL_WINDOW_SIZE_FACTOR), (int) (screenSize.height * INITIAL_WINDOW_SIZE_FACTOR), false);
-		new Thread(oc).start();
+		System.out.println("Running on thread " + Thread.currentThread().threadId() + " / " + Thread.currentThread().getName());
+		oc.run();
 	}
 
 	public static String version() {
@@ -156,14 +125,6 @@ public class Main {
 		}
 		zip.close();
 		return resources;
-	}
-
-	private static void enableLegacySorting() {
-		System.setProperty("java.util.Arrays.useLegacyMergeSort", "true");
-	}
-
-	private static void bindNatives() {
-		System.setProperty("org.lwjgl.librarypath", new File(RESOURCES.resourcesRoot, NATIVES_PATH).getAbsolutePath());
 	}
 
 }
