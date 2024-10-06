@@ -6,6 +6,7 @@ import static org.joml.Math.*;
 import java.nio.IntBuffer;
 import java.util.*;
 
+import net.opencraft.renderer.texture.ImageProvider;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.ARBOcclusionQuery;
 import org.lwjgl.opengl.GL11;
@@ -20,7 +21,6 @@ import net.opencraft.physics.AABB;
 import net.opencraft.renderer.GLAllocation;
 import net.opencraft.renderer.Tessellator;
 import net.opencraft.renderer.culling.ICamera;
-import net.opencraft.renderer.texture.Texture;
 import net.opencraft.tileentity.TileEntity;
 import net.opencraft.tileentity.TileEntityRenderer;
 import net.opencraft.util.Mth;
@@ -1015,7 +1015,7 @@ public class RenderGlobal implements IWorldAccess {
 
 	public void obtainEntitySkin(final Entity entity) {
 		if (entity.skinUrl != null) {
-			this.l.registerNewTextureHolder(entity.skinUrl, new Texture());
+			this.l.registerNewTextureHolder(entity.skinUrl, new ImageProvider());
 		}
 	}
 

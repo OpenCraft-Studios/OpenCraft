@@ -13,10 +13,10 @@ import java.util.*;
 
 import javax.imageio.ImageIO;
 
+import net.opencraft.SkinHolder;
+import net.opencraft.renderer.texture.ImageProvider;
 import org.lwjgl.BufferUtils;
 
-import net.opencraft.ImageProvider;
-import net.opencraft.TextureHolder;
 import net.opencraft.client.config.GameSettings;
 import net.opencraft.renderer.GLAllocation;
 import net.opencraft.renderer.texture.TextureFX;
@@ -28,7 +28,7 @@ public class Renderer {
 	private IntBuffer intBuffer;
 	private ByteBuffer byteBuffer;
 	private List<TextureFX> effects;
-	private Map<String, TextureHolder> skinURLToTextureHolder;
+	private Map<String, SkinHolder> skinURLToTextureHolder;
 	private GameSettings settings;
 	private boolean h;
 	private Set<String> missingTextures = new HashSet<>();
@@ -213,7 +213,7 @@ public class Renderer {
 	 * @return textureID
 	 */
 	public int loadAndBindTexture(final String textureURL, final String textureFileName) {
-		final TextureHolder holder = this.skinURLToTextureHolder.get(textureURL);
+		final SkinHolder holder = this.skinURLToTextureHolder.get(textureURL);
 		if (holder != null && holder.image != null && !holder.isBound) {
 			if (holder.textureID < 0) {
 				holder.textureID = this.registerTexture(holder.image);
@@ -228,10 +228,10 @@ public class Renderer {
 		return holder.textureID;
 	}
 
-	public TextureHolder registerNewTextureHolder(final String skinURL, final ImageProvider p) {
-		final TextureHolder holder = this.skinURLToTextureHolder.get(skinURL);
+	public SkinHolder registerNewTextureHolder(final String skinURL, final ImageProvider p) {
+		final SkinHolder holder = this.skinURLToTextureHolder.get(skinURL);
 		if (holder == null) {
-			this.skinURLToTextureHolder.put(skinURL, new TextureHolder(skinURL, p));
+			this.skinURLToTextureHolder.put(skinURL, new SkinHolder(skinURL, p));
 		} else {
 			++holder.useCount;
 		}
@@ -239,16 +239,16 @@ public class Renderer {
 	}
 
 	public void deleteTextureIfUnused(final String string) {
-		final TextureHolder textureHolder = this.skinURLToTextureHolder.get(string);
-		if (textureHolder != null) {
-			--textureHolder.useCount;
-			if (textureHolder.useCount == 0) {
-				if (textureHolder.textureID >= 0) {
-					this.deleteTexture(textureHolder.textureID);
+		final SkinHolder skinHolder = this.skinURLToTextureHolder.get(string);
+		if (skinHolder != null) {
+			--skinHolder.useCount;
+			if (skinHolder.useCount == 0) {
+				if (skinHolder.textureID >= 0) {
+					this.deleteTexture(skinHolder.textureID);
 				}
 				this.skinURLToTextureHolder.remove(string);
 			} else {
-				System.out.println("TextureHolder not removed, use count: " + textureHolder.useCount);
+				System.out.println("SkinHolder not removed, use count: " + skinHolder.useCount);
 			}
 		}
 	}
@@ -286,7 +286,7 @@ public class Renderer {
 		for (final int intValue : this.textureIDToImage.keySet()) {
 			this.bindTexture(this.textureIDToImage.get(intValue), intValue);
 		}
-		for(TextureHolder holder : this.skinURLToTextureHolder.values()) {
+		for(SkinHolder holder : this.skinURLToTextureHolder.values()) {
 			holder.isBound = false;
 		}
 		for (final String s : this.textureFileNameToID.keySet()) {
