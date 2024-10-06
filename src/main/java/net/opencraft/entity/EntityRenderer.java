@@ -207,14 +207,14 @@ public class EntityRenderer {
 
     private void orientCamera(final float float1, final int integer) {
         this.farPlaneDistance = (float) (256 >> this.mc.options.renderDistance);
-        GL11.glMatrixMode(5889);
+        GL11.glMatrixMode(GL11.GL_PROJECTION);
         GL11.glLoadIdentity();
         final float n = 0.07f;
         if (this.mc.options.anaglyph) {
             GL11.glTranslatef(-(integer * 2 - 1) * n, 0.0f, 0.0f);
         }
-        gluPerspective(this.getFOVModifier(float1), this.mc.width / (float) this.mc.height, 0.05f, this.farPlaneDistance);
-        GL11.glMatrixMode(5888);
+        gluPerspective(this.getFOVModifier(float1), (float) this.mc.width / (float) this.mc.height, 0.05f, this.farPlaneDistance);
+        GL11.glMatrixMode(GL11.GL_MODELVIEW);
         GL11.glLoadIdentity();
         if (this.mc.options.anaglyph) {
             GL11.glTranslatef((integer * 2 - 1) * 0.1f, 0.0f, 0.0f);
@@ -228,7 +228,7 @@ public class EntityRenderer {
 
     // TODO: use joml and upload a view matrix instead of using the GL11 frustum call here
     public static void gluPerspective(float fovy, float aspect, float near, float far) {
-        float bottom = -near * (float) Math.tan(fovy / 2);
+        float bottom = -near * (float) Math.tan(Math.toRadians(fovy / 2.0));
         float top = -bottom;
         float left = aspect * bottom;
         float right = -left;
