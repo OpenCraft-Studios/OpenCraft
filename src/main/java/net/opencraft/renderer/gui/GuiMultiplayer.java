@@ -21,7 +21,7 @@ public class GuiMultiplayer extends GuiScreen {
     }
 
     protected String getSaveFileName(final int integer) {
-        return (World.potentiallySavesFolderLocation(OpenCraft.getMinecraftDir(), new StringBuilder().append("World").append(integer).toString()) != null) ? new StringBuilder().append("World").append(integer).toString() : null;
+        return (World.potentiallySavesFolderLocation(OpenCraft.getGameDir(), new StringBuilder().append("World").append(integer).toString()) != null) ? new StringBuilder().append("World").append(integer).toString() : null;
     }
 
     public void initButtons() {

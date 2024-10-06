@@ -31,12 +31,12 @@ public class GuiCreateWorld extends GuiScreen {
     @Override
     public void initGui() {
         this.controlList.clear();
-        final File minecraftDir = OpenCraft.getMinecraftDir();
-        final String[] worldNames = World.getSaveNames(minecraftDir);
+        final File gameDir = OpenCraft.getGameDir();
+        final String[] worldNames = World.getSaveNames(gameDir);
         final int worldCount = worldNames.length;
 
         for (int i = 0; i < worldCount; ++i) {
-            final NBTTagCompound potentiallySavesFolderLocation = World.potentiallySavesFolderLocation(minecraftDir, worldNames[i]);
+            final NBTTagCompound potentiallySavesFolderLocation = World.potentiallySavesFolderLocation(gameDir, worldNames[i]);
 
             if (potentiallySavesFolderLocation == null) {
                 continue;
@@ -49,7 +49,7 @@ public class GuiCreateWorld extends GuiScreen {
     }
 
     protected String getSaveFileName(final int integer) {
-        return (World.potentiallySavesFolderLocation(OpenCraft.getMinecraftDir(), new StringBuilder().append("World").append(integer).toString()) != null) ? new StringBuilder().append("World").append(integer).toString() : null;
+        return (World.potentiallySavesFolderLocation(OpenCraft.getGameDir(), new StringBuilder().append("World").append(integer).toString()) != null) ? new StringBuilder().append("World").append(integer).toString() : null;
     }
 
     public void initButtons() {
@@ -64,7 +64,7 @@ public class GuiCreateWorld extends GuiScreen {
             return;
         }
         if (iq.buttonId == -20) {
-            final String[] worldNames = World.getSaveNames(OpenCraft.getMinecraftDir());
+            final String[] worldNames = World.getSaveNames(OpenCraft.getGameDir());
             int maximumWorldNumber = 0;
             for (String worldName : worldNames) {
                 final int numberFromWorldName = Integer.parseInt(worldName.substring(5));

@@ -21,10 +21,9 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import net.opencraft.IsoImageBuffer;
+import net.opencraft.OpenCraft;
 import net.opencraft.TerrainTextureManager;
 import net.opencraft.ThreadRunIsoClient;
-import net.opencraft.util.Platform;
-import net.opencraft.util.OsMap;
 import net.opencraft.world.World;
 import net.opencraft.world.chunk.storage.SaveHandler;
 
@@ -43,69 +42,6 @@ public class CanvasIsomPreview extends Canvas implements KeyListener, MouseListe
     private int xPosition;
     private int yPosition;
 
-    public File getMinecraftDir() {
-        if (this.dataFolder == null) {
-            this.dataFolder = this.getAppDir("minecraft");
-        }
-        return this.dataFolder;
-    }
-
-    public File getAppDir(final String string) {
-        final String property = System.getProperty("user.home", ".");
-        File file = null;
-        switch (OsMap.field_1193_a[getOs().ordinal()]) {
-            case 1:
-            case 2: {
-                file = new File(property, '.' + string + '/');
-                break;
-            }
-            case 3: {
-                final String getenv = System.getenv("APPDATA");
-                if (getenv != null) {
-                    file = new File(getenv, "." + string + '/');
-                    break;
-                }
-                file = new File(property, '.' + string + '/');
-                break;
-            }
-            case 4: {
-                file = new File(property, "Library/Application Support/" + string);
-                break;
-            }
-            default: {
-                file = new File(property, string + '/');
-                break;
-            }
-        }
-        if (!file.exists() && !file.mkdirs()) {
-            throw new RuntimeException(new StringBuilder().append("The working directory could not be created: ").append(file).toString());
-        }
-        return file;
-    }
-
-    private static Platform getOs() {
-        final String lowerCase = System.getProperty("os.name").toLowerCase();
-        if (lowerCase.contains("win")) {
-            return Platform.WINDOWS;
-        }
-        if (lowerCase.contains("mac")) {
-            return Platform.MACOS;
-        }
-        if (lowerCase.contains("solaris")) {
-            return Platform.SOLARIS;
-        }
-        if (lowerCase.contains("sunos")) {
-            return Platform.SOLARIS;
-        }
-        if (lowerCase.contains("linux")) {
-            return Platform.LINUX;
-        }
-        if (lowerCase.contains("unix")) {
-            return Platform.LINUX;
-        }
-        return Platform.UNKNOWN;
-    }
-
     public CanvasIsomPreview() {
         this.field_1793_a = 0;
         this.zoomLevel = 2;
@@ -113,15 +49,15 @@ public class CanvasIsomPreview extends Canvas implements KeyListener, MouseListe
         this.running = true;
         this.imageBufferList = Collections.synchronizedList((List) new LinkedList());
         this.imageBuffers = new IsoImageBuffer[64][64];
-        this.dataFolder = this.getMinecraftDir();
+        this.dataFolder = OpenCraft.getGameDir();
         for (int i = 0; i < 64; ++i) {
             for (int j = 0; j < 64; ++j) {
                 this.imageBuffers[i][j] = new IsoImageBuffer(null, i, j);
             }
         }
-        this.addMouseListener((MouseListener) this);
-        this.addMouseMotionListener((MouseMotionListener) this);
-        this.addKeyListener((KeyListener) this);
+        this.addMouseListener(this);
+        this.addMouseMotionListener(this);
+        this.addKeyListener( this);
         this.setFocusable(true);
         this.requestFocus();
         this.setBackground(Color.red);

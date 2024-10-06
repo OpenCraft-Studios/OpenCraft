@@ -33,6 +33,7 @@ import net.opencraft.world.World;
 import net.opencraft.world.WorldRenderer;
 
 public class OpenCraft implements Runnable {
+	public static final String PROJECT_NAME_LOWERCASE = "opencraft";
 
 	public static OpenCraft oc;
 
@@ -174,7 +175,7 @@ public class OpenCraft implements Runnable {
 
 		timer = new Timer(20.0f);
 		resize(width, height);
-		mcDataDir = getMinecraftDir();
+		mcDataDir = getGameDir();
 		options = new GameSettings(oc, mcDataDir);
 		renderer = new Renderer(options);
 		font = new FontRenderer(options, "/assets/default.png", renderer);
@@ -705,7 +706,7 @@ public class OpenCraft implements Runnable {
 	public void startWorld(final String string) {
 		changeWorld1(null);
 		System.gc();
-		final World world = new World(new File(getMinecraftDir(), "saves"), string);
+		final World world = new World(new File(getGameDir(), "saves"), string);
 		if (world.isNewWorld) {
 			changeWorld2(world, "Generating level");
 		} else {
@@ -823,47 +824,10 @@ public class OpenCraft implements Runnable {
 		func_6255_d("Respawning");
 	}
 
-	public static File getMinecraftDir() {
+	public static File getGameDir() {
 		if(gameDir == null)
-			gameDir = new File("opencraft");
-		return OpenCraft.gameDir;
-	}
-
-	public static File getAppDir(final String string) {
-		final String property = System.getProperty("user.home", ".");
-		File file = null;
-		switch (EnumOSMappingHelper.enumOSMappingArray[Platform.getOs().ordinal()]) {
-			case 1:
-			case 2: {
-				file = new File(property, '.' + string + '/');
-				break;
-			}
-
-			case 3: {
-				final String getenv = System.getenv("APPDATA");
-				if (getenv != null) {
-					file = new File(getenv, "." + string + '/');
-					break;
-				}
-				file = new File(property, '.' + string + '/');
-				break;
-			}
-
-			case 4: {
-				file = new File(property, "Library/Application Support/" + string);
-				break;
-			}
-
-			default: {
-				file = new File(property, string + '/');
-				break;
-			}
-		}
-		if (!file.exists() && !file.mkdirs()) {
-			throw new RuntimeException(
-					new StringBuilder().append("The working directory could not be created: ").append(file).toString());
-		}
-		return file;
+			gameDir = new File(PROJECT_NAME_LOWERCASE);
+		return gameDir;
 	}
 
 	public float getTickDelta() {

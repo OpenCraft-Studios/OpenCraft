@@ -25,7 +25,7 @@ public class GuiDeleteWorld extends GuiCreateWorld {
 
     public void deleteWorld(boolean bl, int n) {
         if (bl) {
-            File file = OpenCraft.getMinecraftDir();
+            File file = OpenCraft.getGameDir();
             World.deleteWorldDirectory(file, this.getSaveFileName(n));
         }
         this.id.displayGuiScreen(this.parentGuiScreen);
