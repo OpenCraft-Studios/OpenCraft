@@ -8,14 +8,12 @@ import java.nio.IntBuffer;
 import javax.imageio.ImageIO;
 
 import org.lwjgl.BufferUtils;
-import org.lwjgl.opengl.GL;
 import org.lwjgl.opengl.GL11;
 
 import net.opencraft.client.config.GameSettings;
 import net.opencraft.renderer.GLAllocation;
 import net.opencraft.renderer.Tessellator;
 import net.opencraft.renderer.entity.Renderer;
-import org.lwjgl.opengl.GLCapabilities;
 
 public class FontRenderer {
 
@@ -63,7 +61,7 @@ public class FontRenderer {
             }
             this.charWidth[i] = n5;
         }
-        this.fontTextureName = id2.getTexture(string);
+        this.fontTextureName = id2.loadTexture(string);
         this.fontDisplayLists = GLAllocation.generateDisplayLists(288);
         Tessellator ag2 = Tessellator.instance;
         for (n7 = 0; n7 < 256; ++n7) {

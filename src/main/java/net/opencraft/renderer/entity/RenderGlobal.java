@@ -557,7 +557,7 @@ public class RenderGlobal implements IWorldAccess {
 		GL11.glRotatef(0.0f, 0.0f, 0.0f, 1.0f);
 		GL11.glRotatef(this.k.getCelestialAngle(float1) * 360.0f, 1.0f, 0.0f, 0.0f);
 		float n8 = 30.0f;
-		GL11.glBindTexture(3553, this.l.getTexture("/assets/terrain/sun.png"));
+		GL11.glBindTexture(3553, this.l.loadTexture("/assets/terrain/sun.png"));
 		instance.beginQuads();
 		instance.vertexUV(-n8, 100.0, -n8, 0.0, 0.0);
 		instance.vertexUV(n8, 100.0, -n8, 1.0, 0.0);
@@ -565,7 +565,7 @@ public class RenderGlobal implements IWorldAccess {
 		instance.vertexUV(-n8, 100.0, n8, 0.0, 1.0);
 		instance.draw();
 		n8 = 20.0f;
-		GL11.glBindTexture(3553, this.l.getTexture("/assets/terrain/moon.png"));
+		GL11.glBindTexture(3553, this.l.loadTexture("/assets/terrain/moon.png"));
 		instance.beginQuads();
 		instance.vertexUV(-n8, -100.0, n8, 1.0, 1.0);
 		instance.vertexUV(n8, -100.0, n8, 0.0, 1.0);
@@ -601,7 +601,7 @@ public class RenderGlobal implements IWorldAccess {
 		final int n2 = 32;
 		final int n3 = 256 / n2;
 		final Tessellator instance = Tessellator.instance;
-		GL11.glBindTexture(3553, this.l.getTexture("/assets/clouds.png"));
+		GL11.glBindTexture(3553, this.l.loadTexture("/assets/clouds.png"));
 		GL11.glEnable(3042);
 		GL11.glBlendFunc(770, 771);
 		final Vec3 drawClouds = this.k.drawClouds(float1);
@@ -659,7 +659,7 @@ public class RenderGlobal implements IWorldAccess {
 		final int floor_double2 = Mth.floor_double(n5 / 2048.0);
 		n4 -= floor_double * 2048;
 		n5 -= floor_double2 * 2048;
-		GL11.glBindTexture(3553, this.l.getTexture("/assets/clouds.png"));
+		GL11.glBindTexture(3553, this.l.loadTexture("/assets/clouds.png"));
 		GL11.glEnable(3042);
 		GL11.glBlendFunc(770, 771);
 		final Vec3 drawClouds = this.k.drawClouds(float1);
@@ -820,7 +820,7 @@ public class RenderGlobal implements IWorldAccess {
 		if (integer == 0) {
 			if (this.damagePartialTime > 0.0f) {
 				GL11.glBlendFunc(774, 768);
-				GL11.glBindTexture(3553, this.l.getTexture("/assets/terrain.png"));
+				GL11.glBindTexture(3553, this.l.loadTexture("/assets/terrain.png"));
 				GL11.glColor4f(1.0f, 1.0f, 1.0f, 0.5f);
 				GL11.glPushMatrix();
 				final int n = this.k.getBlockId(hb.blockX, hb.blockY, hb.blockZ);
@@ -849,7 +849,7 @@ public class RenderGlobal implements IWorldAccess {
 			GL11.glBlendFunc(770, 771);
 			final float n2 = sin(System.currentTimeMillis() / 100.0f) * 0.2f + 0.8f;
 			GL11.glColor4f(n2, n2, n2, sin(System.currentTimeMillis() / 200.0f) * 0.2f + 0.5f);
-			final int n = this.l.getTexture("/assets/terrain.png");
+			final int n = this.l.loadTexture("/assets/terrain.png");
 			GL11.glBindTexture(3553, n);
 			/*int blockX = hb.blockX;
 			int blockY = hb.blockY;
@@ -1015,13 +1015,13 @@ public class RenderGlobal implements IWorldAccess {
 
 	public void obtainEntitySkin(final Entity entity) {
 		if (entity.skinUrl != null) {
-			this.l.a(entity.skinUrl, new Texture());
+			this.l.registerNewTextureHolder(entity.skinUrl, new Texture());
 		}
 	}
 
 	public void releaseEntitySkin(final Entity entity) {
 		if (entity.skinUrl != null) {
-			this.l.b(entity.skinUrl);
+			this.l.deleteTextureIfUnused(entity.skinUrl);
 		}
 	}
 

@@ -10,7 +10,6 @@ import net.opencraft.renderer.font.FontRenderer;
 import static org.joml.Math.*;
 
 import java.util.Random;
-import net.opencraft.util.Mth;
 
 import org.lwjgl.opengl.GL11;
 
@@ -105,7 +104,7 @@ public class RenderItem extends Render<EntityItem> {
         }
         if (hw.itemID < 256 && Block.blocksList[hw.itemID].getRenderType() == 0) {
             final int itemID = hw.itemID;
-            id.bindTexture(id.getTexture("/assets/terrain.png"));
+            id.bindTexture(id.loadTexture("/assets/terrain.png"));
             final Block gs = Block.blocksList[itemID];
             GL11.glPushMatrix();
             GL11.glTranslatef((float) (integer4 - 2), (float) (integer5 + 3), 0.0f);
@@ -119,9 +118,9 @@ public class RenderItem extends Render<EntityItem> {
         } else if (hw.getIconIndex() >= 0) {
             GL11.glDisable(2896);
             if (hw.itemID < 256) {
-                id.bindTexture(id.getTexture("/assets/terrain.png"));
+                id.bindTexture(id.loadTexture("/assets/terrain.png"));
             } else {
-                id.bindTexture(id.getTexture("/assets/gui/items.png"));
+                id.bindTexture(id.loadTexture("/assets/gui/items.png"));
             }
             this.renderTexturedQuad(integer4, integer5, hw.getIconIndex() % 16 * 16, hw.getIconIndex() / 16 * 16, 16, 16);
             GL11.glEnable(2896);

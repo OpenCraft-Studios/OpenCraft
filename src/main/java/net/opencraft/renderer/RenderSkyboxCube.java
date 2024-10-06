@@ -48,7 +48,7 @@ public class RenderSkyboxCube {
 
             for (int i = 0; i < 6; ++i) {
                 // Bind the texture for the current face
-                mc.renderer.bindTexture(mc.renderer.getTexture(this.locations[i]));
+                mc.renderer.bindTexture(mc.renderer.loadTexture(this.locations[i]));
 
                 tessellator.beginQuads();
 

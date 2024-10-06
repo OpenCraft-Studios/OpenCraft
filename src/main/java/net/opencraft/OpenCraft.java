@@ -238,7 +238,7 @@ public class OpenCraft implements Runnable {
 		glDisable(2912);
 		glEnable(3553);
 		final Tessellator t = Tessellator.instance;
-		glBindTexture(3553, renderer.getTexture("/assets/dirt.png"));
+		glBindTexture(3553, renderer.loadTexture("/assets/dirt.png"));
 		glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 		final float n = 32.0f;
 		t.beginQuads();
@@ -587,7 +587,7 @@ public class OpenCraft implements Runnable {
 		if (!isGamePaused && world != null) {
 			playerController.updateController();
 		}
-		glBindTexture(3553, renderer.getTexture("/assets/terrain.png"));
+		glBindTexture(3553, renderer.loadTexture("/assets/terrain.png"));
 		if (!isGamePaused) {
 			renderer.updateDynamicTextures();
 		}

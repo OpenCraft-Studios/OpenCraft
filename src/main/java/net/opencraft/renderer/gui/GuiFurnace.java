@@ -33,7 +33,7 @@ public class GuiFurnace extends GuiContainer {
 
     @Override
     protected void drawGuiContainerBackgroundLayer(final float float1) {
-        final int texture = this.id.renderer.getTexture("/assets/gui/furnace.png");
+        final int texture = this.id.renderer.loadTexture("/assets/gui/furnace.png");
         GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
         this.id.renderer.bindTexture(texture);
         final int integer1 = (this.width - this.xSize) / 2;

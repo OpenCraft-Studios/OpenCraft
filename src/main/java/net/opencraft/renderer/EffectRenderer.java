@@ -10,7 +10,6 @@ import org.lwjgl.opengl.GL11;
 import net.opencraft.blocks.Block;
 import net.opencraft.entity.*;
 import net.opencraft.renderer.entity.Renderer;
-import net.opencraft.util.Mth;
 import net.opencraft.world.World;
 
 public class EffectRenderer {
@@ -60,10 +59,10 @@ public class EffectRenderer {
             if (this.fxLayers[i].size() != 0) {
                 int n = 0;
                 if (i == 0) {
-                    n = this.renderer.getTexture("/assets/particles.png");
+                    n = this.renderer.loadTexture("/assets/particles.png");
                 }
                 if (i == 1) {
-                    n = this.renderer.getTexture("/assets/terrain.png");
+                    n = this.renderer.loadTexture("/assets/terrain.png");
                 }
                 GL11.glBindTexture(3553, n);
                 final Tessellator instance = Tessellator.instance;

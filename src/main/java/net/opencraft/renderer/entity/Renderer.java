@@ -16,118 +16,77 @@ import javax.imageio.ImageIO;
 import org.lwjgl.BufferUtils;
 
 import net.opencraft.ImageProvider;
-import net.opencraft.ei;
+import net.opencraft.TextureHolder;
 import net.opencraft.client.config.GameSettings;
 import net.opencraft.renderer.GLAllocation;
 import net.opencraft.renderer.texture.TextureFX;
 
 public class Renderer {
 
-	private HashMap<String, Integer> a;
-	private HashMap<Integer, BufferedImage> b;
-	private IntBuffer c;
-	private ByteBuffer d;
-	private List e;
-	private Map f;
-	private GameSettings options;
+	private HashMap<String, Integer> textureFileNameToID;
+	private HashMap<Integer, BufferedImage> textureIDToImage;
+	private IntBuffer intBuffer;
+	private ByteBuffer byteBuffer;
+	private List<TextureFX> effects;
+	private Map<String, TextureHolder> skinURLToTextureHolder;
+	private GameSettings settings;
 	private boolean h;
 	private Set<String> missingTextures = new HashSet<>();
 
-	public Renderer(final GameSettings ja) {
-		this.a = new HashMap();
-		this.b = new HashMap();
-		this.c = BufferUtils.createIntBuffer(1);
-		this.d = BufferUtils.createByteBuffer(99999999);
-		this.e = (List) new ArrayList();
-		this.f = (Map) new HashMap();
+	public Renderer(final GameSettings settings) {
+		this.textureFileNameToID = new HashMap<>();
+		this.textureIDToImage = new HashMap<>();
+		this.intBuffer = BufferUtils.createIntBuffer(1);
+		this.byteBuffer = BufferUtils.createByteBuffer(99999999);
+		this.effects = new ArrayList<>();
+		this.skinURLToTextureHolder = new HashMap<>();
 		this.h = false;
-		this.options = ja;
+		this.settings = settings;
 	}
 
-	public int getTextureOld(final String string) {
-		final Integer n = (Integer) this.a.get(string);
-		if (n != null) {
-			return n;
+	/**
+	 * Loads a texture from the specified file name. If the texture is not found,
+	 * the "missing texture" texture is loaded instead.
+	 * @return textureID
+	 */
+	public int loadTexture(final String textureFileName) {
+		final Integer textureID = this.textureFileNameToID.get(textureFileName);
+		if (textureID != null) {
+			return textureID;
 		}
 		try {
-			this.c.clear();
-			GLAllocation.generateDisplayLists(this.c);
-			final int value = this.c.get(0);
-
-			if (string.startsWith("##")) {
-				this.a(this.b(ImageIO.read(Renderer.class.getResourceAsStream(string.substring(2)))), value);
-			} else if (string.startsWith("%%")) {
-				this.h = true;
-				this.a(ImageIO.read(Renderer.class.getResourceAsStream(string.substring(2))), value);
-				this.h = false;
-			} else {
-				this.a(ImageIO.read(Renderer.class.getResourceAsStream(string)), value);
-			}
-
-			this.a.put(string, value);
-			return value;
-
-		} catch (IOException ex) {
-			// Load the missing texture when the specified texture is not found
-			System.err.println("Texture not found: " + string + ", using missing texture instead.");
-
-			// Define the path for the missing texture (you need to provide this texture
-			// file in the assets)
-			final String missingTexturePath = "/assets/missing.png";
-
-			try {
-				// Try loading the missing texture
-				this.c.clear();
-				GLAllocation.generateDisplayLists(this.c);
-				final int missingTextureValue = this.c.get(0);
-				this.a(ImageIO.read(Renderer.class.getResourceAsStream(missingTexturePath)), missingTextureValue);
-				this.a.put(string, missingTextureValue);
-				return missingTextureValue;
-
-			} catch (IOException missingTextureEx) {
-				throw new RuntimeException("Missing texture also could not be loaded.");
-			}
-		}
-	}
-
-	public int getTexture(final String string) {
-		final Integer n = (Integer) this.a.get(string);
-		if (n != null) {
-			return n;
-		}
-		try {
-			this.c.clear();
-			GLAllocation.generateDisplayLists(this.c);
-			final int value = this.c.get(0);
+			this.intBuffer.clear();
+			GLAllocation.generateDisplayLists(this.intBuffer);
+			final int firstUnusedTextureID = this.intBuffer.get(0);
 
 			// Try to load the texture based on different prefixes
 			InputStream textureStream = null;
-			if (string.startsWith("##")) {
-				textureStream = Renderer.class.getResourceAsStream(string.substring(2));
-			} else if (string.startsWith("%%")) {
-				textureStream = Renderer.class.getResourceAsStream(string.substring(2));
+			if (textureFileName.startsWith("##")) {
+				textureStream = Renderer.class.getResourceAsStream(textureFileName.substring(2));
+			} else if (textureFileName.startsWith("%%")) {
+				textureStream = Renderer.class.getResourceAsStream(textureFileName.substring(2));
 			} else {
-				textureStream = Renderer.class.getResourceAsStream(string);
+				textureStream = Renderer.class.getResourceAsStream(textureFileName);
 			}
 
 			// If the texture was found, load it
 			if (textureStream != null) {
-				if (string.startsWith("##")) {
-					this.a(this.b(ImageIO.read(textureStream)), value);
+				if (textureFileName.startsWith("##")) {
+					this.bindTexture(this.scaledImage(ImageIO.read(textureStream)), firstUnusedTextureID);
 				} else {
-					if (string.startsWith("%%")) {
+					if (textureFileName.startsWith("%%")) {
 						this.h = true;
 					}
-					this.a(ImageIO.read(textureStream), value);
-					if (string.startsWith("%%")) {
+					this.bindTexture(ImageIO.read(textureStream), firstUnusedTextureID);
+					if (textureFileName.startsWith("%%")) {
 						this.h = false;
 					}
 				}
-				this.a.put(string, value);
-				return value;
+				this.textureFileNameToID.put(textureFileName, firstUnusedTextureID);
+				return firstUnusedTextureID;
 			} else {
 				// If the texture is not found, load the missing texture
-				logMissingTexture(string);
+				logMissingTexture(textureFileName);
 				return loadMissingTexture();
 			}
 
@@ -152,11 +111,11 @@ public class Renderer {
 			InputStream missingTextureStream = Renderer.class.getResourceAsStream(missingTexturePath);
 
 			if (missingTextureStream != null) {
-				this.c.clear();
-				GLAllocation.generateDisplayLists(this.c);
-				final int missingTextureValue = this.c.get(0);
-				this.a(ImageIO.read(missingTextureStream), missingTextureValue);
-				this.a.put(missingTexturePath, missingTextureValue);
+				this.intBuffer.clear();
+				GLAllocation.generateDisplayLists(this.intBuffer);
+				final int missingTextureValue = this.intBuffer.get(0);
+				this.bindTexture(ImageIO.read(missingTextureStream), missingTextureValue);
+				this.textureFileNameToID.put(missingTexturePath, missingTextureValue);
 				return missingTextureValue;
 			} else {
 				// Handle the case where the missing texture itself is missing
@@ -168,28 +127,38 @@ public class Renderer {
 		}
 	}
 
-	private BufferedImage b(final BufferedImage bi) {
-		final int n = bi.getWidth() / 16;
-		final BufferedImage bufferedImage2 = new BufferedImage(16, bi.getHeight() * n, 2);
+	/**
+	 * This provides a blank image at 1/16 scale of the input image.
+	 */
+	private BufferedImage scaledImage(final BufferedImage input) {
+		final int widthDiv16 = input.getWidth() / 16;
+		final BufferedImage bufferedImage2 = new BufferedImage(16, input.getHeight() * widthDiv16, BufferedImage.TYPE_INT_ARGB);
 		final Graphics graphics = bufferedImage2.getGraphics();
-		for (int i = 0; i < n; ++i) {
-			graphics.drawImage(bi, -i * 16, i * bi.getHeight(), null);
+		for (int i = 0; i < widthDiv16; ++i) {
+			graphics.drawImage(input, -i * 16, i * input.getHeight(), null);
 		}
 		graphics.dispose();
 		return bufferedImage2;
 	}
 
-	public int a(final BufferedImage bufferedImage) {
-		this.c.clear();
-		GLAllocation.generateDisplayLists(this.c);
-		final int value = this.c.get(0);
-		this.a(bufferedImage, value);
-		this.b.put(value, bufferedImage);
-		return value;
+	/**
+	 * Registers a texture and returns the texture ID.
+	 * @return textureID
+	 */
+	public int registerTexture(final BufferedImage bufferedImage) {
+		this.intBuffer.clear();
+		GLAllocation.generateDisplayLists(this.intBuffer);
+		final int textureID = this.intBuffer.get(0);
+		this.bindTexture(bufferedImage, textureID);
+		this.textureIDToImage.put(textureID, bufferedImage);
+		return textureID;
 	}
 
-	public void a(final BufferedImage bufferedImage, final int integer) {
-		glBindTexture(GL_TEXTURE_2D, integer);
+	/**
+	 * Binds the specified image to the specified texture ID.
+	 */
+	public void bindTexture(final BufferedImage bufferedImage, final int textureID) {
+		glBindTexture(GL_TEXTURE_2D, textureID);
 		glTexParameteri(GL_TEXTURE_2D, 10241, 9728);
 		glTexParameteri(GL_TEXTURE_2D, 10240, 9728);
 		if (this.h) {
@@ -209,7 +178,7 @@ public class Renderer {
 			int n2 = array[i] >> 16 & 0xFF;
 			int n3 = array[i] >> 8 & 0xFF;
 			int n4 = array[i] & 0xFF;
-			if (this.options != null && this.options.anaglyph) {
+			if (this.settings != null && this.settings.anaglyph) {
 				final int n5 = (n2 * 30 + n3 * 59 + n4 * 11) / 100;
 				final int n6 = (n2 * 30 + n3 * 70) / 100;
 				final int n7 = (n2 * 30 + n4 * 70) / 100;
@@ -222,106 +191,109 @@ public class Renderer {
 			array2[i * 4 + 2] = (byte) n4;
 			array2[i * 4 + 3] = (byte) n;
 		}
-		this.d.clear();
-		this.d.put(array2);
-		this.d.position(0).limit(array2.length);
-		glTexImage2D(GL_TEXTURE_2D, 0, 6408, width, height, 0, 6408, 5121, this.d);
+		this.byteBuffer.clear();
+		this.byteBuffer.put(array2);
+		this.byteBuffer.position(0).limit(array2.length);
+		glTexImage2D(GL_TEXTURE_2D, 0, 6408, width, height, 0, 6408, 5121, this.byteBuffer);
 	}
 
-	public void a(final int integer) {
-		this.b.remove(integer);
-		this.c.clear();
-		this.c.put(integer);
-		this.c.flip();
-		glDeleteTextures(this.c);
+	/**
+	 * Deletes the texture with the specified ID.
+	 */
+	public void deleteTexture(final int textureID) {
+		this.textureIDToImage.remove(textureID);
+		this.intBuffer.clear();
+		this.intBuffer.put(textureID);
+		this.intBuffer.flip();
+		glDeleteTextures(this.intBuffer);
 	}
 
-	public int a(final String string1, final String string2) {
-		final ei ei = (ei) this.f.get(string1);
-		if (ei != null && ei.a != null && !ei.d) {
-			if (ei.c < 0) {
-				ei.c = this.a(ei.a);
+	/**
+	 * Loads and binds a texture from the specified URL or file name.
+	 * @return textureID
+	 */
+	public int loadAndBindTexture(final String textureURL, final String textureFileName) {
+		final TextureHolder holder = this.skinURLToTextureHolder.get(textureURL);
+		if (holder != null && holder.image != null && !holder.isBound) {
+			if (holder.textureID < 0) {
+				holder.textureID = this.registerTexture(holder.image);
 			} else {
-				this.a(ei.a, ei.c);
+				this.bindTexture(holder.image, holder.textureID);
 			}
-			ei.d = true;
+			holder.isBound = true;
 		}
-		if (ei == null || ei.c < 0) {
-			return this.getTexture(string2);
+		if (holder == null || holder.textureID < 0) {
+			return this.loadTexture(textureFileName);
 		}
-		return ei.c;
+		return holder.textureID;
 	}
 
-	public ei a(final String string, final ImageProvider p) {
-		final ei ei = (ei) this.f.get(string);
-		if (ei == null) {
-			this.f.put(string, new ei(string, p));
+	public TextureHolder registerNewTextureHolder(final String skinURL, final ImageProvider p) {
+		final TextureHolder holder = this.skinURLToTextureHolder.get(skinURL);
+		if (holder == null) {
+			this.skinURLToTextureHolder.put(skinURL, new TextureHolder(skinURL, p));
 		} else {
-			final ei ei2 = ei;
-			++ei2.b;
+			++holder.useCount;
 		}
-		return ei;
+		return holder;
 	}
 
-	public void b(final String string) {
-		final ei ei = (ei) this.f.get(string);
-		if (ei != null) {
-			final ei ei2 = ei;
-			--ei2.b;
-			if (ei.b == 0) {
-				if (ei.c >= 0) {
-					this.a(ei.c);
+	public void deleteTextureIfUnused(final String string) {
+		final TextureHolder textureHolder = this.skinURLToTextureHolder.get(string);
+		if (textureHolder != null) {
+			--textureHolder.useCount;
+			if (textureHolder.useCount == 0) {
+				if (textureHolder.textureID >= 0) {
+					this.deleteTexture(textureHolder.textureID);
 				}
-				this.f.remove(string);
+				this.skinURLToTextureHolder.remove(string);
+			} else {
+				System.out.println("TextureHolder not removed, use count: " + textureHolder.useCount);
 			}
 		}
 	}
 
-	public void registerTextureFX(final TextureFX at) {
-		this.e.add(at);
-		at.onTick();
+	public void registerTextureFX(final TextureFX effect) {
+		this.effects.add(effect);
+		effect.onTick();
 	}
 
 	public void updateDynamicTextures() {
-		for (int i = 0; i < this.e.size(); ++i) {
-			final TextureFX textureFX = (TextureFX) this.e.get(i);
-			textureFX.anaglyphEnabled = this.options.anaglyph;
+		for(final TextureFX textureFX : this.effects) {
+			textureFX.anaglyphEnabled = this.settings.anaglyph;
 			textureFX.onTick();
-			this.d.clear();
-			this.d.put(textureFX.imageData);
-			this.d.position(0).limit(textureFX.imageData.length);
-			for (int j = 0; j < textureFX.tileSize; ++j) {
-				for (int k = 0; k < textureFX.tileSize; ++k) {
-					glTexSubImage2D(GL_TEXTURE_2D, 0, textureFX.iconIndex % 16 * 16 + j * 16,
-							textureFX.iconIndex / 16 * 16 + k * 16, 16, 16, 6408, 5121, this.d);
+			this.byteBuffer.clear();
+			this.byteBuffer.put(textureFX.imageData);
+			this.byteBuffer.position(0).limit(textureFX.imageData.length);
+			for(int j = 0; j < textureFX.tileSize; ++j) {
+				for(int k = 0; k < textureFX.tileSize; ++k) {
+					glTexSubImage2D(GL_TEXTURE_2D, 0, textureFX.iconIndex % 16 * 16 + j * 16, textureFX.iconIndex / 16 * 16 + k * 16, 16, 16, 6408, 5121, this.byteBuffer);
 				}
 			}
 		}
-		for (int i = 0; i < this.e.size(); ++i) {
-			final TextureFX textureFX2 = (TextureFX) this.e.get(i);
-			if (textureFX2.textureId > 0) {
-				this.d.clear();
-				this.d.put(textureFX2.imageData);
-				this.d.position(0).limit(textureFX2.imageData.length);
+		for(final TextureFX textureFX2 : this.effects) {
+			if(textureFX2.textureId > 0) {
+				this.byteBuffer.clear();
+				this.byteBuffer.put(textureFX2.imageData);
+				this.byteBuffer.position(0).limit(textureFX2.imageData.length);
 				glBindTexture(GL_TEXTURE_2D, textureFX2.textureId);
-				glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, 16, 16, 6408, 5121, this.d);
+				glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, 16, 16, 6408, 5121, this.byteBuffer);
 			}
 		}
 	}
 
 	public void refreshTextures() {
-		for (final int intValue : this.b.keySet()) {
-			this.a((BufferedImage) this.b.get(intValue), intValue);
+		for (final int intValue : this.textureIDToImage.keySet()) {
+			this.bindTexture(this.textureIDToImage.get(intValue), intValue);
 		}
-		final Iterator iterator2 = this.f.values().iterator();
-		while (iterator2.hasNext()) {
-			((ei) iterator2.next()).d = false;
+		for(TextureHolder holder : this.skinURLToTextureHolder.values()) {
+			holder.isBound = false;
 		}
-		for (final String s : this.a.keySet()) {
+		for (final String s : this.textureFileNameToID.keySet()) {
 			try {
 				BufferedImage bufferedImage;
 				if (s.startsWith("##")) {
-					bufferedImage = this.b(ImageIO.read(Renderer.class.getResourceAsStream(s.substring(2))));
+					bufferedImage = this.scaledImage(ImageIO.read(Renderer.class.getResourceAsStream(s.substring(2))));
 				} else if (s.startsWith("%%")) {
 					this.h = true;
 					bufferedImage = ImageIO.read(Renderer.class.getResourceAsStream(s.substring(2)));
@@ -329,16 +301,21 @@ public class Renderer {
 				} else {
 					bufferedImage = ImageIO.read(Renderer.class.getResourceAsStream(s));
 				}
-				this.a(bufferedImage, (int) this.a.get(s));
+				this.bindTexture(bufferedImage, this.textureFileNameToID.get(s));
 			} catch (IOException ex) {
 				ex.printStackTrace();
 			}
 		}
 	}
 
+	/**
+	 * Binds texture to the specified ID. ID must be > 0
+	 */
 	public void bindTexture(final int id) {
-		if (id < 0)
+		if (id < 0) {
+			System.err.println("Refusing to bind texture. Invalid texture ID: " + id);
 			return;
+		}
 		
 		glBindTexture(GL_TEXTURE_2D, id);
 	}

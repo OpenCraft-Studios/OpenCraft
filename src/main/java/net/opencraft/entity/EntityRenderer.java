@@ -8,7 +8,6 @@ import java.nio.FloatBuffer;
 import java.util.List;
 import java.util.Random;
 
-import net.opencraft.client.input.MouseInput;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.*;
 
@@ -22,7 +21,6 @@ import net.opencraft.item.ItemRenderer;
 import net.opencraft.renderer.EffectRenderer;
 import net.opencraft.renderer.Tessellator;
 import net.opencraft.renderer.culling.Frustrum;
-import net.opencraft.renderer.culling.Frustum;
 import net.opencraft.renderer.entity.RenderGlobal;
 import net.opencraft.renderer.entity.RenderHelper;
 import net.opencraft.util.Mth;
@@ -352,7 +350,7 @@ public class EntityRenderer {
             this.mc.renderGlobal.updateRenderers(thePlayer, false);
             this.setupFog(0);
             GL11.glEnable(2912);
-            GL11.glBindTexture(3553, this.mc.renderer.getTexture("/assets/terrain.png"));
+            GL11.glBindTexture(3553, this.mc.renderer.loadTexture("/assets/terrain.png"));
             RenderHelper.disableStandardItemLighting();
             renderGlobal.sortAndRender(thePlayer, 0, float1);
             RenderHelper.enableStandardItemLighting();
@@ -371,7 +369,7 @@ public class EntityRenderer {
             this.setupFog(0);
             GL11.glEnable(3042);
             GL11.glDisable(2884);
-            GL11.glBindTexture(3553, this.mc.renderer.getTexture("/assets/terrain.png"));
+            GL11.glBindTexture(3553, this.mc.renderer.loadTexture("/assets/terrain.png"));
             if (this.mc.options.fancyGraphics) {
                 GL11.glColorMask(false, false, false, false);
                 final int sortAndRender = renderGlobal.sortAndRender(thePlayer, 1, float1);
@@ -451,7 +449,7 @@ public class EntityRenderer {
         GL11.glNormal3f(0.0f, 1.0f, 0.0f);
         GL11.glEnable(3042);
         GL11.glBlendFunc(770, 771);
-        GL11.glBindTexture(3553, this.mc.renderer.getTexture("/assets/rain.png"));
+        GL11.glBindTexture(3553, this.mc.renderer.loadTexture("/assets/rain.png"));
         for (int n = 5, i = floor_double - n; i <= floor_double + n; ++i) {
             for (int j = floor_double3 - n; j <= floor_double3 + n; ++j) {
                 final int topSolidBlock = theWorld.findTopSolidBlock(i, j);

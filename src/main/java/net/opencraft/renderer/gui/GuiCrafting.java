@@ -71,7 +71,7 @@ public class GuiCrafting extends GuiContainer {
 
     @Override
     protected void drawGuiContainerBackgroundLayer(final float float1) {
-        final int texture = this.id.renderer.getTexture("/assets/gui/crafting.png");
+        final int texture = this.id.renderer.loadTexture("/assets/gui/crafting.png");
         GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
         this.id.renderer.bindTexture(texture);
         this.drawTexturedModalRect((this.width - this.xSize) / 2, (this.height - this.ySize) / 2, 0, 0, this.xSize, this.ySize);

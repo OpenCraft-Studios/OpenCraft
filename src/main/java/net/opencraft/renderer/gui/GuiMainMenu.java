@@ -1,10 +1,8 @@
 
 package net.opencraft.renderer.gui;
 
-import net.opencraft.SharedConstants;
 import net.opencraft.client.Main;
 import net.opencraft.renderer.*;
-import net.opencraft.util.Mth;
 
 import static org.joml.Math.*;
 
@@ -62,7 +60,7 @@ public class GuiMainMenu extends GuiScreen {
         this.panorama.render(partialTicks);
         //this.drawDefaultBackground();
         final Tessellator instance = Tessellator.instance;
-        GL11.glBindTexture(3553, this.id.renderer.getTexture("/assets/gui/logo.png"));
+        GL11.glBindTexture(3553, this.id.renderer.loadTexture("/assets/gui/logo.png"));
         final int integer3 = 256;
         final int integer4 = 49;
         GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);

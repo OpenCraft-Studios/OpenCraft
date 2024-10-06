@@ -3,10 +3,8 @@ package net.opencraft.renderer.gui;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import net.opencraft.OpenCraft;
-import net.opencraft.client.input.KeyboardInput;
 import net.opencraft.client.input.MouseInput;
 import net.opencraft.renderer.Tessellator;
 import net.opencraft.renderer.font.FontRenderer;
@@ -118,7 +116,7 @@ public abstract class GuiScreen extends GuiElement {
             GL11.glDisable(2896);
             GL11.glDisable(2912);
             final Tessellator instance = Tessellator.instance;
-            GL11.glBindTexture(3553, this.id.renderer.getTexture("/assets/dirt.png"));
+            GL11.glBindTexture(3553, this.id.renderer.loadTexture("/assets/dirt.png"));
             GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
             final float n = 32.0f;
             instance.beginQuads();

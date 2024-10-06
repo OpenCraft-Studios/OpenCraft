@@ -12,7 +12,7 @@ public abstract class TileEntitySpecialRenderer<T extends TileEntity> {
 
     protected void bindTextureByName(final String string) {
         final Renderer renderEngine = this.tileEntityRenderer.renderEngine;
-        renderEngine.bindTexture(renderEngine.getTexture(string));
+        renderEngine.bindTexture(renderEngine.loadTexture(string));
     }
 
     public void setTileEntityRenderer(final TileEntityRenderer js) {
