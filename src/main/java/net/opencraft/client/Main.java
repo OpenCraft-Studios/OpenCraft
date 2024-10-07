@@ -20,10 +20,6 @@ import org.lwjgl.glfw.GLFWErrorCallback;
 
 import net.opencraft.OpenCraft;
 
-/**
- *
- * @author LWJGL2
- */
 public class Main {
 
 	public static final ResourcesDescriptor RESOURCES = describeResources();
