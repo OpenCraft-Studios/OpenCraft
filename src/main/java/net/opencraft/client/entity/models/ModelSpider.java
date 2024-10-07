@@ -64,8 +64,8 @@ public class ModelSpider extends ModelBase {
 
     @Override
     public void setRotationAngles(final float nya1, final float nya2, final float nya3, final float nya4, final float nya5, final float nya6) {
-        this.spiderHead.rotateAngleY = nya4 / 57.295776f;
-        this.spiderHead.rotateAngleX = nya5 / 57.295776f;
+        this.spiderHead.rotateAngleY = toRadians(nya4);
+        this.spiderHead.rotateAngleX = toRadians(nya5);
         final float n = 0.7853982f;
         this.spiderLeg1.rotateAngleZ = -n;
         this.spiderLeg2.rotateAngleZ = n;

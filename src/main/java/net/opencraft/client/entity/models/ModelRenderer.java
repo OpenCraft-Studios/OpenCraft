@@ -4,6 +4,8 @@ package net.opencraft.client.entity.models;
 import net.opencraft.PositionTextureVertex;
 import net.opencraft.renderer.*;
 
+import static org.joml.Math.*;
+
 import org.lwjgl.opengl.GL11;
 
 public class ModelRenderer {
@@ -100,13 +102,13 @@ public class ModelRenderer {
             GL11.glPushMatrix();
             GL11.glTranslatef(this.rotationPointX * float1, this.rotationPointY * float1, this.rotationPointZ * float1);
             if (this.rotateAngleZ != 0.0f) {
-                GL11.glRotatef(this.rotateAngleZ * 57.295776f, 0.0f, 0.0f, 1.0f);
+                GL11.glRotatef(toDegrees(rotateAngleZ), 0.0f, 0.0f, 1.0f);
             }
             if (this.rotateAngleY != 0.0f) {
-                GL11.glRotatef(this.rotateAngleY * 57.295776f, 0.0f, 1.0f, 0.0f);
+                GL11.glRotatef(toDegrees(rotateAngleY), 0.0f, 1.0f, 0.0f);
             }
             if (this.rotateAngleX != 0.0f) {
-                GL11.glRotatef(this.rotateAngleX * 57.295776f, 1.0f, 0.0f, 0.0f);
+                GL11.glRotatef(toDegrees(rotateAngleX), 1.0f, 0.0f, 0.0f);
             }
             GL11.glCallList(this.displayList);
             GL11.glPopMatrix();

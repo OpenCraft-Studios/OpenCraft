@@ -36,7 +36,7 @@ public class ModelQuadruped extends ModelBase {
 
     @Override
     public void setRotationAngles(final float nya1, final float nya2, final float nya3, final float nya4, final float nya5, final float nya6) {
-        this.head.rotateAngleY = nya4 / 57.295776f;
+        this.head.rotateAngleY = toRadians(nya4);
         this.body.rotateAngleX = 1.5707964f;
         this.leg1.rotateAngleX = cos(nya1 * 0.6662f) * 1.4f * nya2;
         this.leg2.rotateAngleX = cos(nya1 * 0.6662f + PI_f) * 1.4f * nya2;

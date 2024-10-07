@@ -30,7 +30,7 @@ public class RenderItem extends Render<EntityItem> {
         final ItemStack item = entityLiving.item;
         GL11.glPushMatrix();
         final float n = sin((entityLiving.age + nya2) / 10.0f + entityLiving.hoverStart) * 0.1f + 0.1f;
-        final float n2 = ((entityLiving.age + nya2) / 20.0f + entityLiving.hoverStart) * 57.295776f;
+        final float n2 = toDegrees((entityLiving.age + nya2) / 20.0f + entityLiving.hoverStart);
         int n3 = 1;
         if (entityLiving.item.stackSize > 1) {
             n3 = 2;
