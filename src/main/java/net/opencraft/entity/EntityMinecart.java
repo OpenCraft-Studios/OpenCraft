@@ -264,7 +264,7 @@ public class EntityMinecart extends Entity implements IInventory {
         final double n12 = this.prevPosX - this.posX;
         final double n13 = this.prevPosZ - this.posZ;
         if (n12 * n12 + n13 * n13 > 0.001) {
-            this.rotationYaw = (float) (atan2(n13, n12) * 180.0 / 3.141592653589793);
+            this.rotationYaw = (float) toRadians(atan2(n13, n12));
             if (this.isInReverse) {
                 this.rotationYaw += 180.0f;
             }

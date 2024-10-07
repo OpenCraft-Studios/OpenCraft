@@ -56,16 +56,16 @@ public class ItemRenderer {
             if (this.f) {
                 final float n3 = (this.e + float1) / 8.0f;
                 final float n4 = sin(n3 * PI_f);
-                final float n5 = sin(sqrt(n3) * 3.1415927f);
-                GL11.glTranslatef(-n5 * 0.4f, sin(sqrt(n3) * 3.1415927f * 2.0f) * 0.2f, -n4 * 0.2f);
+                final float n5 = sin(sqrt(n3) * PI_f);
+                GL11.glTranslatef(-n5 * 0.4f, sin(sqrt(n3) * PI_TIMES_2_f) * 0.2f, -n4 * 0.2f);
             }
             GL11.glTranslatef(0.7f * n2, -0.65f * n2 - (1.0f - n) * 0.6f, -0.9f * n2);
             GL11.glRotatef(45.0f, 0.0f, 1.0f, 0.0f);
             GL11.glEnable(32826);
             if (this.f) {
                 final float n3 = (this.e + float1) / 8.0f;
-                final float n4 = sin(n3 * n3 * 3.1415927f);
-                final float n5 = sin(sqrt(n3) * 3.1415927f);
+                final float n4 = sin(n3 * n3 * PI_f);
+                final float n5 = sin(sqrt(n3) * PI_f);
                 GL11.glRotatef(-n4 * 20.0f, 0.0f, 1.0f, 0.0f);
                 GL11.glRotatef(-n5 * 20.0f, 0.0f, 0.0f, 1.0f);
                 GL11.glRotatef(-n5 * 80.0f, 1.0f, 0.0f, 0.0f);
@@ -167,17 +167,17 @@ public class ItemRenderer {
             final float n2 = 0.8f;
             if (this.f) {
                 final float n3 = (this.e + float1) / 8.0f;
-                final float n4 = sin(n3 * 3.1415927f);
-                final float n5 = sin(sqrt(n3) * 3.1415927f);
-                GL11.glTranslatef(-n5 * 0.3f, sin(sqrt(n3) * 3.1415927f * 2.0f) * 0.4f, -n4 * 0.4f);
+                final float n4 = sin(n3 * PI_f);
+                final float n5 = sin(sqrt(n3) * PI_f);
+                GL11.glTranslatef(-n5 * 0.3f, sin(sqrt(n3) * PI_TIMES_2_f) * 0.4f, -n4 * 0.4f);
             }
             GL11.glTranslatef(0.8f * n2, -0.75f * n2 - (1.0f - n) * 0.6f, -0.9f * n2);
             GL11.glRotatef(45.0f, 0.0f, 1.0f, 0.0f);
             GL11.glEnable(32826);
             if (this.f) {
                 final float n3 = (this.e + float1) / 8.0f;
-                final float n4 = sin(n3 * n3 * 3.1415927f);
-                final float n5 = sin(sqrt(n3) * 3.1415927f);
+                final float n4 = sin(n3 * n3 * PI_f);
+                final float n5 = sin(sqrt(n3) * PI_f);
                 GL11.glRotatef(n5 * 70.0f, 0.0f, 1.0f, 0.0f);
                 GL11.glRotatef(-n4 * 20.0f, 0.0f, 0.0f, 1.0f);
             }

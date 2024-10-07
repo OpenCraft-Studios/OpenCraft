@@ -53,9 +53,9 @@ public class EntityArrow extends Entity {
         this.posZ -= sin(toRadians(rotationYaw)) * 0.16f;
         this.setPosition(this.posX, this.posY, this.posZ);
         this.yOffset = 0.0f;
-        this.motionX = -sin(this.rotationYaw / 180.0f * 3.1415927f) * cos(this.rotationPitch / 180.0f * 3.1415927f);
-        this.motionZ = cos(this.rotationYaw / 180.0f * 3.1415927f) * cos(this.rotationPitch / 180.0f * 3.1415927f);
-        this.motionY = -sin(this.rotationPitch / 180.0f * 3.1415927f);
+        this.motionX = -sin(toRadians(rotationYaw)) * cos(toRadians(rotationPitch));
+        this.motionZ = cos(toRadians(rotationYaw)) * cos(toRadians(rotationPitch));
+        this.motionY = -sin(toRadians(rotationPitch));
         this.shoot(this.motionX, this.motionY, this.motionZ, 1.5f, 1.0f);
     }
 
@@ -74,11 +74,10 @@ public class EntityArrow extends Entity {
         this.motionY = yCoord;
         this.motionZ = zCoord;
         final float sqrt_double2 = Mth.sqrt_double(xCoord * xCoord + zCoord * zCoord);
-        final float n = (float) (atan2(xCoord, zCoord) * 180.0 / 3.1415927410125732);
+        final float n = (float) (toRadians(atan2(xCoord, zCoord)));
         this.rotationYaw = n;
         this.prevRotationYaw = n;
-        // TODO:                                                              RADIANS_CONVERSION
-        final float n2 = (float) (atan2(yCoord, (double) sqrt_double2) * 180.0 / 3.1415927410125732);
+        final float n2 = (float) (toRadians(atan2(yCoord, (double) sqrt_double2)));
         this.rotationPitch = n2;
         this.prevRotationPitch = n2;
         this.ticksInGround = 0;
@@ -169,8 +168,8 @@ public class EntityArrow extends Entity {
         this.posY += this.motionY;
         this.posZ += this.motionZ;
         final float n3 = Mth.sqrt_double(this.motionX * this.motionX + this.motionZ * this.motionZ);
-        this.rotationYaw = (float) (atan2(this.motionX, this.motionZ) * 180.0 / 3.1415927410125732);
-        this.rotationPitch = (float) (atan2(this.motionY, (double) n3) * 180.0 / 3.1415927410125732);
+        this.rotationYaw = (float) (toRadians(atan2(this.motionX, this.motionZ)));
+        this.rotationPitch = (float) (toRadians(atan2(this.motionY, (double) n3)));
         while (this.rotationPitch - this.prevRotationPitch < -180.0f) {
             this.prevRotationPitch -= 360.0f;
         }

@@ -23,7 +23,7 @@ public class EntityItem extends Entity {
         super(world);
         this.age = 0;
         this.health = 5;
-        this.hoverStart = (float) (random() * 3.141592653589793 * 2.0);
+        this.hoverStart = (float) (random() * PI_TIMES_2);
         this.setSize(0.25f, 0.25f);
         this.yOffset = this.height / 2.0f;
         this.setPosition(xCoord, yCoord, zCoord);
@@ -39,7 +39,7 @@ public class EntityItem extends Entity {
         super(world);
         this.age = 0;
         this.health = 5;
-        this.hoverStart = (float) (random() * /* PI2 */ 3.141592653589793 * 2.0);
+        this.hoverStart = (float) (random() * PI_TIMES_2);
         this.setSize(0.25f, 0.25f);
         this.yOffset = this.height / 2.0f;
     }

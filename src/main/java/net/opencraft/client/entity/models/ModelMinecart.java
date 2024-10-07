@@ -1,6 +1,8 @@
 
 package net.opencraft.client.entity.models;
 
+import static org.joml.Math.*;
+
 public class ModelMinecart extends ModelBase {
 
     public ModelRenderer[] sideModels;
@@ -31,7 +33,7 @@ public class ModelMinecart extends ModelBase {
         this.sideModels[0].rotateAngleX = 1.5707964f;
         this.sideModels[1].rotateAngleY = 4.712389f;
         this.sideModels[2].rotateAngleY = 1.5707964f;
-        this.sideModels[3].rotateAngleY = 3.1415927f;
+        this.sideModels[3].rotateAngleY = PI_f;
         this.sideModels[5].rotateAngleX = -1.5707964f;
     }
 

@@ -163,7 +163,7 @@ public class RenderGlobal implements IWorldAccess {
 				final double atan3 = Math.atan2(Math.sqrt(n * n + n3 * n3), n2);
 				final double sin2 = Math.sin(atan3);
 				final double cos2 = Math.cos(atan3);
-				final double n9 = random.nextDouble() * 3.141592653589793 * 2.0;
+				final double n9 = random.nextDouble() * PI_TIMES_2;
 				final double sin3 = Math.sin(n9);
 				final double cos3 = Math.cos(n9);
 				for (int j = 0; j < 4; ++j) {

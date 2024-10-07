@@ -84,7 +84,7 @@ public class EntityLiving extends Entity {
         this.field_9363_r = (float) (random() + 1.0) * 0.01f;
         this.setPosition(this.posX, this.posY, this.posZ);
         this.field_9365_p = (float) random() * 12398.0f;
-        this.rotationYaw = (float) (random() * /* PI2 */3.1415927410125732 * 2.0);
+        this.rotationYaw = (float) (random() * PI_TIMES_2);
         this.ae = 1.0f;
         this.stepHeight = 0.5f;
     }
@@ -192,8 +192,7 @@ public class EntityLiving extends Entity {
         if (sqrt_double > 0.05f) {
             n4 = 1.0f;
             n3 = sqrt_double * 3.0f;
-            // TODO:                                 RADIANS_CONVERSION
-            renderYawOffset = (float) atan2(n2, n) * 180.0f / 3.1415927f - 90.0f;
+            renderYawOffset = (float) toRadians(atan2(n2, n)) - 90.0f;
         }
         if (!this.onGround) {
             n4 = 0.0f;
@@ -287,7 +286,7 @@ public class EntityLiving extends Entity {
             double nya3;
             for (nya2 = entity.posX - this.posX, nya3 = entity.posZ - this.posZ; nya2 * nya2 + nya3 * nya3 < 1.0E-4; nya2 = (random() - random()) * 0.01, nya3 = (random() - random()) * 0.01) {
             }
-            this.attackedAtYaw = (float) (atan2(nya3, nya2) * 180.0 / 3.1415927410125732) - this.rotationYaw;
+            this.attackedAtYaw = (float) toRadians(atan2(nya3, nya2)) - this.rotationYaw;
             this.knockBack(entity, nya1, nya2, nya3);
         } else {
             this.attackedAtYaw = (float) ((int) (random() * 2.0) * 180);

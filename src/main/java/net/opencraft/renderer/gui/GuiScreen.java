@@ -9,7 +9,7 @@ import net.opencraft.client.input.MouseInput;
 import net.opencraft.renderer.Tessellator;
 import net.opencraft.renderer.font.FontRenderer;
 
-import org.lwjgl.glfw.GLFW;
+import static org.lwjgl.glfw.GLFW.*;
 import org.lwjgl.opengl.GL11;
 
 public abstract class GuiScreen extends GuiElement {
@@ -79,9 +79,10 @@ public abstract class GuiScreen extends GuiElement {
             this.handleMouseEvent(event);
         }
         // TODO plz fix
-        for(Integer key : this.id.keyboard.pressedKeys) {
-            if(GLFW.glfwGetKeyName(key, GLFW.glfwGetKeyScancode(key)) != null)
-                this.handleKeyboardInput(GLFW.glfwGetKeyName(key, GLFW.glfwGetKeyScancode(key)).charAt(0), key);
+        // TODO: What should be fixed here?
+        for(int key : this.id.keyboard.pressedKeys) {
+            if(glfwGetKeyName(key, glfwGetKeyScancode(key)) != null)
+                this.handleKeyboardInput(glfwGetKeyName(key, glfwGetKeyScancode(key)).charAt(0), key);
         }
     }
 

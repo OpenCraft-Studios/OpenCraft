@@ -210,7 +210,7 @@ public class ChunkProviderGenerate implements IChunkProvider {
 		final int n6 = random.nextInt(integer11 / 2) + integer11 / 4;
 		final boolean b2 = random.nextInt(6) == 0;
 		while (integer10 < integer11) {
-			final double n7 = 1.5 + sin(integer10 * 3.1415927f / integer11) * float7 * 1.0f;
+			final double n7 = 1.5 + sin(integer10 * PI_f / integer11) * float7 * 1.0f;
 			final double n8 = n7 * double12;
 			final float cos = cos(float9);
 			final float sin = sin(float9);
@@ -355,7 +355,7 @@ public class ChunkProviderGenerate implements IChunkProvider {
 					for (int l = 0; l < n7; ++l) {
 						this.a(integer1, integer2, arr, n4, n5, n6,
 								this.rand.nextFloat() * 2.0f + this.rand.nextFloat(),
-								this.rand.nextFloat() * 3.1415927f * 2.0f, (this.rand.nextFloat() - 0.5f) * 2.0f / 8.0f,
+								this.rand.nextFloat() * PI_TIMES_2_f, (this.rand.nextFloat() - 0.5f) * 2.0f / 8.0f,
 								0, 0, 1.0);
 					}
 				}

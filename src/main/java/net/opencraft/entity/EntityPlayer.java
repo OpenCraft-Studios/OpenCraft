@@ -110,8 +110,8 @@ public class EntityPlayer extends EntityLiving {
         }
         this.inventory.dropAllItems();
         if (entity != null) {
-            this.motionX = -cos((this.attackedAtYaw + this.rotationYaw) * 3.1415927f / 180.0f) * 0.1f;
-            this.motionZ = -sin((this.attackedAtYaw + this.rotationYaw) * 3.1415927f / 180.0f) * 0.1f;
+            this.motionX = -cos(toRadians(attackedAtYaw + rotationYaw)) * 0.1f;
+            this.motionZ = -sin(toRadians(attackedAtYaw + rotationYaw)) * 0.1f;
         } else {
             final double n = 0.0;
             this.motionZ = n;
@@ -138,7 +138,7 @@ public class EntityPlayer extends EntityLiving {
         float n = 0.1f;
         if (boolean2) {
             final float n2 = this.rand.nextFloat() * 0.5f;
-            final float n3 = this.rand.nextFloat() * 3.1415927f * 2.0f;
+            final float n3 = this.rand.nextFloat() * PI_TIMES_2_f;
             entity.motionX = -sin(n3) * n2;
             entity.motionZ = cos(n3) * n2;
             entity.motionY = 0.20000000298023224;
@@ -148,7 +148,7 @@ public class EntityPlayer extends EntityLiving {
             entity.motionZ =  cos(toRadians(rotationYaw)) * cos(toRadians(rotationPitch)) * n;
             entity.motionY = -sin(toRadians(rotationYaw)) * n + 0.1f;
             n = 0.02f;
-            final float n2 = this.rand.nextFloat() * 3.1415927f * 2.0f;
+            final float n2 = this.rand.nextFloat() * PI_TIMES_2_f;
             n *= this.rand.nextFloat();
             final EntityItem entityItem = entity;
             entityItem.motionX += cos(n2) * n;

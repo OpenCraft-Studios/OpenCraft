@@ -170,18 +170,20 @@ public class EntityRenderer {
         GL11.glRotatef(n3, 1.0f, 0.0f, 0.0f);
     }
 
-    private void h(final float float1) {
+    private void h(final float multiplier) {
         final EntityPlayerSP player = this.mc.player;
-        final double double1 = player.prevPosX + (player.posX - player.prevPosX) * float1;
-        final double double2 = player.prevPosY + (player.posY - player.prevPosY) * float1;
-        final double double3 = player.prevPosZ + (player.posZ - player.prevPosZ) * float1;
+        double double1, double2, double3;
+        
+        double1 = fma(player.posX - player.prevPosX, multiplier, player.prevPosX);
+        double2 = fma(player.posY - player.prevPosY, multiplier, player.prevPosY);
+        double3 = fma(player.posZ - player.prevPosZ, multiplier, player.prevPosZ);
+        
         if (this.mc.options.thirdPersonView) {
             double n = 4.0;
             
-            // TODO:                                 RADIANS_CONVERSION x3
-            final double n2 = -sin(player.rotationYaw / 180.0f * PI_f) * cos(toRadians(player.rotationPitch)) * n;
-            final double n3 =  cos(player.rotationYaw / 180.0f * PI_f) * cos(toRadians(player.rotationPitch)) * n;
-            final double n4 = -sin(player.rotationPitch / 180.0f * PI_f) * n;
+            final double n2 = -sin(toRadians(player.rotationYaw)) * cos(toRadians(player.rotationPitch)) * n;
+            final double n3 =  cos(toRadians(player.rotationYaw)) * cos(toRadians(player.rotationPitch)) * n;
+            final double n4 = -sin(toRadians(player.rotationPitch)) * n;
             for (int i = 0; i < 8; ++i) {
                 float n5 = (float) ((i & 0x1) * 2 - 1);
                 float n6 = (float) ((i >> 1 & 0x1) * 2 - 1);
@@ -201,8 +203,8 @@ public class EntityRenderer {
         } else {
             GL11.glTranslatef(0.0f, 0.0f, -0.1f);
         }
-        GL11.glRotatef(player.prevRotationPitch + (player.rotationPitch - player.prevRotationPitch) * float1, 1.0f, 0.0f, 0.0f);
-        GL11.glRotatef(player.prevRotationYaw + (player.rotationYaw - player.prevRotationYaw) * float1 + 180.0f, 0.0f, 1.0f, 0.0f);
+        GL11.glRotatef(player.prevRotationPitch + (player.rotationPitch - player.prevRotationPitch) * multiplier, 1.0f, 0.0f, 0.0f);
+        GL11.glRotatef(player.prevRotationYaw + (player.rotationYaw - player.prevRotationYaw) * multiplier + 180.0f, 0.0f, 1.0f, 0.0f);
     }
 
     private void orientCamera(final float float1, final int integer) {
