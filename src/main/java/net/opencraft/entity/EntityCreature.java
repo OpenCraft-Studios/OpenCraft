@@ -87,13 +87,16 @@ public class EntityCreature extends EntityLiving {
             final double n3 = vec3D.x - this.posX;
             final double n4 = vec3D.z - this.posZ;
             final double n5 = vec3D.y - floor_double;
-            this.rotationYaw = (float) (Math.atan2(n4, n3) * 180.0 / 3.1415927410125732) - 90.0f;
+            // TODO:                                       RADIANS_CONVERSION
+            this.rotationYaw = (float) (atan2(n4, n3) * 180.0 / 3.1415927410125732) - 90.0f;
             this.moveForward = this.moveSpeed;
             if (this.hasAttacked && this.playerToAttack != null) {
                 final double n6 = this.playerToAttack.posX - this.posX;
                 final double n7 = this.playerToAttack.posZ - this.posZ;
                 final float rotationYaw = this.rotationYaw;
-                this.rotationYaw = (float) (Math.atan2(n7, n6) * 180.0 / 3.1415927410125732) - 90.0f;
+                // TODO:                                       RADIANS_CONVERSION
+                this.rotationYaw = (float) (atan2(n7, n6) * 180.0 / 3.1415927410125732) - 90.0f;
+                // TODO:                                                    RADIANS_CONVERSION
                 final float n8 = (rotationYaw - this.rotationYaw + 90.0f) * 3.1415927f / 180.0f;
                 this.moveStrafing = -sin(n8) * this.moveForward * 1.0f;
                 this.moveForward = cos(n8) * this.moveForward * 1.0f;

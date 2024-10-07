@@ -5,10 +5,6 @@ import static org.joml.Math.*;
 
 public class Mth {
 
-	/*public static final float sqrt(final float float1) {
-		return (float) Math.sqrt((double) float1);
-	}*/
-
 	public static final float sqrt_double(final double double1) {
 		return (float) Math.sqrt(double1);
 	}

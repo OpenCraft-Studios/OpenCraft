@@ -45,7 +45,7 @@ public class TextureLavaFX extends TextureFX {
                 final float[] field_1144_j = this.field_1144_j;
                 final int n7 = i + j * 16;
                 field_1144_j[n7] -= 0.06f;
-                if (Math.random() < 0.005) {
+                if (random() < 0.005) {
                     this.field_1144_j[i + j * 16] = 1.5f;
                 }
             }

@@ -1,6 +1,8 @@
 
 package net.opencraft.entity;
 
+import static org.joml.Math.*;
+
 import java.util.List;
 
 import net.opencraft.blocks.Block;
@@ -72,17 +74,17 @@ public class EntityLiving extends Entity {
         this.attackTime = 0;
         this.unused_flag = false;
         this.field_9326_T = -1;
-        this.field_9325_U = (float) (Math.random() * 0.8999999761581421 + 0.10000000149011612);
+        this.field_9325_U = (float) (random() * 0.8999999761581421 + 0.10000000149011612);
         this.entityAge = 0;
         this.isJumping = false;
         this.defaultPitch = 0.0f;
         this.moveSpeed = 0.7f;
         this.health = 10;
         this.preventEntitySpawning = true;
-        this.field_9363_r = (float) (Math.random() + 1.0) * 0.01f;
+        this.field_9363_r = (float) (random() + 1.0) * 0.01f;
         this.setPosition(this.posX, this.posY, this.posZ);
-        this.field_9365_p = (float) Math.random() * 12398.0f;
-        this.rotationYaw = (float) (Math.random() * 3.1415927410125732 * 2.0);
+        this.field_9365_p = (float) random() * 12398.0f;
+        this.rotationYaw = (float) (random() * /* PI2 */3.1415927410125732 * 2.0);
         this.ae = 1.0f;
         this.stepHeight = 0.5f;
     }
@@ -114,7 +116,7 @@ public class EntityLiving extends Entity {
             this.livingSoundTime = -80;
             final String livingSound = this.livingSound();
             if (livingSound != null) {
-                this.world.playSoundAtEntity(this, livingSound, 1.0f, (this.rand.nextFloat() - this.rand.nextFloat()) * 0.2f + 1.0f);
+                this.world.playSound(this, livingSound, 1.0f, (this.rand.nextFloat() - this.rand.nextFloat()) * 0.2f + 1.0f);
             }
         }
         if (this.isEntityAlive() && this.isEntityInsideOpaqueBlock()) {
@@ -190,7 +192,8 @@ public class EntityLiving extends Entity {
         if (sqrt_double > 0.05f) {
             n4 = 1.0f;
             n3 = sqrt_double * 3.0f;
-            renderYawOffset = (float) Math.atan2(n2, n) * 180.0f / 3.1415927f - 90.0f;
+            // TODO:                                 RADIANS_CONVERSION
+            renderYawOffset = (float) atan2(n2, n) * 180.0f / 3.1415927f - 90.0f;
         }
         if (!this.onGround) {
             n4 = 0.0f;
@@ -282,18 +285,18 @@ public class EntityLiving extends Entity {
         if (entity != null) {
             double nya2;
             double nya3;
-            for (nya2 = entity.posX - this.posX, nya3 = entity.posZ - this.posZ; nya2 * nya2 + nya3 * nya3 < 1.0E-4; nya2 = (Math.random() - Math.random()) * 0.01, nya3 = (Math.random() - Math.random()) * 0.01) {
+            for (nya2 = entity.posX - this.posX, nya3 = entity.posZ - this.posZ; nya2 * nya2 + nya3 * nya3 < 1.0E-4; nya2 = (random() - random()) * 0.01, nya3 = (random() - random()) * 0.01) {
             }
-            this.attackedAtYaw = (float) (Math.atan2(nya3, nya2) * 180.0 / 3.1415927410125732) - this.rotationYaw;
+            this.attackedAtYaw = (float) (atan2(nya3, nya2) * 180.0 / 3.1415927410125732) - this.rotationYaw;
             this.knockBack(entity, nya1, nya2, nya3);
         } else {
-            this.attackedAtYaw = (float) ((int) (Math.random() * 2.0) * 180);
+            this.attackedAtYaw = (float) ((int) (random() * 2.0) * 180);
         }
         if (this.health <= 0) {
-            this.world.playSoundAtEntity(this, this.getDeathSound(), 1.0f, (this.rand.nextFloat() - this.rand.nextFloat()) * 0.2f + 1.0f);
+            this.world.playSound(this, this.getDeathSound(), 1.0f, (this.rand.nextFloat() - this.rand.nextFloat()) * 0.2f + 1.0f);
             this.onDeath(entity);
         } else {
-            this.world.playSoundAtEntity(this, this.getHurtSound(), 1.0f, (this.rand.nextFloat() - this.rand.nextFloat()) * 0.2f + 1.0f);
+            this.world.playSound(this, this.getHurtSound(), 1.0f, (this.rand.nextFloat() - this.rand.nextFloat()) * 0.2f + 1.0f);
         }
         return true;
     }
@@ -343,13 +346,13 @@ public class EntityLiving extends Entity {
 
     @Override
     protected void fall(final float nya1) {
-        final int nya2 = (int) Math.ceil((double) (nya1 - 3.0f));
+        final int nya2 = (int) ceil((double) (nya1 - 3.0f));
         if (nya2 > 0) {
             this.attackEntityFrom(null, nya2);
             final int blockId = this.world.getBlockId(Mth.floor_double(this.posX), Mth.floor_double(this.posY - 0.20000000298023224 - this.yOffset), Mth.floor_double(this.posZ));
             if (blockId > 0) {
                 final StepSound stepSound = Block.blocksList[blockId].stepSound;
-                this.world.playSoundAtEntity(this, stepSound.stepSoundDir2(), stepSound.soundVolume() * 0.5f, stepSound.soundPitch() * 0.75f);
+                this.world.playSound(this, stepSound.stepSoundDir2(), stepSound.soundVolume() * 0.5f, stepSound.soundPitch() * 0.75f);
             }
         }
     }

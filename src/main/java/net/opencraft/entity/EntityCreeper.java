@@ -48,7 +48,7 @@ public class EntityCreeper extends EntityMonster {
     protected void attackEntity(final Entity entity, final float xCoord) {
         if ((this.creeperState <= 0 && xCoord < 3.0f) || (this.creeperState > 0 && xCoord < 7.0f)) {
             if (this.timeSinceIgnited == 0) {
-                this.world.playSoundAtEntity((Entity) this, "random.fuse", 1.0f, 0.5f);
+                this.world.playSound((Entity) this, "random.fuse", 1.0f, 0.5f);
             }
             this.creeperState = 1;
             ++this.timeSinceIgnited;

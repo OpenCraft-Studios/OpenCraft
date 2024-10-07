@@ -1,6 +1,8 @@
 
 package net.opencraft.entity;
 
+import static org.joml.Math.*;
+
 import net.opencraft.renderer.Tessellator;
 import net.opencraft.world.World;
 
@@ -17,14 +19,14 @@ public class EntitySmokeFX extends EntityFX {
         this.motionX *= 0.10000000149011612;
         this.motionY *= 0.10000000149011612;
         this.motionZ *= 0.10000000149011612;
-        final float particleRed = (float) (Math.random() * 0.30000001192092896);
+        final float particleRed = (float) (random() * 0.30000001192092896);
         this.particleBlue = particleRed;
         this.particleGreen = particleRed;
         this.particleRed = particleRed;
         this.particleScale *= 0.75f;
         this.particleScale *= float5;
         this.smokeParticleScale = this.particleScale;
-        this.particleMaxAge = (int) (8.0 / (Math.random() * 0.8 + 0.2));
+        this.particleMaxAge = (int) (8.0 / (random() * 0.8 + 0.2));
         this.particleMaxAge *= (int) float5;
         this.noClip = false;
     }

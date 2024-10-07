@@ -1,6 +1,7 @@
 
 package net.opencraft.entity;
 
+import static org.joml.Math.*;
 import net.opencraft.nbt.NBTTagCompound;
 import net.opencraft.renderer.Tessellator;
 import net.opencraft.util.Mth;
@@ -33,10 +34,10 @@ public class EntityFX extends Entity {
         this.particleBlue = particleRed;
         this.particleGreen = particleRed;
         this.particleRed = particleRed;
-        this.motionX = double5 + (float) (Math.random() * 2.0 - 1.0) * 0.4f;
-        this.motionY = double6 + (float) (Math.random() * 2.0 - 1.0) * 0.4f;
-        this.motionZ = double7 + (float) (Math.random() * 2.0 - 1.0) * 0.4f;
-        final float n = (float) (Math.random() + Math.random() + 1.0) * 0.15f;
+        this.motionX = double5 + (float) (random() * 2.0 - 1.0) * 0.4f;
+        this.motionY = double6 + (float) (random() * 2.0 - 1.0) * 0.4f;
+        this.motionZ = double7 + (float) (random() * 2.0 - 1.0) * 0.4f;
+        final float n = (float) (random() + random() + 1.0) * 0.15f;
         final float sqrt_double = Mth.sqrt_double(this.motionX * this.motionX + this.motionY * this.motionY + this.motionZ * this.motionZ);
         this.motionX = this.motionX / sqrt_double * n * 0.4000000059604645;
         this.motionY = this.motionY / sqrt_double * n * 0.4000000059604645 + 0.10000000149011612;

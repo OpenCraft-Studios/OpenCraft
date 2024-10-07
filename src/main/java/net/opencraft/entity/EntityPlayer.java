@@ -151,11 +151,11 @@ public class EntityPlayer extends EntityLiving {
             final float n2 = this.rand.nextFloat() * 3.1415927f * 2.0f;
             n *= this.rand.nextFloat();
             final EntityItem entityItem = entity;
-            entityItem.motionX += Math.cos((double) n2) * n;
+            entityItem.motionX += cos(n2) * n;
             final EntityItem entityItem2 = entity;
             entityItem2.motionY += (this.rand.nextFloat() - this.rand.nextFloat()) * 0.1f;
             final EntityItem entityItem3 = entity;
-            entityItem3.motionZ += Math.sin((double) n2) * n;
+            entityItem3.motionZ += sin(n2) * n;
         }
         world.entityJoinedWorld(entity);
     }

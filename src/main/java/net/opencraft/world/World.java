@@ -667,7 +667,7 @@ public class World implements IBlockAccess {
         return null;
     }
 
-    public void playSoundAtEntity(final Entity entity, final String soundName, final float volume, final float pitch) {
+    public void playSound(final Entity entity, final String soundName, final float volume, final float pitch) {
         for (int i = 0; i < this.worldAccesses.size(); ++i) {
             float n = 16.0f;
             if (volume > 1.0f) {
@@ -799,7 +799,7 @@ public class World implements IBlockAccess {
             --n;
         }
         final float n2 = n;
-        n = 1.0f - (float) ((Math.cos(n * 3.141592653589793) + 1.0) / 2.0);
+        n = 1.0f - ((cos(n * PI_f) + 1.0f) * 0.5f);
         n = n2 + (n - n2) / 3.0f;
         return n;
     }

@@ -1,6 +1,8 @@
 
 package net.opencraft.renderer.texture;
 
+import static org.joml.Math.*;
+
 import net.opencraft.blocks.Block;
 
 public class TextureFlamesFX extends TextureFX {
@@ -32,7 +34,7 @@ public class TextureFlamesFX extends TextureFX {
                 }
                 this.field_1132_h[i + j * 16] = n2 / (n * 1.06f);
                 if (j >= 19) {
-                    this.field_1132_h[i + j * 16] = (float) (Math.random() * Math.random() * Math.random() * 4.0 + Math.random() * 0.10000000149011612 + 0.20000000298023224);
+                    this.field_1132_h[i + j * 16] = (float) (random() * random() * random() * 4.0 + random() * 0.10000000149011612 + 0.20000000298023224);
                 }
             }
         }

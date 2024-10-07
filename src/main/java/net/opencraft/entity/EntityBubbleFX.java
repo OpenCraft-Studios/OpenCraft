@@ -1,6 +1,8 @@
 
 package net.opencraft.entity;
 
+import static org.joml.Math.*;
+
 import net.opencraft.blocks.material.Material;
 import net.opencraft.util.Mth;
 import net.opencraft.world.World;
@@ -15,10 +17,10 @@ public class EntityBubbleFX extends EntityFX {
         this.particleTextureIndex = 32;
         this.setSize(0.02f, 0.02f);
         this.particleScale *= this.rand.nextFloat() * 0.6f + 0.2f;
-        this.motionX = double5 * 0.20000000298023224 + (float) (Math.random() * 2.0 - 1.0) * 0.02f;
-        this.motionY = double6 * 0.20000000298023224 + (float) (Math.random() * 2.0 - 1.0) * 0.02f;
-        this.motionZ = double7 * 0.20000000298023224 + (float) (Math.random() * 2.0 - 1.0) * 0.02f;
-        this.particleMaxAge = (int) (8.0 / (Math.random() * 0.8 + 0.2));
+        this.motionX = double5 * 0.20000000298023224 + (float) (random() * 2.0 - 1.0) * 0.02f;
+        this.motionY = double6 * 0.20000000298023224 + (float) (random() * 2.0 - 1.0) * 0.02f;
+        this.motionZ = double7 * 0.20000000298023224 + (float) (random() * 2.0 - 1.0) * 0.02f;
+        this.particleMaxAge = (int) (8.0 / (random() * 0.8 + 0.2));
     }
 
     @Override

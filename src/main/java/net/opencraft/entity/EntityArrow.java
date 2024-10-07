@@ -74,10 +74,11 @@ public class EntityArrow extends Entity {
         this.motionY = yCoord;
         this.motionZ = zCoord;
         final float sqrt_double2 = Mth.sqrt_double(xCoord * xCoord + zCoord * zCoord);
-        final float n = (float) (Math.atan2(xCoord, zCoord) * 180.0 / 3.1415927410125732);
+        final float n = (float) (atan2(xCoord, zCoord) * 180.0 / 3.1415927410125732);
         this.rotationYaw = n;
         this.prevRotationYaw = n;
-        final float n2 = (float) (Math.atan2(yCoord, (double) sqrt_double2) * 180.0 / 3.1415927410125732);
+        // TODO:                                                              RADIANS_CONVERSION
+        final float n2 = (float) (atan2(yCoord, (double) sqrt_double2) * 180.0 / 3.1415927410125732);
         this.rotationPitch = n2;
         this.prevRotationPitch = n2;
         this.ticksInGround = 0;
@@ -137,7 +138,7 @@ public class EntityArrow extends Entity {
         if (rayTraceBlocks != null) {
             if (rayTraceBlocks.entityHit != null) {
                 if (rayTraceBlocks.entityHit.attackEntityFrom(this.owner, 4)) {
-                    this.world.playSoundAtEntity((Entity) this, "random.drr", 1.0f, 1.2f / (this.rand.nextFloat() * 0.2f + 0.9f));
+                    this.world.playSound((Entity) this, "random.drr", 1.0f, 1.2f / (this.rand.nextFloat() * 0.2f + 0.9f));
                     this.setEntityDead();
                 } else {
                     this.motionX *= -0.10000000149011612;
@@ -159,7 +160,7 @@ public class EntityArrow extends Entity {
                 this.posX -= this.motionX / n3 * 0.05000000074505806;
                 this.posY -= this.motionY / n3 * 0.05000000074505806;
                 this.posZ -= this.motionZ / n3 * 0.05000000074505806;
-                this.world.playSoundAtEntity((Entity) this, "random.drr", 1.0f, 1.2f / (this.rand.nextFloat() * 0.2f + 0.9f));
+                this.world.playSound((Entity) this, "random.drr", 1.0f, 1.2f / (this.rand.nextFloat() * 0.2f + 0.9f));
                 this.inGround = true;
                 this.arrowShake = 7;
             }
@@ -168,8 +169,8 @@ public class EntityArrow extends Entity {
         this.posY += this.motionY;
         this.posZ += this.motionZ;
         final float n3 = Mth.sqrt_double(this.motionX * this.motionX + this.motionZ * this.motionZ);
-        this.rotationYaw = (float) (Math.atan2(this.motionX, this.motionZ) * 180.0 / 3.1415927410125732);
-        this.rotationPitch = (float) (Math.atan2(this.motionY, (double) n3) * 180.0 / 3.1415927410125732);
+        this.rotationYaw = (float) (atan2(this.motionX, this.motionZ) * 180.0 / 3.1415927410125732);
+        this.rotationPitch = (float) (atan2(this.motionY, (double) n3) * 180.0 / 3.1415927410125732);
         while (this.rotationPitch - this.prevRotationPitch < -180.0f) {
             this.prevRotationPitch -= 360.0f;
         }
@@ -221,7 +222,7 @@ public class EntityArrow extends Entity {
     @Override
     public void onCollideWithPlayer(final EntityPlayer entityPlayer) {
         if (this.inGround && this.owner == entityPlayer && this.arrowShake <= 0 && entityPlayer.inventory.addItemStackToInventory(new ItemStack(Item.arrow.shiftedIndex, 1))) {
-            this.world.playSoundAtEntity((Entity) this, "random.pop", 0.2f, ((this.rand.nextFloat() - this.rand.nextFloat()) * 0.7f + 1.0f) * 2.0f);
+            this.world.playSound((Entity) this, "random.pop", 0.2f, ((this.rand.nextFloat() - this.rand.nextFloat()) * 0.7f + 1.0f) * 2.0f);
             entityPlayer.onItemPickup(this);
             this.setEntityDead();
         }

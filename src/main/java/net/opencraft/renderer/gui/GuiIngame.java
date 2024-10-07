@@ -1,6 +1,8 @@
 
 package net.opencraft.renderer.gui;
 
+import static org.joml.Math.*;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -108,7 +110,7 @@ public class GuiIngame extends GuiElement {
                 }
             }
             if (this.mc.player.isInsideOfMaterial(Material.WATER)) {
-                for (int j = (int) Math.ceil((this.mc.player.air - 2) * 10.0 / 300.0), integer5 = (int) Math.ceil(this.mc.player.air * 10.0 / 300.0) - j, k = 0; k < j + integer5; ++k) {
+                for (int j = (int) ceil((this.mc.player.air - 2) * 10.0 / 300.0), integer5 = (int) ceil(this.mc.player.air * 10.0 / 300.0) - j, k = 0; k < j + integer5; ++k) {
                     if (k < j) {
                         this.drawTexturedModalRect(scaledWidth / 2 - 91 + k * 8, scaledHeight - 32 - 9, 16, 18, 9, 9);
                     } else {

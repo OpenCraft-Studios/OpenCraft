@@ -3,8 +3,6 @@ package net.opencraft.client.entity.models;
 
 import static org.joml.Math.*;
 
-import net.opencraft.util.Mth;
-
 public class ModelZombie extends ModelBiped {
 
     @Override

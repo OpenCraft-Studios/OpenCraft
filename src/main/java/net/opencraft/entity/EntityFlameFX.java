@@ -1,6 +1,7 @@
 
 package net.opencraft.entity;
 
+import static org.joml.Math.*;
 import net.opencraft.renderer.Tessellator;
 import net.opencraft.world.World;
 
@@ -21,7 +22,7 @@ public class EntityFlameFX extends EntityFX {
         this.particleBlue = particleRed;
         this.particleGreen = particleRed;
         this.particleRed = particleRed;
-        this.particleMaxAge = (int) (8.0 / (Math.random() * 0.8 + 0.2)) + 4;
+        this.particleMaxAge = (int) (8.0 / (random() * 0.8 + 0.2)) + 4;
         this.noClip = true;
         this.particleTextureIndex = 48;
     }

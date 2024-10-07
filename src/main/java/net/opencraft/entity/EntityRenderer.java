@@ -164,9 +164,9 @@ public class EntityRenderer {
         final float n = thePlayer.distanceWalkedModified + (thePlayer.distanceWalkedModified - thePlayer.prevDistanceWalkedModified) * float1;
         final float n2 = thePlayer.prevCameraYaw + (thePlayer.cameraYaw - thePlayer.prevCameraYaw) * float1;
         final float n3 = thePlayer.prevCameraPitch + (thePlayer.cameraPitch - thePlayer.prevCameraPitch) * float1;
-        GL11.glTranslatef(sin(n * PI_f) * n2 * 0.5f, -Math.abs(cos(n * PI_f) * n2), 0.0f);
+        GL11.glTranslatef(sin(n * PI_f) * n2 * 0.5f, -abs(cos(n * PI_f) * n2), 0.0f);
         GL11.glRotatef(sin(n * PI_f) * n2 * 3.0f, 0.0f, 0.0f, 1.0f);
-        GL11.glRotatef(Math.abs(cos(n * PI_f + 0.2f) * n2) * 5.0f, 1.0f, 0.0f, 0.0f);
+        GL11.glRotatef(abs(cos(n * PI_f + 0.2f) * n2) * 5.0f, 1.0f, 0.0f, 0.0f);
         GL11.glRotatef(n3, 1.0f, 0.0f, 0.0f);
     }
 
@@ -177,6 +177,8 @@ public class EntityRenderer {
         final double double3 = player.prevPosZ + (player.posZ - player.prevPosZ) * float1;
         if (this.mc.options.thirdPersonView) {
             double n = 4.0;
+            
+            // TODO:                                 RADIANS_CONVERSION x3
             final double n2 = -sin(player.rotationYaw / 180.0f * PI_f) * cos(toRadians(player.rotationPitch)) * n;
             final double n3 =  cos(player.rotationYaw / 180.0f * PI_f) * cos(toRadians(player.rotationPitch)) * n;
             final double n4 = -sin(player.rotationPitch / 180.0f * PI_f) * n;
@@ -225,12 +227,15 @@ public class EntityRenderer {
     }
 
     // TODO: use joml and upload a view matrix instead of using the GL11 frustum call here
+    // TODO: Ciro's going to do that ;)
     public static void gluPerspective(float fovy, float aspect, float near, float far) {
-        float bottom = -near * (float) Math.tan(Math.toRadians(fovy / 2.0));
+        float bottom = -near * (float) tan(toRadians(fovy / 2.0));
         float top = -bottom;
         float left = aspect * bottom;
         float right = -left;
         GL11.glFrustum(left, right, bottom, top, near, far);
+        
+        
     }
 
     private void setupCameraTransform(final float float1, final int integer) {

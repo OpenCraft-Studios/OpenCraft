@@ -4,7 +4,6 @@ package net.opencraft.renderer.texture;
 import static org.joml.Math.*;
 
 import net.opencraft.blocks.Block;
-import net.opencraft.util.Mth;
 
 public class TextureLavaFlowFX extends TextureFX {
 
@@ -49,7 +48,7 @@ public class TextureLavaFlowFX extends TextureFX {
                 final float[] field_1140_j = this.field_1140_j;
                 final int n7 = i + j * 16;
                 field_1140_j[n7] -= 0.06f;
-                if (Math.random() < 0.005) {
+                if (random() < 0.005) {
                     this.field_1140_j[i + j * 16] = 1.5f;
                 }
             }

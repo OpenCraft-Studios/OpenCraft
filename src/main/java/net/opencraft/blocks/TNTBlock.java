@@ -40,6 +40,6 @@ public class TNTBlock extends Block {
     public void onBlockDestroyedByPlayer(final World world, final int xCoord, final int yCoord, final int zCoord, final int nya4) {
         final EntityTNTPrimed entityTNTPrimed = new EntityTNTPrimed(world, xCoord + 0.5f, yCoord + 0.5f, zCoord + 0.5f);
         world.entityJoinedWorld(entityTNTPrimed);
-        world.playSoundAtEntity(entityTNTPrimed, "random.fuse", 1.0f, 1.0f);
+        world.playSound(entityTNTPrimed, "random.fuse", 1.0f, 1.0f);
     }
 }

@@ -1,6 +1,8 @@
 
 package net.opencraft.entity;
 
+import static org.joml.Math.*;
+
 import net.opencraft.renderer.Tessellator;
 import net.opencraft.world.World;
 
@@ -8,9 +10,9 @@ public class EntityExplodeFX extends EntityFX {
 
     public EntityExplodeFX(final World fe, final double double2, final double double3, final double double4, final double double5, final double double6, final double double7) {
         super(fe, double2, double3, double4, double5, double6, double7);
-        this.motionX = double5 + (float) (Math.random() * 2.0 - 1.0) * 0.05f;
-        this.motionY = double6 + (float) (Math.random() * 2.0 - 1.0) * 0.05f;
-        this.motionZ = double7 + (float) (Math.random() * 2.0 - 1.0) * 0.05f;
+        this.motionX = double5 + (float) (random() * 2.0 - 1.0) * 0.05f;
+        this.motionY = double6 + (float) (random() * 2.0 - 1.0) * 0.05f;
+        this.motionZ = double7 + (float) (random() * 2.0 - 1.0) * 0.05f;
         final float particleRed = this.rand.nextFloat() * 0.3f + 0.7f;
         this.particleBlue = particleRed;
         this.particleGreen = particleRed;

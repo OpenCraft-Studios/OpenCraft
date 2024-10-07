@@ -1,6 +1,8 @@
 
 package net.opencraft;
 
+import static org.joml.Math.*;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
@@ -27,7 +29,7 @@ public class Explosion {
                         double n3 = i / (n2 - 1.0f) * 2.0f - 1.0f;
                         double n4 = j / (n2 - 1.0f) * 2.0f - 1.0f;
                         double n5 = k / (n2 - 1.0f) * 2.0f - 1.0f;
-                        final double sqrt = Math.sqrt(n3 * n3 + n4 * n4 + n5 * n5);
+                        final double sqrt = sqrt(n3 * n3 + n4 * n4 + n5 * n5);
                         n3 /= sqrt;
                         n4 /= sqrt;
                         n5 /= sqrt;

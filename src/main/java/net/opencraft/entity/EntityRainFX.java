@@ -1,6 +1,8 @@
 
 package net.opencraft.entity;
 
+import static org.joml.Math.*;
+
 import net.opencraft.blocks.LiquidBlock;
 import net.opencraft.blocks.material.Material;
 import net.opencraft.renderer.Tessellator;
@@ -12,7 +14,7 @@ public class EntityRainFX extends EntityFX {
     public EntityRainFX(final World fe, final double double2, final double double3, final double double4) {
         super(fe, double2, double3, double4, 0.0, 0.0, 0.0);
         this.motionX *= 0.30000001192092896;
-        this.motionY = (float) Math.random() * 0.2f + 0.1f;
+        this.motionY = (float) random() * 0.2f + 0.1f;
         this.motionZ *= 0.30000001192092896;
         this.particleRed = 1.0f;
         this.particleGreen = 1.0f;
@@ -20,7 +22,7 @@ public class EntityRainFX extends EntityFX {
         this.particleTextureIndex = 16;
         this.setSize(0.01f, 0.01f);
         this.particleGravity = 0.06f;
-        this.particleMaxAge = (int) (8.0 / (Math.random() * 0.8 + 0.2));
+        this.particleMaxAge = (int) (8.0 / (random() * 0.8 + 0.2));
     }
 
     @Override
@@ -42,7 +44,7 @@ public class EntityRainFX extends EntityFX {
             this.setEntityDead();
         }
         if (this.onGround) {
-            if (Math.random() < 0.5) {
+            if (random() < 0.5) {
                 this.setEntityDead();
             }
             this.motionX *= 0.699999988079071;

@@ -3,8 +3,6 @@ package net.opencraft.renderer.gui;
 
 import static org.joml.Math.*;
 
-import net.opencraft.util.Mth;
-
 public class GuiIngameMenu extends GuiScreen {
 
     private int updateCounter2;

@@ -1,6 +1,8 @@
 
 package net.opencraft.entity;
 
+import static org.joml.Math.*;
+
 import java.util.List;
 
 import net.opencraft.blocks.Block;
@@ -154,12 +156,12 @@ public class EntityMinecart extends Entity implements IInventory {
             final int[][] array = EntityMinecart.MATRIX[blockMetadata];
             double n3 = array[1][0] - array[0][0];
             double n4 = array[1][2] - array[0][2];
-            final double sqrt = Math.sqrt(n3 * n3 + n4 * n4);
+            final double sqrt = sqrt(n3 * n3 + n4 * n4);
             if (this.motionX * n3 + this.motionZ * n4 < 0.0) {
                 n3 = -n3;
                 n4 = -n4;
             }
-            double n5 = Math.sqrt(this.motionX * this.motionX + this.motionZ * this.motionZ);
+            double n5 = sqrt(this.motionX * this.motionX + this.motionZ * this.motionZ);
             this.motionX = n5 * n3 / sqrt;
             this.motionZ = n5 * n4 / sqrt;
             double n6 = 0.0;
@@ -219,7 +221,7 @@ public class EntityMinecart extends Entity implements IInventory {
             final Vec3 pos2 = this.getPos(this.posX, this.posY, this.posZ);
             if (pos2 != null && pos != null) {
                 final double n11 = (pos.y - pos2.y) * 0.05;
-                n5 = Math.sqrt(this.motionX * this.motionX + this.motionZ * this.motionZ);
+                n5 = sqrt(this.motionX * this.motionX + this.motionZ * this.motionZ);
                 if (n5 > 0.0) {
                     this.motionX = this.motionX / n5 * (n5 + n11);
                     this.motionZ = this.motionZ / n5 * (n5 + n11);
@@ -229,7 +231,7 @@ public class EntityMinecart extends Entity implements IInventory {
             final int floor_double4 = Mth.floor_double(this.posX);
             final int floor_double5 = Mth.floor_double(this.posZ);
             if (floor_double4 != floor_double || floor_double5 != floor_double3) {
-                n5 = Math.sqrt(this.motionX * this.motionX + this.motionZ * this.motionZ);
+                n5 = sqrt(this.motionX * this.motionX + this.motionZ * this.motionZ);
                 this.motionX = n5 * (floor_double4 - floor_double);
                 this.motionZ = n5 * (floor_double5 - floor_double3);
             }
@@ -262,7 +264,7 @@ public class EntityMinecart extends Entity implements IInventory {
         final double n12 = this.prevPosX - this.posX;
         final double n13 = this.prevPosZ - this.posZ;
         if (n12 * n12 + n13 * n13 > 0.001) {
-            this.rotationYaw = (float) (Math.atan2(n13, n12) * 180.0 / 3.141592653589793);
+            this.rotationYaw = (float) (atan2(n13, n12) * 180.0 / 3.141592653589793);
             if (this.isInReverse) {
                 this.rotationYaw += 180.0f;
             }
@@ -308,7 +310,7 @@ public class EntityMinecart extends Entity implements IInventory {
             final int[][] array = EntityMinecart.MATRIX[blockMetadata];
             double n = array[1][0] - array[0][0];
             double n2 = array[1][2] - array[0][2];
-            final double sqrt = Math.sqrt(n * n + n2 * n2);
+            final double sqrt = sqrt(n * n + n2 * n2);
             n /= sqrt;
             n2 /= sqrt;
             double1 += n * double4;

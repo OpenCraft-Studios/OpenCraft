@@ -186,7 +186,7 @@ public abstract class Entity {
                 if (volume > 1.0f) {
                     volume = 1.0f;
                 }
-                this.world.playSoundAtEntity(this, "random.splash", volume, 1.0f + (this.rand.nextFloat() - this.rand.nextFloat()) * 0.4f);
+                this.world.playSound(this, "random.splash", volume, 1.0f + (this.rand.nextFloat() - this.rand.nextFloat()) * 0.4f);
                 final float n = (float) Mth.floor_double(this.boundingBox.minY);
                 for (int n2 = 0; n2 < 1.0f + this.width * 20.0f; ++n2) {
                     final float n3 = (this.rand.nextFloat() * 2.0f - 1.0f) * this.width;
@@ -342,7 +342,7 @@ public abstract class Entity {
                 ++this.nextStepDistance;
                 final StepSound stepSound = Block.blocksList[k].stepSound;
                 if (!Block.blocksList[k].blockMaterial.isLiquid()) {
-                    this.world.playSoundAtEntity(this, stepSound.stepSoundDir2(), stepSound.soundVolume() * 0.15f, stepSound.soundPitch());
+                    this.world.playSound(this, stepSound.stepSoundDir2(), stepSound.soundVolume() * 0.15f, stepSound.soundPitch());
                 }
                 Block.blocksList[k].onEntityWalking(this.world, floor_double, floor_double2, floor_double3, this);
             }
@@ -361,7 +361,7 @@ public abstract class Entity {
             this.fire = -this.fireResistance;
         }
         if (handleWaterMovement && this.fire > 0) {
-            this.world.playSoundAtEntity(this, "random.fizz", 0.7f, 1.6f + (this.rand.nextFloat() - this.rand.nextFloat()) * 0.4f);
+            this.world.playSound(this, "random.fizz", 0.7f, 1.6f + (this.rand.nextFloat() - this.rand.nextFloat()) * 0.4f);
             this.fire = -this.fireResistance;
         }
     }

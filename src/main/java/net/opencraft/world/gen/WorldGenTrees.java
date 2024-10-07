@@ -1,6 +1,8 @@
 
 package net.opencraft.world.gen;
 
+import static org.joml.Math.*;
+
 import java.util.Random;
 
 import net.opencraft.blocks.Block;
@@ -50,7 +52,7 @@ public class WorldGenTrees extends WorldGenerator {
                 final int n3 = k - integer3;
                 for (int l = integer5 - zCoord; l <= integer5 + zCoord; ++l) {
                     final int n4 = l - integer5;
-                    if (Math.abs(n3) == zCoord && Math.abs(n4) == zCoord) {
+                    if (abs(n3) == zCoord && abs(n4) == zCoord) {
                         if (random.nextInt(2) == 0) {
                             continue;
                         }
