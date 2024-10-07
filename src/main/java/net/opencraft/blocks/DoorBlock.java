@@ -1,6 +1,8 @@
 
 package net.opencraft.blocks;
 
+import static org.joml.Math.*;
+
 import java.util.Random;
 
 import net.opencraft.blocks.material.Material;
@@ -107,7 +109,7 @@ public class DoorBlock extends Block {
         }
         world.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, blockMetadata ^ 0x4);
         world.markBlocksDirty(xCoord, yCoord - 1, zCoord, xCoord, yCoord, zCoord);
-        if (Math.random() < 0.5) {
+        if (random() < 0.5) {
             world.playSoundEffect(xCoord + 0.5, yCoord + 0.5, zCoord + 0.5, "random.door_open", 1.0f, world.rand.nextFloat() * 0.1f + 0.9f);
         } else {
             world.playSoundEffect(xCoord + 0.5, yCoord + 0.5, zCoord + 0.5, "random.door_close", 1.0f, world.rand.nextFloat() * 0.1f + 0.9f);

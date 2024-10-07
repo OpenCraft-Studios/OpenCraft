@@ -1,6 +1,8 @@
 
 package net.opencraft.blocks;
 
+import static org.joml.Math.*;
+
 import java.util.Random;
 
 import net.opencraft.blocks.material.Material;
@@ -252,7 +254,7 @@ public abstract class LiquidBlock extends Block {
     protected void triggerLavaMixEffects(final World world, final int xCoord, final int yCoord, final int zCoord) {
         world.playSoundEffect((xCoord + 0.5f), (yCoord + 0.5f), (zCoord + 0.5f), "random.fizz", 0.5f, 2.6f + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.8f);
         for (int i = 0; i < 8; ++i) {
-            world.spawnParticle("largesmoke", xCoord + Math.random(), yCoord + 1.2, zCoord + Math.random(), 0.0, 0.0, 0.0);
+            world.spawnParticle("largesmoke", xCoord + random(), yCoord + 1.2, zCoord + random(), 0.0, 0.0, 0.0);
         }
     }
 
@@ -274,6 +276,6 @@ public abstract class LiquidBlock extends Block {
         if (vec3D.x == 0.0 && vec3D.z == 0.0) {
             return -1000.0;
         }
-        return Math.atan2(vec3D.z, vec3D.x) - 1.5707963267948966;
+        return atan2(vec3D.z, vec3D.x) - 1.5707963267948966;
     }
 }
