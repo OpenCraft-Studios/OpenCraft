@@ -174,6 +174,9 @@ public class SoundManager {
     }
 
     public void stopSound(String var1) {
+    	if (sndSystem == null)
+    		return; // TODO: Temporary fix to OpenCraft problem
+    	
         this.sndSystem.stop(var1);
     }
 
