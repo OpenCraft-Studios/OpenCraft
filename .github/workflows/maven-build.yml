@@ -9,6 +9,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      actions: write
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v4
@@ -23,7 +26,8 @@ jobs:
           check-latest: false
       - name: Package client jar
         id: package
-        run: mvn -B clean package --file pom.xml --no-transfer-progress
+        # assume windows x64 as the target platform
+        run: mvn -B clean package -P=-lwjgl-natives-linux-amd64,lwjgl-natives-windows-amd64 --file pom.xml --no-transfer-progress
       - name: Publish client artifact
         uses: ./.github/actions/upload_build
         if: ${{ always() && steps.package.outcome == 'success' }}
@@ -40,3 +44,7 @@ jobs:
           files: |
             target/opencraft.jar
             src/scripts/opencraft-windows.bat
+      - name: Move auto-release tag to current commit
+        uses: EndBug/latest-tag@latest
+        with:
+          ref: auto-release
