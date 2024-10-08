@@ -8,8 +8,10 @@ import java.nio.FloatBuffer;
 import java.util.List;
 import java.util.Random;
 
+import org.joml.Matrix4f;
 import org.lwjgl.BufferUtils;
-import org.lwjgl.opengl.*;
+import org.lwjgl.opengl.GL;
+import org.lwjgl.opengl.GL11;
 
 import net.opencraft.OpenCraft;
 import net.opencraft.ScaledResolution;
@@ -228,16 +230,18 @@ public class EntityRenderer {
         this.h(float1);
     }
 
-    // TODO: use joml and upload a view matrix instead of using the GL11 frustum call here
-    // TODO: Ciro's going to do that ;)
     public static void gluPerspective(float fovy, float aspect, float near, float far) {
-        float bottom = -near * (float) tan(toRadians(fovy / 2.0));
-        float top = -bottom;
-        float left = aspect * bottom;
-        float right = -left;
-        GL11.glFrustum(left, right, bottom, top, near, far);
+        // Create JOML Matrix
+    	Matrix4f objMatrix = new Matrix4f()
+    			// Use perspective
+    			.perspective(toRadians(fovy), aspect, near, far);
+    	
+    	// Save in array
+        float[] arrMatrix = new float[16];
+        objMatrix.get(arrMatrix);
         
-        
+        // Send array to OpenGL
+        GL11.glMultMatrixf(arrMatrix);
     }
 
     private void setupCameraTransform(final float float1, final int integer) {
