@@ -39,11 +39,11 @@ public abstract class GuiScreen extends GuiElement {
         }
     }
 
-    protected void drawSlotInventory(final int integer1, final int integer2, final int integer3) {
-        if (integer3 == 0) {
+    protected void onMouseButtonPressed(final int x, final int y, final int mouseButtonNumber) {
+        if (mouseButtonNumber == MouseInput.ButtonEvent.BUTTON_1_PRESS.buttonNumber()) {
 			for(GuiElement guiElement : this.controlList) {
 				final GuiButton iq = (GuiButton) guiElement;
-				if(iq.mousePressed(integer1, integer2)) {
+				if(iq.mousePressed(x, y)) {
 					this.id.sndManager.playSoundFX("random.click", 1.0f, 1.0f);
 					this.actionPerformed(iq);
 				}
@@ -51,12 +51,13 @@ public abstract class GuiScreen extends GuiElement {
         }
     }
 
-    protected void b(final int integer1, final int integer2, final int integer3) {
-        if (integer3 == 0) {
-            for (int i = 0; i < this.controlList.size(); ++i) {
-                final GuiButton iq = (GuiButton) this.controlList.get(i);
-                iq.mouseReleased(integer1, integer2);
-            }
+    protected void onMouseButtonReleased(final int x, final int y, final int button) {
+        if(button == MouseInput.ButtonEvent.BUTTON_1_RELEASE.buttonNumber()) {
+			for(GuiElement guiElement : this.controlList) {
+                if(guiElement instanceof GuiButton guiButton) {
+                    guiButton.mouseReleased(x, y);
+                }
+			}
         }
     }
 
@@ -78,8 +79,6 @@ public abstract class GuiScreen extends GuiElement {
         for(MouseInput.ButtonEvent event : this.id.mouse.buttons.events) {
             this.handleMouseEvent(event);
         }
-        // TODO plz fix
-        // TODO: What should be fixed here?
         for(int key : this.id.keyboard.pressedKeys) {
             if(glfwGetKeyName(key, glfwGetKeyScancode(key)) != null)
                 this.handleKeyboardInput(glfwGetKeyName(key, glfwGetKeyScancode(key)).charAt(0), key);
@@ -87,12 +86,12 @@ public abstract class GuiScreen extends GuiElement {
     }
 
     public void handleMouseEvent(MouseInput.ButtonEvent event) {
-        final int n = ((int) id.mouse.position.x) * this.width / this.id.width;
-        final int n2 = this.height - ((int) id.mouse.position.y) * this.height / this.id.height - 1;
+        final int x = ((int) id.mouse.position.x) * this.width / this.id.width;
+        final int y = this.height - ((int) id.mouse.position.y) * this.height / this.id.height - 1;
         if (event.isPress()) {
-            this.drawSlotInventory(n, n2, event.buttonNumber());
+            this.onMouseButtonPressed(x, y, event.buttonNumber());
         } else {
-            this.b(n, n2, event.buttonNumber());
+            this.onMouseButtonReleased(x, y, event.buttonNumber());
         }
     }
 

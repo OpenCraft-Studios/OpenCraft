@@ -257,8 +257,8 @@ public class OpenCraft implements Runnable {
 	}
 
 	public void displayGuiScreen(GuiScreen screen) {
-		if (currentScreen instanceof GuiEmptyScreen)
-			return;
+		 // if (currentScreen instanceof GuiEmptyScreen)
+		//	return;
 
 		if (currentScreen != null)
 			currentScreen.onGuiClosed();
@@ -625,32 +625,32 @@ public class OpenCraft implements Runnable {
 					currentScreen.handleMouseEvent(event);
 				}
 			}
+			for(Integer key : keyboard.pressedKeys) {
+				if(key == GLFW_KEY_ESCAPE) {
+					displayInGameMenu();
+				}
 
-			if(currentScreen == null) {
-				for(Integer key : keyboard.pressedKeys) {
-						if(key == GLFW_KEY_ESCAPE) {
-							displayInGameMenu();
-						}
+				if(key == GLFW_KEY_F5) {
+					options.thirdPersonView = !options.thirdPersonView;
+					isRaining = !isRaining;
+				}
 
-						if(key == GLFW_KEY_F5) {
-							options.thirdPersonView = !options.thirdPersonView;
-							isRaining = !isRaining;
-						}
+				if(key == options.keyBindings.get(GameSettings.PlayerInput.INVENTORY)) {
+					if(currentScreen instanceof GuiInventory)
+						displayGuiScreen(null);
+					else if(currentScreen == null)
+						displayGuiScreen(new GuiInventory(player.inventory));
+				}
 
-						if(key == options.keyBindings.get(GameSettings.PlayerInput.INVENTORY))
-							displayGuiScreen(new GuiInventory(player.inventory));
+				if(key == options.keyBindings.get(GameSettings.PlayerInput.DROP))
+					player.dropPlayerItemWithRandomChoice(player.inventory.decrStackSize(player.inventory.currentItem, 1), false);
 
-						if(key == options.keyBindings.get(GameSettings.PlayerInput.DROP))
-							player.dropPlayerItemWithRandomChoice(player.inventory.decrStackSize(player.inventory.currentItem, 1), false);
-
-						for(int i = 0; i < 9; ++i) {
-							if(key == GLFW_KEY_0 + i) {
-								player.inventory.currentItem = i;
-							}
-						}
+				for(int i = 0; i < 9; ++i) {
+					if(key == GLFW_KEY_0 + i) {
+						player.inventory.currentItem = i;
+					}
 				}
 			}
-
 			if (currentScreen == null) {
 				if (mouse.isButton1Pressed() && ticksRan - mouseTicksRan >= timer.tps / 4.0f
 						&& inGameHasFocus) {
@@ -753,6 +753,7 @@ public class OpenCraft implements Runnable {
 			if (fe.isNewWorld) {
 				fe.saveWorldIndirectly(loadingScreen);
 			}
+			displayGuiScreen(new GuiInventory(player.inventory));
 		}
 		System.gc();
 		systemTime = 0L;
