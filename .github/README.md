@@ -74,22 +74,7 @@ I hope that you can be part of that community forking the repository or simply, 
 ---
 
 ## ☕ Download
-[Windows Installer](https://github.com/OpenCraft-Studios/OpenCraft/releases/download/auto-release/opencraft-windows.bat)
-
-[Latest .jar](https://github.com/OpenCraft-Studios/OpenCraft/releases/download/auto-release/opencraft.jar)
-
-<div align="right">[ <a href="#-getting-started">↑ Back to top ↑</a> ]</div>
-
----
-
-## 🚧 Build
-
-```bash
-git clone https://github.com/OpenCraft-Studios/OpenCraft
-cd OpenCraft
-mvn clean package
-java -jar target/opencraft.jar
-```
+Launcher is work in progress!
 
 <div align="right">[ <a href="#-getting-started">↑ Back to top ↑</a> ]</div>
 
