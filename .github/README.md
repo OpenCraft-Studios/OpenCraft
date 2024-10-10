@@ -27,7 +27,7 @@
       Report Bugs
     </a>
     ·
-    <a href="#-downloading">
+    <a href="#-download">
       Download
     </a>
     ·
@@ -73,7 +73,7 @@ I hope that you can be part of that community forking the repository or simply, 
 
 ---
 
-## ☕ Downloads
+## ☕ Download
 [Windows Installer](https://github.com/OpenCraft-Studios/OpenCraft/releases/download/auto-release/opencraft-windows.bat)
 
 [Latest .jar](https://github.com/OpenCraft-Studios/OpenCraft/releases/download/auto-release/opencraft.jar)
@@ -82,7 +82,7 @@ I hope that you can be part of that community forking the repository or simply, 
 
 ---
 
-## 🚧 Building
+## 🚧 Build
 
 ```bash
 git clone https://github.com/OpenCraft-Studios/OpenCraft
