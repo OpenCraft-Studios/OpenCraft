@@ -27,7 +27,7 @@ jobs:
       - name: Package client jar
         id: package
         # assume windows x64 as the target platform
-        run: mvn -B clean package -P=-lwjgl-natives-linux-amd64,lwjgl-natives-windows-amd64 --file pom.xml --no-transfer-progress
+        run: mvn -B clean package -Dspotless.check.skip -P=-lwjgl-natives-linux-amd64,lwjgl-natives-windows-amd64 --file pom.xml --no-transfer-progress
       - name: Publish client artifact
         uses: ./.github/actions/upload_build
         if: ${{ always() && steps.package.outcome == 'success' }}
