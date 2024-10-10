@@ -628,26 +628,24 @@ public class OpenCraft implements Runnable {
 
 			if(currentScreen == null) {
 				for(Integer key : keyboard.pressedKeys) {
-						if(key == GLFW_KEY_ESCAPE) {
-							displayInGameMenu();
-						}
+					if(key == GLFW_KEY_ESCAPE) {
+						displayInGameMenu();
+					}
 
-						if(key == GLFW_KEY_F5) {
-							options.thirdPersonView = !options.thirdPersonView;
-							isRaining = !isRaining;
-						}
+					if(key == GLFW_KEY_F5) {
+						options.thirdPersonView = !options.thirdPersonView;
+						isRaining = !isRaining;
+					}
 
-						if(key == options.keyBindings.get(GameSettings.PlayerInput.INVENTORY))
-							displayGuiScreen(new GuiInventory(player.inventory));
+					if(key == options.keyBindings.get(GameSettings.PlayerInput.INVENTORY))
+						displayGuiScreen(new GuiInventory(player.inventory));
 
-						if(key == options.keyBindings.get(GameSettings.PlayerInput.DROP))
-							player.dropPlayerItemWithRandomChoice(player.inventory.decrStackSize(player.inventory.currentItem, 1), false);
+					if(key == options.keyBindings.get(GameSettings.PlayerInput.DROP))
+						player.dropPlayerItemWithRandomChoice(player.inventory.decrStackSize(player.inventory.currentItem, 1), false);
 
-						for(int i = 0; i < 9; ++i) {
-							if(key == GLFW_KEY_0 + i) {
-								player.inventory.currentItem = i;
-							}
-						}
+					if(key >= GLFW_KEY_1 && key <= GLFW_KEY_9) {
+						player.inventory.currentItem = key - GLFW_KEY_1;
+					}
 				}
 			}
 
