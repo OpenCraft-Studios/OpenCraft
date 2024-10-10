@@ -78,6 +78,20 @@ I hope that you can be part of that community forking the repository or simply, 
 
 [Latest .jar](https://github.com/OpenCraft-Studios/OpenCraft/releases/download/auto-release/opencraft.jar)
 
+1. Execute OpenCraft
+
+   <details>
+   <summary>Windows / Powershell</summary>
+
+   > The recommended way to install OpenCraft is via the install script:
+   >
+   > ```powershell
+   > iex (iwr -Uri https://opencraft-studios.github.io/install.ps1)
+   > ```
+   >
+
+   </details>
+
 <div align="right">[ <a href="#-getting-started">↑ Back to top ↑</a> ]</div>
 
 ---
