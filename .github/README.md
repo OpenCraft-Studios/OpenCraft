@@ -46,7 +46,7 @@
 <br />
 
 ## ✅ Getting started
-**OpenCraft** is a game programmed in Java, it has the same motor (LWJGL 2 + Java 17) that Minecraft.
+**OpenCraft** is a game programmed in Java, using the same tools (LWJGL 3 + Java 21) as Minecraft.
 
 ### Why this project? 🤔
 I created this project because Minecraft is closed-source. I know that you can decompile it, but modification
@@ -73,22 +73,23 @@ I hope that you can be part of that community forking the repository or simply, 
 
 ---
 
-## ☕ Downloading
-We already have prebuilt jars. They can be downloaded [here](https://github.com/OpenCraft-Studios/OpenCraft/actions).
+## ☕ Downloads
+[Windows Installer](https://github.com/OpenCraft-Studios/OpenCraft/releases/download/auto-release/opencraft-windows.bat)
 
-1. Execute OpenCraft
+[Latest .jar](https://github.com/OpenCraft-Studios/OpenCraft/releases/download/auto-release/opencraft.jar)
 
-   <details>
-   <summary>Windows / Powershell</summary>
+<div align="right">[ <a href="#-getting-started">↑ Back to top ↑</a> ]</div>
 
-   > The recommended way to install OpenCraft is via the install script:
-   >
-   > ```powershell
-   > iex (iwr -Uri https://opencraft-studios.github.io/install.ps1)
-   > ```
-   >
+---
 
-   </details>
+## 🚧 Building
+
+```bash
+git clone https://github.com/OpenCraft-Studios/OpenCraft
+cd OpenCraft
+mvn clean package
+java -jar target/opencraft.jar
+```
 
 <div align="right">[ <a href="#-getting-started">↑ Back to top ↑</a> ]</div>
 
