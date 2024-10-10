@@ -37,17 +37,16 @@ public class Main {
 		final File root;
 		final File jarFile;
 		URL classURL = Main.class.getResource(classPath);
-		if (classURL.getProtocol().equals("jar")) {
+		if(classURL.getProtocol().equals("jar")) {
 			JarURLConnection jarConn = null;
 			try {
-				jarConn = (JarURLConnection)classURL.openConnection();
+				jarConn = (JarURLConnection) classURL.openConnection();
 			} catch(IOException e) {
 				throw new RuntimeException(e);
 			}
 			jarFile = new File(jarConn.getJarFileURL().getFile());
 			root = jarFile.getParentFile();
-		}
-		else if (classURL.getProtocol().equals("file")) {
+		} else if(classURL.getProtocol().equals("file")) {
 			root = new File(classURL.getFile().replace(classPath, ""));
 			jarFile = null;
 		} else {
@@ -111,7 +110,7 @@ public class Main {
 		List<URL> resources = new ArrayList<>();
 		while(true) {
 			ZipEntry entry = zip.getNextEntry();
-			if (entry == null) {
+			if(entry == null) {
 				break;
 			}
 			final String name = entry.getName();

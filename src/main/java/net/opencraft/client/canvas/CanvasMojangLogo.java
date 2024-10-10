@@ -13,20 +13,21 @@ import net.opencraft.PanelCrashReport;
 
 class CanvasMojangLogo extends Canvas {
 
-    private BufferedImage logo;
+	private BufferedImage logo;
 
-    public CanvasMojangLogo() {
-        try {
-            this.logo = ImageIO.read(PanelCrashReport.class.getResource("/assets/gui/logo.png"));
-        } catch (IOException ex) {
-        }
-        final int n = 100;
-        this.setPreferredSize(new Dimension(n, n));
-        this.setMinimumSize(new Dimension(n, n));
-    }
+	public CanvasMojangLogo() {
+		try {
+			this.logo = ImageIO.read(PanelCrashReport.class.getResource("/assets/gui/logo.png"));
+		} catch(IOException ex) {
+		}
+		final int n = 100;
+		this.setPreferredSize(new Dimension(n, n));
+		this.setMinimumSize(new Dimension(n, n));
+	}
 
-    public void paint(final Graphics graphics) {
-        super.paint(graphics);
-        graphics.drawImage((Image) this.logo, this.getWidth() / 2 - this.logo.getWidth() / 2, 32, (ImageObserver) null);
-    }
+	public void paint(final Graphics graphics) {
+		super.paint(graphics);
+		graphics.drawImage((Image) this.logo, this.getWidth() / 2 - this.logo.getWidth() / 2, 32, (ImageObserver) null);
+	}
+
 }

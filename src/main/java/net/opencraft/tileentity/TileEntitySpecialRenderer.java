@@ -6,20 +6,21 @@ import net.opencraft.renderer.font.FontRenderer;
 
 public abstract class TileEntitySpecialRenderer<T extends TileEntity> {
 
-    protected TileEntityRenderer tileEntityRenderer;
+	protected TileEntityRenderer tileEntityRenderer;
 
-    public abstract void renderTileEntityMobSpawner(final T bk, final double double2, final double double3, final double double4, final float float5);
+	public abstract void renderTileEntityMobSpawner(final T bk, final double double2, final double double3, final double double4, final float float5);
 
-    protected void bindTextureByName(final String string) {
-        final Renderer renderEngine = this.tileEntityRenderer.renderEngine;
-        renderEngine.bindTexture(renderEngine.loadTexture(string));
-    }
+	protected void bindTextureByName(final String string) {
+		final Renderer renderEngine = this.tileEntityRenderer.renderEngine;
+		renderEngine.bindTexture(renderEngine.loadTexture(string));
+	}
 
-    public void setTileEntityRenderer(final TileEntityRenderer js) {
-        this.tileEntityRenderer = js;
-    }
+	public void setTileEntityRenderer(final TileEntityRenderer js) {
+		this.tileEntityRenderer = js;
+	}
 
-    public FontRenderer getFontRenderer() {
-        return this.tileEntityRenderer.getFontRenderer();
-    }
+	public FontRenderer getFontRenderer() {
+		return this.tileEntityRenderer.getFontRenderer();
+	}
+
 }

@@ -7,8 +7,8 @@ import java.awt.image.DataBufferInt;
 
 public class ImageProvider {
 
-    public BufferedImage processedImage(final BufferedImage bufferedImage) {
-        return null;
-    }
+	public BufferedImage processedImage(final BufferedImage bufferedImage) {
+		return null;
+	}
 
 }

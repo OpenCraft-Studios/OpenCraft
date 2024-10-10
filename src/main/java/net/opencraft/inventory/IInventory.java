@@ -5,17 +5,18 @@ import net.opencraft.item.ItemStack;
 
 public interface IInventory {
 
-    int getSizeInventory();
+	int getSizeInventory();
 
-    ItemStack getStackInSlot(final int integer);
+	ItemStack getStackInSlot(final int integer);
 
-    ItemStack decrStackSize(final int integer1, final int integer2);
+	ItemStack decrStackSize(final int integer1, final int integer2);
 
-    void setInventorySlotContents(final int integer, final ItemStack hw);
+	void setInventorySlotContents(final int integer, final ItemStack hw);
 
-    String getInvName();
+	String getInvName();
 
-    int getInventoryStackLimit();
+	int getInventoryStackLimit();
 
-    void onInventoryChanged();
+	void onInventoryChanged();
+
 }

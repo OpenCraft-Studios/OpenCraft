@@ -33,6 +33,7 @@ public class MouseInput {
 	}
 
 	public enum ButtonEvent {
+
 		BUTTON_1_PRESS,
 		BUTTON_1_RELEASE,
 		BUTTON_2_PRESS,
@@ -52,25 +53,26 @@ public class MouseInput {
 				case BUTTON_2_PRESS, BUTTON_2_RELEASE -> GLFW.GLFW_MOUSE_BUTTON_2;
 			};
 		}
+
 	}
 
 	public static final class MouseButtonCallback extends GLFWMouseButtonCallback {
+
 		public Set<Integer> pressedButtons = new HashSet<>();
 		public Set<ButtonEvent> events = new HashSet<>();
 		public int mods;
 
-
 		@Override
 		public void invoke(long window, int button, int action, int mods) {
 			this.mods = mods;
-			if (action == GLFW.GLFW_PRESS) {
+			if(action == GLFW.GLFW_PRESS) {
 				pressedButtons.add(button);
 				if(button == GLFW.GLFW_MOUSE_BUTTON_1) {
 					events.add(ButtonEvent.BUTTON_1_PRESS);
 				} else if(button == GLFW.GLFW_MOUSE_BUTTON_2) {
 					events.add(ButtonEvent.BUTTON_2_PRESS);
 				}
-			} else if (action == GLFW.GLFW_RELEASE) {
+			} else if(action == GLFW.GLFW_RELEASE) {
 				pressedButtons.remove(button);
 				if(button == GLFW.GLFW_MOUSE_BUTTON_1) {
 					events.add(ButtonEvent.BUTTON_1_RELEASE);
@@ -79,9 +81,11 @@ public class MouseInput {
 				}
 			}
 		}
+
 	}
 
 	public static final class CursorPosCallback extends GLFWCursorPosCallback {
+
 		public double x;
 		public double y;
 
@@ -111,6 +115,7 @@ public class MouseInput {
 	}
 
 	public static final class ScrollCallback extends GLFWScrollCallback {
+
 		public double x;
 		public double y;
 
@@ -119,6 +124,7 @@ public class MouseInput {
 			x = xoffset;
 			y = yoffset;
 		}
+
 	}
 
 }

@@ -23,11 +23,11 @@ public class Mth {
 	}
 
 	public static int roundUp(int number, int interval) {
-	    if (interval == 0)
-	        return 0;
-	    
-	    int mod = Math.floorMod(number, interval);
-	    return mod == 0 ? number : number + interval - mod;
+		if(interval == 0)
+			return 0;
+
+		int mod = Math.floorMod(number, interval);
+		return mod == 0 ? number : number + interval - mod;
 	}
 
 }

@@ -7,31 +7,32 @@ import java.io.IOException;
 
 public class NBTTagShort extends NBTBase {
 
-    public short shortValue;
+	public short shortValue;
 
-    public NBTTagShort() {
-    }
+	public NBTTagShort() {
+	}
 
-    public NBTTagShort(final short short1) {
-        this.shortValue = short1;
-    }
+	public NBTTagShort(final short short1) {
+		this.shortValue = short1;
+	}
 
-    @Override
-    public void writeTagContents(final DataOutput dataOutput) throws IOException {
-        dataOutput.writeShort((int) this.shortValue);
-    }
+	@Override
+	public void writeTagContents(final DataOutput dataOutput) throws IOException {
+		dataOutput.writeShort((int) this.shortValue);
+	}
 
-    @Override
-    public void readTagContents(final DataInput dataInput) throws IOException {
-        this.shortValue = dataInput.readShort();
-    }
+	@Override
+	public void readTagContents(final DataInput dataInput) throws IOException {
+		this.shortValue = dataInput.readShort();
+	}
 
-    @Override
-    public byte getType() {
-        return 2;
-    }
+	@Override
+	public byte getType() {
+		return 2;
+	}
 
-    public String toString() {
-        return new StringBuilder().append("").append((int) this.shortValue).toString();
-    }
+	public String toString() {
+		return new StringBuilder().append("").append((int) this.shortValue).toString();
+	}
+
 }

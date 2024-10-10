@@ -67,7 +67,7 @@ public class DownloadResourcesJob implements Job {
 			zip = new ZipInputStream(resourceURL.openStream());
 			while(true) {
 				ZipEntry e = zip.getNextEntry();
-				if (e == null) {
+				if(e == null) {
 					break;
 				}
 				String name = e.getName();
@@ -88,15 +88,19 @@ public class DownloadResourcesJob implements Job {
 	@Override
 	public JobMonitor monitor() {
 		return new JobMonitor() {
+
 			public boolean isFinished() {
 				return !thread.isAlive();
 			}
+
 			public boolean isCancelled() {
 				return cancelled;
 			}
+
 			public boolean endedWithErrors() {
 				return errors;
 			}
+
 		};
 	}
 

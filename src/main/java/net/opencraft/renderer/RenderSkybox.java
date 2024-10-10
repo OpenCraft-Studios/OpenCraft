@@ -16,4 +16,5 @@ public class RenderSkybox {
 		time += partialTicks;
 		renderer.render(oc, sin(time * 0.001F) * 5F + 25F, time * -0.1F);
 	}
+
 }

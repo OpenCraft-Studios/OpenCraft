@@ -7,20 +7,21 @@ import java.io.IOException;
 
 public class NBTTagEnd extends NBTBase {
 
-    @Override
-    public void readTagContents(final DataInput dataInput) throws IOException {
-    }
+	@Override
+	public void readTagContents(final DataInput dataInput) throws IOException {
+	}
 
-    @Override
-    public void writeTagContents(final DataOutput dataOutput) throws IOException {
-    }
+	@Override
+	public void writeTagContents(final DataOutput dataOutput) throws IOException {
+	}
 
-    @Override
-    public byte getType() {
-        return 0;
-    }
+	@Override
+	public byte getType() {
+		return 0;
+	}
 
-    public String toString() {
-        return "END";
-    }
+	public String toString() {
+		return "END";
+	}
+
 }
