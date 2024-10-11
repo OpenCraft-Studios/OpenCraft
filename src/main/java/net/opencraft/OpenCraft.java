@@ -5,13 +5,16 @@ import static org.lwjgl.opengl.GL11.*;
 
 import java.io.File;
 
-import net.opencraft.client.Main;
+import javax.annotation.Nonnull;
+
 import org.lwjgl.glfw.GLFWFramebufferSizeCallback;
 import org.lwjgl.glfw.GLFWWindowFocusCallback;
-import org.lwjgl.opengl.*;
+import org.lwjgl.opengl.GL;
+import org.lwjgl.opengl.GLUtil;
 
 import net.opencraft.blocks.Block;
 import net.opencraft.blocks.SandBlock;
+import net.opencraft.client.Main;
 import net.opencraft.client.config.GameSettings;
 import net.opencraft.client.entity.*;
 import net.opencraft.client.entity.models.ModelBiped;
@@ -28,7 +31,8 @@ import net.opencraft.renderer.font.FontRenderer;
 import net.opencraft.renderer.gui.*;
 import net.opencraft.renderer.texture.*;
 import net.opencraft.tests.DownloadResourcesJob;
-import net.opencraft.util.*;
+import net.opencraft.util.Mth;
+import net.opencraft.util.UnexpectedThrowable;
 import net.opencraft.world.World;
 import net.opencraft.world.WorldRenderer;
 
@@ -36,6 +40,7 @@ public class OpenCraft implements Runnable {
 
 	public static final String PROJECT_NAME_LOWERCASE = "opencraft";
 
+	@Nonnull
 	public static OpenCraft oc;
 
 	public static long[] tickTimes;
