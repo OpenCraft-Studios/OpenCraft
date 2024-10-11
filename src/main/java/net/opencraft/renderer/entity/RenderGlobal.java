@@ -11,8 +11,7 @@ import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.ARBOcclusionQuery;
 import org.lwjgl.opengl.GL11;
 
-import net.opencraft.OpenCraft;
-import net.opencraft.DisplayListRenderer;
+import net.opencraft.*;
 import net.opencraft.blocks.Block;
 import net.opencraft.client.input.MovingObjectPosition;
 import net.opencraft.entity.*;
@@ -94,7 +93,7 @@ public class RenderGlobal implements IWorldAccess {
 		this.l = id;
 		final int n = 64;
 		this.s = GLAllocation.generateDisplayLists(n * n * n * 3);
-		this.w = aw.getOpenGlCapsChecker().checkARBOcclusion();
+		this.w = GLCapabilities.checkARBOcclusion();
 		if(this.w) {
 			this.c.clear();
 			(this.v = BufferUtils.createIntBuffer(n * n * n)).clear();

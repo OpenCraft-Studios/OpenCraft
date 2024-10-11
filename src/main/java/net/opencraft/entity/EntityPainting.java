@@ -52,9 +52,9 @@ public class EntityPainting extends Entity {
 		final float n = (float) (direction * 90);
 		this.rotationYaw = n;
 		this.prevRotationYaw = n;
-		float n2 = (float) this.art.sizeX;
-		float n3 = (float) this.art.sizeY;
-		float n4 = (float) this.art.sizeX;
+		float n2 = (float) this.art.width;
+		float n3 = (float) this.art.height;
+		float n4 = (float) this.art.width;
 		if(direction == 0 || direction == 2) {
 			n4 = 0.5f;
 		} else {
@@ -80,18 +80,18 @@ public class EntityPainting extends Entity {
 			n5 += n8;
 		}
 		if(direction == 0) {
-			n5 -= this.getArtSize(this.art.sizeX);
+			n5 -= this.getArtSize(this.art.width);
 		}
 		if(direction == 1) {
-			n7 += this.getArtSize(this.art.sizeX);
+			n7 += this.getArtSize(this.art.width);
 		}
 		if(direction == 2) {
-			n5 += this.getArtSize(this.art.sizeX);
+			n5 += this.getArtSize(this.art.width);
 		}
 		if(direction == 3) {
-			n7 -= this.getArtSize(this.art.sizeX);
+			n7 -= this.getArtSize(this.art.width);
 		}
-		n6 += this.getArtSize(this.art.sizeY);
+		n6 += this.getArtSize(this.art.height);
 		this.setPosition(n5, n6, n7);
 		final float n9 = -0.00625f;
 		this.boundingBox.setBounds(n5 - n2 - n9, n6 - n3 - n9, n7 - n4 - n9, n5 + n2 + n9, n6 + n3 + n9, n7 + n4 + n9);
@@ -120,24 +120,24 @@ public class EntityPainting extends Entity {
 		if(this.world.getCollidingBoundingBoxes(this, this.boundingBox).size() > 0) {
 			return false;
 		}
-		final int n = this.art.sizeX / 16;
-		final int n2 = this.art.sizeY / 16;
+		final int n = this.art.width / 16;
+		final int n2 = this.art.height / 16;
 		int n3 = this.xPosition;
 		int n4 = this.yPosition;
 		int n5 = this.zPosition;
 		if(this.direction == 0) {
-			n3 = Mth.floor_double(this.x - this.art.sizeX / 32.0f);
+			n3 = Mth.floor_double(this.x - this.art.width / 32.0f);
 		}
 		if(this.direction == 1) {
-			n5 = Mth.floor_double(this.z - this.art.sizeX / 32.0f);
+			n5 = Mth.floor_double(this.z - this.art.width / 32.0f);
 		}
 		if(this.direction == 2) {
-			n3 = Mth.floor_double(this.x - this.art.sizeX / 32.0f);
+			n3 = Mth.floor_double(this.x - this.art.width / 32.0f);
 		}
 		if(this.direction == 3) {
-			n5 = Mth.floor_double(this.z - this.art.sizeX / 32.0f);
+			n5 = Mth.floor_double(this.z - this.art.width / 32.0f);
 		}
-		n4 = Mth.floor_double(this.y - this.art.sizeY / 32.0f);
+		n4 = Mth.floor_double(this.y - this.art.height / 32.0f);
 		for(int i = 0; i < n; ++i) {
 			for(int j = 0; j < n2; ++j) {
 				Material material;

@@ -70,8 +70,8 @@ public class TerrainTextureManager {
 	}
 
 	public void func_799_a(final IsoImageBuffer di) {
-		final World worldObj = di.worldObj;
-		if(worldObj == null) {
+		World world = di.world;
+		if(world == null) {
 			di.field_1351_f = true;
 			di.field_1352_e = true;
 			return;
@@ -80,7 +80,7 @@ public class TerrainTextureManager {
 		final int n2 = di.chunkZ * 16;
 		final int n3 = n + 16;
 		final int n4 = n2 + 16;
-		if(worldObj.getChunkFromChunkCoords(di.chunkX, di.chunkZ).q) {
+		if(world.getChunkFromChunkCoords(di.chunkX, di.chunkZ).q) {
 			di.field_1351_f = true;
 			di.field_1352_e = true;
 			return;
@@ -98,13 +98,13 @@ public class TerrainTextureManager {
 				for(int k = 0; k < 128; ++k) {
 					final int n8 = n6 - n5 - k + 160 - 16;
 					if(n8 < this.field_1183_f[n7] || n8 < this.field_1183_f[n7 + 1]) {
-						final Block block = Block.blocksList[worldObj.getBlockId(j, k, i)];
+						final Block block = Block.blocksList[world.getBlockId(j, k, i)];
 						if(block == null) {
 							b = false;
 						} else if(block.blockMaterial == Material.WATER) {
-							final int blockId = worldObj.getBlockId(j, k + 1, i);
+							final int blockId = world.getBlockId(j, k + 1, i);
 							if(blockId == 0 || Block.blocksList[blockId].blockMaterial != Material.WATER) {
-								final float n9 = worldObj.getLightBrightness(j, k + 1, i) * (k / 127.0f * 0.6f + 0.4f);
+								final float n9 = world.getLightBrightness(j, k + 1, i) * (k / 127.0f * 0.6f + 0.4f);
 								if(n8 >= 0) {
 									if(n8 < 160) {
 										final int n10 = n7 + n8 * 32;
@@ -133,7 +133,7 @@ public class TerrainTextureManager {
 							if(n8 >= 0 && n8 < 160) {
 								final int n12 = n7 + n8 * 32;
 								final int n13 = this.field_1182_g[block.blockID * 3 + 0];
-								final float n14 = (worldObj.getLightBrightness(j, k + 1, i) * 0.8f + 0.2f) * n11;
+								final float n14 = (world.getLightBrightness(j, k + 1, i) * 0.8f + 0.2f) * n11;
 								final int n15 = n13;
 								if(n7 >= 0) {
 									final float n16 = n14;
@@ -153,9 +153,9 @@ public class TerrainTextureManager {
 							if(n8 >= -1 && n8 < 159) {
 								final int n12 = n7 + (n8 + 1) * 32;
 								final int n13 = this.field_1182_g[block.blockID * 3 + 1];
-								final float n14 = worldObj.getLightBrightness(j - 1, k, i) * 0.8f + 0.2f;
+								final float n14 = world.getLightBrightness(j - 1, k, i) * 0.8f + 0.2f;
 								final int n15 = this.field_1182_g[block.blockID * 3 + 2];
-								final float n16 = worldObj.getLightBrightness(j, k, i + 1) * 0.8f + 0.2f;
+								final float n16 = world.getLightBrightness(j, k, i + 1) * 0.8f + 0.2f;
 								if(n7 >= 0) {
 									final float n17 = n14 * n11 * 0.6f;
 									if(this.field_1186_c[n12] <= k - 1) {

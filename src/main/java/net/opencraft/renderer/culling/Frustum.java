@@ -16,17 +16,17 @@ public class Frustum extends ClippingHelper {
 	private static Frustum instance;
 	private FloatBuffer projectionMatrixBuffer;
 	private FloatBuffer modelviewMatrixBuffer;
-	private FloatBuffer floatBuffer16;
+	private FloatBuffer fb;
 
 	public Frustum() {
 		this.projectionMatrixBuffer = BufferUtils.createFloatBuffer(16);
 		this.modelviewMatrixBuffer = BufferUtils.createFloatBuffer(16);
-		this.floatBuffer16 = BufferUtils.createFloatBuffer(16);
+		this.fb = BufferUtils.createFloatBuffer(16);
 	}
 
 	public static ClippingHelper getInstance() {
-		Frustum.instance.calculateFrustum();
-		return Frustum.instance;
+		instance.calculateFrustum();
+		return instance;
 	}
 
 	private void normalize(final float[][] arr, final int integer) {
@@ -48,7 +48,7 @@ public class Frustum extends ClippingHelper {
 	private void calculateFrustum() {
 		this.projectionMatrixBuffer.clear();
 		this.modelviewMatrixBuffer.clear();
-		this.floatBuffer16.clear();
+		this.fb.clear();
 		GL11.glGetFloatv(2983, this.projectionMatrixBuffer);
 		GL11.glGetFloatv(2982, this.modelviewMatrixBuffer);
 		this.projectionMatrixBuffer.flip().limit(16);

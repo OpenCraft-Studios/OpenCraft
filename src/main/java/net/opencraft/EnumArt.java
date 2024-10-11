@@ -22,18 +22,15 @@ public enum EnumArt {
 	Fighters("Fighters", 64, 32, 0, 96),
 	Pointer("Pointer", 64, 64, 0, 192);
 
-	public final String title;
-	public final int sizeX;
-	public final int sizeY;
-	public final int offsetX;
-	public final int offsetY;
+	public String title;
+	public final int x, y, width, height;
 
-	private EnumArt(final String title, final int sizeX, final int sizeY, final int offsetX, final int offsetY) {
+	private EnumArt(String title, int width, int height, int x, int y) {
 		this.title = title;
-		this.sizeX = sizeX;
-		this.sizeY = sizeY;
-		this.offsetX = offsetX;
-		this.offsetY = offsetY;
+		this.width = width;
+		this.height = height;
+		this.x = x;
+		this.y = y;
 	}
 
 }

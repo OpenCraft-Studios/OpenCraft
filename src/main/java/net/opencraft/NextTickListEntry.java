@@ -1,4 +1,3 @@
-
 package net.opencraft;
 
 public class NextTickListEntry implements Comparable<NextTickListEntry> {

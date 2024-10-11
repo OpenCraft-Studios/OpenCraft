@@ -1,4 +1,3 @@
-
 package net.opencraft;
 
 public enum EnumSkyBlock {
@@ -8,7 +7,7 @@ public enum EnumSkyBlock {
 
 	public final int defaultLightValue;
 
-	private EnumSkyBlock(final int lightValue) {
+	private EnumSkyBlock(int lightValue) {
 		this.defaultLightValue = lightValue;
 	}
 

@@ -1,4 +1,3 @@
-
 package net.opencraft;
 
 import java.awt.image.BufferedImage;
@@ -7,7 +6,7 @@ import net.opencraft.world.World;
 public class IsoImageBuffer {
 
 	public BufferedImage field_1348_a;
-	public World worldObj;
+	public World world;
 	public int chunkX;
 	public int chunkZ;
 	public boolean field_1352_e;
@@ -20,7 +19,7 @@ public class IsoImageBuffer {
 		this.field_1351_f = false;
 		this.field_1350_g = 0;
 		this.field_1349_h = false;
-		this.worldObj = fe;
+		this.world = fe;
 		this.setChunkPosition(integer2, integer3);
 	}
 
@@ -33,7 +32,7 @@ public class IsoImageBuffer {
 	}
 
 	public void setWorldAndChunkPosition(final World fe, final int integer2, final int integer3) {
-		this.worldObj = fe;
+		this.world = fe;
 		this.setChunkPosition(integer2, integer3);
 	}
 

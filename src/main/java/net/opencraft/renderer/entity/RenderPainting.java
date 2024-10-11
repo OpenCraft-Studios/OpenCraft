@@ -26,7 +26,7 @@ public class RenderPainting extends Render<EntityPainting> {
 		final EnumArt art = entityLiving.art;
 		final float n = 0.0625f;
 		GL11.glScalef(n, n, n);
-		this.func_159_a(entityLiving, art.sizeX, art.sizeY, art.offsetX, art.offsetY);
+		this.func_159_a(entityLiving, art.width, art.height, art.x, art.y);
 		GL11.glDisable(32826);
 		GL11.glPopMatrix();
 	}

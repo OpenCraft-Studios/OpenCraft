@@ -47,7 +47,6 @@ public class OpenCraft implements Runnable {
 	private boolean fullscreen;
 	public int width;
 	public int height;
-	private OpenGlCapsChecker glCapabilities;
 	private Timer timer;
 	public World world;
 	public RenderGlobal renderGlobal;
@@ -199,7 +198,6 @@ public class OpenCraft implements Runnable {
 		glLoadIdentity();
 		glMatrixMode(5888);
 		checkGLError();
-		glCapabilities = new OpenGlCapsChecker();
 		sndManager.loadSoundSettings(options);
 		renderer.registerTextureFX(textureLavaFX);
 		renderer.registerTextureFX(textureWaterFX);
@@ -777,10 +775,6 @@ public class OpenCraft implements Runnable {
 		}
 		world.func_656_j();
 		SandBlock.fallInstantly = false;
-	}
-
-	public OpenGlCapsChecker getOpenGlCapsChecker() {
-		return glCapabilities;
 	}
 
 	public String debugInfoRenders() {
