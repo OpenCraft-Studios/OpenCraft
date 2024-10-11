@@ -87,7 +87,7 @@ public class OpenCraft implements Runnable {
 	/** Holds the function called when the window is resized, otherwise the function would be garbage collected */
 	private GLFWFramebufferSizeCallback frameBufferResizeCallback;
 	private GLFWWindowFocusCallback windowFocusCallback;
-	public MouseInput mouse;
+	public MouseHandler mouse;
 	public KeyboardInput keyboard;
 
 	static {
@@ -173,7 +173,7 @@ public class OpenCraft implements Runnable {
 		});
 		GLUtil.setupDebugMessageCallback();
 
-		mouse = new MouseInput(window);
+		mouse = new MouseHandler(window);
 		keyboard = new KeyboardInput(window);
 
 		timer = new Timer(20.0f);
@@ -361,7 +361,7 @@ public class OpenCraft implements Runnable {
 				prevFrameTime = System.nanoTime();
 
 				// Thread.yield();
-				mouse.reset();
+				mouse.poll();
 
 				glfwSwapBuffers(window);
 
@@ -598,19 +598,15 @@ public class OpenCraft implements Runnable {
 		}
 
 		if(currentScreen == null || currentScreen.allowUserInput) {
-			for(MouseInput.ButtonEvent event : mouse.buttons.events) {
-				if(System.currentTimeMillis() - systemTime > 200L) {
+			for(MouseHandler.ButtonEvent event : mouse.buttons.events) {
+				if(System.currentTimeMillis() - systemTime > 200L)
 					continue;
-				}
-				final int eventDWheel = (int) mouse.scroll.y;
-				if(eventDWheel != 0) {
-					player.inventory.changeCurrentItem(eventDWheel);
-				}
+
 				if(currentScreen == null) {
-					if(!inGameHasFocus && event.isPress()) {
+					if(!inGameHasFocus && event.isPressed()) {
 						setIngameFocus();
 					} else {
-						if(event.isPress()) {
+						if(event.isPressed()) {
 							clickMouse(event.buttonNumber());
 							mouseTicksRan = ticksRan;
 						}
@@ -647,16 +643,16 @@ public class OpenCraft implements Runnable {
 			}
 
 			if(currentScreen == null) {
-				if(mouse.isButton1Pressed() && ticksRan - mouseTicksRan >= timer.tps / 4.0f && inGameHasFocus) {
+				if(mouse.isButtonPressed(1) && ticksRan - mouseTicksRan >= timer.tps / 4.0f && inGameHasFocus) {
 					clickMouse(0);
 					mouseTicksRan = ticksRan;
 				}
-				if(mouse.isButton2Pressed() && ticksRan - mouseTicksRan >= timer.tps / 4.0f && inGameHasFocus) {
+				if(mouse.isButtonPressed(2) && ticksRan - mouseTicksRan >= timer.tps / 4.0f && inGameHasFocus) {
 					clickMouse(1);
 					mouseTicksRan = ticksRan;
 				}
 			}
-			func_6254_a(0, currentScreen == null && mouse.isButton1Pressed() && inGameHasFocus);
+			func_6254_a(0, currentScreen == null && mouse.isButtonPressed(1) && inGameHasFocus);
 		}
 		if(currentScreen != null) {
 			mouseTicksRan = ticksRan + 10000;
@@ -669,6 +665,7 @@ public class OpenCraft implements Runnable {
 		}
 		if(world != null) {
 			world.difficultySetting = options.difficulty;
+			// TODO: unify "nested" if's
 			if(!isGamePaused) {
 				entityRenderer.updateRenderer();
 			}

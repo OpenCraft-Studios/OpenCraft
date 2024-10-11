@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.opencraft.OpenCraft;
-import net.opencraft.client.input.MouseInput;
+import net.opencraft.client.input.MouseHandler;
 import net.opencraft.renderer.Tessellator;
 import net.opencraft.renderer.font.FontRenderer;
 
@@ -75,7 +75,7 @@ public abstract class GuiScreen extends GuiElement {
 	}
 
 	public void handleInputEvents() {
-		for(MouseInput.ButtonEvent event : this.id.mouse.buttons.events) {
+		for(MouseHandler.ButtonEvent event : this.id.mouse.buttons.events) {
 			this.handleMouseEvent(event);
 		}
 		// TODO plz fix
@@ -86,10 +86,10 @@ public abstract class GuiScreen extends GuiElement {
 		}
 	}
 
-	public void handleMouseEvent(MouseInput.ButtonEvent event) {
+	public void handleMouseEvent(MouseHandler.ButtonEvent event) {
 		final int n = ((int) id.mouse.position.x) * this.width / this.id.width;
 		final int n2 = this.height - ((int) id.mouse.position.y) * this.height / this.id.height - 1;
-		if(event.isPress()) {
+		if(event.isPressed()) {
 			this.drawSlotInventory(n, n2, event.buttonNumber());
 		} else {
 			this.b(n, n2, event.buttonNumber());
