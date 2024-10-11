@@ -65,9 +65,9 @@ public class EntityFX extends Entity {
 
 	@Override
 	public void onUpdate() {
-		this.prevPosX = this.posX;
-		this.prevPosY = this.posY;
-		this.prevPosZ = this.posZ;
+		this.prevPosX = this.x;
+		this.prevPosY = this.y;
+		this.prevPosZ = this.z;
 		if(this.particleAge++ >= this.particleMaxAge) {
 			this.setEntityDead();
 		}
@@ -88,9 +88,9 @@ public class EntityFX extends Entity {
 		final float n3 = this.particleTextureIndex / 16 / 16.0f;
 		final float n4 = n3 + 0.0624375f;
 		final float n5 = 0.1f * this.particleScale;
-		final float n6 = (float) (this.prevPosX + (this.posX - this.prevPosX) * float2 - EntityFX.interpPosX);
-		final float n7 = (float) (this.prevPosY + (this.posY - this.prevPosY) * float2 - EntityFX.interpPosY);
-		final float n8 = (float) (this.prevPosZ + (this.posZ - this.prevPosZ) * float2 - EntityFX.interpPosZ);
+		final float n6 = (float) (this.prevPosX + (this.x - this.prevPosX) * float2 - EntityFX.interpPosX);
+		final float n7 = (float) (this.prevPosY + (this.y - this.prevPosY) * float2 - EntityFX.interpPosY);
+		final float n8 = (float) (this.prevPosZ + (this.z - this.prevPosZ) * float2 - EntityFX.interpPosZ);
 		final float entityBrightness = this.getEntityBrightness(float2);
 		ag.setColorOpaque_F(this.particleRed * entityBrightness, this.particleGreen * entityBrightness, this.particleBlue * entityBrightness);
 		ag.vertexUV(n6 - float3 * n5 - float6 * n5, n7 - float4 * n5, n8 - float5 * n5 - float7 * n5, n, n4);

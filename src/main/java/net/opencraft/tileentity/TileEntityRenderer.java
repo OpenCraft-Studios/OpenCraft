@@ -59,9 +59,9 @@ public class TileEntityRenderer {
 		this.n = ej;
 		this.h = gi.prevRotationYaw + (gi.rotationYaw - gi.prevRotationYaw) * float5;
 		this.i = gi.prevRotationPitch + (gi.rotationPitch - gi.prevRotationPitch) * float5;
-		this.j = gi.lastTickPosX + (gi.posX - gi.lastTickPosX) * float5;
-		this.k = gi.lastTickPosY + (gi.posY - gi.lastTickPosY) * float5;
-		this.l = gi.lastTickPosZ + (gi.posZ - gi.lastTickPosZ) * float5;
+		this.j = gi.lastTickPosX + (gi.x - gi.lastTickPosX) * float5;
+		this.k = gi.lastTickPosY + (gi.y - gi.lastTickPosY) * float5;
+		this.l = gi.lastTickPosZ + (gi.z - gi.lastTickPosZ) * float5;
 	}
 
 	public void a(final TileEntity bk, final float float2) {

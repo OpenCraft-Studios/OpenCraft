@@ -26,7 +26,7 @@ public class Pathfinder {
 	}
 
 	public PathEntity createEntityPathTo(final Entity eq1, final Entity eq2, final float float3) {
-		return this.createEntityPathTo(eq1, eq2.posX, eq2.boundingBox.minY, eq2.posZ, float3);
+		return this.createEntityPathTo(eq1, eq2.x, eq2.boundingBox.minY, eq2.z, float3);
 	}
 
 	public PathEntity createEntityPathTo(final Entity eq, final int integer2, final int integer3, final int integer4, final float float5) {

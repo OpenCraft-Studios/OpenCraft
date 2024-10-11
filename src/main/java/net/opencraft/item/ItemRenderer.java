@@ -48,7 +48,7 @@ public class ItemRenderer {
 		GL11.glRotatef(thePlayer.prevRotationYaw + (thePlayer.rotationYaw - thePlayer.prevRotationYaw) * float1, 0.0f, 1.0f, 0.0f);
 		RenderHelper.enableStandardItemLighting();
 		GL11.glPopMatrix();
-		final float lightBrightness = this.a.world.getLightBrightness(Mth.floor_double(thePlayer.posX), Mth.floor_double(thePlayer.posY), Mth.floor_double(thePlayer.posZ));
+		final float lightBrightness = this.a.world.getLightBrightness(Mth.floor_double(thePlayer.x), Mth.floor_double(thePlayer.y), Mth.floor_double(thePlayer.z));
 		GL11.glColor4f(lightBrightness, lightBrightness, lightBrightness, 1.0f);
 		if(this.b != null) {
 			GL11.glPushMatrix();
@@ -206,9 +206,9 @@ public class ItemRenderer {
 			this.d(float1);
 		}
 		if(this.a.world.player.isEntityInsideOpaqueBlock()) {
-			final int xCoord = Mth.floor_double(this.a.player.posX);
-			final int floor_double = Mth.floor_double(this.a.player.posY);
-			final int floor_double2 = Mth.floor_double(this.a.player.posZ);
+			final int xCoord = Mth.floor_double(this.a.player.x);
+			final int floor_double = Mth.floor_double(this.a.player.y);
+			final int floor_double2 = Mth.floor_double(this.a.player.z);
 			GL11.glBindTexture(3553, this.a.renderer.loadTexture("/assets/terrain.png"));
 			final int blockId = this.a.world.getBlockId(xCoord, floor_double, floor_double2);
 			if(Block.blocksList[blockId] != null) {

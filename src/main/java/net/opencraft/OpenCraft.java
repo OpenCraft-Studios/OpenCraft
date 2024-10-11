@@ -2,6 +2,7 @@ package net.opencraft;
 
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL43.*;
 
 import java.io.File;
 
@@ -130,14 +131,10 @@ public class OpenCraft implements Runnable {
 		this.tempDisplayWidth = width;
 		this.tempDisplayHeight = height;
 		this.fullscreen = boolean6;
-		(new SleepingForeverThread("Timer hack thread")).start();
+		// why?: (new SleepingForeverThread("Timer hack thread")).start();
 		this.width = width;
 		this.height = height;
 		this.fullscreen = boolean6;
-	}
-
-	public static long getSystemTime() {
-		return glfwGetTimerValue() * 1000L / glfwGetTimerFrequency();
 	}
 
 	public void displayUnexpectedThrowable(final UnexpectedThrowable t) {
@@ -190,6 +187,7 @@ public class OpenCraft implements Runnable {
 		}
 		checkGLError();
 		glEnable(GL_TEXTURE_2D);
+		glDisable(GL_DEBUG_OUTPUT);
 		glShadeModel(7425);
 		glClearDepth(1.0);
 		glEnable(2929);
@@ -679,7 +677,7 @@ public class OpenCraft implements Runnable {
 				world.tick();
 			}
 			if(!isGamePaused) {
-				world.randomDisplayUpdates(Mth.floor_double(player.posX), Mth.floor_double(player.posY), Mth.floor_double(player.posZ));
+				world.randomDisplayUpdates(Mth.floor_double(player.x), Mth.floor_double(player.y), Mth.floor_double(player.z));
 			}
 			if(!isGamePaused) {
 				effectRenderer.updateEffects();
@@ -761,8 +759,8 @@ public class OpenCraft implements Runnable {
 			int x = world.x;
 			int z = world.z;
 			if(world.player != null) {
-				x = (int) world.player.posX;
-				z = (int) world.player.posZ;
+				x = (int) world.player.x;
+				z = (int) world.player.z;
 			}
 			for(int j = -n; j <= n; j += 16) {
 				loadingScreen.setLoadingProgress(n2++ * 100 / n3);

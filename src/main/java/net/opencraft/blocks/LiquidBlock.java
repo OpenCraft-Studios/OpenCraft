@@ -250,7 +250,7 @@ public abstract class LiquidBlock extends Block {
 	}
 
 	protected void triggerLavaMixEffects(final World world, final int xCoord, final int yCoord, final int zCoord) {
-		world.playSoundEffect((xCoord + 0.5f), (yCoord + 0.5f), (zCoord + 0.5f), "random.fizz", 0.5f, 2.6f + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.8f);
+		world.playSoundEffect((xCoord + 0.5f), (yCoord + 0.5f), (zCoord + 0.5f), "random.fizz", 0.5f, 2.6f + (world.random.nextFloat() - world.random.nextFloat()) * 0.8f);
 		for(int i = 0; i < 8; ++i) {
 			world.spawnParticle("largesmoke", xCoord + random(), yCoord + 1.2, zCoord + random(), 0.0, 0.0, 0.0);
 		}

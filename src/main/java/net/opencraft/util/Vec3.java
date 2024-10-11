@@ -3,9 +3,7 @@ package net.opencraft.util;
 
 public class Vec3 {
 
-	public double x;
-	public double y;
-	public double z;
+	public double x, y, z;
 
 	public static Vec3 createVectorHelper(final double double1, final double double2, final double double3) {
 		return new Vec3(double1, double2, double3);

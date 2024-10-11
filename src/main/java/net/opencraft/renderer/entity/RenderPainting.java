@@ -97,20 +97,20 @@ public class RenderPainting extends Render<EntityPainting> {
 	}
 
 	private void func_160_a(final EntityPainting cy, final float float2, final float float3) {
-		int nya1 = Mth.floor_double(cy.posX);
-		final int floor_double = Mth.floor_double(cy.posY + float3 / 16.0f);
-		int nya2 = Mth.floor_double(cy.posZ);
+		int nya1 = Mth.floor_double(cy.x);
+		final int floor_double = Mth.floor_double(cy.y + float3 / 16.0f);
+		int nya2 = Mth.floor_double(cy.z);
 		if(cy.direction == 0) {
-			nya1 = Mth.floor_double(cy.posX + float2 / 16.0f);
+			nya1 = Mth.floor_double(cy.x + float2 / 16.0f);
 		}
 		if(cy.direction == 1) {
-			nya2 = Mth.floor_double(cy.posZ - float2 / 16.0f);
+			nya2 = Mth.floor_double(cy.z - float2 / 16.0f);
 		}
 		if(cy.direction == 2) {
-			nya1 = Mth.floor_double(cy.posX - float2 / 16.0f);
+			nya1 = Mth.floor_double(cy.x - float2 / 16.0f);
 		}
 		if(cy.direction == 3) {
-			nya2 = Mth.floor_double(cy.posZ + float2 / 16.0f);
+			nya2 = Mth.floor_double(cy.z + float2 / 16.0f);
 		}
 		final float lightBrightness = this.renderManager.worldObj.getLightBrightness(nya1, floor_double, nya2);
 		GL11.glColor3f(lightBrightness, lightBrightness, lightBrightness);

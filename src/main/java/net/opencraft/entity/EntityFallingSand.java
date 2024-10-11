@@ -43,18 +43,18 @@ public class EntityFallingSand extends Entity {
 			this.setEntityDead();
 			return;
 		}
-		this.prevPosX = this.posX;
-		this.prevPosY = this.posY;
-		this.prevPosZ = this.posZ;
+		this.prevPosX = this.x;
+		this.prevPosY = this.y;
+		this.prevPosZ = this.z;
 		++this.fallTime;
 		this.motionY -= 0.03999999910593033;
 		this.moveEntity(this.motionX, this.motionY, this.motionZ);
 		this.motionX *= 0.9800000190734863;
 		this.motionY *= 0.9800000190734863;
 		this.motionZ *= 0.9800000190734863;
-		final int floor_double = Mth.floor_double(this.posX);
-		final int floor_double2 = Mth.floor_double(this.posY);
-		final int floor_double3 = Mth.floor_double(this.posZ);
+		final int floor_double = Mth.floor_double(this.x);
+		final int floor_double2 = Mth.floor_double(this.y);
+		final int floor_double3 = Mth.floor_double(this.z);
 		if(this.world.getBlockId(floor_double, floor_double2, floor_double3) == this.blockID) {
 			this.world.setBlockWithNotify(floor_double, floor_double2, floor_double3, 0);
 		}

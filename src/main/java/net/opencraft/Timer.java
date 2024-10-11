@@ -19,14 +19,14 @@ public class Timer {
 	public Timer(float tps) {
 		this.msPerTick = 1000.0F / tps;
 		this.tps = tps;
-		this.lastSyncSysClock = OpenCraft.getSystemTime();
+		this.lastSyncSysClock = System.currentTimeMillis();
 	}
 
 	/**
 	 * Updates all fields of the Timer using the current time
 	 */
 	public void updateTimer() {
-		long i = OpenCraft.getSystemTime();
+		long i = System.currentTimeMillis();
 		this.tickDelta = (float) (i - this.lastSyncSysClock) / this.msPerTick;
 		this.lastSyncSysClock = i;
 		this.renderPartialTicks += this.tickDelta;

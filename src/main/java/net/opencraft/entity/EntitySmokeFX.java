@@ -46,16 +46,16 @@ public class EntitySmokeFX extends EntityFX {
 
 	@Override
 	public void onUpdate() {
-		this.prevPosX = this.posX;
-		this.prevPosY = this.posY;
-		this.prevPosZ = this.posZ;
+		this.prevPosX = this.x;
+		this.prevPosY = this.y;
+		this.prevPosZ = this.z;
 		if(this.particleAge++ >= this.particleMaxAge) {
 			this.setEntityDead();
 		}
 		this.particleTextureIndex = 7 - this.particleAge * 8 / this.particleMaxAge;
 		this.motionY += 0.004;
 		this.moveEntity(this.motionX, this.motionY, this.motionZ);
-		if(this.posY == this.prevPosY) {
+		if(this.y == this.prevPosY) {
 			this.motionX *= 1.1;
 			this.motionZ *= 1.1;
 		}

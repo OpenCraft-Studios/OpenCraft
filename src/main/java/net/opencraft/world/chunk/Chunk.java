@@ -286,12 +286,12 @@ public class Chunk {
 
 	public void addEntity(final Entity entity) {
 		this.hasEntities = true;
-		final int floor_double = Mth.floor_double(entity.posX / 16.0);
-		final int floor_double2 = Mth.floor_double(entity.posZ / 16.0);
+		final int floor_double = Mth.floor_double(entity.x / 16.0);
+		final int floor_double2 = Mth.floor_double(entity.z / 16.0);
 		if(floor_double != this.xPosition || floor_double2 != this.zPosition) {
 			System.out.println(new StringBuilder().append("Wrong location! ").append(entity).toString());
 		}
-		int floor_double3 = Mth.floor_double(entity.posY / 16.0);
+		int floor_double3 = Mth.floor_double(entity.y / 16.0);
 		if(floor_double3 < 0) {
 			floor_double3 = 0;
 		}
@@ -302,7 +302,7 @@ public class Chunk {
 	}
 
 	public void removeEntity(final Entity entity) {
-		this.removeEntityAtIndex(entity, Mth.floor_double(entity.posY / 16.0));
+		this.removeEntityAtIndex(entity, Mth.floor_double(entity.y / 16.0));
 	}
 
 	public void removeEntityAtIndex(final Entity entity, int integer) {

@@ -35,8 +35,8 @@ public class EntitySpider extends EntityMonster {
 		}
 		if(xCoord > 2.0f && xCoord < 6.0f && this.rand.nextInt(10) == 0) {
 			if(this.onGround) {
-				final double n = entity.posX - this.posX;
-				final double n2 = entity.posZ - this.posZ;
+				final double n = entity.x - this.x;
+				final double n2 = entity.z - this.z;
 				final float sqrt_double = Mth.sqrt_double(n * n + n2 * n2);
 				this.motionX = n / sqrt_double * 0.5 * 0.800000011920929 + this.motionX * 0.20000000298023224;
 				this.motionZ = n2 / sqrt_double * 0.5 * 0.800000011920929 + this.motionZ * 0.20000000298023224;

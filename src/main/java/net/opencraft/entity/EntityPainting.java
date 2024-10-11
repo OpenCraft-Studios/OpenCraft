@@ -112,7 +112,7 @@ public class EntityPainting extends Entity {
 		if(this.tickCounter1++ == 100 && !this.onValidSurface()) {
 			this.tickCounter1 = 0;
 			this.setEntityDead();
-			this.world.entityJoinedWorld(new EntityItem(this.world, this.posX, this.posY, this.posZ, new ItemStack(Item.painting)));
+			this.world.entityJoinedWorld(new EntityItem(this.world, this.x, this.y, this.z, new ItemStack(Item.painting)));
 		}
 	}
 
@@ -126,18 +126,18 @@ public class EntityPainting extends Entity {
 		int n4 = this.yPosition;
 		int n5 = this.zPosition;
 		if(this.direction == 0) {
-			n3 = Mth.floor_double(this.posX - this.art.sizeX / 32.0f);
+			n3 = Mth.floor_double(this.x - this.art.sizeX / 32.0f);
 		}
 		if(this.direction == 1) {
-			n5 = Mth.floor_double(this.posZ - this.art.sizeX / 32.0f);
+			n5 = Mth.floor_double(this.z - this.art.sizeX / 32.0f);
 		}
 		if(this.direction == 2) {
-			n3 = Mth.floor_double(this.posX - this.art.sizeX / 32.0f);
+			n3 = Mth.floor_double(this.x - this.art.sizeX / 32.0f);
 		}
 		if(this.direction == 3) {
-			n5 = Mth.floor_double(this.posZ - this.art.sizeX / 32.0f);
+			n5 = Mth.floor_double(this.z - this.art.sizeX / 32.0f);
 		}
-		n4 = Mth.floor_double(this.posY - this.art.sizeY / 32.0f);
+		n4 = Mth.floor_double(this.y - this.art.sizeY / 32.0f);
 		for(int i = 0; i < n; ++i) {
 			for(int j = 0; j < n2; ++j) {
 				Material material;
@@ -168,7 +168,7 @@ public class EntityPainting extends Entity {
 	@Override
 	public boolean attackEntityFrom(final Entity entity, final int nya1) {
 		this.setEntityDead();
-		this.world.entityJoinedWorld(new EntityItem(this.world, this.posX, this.posY, this.posZ, new ItemStack(Item.painting)));
+		this.world.entityJoinedWorld(new EntityItem(this.world, this.x, this.y, this.z, new ItemStack(Item.painting)));
 		return true;
 	}
 

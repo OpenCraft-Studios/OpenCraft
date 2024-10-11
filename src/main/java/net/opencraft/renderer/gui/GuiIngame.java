@@ -139,7 +139,7 @@ public class GuiIngame extends GuiElement {
 			font.drawStringWithShadow2(this.mc.entityRenderingInfo(), 2, 22, 16777215);
 			font.drawStringWithShadow2(this.mc.debugInfoEntities(), 2, 32, 16777215);
 			// display current coordinates and orientation
-			font.drawStringWithShadow2("X: " + this.mc.player.posX + " Y: " + this.mc.player.posY + " Z: " + this.mc.player.posZ, 2, 42, 16777215);
+			font.drawStringWithShadow2("X: " + this.mc.player.x + " Y: " + this.mc.player.y + " Z: " + this.mc.player.z, 2, 42, 16777215);
 			font.drawStringWithShadow2("Yaw: " + this.mc.player.rotationYaw + " Pitch: " + this.mc.player.rotationPitch, 2, 52, 16777215);
 			final long maxMemory = Runtime.getRuntime().maxMemory();
 			final long totalMemory = Runtime.getRuntime().totalMemory();

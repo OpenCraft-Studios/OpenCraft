@@ -3,7 +3,7 @@ package net.opencraft.client.entity;
 
 import net.opencraft.OpenCraft;
 import net.opencraft.aa;
-import net.opencraft.ck;
+import net.opencraft.EntitySpawner;
 import net.opencraft.blocks.Block;
 import net.opencraft.entity.EntityAnimal;
 import net.opencraft.entity.EntityCreeper;
@@ -26,8 +26,8 @@ public class PlayerControllerSP extends PlayerController {
 	private float prevBlockDamage;
 	private float field_1069_h;
 	private int blockHitWait;
-	private ck j;
-	private ck k;
+	private EntitySpawner j;
+	private EntitySpawner k;
 
 	public PlayerControllerSP(final OpenCraft aw) {
 		super(aw);
@@ -39,7 +39,7 @@ public class PlayerControllerSP extends PlayerController {
 		this.field_1069_h = 0.0f;
 		this.blockHitWait = 0;
 		this.j = new aa(this, 100, EntityMonster.class, new Class[] { EntityZombie.class, EntitySkeleton.class, EntityCreeper.class, EntitySpider.class });
-		this.k = new ck(20, EntityAnimal.class, new Class[] { EntitySheep.class, EntityPig.class });
+		this.k = new EntitySpawner(20, EntityAnimal.class, new Class[] { EntitySheep.class, EntityPig.class });
 	}
 
 	@Override
@@ -148,8 +148,8 @@ public class PlayerControllerSP extends PlayerController {
 	@Override
 	public void updateController() {
 		this.prevBlockDamage = this.curBlockDamage;
-		this.j.a(this.mc.world);
-		this.k.a(this.mc.world);
+		this.j.spawnEntitiesIfNecessary(this.mc.world);
+		this.k.spawnEntitiesIfNecessary(this.mc.world);
 		this.mc.sndManager.playRandomMusicIfReady();
 	}
 

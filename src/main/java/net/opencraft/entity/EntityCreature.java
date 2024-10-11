@@ -20,7 +20,7 @@ public class EntityCreature extends EntityLiving {
 	}
 
 	protected boolean canEntityBeSeen(final Entity entity) {
-		return this.world.rayTraceBlocks(Vec3.newTemp(this.posX, this.posY + this.getEyeHeight(), this.posZ), Vec3.newTemp(entity.posX, entity.posY + entity.getEyeHeight(), entity.posZ)) == null;
+		return this.world.rayTraceBlocks(Vec3.newTemp(this.x, this.y + this.getEyeHeight(), this.z), Vec3.newTemp(entity.x, entity.y + entity.getEyeHeight(), entity.z)) == null;
 	}
 
 	@Override
@@ -48,9 +48,9 @@ public class EntityCreature extends EntityLiving {
 			int zCoord = -1;
 			float n = -99999.0f;
 			for(int i = 0; i < 50; ++i) {
-				final int floor_double2 = Mth.floor_double(this.posX + this.rand.nextInt(11) - 5.0);
-				final int floor_double3 = Mth.floor_double(this.posY + this.rand.nextInt(7) - 3.0);
-				final int floor_double4 = Mth.floor_double(this.posZ + this.rand.nextInt(11) - 5.0);
+				final int floor_double2 = Mth.floor_double(this.x + this.rand.nextInt(11) - 5.0);
+				final int floor_double3 = Mth.floor_double(this.y + this.rand.nextInt(7) - 3.0);
+				final int floor_double4 = Mth.floor_double(this.z + this.rand.nextInt(11) - 5.0);
 				final float blockPathWeight = this.getBlockPathWeight(floor_double2, floor_double3, floor_double4);
 				if(blockPathWeight > n) {
 					n = blockPathWeight;
@@ -73,7 +73,7 @@ public class EntityCreature extends EntityLiving {
 		}
 		Vec3 vec3D = this.pathToEntity.getPosition(this);
 		final float n2 = this.width * 2.0f;
-		while(vec3D != null && vec3D.distanceSquared(this.posX, this.posY, this.posZ) < n2 * n2 && vec3D.y <= floor_double) {
+		while(vec3D != null && vec3D.distanceSquared(this.x, this.y, this.z) < n2 * n2 && vec3D.y <= floor_double) {
 			this.pathToEntity.incrementPathIndex();
 			if(this.pathToEntity.isFinished()) {
 				vec3D = null;
@@ -84,14 +84,14 @@ public class EntityCreature extends EntityLiving {
 		}
 		this.isJumping = false;
 		if(vec3D != null) {
-			final double n3 = vec3D.x - this.posX;
-			final double n4 = vec3D.z - this.posZ;
+			final double n3 = vec3D.x - this.x;
+			final double n4 = vec3D.z - this.z;
 			final double n5 = vec3D.y - floor_double;
 			this.rotationYaw = (float) (toRadians(atan2(n4, n3))) - 90.0f;
 			this.moveForward = this.moveSpeed;
 			if(this.hasAttacked && this.playerToAttack != null) {
-				final double n6 = this.playerToAttack.posX - this.posX;
-				final double n7 = this.playerToAttack.posZ - this.posZ;
+				final double n6 = this.playerToAttack.x - this.x;
+				final double n7 = this.playerToAttack.z - this.z;
 				final float rotationYaw = this.rotationYaw;
 				this.rotationYaw = (float) (toRadians(atan2(n7, n6))) - 90.0f;
 				final float n8 = toRadians(rotationYaw - this.rotationYaw + 90.0f);

@@ -368,12 +368,12 @@ public class Block {
 	}
 
 	public void dropBlockAsItemWithChance(final World world, final int xCoord, final int yCoord, final int zCoord, final int nya4, final float nya5) {
-		for(int quantityDropped = this.quantityDropped(world.rand), i = 0; i < quantityDropped; ++i) {
-			if(world.rand.nextFloat() <= nya5) {
-				final int idDropped = this.idDropped(nya4, world.rand);
+		for(int quantityDropped = this.quantityDropped(world.random), i = 0; i < quantityDropped; ++i) {
+			if(world.random.nextFloat() <= nya5) {
+				final int idDropped = this.idDropped(nya4, world.random);
 				if(idDropped > 0) {
 					final float n = 0.7f;
-					final EntityItem entity = new EntityItem(world, xCoord + (world.rand.nextFloat() * n + (1.0f - n) * 0.5), yCoord + (world.rand.nextFloat() * n + (1.0f - n) * 0.5), zCoord + (world.rand.nextFloat() * n + (1.0f - n) * 0.5), new ItemStack(idDropped));
+					final EntityItem entity = new EntityItem(world, xCoord + (world.random.nextFloat() * n + (1.0f - n) * 0.5), yCoord + (world.random.nextFloat() * n + (1.0f - n) * 0.5), zCoord + (world.random.nextFloat() * n + (1.0f - n) * 0.5), new ItemStack(idDropped));
 					entity.delayBeforeCanPickup = 10;
 					world.entityJoinedWorld(entity);
 				}

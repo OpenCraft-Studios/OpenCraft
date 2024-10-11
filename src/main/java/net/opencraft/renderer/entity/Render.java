@@ -85,9 +85,9 @@ public abstract class Render<T extends Entity> {
 		final World worldFromRenderManager = this.getWorldFromRenderManager();
 		GL11.glDepthMask(false);
 		final float shadowSize = this.shadowSize;
-		final double n = eq.lastTickPosX + (eq.posX - eq.lastTickPosX) * float6;
-		final double double5 = eq.lastTickPosY + (eq.posY - eq.lastTickPosY) * float6;
-		final double n2 = eq.lastTickPosZ + (eq.posZ - eq.lastTickPosZ) * float6;
+		final double n = eq.lastTickPosX + (eq.x - eq.lastTickPosX) * float6;
+		final double double5 = eq.lastTickPosY + (eq.y - eq.lastTickPosY) * float6;
+		final double n2 = eq.lastTickPosZ + (eq.z - eq.lastTickPosZ) * float6;
 		final int floor_double = Mth.floor_double(n - shadowSize);
 		final int floor_double2 = Mth.floor_double(n + shadowSize);
 		final int floor_double3 = Mth.floor_double(double5 - shadowSize);
@@ -224,7 +224,7 @@ public abstract class Render<T extends Entity> {
 
 	public void doRenderShadowAndFire(final Entity eq, final double double2, final double double3, final double double4, final float float5, final float float6) {
 		if(this.renderManager.options.fancyGraphics && this.shadowSize > 0.0f) {
-			final float float7 = (float) ((1.0 - this.renderManager.func_851_a(eq.posX, eq.posY, eq.posZ) / 256.0) * this.field_194_c);
+			final float float7 = (float) ((1.0 - this.renderManager.func_851_a(eq.x, eq.y, eq.z) / 256.0) * this.field_194_c);
 			if(float7 > 0.0f) {
 				this.renderShadow(eq, double2, double3, double4, float7, float6);
 			}

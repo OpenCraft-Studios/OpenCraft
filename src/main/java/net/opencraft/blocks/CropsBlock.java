@@ -86,9 +86,9 @@ public class CropsBlock extends FlowerBlock {
 	public void onBlockDestroyedByPlayer(final World world, final int xCoord, final int yCoord, final int zCoord, final int nya4) {
 		super.onBlockDestroyedByPlayer(world, xCoord, yCoord, zCoord, nya4);
 		for(int i = 0; i < 3; ++i) {
-			if(world.rand.nextInt(15) <= nya4) {
+			if(world.random.nextInt(15) <= nya4) {
 				final float n = 0.7f;
-				final EntityItem entity = new EntityItem(world, xCoord + (world.rand.nextFloat() * n + (1.0f - n) * 0.5f), yCoord + (world.rand.nextFloat() * n + (1.0f - n) * 0.5f), zCoord + (world.rand.nextFloat() * n + (1.0f - n) * 0.5f), new ItemStack(Item.seeds));
+				final EntityItem entity = new EntityItem(world, xCoord + (world.random.nextFloat() * n + (1.0f - n) * 0.5f), yCoord + (world.random.nextFloat() * n + (1.0f - n) * 0.5f), zCoord + (world.random.nextFloat() * n + (1.0f - n) * 0.5f), new ItemStack(Item.seeds));
 				entity.delayBeforeCanPickup = 10;
 				world.entityJoinedWorld(entity);
 			}

@@ -22,10 +22,10 @@ public class ItemHoe extends Item {
 			fe.playSoundEffect(xCoord + 0.5f, yCoord + 0.5f, zCoord + 0.5f, tilledField.stepSound.stepSoundDir2(), (tilledField.stepSound.soundVolume() + 1.0f) / 2.0f, tilledField.stepSound.soundPitch() * 0.8f);
 			fe.setBlockWithNotify(xCoord, yCoord, zCoord, tilledField.blockID);
 			hw.damageItem(1);
-			if(fe.rand.nextInt(8) == 0 && blockId == Block.grass.blockID) {
+			if(fe.random.nextInt(8) == 0 && blockId == Block.grass.blockID) {
 				for(int n = 1, i = 0; i < n; ++i) {
 					final float n2 = 0.7f;
-					final EntityItem entity = new EntityItem(fe, xCoord + (fe.rand.nextFloat() * n2 + (1.0f - n2) * 0.5f), yCoord + 1.2f, zCoord + (fe.rand.nextFloat() * n2 + (1.0f - n2) * 0.5f), new ItemStack(Item.seeds));
+					final EntityItem entity = new EntityItem(fe, xCoord + (fe.random.nextFloat() * n2 + (1.0f - n2) * 0.5f), yCoord + 1.2f, zCoord + (fe.random.nextFloat() * n2 + (1.0f - n2) * 0.5f), new ItemStack(Item.seeds));
 					entity.delayBeforeCanPickup = 10;
 					fe.entityJoinedWorld(entity);
 				}

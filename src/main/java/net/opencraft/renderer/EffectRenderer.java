@@ -54,9 +54,9 @@ public class EffectRenderer {
 		final float float3 = -sin * sin(toRadians(eq.rotationPitch));
 		final float float4 = cos * sin(toRadians(eq.rotationPitch));
 		final float cos2 = cos(toRadians(eq.rotationPitch));
-		EntityFX.interpPosX = eq.lastTickPosX + (eq.posX - eq.lastTickPosX) * float2;
-		EntityFX.interpPosY = eq.lastTickPosY + (eq.posY - eq.lastTickPosY) * float2;
-		EntityFX.interpPosZ = eq.lastTickPosZ + (eq.posZ - eq.lastTickPosZ) * float2;
+		EntityFX.interpPosX = eq.lastTickPosX + (eq.x - eq.lastTickPosX) * float2;
+		EntityFX.interpPosY = eq.lastTickPosY + (eq.y - eq.lastTickPosY) * float2;
+		EntityFX.interpPosZ = eq.lastTickPosZ + (eq.z - eq.lastTickPosZ) * float2;
 		for(int i = 0; i < 2; ++i) {
 			if(this.fxLayers[i].size() != 0) {
 				int n = 0;

@@ -12,7 +12,7 @@ import org.lwjgl.opengl.ARBOcclusionQuery;
 import org.lwjgl.opengl.GL11;
 
 import net.opencraft.OpenCraft;
-import net.opencraft.fi;
+import net.opencraft.DisplayListRenderer;
 import net.opencraft.blocks.Block;
 import net.opencraft.client.input.MovingObjectPosition;
 import net.opencraft.entity.*;
@@ -65,7 +65,7 @@ public class RenderGlobal implements IWorldAccess {
 	private int O;
 	private int P;
 	private List Q;
-	private fi[] R;
+	private DisplayListRenderer[] R;
 	int d;
 	int e;
 	double f;
@@ -83,7 +83,7 @@ public class RenderGlobal implements IWorldAccess {
 		this.b = new int[50000];
 		this.c = BufferUtils.createIntBuffer(64);
 		this.Q = (List) new ArrayList();
-		this.R = new fi[] { new fi(), new fi(), new fi(), new fi() };
+		this.R = new DisplayListRenderer[] { new DisplayListRenderer(), new DisplayListRenderer(), new DisplayListRenderer(), new DisplayListRenderer() };
 		this.d = 0;
 		this.e = GLAllocation.generateDisplayLists(1);
 		this.f = -9999.0;
@@ -250,7 +250,7 @@ public class RenderGlobal implements IWorldAccess {
 		}
 		if(this.k != null) {
 			final Entity player = this.k.player;
-			this.b(Mth.floor_double(player.posX), Mth.floor_double(player.posY), Mth.floor_double(player.posZ));
+			this.b(Mth.floor_double(player.x), Mth.floor_double(player.y), Mth.floor_double(player.z));
 			Arrays.sort((Object[]) this.n, (Comparator) new EntitySorter(player));
 		}
 	}
@@ -262,12 +262,12 @@ public class RenderGlobal implements IWorldAccess {
 		this.J = 0;
 		this.K = 0;
 		final Entity player = this.k.player;
-		RenderManager.renderPosX = player.lastTickPosX + (player.posX - player.lastTickPosX) * float3;
-		RenderManager.renderPosY = player.lastTickPosY + (player.posY - player.lastTickPosY) * float3;
-		RenderManager.renderPosZ = player.lastTickPosZ + (player.posZ - player.lastTickPosZ) * float3;
-		TileEntityRenderer.b = player.lastTickPosX + (player.posX - player.lastTickPosX) * float3;
-		TileEntityRenderer.c = player.lastTickPosY + (player.posY - player.lastTickPosY) * float3;
-		TileEntityRenderer.d = player.lastTickPosZ + (player.posZ - player.lastTickPosZ) * float3;
+		RenderManager.renderPosX = player.lastTickPosX + (player.x - player.lastTickPosX) * float3;
+		RenderManager.renderPosY = player.lastTickPosY + (player.y - player.lastTickPosY) * float3;
+		RenderManager.renderPosZ = player.lastTickPosZ + (player.z - player.lastTickPosZ) * float3;
+		TileEntityRenderer.b = player.lastTickPosX + (player.x - player.lastTickPosX) * float3;
+		TileEntityRenderer.c = player.lastTickPosY + (player.y - player.lastTickPosY) * float3;
+		TileEntityRenderer.d = player.lastTickPosZ + (player.z - player.lastTickPosZ) * float3;
 		final List loadedEntityList = this.k.getLoadedEntityList();
 		this.I = loadedEntityList.size();
 		for(int i = 0; i < loadedEntityList.size(); ++i) {
@@ -362,17 +362,17 @@ public class RenderGlobal implements IWorldAccess {
 			this.O = 0;
 			this.P = 0;
 		}
-		final double n = gi.lastTickPosX + (gi.posX - gi.lastTickPosX) * double3;
-		final double n2 = gi.lastTickPosY + (gi.posY - gi.lastTickPosY) * double3;
-		final double n3 = gi.lastTickPosZ + (gi.posZ - gi.lastTickPosZ) * double3;
-		final double n4 = gi.posX - this.f;
-		final double n5 = gi.posY - this.g;
-		final double n6 = gi.posZ - this.h;
+		final double n = gi.lastTickPosX + (gi.x - gi.lastTickPosX) * double3;
+		final double n2 = gi.lastTickPosY + (gi.y - gi.lastTickPosY) * double3;
+		final double n3 = gi.lastTickPosZ + (gi.z - gi.lastTickPosZ) * double3;
+		final double n4 = gi.x - this.f;
+		final double n5 = gi.y - this.g;
+		final double n6 = gi.z - this.h;
 		if(n4 * n4 + n5 * n5 + n6 * n6 > 16.0) {
-			this.f = gi.posX;
-			this.g = gi.posY;
-			this.h = gi.posZ;
-			this.b(Mth.floor_double(gi.posX), Mth.floor_double(gi.posY), Mth.floor_double(gi.posZ));
+			this.f = gi.x;
+			this.g = gi.y;
+			this.h = gi.z;
+			this.b(Mth.floor_double(gi.x), Mth.floor_double(gi.y), Mth.floor_double(gi.z));
 			Arrays.sort((Object[]) this.n, (Comparator) new EntitySorter(gi));
 		}
 		final int n7 = 0;
@@ -484,26 +484,26 @@ public class RenderGlobal implements IWorldAccess {
 			}
 		}
 		final EntityPlayerSP thePlayer = this.t.player;
-		final double double5 = thePlayer.lastTickPosX + (thePlayer.posX - thePlayer.lastTickPosX) * double4;
-		final double double6 = thePlayer.lastTickPosY + (thePlayer.posY - thePlayer.lastTickPosY) * double4;
-		final double double7 = thePlayer.lastTickPosZ + (thePlayer.posZ - thePlayer.lastTickPosZ) * double4;
+		final double double5 = thePlayer.lastTickPosX + (thePlayer.x - thePlayer.lastTickPosX) * double4;
+		final double double6 = thePlayer.lastTickPosY + (thePlayer.y - thePlayer.lastTickPosY) * double4;
+		final double double7 = thePlayer.lastTickPosZ + (thePlayer.z - thePlayer.lastTickPosZ) * double4;
 		int n2 = 0;
 		for(int j = 0; j < this.R.length; ++j) {
-			this.R[j].b();
+			this.R[j].reset();
 		}
 		for(int j = 0; j < this.Q.size(); ++j) {
 			final WorldRenderer worldRenderer = (WorldRenderer) this.Q.get(j);
 			int n3 = -1;
 			for(int k = 0; k < n2; ++k) {
-				if(this.R[k].a(worldRenderer.i, worldRenderer.j, worldRenderer.k)) {
+				if(this.R[k].positionsMatch(worldRenderer.i, worldRenderer.j, worldRenderer.k)) {
 					n3 = k;
 				}
 			}
 			if(n3 < 0) {
 				n3 = n2++;
-				this.R[n3].a(worldRenderer.i, worldRenderer.j, worldRenderer.k, double5, double6, double7);
+				this.R[n3].initialize(worldRenderer.i, worldRenderer.j, worldRenderer.k, double5, double6, double7);
 			}
-			this.R[n3].a(worldRenderer.a(integer3));
+			this.R[n3].addCommand(worldRenderer.a(integer3));
 		}
 		this.renderAllRenderLists(integer3, double4);
 		return n;
@@ -511,7 +511,7 @@ public class RenderGlobal implements IWorldAccess {
 
 	public void renderAllRenderLists(final int integer, final double double2) {
 		for(int i = 0; i < this.R.length; ++i) {
-			this.R[i].a();
+			this.R[i].render();
 		}
 	}
 
@@ -592,7 +592,7 @@ public class RenderGlobal implements IWorldAccess {
 			return;
 		}
 		GL11.glDisable(2884);
-		final float n = (float) (this.t.player.lastTickPosY + (this.t.player.posY - this.t.player.lastTickPosY) * float1);
+		final float n = (float) (this.t.player.lastTickPosY + (this.t.player.y - this.t.player.lastTickPosY) * float1);
 		final int n2 = 32;
 		final int n3 = 256 / n2;
 		final Tessellator instance = Tessellator.instance;
@@ -612,8 +612,8 @@ public class RenderGlobal implements IWorldAccess {
 			float4 = n6;
 		}
 		final float n4 = 4.8828125E-4f;
-		double n7 = this.k.player.prevPosX + (this.k.player.posX - this.k.player.prevPosX) * float1 + (this.x + float1) * 0.03f;
-		double n8 = this.k.player.prevPosZ + (this.k.player.posZ - this.k.player.prevPosZ) * float1;
+		double n7 = this.k.player.prevPosX + (this.k.player.x - this.k.player.prevPosX) * float1 + (this.x + float1) * 0.03f;
+		double n8 = this.k.player.prevPosZ + (this.k.player.z - this.k.player.prevPosZ) * float1;
 		final int floor_double = Mth.floor_double(n7 / 2048.0);
 		final int floor_double2 = Mth.floor_double(n8 / 2048.0);
 		n7 -= floor_double * 2048;
@@ -639,12 +639,12 @@ public class RenderGlobal implements IWorldAccess {
 
 	public void c(final float float1) {
 		GL11.glDisable(2884);
-		final float n = (float) (this.t.player.lastTickPosY + (this.t.player.posY - this.t.player.lastTickPosY) * float1);
+		final float n = (float) (this.t.player.lastTickPosY + (this.t.player.y - this.t.player.lastTickPosY) * float1);
 		final Tessellator instance = Tessellator.instance;
 		final float n2 = 12.0f;
 		final float n3 = 4.0f;
-		double n4 = (this.k.player.prevPosX + (this.k.player.posX - this.k.player.prevPosX) * float1 + (this.x + float1) * 0.03f) / n2;
-		double n5 = (this.k.player.prevPosZ + (this.k.player.posZ - this.k.player.prevPosZ) * float1) / n2 + 0.33000001311302185;
+		double n4 = (this.k.player.prevPosX + (this.k.player.x - this.k.player.prevPosX) * float1 + (this.x + float1) * 0.03f) / n2;
+		double n5 = (this.k.player.prevPosZ + (this.k.player.z - this.k.player.prevPosZ) * float1) / n2 + 0.33000001311302185;
 		final float n6 = 108.0f - n + 0.33f;
 		final int floor_double = Mth.floor_double(n4 / 2048.0);
 		final int floor_double2 = Mth.floor_double(n5 / 2048.0);
@@ -795,7 +795,7 @@ public class RenderGlobal implements IWorldAccess {
 				GL11.glPolygonOffset(-3.0f, -3.0f);
 				GL11.glEnable(32823);
 				instance.beginQuads();
-				instance.setTranslationD(-(gi.lastTickPosX + (gi.posX - gi.lastTickPosX) * float5), -(gi.lastTickPosY + (gi.posY - gi.lastTickPosY) * float5), -(gi.lastTickPosZ + (gi.posZ - gi.lastTickPosZ) * float5));
+				instance.setTranslationD(-(gi.lastTickPosX + (gi.x - gi.lastTickPosX) * float5), -(gi.lastTickPosY + (gi.y - gi.lastTickPosY) * float5), -(gi.lastTickPosZ + (gi.z - gi.lastTickPosZ) * float5));
 				instance.c();
 				if(stone == null) {
 					stone = Block.stone;
@@ -852,7 +852,7 @@ public class RenderGlobal implements IWorldAccess {
 			final float n = 0.002f;
 			final int blockId = this.k.getBlockId(hb.blockX, hb.blockY, hb.blockZ);
 			if(blockId > 0) {
-				this.a(Block.blocksList[blockId].getSelectedBoundingBoxFromPool(this.k, hb.blockX, hb.blockY, hb.blockZ).expand(n, n, n).getOffsetBoundingBox(-(gi.lastTickPosX + (gi.posX - gi.lastTickPosX) * float5), -(gi.lastTickPosY + (gi.posY - gi.lastTickPosY) * float5), -(gi.lastTickPosZ + (gi.posZ - gi.lastTickPosZ) * float5)));
+				this.a(Block.blocksList[blockId].getSelectedBoundingBoxFromPool(this.k, hb.blockX, hb.blockY, hb.blockZ).expand(n, n, n).getOffsetBoundingBox(-(gi.lastTickPosX + (gi.x - gi.lastTickPosX) * float5), -(gi.lastTickPosY + (gi.y - gi.lastTickPosY) * float5), -(gi.lastTickPosZ + (gi.z - gi.lastTickPosZ) * float5)));
 			}
 			GL11.glDepthMask(true);
 			GL11.glEnable(3553);
@@ -942,9 +942,9 @@ public class RenderGlobal implements IWorldAccess {
 	}
 
 	public void spawnParticle(final String particle, final double xCoordBlock, final double yCoordBlock, final double zCoordBlock, final double xPosition, final double yPosition, final double zPosition) {
-		final double n = this.k.player.posX - xCoordBlock;
-		final double n2 = this.k.player.posY - yCoordBlock;
-		final double n3 = this.k.player.posZ - zCoordBlock;
+		final double n = this.k.player.x - xCoordBlock;
+		final double n2 = this.k.player.y - yCoordBlock;
+		final double n3 = this.k.player.z - zCoordBlock;
 		if(n * n + n2 * n2 + n3 * n3 > 256.0) {
 			return;
 		}

@@ -5,9 +5,9 @@ import net.opencraft.client.entity.PlayerControllerSP;
 import net.opencraft.world.World;
 import net.opencraft.world.chunk.ChunkPosition;
 
-public class aa extends ck {
+public class aa extends EntitySpawner {
 
-	public final /* synthetic */ PlayerControllerSP a;
+	public final PlayerControllerSP a;
 
 	public aa(final PlayerControllerSP bb, final int integer, final Class class3, final Class[] arr) {
 		super(integer, class3, arr);
@@ -15,8 +15,8 @@ public class aa extends ck {
 	}
 
 	@Override
-	protected ChunkPosition a(final World fe, final int integer2, final int integer3) {
-		return new ChunkPosition(integer2 + fe.rand.nextInt(256) - 128, fe.rand.nextInt(fe.rand.nextInt(fe.rand.nextInt(112) + 8) + 8), integer3 + fe.rand.nextInt(256) - 128);
+	protected ChunkPosition getRandomChunkPos(final World fe, final int integer2, final int integer3) {
+		return new ChunkPosition(integer2 + fe.random.nextInt(256) - 128, fe.random.nextInt(fe.random.nextInt(fe.random.nextInt(112) + 8) + 8), integer3 + fe.random.nextInt(256) - 128);
 	}
 
 }

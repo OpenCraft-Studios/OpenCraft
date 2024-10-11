@@ -82,7 +82,7 @@ public class EntityLiving extends Entity {
 		this.health = 10;
 		this.preventEntitySpawning = true;
 		this.field_9363_r = (float) (random() + 1.0) * 0.01f;
-		this.setPosition(this.posX, this.posY, this.posZ);
+		this.setPosition(this.x, this.y, this.z);
 		this.field_9365_p = (float) random() * 12398.0f;
 		this.rotationYaw = (float) (random() * PI_TIMES_2);
 		this.ae = 1.0f;
@@ -127,7 +127,7 @@ public class EntityLiving extends Entity {
 			if(this.air == -20) {
 				this.air = 0;
 				for(int i = 0; i < 8; ++i) {
-					this.world.spawnParticle("bubble", this.posX + (this.rand.nextFloat() - this.rand.nextFloat()), this.posY + (this.rand.nextFloat() - this.rand.nextFloat()), this.posZ + (this.rand.nextFloat() - this.rand.nextFloat()), this.motionX, this.motionY, this.motionZ);
+					this.world.spawnParticle("bubble", this.x + (this.rand.nextFloat() - this.rand.nextFloat()), this.y + (this.rand.nextFloat() - this.rand.nextFloat()), this.z + (this.rand.nextFloat() - this.rand.nextFloat()), this.motionX, this.motionY, this.motionZ);
 				}
 				this.attackEntityFrom(null, 2);
 			}
@@ -151,7 +151,7 @@ public class EntityLiving extends Entity {
 				this.onEntityDeath();
 				this.setEntityDead();
 				for(int i = 0; i < 20; ++i) {
-					this.world.spawnParticle("explode", this.posX + this.rand.nextFloat() * this.width * 2.0f - this.width, this.posY + this.rand.nextFloat() * this.height, this.posZ + this.rand.nextFloat() * this.width * 2.0f - this.width, this.rand.nextGaussian() * 0.02, this.rand.nextGaussian() * 0.02, this.rand.nextGaussian() * 0.02);
+					this.world.spawnParticle("explode", this.x + this.rand.nextFloat() * this.width * 2.0f - this.width, this.y + this.rand.nextFloat() * this.height, this.z + this.rand.nextFloat() * this.width * 2.0f - this.width, this.rand.nextGaussian() * 0.02, this.rand.nextGaussian() * 0.02, this.rand.nextGaussian() * 0.02);
 				}
 			}
 		}
@@ -167,7 +167,7 @@ public class EntityLiving extends Entity {
 			final double yPosition = this.rand.nextGaussian() * 0.02;
 			final double zPosition = this.rand.nextGaussian() * 0.02;
 			final double n = 10.0;
-			this.world.spawnParticle("explode", this.posX + this.rand.nextFloat() * this.width * 2.0f - this.width - xPosition * n, this.posY + this.rand.nextFloat() * this.height - yPosition * n, this.posZ + this.rand.nextFloat() * this.width * 2.0f - this.width - zPosition * n, xPosition, yPosition, zPosition);
+			this.world.spawnParticle("explode", this.x + this.rand.nextFloat() * this.width * 2.0f - this.width - xPosition * n, this.y + this.rand.nextFloat() * this.height - yPosition * n, this.z + this.rand.nextFloat() * this.width * 2.0f - this.width - zPosition * n, xPosition, yPosition, zPosition);
 		}
 	}
 
@@ -182,8 +182,8 @@ public class EntityLiving extends Entity {
 	public void onUpdate() {
 		super.onUpdate();
 		this.onLivingUpdate();
-		final double n = this.posX - this.prevPosX;
-		final double n2 = this.posZ - this.prevPosZ;
+		final double n = this.x - this.prevPosX;
+		final double n2 = this.z - this.prevPosZ;
 		final float sqrt_double = Mth.sqrt_double(n * n + n2 * n2);
 		float renderYawOffset = this.renderYawOffset;
 		float n3 = 0.0f;
@@ -284,7 +284,7 @@ public class EntityLiving extends Entity {
 		if(entity != null) {
 			double nya2;
 			double nya3;
-			for(nya2 = entity.posX - this.posX, nya3 = entity.posZ - this.posZ; nya2 * nya2 + nya3 * nya3 < 1.0E-4; nya2 = (random() - random()) * 0.01, nya3 = (random() - random()) * 0.01) {
+			for(nya2 = entity.x - this.x, nya3 = entity.z - this.z; nya2 * nya2 + nya3 * nya3 < 1.0E-4; nya2 = (random() - random()) * 0.01, nya3 = (random() - random()) * 0.01) {
 			}
 			this.attackedAtYaw = (float) toRadians(atan2(nya3, nya2)) - this.rotationYaw;
 			this.knockBack(entity, nya1, nya2, nya3);
@@ -348,7 +348,7 @@ public class EntityLiving extends Entity {
 		final int nya2 = (int) ceil((double) (nya1 - 3.0f));
 		if(nya2 > 0) {
 			this.attackEntityFrom(null, nya2);
-			final int blockId = this.world.getBlockId(Mth.floor_double(this.posX), Mth.floor_double(this.posY - 0.20000000298023224 - this.yOffset), Mth.floor_double(this.posZ));
+			final int blockId = this.world.getBlockId(Mth.floor_double(this.x), Mth.floor_double(this.y - 0.20000000298023224 - this.yOffset), Mth.floor_double(this.z));
 			if(blockId > 0) {
 				final StepSound stepSound = Block.blocksList[blockId].stepSound;
 				this.world.playSound(this, stepSound.stepSoundDir2(), stepSound.soundVolume() * 0.5f, stepSound.soundPitch() * 0.75f);
@@ -358,25 +358,25 @@ public class EntityLiving extends Entity {
 
 	public void moveEntityWithHeading(final float nya1, final float moveForward) {
 		if(this.handleWaterMovement()) {
-			final double n = this.posY;
+			final double n = this.y;
 			this.moveFlying(nya1, moveForward, 0.02f);
 			this.moveEntity(this.motionX, this.motionY, this.motionZ);
 			this.motionX *= 0.800000011920929;
 			this.motionY *= 0.800000011920929;
 			this.motionZ *= 0.800000011920929;
 			this.motionY -= 0.02;
-			if(this.isCollidedHorizontally && this.isOffsetPositionInLiquid(this.motionX, this.motionY + 0.6000000238418579 - this.posY + n, this.motionZ)) {
+			if(this.isCollidedHorizontally && this.isOffsetPositionInLiquid(this.motionX, this.motionY + 0.6000000238418579 - this.y + n, this.motionZ)) {
 				this.motionY = 0.30000001192092896;
 			}
 		} else if(this.handleLavaMovement()) {
-			final double n = this.posY;
+			final double n = this.y;
 			this.moveFlying(nya1, moveForward, 0.02f);
 			this.moveEntity(this.motionX, this.motionY, this.motionZ);
 			this.motionX *= 0.5;
 			this.motionY *= 0.5;
 			this.motionZ *= 0.5;
 			this.motionY -= 0.02;
-			if(this.isCollidedHorizontally && this.isOffsetPositionInLiquid(this.motionX, this.motionY + 0.6000000238418579 - this.posY + n, this.motionZ)) {
+			if(this.isCollidedHorizontally && this.isOffsetPositionInLiquid(this.motionX, this.motionY + 0.6000000238418579 - this.y + n, this.motionZ)) {
 				this.motionY = 0.30000001192092896;
 			}
 		} else {
@@ -402,8 +402,8 @@ public class EntityLiving extends Entity {
 			}
 		}
 		this.newPosZ = this.newRotationYaw;
-		final double n = this.posX - this.prevPosX;
-		final double n3 = this.posZ - this.prevPosZ;
+		final double n = this.x - this.prevPosX;
+		final double n3 = this.z - this.prevPosZ;
 		float n4 = Mth.sqrt_double(n * n + n3 * n3) * 4.0f;
 		if(n4 > 1.0f) {
 			n4 = 1.0f;
@@ -413,9 +413,9 @@ public class EntityLiving extends Entity {
 	}
 
 	public boolean isOnLadder() {
-		final int floor_double = Mth.floor_double(this.posX);
+		final int floor_double = Mth.floor_double(this.x);
 		final int floor_double2 = Mth.floor_double(this.boundingBox.minY);
-		final int floor_double3 = Mth.floor_double(this.posZ);
+		final int floor_double3 = Mth.floor_double(this.z);
 		return this.world.getBlockId(floor_double, floor_double2, floor_double3) == Block.ladder.blockID || this.world.getBlockId(floor_double, floor_double2 + 1, floor_double3) == Block.ladder.blockID;
 	}
 
@@ -445,9 +445,9 @@ public class EntityLiving extends Entity {
 		++this.entityAge;
 		final Entity player = this.world.getPlayer();
 		if(player != null) {
-			final double n = player.posX - this.posX;
-			final double n2 = player.posY - this.posY;
-			final double n3 = player.posZ - this.posZ;
+			final double n = player.x - this.x;
+			final double n2 = player.y - this.y;
+			final double n3 = player.z - this.z;
 			final double n4 = n * n + n2 * n2 + n3 * n3;
 			if(n4 > 16384.0) {
 				this.setEntityDead();

@@ -30,9 +30,9 @@ public class EntityDiggingFX extends EntityFX {
 		final float n3 = (this.particleTextureIndex / 16 + this.particleTextureJitterY / 4.0f) / 16.0f;
 		final float n4 = n3 + 0.015609375f;
 		final float n5 = 0.1f * this.particleScale;
-		final float n6 = (float) (this.prevPosX + (this.posX - this.prevPosX) * float2 - EntityDiggingFX.interpPosX);
-		final float n7 = (float) (this.prevPosY + (this.posY - this.prevPosY) * float2 - EntityDiggingFX.interpPosY);
-		final float n8 = (float) (this.prevPosZ + (this.posZ - this.prevPosZ) * float2 - EntityDiggingFX.interpPosZ);
+		final float n6 = (float) (this.prevPosX + (this.x - this.prevPosX) * float2 - EntityDiggingFX.interpPosX);
+		final float n7 = (float) (this.prevPosY + (this.y - this.prevPosY) * float2 - EntityDiggingFX.interpPosY);
+		final float n8 = (float) (this.prevPosZ + (this.z - this.prevPosZ) * float2 - EntityDiggingFX.interpPosZ);
 		final float entityBrightness = this.getEntityBrightness(float2);
 		ag.setColorOpaque_F(entityBrightness * this.particleRed, entityBrightness * this.particleGreen, entityBrightness * this.particleBlue);
 		ag.vertexUV(n6 - float3 * n5 - float6 * n5, n7 - float4 * n5, n8 - float5 * n5 - float7 * n5, n, n4);

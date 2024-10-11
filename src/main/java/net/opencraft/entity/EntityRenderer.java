@@ -63,7 +63,7 @@ public class EntityRenderer {
 
 	public void updateRenderer() {
 		this.fogColor2 = this.fogColor1;
-		final float lightBrightness = this.mc.world.getLightBrightness(Mth.floor_double(this.mc.player.posX), Mth.floor_double(this.mc.player.posY), Mth.floor_double(this.mc.player.posZ));
+		final float lightBrightness = this.mc.world.getLightBrightness(Mth.floor_double(this.mc.player.x), Mth.floor_double(this.mc.player.y), Mth.floor_double(this.mc.player.z));
 		final float n = (3 - this.mc.options.renderDistance) / 3.0f;
 		this.fogColor1 += (lightBrightness * (1.0f - n) + n - this.fogColor1) * 0.1f;
 		++this.rendererUpdateCount;
@@ -75,7 +75,7 @@ public class EntityRenderer {
 
 	private Vec3 orientCamera(final float float1) {
 		final EntityPlayerSP thePlayer = this.mc.player;
-		return Vec3.newTemp(thePlayer.prevPosX + (thePlayer.posX - thePlayer.prevPosX) * float1, thePlayer.prevPosY + (thePlayer.posY - thePlayer.prevPosY) * float1, thePlayer.prevPosZ + (thePlayer.posZ - thePlayer.prevPosZ) * float1);
+		return Vec3.newTemp(thePlayer.prevPosX + (thePlayer.x - thePlayer.prevPosX) * float1, thePlayer.prevPosY + (thePlayer.y - thePlayer.prevPosY) * float1, thePlayer.prevPosZ + (thePlayer.z - thePlayer.prevPosZ) * float1);
 	}
 
 	private void getMouseOver(final float float1) {
@@ -176,9 +176,9 @@ public class EntityRenderer {
 		final EntityPlayerSP player = this.mc.player;
 		double double1, double2, double3;
 
-		double1 = fma(player.posX - player.prevPosX, multiplier, player.prevPosX);
-		double2 = fma(player.posY - player.prevPosY, multiplier, player.prevPosY);
-		double3 = fma(player.posZ - player.prevPosZ, multiplier, player.prevPosZ);
+		double1 = fma(player.x - player.prevPosX, multiplier, player.prevPosX);
+		double2 = fma(player.y - player.prevPosY, multiplier, player.prevPosY);
+		double3 = fma(player.z - player.prevPosZ, multiplier, player.prevPosZ);
 
 		if(this.mc.options.thirdPersonView) {
 			double n = 4.0;
@@ -332,9 +332,9 @@ public class EntityRenderer {
 		final EntityPlayerSP thePlayer = this.mc.player;
 		final RenderGlobal renderGlobal = this.mc.renderGlobal;
 		final EffectRenderer effectRenderer = this.mc.effectRenderer;
-		final double xCoord = thePlayer.lastTickPosX + (thePlayer.posX - thePlayer.lastTickPosX) * float1;
-		final double yCoord = thePlayer.lastTickPosY + (thePlayer.posY - thePlayer.lastTickPosY) * float1;
-		final double zCoord = thePlayer.lastTickPosZ + (thePlayer.posZ - thePlayer.lastTickPosZ) * float1;
+		final double xCoord = thePlayer.lastTickPosX + (thePlayer.x - thePlayer.lastTickPosX) * float1;
+		final double yCoord = thePlayer.lastTickPosY + (thePlayer.y - thePlayer.lastTickPosY) * float1;
+		final double zCoord = thePlayer.lastTickPosZ + (thePlayer.z - thePlayer.lastTickPosZ) * float1;
 		for(int i = 0; i < 2; ++i) {
 			if(this.mc.options.anaglyph) {
 				if(i == 0) {
@@ -430,9 +430,9 @@ public class EntityRenderer {
 	private void addRainParticles() {
 		final EntityPlayerSP thePlayer = this.mc.player;
 		final World theWorld = this.mc.world;
-		final int floor_double = Mth.floor_double(thePlayer.posX);
-		final int floor_double2 = Mth.floor_double(thePlayer.posY);
-		final int floor_double3 = Mth.floor_double(thePlayer.posZ);
+		final int floor_double = Mth.floor_double(thePlayer.x);
+		final int floor_double2 = Mth.floor_double(thePlayer.y);
+		final int floor_double3 = Mth.floor_double(thePlayer.z);
 		final int n = 4;
 		for(int i = 0; i < 50; ++i) {
 			final int n2 = floor_double + this.random.nextInt(n * 2 + 1) - n;
@@ -452,9 +452,9 @@ public class EntityRenderer {
 	private void renderRainSnow(final float float1) {
 		final EntityPlayerSP thePlayer = this.mc.player;
 		final World theWorld = this.mc.world;
-		final int floor_double = Mth.floor_double(thePlayer.posX);
-		final int floor_double2 = Mth.floor_double(thePlayer.posY);
-		final int floor_double3 = Mth.floor_double(thePlayer.posZ);
+		final int floor_double = Mth.floor_double(thePlayer.x);
+		final int floor_double2 = Mth.floor_double(thePlayer.y);
+		final int floor_double3 = Mth.floor_double(thePlayer.z);
 		final Tessellator instance = Tessellator.instance;
 		GL11.glDisable(2884);
 		GL11.glNormal3f(0.0f, 1.0f, 0.0f);
@@ -475,8 +475,8 @@ public class EntityRenderer {
 				final float n4 = 2.0f;
 				if(n2 != n3) {
 					final float n5 = ((this.rendererUpdateCount + i * 3121 + j * 418711) % 32 + float1) / 32.0f;
-					final double n6 = i + 0.5f - thePlayer.posX;
-					final double n7 = j + 0.5f - thePlayer.posZ;
+					final double n6 = i + 0.5f - thePlayer.x;
+					final double n7 = j + 0.5f - thePlayer.z;
 					final float n8 = Mth.sqrt_double(n6 * n6 + n7 * n7) / n;
 					GL11.glColor4f(1.0f, 1.0f, 1.0f, (1.0f - n8 * n8) * 0.7f);
 					instance.beginQuads();

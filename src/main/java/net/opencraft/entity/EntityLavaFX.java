@@ -41,14 +41,14 @@ public class EntityLavaFX extends EntityFX {
 
 	@Override
 	public void onUpdate() {
-		this.prevPosX = this.posX;
-		this.prevPosY = this.posY;
-		this.prevPosZ = this.posZ;
+		this.prevPosX = this.x;
+		this.prevPosY = this.y;
+		this.prevPosZ = this.z;
 		if(this.particleAge++ >= this.particleMaxAge) {
 			this.setEntityDead();
 		}
 		if(this.rand.nextFloat() > this.particleAge / (float) this.particleMaxAge) {
-			this.world.spawnParticle("smoke", this.posX, this.posY, this.posZ, this.motionX, this.motionY, this.motionZ);
+			this.world.spawnParticle("smoke", this.x, this.y, this.z, this.motionX, this.motionY, this.motionZ);
 		}
 		this.motionY -= 0.03;
 		this.moveEntity(this.motionX, this.motionY, this.motionZ);

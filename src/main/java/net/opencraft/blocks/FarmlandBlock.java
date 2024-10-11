@@ -62,7 +62,7 @@ public class FarmlandBlock extends Block {
 
 	@Override
 	public void onEntityWalking(final World world, final int xCoord, final int yCoord, final int zCoord, final Entity entity) {
-		if(world.rand.nextInt(4) == 0) {
+		if(world.random.nextInt(4) == 0) {
 			world.setBlockWithNotify(xCoord, yCoord, zCoord, Block.dirt.blockID);
 		}
 	}

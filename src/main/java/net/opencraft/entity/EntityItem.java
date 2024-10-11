@@ -50,17 +50,17 @@ public class EntityItem extends Entity {
 		if(this.delayBeforeCanPickup > 0) {
 			--this.delayBeforeCanPickup;
 		}
-		this.prevPosX = this.posX;
-		this.prevPosY = this.posY;
-		this.prevPosZ = this.posZ;
+		this.prevPosX = this.x;
+		this.prevPosY = this.y;
+		this.prevPosZ = this.z;
 		this.motionY -= 0.03999999910593033;
-		if(this.world.getBlockMaterial(Mth.floor_double(this.posX), Mth.floor_double(this.posY), Mth.floor_double(this.posZ)) == Material.LAVA) {
+		if(this.world.getBlockMaterial(Mth.floor_double(this.x), Mth.floor_double(this.y), Mth.floor_double(this.z)) == Material.LAVA) {
 			this.motionY = 0.20000000298023224;
 			this.motionX = (this.rand.nextFloat() - this.rand.nextFloat()) * 0.2f;
 			this.motionZ = (this.rand.nextFloat() - this.rand.nextFloat()) * 0.2f;
 			this.world.playSound((Entity) this, "random.fizz", 0.4f, 2.0f + this.rand.nextFloat() * 0.4f);
 		}
-		this.pushOutOfBlocks(this.posX, this.posY, this.posZ);
+		this.pushOutOfBlocks(this.x, this.y, this.z);
 		this.handleWaterMovement();
 		this.moveEntity(this.motionX, this.motionY, this.motionZ);
 		this.motionX *= 0.9800000190734863;

@@ -19,7 +19,7 @@ import net.opencraft.world.chunk.ChunkPosition;
 public class Explosion {
 
 	public void doExplosion(final World fe, final Entity eq, final double double3, final double double4, final double double5, float float6) {
-		fe.playSoundEffect(double3, double4, double5, "random.explode", 4.0f, (1.0f + (fe.rand.nextFloat() - fe.rand.nextFloat()) * 0.2f) * 0.7f);
+		fe.playSoundEffect(double3, double4, double5, "random.explode", 4.0f, (1.0f + (fe.random.nextFloat() - fe.random.nextFloat()) * 0.2f) * 0.7f);
 		final HashSet set = new HashSet();
 		final float n = float6;
 		for(int n2 = 16, i = 0; i < n2; ++i) {
@@ -33,7 +33,7 @@ public class Explosion {
 						n3 /= sqrt;
 						n4 /= sqrt;
 						n5 /= sqrt;
-						float n6 = float6 * (0.7f + fe.rand.nextFloat() * 0.6f);
+						float n6 = float6 * (0.7f + fe.random.nextFloat() * 0.6f);
 						double double6 = double3;
 						double double7 = double4;
 						double n7 = double5;
@@ -66,9 +66,9 @@ public class Explosion {
 			final Entity entity = (Entity) entitiesWithinAABBExcludingEntity.get(l);
 			final double n9 = entity.getDistance(double3, double4, double5) / float6;
 			if(n9 <= 1.0) {
-				double double6 = entity.posX - double3;
-				double double7 = entity.posY - double4;
-				double n7 = entity.posZ - double5;
+				double double6 = entity.x - double3;
+				double double7 = entity.y - double4;
+				double n7 = entity.z - double5;
 				final double yCoordBlock = Mth.sqrt_double(double6 * double6 + double7 * double7 + n7 * n7);
 				double6 /= yCoordBlock;
 				double7 /= yCoordBlock;
@@ -95,9 +95,9 @@ public class Explosion {
 			final int z = chunkPosition.z;
 			final int blockId2 = fe.getBlockId(x, y, z);
 			for(int n13 = 0; n13 < 1; ++n13) {
-				final double n7 = x + fe.rand.nextFloat();
-				final double yCoordBlock = y + fe.rand.nextFloat();
-				final double zCoordBlock = z + fe.rand.nextFloat();
+				final double n7 = x + fe.random.nextFloat();
+				final double yCoordBlock = y + fe.random.nextFloat();
+				final double zCoordBlock = z + fe.random.nextFloat();
 				double n10 = n7 - double3;
 				double n11 = yCoordBlock - double4;
 				double n14 = zCoordBlock - double5;
@@ -106,7 +106,7 @@ public class Explosion {
 				n11 /= n15;
 				n14 /= n15;
 				double n16 = 0.5 / (n15 / float6 + 0.1);
-				n16 *= fe.rand.nextFloat() * fe.rand.nextFloat() + 0.3f;
+				n16 *= fe.random.nextFloat() * fe.random.nextFloat() + 0.3f;
 				n10 *= n16;
 				n11 *= n16;
 				n14 *= n16;

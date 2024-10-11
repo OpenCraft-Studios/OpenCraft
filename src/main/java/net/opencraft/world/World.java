@@ -43,7 +43,7 @@ public class World implements IBlockAccess {
 	public Entity player;
 	public int difficultySetting;
 	public Object h;
-	public Random rand;
+	public Random random;
 	public int x;
 	public int y;
 	public int z;
@@ -86,7 +86,7 @@ public class World implements IBlockAccess {
 		this.randInt = new Random().nextInt();
 		this.zz = 1013904223;
 		this.editingBlocks = false;
-		this.rand = new Random();
+		this.random = new Random();
 		this.isNewWorld = false;
 		this.worldAccesses = new ArrayList();
 		this.n = 0L;
@@ -123,8 +123,8 @@ public class World implements IBlockAccess {
 			this.y = 64;
 			this.z = 0;
 			while(!this.e(this.x, this.z)) {
-				this.x += this.rand.nextInt(64) - this.rand.nextInt(64);
-				this.z += this.rand.nextInt(64) - this.rand.nextInt(64);
+				this.x += this.random.nextInt(64) - this.random.nextInt(64);
+				this.z += this.random.nextInt(64) - this.random.nextInt(64);
 			}
 		}
 		this.calculateInitialSkylight();
@@ -136,8 +136,8 @@ public class World implements IBlockAccess {
 
 	public void a() {
 		while(this.f(this.x, this.z) == 0) {
-			this.x += this.rand.nextInt(8) - this.rand.nextInt(8);
-			this.z += this.rand.nextInt(8) - this.rand.nextInt(8);
+			this.x += this.random.nextInt(8) - this.random.nextInt(8);
+			this.z += this.random.nextInt(8) - this.random.nextInt(8);
 		}
 	}
 
@@ -674,7 +674,7 @@ public class World implements IBlockAccess {
 				n *= volume;
 			}
 			if(this.player.getDistanceSqToEntity(entity) < n * n) {
-				((IWorldAccess) this.worldAccesses.get(i)).playSound(soundName, entity.posX, entity.posY - entity.yOffset, entity.posZ, volume, pitch);
+				((IWorldAccess) this.worldAccesses.get(i)).playSound(soundName, entity.x, entity.y - entity.yOffset, entity.z, volume, pitch);
 			}
 		}
 	}
@@ -686,9 +686,9 @@ public class World implements IBlockAccess {
 				if(volume > 1.0f) {
 					n *= volume;
 				}
-				final double n2 = xCoord - this.player.posX;
-				final double n3 = yCoord - this.player.posY;
-				final double n4 = zCoord - this.player.posZ;
+				final double n2 = xCoord - this.player.x;
+				final double n3 = yCoord - this.player.y;
+				final double n4 = zCoord - this.player.z;
 				if(n2 * n2 + n3 * n3 + n4 * n4 < n * n) {
 					((IWorldAccess) this.worldAccesses.get(i)).playSound(soundName, xCoord, yCoord, zCoord, volume, pitch);
 				}
@@ -708,8 +708,8 @@ public class World implements IBlockAccess {
 	}
 
 	public void entityJoinedWorld(final Entity entity) {
-		final int floor_double = Mth.floor_double(entity.posX / 16.0);
-		final int floor_double2 = Mth.floor_double(entity.posZ / 16.0);
+		final int floor_double = Mth.floor_double(entity.x / 16.0);
+		final int floor_double2 = Mth.floor_double(entity.z / 16.0);
 		if(this.chunkExists(floor_double, floor_double2)) {
 			this.getChunkFromChunkCoords(floor_double, floor_double2).addEntity(entity);
 			this.loadedEntityList.add(entity);
@@ -889,8 +889,8 @@ public class World implements IBlockAccess {
 				this.updateEntity(entity);
 			}
 			if(entity.isDead) {
-				final int j = Mth.floor_double(entity.posX / 16.0);
-				final int floor_double = Mth.floor_double(entity.posZ / 16.0);
+				final int j = Mth.floor_double(entity.x / 16.0);
+				final int floor_double = Mth.floor_double(entity.z / 16.0);
 				if(this.chunkExists(j, floor_double)) {
 					this.getChunkFromChunkCoords(j, floor_double).removeEntity(entity);
 				}
@@ -906,29 +906,29 @@ public class World implements IBlockAccess {
 	}
 
 	private void updateEntity(final Entity entity) {
-		final int floor_double = Mth.floor_double(entity.posX);
-		Mth.floor_double(entity.posY);
-		final int floor_double2 = Mth.floor_double(entity.posZ);
+		final int floor_double = Mth.floor_double(entity.x);
+		Mth.floor_double(entity.y);
+		final int floor_double2 = Mth.floor_double(entity.z);
 		final int n = 16;
 		if(!this.checkChunksExist(floor_double - n, 0, floor_double2 - n, floor_double + n, 128, floor_double2 + n)) {
 			return;
 		}
-		entity.lastTickPosX = entity.posX;
-		entity.lastTickPosY = entity.posY;
-		entity.lastTickPosZ = entity.posZ;
+		entity.lastTickPosX = entity.x;
+		entity.lastTickPosY = entity.y;
+		entity.lastTickPosZ = entity.z;
 		entity.prevRotationYaw = entity.rotationYaw;
 		entity.prevRotationPitch = entity.rotationPitch;
-		final int floor_double3 = Mth.floor_double(entity.posX / 16.0);
-		final int floor_double4 = Mth.floor_double(entity.posY / 16.0);
-		final int floor_double5 = Mth.floor_double(entity.posZ / 16.0);
+		final int floor_double3 = Mth.floor_double(entity.x / 16.0);
+		final int floor_double4 = Mth.floor_double(entity.y / 16.0);
+		final int floor_double5 = Mth.floor_double(entity.z / 16.0);
 		if(entity.ridingEntity != null) {
 			entity.updateRidden();
 		} else {
 			entity.onUpdate();
 		}
-		final int floor_double6 = Mth.floor_double(entity.posX / 16.0);
-		final int floor_double7 = Mth.floor_double(entity.posY / 16.0);
-		final int floor_double8 = Mth.floor_double(entity.posZ / 16.0);
+		final int floor_double6 = Mth.floor_double(entity.x / 16.0);
+		final int floor_double7 = Mth.floor_double(entity.y / 16.0);
+		final int floor_double8 = Mth.floor_double(entity.z / 16.0);
 		if(floor_double3 != floor_double6 || floor_double4 != floor_double7 || floor_double5 != floor_double8) {
 			if(this.chunkExists(floor_double3, floor_double5)) {
 				this.getChunkFromChunkCoords(floor_double3, floor_double5).removeEntityAtIndex(entity, floor_double4);
@@ -947,14 +947,14 @@ public class World implements IBlockAccess {
 				this.updateEntity(entity.riddenByEntity);
 			}
 		}
-		if(Double.isNaN(entity.posX) || Double.isInfinite(entity.posX)) {
-			entity.posX = entity.lastTickPosX;
+		if(Double.isNaN(entity.x) || Double.isInfinite(entity.x)) {
+			entity.x = entity.lastTickPosX;
 		}
-		if(Double.isNaN(entity.posY) || Double.isInfinite(entity.posY)) {
-			entity.posY = entity.lastTickPosY;
+		if(Double.isNaN(entity.y) || Double.isInfinite(entity.y)) {
+			entity.y = entity.lastTickPosY;
 		}
-		if(Double.isNaN(entity.posZ) || Double.isInfinite(entity.posZ)) {
-			entity.posZ = entity.lastTickPosZ;
+		if(Double.isNaN(entity.z) || Double.isInfinite(entity.z)) {
+			entity.z = entity.lastTickPosZ;
 		}
 		if(Double.isNaN(entity.rotationPitch) || Double.isInfinite(entity.rotationPitch)) {
 			entity.rotationPitch = entity.prevRotationPitch;
@@ -1117,7 +1117,7 @@ public class World implements IBlockAccess {
 			++var1;
 		}
 		if(this.getBlockId(var1, var2, var3) == Block.fire.blockID) {
-			this.playSoundEffect((var1 + 0.5f), (var2 + 0.5f), (var3 + 0.5f), "random.fizz", 0.5f, 2.6f + (this.rand.nextFloat() - this.rand.nextFloat()) * 0.8f);
+			this.playSoundEffect((var1 + 0.5f), (var2 + 0.5f), (var3 + 0.5f), "random.fizz", 0.5f, 2.6f + (this.random.nextFloat() - this.random.nextFloat()) * 0.8f);
 			this.setBlockWithNotify(var1, var2, var3, 0);
 		}
 	}
@@ -1222,8 +1222,8 @@ public class World implements IBlockAccess {
 			this.saveWorld(false, null);
 		}
 		this.TickUpdates(false);
-		int i = Mth.floor_double(this.player.posX);
-		final int floor_double = Mth.floor_double(this.player.posZ);
+		int i = Mth.floor_double(this.player.x);
+		final int floor_double = Mth.floor_double(this.player.z);
 		final int n = 64;
 		final ChunkCache chunkCache = new ChunkCache(this, i - n, 0, floor_double - n, i + n, 128, floor_double + n);
 		for(int j = 0; j < 8000; ++j) {
@@ -1234,7 +1234,7 @@ public class World implements IBlockAccess {
 			final int n5 = n2 >> 16 & 0x7F;
 			final int blockId = chunkCache.getBlockId(n3, n5, n4);
 			if(Block.tickOnLoad[blockId]) {
-				Block.blocksList[blockId].updateTick(this, n3, n5, n4, this.rand);
+				Block.blocksList[blockId].updateTick(this, n3, n5, n4, this.random);
 			}
 		}
 	}
@@ -1258,7 +1258,7 @@ public class World implements IBlockAccess {
 			if(this.checkChunksExist(nextTickListEntry.xCoord - n, nextTickListEntry.yCoord - n, nextTickListEntry.zCoord - n, nextTickListEntry.xCoord + n, nextTickListEntry.yCoord + n, nextTickListEntry.zCoord + n)) {
 				final int blockId = this.getBlockId(nextTickListEntry.xCoord, nextTickListEntry.yCoord, nextTickListEntry.zCoord);
 				if(blockId == nextTickListEntry.blockID && blockId > 0) {
-					Block.blocksList[blockId].updateTick(this, nextTickListEntry.xCoord, nextTickListEntry.yCoord, nextTickListEntry.zCoord, this.rand);
+					Block.blocksList[blockId].updateTick(this, nextTickListEntry.xCoord, nextTickListEntry.yCoord, nextTickListEntry.zCoord, this.random);
 				}
 			}
 		}
@@ -1269,9 +1269,9 @@ public class World implements IBlockAccess {
 		final int n = 16;
 		final Random random = new Random();
 		for(int i = 0; i < 1000; ++i) {
-			final int n2 = integer1 + this.rand.nextInt(n) - this.rand.nextInt(n);
-			final int n3 = integer2 + this.rand.nextInt(n) - this.rand.nextInt(n);
-			final int n4 = integer3 + this.rand.nextInt(n) - this.rand.nextInt(n);
+			final int n2 = integer1 + this.random.nextInt(n) - this.random.nextInt(n);
+			final int n3 = integer2 + this.random.nextInt(n) - this.random.nextInt(n);
+			final int n4 = integer3 + this.random.nextInt(n) - this.random.nextInt(n);
 			final int blockId = this.getBlockId(n2, n3, n4);
 			if(blockId > 0) {
 				Block.blocksList[blockId].randomDisplayTick(this, n2, n3, n4, random);
@@ -1361,17 +1361,17 @@ public class World implements IBlockAccess {
 	}
 
 	public PathEntity getPathToEntity(final Entity entity, final Entity entity2, final float float3) {
-		final int floor_double = Mth.floor_double(entity.posX);
-		final int floor_double2 = Mth.floor_double(entity.posY);
-		final int floor_double3 = Mth.floor_double(entity.posZ);
+		final int floor_double = Mth.floor_double(entity.x);
+		final int floor_double2 = Mth.floor_double(entity.y);
+		final int floor_double3 = Mth.floor_double(entity.z);
 		final int n = (int) (float3 + 32.0f);
 		return new Pathfinder(new ChunkCache(this, floor_double - n, floor_double2 - n, floor_double3 - n, floor_double + n, floor_double2 + n, floor_double3 + n)).createEntityPathTo(entity, entity2, float3);
 	}
 
 	public PathEntity getEntityPathToXYZ(final Entity entity, final int xCoord, final int yCoord, final int zCoord, final float float5) {
-		final int floor_double = Mth.floor_double(entity.posX);
-		final int floor_double2 = Mth.floor_double(entity.posY);
-		final int floor_double3 = Mth.floor_double(entity.posZ);
+		final int floor_double = Mth.floor_double(entity.x);
+		final int floor_double2 = Mth.floor_double(entity.y);
+		final int floor_double3 = Mth.floor_double(entity.z);
 		final int n = (int) (float5 + 32.0f);
 		return new Pathfinder(new ChunkCache(this, floor_double - n, floor_double2 - n, floor_double3 - n, floor_double + n, floor_double2 + n, floor_double3 + n)).createEntityPathTo(entity, xCoord, yCoord, zCoord, float5);
 	}

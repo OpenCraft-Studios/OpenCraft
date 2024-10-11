@@ -1,6 +1,8 @@
 
 package net.opencraft.world.chunk;
 
+import java.util.Objects;
+
 public class ChunkPosition {
 
 	public final int x;
@@ -13,14 +15,19 @@ public class ChunkPosition {
 		this.z = zCoord;
 	}
 
-	public boolean equals(final Object object) {
-		if(object instanceof ChunkPosition) {
-			final ChunkPosition chunkPosition = (ChunkPosition) object;
-			return chunkPosition.x == this.x && chunkPosition.y == this.y && chunkPosition.z == this.z;
-		}
-		return false;
+	@Override
+	public boolean equals(Object obj) {
+		if(this == obj)
+			return true;
+		if(obj == null)
+			return false;
+		if(getClass() != obj.getClass())
+			return false;
+		ChunkPosition other = (ChunkPosition) obj;
+		return x == other.x && y == other.y && z == other.z;
 	}
 
+	@Override
 	public int hashCode() {
 		return this.x * 8976890 + this.y * 981131 + this.z;
 	}

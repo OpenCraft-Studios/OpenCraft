@@ -47,11 +47,11 @@ public class EntityArrow extends Entity {
 		this.ticksInAir = 0;
 		this.owner = entityLiving;
 		this.setSize(0.5f, 0.5f);
-		this.setPositionAndRotation(entityLiving.posX, entityLiving.posY, entityLiving.posZ, entityLiving.rotationYaw, entityLiving.rotationPitch);
-		this.posX -= cos(toRadians(rotationYaw)) * 0.16f;
-		this.posY -= 0.10000000149011612;
-		this.posZ -= sin(toRadians(rotationYaw)) * 0.16f;
-		this.setPosition(this.posX, this.posY, this.posZ);
+		this.setPositionAndRotation(entityLiving.x, entityLiving.y, entityLiving.z, entityLiving.rotationYaw, entityLiving.rotationPitch);
+		this.x -= cos(toRadians(rotationYaw)) * 0.16f;
+		this.y -= 0.10000000149011612;
+		this.z -= sin(toRadians(rotationYaw)) * 0.16f;
+		this.setPosition(this.x, this.y, this.z);
 		this.yOffset = 0.0f;
 		this.motionX = -sin(toRadians(rotationYaw)) * cos(toRadians(rotationPitch));
 		this.motionZ = cos(toRadians(rotationYaw)) * cos(toRadians(rotationPitch));
@@ -106,9 +106,9 @@ public class EntityArrow extends Entity {
 		} else {
 			++this.ticksInAir;
 		}
-		MovingObjectPosition rayTraceBlocks = this.world.rayTraceBlocks(Vec3.newTemp(this.posX, this.posY, this.posZ), Vec3.newTemp(this.posX + this.motionX, this.posY + this.motionY, this.posZ + this.motionZ));
-		final Vec3 vector = Vec3.newTemp(this.posX, this.posY, this.posZ);
-		Vec3 var2 = Vec3.newTemp(this.posX + this.motionX, this.posY + this.motionY, this.posZ + this.motionZ);
+		MovingObjectPosition rayTraceBlocks = this.world.rayTraceBlocks(Vec3.newTemp(this.x, this.y, this.z), Vec3.newTemp(this.x + this.motionX, this.y + this.motionY, this.z + this.motionZ));
+		final Vec3 vector = Vec3.newTemp(this.x, this.y, this.z);
+		Vec3 var2 = Vec3.newTemp(this.x + this.motionX, this.y + this.motionY, this.z + this.motionZ);
 		if(rayTraceBlocks != null) {
 			var2 = Vec3.newTemp(rayTraceBlocks.hitVec.x, rayTraceBlocks.hitVec.y, rayTraceBlocks.hitVec.z);
 		}
@@ -152,21 +152,21 @@ public class EntityArrow extends Entity {
 				this.yTile = rayTraceBlocks.blockY;
 				this.zTile = rayTraceBlocks.blockZ;
 				this.inTile = this.world.getBlockId(this.xTile, this.yTile, this.zTile);
-				this.motionX = (float) (rayTraceBlocks.hitVec.x - this.posX);
-				this.motionY = (float) (rayTraceBlocks.hitVec.y - this.posY);
-				this.motionZ = (float) (rayTraceBlocks.hitVec.z - this.posZ);
+				this.motionX = (float) (rayTraceBlocks.hitVec.x - this.x);
+				this.motionY = (float) (rayTraceBlocks.hitVec.y - this.y);
+				this.motionZ = (float) (rayTraceBlocks.hitVec.z - this.z);
 				final float n3 = Mth.sqrt_double(this.motionX * this.motionX + this.motionY * this.motionY + this.motionZ * this.motionZ);
-				this.posX -= this.motionX / n3 * 0.05000000074505806;
-				this.posY -= this.motionY / n3 * 0.05000000074505806;
-				this.posZ -= this.motionZ / n3 * 0.05000000074505806;
+				this.x -= this.motionX / n3 * 0.05000000074505806;
+				this.y -= this.motionY / n3 * 0.05000000074505806;
+				this.z -= this.motionZ / n3 * 0.05000000074505806;
 				this.world.playSound((Entity) this, "random.drr", 1.0f, 1.2f / (this.rand.nextFloat() * 0.2f + 0.9f));
 				this.inGround = true;
 				this.arrowShake = 7;
 			}
 		}
-		this.posX += this.motionX;
-		this.posY += this.motionY;
-		this.posZ += this.motionZ;
+		this.x += this.motionX;
+		this.y += this.motionY;
+		this.z += this.motionZ;
 		final float n3 = Mth.sqrt_double(this.motionX * this.motionX + this.motionZ * this.motionZ);
 		this.rotationYaw = (float) (toRadians(atan2(this.motionX, this.motionZ)));
 		this.rotationPitch = (float) (toRadians(atan2(this.motionY, (double) n3)));
@@ -189,7 +189,7 @@ public class EntityArrow extends Entity {
 		if(this.handleWaterMovement()) {
 			for(int j = 0; j < 4; ++j) {
 				final float n5 = 0.25f;
-				this.world.spawnParticle("bubble", this.posX - this.motionX * n5, this.posY - this.motionY * n5, this.posZ - this.motionZ * n5, this.motionX, this.motionY, this.motionZ);
+				this.world.spawnParticle("bubble", this.x - this.motionX * n5, this.y - this.motionY * n5, this.z - this.motionZ * n5, this.motionX, this.motionY, this.motionZ);
 			}
 			n4 = 0.8f;
 		}
@@ -197,7 +197,7 @@ public class EntityArrow extends Entity {
 		this.motionY *= n4;
 		this.motionZ *= n4;
 		this.motionY -= n2;
-		this.setPosition(this.posX, this.posY, this.posZ);
+		this.setPosition(this.x, this.y, this.z);
 	}
 
 	public void writeEntityToNBT(final NBTTagCompound nbtTagCompound) {

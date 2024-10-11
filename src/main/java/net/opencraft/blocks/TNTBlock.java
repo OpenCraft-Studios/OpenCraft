@@ -32,7 +32,7 @@ public class TNTBlock extends Block {
 	@Override
 	public void onBlockDestroyedByExplosion(final World world, final int xCoord, final int yCoord, final int zCoord) {
 		final EntityTNTPrimed entity = new EntityTNTPrimed(world, xCoord + 0.5f, yCoord + 0.5f, zCoord + 0.5f);
-		entity.fuse = world.rand.nextInt(entity.fuse / 4) + entity.fuse / 8;
+		entity.fuse = world.random.nextInt(entity.fuse / 4) + entity.fuse / 8;
 		world.entityJoinedWorld(entity);
 	}
 

@@ -62,7 +62,7 @@ public class EntityPlayer extends EntityLiving {
 
 	@Override
 	public void onLivingUpdate() {
-		this.world.playSoundEffect(this.posX, this.posY, this.posZ, "calm", 0.0f);
+		this.world.playSoundEffect(this.x, this.y, this.z, "calm", 0.0f);
 		if(this.world.difficultySetting == 0 && this.health < 20 && this.ticksExisted % 20 * 4 == 0) {
 			this.heal(1);
 		}
@@ -103,7 +103,7 @@ public class EntityPlayer extends EntityLiving {
 	@Override
 	public void onDeath(final Entity entity) {
 		this.setSize(0.2f, 0.2f);
-		this.setPosition(this.posX, this.posY, this.posZ);
+		this.setPosition(this.x, this.y, this.z);
 		this.motionY = 0.10000000149011612;
 		if(this.username.equals("Notch")) {
 			this.dropPlayerItemWithRandomChoice(new ItemStack(Item.appleRed, 1), true);
@@ -133,7 +133,7 @@ public class EntityPlayer extends EntityLiving {
 		if(hw == null) {
 			return;
 		}
-		final EntityItem entity = new EntityItem(this.world, this.posX, this.posY - 0.30000001192092896, this.posZ, hw);
+		final EntityItem entity = new EntityItem(this.world, this.x, this.y - 0.30000001192092896, this.z, hw);
 		entity.delayBeforeCanPickup = 40;
 		float n = 0.1f;
 		if(boolean2) {

@@ -102,7 +102,7 @@ public class EntityMinecart extends Entity implements IInventory {
 					}
 					final ItemStack itemStack = stackInSlot;
 					itemStack.stackSize -= stackSize;
-					final EntityItem entity = new EntityItem(this.world, this.posX + n, this.posY + n2, this.posZ + n3, new ItemStack(stackInSlot.itemID, stackSize, stackInSlot.itemDamage));
+					final EntityItem entity = new EntityItem(this.world, this.x + n, this.y + n2, this.z + n3, new ItemStack(stackInSlot.itemID, stackSize, stackInSlot.itemDamage));
 					final float n4 = 0.05f;
 					entity.motionX = (float) this.rand.nextGaussian() * n4;
 					entity.motionY = (float) this.rand.nextGaussian() * n4 + 0.2f;
@@ -122,24 +122,24 @@ public class EntityMinecart extends Entity implements IInventory {
 		if(this.minecartCurrentDamage > 0) {
 			--this.minecartCurrentDamage;
 		}
-		this.prevPosX = this.posX;
-		this.prevPosY = this.posY;
-		this.prevPosZ = this.posZ;
+		this.prevPosX = this.x;
+		this.prevPosY = this.y;
+		this.prevPosZ = this.z;
 		this.motionY -= 0.03999999910593033;
-		final int floor_double = Mth.floor_double(this.posX);
-		int floor_double2 = Mth.floor_double(this.posY);
-		final int floor_double3 = Mth.floor_double(this.posZ);
+		final int floor_double = Mth.floor_double(this.x);
+		int floor_double2 = Mth.floor_double(this.y);
+		final int floor_double3 = Mth.floor_double(this.z);
 		if(this.world.getBlockId(floor_double, floor_double2 - 1, floor_double3) == Block.rail.blockID) {
 			--floor_double2;
 		}
 		final double n = 0.4;
 		final double n2 = 0.0078125;
 		if(this.world.getBlockId(floor_double, floor_double2, floor_double3) == Block.rail.blockID) {
-			final Vec3 pos = this.getPos(this.posX, this.posY, this.posZ);
+			final Vec3 pos = this.getPos(this.x, this.y, this.z);
 			final int blockMetadata = this.world.getBlockMetadata(floor_double, floor_double2, floor_double3);
-			this.posY = floor_double2;
+			this.y = floor_double2;
 			if(blockMetadata >= 2 && blockMetadata <= 5) {
-				this.posY = floor_double2 + 1;
+				this.y = floor_double2 + 1;
 			}
 			if(blockMetadata == 2) {
 				this.motionX -= n2;
@@ -172,19 +172,19 @@ public class EntityMinecart extends Entity implements IInventory {
 			n3 = n9 - n7;
 			n4 = n10 - n8;
 			if(n3 == 0.0) {
-				this.posX = floor_double + 0.5;
-				n6 = this.posZ - floor_double3;
+				this.x = floor_double + 0.5;
+				n6 = this.z - floor_double3;
 			} else if(n4 == 0.0) {
-				this.posZ = floor_double3 + 0.5;
-				n6 = this.posX - floor_double;
+				this.z = floor_double3 + 0.5;
+				n6 = this.x - floor_double;
 			} else {
-				final double motionX = this.posX - n7;
-				final double motionZ = this.posZ - n8;
+				final double motionX = this.x - n7;
+				final double motionZ = this.z - n8;
 				n6 = (motionX * n3 + motionZ * n4) * 2.0;
 			}
-			this.posX = n7 + n3 * n6;
-			this.posZ = n8 + n4 * n6;
-			this.setPosition(this.posX, this.posY + this.yOffset, this.posZ);
+			this.x = n7 + n3 * n6;
+			this.z = n8 + n4 * n6;
+			this.setPosition(this.x, this.y + this.yOffset, this.z);
 			double motionX = this.motionX;
 			double motionZ = this.motionZ;
 			if(this.riddenByEntity != null) {
@@ -204,10 +204,10 @@ public class EntityMinecart extends Entity implements IInventory {
 				motionZ = n;
 			}
 			this.moveEntity(motionX, 0.0, motionZ);
-			if(array[0][1] != 0 && Mth.floor_double(this.posX) - floor_double == array[0][0] && Mth.floor_double(this.posZ) - floor_double3 == array[0][2]) {
-				this.setPosition(this.posX, this.posY + array[0][1], this.posZ);
-			} else if(array[1][1] != 0 && Mth.floor_double(this.posX) - floor_double == array[1][0] && Mth.floor_double(this.posZ) - floor_double3 == array[1][2]) {
-				this.setPosition(this.posX, this.posY + array[1][1], this.posZ);
+			if(array[0][1] != 0 && Mth.floor_double(this.x) - floor_double == array[0][0] && Mth.floor_double(this.z) - floor_double3 == array[0][2]) {
+				this.setPosition(this.x, this.y + array[0][1], this.z);
+			} else if(array[1][1] != 0 && Mth.floor_double(this.x) - floor_double == array[1][0] && Mth.floor_double(this.z) - floor_double3 == array[1][2]) {
+				this.setPosition(this.x, this.y + array[1][1], this.z);
 			}
 			if(this.riddenByEntity != null) {
 				this.motionX *= 0.996999979019165;
@@ -218,7 +218,7 @@ public class EntityMinecart extends Entity implements IInventory {
 				this.motionY *= 0.0;
 				this.motionZ *= 0.9599999785423279;
 			}
-			final Vec3 pos2 = this.getPos(this.posX, this.posY, this.posZ);
+			final Vec3 pos2 = this.getPos(this.x, this.y, this.z);
 			if(pos2 != null && pos != null) {
 				final double n11 = (pos.y - pos2.y) * 0.05;
 				n5 = sqrt(this.motionX * this.motionX + this.motionZ * this.motionZ);
@@ -226,10 +226,10 @@ public class EntityMinecart extends Entity implements IInventory {
 					this.motionX = this.motionX / n5 * (n5 + n11);
 					this.motionZ = this.motionZ / n5 * (n5 + n11);
 				}
-				this.setPosition(this.posX, pos2.y, this.posZ);
+				this.setPosition(this.x, pos2.y, this.z);
 			}
-			final int floor_double4 = Mth.floor_double(this.posX);
-			final int floor_double5 = Mth.floor_double(this.posZ);
+			final int floor_double4 = Mth.floor_double(this.x);
+			final int floor_double5 = Mth.floor_double(this.z);
 			if(floor_double4 != floor_double || floor_double5 != floor_double3) {
 				n5 = sqrt(this.motionX * this.motionX + this.motionZ * this.motionZ);
 				this.motionX = n5 * (floor_double4 - floor_double);
@@ -261,8 +261,8 @@ public class EntityMinecart extends Entity implements IInventory {
 			}
 		}
 		this.rotationPitch = 0.0f;
-		final double n12 = this.prevPosX - this.posX;
-		final double n13 = this.prevPosZ - this.posZ;
+		final double n12 = this.prevPosX - this.x;
+		final double n13 = this.prevPosZ - this.z;
 		if(n12 * n12 + n13 * n13 > 0.001) {
 			this.rotationYaw = (float) toRadians(atan2(n13, n12));
 			if(this.isInReverse) {
@@ -404,8 +404,8 @@ public class EntityMinecart extends Entity implements IInventory {
 		if(entity == this.riddenByEntity) {
 			return;
 		}
-		double n = entity.posX - this.posX;
-		double n2 = entity.posZ - this.posZ;
+		double n = entity.x - this.x;
+		double n2 = entity.z - this.z;
 		double double1 = n * n + n2 * n2;
 		if(double1 >= 9.999999747378752E-5) {
 			double1 = Mth.sqrt_double(double1);

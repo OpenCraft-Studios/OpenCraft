@@ -28,9 +28,9 @@ public class EntityExplodeFX extends EntityFX {
 
 	@Override
 	public void onUpdate() {
-		this.prevPosX = this.posX;
-		this.prevPosY = this.posY;
-		this.prevPosZ = this.posZ;
+		this.prevPosX = this.x;
+		this.prevPosY = this.y;
+		this.prevPosZ = this.z;
 		if(this.particleAge++ >= this.particleMaxAge) {
 			this.setEntityDead();
 		}

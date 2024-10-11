@@ -32,9 +32,9 @@ public class EntityRainFX extends EntityFX {
 
 	@Override
 	public void onUpdate() {
-		this.prevPosX = this.posX;
-		this.prevPosY = this.posY;
-		this.prevPosZ = this.posZ;
+		this.prevPosX = this.x;
+		this.prevPosY = this.y;
+		this.prevPosZ = this.z;
 		this.motionY -= this.particleGravity;
 		this.moveEntity(this.motionX, this.motionY, this.motionZ);
 		this.motionX *= 0.9800000190734863;
@@ -50,8 +50,8 @@ public class EntityRainFX extends EntityFX {
 			this.motionX *= 0.699999988079071;
 			this.motionZ *= 0.699999988079071;
 		}
-		final Material blockMaterial = this.world.getBlockMaterial(Mth.floor_double(this.posX), Mth.floor_double(this.posY), Mth.floor_double(this.posZ));
-		if((blockMaterial.isLiquid() || blockMaterial.isSolid()) && this.posY < Mth.floor_double(this.posY) + 1 - LiquidBlock.getPercentAir(this.world.getBlockMetadata(Mth.floor_double(this.posX), Mth.floor_double(this.posY), Mth.floor_double(this.posZ)))) {
+		final Material blockMaterial = this.world.getBlockMaterial(Mth.floor_double(this.x), Mth.floor_double(this.y), Mth.floor_double(this.z));
+		if((blockMaterial.isLiquid() || blockMaterial.isSolid()) && this.y < Mth.floor_double(this.y) + 1 - LiquidBlock.getPercentAir(this.world.getBlockMetadata(Mth.floor_double(this.x), Mth.floor_double(this.y), Mth.floor_double(this.z)))) {
 			this.setEntityDead();
 		}
 	}

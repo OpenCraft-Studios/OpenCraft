@@ -25,15 +25,15 @@ public class EntityBubbleFX extends EntityFX {
 
 	@Override
 	public void onUpdate() {
-		this.prevPosX = this.posX;
-		this.prevPosY = this.posY;
-		this.prevPosZ = this.posZ;
+		this.prevPosX = this.x;
+		this.prevPosY = this.y;
+		this.prevPosZ = this.z;
 		this.motionY += 0.002;
 		this.moveEntity(this.motionX, this.motionY, this.motionZ);
 		this.motionX *= 0.8500000238418579;
 		this.motionY *= 0.8500000238418579;
 		this.motionZ *= 0.8500000238418579;
-		if(this.world.getBlockMaterial(Mth.floor_double(this.posX), Mth.floor_double(this.posY), Mth.floor_double(this.posZ)) != Material.WATER) {
+		if(this.world.getBlockMaterial(Mth.floor_double(this.x), Mth.floor_double(this.y), Mth.floor_double(this.z)) != Material.WATER) {
 			this.setEntityDead();
 		}
 		if(this.particleMaxAge-- <= 0) {

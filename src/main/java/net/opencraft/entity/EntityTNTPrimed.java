@@ -39,9 +39,9 @@ public class EntityTNTPrimed extends Entity {
 
 	@Override
 	public void onUpdate() {
-		this.prevPosX = this.posX;
-		this.prevPosY = this.posY;
-		this.prevPosZ = this.posZ;
+		this.prevPosX = this.x;
+		this.prevPosY = this.y;
+		this.prevPosZ = this.z;
 		this.motionY -= 0.03999999910593033;
 		this.moveEntity(this.motionX, this.motionY, this.motionZ);
 		this.motionX *= 0.9800000190734863;
@@ -56,12 +56,12 @@ public class EntityTNTPrimed extends Entity {
 			this.setEntityDead();
 			this.createExplosion();
 		} else {
-			this.world.spawnParticle("smoke", this.posX, this.posY + 0.5, this.posZ, 0.0, 0.0, 0.0);
+			this.world.spawnParticle("smoke", this.x, this.y + 0.5, this.z, 0.0, 0.0, 0.0);
 		}
 	}
 
 	private void createExplosion() {
-		this.world.createExplosion((Entity) null, this.posX, this.posY, this.posZ, 4.0f);
+		this.world.createExplosion((Entity) null, this.x, this.y, this.z, 4.0f);
 	}
 
 	@Override
