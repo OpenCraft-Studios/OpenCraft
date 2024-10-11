@@ -114,6 +114,9 @@ public class MouseHandler {
 
 		@Override
 		public void invoke(long window, double deltaX, double deltaY) {
+			if (oc.player == null)
+				return;
+			
 			oc.player.inventory.changeCurrentItem((int) deltaY);
 		}
 
