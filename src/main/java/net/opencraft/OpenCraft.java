@@ -6,13 +6,16 @@ import static org.lwjgl.opengl.GL43.*;
 
 import java.io.File;
 
-import net.opencraft.client.Main;
+import javax.annotation.Nullable;
+
 import org.lwjgl.glfw.GLFWFramebufferSizeCallback;
 import org.lwjgl.glfw.GLFWWindowFocusCallback;
-import org.lwjgl.opengl.*;
+import org.lwjgl.opengl.GL;
+import org.lwjgl.opengl.GLUtil;
 
 import net.opencraft.blocks.Block;
 import net.opencraft.blocks.SandBlock;
+import net.opencraft.client.Main;
 import net.opencraft.client.config.GameSettings;
 import net.opencraft.client.entity.*;
 import net.opencraft.client.entity.models.ModelBiped;
@@ -29,19 +32,21 @@ import net.opencraft.renderer.font.FontRenderer;
 import net.opencraft.renderer.gui.*;
 import net.opencraft.renderer.texture.*;
 import net.opencraft.tests.DownloadResourcesJob;
-import net.opencraft.util.*;
+import net.opencraft.util.Mth;
+import net.opencraft.util.UnexpectedThrowable;
 import net.opencraft.world.World;
 import net.opencraft.world.WorldRenderer;
 
 public class OpenCraft implements Runnable {
 
-	public static final String PROJECT_NAME_LOWERCASE = "opencraft";
-
 	public static OpenCraft oc;
 
 	public static long[] tickTimes;
 	public static int numRecordedFrameTimes;
+
+	@Nullable
 	private static File gameDir;
+
 	public long window;
 	public PlayerController playerController;
 	private boolean fullscreen;
@@ -807,7 +812,7 @@ public class OpenCraft implements Runnable {
 
 	public static File getGameDir() {
 		if(gameDir == null)
-			gameDir = new File(PROJECT_NAME_LOWERCASE);
+			gameDir = new File("opencraft");
 		return gameDir;
 	}
 
