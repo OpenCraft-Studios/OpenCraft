@@ -1,9 +1,12 @@
 
 package net.opencraft.renderer.gui;
 
+import static net.opencraft.OpenCraft.*;
+
+import org.lwjgl.opengl.GL11;
+
 import net.opencraft.tileentity.TileEntityRenderer;
 import net.opencraft.tileentity.TileEntitySign;
-import org.lwjgl.opengl.GL11;
 
 public class GuiEditSign extends GuiScreen {
 
@@ -37,12 +40,12 @@ public class GuiEditSign extends GuiScreen {
 
 	@Override
 	protected void actionPerformed(final GuiButton iq) {
-		if(!iq.enabled) {
+		if(!iq.enabled)
 			return;
-		}
+
 		if(iq.buttonId == 0) {
 			this.entitySign.onInventoryChanged();
-			this.id.displayGuiScreen(null);
+			oc.displayGuiScreen(null);
 		}
 	}
 

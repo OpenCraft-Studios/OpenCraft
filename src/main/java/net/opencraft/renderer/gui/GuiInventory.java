@@ -1,18 +1,15 @@
 
 package net.opencraft.renderer.gui;
 
-import net.opencraft.inventory.IInventory;
-import net.opencraft.inventory.InventoryCraftResult;
-import net.opencraft.inventory.InventoryCrafting;
-import net.opencraft.inventory.Slot;
-import net.opencraft.inventory.SlotArmor;
-import net.opencraft.inventory.SlotCrafting;
+import static net.opencraft.OpenCraft.*;
+
+import org.lwjgl.opengl.GL11;
+
+import net.opencraft.inventory.*;
 import net.opencraft.inventory.recipe.CraftingManager;
 import net.opencraft.item.ItemStack;
 import net.opencraft.renderer.entity.RenderHelper;
 import net.opencraft.renderer.entity.RenderManager;
-
-import org.lwjgl.opengl.GL11;
 
 public class GuiInventory extends GuiContainer {
 
@@ -51,7 +48,7 @@ public class GuiInventory extends GuiContainer {
 		for(int i = 0; i < this.inventoryCrafting.getSizeInventory(); ++i) {
 			final ItemStack stackInSlot = this.inventoryCrafting.getStackInSlot(i);
 			if(stackInSlot != null) {
-				this.id.player.dropPlayerItem(stackInSlot);
+				oc.player.dropPlayerItem(stackInSlot);
 			}
 		}
 	}
@@ -88,9 +85,9 @@ public class GuiInventory extends GuiContainer {
 
 	@Override
 	protected void drawGuiContainerBackgroundLayer(final float float1) {
-		final int texture = this.id.renderer.loadTexture("/assets/gui/inventory.png");
+		final int texture = oc.renderer.loadTexture("/assets/gui/inventory.png");
 		GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
-		this.id.renderer.bindTexture(texture);
+		oc.renderer.bindTexture(texture);
 		final int integer1 = (this.width - this.xSize) / 2;
 		final int integer2 = (this.height - this.ySize) / 2;
 		this.drawTexturedModalRect(integer1, integer2, 0, 0, this.xSize, this.ySize);
@@ -101,23 +98,23 @@ public class GuiInventory extends GuiContainer {
 		final float n = 30.0f;
 		GL11.glScalef(-n, n, n);
 		GL11.glRotatef(180.0f, 0.0f, 0.0f, 1.0f);
-		final float renderYawOffset = this.id.player.renderYawOffset;
-		final float rotationYaw = this.id.player.rotationYaw;
-		final float rotationPitch = this.id.player.rotationPitch;
+		final float renderYawOffset = oc.player.renderYawOffset;
+		final float rotationYaw = oc.player.rotationYaw;
+		final float rotationPitch = oc.player.rotationPitch;
 		final float n2 = integer1 + 51 - this.xSize_lo;
 		final float n3 = integer2 + 75 - 50 - this.ySize_lo;
 		GL11.glRotatef(135.0f, 0.0f, 1.0f, 0.0f);
 		RenderHelper.enableStandardItemLighting();
 		GL11.glRotatef(-135.0f, 0.0f, 1.0f, 0.0f);
 		GL11.glRotatef(-(float) Math.atan((double) (n3 / 40.0f)) * 20.0f, 1.0f, 0.0f, 0.0f);
-		this.id.player.renderYawOffset = (float) Math.atan((double) (n2 / 40.0f)) * 20.0f;
-		this.id.player.rotationYaw = (float) Math.atan((double) (n2 / 40.0f)) * 40.0f;
-		this.id.player.rotationPitch = -(float) Math.atan((double) (n3 / 40.0f)) * 20.0f;
+		oc.player.renderYawOffset = (float) Math.atan((double) (n2 / 40.0f)) * 20.0f;
+		oc.player.rotationYaw = (float) Math.atan((double) (n2 / 40.0f)) * 40.0f;
+		oc.player.rotationPitch = -(float) Math.atan((double) (n3 / 40.0f)) * 20.0f;
 		GL11.glTranslatef(0.0f, 0.0f, 0.0f);
-		RenderManager.instance.renderEntityWithPosYaw(this.id.player, 0.0, 0.0, 0.0, 0.0f, 1.0f);
-		this.id.player.renderYawOffset = renderYawOffset;
-		this.id.player.rotationYaw = rotationYaw;
-		this.id.player.rotationPitch = rotationPitch;
+		RenderManager.instance.renderEntityWithPosYaw(oc.player, 0.0, 0.0, 0.0, 0.0f, 1.0f);
+		oc.player.renderYawOffset = renderYawOffset;
+		oc.player.rotationYaw = rotationYaw;
+		oc.player.rotationPitch = rotationPitch;
 		GL11.glPopMatrix();
 		RenderHelper.disableStandardItemLighting();
 		GL11.glDisable(32826);

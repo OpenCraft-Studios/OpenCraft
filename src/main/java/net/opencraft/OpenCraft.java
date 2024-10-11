@@ -3,13 +3,13 @@ package net.opencraft;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL43.*;
+import static org.lwjgl.system.MemoryUtil.*;
 
 import java.io.File;
 
 import javax.annotation.Nullable;
 
-import org.lwjgl.glfw.GLFWFramebufferSizeCallback;
-import org.lwjgl.glfw.GLFWWindowFocusCallback;
+import org.lwjgl.glfw.*;
 import org.lwjgl.opengl.GL;
 import org.lwjgl.opengl.GLUtil;
 
@@ -48,19 +48,19 @@ public class OpenCraft implements Runnable {
 	private static File gameDir;
 
 	public long window;
+
 	public PlayerController playerController;
-	private boolean fullscreen;
-	public int width;
-	public int height;
+	public EntityPlayerSP player;
+
+	public int width, height;
 	private Timer timer;
 	public World world;
 	public RenderGlobal renderGlobal;
-	public EntityPlayerSP player;
 	public EffectRenderer effectRenderer;
 	public Session sessionData;
 	public String minecraftUri;
 	public boolean hideQuitButton;
-	public volatile boolean isGamePaused;
+	public volatile boolean paused;
 	public Renderer renderer;
 	public FontRenderer font;
 	public GuiScreen currentScreen;
@@ -68,8 +68,6 @@ public class OpenCraft implements Runnable {
 	public EntityRenderer entityRenderer;
 	private int ticksRan;
 	private int leftClickCounter;
-	private int tempDisplayWidth;
-	private int tempDisplayHeight;
 	public String objectMouseOverString;
 	public int rightClickDelayTimer;
 	public GuiIngame ingameGUI;
@@ -104,17 +102,15 @@ public class OpenCraft implements Runnable {
 		}
 	}
 
-	public OpenCraft(final int width, final int height, final boolean boolean6) {
-		oc = this;
-		this.playerController = new PlayerControllerSP(oc);
-		this.fullscreen = false;
+	public OpenCraft(int width, int height) {
+		this.playerController = new PlayerControllerSP();
 		this.timer = null;
 		this.sessionData = new Session("Notch", "1488228");
 		this.hideQuitButton = true;
-		this.isGamePaused = false;
+		this.paused = false;
 		this.currentScreen = null;
-		this.loadingScreen = new LoadingScreenRenderer(oc);
-		this.entityRenderer = new EntityRenderer(oc);
+		this.loadingScreen = new LoadingScreenRenderer();
+		this.entityRenderer = new EntityRenderer();
 		this.ticksRan = 0;
 		this.leftClickCounter = 0;
 		this.objectMouseOverString = null;
@@ -132,13 +128,9 @@ public class OpenCraft implements Runnable {
 		this.mouseTicksRan = 0;
 		this.isRaining = false;
 		this.systemTime = System.currentTimeMillis();
-		this.tempDisplayWidth = width;
-		this.tempDisplayHeight = height;
-		this.fullscreen = boolean6;
 		// why?: (new SleepingForeverThread("Timer hack thread")).start();
 		this.width = width;
 		this.height = height;
-		this.fullscreen = boolean6;
 	}
 
 	public void displayUnexpectedThrowable(final UnexpectedThrowable t) {
@@ -150,18 +142,26 @@ public class OpenCraft implements Runnable {
 
 	public void init() {
 		glfwInit();
+
 		glfwWindowHint(GLFW_RESIZABLE, GL_TRUE);
+		glfwWindowHint(GLFW_VISIBLE, GL_FALSE);
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
-		window = glfwCreateWindow(width, height, Main.TITLE, 0, 0);
-		if(window == 0) {
-			throw new RuntimeException("Failed to create the GLFW window");
-		}
+
+		window = glfwCreateWindow(width, height, "OpenCraft " + Main.VERSION, NULL, NULL);
+		if(window == NULL)
+			throw new RuntimeException("Unable to create GLFW window!");
+
 		glfwMakeContextCurrent(window);
 		if(GL.createCapabilities() == null)
 			throw new RuntimeException("Failed to create OpenGL capabilities");
-		glfwShowWindow(window);
 
+		GLFWVidMode videoMode = glfwGetVideoMode(glfwGetPrimaryMonitor());
+		int wPosX = (videoMode.width() - width) / 2;
+		int wPosY = (videoMode.height() - height) / 2;
+
+		glfwSetWindowPos(window, wPosX, wPosY);
+		glfwShowWindow(window);
 		glfwSetFramebufferSizeCallback(window, frameBufferResizeCallback = new GLFWFramebufferSizeCallback() {
 
 			@Override
@@ -180,7 +180,7 @@ public class OpenCraft implements Runnable {
 		timer = new Timer(20.0f);
 		resize(width, height);
 		mcDataDir = getGameDir();
-		options = new GameSettings(oc, mcDataDir);
+		options = new GameSettings(mcDataDir);
 		renderer = new Renderer(options);
 		font = new FontRenderer(options, "/assets/default.png", renderer);
 		loadScreen();
@@ -222,7 +222,7 @@ public class OpenCraft implements Runnable {
 			ex4.printStackTrace();
 		}
 		checkGLError();
-		ingameGUI = new GuiIngame(oc);
+		ingameGUI = new GuiIngame();
 		playerController.a();
 	}
 
@@ -277,7 +277,7 @@ public class OpenCraft implements Runnable {
 		if((currentScreen = screen) != null) {
 			setIngameNotInFocus();
 			final ScaledResolution scaledResolution = new ScaledResolution(width, height);
-			screen.setWorldAndResolution(oc, scaledResolution.getScaledWidth(), scaledResolution.getScaledHeight());
+			screen.setWorldAndResolution(scaledResolution.getScaledWidth(), scaledResolution.getScaledHeight());
 			skipRenderWorld = false;
 		} else {
 			setIngameFocus();
@@ -313,7 +313,8 @@ public class OpenCraft implements Runnable {
 
 	@Override
 	public void run() {
-		running = true;
+		System.out.println("Running on thread " + Thread.currentThread().threadId() + " / " + Thread.currentThread().getName());
+		this.running = true;
 		try {
 			init();
 		} catch(Exception exception) {
@@ -329,7 +330,7 @@ public class OpenCraft implements Runnable {
 				if(glfwWindowShouldClose(window)) {
 					shutdown();
 				}
-				if(isGamePaused) {
+				if(paused) {
 					final float renderPartialTicks = timer.renderPartialTicks;
 					timer.updateTimer();
 					timer.renderPartialTicks = renderPartialTicks;
@@ -345,7 +346,7 @@ public class OpenCraft implements Runnable {
 					this.runTick();
 				}
 				checkGLError();
-				if(isGamePaused)
+				if(paused)
 					timer.renderPartialTicks = 1.0f;
 
 				sndManager.setListener(player, timer.renderPartialTicks);
@@ -370,7 +371,7 @@ public class OpenCraft implements Runnable {
 
 				checkGLError();
 				++n;
-				isGamePaused = (!isMultiplayerWorld() && currentScreen != null && currentScreen.doesGuiPauseGame());
+				paused = (!isMultiplayerWorld() && currentScreen != null && currentScreen.doesGuiPauseGame());
 				while(System.currentTimeMillis() >= currentTimeMillis + 1000L) {
 					debug = new StringBuilder().append(n).append(" fps, ").append(WorldRenderer.chunksUpdated).append(" chunk updates").toString();
 					WorldRenderer.chunksUpdated = 0;
@@ -561,7 +562,7 @@ public class OpenCraft implements Runnable {
 		this.height = height;
 		if(currentScreen != null) {
 			final ScaledResolution scaledResolution = new ScaledResolution(width, height);
-			currentScreen.setWorldAndResolution(oc, scaledResolution.getScaledWidth(), scaledResolution.getScaledHeight());
+			currentScreen.setWorldAndResolution(scaledResolution.getScaledWidth(), scaledResolution.getScaledHeight());
 		}
 	}
 
@@ -583,11 +584,11 @@ public class OpenCraft implements Runnable {
 
 	public void runTick() {
 		ingameGUI.updateTick();
-		if(!isGamePaused && world != null) {
+		if(!paused && world != null) {
 			playerController.updateController();
 		}
 		glBindTexture(3553, renderer.loadTexture("/assets/terrain.png"));
-		if(!isGamePaused) {
+		if(!paused) {
 			renderer.updateDynamicTextures();
 		}
 		if(currentScreen == null && player != null && player.health <= 0) {
@@ -667,22 +668,22 @@ public class OpenCraft implements Runnable {
 		if(world != null) {
 			world.difficultySetting = options.difficulty;
 			// TODO: unify "nested" if's
-			if(!isGamePaused) {
+			if(!paused) {
 				entityRenderer.updateRenderer();
 			}
-			if(!isGamePaused) {
+			if(!paused) {
 				renderGlobal.updateClouds();
 			}
-			if(!isGamePaused) {
+			if(!paused) {
 				world.updateEntities();
 			}
-			if(!isGamePaused && !isMultiplayerWorld()) {
+			if(!paused && !isMultiplayerWorld()) {
 				world.tick();
 			}
-			if(!isGamePaused) {
+			if(!paused) {
 				world.randomDisplayUpdates(Mth.floor_double(player.x), Mth.floor_double(player.y), Mth.floor_double(player.z));
 			}
-			if(!isGamePaused) {
+			if(!paused) {
 				effectRenderer.updateEffects();
 			}
 		}
@@ -727,7 +728,7 @@ public class OpenCraft implements Runnable {
 			}
 			func_6255_d(string);
 			if(player == null) {
-				(player = new EntityPlayerSP(oc, fe, sessionData)).preparePlayerToSpawn();
+				(player = new EntityPlayerSP(fe, sessionData)).preparePlayerToSpawn();
 				playerController.flipPlayer(player);
 			}
 			player.movementInput = new MovementInput(options, keyboard);
@@ -799,7 +800,7 @@ public class OpenCraft implements Runnable {
 			world.setEntityDead(player);
 		}
 		world.a();
-		(player = new EntityPlayerSP(oc, world, sessionData)).preparePlayerToSpawn();
+		(player = new EntityPlayerSP(world, sessionData)).preparePlayerToSpawn();
 		playerController.flipPlayer(player);
 		if(world != null) {
 			world.player = player;

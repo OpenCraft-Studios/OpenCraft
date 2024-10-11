@@ -1,20 +1,21 @@
 
 package net.opencraft.renderer.gui;
 
+import static net.opencraft.OpenCraft.*;
+import static org.lwjgl.glfw.GLFW.*;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import org.lwjgl.opengl.GL11;
 
 import net.opencraft.OpenCraft;
 import net.opencraft.client.input.MouseHandler;
 import net.opencraft.renderer.Tessellator;
 import net.opencraft.renderer.font.FontRenderer;
 
-import static org.lwjgl.glfw.GLFW.*;
-import org.lwjgl.opengl.GL11;
-
 public abstract class GuiScreen extends GuiElement {
 
-	protected OpenCraft id;
 	public int width;
 	public int height;
 	protected List<GuiElement> controlList;
@@ -28,14 +29,14 @@ public abstract class GuiScreen extends GuiElement {
 
 	public void drawScreen(final int integer1, final int integer2, final float float3) {
 		for(int i = 0; i < this.controlList.size(); ++i) {
-			((GuiButton) this.controlList.get(i)).drawButton(this.id, integer1, integer2);
+			((GuiButton) this.controlList.get(i)).drawButton(integer1, integer2);
 		}
 	}
 
 	protected void keyTyped(final char character, final int integer) {
 		if(integer == 1) {
-			this.id.displayGuiScreen(null);
-			this.id.setIngameFocus();
+			oc.displayGuiScreen(null);
+			oc.setIngameFocus();
 		}
 	}
 
@@ -44,7 +45,7 @@ public abstract class GuiScreen extends GuiElement {
 			for(GuiElement guiElement : this.controlList) {
 				final GuiButton iq = (GuiButton) guiElement;
 				if(iq.mousePressed(integer1, integer2)) {
-					this.id.sndManager.playSoundFX("random.click", 1.0f, 1.0f);
+					oc.sndManager.playSoundFX("random.click", 1.0f, 1.0f);
 					this.actionPerformed(iq);
 				}
 			}
@@ -63,9 +64,8 @@ public abstract class GuiScreen extends GuiElement {
 	protected void actionPerformed(final GuiButton iq) {
 	}
 
-	public void setWorldAndResolution(final OpenCraft aw, final int integer2, final int integer3) {
-		this.id = aw;
-		this.fontRenderer = aw.font;
+	public void setWorldAndResolution(final int integer2, final int integer3) {
+		this.fontRenderer = oc.font;
 		this.width = integer2;
 		this.height = integer3;
 		this.initGui();
@@ -75,20 +75,20 @@ public abstract class GuiScreen extends GuiElement {
 	}
 
 	public void handleInputEvents() {
-		for(MouseHandler.ButtonEvent event : this.id.mouse.buttons.events) {
+		for(MouseHandler.ButtonEvent event : oc.mouse.buttons.events) {
 			this.handleMouseEvent(event);
 		}
 		// TODO plz fix
 		// TODO: What should be fixed here?
-		for(int key : this.id.keyboard.pressedKeys) {
+		for(int key : oc.keyboard.pressedKeys) {
 			if(glfwGetKeyName(key, glfwGetKeyScancode(key)) != null)
 				this.handleKeyboardInput(glfwGetKeyName(key, glfwGetKeyScancode(key)).charAt(0), key);
 		}
 	}
 
 	public void handleMouseEvent(MouseHandler.ButtonEvent event) {
-		final int n = ((int) id.mouse.position.x) * this.width / this.id.width;
-		final int n2 = this.height - ((int) id.mouse.position.y) * this.height / this.id.height - 1;
+		final int n = ((int) oc.mouse.position.x) * this.width / oc.width;
+		final int n2 = this.height - ((int) oc.mouse.position.y) * this.height / oc.height - 1;
 		if(event.isPressed()) {
 			this.drawSlotInventory(n, n2, event.buttonNumber());
 		} else {
@@ -111,13 +111,13 @@ public abstract class GuiScreen extends GuiElement {
 	}
 
 	public void b(final int integer) {
-		if(this.id.world != null) {
+		if(oc.world != null) {
 			this.drawGradientRect(0, 0, this.width, this.height, 1610941696, -1607454656);
 		} else {
 			GL11.glDisable(2896);
 			GL11.glDisable(2912);
 			final Tessellator instance = Tessellator.instance;
-			GL11.glBindTexture(3553, this.id.renderer.loadTexture("/assets/dirt.png"));
+			GL11.glBindTexture(3553, oc.renderer.loadTexture("/assets/dirt.png"));
 			GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 			final float n = 32.0f;
 			instance.beginQuads();

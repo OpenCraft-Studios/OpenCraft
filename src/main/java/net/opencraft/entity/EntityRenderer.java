@@ -1,8 +1,10 @@
 
 package net.opencraft.entity;
 
+import static net.opencraft.OpenCraft.*;
 import static org.joml.Math.*;
 import static org.lwjgl.glfw.GLFW.*;
+import static org.lwjgl.opengl.GL11.*;
 
 import java.nio.FloatBuffer;
 import java.util.List;
@@ -11,9 +13,7 @@ import java.util.Random;
 import org.joml.Matrix4f;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL;
-import org.lwjgl.opengl.GL11;
 
-import net.opencraft.OpenCraft;
 import net.opencraft.ScaledResolution;
 import net.opencraft.blocks.Block;
 import net.opencraft.blocks.material.Material;
@@ -31,7 +31,6 @@ import net.opencraft.world.World;
 
 public class EntityRenderer {
 
-	private OpenCraft mc;
 	private boolean anaglyphEnable;
 	private float farPlaneDistance;
 	public ItemRenderer itemRenderer;
@@ -49,7 +48,7 @@ public class EntityRenderer {
 	private float fogColor2;
 	private float fogColor1;
 
-	public EntityRenderer(final OpenCraft aw) {
+	public EntityRenderer() {
 		this.anaglyphEnable = false;
 		this.farPlaneDistance = 0.0f;
 		this.pointedEntity = null;
@@ -57,29 +56,28 @@ public class EntityRenderer {
 		this.unusedVolatile0 = 0;
 		this.unusedVolatile1 = 0;
 		this.fogColorBuffer = BufferUtils.createFloatBuffer(16);
-		this.mc = aw;
-		this.itemRenderer = new ItemRenderer(aw);
+		this.itemRenderer = new ItemRenderer();
 	}
 
 	public void updateRenderer() {
 		this.fogColor2 = this.fogColor1;
-		final float lightBrightness = this.mc.world.getLightBrightness(Mth.floor_double(this.mc.player.x), Mth.floor_double(this.mc.player.y), Mth.floor_double(this.mc.player.z));
-		final float n = (3 - this.mc.options.renderDistance) / 3.0f;
+		final float lightBrightness = oc.world.getLightBrightness(Mth.floor_double(oc.player.x), Mth.floor_double(oc.player.y), Mth.floor_double(oc.player.z));
+		final float n = (3 - oc.options.renderDistance) / 3.0f;
 		this.fogColor1 += (lightBrightness * (1.0f - n) + n - this.fogColor1) * 0.1f;
 		++this.rendererUpdateCount;
 		this.itemRenderer.updateEquippedItem();
-		if(this.mc.isRaining) {
+		if(oc.isRaining) {
 			this.addRainParticles();
 		}
 	}
 
 	private Vec3 orientCamera(final float float1) {
-		final EntityPlayerSP thePlayer = this.mc.player;
+		final EntityPlayerSP thePlayer = oc.player;
 		return Vec3.newTemp(thePlayer.prevPosX + (thePlayer.x - thePlayer.prevPosX) * float1, thePlayer.prevPosY + (thePlayer.y - thePlayer.prevPosY) * float1, thePlayer.prevPosZ + (thePlayer.z - thePlayer.prevPosZ) * float1);
 	}
 
 	private void getMouseOver(final float float1) {
-		final EntityPlayerSP thePlayer = this.mc.player;
+		final EntityPlayerSP thePlayer = oc.player;
 		final float n = thePlayer.prevRotationPitch + (thePlayer.rotationPitch - thePlayer.prevRotationPitch) * float1;
 		final float n2 = thePlayer.prevRotationYaw + (thePlayer.rotationYaw - thePlayer.prevRotationYaw) * float1;
 		final Vec3 orientCamera = this.orientCamera(float1);
@@ -90,14 +88,14 @@ public class EntityRenderer {
 		final float n4 = sin * n3;
 		final float n5 = sin2;
 		final float n6 = cos * n3;
-		double n7 = this.mc.playerController.getBlockReachDistance();
-		this.mc.objectMouseOver = this.mc.world.rayTraceBlocks(orientCamera, orientCamera.add(n4 * n7, n5 * n7, n6 * n7));
+		double n7 = oc.playerController.getBlockReachDistance();
+		oc.objectMouseOver = oc.world.rayTraceBlocks(orientCamera, orientCamera.add(n4 * n7, n5 * n7, n6 * n7));
 		double distanceTo = n7;
 		final Vec3 orientCamera2 = this.orientCamera(float1);
-		if(this.mc.objectMouseOver != null) {
-			distanceTo = this.mc.objectMouseOver.hitVec.distance(orientCamera2);
+		if(oc.objectMouseOver != null) {
+			distanceTo = oc.objectMouseOver.hitVec.distance(orientCamera2);
 		}
-		if(this.mc.playerController instanceof PlayerControllerTest) {
+		if(oc.playerController instanceof PlayerControllerTest) {
 			n7 = (distanceTo = 32.0);
 		} else {
 			if(distanceTo > 3.0) {
@@ -107,7 +105,7 @@ public class EntityRenderer {
 		}
 		final Vec3 addVector = orientCamera2.add(n4 * n7, n5 * n7, n6 * n7);
 		this.pointedEntity = null;
-		final List entitiesWithinAABBExcludingEntity = this.mc.world.getEntitiesWithinAABBExcludingEntity(thePlayer, thePlayer.boundingBox.addCoord(n4 * n7, n5 * n7, n6 * n7));
+		final List entitiesWithinAABBExcludingEntity = oc.world.getEntitiesWithinAABBExcludingEntity(thePlayer, thePlayer.boundingBox.addCoord(n4 * n7, n5 * n7, n6 * n7));
 		double n8 = 0.0;
 		for(int i = 0; i < entitiesWithinAABBExcludingEntity.size(); ++i) {
 			final Entity pointedEntity = (Entity) entitiesWithinAABBExcludingEntity.get(i);
@@ -123,14 +121,14 @@ public class EntityRenderer {
 				}
 			}
 		}
-		if(this.pointedEntity != null && !(this.mc.playerController instanceof PlayerControllerTest)) {
-			this.mc.objectMouseOver = new MovingObjectPosition(this.pointedEntity);
+		if(this.pointedEntity != null && !(oc.playerController instanceof PlayerControllerTest)) {
+			oc.objectMouseOver = new MovingObjectPosition(this.pointedEntity);
 		}
 	}
 
 	private float getFOVModifier(final float float1) {
-		final EntityPlayerSP thePlayer = this.mc.player;
-		float n = this.mc.options.fov;
+		final EntityPlayerSP thePlayer = oc.player;
+		float n = oc.options.fov;
 		if(thePlayer.isInsideOfMaterial(Material.WATER)) {
 			n = 60.0f;
 		}
@@ -141,11 +139,11 @@ public class EntityRenderer {
 	}
 
 	private void hurtCameraEffect(final float float1) {
-		final EntityPlayerSP thePlayer = this.mc.player;
+		final EntityPlayerSP thePlayer = oc.player;
 		float sin = thePlayer.hurtTime - float1;
 		if(thePlayer.health <= 0) {
 			final float attackedAtYaw = thePlayer.deathTime + float1;
-			GL11.glRotatef(40.0f - 8000.0f / (attackedAtYaw + 200.0f), 0.0f, 0.0f, 1.0f);
+			glRotatef(40.0f - 8000.0f / (attackedAtYaw + 200.0f), 0.0f, 0.0f, 1.0f);
 		}
 		if(sin < 0.0f) {
 			return;
@@ -153,34 +151,34 @@ public class EntityRenderer {
 		sin /= thePlayer.maxHurtTime;
 		sin = sin(sin * sin * sin * sin * PI_f);
 		final float attackedAtYaw = thePlayer.attackedAtYaw;
-		GL11.glRotatef(-attackedAtYaw, 0.0f, 1.0f, 0.0f);
-		GL11.glRotatef(-sin * 14.0f, 0.0f, 0.0f, 1.0f);
-		GL11.glRotatef(attackedAtYaw, 0.0f, 1.0f, 0.0f);
+		glRotatef(-attackedAtYaw, 0.0f, 1.0f, 0.0f);
+		glRotatef(-sin * 14.0f, 0.0f, 0.0f, 1.0f);
+		glRotatef(attackedAtYaw, 0.0f, 1.0f, 0.0f);
 	}
 
 	private void setupViewBobbing(final float float1) {
-		if(this.mc.options.thirdPersonView) {
+		if(oc.options.thirdPersonView) {
 			return;
 		}
-		final EntityPlayerSP thePlayer = this.mc.player;
+		final EntityPlayerSP thePlayer = oc.player;
 		final float n = thePlayer.distanceWalkedModified + (thePlayer.distanceWalkedModified - thePlayer.prevDistanceWalkedModified) * float1;
 		final float n2 = thePlayer.prevCameraYaw + (thePlayer.cameraYaw - thePlayer.prevCameraYaw) * float1;
 		final float n3 = thePlayer.prevCameraPitch + (thePlayer.cameraPitch - thePlayer.prevCameraPitch) * float1;
-		GL11.glTranslatef(sin(n * PI_f) * n2 * 0.5f, -abs(cos(n * PI_f) * n2), 0.0f);
-		GL11.glRotatef(sin(n * PI_f) * n2 * 3.0f, 0.0f, 0.0f, 1.0f);
-		GL11.glRotatef(abs(cos(n * PI_f + 0.2f) * n2) * 5.0f, 1.0f, 0.0f, 0.0f);
-		GL11.glRotatef(n3, 1.0f, 0.0f, 0.0f);
+		glTranslatef(sin(n * PI_f) * n2 * 0.5f, -abs(cos(n * PI_f) * n2), 0.0f);
+		glRotatef(sin(n * PI_f) * n2 * 3.0f, 0.0f, 0.0f, 1.0f);
+		glRotatef(abs(cos(n * PI_f + 0.2f) * n2) * 5.0f, 1.0f, 0.0f, 0.0f);
+		glRotatef(n3, 1.0f, 0.0f, 0.0f);
 	}
 
 	private void h(final float multiplier) {
-		final EntityPlayerSP player = this.mc.player;
+		final EntityPlayerSP player = oc.player;
 		double double1, double2, double3;
 
 		double1 = fma(player.x - player.prevPosX, multiplier, player.prevPosX);
 		double2 = fma(player.y - player.prevPosY, multiplier, player.prevPosY);
 		double3 = fma(player.z - player.prevPosZ, multiplier, player.prevPosZ);
 
-		if(this.mc.options.thirdPersonView) {
+		if(oc.options.thirdPersonView) {
 			double n = 4.0;
 
 			final double n2 = -sin(toRadians(player.rotationYaw)) * cos(toRadians(player.rotationPitch)) * n;
@@ -193,7 +191,7 @@ public class EntityRenderer {
 				n5 *= 0.1f;
 				n6 *= 0.1f;
 				n7 *= 0.1f;
-				final MovingObjectPosition rayTraceBlocks = this.mc.world.rayTraceBlocks(Vec3.newTemp(double1 + n5, double2 + n6, double3 + n7), Vec3.newTemp(double1 - n2 + n5 + n7, double2 - n4 + n6, double3 - n3 + n7));
+				final MovingObjectPosition rayTraceBlocks = oc.world.rayTraceBlocks(Vec3.newTemp(double1 + n5, double2 + n6, double3 + n7), Vec3.newTemp(double1 - n2 + n5 + n7, double2 - n4 + n6, double3 - n3 + n7));
 				if(rayTraceBlocks != null) {
 					final double distanceTo = rayTraceBlocks.hitVec.distance(Vec3.newTemp(double1, double2, double3));
 					if(distanceTo < n) {
@@ -201,30 +199,30 @@ public class EntityRenderer {
 					}
 				}
 			}
-			GL11.glTranslatef(0.0f, 0.0f, (float) (-n));
+			glTranslatef(0.0f, 0.0f, (float) (-n));
 		} else {
-			GL11.glTranslatef(0.0f, 0.0f, -0.1f);
+			glTranslatef(0.0f, 0.0f, -0.1f);
 		}
-		GL11.glRotatef(player.prevRotationPitch + (player.rotationPitch - player.prevRotationPitch) * multiplier, 1.0f, 0.0f, 0.0f);
-		GL11.glRotatef(player.prevRotationYaw + (player.rotationYaw - player.prevRotationYaw) * multiplier + 180.0f, 0.0f, 1.0f, 0.0f);
+		glRotatef(player.prevRotationPitch + (player.rotationPitch - player.prevRotationPitch) * multiplier, 1.0f, 0.0f, 0.0f);
+		glRotatef(player.prevRotationYaw + (player.rotationYaw - player.prevRotationYaw) * multiplier + 180.0f, 0.0f, 1.0f, 0.0f);
 	}
 
 	private void orientCamera(final float float1, final int integer) {
-		this.farPlaneDistance = (float) (256 >> this.mc.options.renderDistance);
-		GL11.glMatrixMode(GL11.GL_PROJECTION);
-		GL11.glLoadIdentity();
+		this.farPlaneDistance = (float) (256 >> oc.options.renderDistance);
+		glMatrixMode(GL_PROJECTION);
+		glLoadIdentity();
 		final float n = 0.07f;
-		if(this.mc.options.anaglyph) {
-			GL11.glTranslatef(-(integer * 2 - 1) * n, 0.0f, 0.0f);
+		if(oc.options.anaglyph) {
+			glTranslatef(-(integer * 2 - 1) * n, 0.0f, 0.0f);
 		}
-		gluPerspective(this.getFOVModifier(float1), (float) this.mc.width / (float) this.mc.height, 0.05f, this.farPlaneDistance);
-		GL11.glMatrixMode(GL11.GL_MODELVIEW);
-		GL11.glLoadIdentity();
-		if(this.mc.options.anaglyph) {
-			GL11.glTranslatef((integer * 2 - 1) * 0.1f, 0.0f, 0.0f);
+		gluPerspective(this.getFOVModifier(float1), (float) oc.width / (float) oc.height, 0.05f, this.farPlaneDistance);
+		glMatrixMode(GL_MODELVIEW);
+		glLoadIdentity();
+		if(oc.options.anaglyph) {
+			glTranslatef((integer * 2 - 1) * 0.1f, 0.0f, 0.0f);
 		}
 		this.hurtCameraEffect(float1);
-		if(this.mc.options.viewBobbing) {
+		if(oc.options.viewBobbing) {
 			this.setupViewBobbing(float1);
 		}
 		this.h(float1);
@@ -241,50 +239,53 @@ public class EntityRenderer {
 		objMatrix.get(arrMatrix);
 
 		// Send array to OpenGL
-		GL11.glMultMatrixf(arrMatrix);
+		glMultMatrixf(arrMatrix);
 	}
 
 	private void setupCameraTransform(final float float1, final int integer) {
-		GL11.glLoadIdentity();
-		if(this.mc.options.anaglyph) {
-			GL11.glTranslatef((integer * 2 - 1) * 0.1f, 0.0f, 0.0f);
+		glLoadIdentity();
+		if(oc.options.anaglyph) {
+			glTranslatef((integer * 2 - 1) * 0.1f, 0.0f, 0.0f);
 		}
-		GL11.glPushMatrix();
+		glPushMatrix();
 		this.hurtCameraEffect(float1);
-		if(this.mc.options.viewBobbing) {
+		if(oc.options.viewBobbing) {
 			this.setupViewBobbing(float1);
 		}
-		if(!this.mc.options.thirdPersonView) {
+		if(!oc.options.thirdPersonView) {
 			this.itemRenderer.renderItemInFirstPerson(float1);
 		}
-		GL11.glPopMatrix();
-		if(!this.mc.options.thirdPersonView) {
+		glPopMatrix();
+		if(!oc.options.thirdPersonView) {
 			this.itemRenderer.renderOverlays(float1);
 			this.hurtCameraEffect(float1);
 		}
-		if(this.mc.options.viewBobbing) {
+		if(oc.options.viewBobbing) {
 			this.setupViewBobbing(float1);
 		}
 	}
 
 	public void updateCameraAndRender(final float float1) {
-		/* TODO: reimplement whatever this does. I think it shows the pause menu when the window is not focused
-		if (this.anaglyphEnable && !Display.isActive()) {
-			this.mc.displayInGameMenu();
-		}
-		*/
-		this.anaglyphEnable = glfwGetWindowAttrib(this.mc.window, GLFW_FOCUSED) == GLFW_TRUE;
-		if(this.mc.inGameHasFocus) {
-			final int scaledHeight = (int) (mc.mouse.position.deltaX() * 1);
-			final int scaledWidth = (int) (mc.mouse.position.deltaY() * 1);
+		/*
+		 * TODO: reimplement whatever this does. I think it shows the pause menu when
+		 * the window is not focused if (this.anaglyphEnable && !Display.isActive()) {
+		 * oc.displayInGameMenu(); }
+		 */
+		this.anaglyphEnable = glfwGetWindowAttrib(oc.window, GLFW_FOCUSED) == GLFW_TRUE;
+		if(oc.inGameHasFocus) {
+			final int scaledHeight = (int) (oc.mouse.position.deltaX() * 1);
+			final int scaledWidth = (int) (oc.mouse.position.deltaY() * 1);
 			int invertVerticalMouse = 1;
-			if(this.mc.options.invertMouse) {
+			if(oc.options.invertMouse) {
 				invertVerticalMouse = -1;
 			}
-			final int n = scaledHeight;// + this.mc.mouseHelper.deltaX;
-			final int n2 = scaledWidth;// - this.mc.mouseHelper.deltaY;
+			final int n = scaledHeight;// + OpenCraft.oc.mouseHelper.deltaX;
+			final int n2 = scaledWidth;// - OpenCraft.oc.mouseHelper.deltaY;
 			if(scaledHeight != 0 || this.entityRendererInt1 != 0) {
-				//                System.out.println(new StringBuilder().append("xxo: ").append(entityRendererInt1).append(", ").append(this.entityRendererInt1).append(": ").append(this.entityRendererInt1).append(", xo: ").append(n).toString());
+				// System.out.println(new StringBuilder().append("xxo:
+				// ").append(entityRendererInt1).append(",
+				// ").append(this.entityRendererInt1).append(":
+				// ").append(this.entityRendererInt1).append(", xo: ").append(n).toString());
 			}
 			if(this.entityRendererInt1 != 0) {
 				this.entityRendererInt1 = 0;
@@ -298,70 +299,70 @@ public class EntityRenderer {
 			if(scaledWidth != 0) {
 				this.entityRendererInt2 = scaledWidth;
 			}
-			this.mc.player.setAngles((float) n, (float) (n2 * invertVerticalMouse));
+			oc.player.setAngles((float) n, (float) (n2 * invertVerticalMouse));
 		}
-		if(this.mc.skipRenderWorld) {
+		if(oc.skipRenderWorld) {
 			return;
 		}
-		final ScaledResolution scaledResolution = new ScaledResolution(this.mc.width, this.mc.height);
+		final ScaledResolution scaledResolution = new ScaledResolution(oc.width, oc.height);
 		final int scaledWidth = scaledResolution.getScaledWidth();
 		int scaledHeight = scaledResolution.getScaledHeight();
-		final int n = (int) (mc.mouse.position.x * scaledWidth / this.mc.width);
-		final int n2 = (int) (scaledHeight - mc.mouse.position.y * scaledHeight / this.mc.height - 1);
-		if(this.mc.world != null) {
+		final int n = (int) (oc.mouse.position.x * scaledWidth / oc.width);
+		final int n2 = (int) (scaledHeight - oc.mouse.position.y * scaledHeight / oc.height - 1);
+		if(oc.world != null) {
 			this.renderWorld(float1);
-			this.mc.ingameGUI.renderGameOverlay(float1, this.mc.currentScreen != null, n, n2);
+			oc.ingameGUI.renderGameOverlay(float1, oc.currentScreen != null, n, n2);
 		} else {
-			GL11.glViewport(0, 0, this.mc.width, this.mc.height);
-			GL11.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-			GL11.glClear(16640);
-			GL11.glMatrixMode(5889);
-			GL11.glLoadIdentity();
-			GL11.glMatrixMode(5888);
-			GL11.glLoadIdentity();
+			glViewport(0, 0, oc.width, oc.height);
+			glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+			glClear(16640);
+			glMatrixMode(5889);
+			glLoadIdentity();
+			glMatrixMode(5888);
+			glLoadIdentity();
 			this.setupOverlayRendering();
 		}
-		if(this.mc.currentScreen != null) {
-			GL11.glClear(256);
-			this.mc.currentScreen.drawScreen(n, n2, this.mc.getTickDelta());
+		if(oc.currentScreen != null) {
+			glClear(256);
+			oc.currentScreen.drawScreen(n, n2, oc.getTickDelta());
 		}
 	}
 
 	public void renderWorld(final float float1) {
 		this.getMouseOver(float1);
-		final EntityPlayerSP thePlayer = this.mc.player;
-		final RenderGlobal renderGlobal = this.mc.renderGlobal;
-		final EffectRenderer effectRenderer = this.mc.effectRenderer;
+		final EntityPlayerSP thePlayer = oc.player;
+		final RenderGlobal renderGlobal = oc.renderGlobal;
+		final EffectRenderer effectRenderer = oc.effectRenderer;
 		final double xCoord = thePlayer.lastTickPosX + (thePlayer.x - thePlayer.lastTickPosX) * float1;
 		final double yCoord = thePlayer.lastTickPosY + (thePlayer.y - thePlayer.lastTickPosY) * float1;
 		final double zCoord = thePlayer.lastTickPosZ + (thePlayer.z - thePlayer.lastTickPosZ) * float1;
 		for(int i = 0; i < 2; ++i) {
-			if(this.mc.options.anaglyph) {
+			if(oc.options.anaglyph) {
 				if(i == 0) {
-					GL11.glColorMask(false, true, true, false);
+					glColorMask(false, true, true, false);
 				} else {
-					GL11.glColorMask(true, false, false, false);
+					glColorMask(true, false, false, false);
 				}
 			}
-			GL11.glViewport(0, 0, this.mc.width, this.mc.height);
+			glViewport(0, 0, oc.width, oc.height);
 			this.updateFogColor(float1);
-			GL11.glClear(16640);
-			GL11.glEnable(2884);
+			glClear(16640);
+			glEnable(2884);
 			this.orientCamera(float1, i);
-			//Frustum.getInstance();
-			if(this.mc.options.renderDistance < 2) {
+			// Frustum.getInstance();
+			if(oc.options.renderDistance < 2) {
 				this.setupFog(-1);
 				renderGlobal.renderSky(float1);
 			}
-			GL11.glEnable(2912);
+			glEnable(2912);
 			this.setupFog(1);
 			final Frustrum frustrum = new Frustrum();
 			frustrum.setPosition(xCoord, yCoord, zCoord);
-			this.mc.renderGlobal.clipRenderersByFrustrum(frustrum, float1);
-			this.mc.renderGlobal.updateRenderers(thePlayer, false);
+			oc.renderGlobal.clipRenderersByFrustrum(frustrum, float1);
+			oc.renderGlobal.updateRenderers(thePlayer, false);
 			this.setupFog(0);
-			GL11.glEnable(2912);
-			GL11.glBindTexture(3553, this.mc.renderer.loadTexture("/assets/terrain.png"));
+			glEnable(2912);
+			glBindTexture(3553, oc.renderer.loadTexture("/assets/terrain.png"));
 			RenderHelper.disableStandardItemLighting();
 			renderGlobal.sortAndRender(thePlayer, 0, float1);
 			RenderHelper.enableStandardItemLighting();
@@ -370,26 +371,26 @@ public class EntityRenderer {
 			RenderHelper.disableStandardItemLighting();
 			this.setupFog(0);
 			effectRenderer.renderParticles(thePlayer, float1);
-			if(this.mc.objectMouseOver != null && thePlayer.isInsideOfMaterial(Material.WATER)) {
-				GL11.glDisable(3008);
-				renderGlobal.drawBlockBreaking(thePlayer, this.mc.objectMouseOver, 0, thePlayer.inventory.getCurrentItem(), float1);
-				renderGlobal.drawSelectionBox(thePlayer, this.mc.objectMouseOver, 0, thePlayer.inventory.getCurrentItem(), float1);
-				GL11.glEnable(3008);
+			if(oc.objectMouseOver != null && thePlayer.isInsideOfMaterial(Material.WATER)) {
+				glDisable(3008);
+				renderGlobal.drawBlockBreaking(thePlayer, oc.objectMouseOver, 0, thePlayer.inventory.getCurrentItem(), float1);
+				renderGlobal.drawSelectionBox(thePlayer, oc.objectMouseOver, 0, thePlayer.inventory.getCurrentItem(), float1);
+				glEnable(3008);
 			}
-			GL11.glBlendFunc(770, 771);
+			glBlendFunc(770, 771);
 			this.setupFog(0);
-			GL11.glEnable(3042);
-			GL11.glDisable(2884);
-			GL11.glBindTexture(3553, this.mc.renderer.loadTexture("/assets/terrain.png"));
-			if(this.mc.options.fancyGraphics) {
-				GL11.glColorMask(false, false, false, false);
+			glEnable(3042);
+			glDisable(2884);
+			glBindTexture(3553, oc.renderer.loadTexture("/assets/terrain.png"));
+			if(oc.options.fancyGraphics) {
+				glColorMask(false, false, false, false);
 				final int sortAndRender = renderGlobal.sortAndRender(thePlayer, 1, float1);
-				GL11.glColorMask(true, true, true, true);
-				if(this.mc.options.anaglyph) {
+				glColorMask(true, true, true, true);
+				if(oc.options.anaglyph) {
 					if(i == 0) {
-						GL11.glColorMask(false, true, true, false);
+						glColorMask(false, true, true, false);
 					} else {
-						GL11.glColorMask(true, false, false, false);
+						glColorMask(true, false, false, false);
 					}
 				}
 				if(sortAndRender > 0) {
@@ -398,38 +399,38 @@ public class EntityRenderer {
 			} else {
 				renderGlobal.sortAndRender(thePlayer, 1, float1);
 			}
-			GL11.glDepthMask(true);
-			GL11.glEnable(2884);
-			GL11.glDisable(3042);
-			if(this.mc.objectMouseOver != null && !thePlayer.isInsideOfMaterial(Material.WATER)) {
-				GL11.glDisable(3008);
-				renderGlobal.drawBlockBreaking(thePlayer, this.mc.objectMouseOver, 0, thePlayer.inventory.getCurrentItem(), float1);
-				renderGlobal.drawSelectionBox(thePlayer, this.mc.objectMouseOver, 0, thePlayer.inventory.getCurrentItem(), float1);
-				GL11.glEnable(3008);
+			glDepthMask(true);
+			glEnable(2884);
+			glDisable(3042);
+			if(oc.objectMouseOver != null && !thePlayer.isInsideOfMaterial(Material.WATER)) {
+				glDisable(3008);
+				renderGlobal.drawBlockBreaking(thePlayer, oc.objectMouseOver, 0, thePlayer.inventory.getCurrentItem(), float1);
+				renderGlobal.drawSelectionBox(thePlayer, oc.objectMouseOver, 0, thePlayer.inventory.getCurrentItem(), float1);
+				glEnable(3008);
 			}
-			GL11.glDisable(2912);
-			if(this.mc.isRaining) {
+			glDisable(2912);
+			if(oc.isRaining) {
 				this.renderRainSnow(float1);
 			}
 			if(this.pointedEntity != null) {
 			}
 			this.setupFog(0);
-			GL11.glEnable(2912);
+			glEnable(2912);
 			renderGlobal.renderClouds(float1);
-			GL11.glDisable(2912);
+			glDisable(2912);
 			this.setupFog(1);
-			GL11.glClear(256);
+			glClear(256);
 			this.setupCameraTransform(float1, i);
-			if(!this.mc.options.anaglyph) {
+			if(!oc.options.anaglyph) {
 				return;
 			}
 		}
-		GL11.glColorMask(true, true, true, false);
+		glColorMask(true, true, true, false);
 	}
 
 	private void addRainParticles() {
-		final EntityPlayerSP thePlayer = this.mc.player;
-		final World theWorld = this.mc.world;
+		final EntityPlayerSP thePlayer = oc.player;
+		final World theWorld = oc.world;
 		final int floor_double = Mth.floor_double(thePlayer.x);
 		final int floor_double2 = Mth.floor_double(thePlayer.y);
 		final int floor_double3 = Mth.floor_double(thePlayer.z);
@@ -443,24 +444,24 @@ public class EntityRenderer {
 				final float nextFloat = this.random.nextFloat();
 				final float nextFloat2 = this.random.nextFloat();
 				if(blockId > 0) {
-					this.mc.effectRenderer.addEffect(new EntityRainFX(theWorld, n2 + nextFloat, topSolidBlock + 0.1f - Block.blocksList[blockId].minY, n3 + nextFloat2));
+					oc.effectRenderer.addEffect(new EntityRainFX(theWorld, n2 + nextFloat, topSolidBlock + 0.1f - Block.blocksList[blockId].minY, n3 + nextFloat2));
 				}
 			}
 		}
 	}
 
 	private void renderRainSnow(final float float1) {
-		final EntityPlayerSP thePlayer = this.mc.player;
-		final World theWorld = this.mc.world;
+		final EntityPlayerSP thePlayer = oc.player;
+		final World theWorld = oc.world;
 		final int floor_double = Mth.floor_double(thePlayer.x);
 		final int floor_double2 = Mth.floor_double(thePlayer.y);
 		final int floor_double3 = Mth.floor_double(thePlayer.z);
 		final Tessellator instance = Tessellator.instance;
-		GL11.glDisable(2884);
-		GL11.glNormal3f(0.0f, 1.0f, 0.0f);
-		GL11.glEnable(3042);
-		GL11.glBlendFunc(770, 771);
-		GL11.glBindTexture(3553, this.mc.renderer.loadTexture("/assets/rain.png"));
+		glDisable(2884);
+		glNormal3f(0.0f, 1.0f, 0.0f);
+		glEnable(3042);
+		glBlendFunc(770, 771);
+		glBindTexture(3553, oc.renderer.loadTexture("/assets/rain.png"));
 		for(int n = 5, i = floor_double - n; i <= floor_double + n; ++i) {
 			for(int j = floor_double3 - n; j <= floor_double3 + n; ++j) {
 				final int topSolidBlock = theWorld.findTopSolidBlock(i, j);
@@ -478,7 +479,7 @@ public class EntityRenderer {
 					final double n6 = i + 0.5f - thePlayer.x;
 					final double n7 = j + 0.5f - thePlayer.z;
 					final float n8 = Mth.sqrt_double(n6 * n6 + n7 * n7) / n;
-					GL11.glColor4f(1.0f, 1.0f, 1.0f, (1.0f - n8 * n8) * 0.7f);
+					glColor4f(1.0f, 1.0f, 1.0f, (1.0f - n8 * n8) * 0.7f);
 					instance.beginQuads();
 					instance.vertexUV(i + 0, n2, j + 0, 0.0f * n4, n2 * n4 / 8.0f + n5 * n4);
 					instance.vertexUV(i + 1, n2, j + 1, 1.0f * n4, n2 * n4 / 8.0f + n5 * n4);
@@ -492,27 +493,27 @@ public class EntityRenderer {
 				}
 			}
 		}
-		GL11.glEnable(2884);
-		GL11.glDisable(3042);
+		glEnable(2884);
+		glDisable(3042);
 	}
 
 	public void setupOverlayRendering() {
-		final ScaledResolution scaledResolution = new ScaledResolution(this.mc.width, this.mc.height);
+		final ScaledResolution scaledResolution = new ScaledResolution(oc.width, oc.height);
 		final int scaledWidth = scaledResolution.getScaledWidth();
 		final int scaledHeight = scaledResolution.getScaledHeight();
-		GL11.glClear(256);
-		GL11.glMatrixMode(5889);
-		GL11.glLoadIdentity();
-		GL11.glOrtho(0.0, (double) scaledWidth, (double) scaledHeight, 0.0, 1000.0, 3000.0);
-		GL11.glMatrixMode(5888);
-		GL11.glLoadIdentity();
-		GL11.glTranslatef(0.0f, 0.0f, -2000.0f);
+		glClear(256);
+		glMatrixMode(5889);
+		glLoadIdentity();
+		glOrtho(0.0, (double) scaledWidth, (double) scaledHeight, 0.0, 1000.0, 3000.0);
+		glMatrixMode(5888);
+		glLoadIdentity();
+		glTranslatef(0.0f, 0.0f, -2000.0f);
 	}
 
 	private void updateFogColor(final float float1) {
-		final World theWorld = this.mc.world;
-		final EntityPlayerSP thePlayer = this.mc.player;
-		float n = 1.0f / (4 - this.mc.options.renderDistance);
+		final World theWorld = oc.world;
+		final EntityPlayerSP thePlayer = oc.player;
+		float n = 1.0f / (4 - oc.options.renderDistance);
 		n = 1.0f - (float) Math.pow((double) n, 0.25);
 		final Vec3 skyColor = theWorld.getSkyColor(float1);
 		final float n2 = (float) skyColor.x;
@@ -538,7 +539,7 @@ public class EntityRenderer {
 		this.fogColorRed *= n5;
 		this.fogColorGreen *= n5;
 		this.fogColorBlue *= n5;
-		if(this.mc.options.anaglyph) {
+		if(oc.options.anaglyph) {
 			final float fogColorRed = (this.fogColorRed * 30.0f + this.fogColorGreen * 59.0f + this.fogColorBlue * 11.0f) / 100.0f;
 			final float fogColorGreen = (this.fogColorRed * 30.0f + this.fogColorGreen * 70.0f) / 100.0f;
 			final float fogColorBlue = (this.fogColorRed * 30.0f + this.fogColorBlue * 70.0f) / 100.0f;
@@ -546,21 +547,21 @@ public class EntityRenderer {
 			this.fogColorGreen = fogColorGreen;
 			this.fogColorBlue = fogColorBlue;
 		}
-		GL11.glClearColor(this.fogColorRed, this.fogColorGreen, this.fogColorBlue, 0.0f);
+		glClearColor(this.fogColorRed, this.fogColorGreen, this.fogColorBlue, 0.0f);
 	}
 
 	private void setupFog(final int integer) {
-		final EntityPlayerSP thePlayer = this.mc.player;
-		GL11.glFogfv(GL11.GL_FOG_COLOR, this.setFogColorBuffer(this.fogColorRed, this.fogColorGreen, this.fogColorBlue, 1.0f));
-		GL11.glNormal3f(0.0f, -1.0f, 0.0f);
-		GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+		final EntityPlayerSP thePlayer = oc.player;
+		glFogfv(GL_FOG_COLOR, this.setFogColorBuffer(this.fogColorRed, this.fogColorGreen, this.fogColorBlue, 1.0f));
+		glNormal3f(0.0f, -1.0f, 0.0f);
+		glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 		if(thePlayer.isInsideOfMaterial(Material.WATER)) {
-			GL11.glFogi(GL11.GL_FOG_MODE, GL11.GL_EXP);
-			GL11.glFogf(GL11.GL_FOG_DENSITY, 0.1f);
+			glFogi(GL_FOG_MODE, GL_EXP);
+			glFogf(GL_FOG_DENSITY, 0.1f);
 			float n = 0.4f;
 			float n2 = 0.4f;
 			float n3 = 0.9f;
-			if(this.mc.options.anaglyph) {
+			if(oc.options.anaglyph) {
 				final float n4 = (n * 30.0f + n2 * 59.0f + n3 * 11.0f) / 100.0f;
 				final float n5 = (n * 30.0f + n2 * 70.0f) / 100.0f;
 				final float n6 = (n * 30.0f + n3 * 70.0f) / 100.0f;
@@ -569,12 +570,12 @@ public class EntityRenderer {
 				n3 = n6;
 			}
 		} else if(thePlayer.isInsideOfMaterial(Material.LAVA)) {
-			GL11.glFogi(GL11.GL_FOG_MODE, GL11.GL_EXP);
-			GL11.glFogf(GL11.GL_FOG_DENSITY, 2.0f);
+			glFogi(GL_FOG_MODE, GL_EXP);
+			glFogf(GL_FOG_DENSITY, 2.0f);
 			float n = 0.4f;
 			float n2 = 0.3f;
 			float n3 = 0.3f;
-			if(this.mc.options.anaglyph) {
+			if(oc.options.anaglyph) {
 				final float n4 = (n * 30.0f + n2 * 59.0f + n3 * 11.0f) / 100.0f;
 				final float n5 = (n * 30.0f + n2 * 70.0f) / 100.0f;
 				final float n6 = (n * 30.0f + n3 * 70.0f) / 100.0f;
@@ -583,19 +584,19 @@ public class EntityRenderer {
 				n3 = n6;
 			}
 		} else {
-			GL11.glFogi(2917, 9729);
-			GL11.glFogf(2915, this.farPlaneDistance * 0.25f);
-			GL11.glFogf(2916, this.farPlaneDistance);
+			glFogi(2917, 9729);
+			glFogf(2915, this.farPlaneDistance * 0.25f);
+			glFogf(2916, this.farPlaneDistance);
 			if(integer < 0) {
-				GL11.glFogf(2915, 0.0f);
-				GL11.glFogf(2916, this.farPlaneDistance * 0.8f);
+				glFogf(2915, 0.0f);
+				glFogf(2916, this.farPlaneDistance * 0.8f);
 			}
 			if(GL.getCapabilities().GL_NV_fog_distance) {
-				GL11.glFogi(34138, 34139);
+				glFogi(34138, 34139);
 			}
 		}
-		GL11.glEnable(2903);
-		GL11.glColorMaterial(1028, 4608);
+		glEnable(2903);
+		glColorMaterial(1028, 4608);
 	}
 
 	private FloatBuffer setFogColorBuffer(final float float1, final float float2, final float float3, final float float4) {

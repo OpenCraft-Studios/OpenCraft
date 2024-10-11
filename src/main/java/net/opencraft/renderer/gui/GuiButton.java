@@ -1,8 +1,9 @@
 
 package net.opencraft.renderer.gui;
 
-import net.opencraft.OpenCraft;
 import net.opencraft.renderer.font.FontRenderer;
+
+import static net.opencraft.OpenCraft.*;
 
 import org.lwjgl.opengl.GL11;
 
@@ -34,12 +35,12 @@ public class GuiButton extends GuiElement {
 		this.displayString = displayString;
 	}
 
-	public void drawButton(final OpenCraft aw, final int integer2, final int integer3) {
+	public void drawButton(final int integer2, final int integer3) {
 		if(!this.enabled2) {
 			return;
 		}
-		final FontRenderer fontRenderer = aw.font;
-		GL11.glBindTexture(3553, aw.renderer.loadTexture("/assets/gui/gui.png"));
+		final FontRenderer fontRenderer = oc.font;
+		GL11.glBindTexture(3553, oc.renderer.loadTexture("/assets/gui/gui.png"));
 		GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 		int n = 1;
 		final boolean b = integer2 >= this.xPosition && integer3 >= this.yPosition && integer2 < this.xPosition + this.width && integer3 < this.yPosition + this.height;

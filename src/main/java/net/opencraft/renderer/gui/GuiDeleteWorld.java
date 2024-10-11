@@ -19,7 +19,7 @@ public class GuiDeleteWorld extends GuiCreateWorld {
 	public void actionPerformed(int n) {
 		String string = this.getSaveFileName(n);
 		if(string != null) {
-			this.id.displayGuiScreen(new GuiYesNo(this, "Are you sure you want to delete this world?", "'" + string + "' will be lost forever!", n));
+			OpenCraft.oc.displayGuiScreen(new GuiYesNo(this, "Are you sure you want to delete this world?", "'" + string + "' will be lost forever!", n));
 		}
 	}
 
@@ -28,7 +28,7 @@ public class GuiDeleteWorld extends GuiCreateWorld {
 			File file = OpenCraft.getGameDir();
 			World.deleteWorldDirectory(file, this.getSaveFileName(n));
 		}
-		this.id.displayGuiScreen(this.parentGuiScreen);
+		OpenCraft.oc.displayGuiScreen(this.parentGuiScreen);
 	}
 
 }

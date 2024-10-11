@@ -1,12 +1,13 @@
 
 package net.opencraft.renderer.gui;
 
+import static net.opencraft.OpenCraft.*;
 import static org.joml.Math.*;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import net.opencraft.OpenCraft;
+
 import net.opencraft.ScaledResolution;
 import net.opencraft.blocks.material.Material;
 import net.opencraft.client.Main;
@@ -27,51 +28,49 @@ public class GuiIngame extends GuiElement {
 	private static RenderItem itemRenderer = new RenderItem();
 	private List<ChatLine> chatMessageList;
 	private Random rand;
-	private OpenCraft mc;
 	public String field_933_a;
 	private int updateCounter;
 	public float damageGuiPartialTime;
 	float prevVignetteBrightness;
 
-	public GuiIngame(final OpenCraft aw) {
+	public GuiIngame() {
 		this.chatMessageList = new ArrayList<>();
 		this.rand = new Random();
 		this.field_933_a = null;
 		this.updateCounter = 0;
 		this.prevVignetteBrightness = 1.0f;
-		this.mc = aw;
 	}
 
 	public void renderGameOverlay(final float float1, final boolean boolean2, final int integer3, final int integer4) {
-		final ScaledResolution scaledResolution = new ScaledResolution(this.mc.width, this.mc.height);
+		final ScaledResolution scaledResolution = new ScaledResolution(oc.width, oc.height);
 		final int scaledWidth = scaledResolution.getScaledWidth();
 		final int scaledHeight = scaledResolution.getScaledHeight();
-		final FontRenderer font = this.mc.font;
-		this.mc.entityRenderer.setupOverlayRendering();
+		final FontRenderer font = oc.font;
+		oc.entityRenderer.setupOverlayRendering();
 		GL11.glEnable(3042);
-		if(this.mc.options.fancyGraphics) {
-			this.renderVignette(this.mc.player.getEntityBrightness(float1), scaledWidth, scaledHeight);
+		if(oc.options.fancyGraphics) {
+			this.renderVignette(oc.player.getEntityBrightness(float1), scaledWidth, scaledHeight);
 		}
 		GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
-		GL11.glBindTexture(3553, this.mc.renderer.loadTexture("/assets/gui/gui.png"));
-		final InventoryPlayer inventory = this.mc.player.inventory;
+		GL11.glBindTexture(3553, oc.renderer.loadTexture("/assets/gui/gui.png"));
+		final InventoryPlayer inventory = oc.player.inventory;
 		this.zLevel = -90.0f;
 		this.drawTexturedModalRect(scaledWidth / 2 - 91, scaledHeight - 22, 0, 0, 182, 22);
 		this.drawTexturedModalRect(scaledWidth / 2 - 91 - 1 + inventory.currentItem * 20, scaledHeight - 22 - 1, 0, 22, 24, 22);
-		GL11.glBindTexture(3553, this.mc.renderer.loadTexture("/assets/gui/icons.png"));
+		GL11.glBindTexture(3553, oc.renderer.loadTexture("/assets/gui/icons.png"));
 		GL11.glEnable(3042);
 		GL11.glBlendFunc(775, 769);
 		this.drawTexturedModalRect(scaledWidth / 2 - 7, scaledHeight / 2 - 7, 0, 0, 16, 16);
 		GL11.glDisable(3042);
-		boolean b = this.mc.player.heartsLife / 3 % 2 == 1;
-		if(this.mc.player.heartsLife < 10) {
+		boolean b = oc.player.heartsLife / 3 % 2 == 1;
+		if(oc.player.heartsLife < 10) {
 			b = false;
 		}
-		final int health = this.mc.player.health;
-		final int prevHealth = this.mc.player.prevHealth;
+		final int health = oc.player.health;
+		final int prevHealth = oc.player.prevHealth;
 		this.rand.setSeed((long) (this.updateCounter * 312871L));
-		if(this.mc.playerController.shouldDrawHUD()) {
-			final int i = this.mc.player.getPlayerArmorValue();
+		if(oc.playerController.shouldDrawHUD()) {
+			final int i = oc.player.getPlayerArmorValue();
 			for(int j = 0; j < 10; ++j) {
 				int integer5 = scaledHeight - 32;
 				if(i > 0) {
@@ -110,8 +109,8 @@ public class GuiIngame extends GuiElement {
 					this.drawTexturedModalRect(integer7, integer5, 61, 0, 9, 9);
 				}
 			}
-			if(this.mc.player.isInsideOfMaterial(Material.WATER)) {
-				for(int j = (int) ceil((this.mc.player.air - 2) * 10.0 / 300.0), integer5 = (int) ceil(this.mc.player.air * 10.0 / 300.0) - j, k = 0; k < j + integer5; ++k) {
+			if(oc.player.isInsideOfMaterial(Material.WATER)) {
+				for(int j = (int) ceil((oc.player.air - 2) * 10.0 / 300.0), integer5 = (int) ceil(oc.player.air * 10.0 / 300.0) - j, k = 0; k < j + integer5; ++k) {
 					if(k < j) {
 						this.drawTexturedModalRect(scaledWidth / 2 - 91 + k * 8, scaledHeight - 32 - 9, 16, 18, 9, 9);
 					} else {
@@ -133,14 +132,14 @@ public class GuiIngame extends GuiElement {
 		}
 		RenderHelper.disableStandardItemLighting();
 		GL11.glDisable(GL_FULLBRIGHT_RENDERING);
-		if(this.mc.options.showDebugInfo) {
-			font.drawStringWithShadow2(Main.TITLE + " (" + this.mc.debug + ")", 2, 2, 16777215);
-			font.drawStringWithShadow2(this.mc.debugInfoRenders(), 2, 12, 16777215);
-			font.drawStringWithShadow2(this.mc.entityRenderingInfo(), 2, 22, 16777215);
-			font.drawStringWithShadow2(this.mc.debugInfoEntities(), 2, 32, 16777215);
+		if(oc.options.showDebugInfo) {
+			font.drawStringWithShadow2("OpenCraft " + Main.VERSION + " (" + oc.debug + ")", 2, 2, 16777215);
+			font.drawStringWithShadow2(oc.debugInfoRenders(), 2, 12, 16777215);
+			font.drawStringWithShadow2(oc.entityRenderingInfo(), 2, 22, 16777215);
+			font.drawStringWithShadow2(oc.debugInfoEntities(), 2, 32, 16777215);
 			// display current coordinates and orientation
-			font.drawStringWithShadow2("X: " + this.mc.player.x + " Y: " + this.mc.player.y + " Z: " + this.mc.player.z, 2, 42, 16777215);
-			font.drawStringWithShadow2("Yaw: " + this.mc.player.rotationYaw + " Pitch: " + this.mc.player.rotationPitch, 2, 52, 16777215);
+			font.drawStringWithShadow2("X: " + oc.player.x + " Y: " + oc.player.y + " Z: " + oc.player.z, 2, 42, 16777215);
+			font.drawStringWithShadow2("Yaw: " + oc.player.rotationYaw + " Pitch: " + oc.player.rotationPitch, 2, 52, 16777215);
 			final long maxMemory = Runtime.getRuntime().maxMemory();
 			final long totalMemory = Runtime.getRuntime().totalMemory();
 			final long allocatedMemory = totalMemory - Runtime.getRuntime().freeMemory();
@@ -172,7 +171,7 @@ public class GuiIngame extends GuiElement {
 		GL11.glDepthMask(false);
 		GL11.glBlendFunc(0, 769);
 		GL11.glColor4f(this.prevVignetteBrightness, this.prevVignetteBrightness, this.prevVignetteBrightness, 1.0f);
-		GL11.glBindTexture(3553, this.mc.renderer.loadTexture("/assets/misc/vignette.png"));
+		GL11.glBindTexture(3553, oc.renderer.loadTexture("/assets/misc/vignette.png"));
 		final Tessellator instance = Tessellator.instance;
 		instance.beginQuads();
 		instance.vertexUV(0.0, integer3, -90.0, 0.0, 1.0);
@@ -187,7 +186,7 @@ public class GuiIngame extends GuiElement {
 	}
 
 	private void renderInventorySlot(final int integer1, final int integer2, final int integer3, final float float4) {
-		final ItemStack itemStack = this.mc.player.inventory.mainInventory[integer1];
+		final ItemStack itemStack = oc.player.inventory.mainInventory[integer1];
 		if(itemStack == null) {
 			return;
 		}
@@ -199,11 +198,11 @@ public class GuiIngame extends GuiElement {
 			GL11.glScalef(1.0f / n2, (n2 + 1.0f) / 2.0f, 1.0f);
 			GL11.glTranslatef((float) (-(integer2 + 8)), (float) (-(integer3 + 12)), 0.0f);
 		}
-		GuiIngame.itemRenderer.drawItemIntoGui(this.mc.font, this.mc.renderer, itemStack, integer2, integer3);
+		GuiIngame.itemRenderer.drawItemIntoGui(oc.font, oc.renderer, itemStack, integer2, integer3);
 		if(n > 0.0f) {
 			GL11.glPopMatrix();
 		}
-		GuiIngame.itemRenderer.renderItemOverlayIntoGUI(this.mc.font, this.mc.renderer, itemStack, integer2, integer3);
+		GuiIngame.itemRenderer.renderItemOverlayIntoGUI(oc.font, oc.renderer, itemStack, integer2, integer3);
 	}
 
 	public void updateTick() {

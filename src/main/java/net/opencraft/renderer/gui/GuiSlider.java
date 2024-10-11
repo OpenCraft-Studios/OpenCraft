@@ -1,19 +1,18 @@
 package net.opencraft.renderer.gui;
 
-import net.opencraft.OpenCraft;
-import net.opencraft.renderer.font.FontRenderer;
-import net.opencraft.util.Mth;
-
+import static net.opencraft.OpenCraft.*;
 import static org.joml.Math.*;
 
 import org.lwjgl.opengl.GL11;
+
+import net.opencraft.renderer.font.FontRenderer;
+import net.opencraft.util.Mth;
 
 public class GuiSlider extends GuiButton {
 
 	public float sliderValue;
 	public boolean dragging = false;
 	private int keyId;
-	private OpenCraft mc;
 
 	private final float minValue;
 	private final float maxValue;
@@ -38,26 +37,31 @@ public class GuiSlider extends GuiButton {
 	}
 
 	public boolean mousePressed(final int mouseX, final int mouseY) {
-		if(super.mousePressed(mouseX, mouseY)) {
-			if(mouseX >= this.xPosition && mouseX <= this.xPosition + this.width && mouseY >= this.yPosition && mouseY <= this.yPosition + this.height) {
-				this.dragging = true;
-				// Calculate the position of the slider relative to the mouse position
-				float sliderPos = (float) (mouseX - this.xPosition - 4) / (float) (this.width - 8);
-				sliderPos = clamp(0.0f, 1.0f, sliderPos);
-				// Update the slider value within the specified range
-				this.sliderValue = minValue + sliderPos * (maxValue - minValue);
-				if(this.decimalPlace != 0.0f) {
-					this.sliderValue = Mth.roundToDecimalPlace(this.sliderValue, this.decimalPlace);
-				}
-				this.mc.options.setOptionFloatValue(this.keyId, this.sliderValue);
-				this.displayString = this.displayStringName + ": " + this.sliderValue;
-				return true;
+		if(!super.mousePressed(mouseX, mouseY))
+			return false;
+
+		if(mouseX >= this.xPosition && mouseX <= this.xPosition + this.width && mouseY >= this.yPosition && mouseY <= this.yPosition + this.height) {
+
+			this.dragging = true;
+
+			// Calculate the position of the slider relative to the mouse position
+			float sliderPos = (float) (mouseX - this.xPosition - 4) / (float) (this.width - 8);
+			sliderPos = clamp(0.0f, 1.0f, sliderPos);
+
+			// Update the slider value within the specified range
+			this.sliderValue = minValue + sliderPos * (maxValue - minValue);
+			if(this.decimalPlace != 0.0f) {
+				this.sliderValue = Mth.roundToDecimalPlace(this.sliderValue, this.decimalPlace);
 			}
+			oc.options.setOptionFloatValue(this.keyId, this.sliderValue);
+			this.displayString = this.displayStringName + ": " + this.sliderValue;
+			return true;
 		}
+
 		return false;
 	}
 
-	protected void mouseDragged(OpenCraft mc, int mouseX, int mouseY) {
+	protected void mouseDragged(int mouseX, int mouseY) {
 		if(this.dragging) {
 			// Calculate the position of the slider relative to the mouse position
 			float sliderPos = (float) (mouseX - this.xPosition - 4) / (float) (this.width - 8);
@@ -67,7 +71,7 @@ public class GuiSlider extends GuiButton {
 			if(this.decimalPlace != 0.0f) {
 				this.sliderValue = Mth.roundToDecimalPlace(this.sliderValue, this.decimalPlace);
 			}
-			this.mc.options.setOptionFloatValue(this.keyId, this.sliderValue);
+			oc.options.setOptionFloatValue(this.keyId, this.sliderValue);
 			this.displayString = this.displayStringName + ": " + this.sliderValue;
 		}
 	}
@@ -77,13 +81,12 @@ public class GuiSlider extends GuiButton {
 	}
 
 	@Override
-	public void drawButton(OpenCraft mc, int mouseX, int mouseY) {
-		this.mc = mc;
-		if(!this.enabled2) {
+	public void drawButton(int mouseX, int mouseY) {
+		if(!enabled2)
 			return;
-		}
-		final FontRenderer fontRenderer = mc.font;
-		GL11.glBindTexture(3553, mc.renderer.loadTexture("/assets/gui/gui.png"));
+
+		final FontRenderer fontRenderer = oc.font;
+		GL11.glBindTexture(3553, oc.renderer.loadTexture("/assets/gui/gui.png"));
 
 		int colorChange = 1;
 		final boolean isHovered = mouseX >= this.xPosition && mouseY >= this.yPosition && mouseX < this.xPosition + this.width && mouseY < this.yPosition + this.height;
@@ -97,7 +100,8 @@ public class GuiSlider extends GuiButton {
 		this.drawTexturedModalRect(this.xPosition, this.yPosition, 0, 46, this.width / 2, this.height);
 		this.drawTexturedModalRect(this.xPosition + this.width / 2, this.yPosition, 200 - this.width / 2, 46, this.width / 2, this.height);
 
-		// Calculate slider position based on sliderValue within the range of minValue and maxValue
+		// Calculate slider position based on sliderValue within the range of minValue
+		// and maxValue
 		final float sliderPos = (this.sliderValue - this.minValue) / (this.maxValue - this.minValue);
 		final int sliderX = (int) (this.xPosition + (sliderPos * (this.width - 8)));
 
@@ -111,7 +115,7 @@ public class GuiSlider extends GuiButton {
 		}
 
 		if(this.dragging) {
-			this.mouseDragged(mc, mouseX, mouseY);
+			this.mouseDragged(mouseX, mouseY);
 		}
 	}
 

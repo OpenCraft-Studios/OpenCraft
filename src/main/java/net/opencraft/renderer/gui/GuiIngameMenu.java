@@ -1,6 +1,7 @@
 
 package net.opencraft.renderer.gui;
 
+import static net.opencraft.OpenCraft.*;
 import static org.joml.Math.*;
 
 public class GuiIngameMenu extends GuiScreen {
@@ -25,15 +26,15 @@ public class GuiIngameMenu extends GuiScreen {
 	@Override
 	protected void actionPerformed(final GuiButton iq) {
 		if(iq.buttonId == 0) {
-			this.id.displayGuiScreen(new GuiOptions(this, this.id.options));
+			oc.displayGuiScreen(new GuiOptions(this, oc.options));
 		}
 		if(iq.buttonId == 1) {
-			this.id.changeWorld1(null);
-			this.id.displayGuiScreen(new GuiMainMenu());
+			oc.changeWorld1(null);
+			oc.displayGuiScreen(new GuiMainMenu());
 		}
 		if(iq.buttonId == 4) {
-			this.id.displayGuiScreen(null);
-			this.id.setIngameFocus();
+			oc.displayGuiScreen(null);
+			oc.setIngameFocus();
 		}
 	}
 
@@ -46,7 +47,7 @@ public class GuiIngameMenu extends GuiScreen {
 	@Override
 	public void drawScreen(final int integer1, final int integer2, final float float3) {
 		this.drawDefaultBackground();
-		if(!this.id.world.quickSaveWorld(this.updateCounter2++) || this.updateCounter1 < 20) {
+		if(!oc.world.quickSaveWorld(this.updateCounter2++) || this.updateCounter1 < 20) {
 			float n = (this.updateCounter1 % 10 + float3) / 10.0f;
 			n = sin(toRadians(n) * 2.0f) * 0.2f + 0.8f;
 			final int n2 = (int) (255.0f * n);

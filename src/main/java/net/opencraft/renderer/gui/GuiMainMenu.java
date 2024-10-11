@@ -1,12 +1,14 @@
 
 package net.opencraft.renderer.gui;
 
-import net.opencraft.client.Main;
-import net.opencraft.renderer.*;
-
+import static net.opencraft.OpenCraft.*;
 import static org.joml.Math.*;
 
 import org.lwjgl.opengl.GL11;
+
+import net.opencraft.OpenCraft;
+import net.opencraft.client.Main;
+import net.opencraft.renderer.*;
 
 public class GuiMainMenu extends GuiScreen {
 
@@ -44,16 +46,16 @@ public class GuiMainMenu extends GuiScreen {
 	@Override
 	protected void actionPerformed(final GuiButton iq) {
 		if(iq.buttonId == 0) {
-			this.id.displayGuiScreen(new GuiOptions(this, this.id.options));
+			oc.displayGuiScreen(new GuiOptions(this, oc.options));
 		}
 		if(iq.buttonId == 1) {
-			this.id.displayGuiScreen(new GuiCreateWorld(this));
+			oc.displayGuiScreen(new GuiCreateWorld(this));
 		}
 		if(iq.buttonId == 2) {
-			this.id.displayGuiScreen(new GuiMultiplayer(this));
+			oc.displayGuiScreen(new GuiMultiplayer(this));
 		}
 		if(iq.buttonId == 3) {
-			this.id.shutdown();
+			oc.shutdown();
 		}
 	}
 
@@ -62,7 +64,7 @@ public class GuiMainMenu extends GuiScreen {
 		this.panorama.render(partialTicks);
 		//this.drawDefaultBackground();
 		final Tessellator instance = Tessellator.instance;
-		GL11.glBindTexture(3553, this.id.renderer.loadTexture("/assets/gui/logo.png"));
+		GL11.glBindTexture(3553, oc.renderer.loadTexture("/assets/gui/logo.png"));
 		final int integer3 = 256;
 		final int integer4 = 49;
 		GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
@@ -76,7 +78,7 @@ public class GuiMainMenu extends GuiScreen {
 		GL11.glScalef(n, n, n);
 		this.drawCenteredString(this.fontRenderer, this.currentSplash, 0, -8, 16776960);
 		GL11.glPopMatrix();
-		final String gameVersion = Main.TITLE;
+		final String gameVersion = "OpenCraft " + Main.VERSION;
 		this.drawString(this.fontRenderer, gameVersion, 4, this.height - 12, 0xFFFFFF);
 		final long maxMemory = Runtime.getRuntime().maxMemory();
 		final long totalMemory = Runtime.getRuntime().totalMemory();
@@ -86,8 +88,8 @@ public class GuiMainMenu extends GuiScreen {
 		this.drawString(this.fontRenderer, string2, this.width - this.fontRenderer.getStringWidth(string2) - 2, 12, 16777215);
 		super.drawScreen(mouseX, mouseY, partialTicks);
 
-		id.sndManager.currentMusicTheme = "menu";
-		id.sndManager.playRandomMusicIfReady();
+		oc.sndManager.currentMusicTheme = "menu";
+		oc.sndManager.playRandomMusicIfReady();
 	}
 
 }

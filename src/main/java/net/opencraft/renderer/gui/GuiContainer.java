@@ -1,8 +1,12 @@
 
 package net.opencraft.renderer.gui;
 
+import static net.opencraft.OpenCraft.*;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import org.lwjgl.opengl.GL11;
 
 import net.opencraft.client.config.GameSettings;
 import net.opencraft.entity.EntityPlayerSP;
@@ -11,8 +15,6 @@ import net.opencraft.inventory.Slot;
 import net.opencraft.item.ItemStack;
 import net.opencraft.renderer.entity.RenderHelper;
 import net.opencraft.renderer.entity.RenderItem;
-
-import org.lwjgl.opengl.GL11;
 
 public abstract class GuiContainer extends GuiScreen {
 
@@ -58,8 +60,8 @@ public abstract class GuiContainer extends GuiScreen {
 		}
 		if(this.itemStack != null) {
 			GL11.glTranslatef(0.0f, 0.0f, 32.0f);
-			GuiContainer.itemRenderer.drawItemIntoGui(this.fontRenderer, this.id.renderer, this.itemStack, integer1 - n - 8, integer2 - n2 - 8);
-			GuiContainer.itemRenderer.renderItemOverlayIntoGUI(this.fontRenderer, this.id.renderer, this.itemStack, integer1 - n - 8, integer2 - n2 - 8);
+			GuiContainer.itemRenderer.drawItemIntoGui(this.fontRenderer, oc.renderer, this.itemStack, integer1 - n - 8, integer2 - n2 - 8);
+			GuiContainer.itemRenderer.renderItemOverlayIntoGUI(this.fontRenderer, oc.renderer, this.itemStack, integer1 - n - 8, integer2 - n2 - 8);
 		}
 		GL11.glDisable(32826);
 		RenderHelper.disableStandardItemLighting();
@@ -86,14 +88,14 @@ public abstract class GuiContainer extends GuiScreen {
 			final int backgroundIconIndex = gq.getBackgroundIconIndex();
 			if(backgroundIconIndex >= 0) {
 				GL11.glDisable(2896);
-				this.id.renderer.bindTexture(this.id.renderer.loadTexture("/assets/gui/items.png"));
+				oc.renderer.bindTexture(oc.renderer.loadTexture("/assets/gui/items.png"));
 				this.drawTexturedModalRect(xPos, yPos, backgroundIconIndex % 16 * 16, backgroundIconIndex / 16 * 16, 16, 16);
 				GL11.glEnable(2896);
 				return;
 			}
 		}
-		GuiContainer.itemRenderer.drawItemIntoGui(this.fontRenderer, this.id.renderer, stackInSlot, xPos, yPos);
-		GuiContainer.itemRenderer.renderItemOverlayIntoGUI(this.fontRenderer, this.id.renderer, stackInSlot, xPos, yPos);
+		GuiContainer.itemRenderer.drawItemIntoGui(this.fontRenderer, oc.renderer, stackInSlot, xPos, yPos);
+		GuiContainer.itemRenderer.renderItemOverlayIntoGUI(this.fontRenderer, oc.renderer, stackInSlot, xPos, yPos);
 	}
 
 	private Slot a(final int integer1, final int integer2) {
@@ -187,7 +189,7 @@ public abstract class GuiContainer extends GuiScreen {
 				final int n = (this.width - this.xSize) / 2;
 				final int integer4 = (this.height - this.ySize) / 2;
 				if(integer1 < n || integer2 < integer4 || integer1 >= n + this.xSize || integer2 >= integer4 + this.xSize) {
-					final EntityPlayerSP thePlayer = this.id.player;
+					final EntityPlayerSP thePlayer = oc.player;
 					if(integer3 == 0) {
 						thePlayer.dropPlayerItem(this.itemStack);
 						this.itemStack = null;
@@ -211,15 +213,15 @@ public abstract class GuiContainer extends GuiScreen {
 
 	@Override
 	protected void keyTyped(final char character, final int integer) {
-		if(integer == 1 || integer == this.id.options.keyBindings.get(GameSettings.PlayerInput.INVENTORY)) {
-			this.id.displayGuiScreen(null);
+		if(integer == 1 || integer == oc.options.keyBindings.get(GameSettings.PlayerInput.INVENTORY)) {
+			oc.displayGuiScreen(null);
 		}
 	}
 
 	@Override
 	public void onGuiClosed() {
 		if(this.itemStack != null) {
-			this.id.player.dropPlayerItem(this.itemStack);
+			oc.player.dropPlayerItem(this.itemStack);
 		}
 	}
 

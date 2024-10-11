@@ -14,6 +14,7 @@ import java.util.stream.Collectors;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
+import static net.opencraft.OpenCraft.*;
 import static org.lwjgl.glfw.GLFW.*;
 
 import org.lwjgl.glfw.GLFWErrorCallback;
@@ -25,10 +26,8 @@ public class Main {
 	public static final ResourcesDescriptor RESOURCES = describeResources();
 	public static final String NATIVES_PATH = "natives/";
 	public static final int EXPECTED_NATIVES_COUNT = 10;
-	public static final float INITIAL_WINDOW_SIZE_FACTOR = 0.8f;
 	public static final String GIT_INFO = "git.properties";
 	public static final String VERSION = version();
-	public static final String TITLE = "OpenCraft " + VERSION;
 
 	private static GLFWErrorCallback errorCallback;
 
@@ -56,14 +55,11 @@ public class Main {
 	}
 
 	public static void main(String[] args) throws Exception {
-		System.out.println("Starting...");
+		System.out.println("Starting OpenCraft...");
 		System.setProperty("user.dir", RESOURCES.resourcesRoot.getAbsolutePath());
 
 		glfwSetErrorCallback(errorCallback = GLFWErrorCallback.createPrint(System.err));
-
-		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-		OpenCraft oc = new OpenCraft((int) (screenSize.width * INITIAL_WINDOW_SIZE_FACTOR), (int) (screenSize.height * INITIAL_WINDOW_SIZE_FACTOR), false);
-		System.out.println("Running on thread " + Thread.currentThread().threadId() + " / " + Thread.currentThread().getName());
+		oc = new OpenCraft(840, 480);
 		oc.run();
 	}
 
@@ -95,28 +91,22 @@ public class Main {
 	}
 
 	public static String updateVersionIfInString(String version, String line) {
-		if(line.startsWith("git.commit.id.abbrev")) {
-			return line.split("=")[1];
-		} else {
-			return version;
-		}
+		if(line.startsWith("git.commit.id.abbrev"))
+			return line.substring(line.lastIndexOf("=") + 1);
+
+		return version;
 	}
 
 	// TODO: deduplicate this method with the one in DownloadResourcesJob
 	// A lambda might be appropriate
 	public static List<URL> resourcesAt(String prefix) throws IOException {
-		ZipInputStream zip = null;
-		zip = new ZipInputStream(RESOURCES.jarFile.toURI().toURL().openStream());
+		ZipInputStream zip = new ZipInputStream(RESOURCES.jarFile.toURI().toURL().openStream());
 		List<URL> resources = new ArrayList<>();
-		while(true) {
-			ZipEntry entry = zip.getNextEntry();
-			if(entry == null) {
-				break;
-			}
-			final String name = entry.getName();
-			if(name.startsWith(prefix) && !entry.isDirectory()) {
+		ZipEntry entry;
+		while((entry = zip.getNextEntry()) != null) {
+			String name = entry.getName();
+			if(name.startsWith(prefix) && !entry.isDirectory())
 				resources.add(Main.class.getClassLoader().getResource(name));
-			}
 		}
 		zip.close();
 		return resources;

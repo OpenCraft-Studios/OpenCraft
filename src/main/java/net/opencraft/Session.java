@@ -10,7 +10,7 @@ public class Session {
 
 	public static List<Block> registeredBlocksList;
 	public String username;
-	public String sessionId;
+	private String sessionId;
 
 	static {
 		registeredBlocksList = new ArrayList<>();

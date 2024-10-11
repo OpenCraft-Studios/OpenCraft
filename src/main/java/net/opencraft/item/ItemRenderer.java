@@ -1,6 +1,12 @@
 
 package net.opencraft.item;
 
+import static net.opencraft.OpenCraft.*;
+import static net.opencraft.entity.EntityRenderer.*;
+import static org.joml.Math.*;
+
+import org.lwjgl.opengl.GL11;
+
 import net.opencraft.OpenCraft;
 import net.opencraft.blocks.Block;
 import net.opencraft.blocks.material.Material;
@@ -9,15 +15,8 @@ import net.opencraft.renderer.Tessellator;
 import net.opencraft.renderer.entity.*;
 import net.opencraft.util.Mth;
 
-import static net.opencraft.OpenCraft.*;
-import static net.opencraft.entity.EntityRenderer.gluPerspective;
-import static org.joml.Math.*;
-
-import org.lwjgl.opengl.GL11;
-
 public class ItemRenderer {
 
-	private OpenCraft a;
 	private ItemStack b;
 	private float c;
 	private float d;
@@ -25,14 +24,13 @@ public class ItemRenderer {
 	private boolean f;
 	private RenderBlocks g;
 
-	public ItemRenderer(final OpenCraft aw) {
+	public ItemRenderer() {
 		this.b = null;
 		this.c = 0.0f;
 		this.d = 0.0f;
 		this.e = 0;
 		this.f = false;
 		this.g = new RenderBlocks();
-		this.a = aw;
 	}
 
 	public void renderItemInFirstPerson(final float float1) {
@@ -42,13 +40,13 @@ public class ItemRenderer {
 		GL11.glMatrixMode(GL11.GL_MODELVIEW);
 
 		final float n = this.d + (this.c - this.d) * float1;
-		final EntityPlayerSP thePlayer = this.a.player;
+		final EntityPlayerSP thePlayer = oc.player;
 		GL11.glPushMatrix();
 		GL11.glRotatef(thePlayer.prevRotationPitch + (thePlayer.rotationPitch - thePlayer.prevRotationPitch) * float1, 1.0f, 0.0f, 0.0f);
 		GL11.glRotatef(thePlayer.prevRotationYaw + (thePlayer.rotationYaw - thePlayer.prevRotationYaw) * float1, 0.0f, 1.0f, 0.0f);
 		RenderHelper.enableStandardItemLighting();
 		GL11.glPopMatrix();
-		final float lightBrightness = this.a.world.getLightBrightness(Mth.floor_double(thePlayer.x), Mth.floor_double(thePlayer.y), Mth.floor_double(thePlayer.z));
+		final float lightBrightness = oc.world.getLightBrightness(Mth.floor_double(thePlayer.x), Mth.floor_double(thePlayer.y), Mth.floor_double(thePlayer.z));
 		GL11.glColor4f(lightBrightness, lightBrightness, lightBrightness, 1.0f);
 		if(this.b != null) {
 			GL11.glPushMatrix();
@@ -73,13 +71,13 @@ public class ItemRenderer {
 			final float n3 = 0.4f;
 			GL11.glScalef(n3, n3, n3);
 			if(this.b.itemID < 256 && Block.blocksList[this.b.itemID].getRenderType() == 0) {
-				GL11.glBindTexture(3553, this.a.renderer.loadTexture("/assets/terrain.png"));
+				GL11.glBindTexture(3553, oc.renderer.loadTexture("/assets/terrain.png"));
 				this.g.renderBlockOnInventory(Block.blocksList[this.b.itemID]);
 			} else {
 				if(this.b.itemID < 256) {
-					GL11.glBindTexture(3553, this.a.renderer.loadTexture("/assets/terrain.png"));
+					GL11.glBindTexture(3553, oc.renderer.loadTexture("/assets/terrain.png"));
 				} else {
-					GL11.glBindTexture(3553, this.a.renderer.loadTexture("/assets/gui/items.png"));
+					GL11.glBindTexture(3553, oc.renderer.loadTexture("/assets/gui/items.png"));
 				}
 				final Tessellator instance = Tessellator.instance;
 				final float n5 = (this.b.getIconIndex() % 16 * 16 + 0) / 256.0f;
@@ -181,14 +179,14 @@ public class ItemRenderer {
 				GL11.glRotatef(n5 * 70.0f, 0.0f, 1.0f, 0.0f);
 				GL11.glRotatef(-n4 * 20.0f, 0.0f, 0.0f, 1.0f);
 			}
-			GL11.glBindTexture(3553, this.a.renderer.loadAndBindTexture(this.a.player.skinUrl, this.a.player.addToPlayerScore()));
+			GL11.glBindTexture(3553, oc.renderer.loadAndBindTexture(oc.player.skinUrl, oc.player.addToPlayerScore()));
 			GL11.glTranslatef(-1.0f, 3.6f, 3.5f);
 			GL11.glRotatef(120.0f, 0.0f, 0.0f, 1.0f);
 			GL11.glRotatef(200.0f, 1.0f, 0.0f, 0.0f);
 			GL11.glRotatef(-135.0f, 0.0f, 1.0f, 0.0f);
 			GL11.glScalef(1.0f, 1.0f, 1.0f);
 			GL11.glTranslatef(5.6f, 0.0f, 0.0f);
-			final RenderPlayer renderPlayer = (RenderPlayer) RenderManager.instance.getEntityRenderObject(this.a.player);
+			final RenderPlayer renderPlayer = (RenderPlayer) RenderManager.instance.getEntityRenderObject(oc.player);
 			final float n5 = 1.0f;
 			GL11.glScalef(n5, n5, n5);
 			renderPlayer.drawFirstPersonHand();
@@ -200,23 +198,23 @@ public class ItemRenderer {
 
 	public void renderOverlays(final float float1) {
 		GL11.glDisable(3008);
-		if(this.a.player.fire > 0) {
-			final int xCoord = this.a.renderer.loadTexture("/assets/terrain.png");
+		if(oc.player.fire > 0) {
+			final int xCoord = oc.renderer.loadTexture("/assets/terrain.png");
 			GL11.glBindTexture(3553, xCoord);
 			this.d(float1);
 		}
-		if(this.a.world.player.isEntityInsideOpaqueBlock()) {
-			final int xCoord = Mth.floor_double(this.a.player.x);
-			final int floor_double = Mth.floor_double(this.a.player.y);
-			final int floor_double2 = Mth.floor_double(this.a.player.z);
-			GL11.glBindTexture(3553, this.a.renderer.loadTexture("/assets/terrain.png"));
-			final int blockId = this.a.world.getBlockId(xCoord, floor_double, floor_double2);
+		if(oc.world.player.isEntityInsideOpaqueBlock()) {
+			final int xCoord = Mth.floor_double(oc.player.x);
+			final int floor_double = Mth.floor_double(oc.player.y);
+			final int floor_double2 = Mth.floor_double(oc.player.z);
+			GL11.glBindTexture(3553, oc.renderer.loadTexture("/assets/terrain.png"));
+			final int blockId = oc.world.getBlockId(xCoord, floor_double, floor_double2);
 			if(Block.blocksList[blockId] != null) {
 				this.a(float1, Block.blocksList[blockId].getBlockTextureFromSide(2));
 			}
 		}
-		if(this.a.player.isInsideOfMaterial(Material.WATER)) {
-			final int xCoord = this.a.renderer.loadTexture("/assets/water.png");
+		if(oc.player.isInsideOfMaterial(Material.WATER)) {
+			final int xCoord = oc.renderer.loadTexture("/assets/water.png");
 			GL11.glBindTexture(3553, xCoord);
 			this.c(float1);
 		}
@@ -225,7 +223,7 @@ public class ItemRenderer {
 
 	private void a(final float float1, final int integer) {
 		final Tessellator instance = Tessellator.instance;
-		float entityBrightness = this.a.player.getEntityBrightness(float1);
+		float entityBrightness = oc.player.getEntityBrightness(float1);
 		entityBrightness = 0.1f;
 		GL11.glColor4f(entityBrightness, entityBrightness, entityBrightness, 0.5f);
 		GL11.glPushMatrix();
@@ -251,7 +249,7 @@ public class ItemRenderer {
 
 	private void c(final float float1) {
 		final Tessellator instance = Tessellator.instance;
-		final float entityBrightness = this.a.player.getEntityBrightness(float1);
+		final float entityBrightness = oc.player.getEntityBrightness(float1);
 		GL11.glColor4f(entityBrightness, entityBrightness, entityBrightness, 0.5f);
 		GL11.glEnable(3042);
 		GL11.glBlendFunc(770, 771);
@@ -262,8 +260,8 @@ public class ItemRenderer {
 		final float n4 = -1.0f;
 		final float n5 = 1.0f;
 		final float n6 = -0.5f;
-		final float n7 = -this.a.player.rotationYaw / 64.0f;
-		final float n8 = this.a.player.rotationPitch / 64.0f;
+		final float n7 = -oc.player.rotationYaw / 64.0f;
+		final float n8 = oc.player.rotationPitch / 64.0f;
 		instance.beginQuads();
 		instance.vertexUV(n2, n4, n6, n + n7, n + n8);
 		instance.vertexUV(n3, n4, n6, 0.0f + n7, n + n8);
@@ -318,7 +316,7 @@ public class ItemRenderer {
 				this.f = false;
 			}
 		}
-		final ItemStack currentItem = this.a.player.inventory.getCurrentItem();
+		final ItemStack currentItem = oc.player.inventory.getCurrentItem();
 		final float n = 0.4f;
 		float n2 = ((currentItem == this.b) ? 1.0f : 0.0f) - this.c;
 		if(n2 < -n) {

@@ -33,7 +33,7 @@ public class GuiMultiplayer extends GuiScreen {
 			return;
 		}
 		if(iq.buttonId == -6) {
-			this.id.displayGuiScreen(this.parentGuiScreen);
+			OpenCraft.oc.displayGuiScreen(this.parentGuiScreen);
 		}
 	}
 

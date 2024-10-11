@@ -3,6 +3,9 @@ package net.opencraft.client.entity;
 
 import net.opencraft.OpenCraft;
 import net.opencraft.aa;
+
+import static net.opencraft.OpenCraft.*;
+
 import net.opencraft.EntitySpawner;
 import net.opencraft.blocks.Block;
 import net.opencraft.entity.EntityAnimal;
@@ -29,8 +32,8 @@ public class PlayerControllerSP extends PlayerController {
 	private EntitySpawner j;
 	private EntitySpawner k;
 
-	public PlayerControllerSP(final OpenCraft aw) {
-		super(aw);
+	public PlayerControllerSP() {
+		super();
 		this.field_1074_c = -1;
 		this.field_1073_d = -1;
 		this.field_1072_e = -1;
@@ -53,30 +56,30 @@ public class PlayerControllerSP extends PlayerController {
 
 	@Override
 	public boolean sendBlockRemoved(final int xCoord, final int yCoord, final int zCoord) {
-		final int blockId = this.mc.world.getBlockId(xCoord, yCoord, zCoord);
-		final int blockMetadata = this.mc.world.getBlockMetadata(xCoord, yCoord, zCoord);
+		final int blockId = oc.world.getBlockId(xCoord, yCoord, zCoord);
+		final int blockMetadata = oc.world.getBlockMetadata(xCoord, yCoord, zCoord);
 		final boolean sendBlockRemoved = super.sendBlockRemoved(xCoord, yCoord, zCoord);
-		final ItemStack currentEquippedItem = this.mc.player.getCurrentEquippedItem();
+		final ItemStack currentEquippedItem = oc.player.getCurrentEquippedItem();
 		if(currentEquippedItem != null) {
 			currentEquippedItem.onDestroyBlock(blockId, xCoord, yCoord, zCoord);
 			if(currentEquippedItem.stackSize == 0) {
-				currentEquippedItem.onItemDestroyedByUse(this.mc.player);
-				this.mc.player.displayGUIInventory();
+				currentEquippedItem.onItemDestroyedByUse(oc.player);
+				oc.player.displayGUIInventory();
 			}
 		}
-		if(sendBlockRemoved && this.mc.player.canHarvestBlock(Block.blocksList[blockId])) {
-			Block.blocksList[blockId].dropBlockAsItem(this.mc.world, xCoord, yCoord, zCoord, blockMetadata);
+		if(sendBlockRemoved && oc.player.canHarvestBlock(Block.blocksList[blockId])) {
+			Block.blocksList[blockId].dropBlockAsItem(oc.world, xCoord, yCoord, zCoord, blockMetadata);
 		}
 		return sendBlockRemoved;
 	}
 
 	@Override
 	public void clickBlock(final int xCoord, final int yCoord, final int zCoord) {
-		final int blockId = this.mc.world.getBlockId(xCoord, yCoord, zCoord);
+		final int blockId = oc.world.getBlockId(xCoord, yCoord, zCoord);
 		if(blockId > 0 && this.curBlockDamage == 0.0f) {
-			Block.blocksList[blockId].onBlockClicked(this.mc.world, xCoord, yCoord, zCoord, this.mc.player);
+			Block.blocksList[blockId].onBlockClicked(oc.world, xCoord, yCoord, zCoord, oc.player);
 		}
-		if(blockId > 0 && Block.blocksList[blockId].blockStrength(this.mc.player) >= 1.0f) {
+		if(blockId > 0 && Block.blocksList[blockId].blockStrength(oc.player) >= 1.0f) {
 			this.sendBlockRemoved(xCoord, yCoord, zCoord);
 		}
 	}
@@ -96,14 +99,14 @@ public class PlayerControllerSP extends PlayerController {
 		}
 		super.sendBlockRemoving(integer1, integer2, integer3, integer4);
 		if(integer1 == this.field_1074_c && integer2 == this.field_1073_d && integer3 == this.field_1072_e) {
-			final int blockId = this.mc.world.getBlockId(integer1, integer2, integer3);
+			final int blockId = oc.world.getBlockId(integer1, integer2, integer3);
 			if(blockId == 0) {
 				return;
 			}
 			final Block block = Block.blocksList[blockId];
-			this.curBlockDamage += block.blockStrength(this.mc.player);
+			this.curBlockDamage += block.blockStrength(oc.player);
 			if(this.field_1069_h % 4.0f == 0.0f && block != null) {
-				this.mc.sndManager.playSound(block.stepSound.stepSoundDir2(), integer1 + 0.5f, integer2 + 0.5f, integer3 + 0.5f, (block.stepSound.soundVolume() + 1.0f) / 8.0f, block.stepSound.soundPitch() * 0.5f);
+				oc.sndManager.playSound(block.stepSound.stepSoundDir2(), integer1 + 0.5f, integer2 + 0.5f, integer3 + 0.5f, (block.stepSound.soundVolume() + 1.0f) / 8.0f, block.stepSound.soundPitch() * 0.5f);
 			}
 			++this.field_1069_h;
 			if(this.curBlockDamage >= 1.0f) {
@@ -126,12 +129,12 @@ public class PlayerControllerSP extends PlayerController {
 	@Override
 	public void setPartialTime(final float float1) {
 		if(this.curBlockDamage <= 0.0f) {
-			this.mc.ingameGUI.damageGuiPartialTime = 0.0f;
-			this.mc.renderGlobal.damagePartialTime = 0.0f;
+			oc.ingameGUI.damageGuiPartialTime = 0.0f;
+			oc.renderGlobal.damagePartialTime = 0.0f;
 		} else {
 			final float n = this.prevBlockDamage + (this.curBlockDamage - this.prevBlockDamage) * float1;
-			this.mc.ingameGUI.damageGuiPartialTime = n;
-			this.mc.renderGlobal.damagePartialTime = n;
+			oc.ingameGUI.damageGuiPartialTime = n;
+			oc.renderGlobal.damagePartialTime = n;
 		}
 	}
 
@@ -148,9 +151,9 @@ public class PlayerControllerSP extends PlayerController {
 	@Override
 	public void updateController() {
 		this.prevBlockDamage = this.curBlockDamage;
-		this.j.spawnEntitiesIfNecessary(this.mc.world);
-		this.k.spawnEntitiesIfNecessary(this.mc.world);
-		this.mc.sndManager.playRandomMusicIfReady();
+		this.j.spawnEntitiesIfNecessary(oc.world);
+		this.k.spawnEntitiesIfNecessary(oc.world);
+		oc.sndManager.playRandomMusicIfReady();
 	}
 
 }

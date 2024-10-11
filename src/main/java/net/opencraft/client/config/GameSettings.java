@@ -10,12 +10,13 @@ import java.io.PrintWriter;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.EnumBiMap;
 import com.google.common.collect.EnumHashBiMap;
-import net.opencraft.OpenCraft;
+
 import net.opencraft.client.input.MovementInput;
 import net.opencraft.world.IWorldAccess;
 
 import javax.swing.text.JTextComponent;
 
+import static net.opencraft.OpenCraft.*;
 import static org.lwjgl.glfw.GLFW.*;
 
 public class GameSettings {
@@ -33,7 +34,6 @@ public class GameSettings {
 	public boolean limitFramerate;
 	public boolean fancyGraphics;
 	public BiMap<PlayerInput, Integer> keyBindings = EnumHashBiMap.create(PlayerInput.class);
-	protected OpenCraft mc;
 	private final File optionsFile;
 	public int numberOfOptions;
 	public int difficulty;
@@ -58,7 +58,7 @@ public class GameSettings {
 		TOGGLE_FOG
 	}
 
-	public GameSettings(final OpenCraft aw, final File file) {
+	public GameSettings(final File file) {
 		setupKeybinds();
 
 		this.music = true;
@@ -75,7 +75,6 @@ public class GameSettings {
 		this.thirdPersonView = false;
 		this.fov = 100.0F;
 		this.minimumBrightness = 0.0F;
-		this.mc = aw;
 		this.optionsFile = new File(file, "options.txt");
 		this.loadOptions();
 	}
@@ -113,11 +112,11 @@ public class GameSettings {
 	public void setOptionFloatValue(final float key, float value) {
 		if(key == 0) {
 			this.music = !this.music;
-			this.mc.sndManager.onSoundOptionsChanged();
+			oc.sndManager.onSoundOptionsChanged();
 		}
 		if(key == 1) {
 			this.sound = !this.sound;
-			this.mc.sndManager.onSoundOptionsChanged();
+			oc.sndManager.onSoundOptionsChanged();
 		}
 		if(key == 2) {
 			this.invertMouse = !this.invertMouse;
@@ -133,7 +132,7 @@ public class GameSettings {
 		}
 		if(key == 6) {
 			this.anaglyph = !this.anaglyph;
-			this.mc.renderer.refreshTextures();
+			oc.renderer.refreshTextures();
 		}
 		if(key == 7) {
 			this.limitFramerate = !this.limitFramerate;
@@ -143,16 +142,16 @@ public class GameSettings {
 		}
 		if(key == 9) {
 			this.fancyGraphics = !this.fancyGraphics;
-			this.mc.renderGlobal.fancyGraphics();
+			oc.renderGlobal.fancyGraphics();
 		}
 		if(key == 10) {
 			this.fov = value;
 		}
 		if(key == 11) {
 			this.minimumBrightness = value;
-			if(mc.world != null) {
-				for(int i = 0; i < mc.world.worldAccesses.size(); ++i) {
-					((IWorldAccess) mc.world.worldAccesses.get(i)).updateAllRenderers();
+			if(oc.world != null) {
+				for(int i = 0; i < oc.world.worldAccesses.size(); ++i) {
+					((IWorldAccess) oc.world.worldAccesses.get(i)).updateAllRenderers();
 				}
 			}
 		}

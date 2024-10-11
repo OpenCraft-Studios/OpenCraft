@@ -1,7 +1,8 @@
 
 package net.opencraft.entity;
 
-import net.opencraft.OpenCraft;
+import static net.opencraft.OpenCraft.*;
+
 import net.opencraft.Session;
 import net.opencraft.client.input.KeyboardInput;
 import net.opencraft.client.input.MovementInput;
@@ -18,11 +19,9 @@ import net.opencraft.world.World;
 public class EntityPlayerSP extends EntityPlayer {
 
 	public MovementInput movementInput;
-	private OpenCraft mc;
 
-	public EntityPlayerSP(final OpenCraft aw, final World fe, final Session gg) {
+	public EntityPlayerSP(World fe, Session gg) {
 		super(fe);
-		this.mc = aw;
 		if(fe != null) {
 			if(fe.player != null) {
 				fe.setEntityDead(fe.player);
@@ -64,22 +63,22 @@ public class EntityPlayerSP extends EntityPlayer {
 
 	@Override
 	public void displayGUIChest(final IInventory kd) {
-		this.mc.displayGuiScreen(new GuiChest(this.inventory, kd));
+		oc.displayGuiScreen(new GuiChest(this.inventory, kd));
 	}
 
 	@Override
 	public void displayGUIEditSign(final TileEntitySign jn) {
-		this.mc.displayGuiScreen(new GuiEditSign(jn));
+		oc.displayGuiScreen(new GuiEditSign(jn));
 	}
 
 	@Override
 	public void displayWorkbenchGUI() {
-		this.mc.displayGuiScreen(new GuiCrafting(this.inventory));
+		oc.displayGuiScreen(new GuiCrafting(this.inventory));
 	}
 
 	@Override
 	public void displayGUIFurnace(final TileEntityFurnace el) {
-		this.mc.displayGuiScreen(new GuiFurnace(this.inventory, el));
+		oc.displayGuiScreen(new GuiFurnace(this.inventory, el));
 	}
 
 	public ItemStack getCurrentEquippedItem() {
@@ -107,7 +106,7 @@ public class EntityPlayerSP extends EntityPlayer {
 
 	@Override
 	public void onItemPickup(final Entity eq) {
-		this.mc.effectRenderer.addEffect(new EntityPickupFX(this.mc.world, eq, this, -0.5f));
+		oc.effectRenderer.addEffect(new EntityPickupFX(oc.world, eq, this, -0.5f));
 	}
 
 	public int getPlayerArmorValue() {

@@ -1,29 +1,25 @@
 
 package net.opencraft.renderer;
 
-import net.opencraft.OpenCraft;
-import net.opencraft.OpenCraftError;
-import net.opencraft.ScaledResolution;
+import static net.opencraft.OpenCraft.*;
+import static org.lwjgl.glfw.GLFW.*;
+import static org.lwjgl.opengl.GL11.*;
+
+import net.opencraft.*;
 import net.opencraft.renderer.gui.IProgressUpdate;
-
-import org.lwjgl.opengl.GL11;
-
-import static org.lwjgl.glfw.GLFW.glfwSwapBuffers;
 
 public class LoadingScreenRenderer implements IProgressUpdate {
 
 	private String field_1004_a;
-	private OpenCraft mc;
 	private String currentlyDisplayedText;
 	private long field_1006_d;
 	private boolean field_1005_e;
 
-	public LoadingScreenRenderer(final OpenCraft aw) {
+	public LoadingScreenRenderer() {
 		this.field_1004_a = "";
 		this.currentlyDisplayedText = "";
 		this.field_1006_d = System.currentTimeMillis();
 		this.field_1005_e = false;
-		this.mc = aw;
 	}
 
 	public void printText(final String string) {
@@ -37,18 +33,18 @@ public class LoadingScreenRenderer implements IProgressUpdate {
 	}
 
 	public void setLoadingProgress(final String string) {
-		if(this.mc.running) {
+		if(oc.running) {
 			this.currentlyDisplayedText = string;
-			final ScaledResolution scaledResolution = new ScaledResolution(this.mc.width, this.mc.height);
+			final ScaledResolution scaledResolution = new ScaledResolution(oc.width, oc.height);
 			final int scaledWidth = scaledResolution.getScaledWidth();
 			final int scaledHeight = scaledResolution.getScaledHeight();
-			GL11.glClear(256);
-			GL11.glMatrixMode(5889);
-			GL11.glLoadIdentity();
-			GL11.glOrtho(0.0, (double) scaledWidth, (double) scaledHeight, 0.0, 100.0, 300.0);
-			GL11.glMatrixMode(5888);
-			GL11.glLoadIdentity();
-			GL11.glTranslatef(0.0f, 0.0f, -200.0f);
+			glClear(256);
+			glMatrixMode(5889);
+			glLoadIdentity();
+			glOrtho(0.0, (double) scaledWidth, (double) scaledHeight, 0.0, 100.0, 300.0);
+			glMatrixMode(5888);
+			glLoadIdentity();
+			glTranslatef(0.0f, 0.0f, -200.0f);
 			return;
 		}
 		if(this.field_1005_e) {
@@ -58,7 +54,7 @@ public class LoadingScreenRenderer implements IProgressUpdate {
 	}
 
 	public void displayLoadingString(final String string) {
-		if(this.mc.running) {
+		if(oc.running) {
 			this.field_1006_d = 0L;
 			this.field_1004_a = string;
 			this.setLoadingProgress(-1);
@@ -72,7 +68,7 @@ public class LoadingScreenRenderer implements IProgressUpdate {
 	}
 
 	public void setLoadingProgress(final int integer) {
-		if(!this.mc.running) {
+		if(!oc.running) {
 			if(this.field_1005_e) {
 				return;
 			}
@@ -83,19 +79,19 @@ public class LoadingScreenRenderer implements IProgressUpdate {
 				return;
 			}
 			this.field_1006_d = currentTimeMillis;
-			final ScaledResolution scaledResolution = new ScaledResolution(this.mc.width, this.mc.height);
+			final ScaledResolution scaledResolution = new ScaledResolution(oc.width, oc.height);
 			final int scaledWidth = scaledResolution.getScaledWidth();
 			final int scaledHeight = scaledResolution.getScaledHeight();
-			GL11.glClear(256);
-			GL11.glMatrixMode(5889);
-			GL11.glLoadIdentity();
-			GL11.glOrtho(0.0, (double) scaledWidth, (double) scaledHeight, 0.0, 100.0, 300.0);
-			GL11.glMatrixMode(5888);
-			GL11.glLoadIdentity();
-			GL11.glTranslatef(0.0f, 0.0f, -200.0f);
-			GL11.glClear(16640);
+			glClear(256);
+			glMatrixMode(5889);
+			glLoadIdentity();
+			glOrtho(0, (double) scaledWidth, (double) scaledHeight, 0, 100, 300);
+			glMatrixMode(5888);
+			glLoadIdentity();
+			glTranslatef(0.0f, 0.0f, -200.0f);
+			glClear(16640);
 			final Tessellator instance = Tessellator.instance;
-			GL11.glBindTexture(3553, this.mc.renderer.loadTexture("/assets/dirt.png"));
+			glBindTexture(3553, oc.renderer.loadTexture("/assets/dirt.png"));
 			final float n = 32.0f;
 			instance.beginQuads();
 			instance.setColorOpaque_I(4210752);
@@ -109,7 +105,7 @@ public class LoadingScreenRenderer implements IProgressUpdate {
 				final int n3 = 2;
 				final int n4 = scaledWidth / 2 - n2 / 2;
 				final int n5 = scaledHeight / 2 + 16;
-				GL11.glDisable(3553);
+				glDisable(3553);
 				instance.beginQuads();
 				instance.setColorOpaque_I(8421504);
 				instance.vertex(n4, n5, 0.0);
@@ -122,11 +118,11 @@ public class LoadingScreenRenderer implements IProgressUpdate {
 				instance.vertex(n4 + integer, n5 + n3, 0.0);
 				instance.vertex(n4 + integer, n5, 0.0);
 				instance.draw();
-				GL11.glEnable(3553);
+				glEnable(3553);
 			}
-			this.mc.font.drawStringWithShadow2(this.currentlyDisplayedText, (scaledWidth - this.mc.font.getStringWidth(this.currentlyDisplayedText)) / 2, scaledHeight / 2 - 4 - 16, 16777215);
-			this.mc.font.drawStringWithShadow2(this.field_1004_a, (scaledWidth - this.mc.font.getStringWidth(this.field_1004_a)) / 2, scaledHeight / 2 - 4 + 8, 16777215);
-			glfwSwapBuffers(this.mc.window);
+			oc.font.drawStringWithShadow2(this.currentlyDisplayedText, (scaledWidth - oc.font.getStringWidth(this.currentlyDisplayedText)) / 2, scaledHeight / 2 - 4 - 16, 16777215);
+			oc.font.drawStringWithShadow2(this.field_1004_a, (scaledWidth - oc.font.getStringWidth(this.field_1004_a)) / 2, scaledHeight / 2 - 4 + 8, 16777215);
+			glfwSwapBuffers(oc.window);
 			try {
 				Thread.yield();
 			} catch(Exception ex) {

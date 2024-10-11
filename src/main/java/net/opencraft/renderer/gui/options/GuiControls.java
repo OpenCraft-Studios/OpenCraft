@@ -1,6 +1,8 @@
 
 package net.opencraft.renderer.gui.options;
 
+import static net.opencraft.OpenCraft.*;
+
 import net.opencraft.client.config.GameSettings;
 import net.opencraft.renderer.gui.*;
 
@@ -33,7 +35,7 @@ public class GuiControls extends GuiScreen {
 			((GuiButton) this.controlList.get(i)).displayString = this.options.getOptionDisplayString(i);
 		}
 		if(iq.buttonId == 200) {
-			this.id.displayGuiScreen(this.parentScreen);
+			oc.displayGuiScreen(this.parentScreen);
 		} else {
 			this.buttonId = iq.buttonId;
 			iq.displayString = "> " + this.options.getOptionDisplayString(iq.buttonId) + " <";

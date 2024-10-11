@@ -74,9 +74,9 @@ public class GuiCreateWorld extends GuiScreen {
 			}
 			this.actionPerformed(maximumWorldNumber + 1);
 		} else if(iq.buttonId == -5) {
-			this.id.displayGuiScreen(new GuiDeleteWorld(this));
+			OpenCraft.oc.displayGuiScreen(new GuiDeleteWorld(this));
 		} else if(iq.buttonId == -6) {
-			this.id.displayGuiScreen(this.parentGuiScreen);
+			OpenCraft.oc.displayGuiScreen(this.parentGuiScreen);
 		}
 
 		if(iq.buttonId >= 0) {
@@ -85,13 +85,13 @@ public class GuiCreateWorld extends GuiScreen {
 	}
 
 	public void actionPerformed(final int integer) {
-		this.id.displayGuiScreen(null);
+		OpenCraft.oc.displayGuiScreen(null);
 		if(this.createClicked) {
 			return;
 		}
 		this.createClicked = true;
-		this.id.startWorld(new StringBuilder().append("World").append(integer).toString());
-		this.id.displayGuiScreen(null);
+		OpenCraft.oc.startWorld(new StringBuilder().append("World").append(integer).toString());
+		OpenCraft.oc.displayGuiScreen(null);
 	}
 
 	@Override

@@ -1,6 +1,8 @@
 
 package net.opencraft.renderer.gui;
 
+import static net.opencraft.OpenCraft.*;
+
 import org.lwjgl.opengl.GL11;
 
 public class GuiGameOver extends GuiScreen {
@@ -10,7 +12,7 @@ public class GuiGameOver extends GuiScreen {
 		this.controlList.clear();
 		this.controlList.add(new GuiButton(1, this.width / 2 - 100, this.height / 4 + 72, "Respawn", 200, 20));
 		this.controlList.add(new GuiButton(2, this.width / 2 - 100, this.height / 4 + 96, "Title menu", 200, 20));
-		if(this.id.sessionData == null) {
+		if(oc.sessionData == null) {
 			((GuiButton) this.controlList.get(1)).enabled = false;
 		}
 	}
@@ -24,12 +26,12 @@ public class GuiGameOver extends GuiScreen {
 		if(iq.buttonId == 0) {
 		}
 		if(iq.buttonId == 1) {
-			this.id.respawn();
-			this.id.displayGuiScreen(null);
+			oc.respawn();
+			oc.displayGuiScreen(null);
 		}
 		if(iq.buttonId == 2) {
-			this.id.changeWorld1(null);
-			this.id.displayGuiScreen(new GuiMainMenu());
+			oc.changeWorld1(null);
+			oc.displayGuiScreen(new GuiMainMenu());
 		}
 	}
 
@@ -40,7 +42,7 @@ public class GuiGameOver extends GuiScreen {
 		GL11.glScalef(2.0f, 2.0f, 2.0f);
 		this.drawCenteredString(this.fontRenderer, "Game over!", this.width / 2 / 2, 30, 16777215);
 		GL11.glPopMatrix();
-		this.drawCenteredString(this.fontRenderer, new StringBuilder().append("Score: &e").append(this.id.player.getScore()).toString(), this.width / 2, 100, 16777215);
+		this.drawCenteredString(this.fontRenderer, new StringBuilder().append("Score: &e").append(oc.player.getScore()).toString(), this.width / 2, 100, 16777215);
 		super.drawScreen(integer1, integer2, float3);
 	}
 

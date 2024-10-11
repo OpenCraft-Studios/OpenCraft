@@ -1,10 +1,13 @@
 
 package net.opencraft.renderer.gui;
 
+import static net.opencraft.OpenCraft.*;
+
+import org.lwjgl.opengl.GL11;
+
 import net.opencraft.inventory.InventoryPlayer;
 import net.opencraft.inventory.Slot;
 import net.opencraft.tileentity.TileEntityFurnace;
-import org.lwjgl.opengl.GL11;
 
 public class GuiFurnace extends GuiContainer {
 
@@ -33,9 +36,9 @@ public class GuiFurnace extends GuiContainer {
 
 	@Override
 	protected void drawGuiContainerBackgroundLayer(final float float1) {
-		final int texture = this.id.renderer.loadTexture("/assets/gui/furnace.png");
+		final int texture = oc.renderer.loadTexture("/assets/gui/furnace.png");
 		GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
-		this.id.renderer.bindTexture(texture);
+		oc.renderer.bindTexture(texture);
 		final int integer1 = (this.width - this.xSize) / 2;
 		final int integer2 = (this.height - this.ySize) / 2;
 		this.drawTexturedModalRect(integer1, integer2, 0, 0, this.xSize, this.ySize);
