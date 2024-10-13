@@ -27,7 +27,7 @@ public abstract class GuiScreen extends GuiElement {
 	}
 
 	public void drawScreen(final int integer1, final int integer2, final float float3) {
-		for (int i = 0; i < this.controlList.size(); ++i) {
+		for ( int i = 0; i < this.controlList.size(); ++i ) {
 			((GuiButton) this.controlList.get(i)).drawButton(oc, integer1, integer2);
 		}
 	}
@@ -41,7 +41,7 @@ public abstract class GuiScreen extends GuiElement {
 
 	protected void drawSlotInventory(final int integer1, final int integer2, final int integer3) {
 		if (integer3 == 0) {
-			for (GuiElement guiElement : this.controlList) {
+			for ( GuiElement guiElement : this.controlList ) {
 				final GuiButton iq = (GuiButton) guiElement;
 				if (iq.mousePressed(integer1, integer2)) {
 					oc.sndManager.playSoundFX("random.click", 1.0f, 1.0f);
@@ -53,7 +53,7 @@ public abstract class GuiScreen extends GuiElement {
 
 	protected void b(final int integer1, final int integer2, final int integer3) {
 		if (integer3 == 0) {
-			for (int i = 0; i < this.controlList.size(); ++i) {
+			for ( int i = 0; i < this.controlList.size(); ++i ) {
 				final GuiButton iq = (GuiButton) this.controlList.get(i);
 				iq.mouseReleased(integer1, integer2);
 			}
@@ -75,13 +75,13 @@ public abstract class GuiScreen extends GuiElement {
 	}
 
 	public void handleInputEvents() {
-		for (MouseHandler.ButtonEvent event : oc.mouse.buttons.events)
+		for ( MouseHandler.ButtonEvent event : oc.mouse.buttons.events )
 			this.handleMouseEvent(event);
-	
-		for (int key : oc.keyboard.pressedKeys) {
+
+		for ( int key : oc.keyboard.pressedKeys ) {
 			if (key == -1)
 				continue;
-			
+
 			if (glfwGetKeyName(key, glfwGetKeyScancode(key)) != null)
 				this.handleKeyboardInput(glfwGetKeyName(key, glfwGetKeyScancode(key)).charAt(0), key);
 		}

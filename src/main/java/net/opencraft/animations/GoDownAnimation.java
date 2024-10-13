@@ -8,8 +8,8 @@ public class GoDownAnimation {
 		float y = ptr.get();
 		if (y < maxY)
 			y += speed;
-		
+
 		ptr.set(y);
 	}
-	
+
 }

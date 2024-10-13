@@ -22,6 +22,8 @@ public class RenderSorter implements Comparator<WorldRenderer> {
 		if (isInFrustum2 && !isInFrustum) {
 			return -1;
 		}
+		if (dl1.chunkIndex(this.entity) == dl2.chunkIndex(this.entity))
+			return 0;
 		return (dl1.chunkIndex(this.entity) < dl2.chunkIndex(this.entity)) ? 1 : -1;
 	}
 

@@ -279,7 +279,7 @@ public class OpenCraft implements Runnable, GLFWFramebufferSizeCallbackI {
 			changeWorld1(null);
 			GLAllocation.deleteTexturesAndDisplayLists();
 			sndManager.shutdown();
-		} catch (Exception ignored) {
+		} catch(Exception ignored) {
 		} finally {
 			glfwDestroyWindow(window);
 			glfwTerminate();
@@ -293,29 +293,29 @@ public class OpenCraft implements Runnable, GLFWFramebufferSizeCallbackI {
 	public void run() {
 		System.out.println("Running on thread " + Thread.currentThread().threadId() + " / " + Thread.currentThread().getName());
 		this.running = true;
-		
+
 		try {
 			init();
-		} catch (Exception exception) {
+		} catch(Exception exception) {
 			exception.printStackTrace();
 			destroy();
 		}
-		
+
 		try {
 			long begin = System.currentTimeMillis();
-			while (running) {
+			while(running) {
 				AABB.clearBoundingBoxPool();
 				if (glfwWindowShouldClose(window))
 					stop();
-				
+
 				if (isGamePaused) {
 					final float renderPartialTicks = timer.renderPartialTicks;
 					timer.updateTimer();
 					timer.renderPartialTicks = renderPartialTicks;
 				} else
 					timer.updateTimer();
-				
-				for (int j = 0; j < Math.min(10, this.timer.elapsedTicks); ++j) {
+
+				for ( int j = 0; j < Math.min(10, this.timer.elapsedTicks); ++j ) {
 					++ticksRan;
 					this.tick();
 				}
@@ -326,11 +326,12 @@ public class OpenCraft implements Runnable, GLFWFramebufferSizeCallbackI {
 				sndManager.setListener(player, timer.renderPartialTicks);
 				glEnable(GL_TEXTURE_2D);
 				if (world != null)
-					while (world.updatingLighting());
+					while(world.updatingLighting())
+						;
 
 				if (!skipRenderWorld) {
 					playerController.setPartialTime(timer.renderPartialTicks);
-					
+
 					// TODO: This method blocks the thread when loading the game
 					entityRenderer.updateCameraAndRender(timer.renderPartialTicks);
 				}
@@ -339,7 +340,7 @@ public class OpenCraft implements Runnable, GLFWFramebufferSizeCallbackI {
 
 				// Other threads can execute
 				Thread.yield();
-				
+
 				mouse.poll();
 
 				glfwSwapBuffers(window);
@@ -348,21 +349,21 @@ public class OpenCraft implements Runnable, GLFWFramebufferSizeCallbackI {
 				checkGLError();
 				++fps;
 				isGamePaused = (!isMultiplayerWorld() && currentScreen != null && currentScreen.doesGuiPauseGame());
-				
+
 				long now;
-				while ((now = System.currentTimeMillis()) >= begin + 1000L) {
+				while((now = System.currentTimeMillis()) >= begin + 1000L) {
 					fpsString = fps + " FPS, " + WorldRenderer.chunksUpdated + " chunk updates";
-					
+
 					// Reset variables
 					WorldRenderer.chunksUpdated = 0;
 					begin = now;
 					fps = 0;
 				}
 			}
-		} catch (Exception ex) {
+		} catch(Exception ex) {
 			ex.printStackTrace();
 		}
-		
+
 		destroy();
 	}
 
@@ -371,8 +372,7 @@ public class OpenCraft implements Runnable, GLFWFramebufferSizeCallbackI {
 			prevFrameTime = System.nanoTime();
 		}
 		final long nanoTime = System.nanoTime();
-		OpenCraft.tickTimes[OpenCraft.numRecordedFrameTimes++ & OpenCraft.tickTimes.length - 1] = nanoTime
-				- prevFrameTime;
+		OpenCraft.tickTimes[OpenCraft.numRecordedFrameTimes++ & OpenCraft.tickTimes.length - 1] = nanoTime - prevFrameTime;
 		prevFrameTime = nanoTime;
 		glClear(256);
 		glMatrixMode(5889);
@@ -392,7 +392,7 @@ public class OpenCraft implements Runnable, GLFWFramebufferSizeCallbackI {
 		instance.vertex(OpenCraft.tickTimes.length, height - 100, 0.0);
 		instance.draw();
 		long n = 0L;
-		for (int i = 0; i < OpenCraft.tickTimes.length; ++i) {
+		for ( int i = 0; i < OpenCraft.tickTimes.length; ++i ) {
 			n += OpenCraft.tickTimes[i];
 		}
 		int i = (int) (n / 200000L / OpenCraft.tickTimes.length);
@@ -404,9 +404,8 @@ public class OpenCraft implements Runnable, GLFWFramebufferSizeCallbackI {
 		instance.vertex(OpenCraft.tickTimes.length, height - i, 0.0);
 		instance.draw();
 		instance.begin(1);
-		for (int j = 0; j < OpenCraft.tickTimes.length; ++j) {
-			final int n2 = (j - OpenCraft.numRecordedFrameTimes & OpenCraft.tickTimes.length - 1) * 255
-					/ OpenCraft.tickTimes.length;
+		for ( int j = 0; j < OpenCraft.tickTimes.length; ++j ) {
+			final int n2 = (j - OpenCraft.numRecordedFrameTimes & OpenCraft.tickTimes.length - 1) * 255 / OpenCraft.tickTimes.length;
 			int n3 = n2 * n2 / 255;
 			n3 = n3 * n3 / 255;
 			int n4 = n3 * n3 / 255;
@@ -445,7 +444,7 @@ public class OpenCraft implements Runnable, GLFWFramebufferSizeCallbackI {
 	public void displayInGameMenu() {
 		if (currentScreen != null)
 			return;
-		
+
 		displayGuiScreen(new GuiIngameMenu());
 	}
 
@@ -521,8 +520,7 @@ public class OpenCraft implements Runnable, GLFWFramebufferSizeCallbackI {
 			if (currentItem2 != null) {
 				final int n = currentItem2.stackSize;
 				final ItemStack useItemRightClick = currentItem2.useItemRightClick(world, player);
-				if (useItemRightClick != currentItem2
-						|| (useItemRightClick != null && useItemRightClick.stackSize != n)) {
+				if (useItemRightClick != currentItem2 || (useItemRightClick != null && useItemRightClick.stackSize != n)) {
 					player.inventory.mainInventory[player.inventory.currentItem] = useItemRightClick;
 					entityRenderer.itemRenderer.d();
 					if (useItemRightClick.stackSize == 0) {
@@ -567,7 +565,7 @@ public class OpenCraft implements Runnable, GLFWFramebufferSizeCallbackI {
 		}
 
 		if (currentScreen == null || currentScreen.allowUserInput) {
-			for (MouseHandler.ButtonEvent event : mouse.buttons.events) {
+			for ( MouseHandler.ButtonEvent event : mouse.buttons.events ) {
 				if (System.currentTimeMillis() - systemTime > 200L)
 					continue;
 
@@ -589,7 +587,7 @@ public class OpenCraft implements Runnable, GLFWFramebufferSizeCallbackI {
 			}
 
 			if (currentScreen == null) {
-				for (Integer key : keyboard.pressedKeys) {
+				for ( Integer key : keyboard.pressedKeys ) {
 					if (key == GLFW_KEY_ESCAPE) {
 						displayInGameMenu();
 					}
@@ -603,8 +601,7 @@ public class OpenCraft implements Runnable, GLFWFramebufferSizeCallbackI {
 						displayGuiScreen(new GuiInventory(player.inventory));
 
 					if (key == options.keyBindings.get(GameSettings.PlayerInput.DROP))
-						player.dropPlayerItemWithRandomChoice(
-								player.inventory.decrStackSize(player.inventory.currentItem, 1), false);
+						player.dropPlayerItemWithRandomChoice(player.inventory.decrStackSize(player.inventory.currentItem, 1), false);
 
 					if (key >= GLFW_KEY_1 && key <= GLFW_KEY_9) {
 						player.inventory.currentItem = key - GLFW_KEY_1;
@@ -641,10 +638,9 @@ public class OpenCraft implements Runnable, GLFWFramebufferSizeCallbackI {
 				world.updateEntities();
 				if (!isMultiplayerWorld())
 					world.tick();
-				
-				world.randomDisplayUpdates(Mth.floor_double(player.posX), Mth.floor_double(player.posY),
-						Mth.floor_double(player.posZ));
-				
+
+				world.randomDisplayUpdates(Mth.floor_double(player.posX), Mth.floor_double(player.posY), Mth.floor_double(player.posZ));
+
 				effectRenderer.updateEffects();
 			}
 		}
@@ -720,24 +716,24 @@ public class OpenCraft implements Runnable, GLFWFramebufferSizeCallbackI {
 		int n2 = 0;
 		int n3 = n * 2 / 16 + 1;
 		n3 *= n3;
-		for (int i = -n; i <= n; i += 16) {
+		for ( int i = -n; i <= n; i += 16 ) {
 			int x = world.x;
 			int z = world.z;
 			if (world.player != null) {
 				x = (int) world.player.posX;
 				z = (int) world.player.posZ;
 			}
-			for (int j = -n; j <= n; j += 16) {
+			for ( int j = -n; j <= n; j += 16 ) {
 				loadingScreen.setLoadingProgress(n2++ * 100 / n3);
 				world.getBlockId(x + i, 64, z + j);
-				while (world.updatingLighting()) {
+				while(world.updatingLighting()) {
 				}
 			}
 		}
 		loadingScreen.displayLoadingString("Simulating world for a bit");
 		n3 = 2000;
 		SandBlock.fallInstantly = true;
-		for (int i = 0; i < n3; ++i) {
+		for ( int i = 0; i < n3; ++i ) {
 			world.TickUpdates(true);
 		}
 		world.func_656_j();

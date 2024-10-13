@@ -40,14 +40,11 @@ public class ItemRenderer {
 		final float n = this.d + (this.c - this.d) * float1;
 		final EntityPlayerSP thePlayer = OpenCraft.oc.player;
 		glPushMatrix();
-		glRotatef(thePlayer.prevRotationPitch + (thePlayer.rotationPitch - thePlayer.prevRotationPitch) * float1, 1.0f,
-				0.0f, 0.0f);
-		glRotatef(thePlayer.prevRotationYaw + (thePlayer.rotationYaw - thePlayer.prevRotationYaw) * float1, 0.0f, 1.0f,
-				0.0f);
+		glRotatef(thePlayer.prevRotationPitch + (thePlayer.rotationPitch - thePlayer.prevRotationPitch) * float1, 1.0f, 0.0f, 0.0f);
+		glRotatef(thePlayer.prevRotationYaw + (thePlayer.rotationYaw - thePlayer.prevRotationYaw) * float1, 0.0f, 1.0f, 0.0f);
 		RenderHelper.enableStandardItemLighting();
 		glPopMatrix();
-		final float lightBrightness = OpenCraft.oc.world.getLightBrightness(Mth.floor_double(thePlayer.posX),
-				Mth.floor_double(thePlayer.posY), Mth.floor_double(thePlayer.posZ));
+		final float lightBrightness = OpenCraft.oc.world.getLightBrightness(Mth.floor_double(thePlayer.posX), Mth.floor_double(thePlayer.posY), Mth.floor_double(thePlayer.posZ));
 		glColor4f(lightBrightness, lightBrightness, lightBrightness, 1.0f);
 		if (this.b != null) {
 			glPushMatrix();
@@ -112,7 +109,7 @@ public class ItemRenderer {
 				instance.draw();
 				instance.beginQuads();
 				instance.normal(-1.0f, 0.0f, 0.0f);
-				for (int i = 0; i < 16; ++i) {
+				for ( int i = 0; i < 16; ++i ) {
 					final float n14 = i / 16.0f;
 					final float n15 = n6 + (n5 - n6) * n14 - 0.001953125f;
 					final float n16 = n9 * n14;
@@ -124,7 +121,7 @@ public class ItemRenderer {
 				instance.draw();
 				instance.beginQuads();
 				instance.normal(1.0f, 0.0f, 0.0f);
-				for (int i = 0; i < 16; ++i) {
+				for ( int i = 0; i < 16; ++i ) {
 					final float n14 = i / 16.0f;
 					final float n15 = n6 + (n5 - n6) * n14 - 0.001953125f;
 					final float n16 = n9 * n14 + 0.0625f;
@@ -136,7 +133,7 @@ public class ItemRenderer {
 				instance.draw();
 				instance.beginQuads();
 				instance.normal(0.0f, 1.0f, 0.0f);
-				for (int i = 0; i < 16; ++i) {
+				for ( int i = 0; i < 16; ++i ) {
 					final float n14 = i / 16.0f;
 					final float n15 = n8 + (n7 - n8) * n14 - 0.001953125f;
 					final float n16 = n9 * n14 + 0.0625f;
@@ -148,7 +145,7 @@ public class ItemRenderer {
 				instance.draw();
 				instance.beginQuads();
 				instance.normal(0.0f, -1.0f, 0.0f);
-				for (int i = 0; i < 16; ++i) {
+				for ( int i = 0; i < 16; ++i ) {
 					final float n14 = i / 16.0f;
 					final float n15 = n8 + (n7 - n8) * n14 - 0.001953125f;
 					final float n16 = n9 * n14;
@@ -180,16 +177,14 @@ public class ItemRenderer {
 				glRotatef(n5 * 70.0f, 0.0f, 1.0f, 0.0f);
 				glRotatef(-n4 * 20.0f, 0.0f, 0.0f, 1.0f);
 			}
-			glBindTexture(3553, OpenCraft.oc.renderer.loadAndBindTexture(OpenCraft.oc.player.skinUrl,
-					OpenCraft.oc.player.addToPlayerScore()));
+			glBindTexture(3553, OpenCraft.oc.renderer.loadAndBindTexture(OpenCraft.oc.player.skinUrl, OpenCraft.oc.player.addToPlayerScore()));
 			glTranslatef(-1.0f, 3.6f, 3.5f);
 			glRotatef(120.0f, 0.0f, 0.0f, 1.0f);
 			glRotatef(200.0f, 1.0f, 0.0f, 0.0f);
 			glRotatef(-135.0f, 0.0f, 1.0f, 0.0f);
 			glScalef(1.0f, 1.0f, 1.0f);
 			glTranslatef(5.6f, 0.0f, 0.0f);
-			final RenderPlayer renderPlayer = (RenderPlayer) RenderManager.instance
-					.getEntityRenderObject(OpenCraft.oc.player);
+			final RenderPlayer renderPlayer = (RenderPlayer) RenderManager.instance.getEntityRenderObject(OpenCraft.oc.player);
 			final float n5 = 1.0f;
 			glScalef(n5, n5, n5);
 			renderPlayer.drawFirstPersonHand();
@@ -282,7 +277,7 @@ public class ItemRenderer {
 		glEnable(3042);
 		glBlendFunc(770, 771);
 		final float n = 1.0f;
-		for (int i = 0; i < 2; ++i) {
+		for ( int i = 0; i < 2; ++i ) {
 			glPushMatrix();
 			final int n2 = Block.fire.blockIndexInTexture + i * 16;
 			final int n3 = (n2 & 0xF) << 4;

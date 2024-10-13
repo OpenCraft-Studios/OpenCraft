@@ -36,21 +36,21 @@ public final class FontRenderer {
 		BufferedImage bi;
 		try {
 			bi = ImageIO.read(Renderer.class.getResourceAsStream(string));
-		} catch (IOException iOException) {
+		} catch(IOException iOException) {
 			throw new RuntimeException(iOException);
 		}
 		int n8 = bi.getWidth();
 		int n9 = bi.getHeight();
 		int[] nArray = new int[n8 * n9];
 		bi.getRGB(0, 0, n8, n9, nArray, 0, n8);
-		for (int i = 0; i < 128; ++i) {
+		for ( int i = 0; i < 128; ++i ) {
 			n7 = i % 16;
 			n6 = i / 16;
 			boolean bl = false;
-			for (n5 = 0; n5 < 8 && !bl; ++n5) {
+			for ( n5 = 0; n5 < 8 && !bl; ++n5 ) {
 				n4 = n7 * 8 + n5;
 				bl = true;
-				for (n3 = 0; n3 < 8 && bl; ++n3) {
+				for ( n3 = 0; n3 < 8 && bl; ++n3 ) {
 					n2 = (n6 * 8 + n3) * n8;
 					n = nArray[n4 + n2] & 0xFF;
 					if (n <= 128) {
@@ -67,7 +67,7 @@ public final class FontRenderer {
 		this.fontTextureName = id2.loadTexture(string);
 		this.fontDisplayLists = GLAllocation.generateDisplayLists(288);
 		Tessellator ag2 = Tessellator.instance;
-		for (n7 = 0; n7 < 256; ++n7) {
+		for ( n7 = 0; n7 < 256; ++n7 ) {
 			glNewList((int) (this.fontDisplayLists + n7), (int) 4864);
 			ag2.beginQuads();
 			n6 = n7 % 16 * 8;
@@ -81,7 +81,7 @@ public final class FontRenderer {
 			glTranslatef((float) this.charWidth[n7], (float) 0.0f, (float) 0.0f);
 			glEndList();
 		}
-		for (n7 = 0; n7 < 32; ++n7) {
+		for ( n7 = 0; n7 < 32; ++n7 ) {
 			n6 = (n7 & 8) * 8;
 			n5 = (n7 & 1) * 191 + n6;
 			int n10 = ((n7 & 2) >> 1) * 191 + n6;
@@ -101,8 +101,7 @@ public final class FontRenderer {
 				n10 /= 4;
 				n5 /= 4;
 			}
-			glColor4f((float) ((float) n4 / 255.0f), (float) ((float) n10 / 255.0f), (float) ((float) n5 / 255.0f),
-					(float) 1.0f);
+			glColor4f((float) ((float) n4 / 255.0f), (float) ((float) n10 / 255.0f), (float) ((float) n5 / 255.0f), (float) 1.0f);
 		}
 	}
 
@@ -132,8 +131,8 @@ public final class FontRenderer {
 		glPushMatrix();
 		{
 			glTranslatef(x, y, 0);
-			for (int i = 0; i < text.length(); ++i) {
-				while (text.charAt(i) == '&' && text.length() > i + 1) {
+			for ( int i = 0; i < text.length(); ++i ) {
+				while(text.charAt(i) == '&' && text.length() > i + 1) {
 					int index = "0123456789abcdef".indexOf((int) text.charAt(i + 1));
 					if (index < 0 || index > 15)
 						index = 15;
@@ -146,7 +145,7 @@ public final class FontRenderer {
 					}
 					i += 2;
 				}
-				
+
 				buffer.put(this.fontDisplayLists + text.charAt(i));
 				if (!buffer.hasRemaining()) {
 					buffer.flip();
@@ -166,7 +165,7 @@ public final class FontRenderer {
 			return 0;
 		}
 		int n = 0;
-		for (int i = 0; i < string.length(); ++i) {
+		for ( int i = 0; i < string.length(); ++i ) {
 			if (string.charAt(i) == '&') {
 				++i;
 			} else {

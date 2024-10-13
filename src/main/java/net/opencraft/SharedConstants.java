@@ -20,26 +20,26 @@ public class SharedConstants {
 	public static final ResourcesDescriptor RESOURCES = describeResources();
 	public static final String GIT_INFO = "git.properties";
 	public static final String VERSION = version();
-	
+
 	public static final String TITLE = "OpenCraft " + VERSION;
-	
+
 	public static final String SPLASHES_URL = "https://opencraft-studios.github.io/splashes.txt";
 
 	public static List<URL> resourcesAt(String prefix) throws IOException {
 		ZipInputStream zip = new ZipInputStream(RESOURCES.jarFile.toURI().toURL().openStream());
 		List<URL> resources = new ArrayList<>();
-		
+
 		ZipEntry entry;
-		while ((entry = zip.getNextEntry()) != null) {
+		while((entry = zip.getNextEntry()) != null) {
 			final String name = entry.getName();
 			if (name.startsWith(prefix) && !entry.isDirectory())
 				resources.add(SharedConstants.class.getResource("/" + name));
 		}
-		
+
 		zip.close();
 		return resources;
 	}
-	
+
 	public static String version() {
 		String commitId = "COMMIT_ID_UNKNOWN";
 		if (RESOURCES.jarFile != null) {
@@ -66,7 +66,7 @@ public class SharedConstants {
 		}
 		return commitId;
 	}
-	
+
 	public static String updateVersionIfInString(String version, String line) {
 		if (line.startsWith("git.commit.id.abbrev")) {
 			return line.split("=")[1];
@@ -74,7 +74,7 @@ public class SharedConstants {
 			return version;
 		}
 	}
-	
+
 	public static ResourcesDescriptor describeResources() {
 		final String classPath = "/" + Main.class.getName().replace('.', '/') + ".class";
 		final File root;
@@ -97,7 +97,7 @@ public class SharedConstants {
 		}
 		return new ResourcesDescriptor(root, jarFile);
 	}
-	
+
 	private SharedConstants() {
 	}
 

@@ -181,7 +181,7 @@ public class Tessellator {
 	public void color(int r, int g, int b, int a) {
 		if (noColor)
 			return;
-		
+
 		r = clamp(0, 255, r);
 		g = clamp(0, 255, g);
 		b = clamp(0, 255, b);
@@ -199,7 +199,7 @@ public class Tessellator {
 	public void vertex(final double double1, final double double2, final double double3) {
 		++this.p;
 		if (this.mode == GL_QUADS && Tessellator.triangulate && this.p % 4 == 0) {
-			for (int i = 0; i < 2; ++i) {
+			for ( int i = 0; i < 2; ++i ) {
 				final int n = 8 * (3 - i);
 				if (this.hasTexture) {
 					this.g[this.o + 3] = this.g[this.o - n + 3];

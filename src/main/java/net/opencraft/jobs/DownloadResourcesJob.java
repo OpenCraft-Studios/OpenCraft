@@ -69,7 +69,7 @@ public class DownloadResourcesJob implements Job {
 			zip = new ZipInputStream(resourceURL.openStream());
 			while(true) {
 				SpinnerBarAnimation.animate("Loading sounds", 1);
-				
+
 				ZipEntry e = zip.getNextEntry();
 				if (e == null) {
 					break;

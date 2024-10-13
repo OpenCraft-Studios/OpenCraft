@@ -11,10 +11,10 @@ public class Main {
 
 	private Main() {
 	}
-	
+
 	public static void main(String[] args) throws Exception {
 		checkMemoryCapacity();
-		
+
 		System.out.println("Starting...");
 		System.setProperty("user.dir", RESOURCES.resourcesRoot.getAbsolutePath());
 
@@ -30,7 +30,7 @@ public class Main {
 			System.err.println("OpenCraft can't run with less than 747 MB!");
 			System.exit(1);
 		}
-		
+
 		if (mbMaxMemory < 1500) {
 			System.err.println("---------------------------------------------------------------------");
 			System.err.println("  OpenCraft average ram consume is about 747 MB when playing.");

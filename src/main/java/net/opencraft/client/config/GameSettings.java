@@ -45,7 +45,15 @@ public class GameSettings {
 	}
 
 	public enum PlayerInput {
-		FORWARD, BACKWARD, LEFT, RIGHT, JUMP, INVENTORY, DROP, CHAT, TOGGLE_FOG
+		FORWARD,
+		BACKWARD,
+		LEFT,
+		RIGHT,
+		JUMP,
+		INVENTORY,
+		DROP,
+		CHAT,
+		TOGGLE_FOG
 	}
 
 	public GameSettings(final File file) {
@@ -94,7 +102,7 @@ public class GameSettings {
 	}
 
 	public void setOptionFloatValue(float key, float value) {
-		switch ((int) key) {
+		switch((int) key) {
 			case 0:
 				this.music.toggle();
 				oc.sndManager.onSoundOptionsChanged();
@@ -145,20 +153,20 @@ public class GameSettings {
 
 			case 11:
 				this.minimumBrightness = value;
-				if (oc.world == null) 
+				if (oc.world == null)
 					break;
-				
-				for (int i = 0; i < oc.world.worldAccesses.size(); ++i) {
+
+				for ( int i = 0; i < oc.world.worldAccesses.size(); ++i ) {
 					((IWorldAccess) oc.world.worldAccesses.get(i)).updateAllRenderers();
 				}
-				
+
 				break;
 		}
 		saveOptions();
 	}
 
 	public String getKeyBinding(final int integer) {
-		return switch (integer) {
+		return switch(integer) {
 			case 0 -> "Music: " + music.either("ON", "OFF");
 			case 1 -> "Sound: " + sound.either("ON", "OFF");
 			case 2 -> "Invert mouse: " + invertMouse.either("ON", "OFF");
@@ -178,9 +186,9 @@ public class GameSettings {
 		if (!this.optionsFile.exists()) {
 			return;
 		}
-		try (BufferedReader bufferedReader = new BufferedReader(new FileReader(this.optionsFile))) {
+		try(BufferedReader bufferedReader = new BufferedReader(new FileReader(this.optionsFile))) {
 			String line;
-			while ((line = bufferedReader.readLine()) != null) {
+			while((line = bufferedReader.readLine()) != null) {
 				final String[] tokens = line.split(":");
 				if (tokens[0].equals("music")) {
 					music.parse(tokens[1]);
@@ -218,20 +226,20 @@ public class GameSettings {
 				if (tokens[0].equals("minimumBrightness")) {
 					this.minimumBrightness = Float.parseFloat(tokens[1]);
 				}
-				for (PlayerInput input : PlayerInput.values()) {
+				for ( PlayerInput input : PlayerInput.values() ) {
 					if (tokens[0].equals("key_" + input.name())) {
 						this.keyBindings.put(input, Integer.parseInt(tokens[1]));
 					}
 				}
 			}
-		} catch (Exception ex) {
+		} catch(Exception ex) {
 			System.out.println("Failed to load options");
 			ex.printStackTrace();
 		}
 	}
 
 	public void saveOptions() {
-		try (PrintWriter s = new PrintWriter(new FileWriter(this.optionsFile))) {
+		try(PrintWriter s = new PrintWriter(new FileWriter(this.optionsFile))) {
 			s.println("music:" + music);
 			s.println("sound:" + sound);
 			s.println("invertYMouse:" + invertMouse);
@@ -244,10 +252,10 @@ public class GameSettings {
 			s.println("fancyGraphics:" + fancyGraphics);
 			s.println("FOV:" + fov);
 			s.println("minimumBrightness:" + this.minimumBrightness);
-			for (PlayerInput input : PlayerInput.values()) {
+			for ( PlayerInput input : PlayerInput.values() ) {
 				s.println("key_" + input.name() + ":" + keyBindings.get(input));
 			}
-		} catch (Exception ex) {
+		} catch(Exception ex) {
 			System.out.println("Failed to save options");
 			ex.printStackTrace();
 		}

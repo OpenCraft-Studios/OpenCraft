@@ -7,8 +7,8 @@ public class SpinnerBarAnimation {
 		int index = (int) (System.currentTimeMillis() / interval % 4);
 		System.out.print(msg + " " + bars.charAt((int) index) + "\r");
 	}
-	
+
 	private SpinnerBarAnimation() {
 	}
-	
+
 }

@@ -16,9 +16,9 @@ public class GuiMainMenu extends GuiScreen {
 
 	private float updateCounter;
 	private AtomicReference<Float> logoY = new AtomicReference<Float>(0F);
-	
+
 	private Splashes splashes = new Splashes();
-	
+
 	private String currentSplash;
 	private final RenderSkybox panorama = new RenderSkybox(new RenderSkyboxCube("textures/gui/title/background/panorama"));
 
@@ -49,7 +49,7 @@ public class GuiMainMenu extends GuiScreen {
 
 	@Override
 	protected void actionPerformed(GuiButton button) {
-		switch (button.buttonId) {
+		switch(button.buttonId) {
 			case 0:
 				oc.displayGuiScreen(new GuiOptions(this, oc.options));
 				break;
@@ -102,7 +102,7 @@ public class GuiMainMenu extends GuiScreen {
 		final int integer4 = 49;
 		glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 		t.color(0xFFFFFF);
-		
+
 		// Animation
 		GoDownAnimation.animate(logoY, 30, 0.2f);
 		this.drawTexturedModalRect((this.width - integer3) / 2, logoY.get().intValue(), 0, 0, integer3, integer4);
