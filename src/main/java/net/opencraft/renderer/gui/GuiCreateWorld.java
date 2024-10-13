@@ -57,7 +57,7 @@ public class GuiCreateWorld extends GuiScreen {
 	public void initButtons() {
 		this.controlList.add(new GuiButton(-5, this.width / 2 - 100, this.height / 6 + 120 + 12, "Delete world...", 200, 20));
 		this.controlList.add(new GuiButton(-20, (this.width / 2 - 100) + 120, this.height / 6 + 168, "Create world", 100, 20));
-		this.controlList.add(new GuiButton(-6, (this.width / 2) - 120, this.height / 6 + 168, "Cancel", 100, 20));
+		this.controlList.add(new GuiButton(-6, (this.width / 2) - 120, this.height / 6 + 168, "Done", 100, 20));
 	}
 
 	@Override

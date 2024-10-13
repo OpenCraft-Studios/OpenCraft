@@ -251,7 +251,7 @@ public class Renderer {
 				}
 				this.skinURLToTextureHolder.remove(string);
 			} else {
-				System.out.println("SkinHolder not removed, use count: " + skinHolder.useCount);
+				// TODO: chat bother System.out.println("SkinHolder not removed, use count: " + skinHolder.useCount);
 			}
 		}
 	}

@@ -134,7 +134,7 @@ public class GuiIngame extends GuiElement {
 		RenderHelper.disableStandardItemLighting();
 		GL11.glDisable(GL_FULLBRIGHT_RENDERING);
 		if (this.mc.options.showDebugInfo) {
-			font.drawStringWithShadow2(Main.TITLE + " (" + this.mc.debug + ")", 2, 2, 16777215);
+			font.drawStringWithShadow2(Main.TITLE + " (" + this.mc.fpsString + ")", 2, 2, 16777215);
 			font.drawStringWithShadow2(this.mc.debugInfoRenders(), 2, 12, 16777215);
 			font.drawStringWithShadow2(this.mc.entityRenderingInfo(), 2, 22, 16777215);
 			font.drawStringWithShadow2(this.mc.debugInfoEntities(), 2, 32, 16777215);

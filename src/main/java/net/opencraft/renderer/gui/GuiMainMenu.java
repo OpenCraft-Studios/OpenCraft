@@ -60,7 +60,7 @@ public class GuiMainMenu extends GuiScreen {
 				break;
 
 			case 3:
-				oc.shutdown();
+				oc.destroy();
 				break;
 		}
 	}
