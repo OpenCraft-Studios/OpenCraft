@@ -10,8 +10,7 @@ import java.util.Objects;
 
 import javax.annotation.Nonnull;
 
-import org.lwjgl.glfw.GLFWFramebufferSizeCallback;
-import org.lwjgl.glfw.GLFWWindowFocusCallback;
+import org.lwjgl.glfw.*;
 import org.lwjgl.opengl.GL;
 import org.lwjgl.opengl.GLUtil;
 
@@ -39,7 +38,7 @@ import net.opencraft.util.UnexpectedThrowable;
 import net.opencraft.world.World;
 import net.opencraft.world.WorldRenderer;
 
-public class OpenCraft implements Runnable {
+public class OpenCraft implements Runnable, GLFWFramebufferSizeCallbackI {
 
 	public static final String PROJECT_NAME_LOWERCASE = "opencraft";
 
@@ -93,7 +92,6 @@ public class OpenCraft implements Runnable {
 	long systemTime;
 
 	/** Holds the function called when the window is resized, otherwise the function would be garbage collected */
-	private GLFWFramebufferSizeCallback frameBufferResizeCallback;
 	private GLFWWindowFocusCallback windowFocusCallback;
 	public MouseHandler mouse;
 	public KeyboardInput keyboard;
@@ -170,27 +168,20 @@ public class OpenCraft implements Runnable {
 		Objects.requireNonNull(GL.createCapabilities(), "Failed to create OpenGL capabilities");
 		glfwShowWindow(window);
 
-		glfwSetFramebufferSizeCallback(window, frameBufferResizeCallback = new GLFWFramebufferSizeCallback() {
-
-			@Override
-			public void invoke(long window, int width, int height) {
-				
-				resize(width, height);
-			}
-
-		});
+		glfwSetFramebufferSizeCallback(window, this);
 		GLUtil.setupDebugMessageCallback();
 
 		mouse = new MouseHandler(window);
 		keyboard = new KeyboardInput(window);
 
 		timer = new Timer(20.0f);
-		resize(width, height);
+		invoke(NULL, width, height);
 		mcDataDir = getGameDir();
 		options = new GameSettings(oc, mcDataDir);
 		renderer = new Renderer(options);
 		font = new FontRenderer(options, "/assets/default.png", renderer);
 		loadScreen();
+		// TODO: remove
 		try {
 			//            Controllers.create();
 		} catch(Exception ex2) {
@@ -558,16 +549,6 @@ public class OpenCraft implements Runnable {
 		}
 	}
 
-	private void resize(int width, int height) {
-		this.width = Math.max(1, width);
-		this.height = Math.max(1, height);
-		if (currentScreen == null)
-			return;
-		
-		final ScaledResolution scaledResolution = new ScaledResolution(width, height);
-		currentScreen.setWorldAndResolution(oc, scaledResolution.getScaledWidth(), scaledResolution.getScaledHeight());
-	}
-
 	private void clickMiddleMouseButton() {
 		if (objectMouseOver != null) {
 			int integer = world.getBlockId(objectMouseOver.blockX, objectMouseOver.blockY, objectMouseOver.blockZ);
@@ -825,6 +806,17 @@ public class OpenCraft implements Runnable {
 
 	public float getTickDelta() {
 		return this.timer.tickDelta;
+	}
+
+	@Override
+	public void invoke(long window, int width, int height) {
+		this.width = Math.max(1, width);
+		this.height = Math.max(1, height);
+		if (currentScreen == null)
+			return;
+		
+		final ScaledResolution scaledResolution = new ScaledResolution(width, height);
+		currentScreen.setWorldAndResolution(oc, scaledResolution.getScaledWidth(), scaledResolution.getScaledHeight());
 	}
 
 }
