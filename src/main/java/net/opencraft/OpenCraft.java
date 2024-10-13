@@ -108,6 +108,7 @@ public class OpenCraft implements Runnable {
 	}
 
 	public OpenCraft(int width, int height) {
+		oc = this;
 		this.playerController = new PlayerControllerSP(oc);
 		this.fullscreen = false;
 		this.timer = null;

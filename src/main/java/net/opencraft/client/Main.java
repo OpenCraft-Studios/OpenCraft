@@ -64,7 +64,7 @@ public class Main {
 
 		glfwSetErrorCallback(errorCallback = GLFWErrorCallback.createPrint(System.err));
 
-		oc = new OpenCraft(854, 480);
+		OpenCraft oc = new OpenCraft(854, 480);
 		oc.run();
 		System.out.println("Running on thread " + Thread.currentThread().threadId() + " / " + Thread.currentThread().getName());
 	}
