@@ -1,14 +1,15 @@
-Pre-beta!
+Open source!
 As seen on TV!
 Awesome!
 100% pure!
 May contain nuts!
-Better than Prey!
+Better than Minecraft!
 More polygons!
 Sexy!
 Limited edition!
 Flashing letters!
-Made by Notch!
+Made by Ciro
+With cliserkad!
 Coming soon!
 Best in class!
 When it's finished!
@@ -16,13 +17,13 @@ Absolutely dragon free!
 Excitement!
 More than 5000 sold!
 One of a kind!
-700+ hits on YouTube!
+You are the first to try this!
 Indev!
 Spiders everywhere!
 Check it out!
 Holy cow, man!
 It's a game!
-Made in Sweden!
+Made in Argentina!
 Uses LWJGL!
 Reticulating splines!
 OpenCraft!
@@ -33,7 +34,7 @@ Keyboard compatible!
 Undocumented!
 Ingots!
 Exploding creepers!
-That's not a moon!
+That's a cubic moon!
 l33t!
 Create!
 Survive!
@@ -41,11 +42,10 @@ Dungeon!
 Exclusive!
 The bee's knees!
 Down with O.P.P.!
-Classy!
+Classic!
 Wow!
 Not on steam!
-9.95 euro!
-Half price!
+0 euros!
 Oh man!
 Check it out!
 Awesome community!
@@ -54,7 +54,8 @@ Teetsuuuuoooo!
 Kaaneeeedaaaa!
 Now with difficulty!
 Enhanced!
-90% bug free!
+50% bug free!
+Clean code!
 Pretty!
 12 herbs and spices!
 Fat free!
@@ -69,15 +70,14 @@ Technically good!
 Bringing home the bacon!
 Indie!
 GOTY!
-Ceci n'est pas une title screen!
 Euclidian!
 Now in 3D!
 Inspirational!
 Herregud!
 Complex cellular automata!
 Yes, sir!
-Played by cowboys!
-OpenGL 1.1!
+Played by everyone!
+OpenGL 4.6 soon!
 Thousands of colors!
 Try it!
 Age of Wonders is better!
@@ -101,5 +101,5 @@ Whoa, dude!
 All inclusive!
 Tell your friends!
 NP is not in P!
-Notch <3 Ez!
+Ciro <3 Ez!
 Music by C418!
