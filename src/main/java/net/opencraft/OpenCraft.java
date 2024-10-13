@@ -104,7 +104,7 @@ public class OpenCraft implements Runnable {
 		}
 	}
 
-	public OpenCraft(final int width, final int height, final boolean boolean6) {
+	public OpenCraft(int width, int height) {
 		oc = this;
 		this.playerController = new PlayerControllerSP(oc);
 		this.fullscreen = false;
@@ -134,11 +134,9 @@ public class OpenCraft implements Runnable {
 		this.systemTime = System.currentTimeMillis();
 		this.tempDisplayWidth = width;
 		this.tempDisplayHeight = height;
-		this.fullscreen = boolean6;
 		(new SleepingForeverThread("Timer hack thread")).start();
 		this.width = width;
 		this.height = height;
-		this.fullscreen = boolean6;
 	}
 
 	public static long getSystemTime() {

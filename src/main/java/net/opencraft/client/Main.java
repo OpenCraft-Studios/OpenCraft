@@ -64,7 +64,7 @@ public class Main {
 		glfwSetErrorCallback(errorCallback = GLFWErrorCallback.createPrint(System.err));
 
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-		OpenCraft oc = new OpenCraft((int) (screenSize.width * INITIAL_WINDOW_SIZE_FACTOR), (int) (screenSize.height * INITIAL_WINDOW_SIZE_FACTOR), false);
+		OpenCraft oc = new OpenCraft((int) (screenSize.width * INITIAL_WINDOW_SIZE_FACTOR), (int) (screenSize.height * INITIAL_WINDOW_SIZE_FACTOR));
 		System.out.println("Running on thread " + Thread.currentThread().threadId() + " / " + Thread.currentThread().getName());
 		oc.run();
 	}
