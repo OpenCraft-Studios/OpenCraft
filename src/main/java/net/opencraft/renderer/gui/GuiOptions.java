@@ -38,19 +38,19 @@ public class GuiOptions extends GuiScreen {
 
 	@Override
 	protected void actionPerformed(final GuiButton iq) {
-		if(!iq.enabled) {
+		if (!iq.enabled) {
 			return;
 		}
-		if(iq.buttonId == 1) {
+		if (iq.buttonId == 1) {
 			this.id.displayGuiScreen(new GuiVideoSettings(this, this.options));
 		}
-		if(iq.buttonId == 4) {
+		if (iq.buttonId == 4) {
 			this.id.displayGuiScreen(new GuiMusicAndSounds(this, this.options));
 		}
-		if(iq.buttonId == 5) {
+		if (iq.buttonId == 5) {
 			this.id.displayGuiScreen(new GuiControls(this, this.options));
 		}
-		if(iq.buttonId == 7) {
+		if (iq.buttonId == 7) {
 			this.id.displayGuiScreen(this.parentScreen);
 		}
 	}

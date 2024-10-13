@@ -28,14 +28,14 @@ public class RenderCreeper extends RenderLiving {
 
 	protected int getColorMultiplier(final EntityCreeper entityLiving, final float nya1, final float nya2) {
 		final float setCreeperFlashTime = entityLiving.setCreeperFlashTime(nya2);
-		if((int) (setCreeperFlashTime * 10.0f) % 2 == 0) {
+		if ((int) (setCreeperFlashTime * 10.0f) % 2 == 0) {
 			return 0;
 		}
 		int n = (int) (setCreeperFlashTime * 0.2f * 255.0f);
-		if(n < 0) {
+		if (n < 0) {
 			n = 0;
 		}
-		if(n > 255) {
+		if (n > 255) {
 			n = 255;
 		}
 		return n << 24 | 255 << 16 | 255 << 8 | 0xFF;

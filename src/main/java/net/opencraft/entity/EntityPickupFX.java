@@ -45,7 +45,7 @@ public class EntityPickupFX extends EntityFX {
 
 	public void onUpdate() {
 		++this.age;
-		if(this.age == this.maxAge) {
+		if (this.age == this.maxAge) {
 			this.setEntityDead();
 		}
 	}

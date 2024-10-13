@@ -16,8 +16,8 @@ public class ClippingHelper {
 	}
 
 	public boolean isBoxInFrustum(double a, double b, double c, double d, double e, double f) {
-		for(int i = 0; i < 6; ++i) {
-			if(isOutsidePlane(i, a, b, c) && isOutsidePlane(i, d, b, c) && isOutsidePlane(i, a, e, c) && isOutsidePlane(i, d, e, c) && isOutsidePlane(i, a, b, f) && isOutsidePlane(i, d, b, f) && isOutsidePlane(i, a, e, f) && isOutsidePlane(i, d, e, f)) {
+		for ( int i = 0; i < 6; ++i ) {
+			if (isOutsidePlane(i, a, b, c) && isOutsidePlane(i, d, b, c) && isOutsidePlane(i, a, e, c) && isOutsidePlane(i, d, e, c) && isOutsidePlane(i, a, b, f) && isOutsidePlane(i, d, b, f) && isOutsidePlane(i, a, e, f) && isOutsidePlane(i, d, e, f)) {
 				return false;
 			}
 		}

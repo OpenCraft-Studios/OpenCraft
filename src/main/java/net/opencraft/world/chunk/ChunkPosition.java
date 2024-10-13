@@ -14,7 +14,7 @@ public class ChunkPosition {
 	}
 
 	public boolean equals(final Object object) {
-		if(object instanceof ChunkPosition) {
+		if (object instanceof ChunkPosition) {
 			final ChunkPosition chunkPosition = (ChunkPosition) object;
 			return chunkPosition.x == this.x && chunkPosition.y == this.y && chunkPosition.z == this.z;
 		}

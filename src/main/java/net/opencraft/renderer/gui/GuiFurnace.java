@@ -15,12 +15,12 @@ public class GuiFurnace extends GuiContainer {
 		this.inventorySlots.add(new Slot(this, el, 0, 56, 17));
 		this.inventorySlots.add(new Slot(this, el, 1, 56, 53));
 		this.inventorySlots.add(new Slot(this, el, 2, 116, 35));
-		for(int i = 0; i < 3; ++i) {
-			for(int j = 0; j < 9; ++j) {
+		for ( int i = 0; i < 3; ++i ) {
+			for ( int j = 0; j < 9; ++j ) {
 				this.inventorySlots.add(new Slot(this, ht, j + (i + 1) * 9, 8 + j * 18, 84 + i * 18));
 			}
 		}
-		for(int i = 0; i < 9; ++i) {
+		for ( int i = 0; i < 9; ++i ) {
 			this.inventorySlots.add(new Slot(this, ht, i, 8 + i * 18, 142));
 		}
 	}
@@ -39,7 +39,7 @@ public class GuiFurnace extends GuiContainer {
 		final int integer1 = (this.width - this.xSize) / 2;
 		final int integer2 = (this.height - this.ySize) / 2;
 		this.drawTexturedModalRect(integer1, integer2, 0, 0, this.xSize, this.ySize);
-		if(this.furnaceInventory.isBurning()) {
+		if (this.furnaceInventory.isBurning()) {
 			final int n = this.furnaceInventory.getBurnTimeRemainingScaled(12);
 			this.drawTexturedModalRect(integer1 + 56, integer2 + 36 + 12 - n, 176, 12 - n, 14, n + 2);
 		}

@@ -101,9 +101,9 @@ public final class ItemStack {
 
 	public void damageItem(final int integer) {
 		this.itemDamage += integer;
-		if(this.itemDamage > this.isItemStackDamageable()) {
+		if (this.itemDamage > this.isItemStackDamageable()) {
 			--this.stackSize;
-			if(this.stackSize < 0) {
+			if (this.stackSize < 0) {
 				this.stackSize = 0;
 			}
 			this.itemDamage = 0;

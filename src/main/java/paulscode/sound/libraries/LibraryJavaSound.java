@@ -146,10 +146,10 @@ public class LibraryJavaSound extends Library {
 	public void init() throws SoundSystemException {
 		MixerRanking mixerRanker = null;
 		// Check if a mixer has already been defined:
-		if(myMixer == null) {
+		if (myMixer == null) {
 			// Nope, try the default Java Sound mixer first:
-			for(Mixer.Info mixerInfo : AudioSystem.getMixerInfo()) {
-				if(mixerInfo.getName().equals("Java Sound Audio Engine")) {
+			for ( Mixer.Info mixerInfo : AudioSystem.getMixerInfo() ) {
+				if (mixerInfo.getName().equals("Java Sound Audio Engine")) {
 					// Found it, make sure it measures up to standards
 					mixerRanker = new MixerRanking();
 					try {
@@ -158,7 +158,7 @@ public class LibraryJavaSound extends Library {
 						// Serious problem, don't use it!
 						break;
 					}
-					if(mixerRanker.rank < 14)
+					if (mixerRanker.rank < 14)
 						break;  // Minor problem, see if there is a better mixer
 					// It's a good mixer, let's use it:
 					myMixer = AudioSystem.getMixer(mixerInfo);
@@ -167,10 +167,10 @@ public class LibraryJavaSound extends Library {
 				}
 			}
 			// See if we have a mixer yet:
-			if(myMixer == null) {
+			if (myMixer == null) {
 				// Nope, rank all the available mixers
 				MixerRanking bestRankedMixer = mixerRanker;
-				for(Mixer.Info mixerInfo : AudioSystem.getMixerInfo()) {
+				for ( Mixer.Info mixerInfo : AudioSystem.getMixerInfo() ) {
 					mixerRanker = new MixerRanking();
 					try {
 						// See how good it is
@@ -178,11 +178,11 @@ public class LibraryJavaSound extends Library {
 					} catch(LibraryJavaSound.Exception ljse) {
 					}
 					// If this one is better, save it:
-					if(bestRankedMixer == null || mixerRanker.rank > bestRankedMixer.rank)
+					if (bestRankedMixer == null || mixerRanker.rank > bestRankedMixer.rank)
 						bestRankedMixer = mixerRanker;
 				}
 				// Check if didn't find any useable mixers at all:
-				if(bestRankedMixer == null)
+				if (bestRankedMixer == null)
 					throw new LibraryJavaSound.Exception("No useable mixers " + "found!", new MixerRanking());
 				try {
 					// Use the best available mixer
@@ -211,8 +211,8 @@ public class LibraryJavaSound extends Library {
 	 */
 	public static boolean libraryCompatible() {
 		// No real "loading" for the JavaSound library, just grab the Mixer:
-		for(Mixer.Info mixerInfo : AudioSystem.getMixerInfo()) {
-			if(mixerInfo.getName().equals("Java Sound Audio Engine"))
+		for ( Mixer.Info mixerInfo : AudioSystem.getMixerInfo() ) {
+			if (mixerInfo.getName().equals("Java Sound Audio Engine"))
 				return true;
 		}
 		return false;
@@ -250,32 +250,32 @@ public class LibraryJavaSound extends Library {
 	@Override
 	public boolean loadSound(FilenameURL filenameURL) {
 		// Make sure the buffer map exists:
-		if(bufferMap == null) {
+		if (bufferMap == null) {
 			bufferMap = new HashMap<String, SoundBuffer>();
 			importantMessage("Buffer Map was null in method 'loadSound'");
 		}
 
 		// make sure they gave us a filename:
-		if(errorCheck(filenameURL == null, "Filename/URL not specified in method 'loadSound'"))
+		if (errorCheck(filenameURL == null, "Filename/URL not specified in method 'loadSound'"))
 			return false;
 
 		// check if it is already loaded:        
-		if(bufferMap.get(filenameURL.getFilename()) != null)
+		if (bufferMap.get(filenameURL.getFilename()) != null)
 			return true;
 
 		ICodec codec = SoundSystemConfig.getCodec(filenameURL.getFilename());
-		if(errorCheck(codec == null, "No codec found for file '" + filenameURL.getFilename() + "' in method 'loadSound'"))
+		if (errorCheck(codec == null, "No codec found for file '" + filenameURL.getFilename() + "' in method 'loadSound'"))
 			return false;
 		URL url = filenameURL.getURL();
 
-		if(errorCheck(url == null, "Unable to open file '" + filenameURL.getFilename() + "' in method 'loadSound'"))
+		if (errorCheck(url == null, "Unable to open file '" + filenameURL.getFilename() + "' in method 'loadSound'"))
 			return false;
 
 		codec.initialize(url);
 		SoundBuffer buffer = codec.readAll();
 		codec.cleanup();
 		codec = null;
-		if(buffer != null)
+		if (buffer != null)
 			bufferMap.put(filenameURL.getFilename(), buffer);
 		else
 			errorMessage("Sound buffer null in method 'loadSound'");
@@ -295,21 +295,21 @@ public class LibraryJavaSound extends Library {
 	@Override
 	public boolean loadSound(SoundBuffer buffer, String identifier) {
 		// Make sure the buffer map exists:
-		if(bufferMap == null) {
+		if (bufferMap == null) {
 			bufferMap = new HashMap<String, SoundBuffer>();
 			importantMessage("Buffer Map was null in method 'loadSound'");
 		}
 
 		// make sure they gave us an identifier:
-		if(errorCheck(identifier == null, "Identifier not specified in method 'loadSound'"))
+		if (errorCheck(identifier == null, "Identifier not specified in method 'loadSound'"))
 			return false;
 
 		// check if it is already loaded:
-		if(bufferMap.get(identifier) != null)
+		if (bufferMap.get(identifier) != null)
 			return true;
 
 		// save it for later:
-		if(buffer != null)
+		if (buffer != null)
 			bufferMap.put(identifier, buffer);
 		else
 			errorMessage("Sound buffer null in method 'loadSound'");
@@ -335,7 +335,7 @@ public class LibraryJavaSound extends Library {
 		while(iter.hasNext()) {
 			sourcename = iter.next();
 			source = sourceMap.get(sourcename);
-			if(source != null)
+			if (source != null)
 				source.positionChanged();
 		}
 	}
@@ -358,12 +358,12 @@ public class LibraryJavaSound extends Library {
 	public void newSource(boolean priority, boolean toStream, boolean toLoop, String sourcename, FilenameURL filenameURL, float x, float y, float z, int attModel, float distOrRoll) {
 		SoundBuffer buffer = null;
 
-		if(!toStream) {
+		if (!toStream) {
 			// Grab the audio data for this file:
 			buffer = bufferMap.get(filenameURL.getFilename());
 			// if not found, try loading it:
-			if(buffer == null) {
-				if(!loadSound(filenameURL)) {
+			if (buffer == null) {
+				if (!loadSound(filenameURL)) {
 					errorMessage("Source '" + sourcename + "' was not created " + "because an error occurred while loading " + filenameURL.getFilename());
 					return;
 				}
@@ -371,13 +371,13 @@ public class LibraryJavaSound extends Library {
 			// try and grab the sound buffer again:
 			buffer = bufferMap.get(filenameURL.getFilename());
 			// see if it was there this time:
-			if(buffer == null) {
+			if (buffer == null) {
 				errorMessage("Source '" + sourcename + "' was not created " + "because audio data was not found for " + filenameURL.getFilename());
 				return;
 			}
 		}
 
-		if(!toStream && buffer != null)
+		if (!toStream && buffer != null)
 			buffer.trimData(maxClipSize);
 
 		sourceMap.put(sourcename, new SourceJavaSound(listener, priority, toStream, toLoop, sourcename, filenameURL, buffer, x, y, z, attModel, distOrRoll, false));
@@ -419,12 +419,12 @@ public class LibraryJavaSound extends Library {
 	public void quickPlay(boolean priority, boolean toStream, boolean toLoop, String sourcename, FilenameURL filenameURL, float x, float y, float z, int attModel, float distOrRoll, boolean temporary) {
 		SoundBuffer buffer = null;
 
-		if(!toStream) {
+		if (!toStream) {
 			// Grab the audio data for this file:
 			buffer = bufferMap.get(filenameURL.getFilename());
 			// if not found, try loading it:
-			if(buffer == null) {
-				if(!loadSound(filenameURL)) {
+			if (buffer == null) {
+				if (!loadSound(filenameURL)) {
 					errorMessage("Source '" + sourcename + "' was not created " + "because an error occurred while loading " + filenameURL.getFilename());
 					return;
 				}
@@ -432,13 +432,13 @@ public class LibraryJavaSound extends Library {
 			// try and grab the sound buffer again:
 			buffer = bufferMap.get(filenameURL.getFilename());
 			// see if it was there this time:
-			if(buffer == null) {
+			if (buffer == null) {
 				errorMessage("Source '" + sourcename + "' was not created " + "because audio data was not found for " + filenameURL.getFilename());
 				return;
 			}
 		}
 
-		if(!toStream && buffer != null)
+		if (!toStream && buffer != null)
 			buffer.trimData(maxClipSize);
 
 		sourceMap.put(sourcename, new SourceJavaSound(listener, priority, toStream, toLoop, sourcename, filenameURL, buffer, x, y, z, attModel, distOrRoll, temporary));
@@ -451,7 +451,7 @@ public class LibraryJavaSound extends Library {
 	 */
 	@Override
 	public void copySources(HashMap<String, Source> srcMap) {
-		if(srcMap == null)
+		if (srcMap == null)
 			return;
 		Set<String> keys = srcMap.keySet();
 		Iterator<String> iter = keys.iterator();
@@ -459,7 +459,7 @@ public class LibraryJavaSound extends Library {
 		Source source;
 
 		// Make sure the buffer map exists:
-		if(bufferMap == null) {
+		if (bufferMap == null) {
 			bufferMap = new HashMap<String, SoundBuffer>();
 			importantMessage("Buffer Map was null in method 'copySources'");
 		}
@@ -472,16 +472,16 @@ public class LibraryJavaSound extends Library {
 		while(iter.hasNext()) {
 			sourcename = iter.next();
 			source = srcMap.get(sourcename);
-			if(source != null) {
+			if (source != null) {
 				buffer = null;
-				if(!source.toStream) {
+				if (!source.toStream) {
 					loadSound(source.filenameURL);
 					buffer = bufferMap.get(source.filenameURL.getFilename());
 				}
-				if(!source.toStream && buffer != null) {
+				if (!source.toStream && buffer != null) {
 					buffer.trimData(maxClipSize);
 				}
-				if(source.toStream || buffer != null) {
+				if (source.toStream || buffer != null) {
 					sourceMap.put(sourcename, new SourceJavaSound(listener, source, buffer));
 				}
 			}
@@ -532,7 +532,7 @@ public class LibraryJavaSound extends Library {
 		mixer(SET, m);
 		SoundSystemException e = SoundSystem.getLastException();
 		SoundSystem.setException(null);
-		if(e != null)
+		if (e != null)
 			throw e;
 	}
 
@@ -544,8 +544,8 @@ public class LibraryJavaSound extends Library {
 	 * @return Handle to the mixer.
 	 */
 	private static synchronized Mixer mixer(boolean action, Mixer m) {
-		if(action == SET) {
-			if(m == null)
+		if (action == SET) {
+			if (m == null)
 				return myMixer;
 
 			MixerRanking mixerRanker = new MixerRanking();
@@ -558,7 +558,7 @@ public class LibraryJavaSound extends Library {
 			myMixer = m;
 			mixerRanking(SET, mixerRanker);
 			ChannelJavaSound c;
-			if(instance != null) {
+			if (instance != null) {
 				ListIterator<Channel> itr = instance.normalChannels.listIterator();
 				SoundSystem.setException(null);
 				while(itr.hasNext()) {
@@ -580,7 +580,7 @@ public class LibraryJavaSound extends Library {
 	}
 
 	private static synchronized MixerRanking mixerRanking(boolean action, MixerRanking value) {
-		if(action == SET)
+		if (action == SET)
 			myMixerRanking = value;
 		return myMixerRanking;
 	}
@@ -590,7 +590,7 @@ public class LibraryJavaSound extends Library {
 	}
 
 	private static synchronized int minSampleRate(boolean action, int value) {
-		if(action == SET)
+		if (action == SET)
 			minSampleRate = value;
 		return minSampleRate;
 	}
@@ -600,7 +600,7 @@ public class LibraryJavaSound extends Library {
 	}
 
 	private static synchronized int maxSampleRate(boolean action, int value) {
-		if(action == SET)
+		if (action == SET)
 			maxSampleRate = value;
 		return maxSampleRate;
 	}
@@ -610,7 +610,7 @@ public class LibraryJavaSound extends Library {
 	}
 
 	private static synchronized int lineCount(boolean action, int value) {
-		if(action == SET)
+		if (action == SET)
 			lineCount = value;
 		return lineCount;
 	}
@@ -620,7 +620,7 @@ public class LibraryJavaSound extends Library {
 	}
 
 	private static synchronized boolean useGainControl(boolean action, boolean value) {
-		if(action == SET)
+		if (action == SET)
 			useGainControl = value;
 		return useGainControl;
 	}
@@ -630,7 +630,7 @@ public class LibraryJavaSound extends Library {
 	}
 
 	private static synchronized boolean usePanControl(boolean action, boolean value) {
-		if(action == SET)
+		if (action == SET)
 			usePanControl = value;
 		return usePanControl;
 	}
@@ -640,7 +640,7 @@ public class LibraryJavaSound extends Library {
 	}
 
 	private static synchronized boolean useSampleRateControl(boolean action, boolean value) {
-		if(action == SET)
+		if (action == SET)
 			useSampleRateControl = value;
 		return useSampleRateControl;
 	}
@@ -829,7 +829,7 @@ public class LibraryJavaSound extends Library {
 		 */
 		public void rank(Mixer.Info i) throws LibraryJavaSound.Exception {
 			// STEP 1: Determine if the Mixer exists
-			if(i == null)
+			if (i == null)
 				throw new LibraryJavaSound.Exception("No Mixer info " + "specified in method 'MixerRanking.rank'", this);
 			mixerInfo = i;
 			Mixer m;
@@ -838,7 +838,7 @@ public class LibraryJavaSound extends Library {
 			} catch(java.lang.Exception e) {
 				throw new LibraryJavaSound.Exception("Unable to acquire the " + "specified Mixer in method 'MixerRanking.rank'", this);
 			}
-			if(m == null)
+			if (m == null)
 				throw new LibraryJavaSound.Exception("Unable to acquire the " + "specified Mixer in method 'MixerRanking.rank'", this);
 			mixerExists = true;
 
@@ -851,8 +851,8 @@ public class LibraryJavaSound extends Library {
 			} catch(java.lang.Exception e) {
 				throw new LibraryJavaSound.Exception("Invalid minimum " + "sample-rate specified in method 'MixerRanking.rank'", this);
 			}
-			if(!AudioSystem.isLineSupported(lineInfo)) {
-				if(MIN_SAMPLE_RATE_PRIORITY == HIGH)
+			if (!AudioSystem.isLineSupported(lineInfo)) {
+				if (MIN_SAMPLE_RATE_PRIORITY == HIGH)
 					throw new LibraryJavaSound.Exception("Specified minimum " + "sample-rate not possible for Mixer '" + mixerInfo.getName() + "'", this);
 			} else {
 				minSampleRateOK = true;
@@ -863,8 +863,8 @@ public class LibraryJavaSound extends Library {
 			} catch(java.lang.Exception e) {
 				throw new LibraryJavaSound.Exception("Invalid maximum " + "sample-rate specified in method 'MixerRanking.rank'", this);
 			}
-			if(!AudioSystem.isLineSupported(lineInfo)) {
-				if(MAX_SAMPLE_RATE_PRIORITY == HIGH)
+			if (!AudioSystem.isLineSupported(lineInfo)) {
+				if (MAX_SAMPLE_RATE_PRIORITY == HIGH)
 					throw new LibraryJavaSound.Exception("Specified maximum " + "sample-rate not possible for Mixer '" + mixerInfo.getName() + "'", this);
 			} else {
 				maxSampleRateOK = true;
@@ -874,7 +874,7 @@ public class LibraryJavaSound extends Library {
 			int lL;
 			int uL;
 			int testSampleRate;
-			if(minSampleRateOK) {
+			if (minSampleRateOK) {
 				minSampleRatePossible = minSampleRate(GET, XXX);
 			} else {
 				// Find the lower limit:
@@ -884,7 +884,7 @@ public class LibraryJavaSound extends Library {
 					testSampleRate = lL + (uL - lL) / 2;
 					format = new AudioFormat(testSampleRate, 16, 2, true, false);
 					lineInfo = new DataLine.Info(SourceDataLine.class, format);
-					if(AudioSystem.isLineSupported(lineInfo)) {
+					if (AudioSystem.isLineSupported(lineInfo)) {
 						minSampleRatePossible = testSampleRate;
 						uL = testSampleRate;
 					} else {
@@ -892,9 +892,9 @@ public class LibraryJavaSound extends Library {
 					}
 				}
 			}
-			if(maxSampleRateOK) {
+			if (maxSampleRateOK) {
 				maxSampleRatePossible = maxSampleRate(GET, XXX);
-			} else if(minSampleRatePossible != -1) {
+			} else if (minSampleRatePossible != -1) {
 				// Find the upper limit:
 				uL = maxSampleRate(GET, XXX);
 				lL = minSampleRatePossible;
@@ -902,7 +902,7 @@ public class LibraryJavaSound extends Library {
 					testSampleRate = lL + (uL - lL) / 2;
 					format = new AudioFormat(testSampleRate, 16, 2, true, false);
 					lineInfo = new DataLine.Info(SourceDataLine.class, format);
-					if(AudioSystem.isLineSupported(lineInfo)) {
+					if (AudioSystem.isLineSupported(lineInfo)) {
 						maxSampleRatePossible = testSampleRate;
 						lL = testSampleRate;
 					} else {
@@ -911,7 +911,7 @@ public class LibraryJavaSound extends Library {
 				}
 			}
 			// Make sure we have some range of possible sample-rates:
-			if(minSampleRatePossible == -1 || maxSampleRatePossible == -1)
+			if (minSampleRatePossible == -1 || maxSampleRatePossible == -1)
 				throw new LibraryJavaSound.Exception("No possible " + "sample-rate found for Mixer '" + mixerInfo.getName() + "'", this);
 
 			//STEP 4: Determine if the specified number of lines is possible:
@@ -930,13 +930,13 @@ public class LibraryJavaSound extends Library {
 			SourceDataLine[] lines = new SourceDataLine[lineCount(GET, XXX) - 1];
 			int c = 0;
 			int x;
-			for(x = 1; x < lines.length + 1; x++) {
+			for ( x = 1; x < lines.length + 1; x++ ) {
 				try {
 					lines[x - 1] = (SourceDataLine) m.getLine(lineInfo);
 				} catch(java.lang.Exception e) {
-					if(x == 0)
+					if (x == 0)
 						throw new LibraryJavaSound.Exception("No output " + "lines possible for Mixer '" + mixerInfo.getName() + "'", this);
-					else if(LINE_COUNT_PRIORITY == HIGH)
+					else if (LINE_COUNT_PRIORITY == HIGH)
 						throw new LibraryJavaSound.Exception("Specified " + "maximum number of lines not possible for Mixer '" + mixerInfo.getName() + "'", this);
 					break;
 				}
@@ -947,31 +947,31 @@ public class LibraryJavaSound extends Library {
 			} catch(java.lang.Exception e) {
 			}
 			clip = null;
-			if(maxLinesPossible == lineCount(GET, XXX)) {
+			if (maxLinesPossible == lineCount(GET, XXX)) {
 				lineCountOK = true;
 			}
 
 			//STEP 5: Check which controls are available:
-			if(!useGainControl(GET, false)) {
+			if (!useGainControl(GET, false)) {
 				GAIN_CONTROL_PRIORITY = NONE;
-			} else if(!lines[0].isControlSupported(FloatControl.Type.MASTER_GAIN)) {
-				if(GAIN_CONTROL_PRIORITY == HIGH)
+			} else if (!lines[0].isControlSupported(FloatControl.Type.MASTER_GAIN)) {
+				if (GAIN_CONTROL_PRIORITY == HIGH)
 					throw new LibraryJavaSound.Exception("Gain control " + "not available for Mixer '" + mixerInfo.getName() + "'", this);
 			} else {
 				gainControlOK = true;
 			}
-			if(!usePanControl(GET, false)) {
+			if (!usePanControl(GET, false)) {
 				PAN_CONTROL_PRIORITY = NONE;
-			} else if(!lines[0].isControlSupported(FloatControl.Type.PAN)) {
-				if(PAN_CONTROL_PRIORITY == HIGH)
+			} else if (!lines[0].isControlSupported(FloatControl.Type.PAN)) {
+				if (PAN_CONTROL_PRIORITY == HIGH)
 					throw new LibraryJavaSound.Exception("Pan control " + "not available for Mixer '" + mixerInfo.getName() + "'", this);
 			} else {
 				panControlOK = true;
 			}
-			if(!useSampleRateControl(GET, false)) {
+			if (!useSampleRateControl(GET, false)) {
 				SAMPLE_RATE_CONTROL_PRIORITY = NONE;
-			} else if(!lines[0].isControlSupported(FloatControl.Type.SAMPLE_RATE)) {
-				if(SAMPLE_RATE_CONTROL_PRIORITY == HIGH)
+			} else if (!lines[0].isControlSupported(FloatControl.Type.SAMPLE_RATE)) {
+				if (SAMPLE_RATE_CONTROL_PRIORITY == HIGH)
 					throw new LibraryJavaSound.Exception("Sample-rate " + "control not available for " + "Mixer '" + mixerInfo.getName() + "'", this);
 			} else {
 				sampleRateControlOK = true;
@@ -1002,14 +1002,14 @@ public class LibraryJavaSound extends Library {
 		 */
 		private int getRankValue(boolean property, int priority) {
 			// Maximum value if the propery is available:
-			if(property)
+			if (property)
 				return 2;
 			// Property isn't available..
 			// Full value if the property has no priority:
-			if(priority == NONE)
+			if (priority == NONE)
 				return 2;
 			// Half-value if the priority is low:
-			if(priority == LOW)
+			if (priority == LOW)
 				return 1;
 			// Otherwise, no value:
 			return 0;

@@ -46,7 +46,7 @@ public class EntityPig extends EntityAnimal {
 
 	@Override
 	public boolean interact(final EntityPlayer entityPlayer) {
-		if(this.getSaddled) {
+		if (this.getSaddled) {
 			entityPlayer.mountEntity(this);
 			return true;
 		}

@@ -20,17 +20,17 @@ public class GuiCrafting extends GuiContainer {
 		this.inventoryCrafting = new InventoryCrafting(this, 3, 3);
 		this.iInventory = new InventoryCraftResult();
 		this.inventorySlots.add(new SlotCrafting(this, this.inventoryCrafting, this.iInventory, 0, 124, 35));
-		for(int i = 0; i < 3; ++i) {
-			for(int j = 0; j < 3; ++j) {
+		for ( int i = 0; i < 3; ++i ) {
+			for ( int j = 0; j < 3; ++j ) {
 				this.inventorySlots.add(new Slot(this, this.inventoryCrafting, j + i * 3, 30 + j * 18, 17 + i * 18));
 			}
 		}
-		for(int i = 0; i < 3; ++i) {
-			for(int j = 0; j < 9; ++j) {
+		for ( int i = 0; i < 3; ++i ) {
+			for ( int j = 0; j < 9; ++j ) {
 				this.inventorySlots.add(new Slot(this, ht, j + (i + 1) * 9, 8 + j * 18, 84 + i * 18));
 			}
 		}
-		for(int i = 0; i < 9; ++i) {
+		for ( int i = 0; i < 9; ++i ) {
 			this.inventorySlots.add(new Slot(this, ht, i, 8 + i * 18, 142));
 		}
 	}
@@ -38,9 +38,9 @@ public class GuiCrafting extends GuiContainer {
 	@Override
 	public void onGuiClosed() {
 		super.onGuiClosed();
-		for(int i = 0; i < 9; ++i) {
+		for ( int i = 0; i < 9; ++i ) {
 			final ItemStack stackInSlot = this.inventoryCrafting.getStackInSlot(i);
-			if(stackInSlot != null) {
+			if (stackInSlot != null) {
 				this.id.player.dropPlayerItem(stackInSlot);
 			}
 		}
@@ -49,11 +49,11 @@ public class GuiCrafting extends GuiContainer {
 	@Override
 	public void onCraftMatrixChanged(final IInventory kd) {
 		final int[] arr = new int[9];
-		for(int i = 0; i < 3; ++i) {
-			for(int j = 0; j < 3; ++j) {
+		for ( int i = 0; i < 3; ++i ) {
+			for ( int j = 0; j < 3; ++j ) {
 				final int integer = i + j * 3;
 				final ItemStack stackInSlot = this.inventoryCrafting.getStackInSlot(integer);
-				if(stackInSlot == null) {
+				if (stackInSlot == null) {
 					arr[integer] = -1;
 				} else {
 					arr[integer] = stackInSlot.itemID;

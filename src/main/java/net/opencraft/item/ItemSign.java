@@ -17,11 +17,11 @@ public class ItemSign extends Item {
 
 	@Override
 	public boolean onItemUse(final ItemStack hw, final EntityPlayer gi, final World fe, final int xCoord, int yCoord, final int zCoord, final int integer7) {
-		if(integer7 != 1) {
+		if (integer7 != 1) {
 			return false;
 		}
 		++yCoord;
-		if(!Block.signPost.canPlaceBlockAt(fe, xCoord, yCoord, zCoord)) {
+		if (!Block.signPost.canPlaceBlockAt(fe, xCoord, yCoord, zCoord)) {
 			return false;
 		}
 		fe.setBlockWithNotify(xCoord, yCoord, zCoord, Block.signPost.blockID);

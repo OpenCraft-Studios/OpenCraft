@@ -215,7 +215,7 @@ public class Channel {
 	public String getClassName() {
 		String libTitle = SoundSystemConfig.getLibraryTitle(libraryType);
 
-		if(libTitle.equals("No Sound"))
+		if (libTitle.equals("No Sound"))
 			return "Channel";
 		else
 			return "Channel" + libTitle;

@@ -31,7 +31,7 @@ public class MusInputStream extends InputStream {
 	public int read(byte[] var1, int var2, int var3) throws IOException {
 		var3 = this.inputStream.read(var1, var2, var3);
 
-		for(int var4 = 0; var4 < var3; ++var4) {
+		for ( int var4 = 0; var4 < var3; ++var4 ) {
 			byte var5 = var1[var2 + var4] = (byte) (var1[var2 + var4] ^ this.hash >> 8);
 			this.hash = this.hash * multiplier + addend * var5;
 		}

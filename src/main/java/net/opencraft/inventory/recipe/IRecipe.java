@@ -20,12 +20,12 @@ public class IRecipe {
 	}
 
 	public boolean matchRecipe(final int[] arr) {
-		for(int i = 0; i <= 3 - this.b; ++i) {
-			for(int j = 0; j <= 3 - this.c; ++j) {
-				if(this.a(arr, i, j, true)) {
+		for ( int i = 0; i <= 3 - this.b; ++i ) {
+			for ( int j = 0; j <= 3 - this.c; ++j ) {
+				if (this.a(arr, i, j, true)) {
 					return true;
 				}
-				if(this.a(arr, i, j, false)) {
+				if (this.a(arr, i, j, false)) {
 					return true;
 				}
 			}
@@ -34,19 +34,19 @@ public class IRecipe {
 	}
 
 	private boolean a(final int[] arr, final int integer2, final int integer3, final boolean boolean4) {
-		for(int i = 0; i < 3; ++i) {
-			for(int j = 0; j < 3; ++j) {
+		for ( int i = 0; i < 3; ++i ) {
+			for ( int j = 0; j < 3; ++j ) {
 				final int n = i - integer2;
 				final int n2 = j - integer3;
 				int n3 = -1;
-				if(n >= 0 && n2 >= 0 && n < this.b && n2 < this.c) {
-					if(boolean4) {
+				if (n >= 0 && n2 >= 0 && n < this.b && n2 < this.c) {
+					if (boolean4) {
 						n3 = this.d[this.b - n - 1 + n2 * this.b];
 					} else {
 						n3 = this.d[n + n2 * this.b];
 					}
 				}
-				if(arr[i + j * 3] != n3) {
+				if (arr[i + j * 3] != n3) {
 					return false;
 				}
 			}

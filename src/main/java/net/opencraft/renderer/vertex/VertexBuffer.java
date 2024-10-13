@@ -36,7 +36,7 @@ public class VertexBuffer {
 	}
 
 	public void deleteGlBuffers() {
-		if(this.glBufferId >= 0) {
+		if (this.glBufferId >= 0) {
 			OpenGlHelper.glDeleteBuffers(this.glBufferId);
 			this.glBufferId = -1;
 		}

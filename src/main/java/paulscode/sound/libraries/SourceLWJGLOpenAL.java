@@ -137,7 +137,7 @@ public class SourceLWJGLOpenAL extends Source {
 	 */
 	public SourceLWJGLOpenAL(FloatBuffer listenerPosition, IntBuffer myBuffer, boolean priority, boolean toStream, boolean toLoop, String sourcename, FilenameURL filenameURL, SoundBuffer soundBuffer, float x, float y, float z, int attModel, float distOrRoll, boolean temporary) {
 		super(priority, toStream, toLoop, sourcename, filenameURL, soundBuffer, x, y, z, attModel, distOrRoll, temporary);
-		if(codec != null)
+		if (codec != null)
 			codec.reverseByteOrder(true);
 		this.listenerPosition = listenerPosition;
 		this.myBuffer = myBuffer;
@@ -156,7 +156,7 @@ public class SourceLWJGLOpenAL extends Source {
 	 */
 	public SourceLWJGLOpenAL(FloatBuffer listenerPosition, IntBuffer myBuffer, Source old, SoundBuffer soundBuffer) {
 		super(old, soundBuffer);
-		if(codec != null)
+		if (codec != null)
 			codec.reverseByteOrder(true);
 		this.listenerPosition = listenerPosition;
 		this.myBuffer = myBuffer;
@@ -233,42 +233,42 @@ public class SourceLWJGLOpenAL extends Source {
 	 */
 	@Override
 	public boolean incrementSoundSequence() {
-		if(!toStream) {
+		if (!toStream) {
 			errorMessage("Method 'incrementSoundSequence' may only be used " + "for streaming sources.");
 			return false;
 		}
 		synchronized(soundSequenceLock) {
-			if(soundSequenceQueue != null && soundSequenceQueue.size() > 0) {
+			if (soundSequenceQueue != null && soundSequenceQueue.size() > 0) {
 				filenameURL = soundSequenceQueue.remove(0);
-				if(codec != null)
+				if (codec != null)
 					codec.cleanup();
 				codec = SoundSystemConfig.getCodec(filenameURL.getFilename());
-				if(codec != null) {
+				if (codec != null) {
 					codec.reverseByteOrder(true);
-					if(codec.getAudioFormat() == null)
+					if (codec.getAudioFormat() == null)
 						codec.initialize(filenameURL.getURL());
 
 					AudioFormat audioFormat = codec.getAudioFormat();
 
-					if(audioFormat == null) {
+					if (audioFormat == null) {
 						errorMessage("Audio Format null in method " + "'incrementSoundSequence'");
 						return false;
 					}
 
 					int soundFormat = 0;
-					if(audioFormat.getChannels() == 1) {
-						if(audioFormat.getSampleSizeInBits() == 8) {
+					if (audioFormat.getChannels() == 1) {
+						if (audioFormat.getSampleSizeInBits() == 8) {
 							soundFormat = AL10.AL_FORMAT_MONO8;
-						} else if(audioFormat.getSampleSizeInBits() == 16) {
+						} else if (audioFormat.getSampleSizeInBits() == 16) {
 							soundFormat = AL10.AL_FORMAT_MONO16;
 						} else {
 							errorMessage("Illegal sample size in method " + "'incrementSoundSequence'");
 							return false;
 						}
-					} else if(audioFormat.getChannels() == 2) {
-						if(audioFormat.getSampleSizeInBits() == 8) {
+					} else if (audioFormat.getChannels() == 2) {
+						if (audioFormat.getSampleSizeInBits() == 8) {
 							soundFormat = AL10.AL_FORMAT_STEREO8;
-						} else if(audioFormat.getSampleSizeInBits() == 16) {
+						} else if (audioFormat.getSampleSizeInBits() == 16) {
 							soundFormat = AL10.AL_FORMAT_STEREO16;
 						} else {
 							errorMessage("Illegal sample size in method " + "'incrementSoundSequence'");
@@ -309,7 +309,7 @@ public class SourceLWJGLOpenAL extends Source {
 		super.setPosition(x, y, z);
 
 		// Make sure OpenAL information has been created
-		if(sourcePosition == null)
+		if (sourcePosition == null)
 			resetALInformation();
 		else
 			positionChanged();
@@ -320,7 +320,7 @@ public class SourceLWJGLOpenAL extends Source {
 		sourcePosition.put(2, z);
 
 		// make sure we are assigned to a channel:
-		if(channel != null && channel.attachedSource == this && channelOpenAL != null && channelOpenAL.ALSource != null) {
+		if (channel != null && channel.attachedSource == this && channelOpenAL != null && channelOpenAL.ALSource != null) {
 			// move the source:
 			AL10.alSourcefv(channelOpenAL.ALSource.get(0), AL10.AL_POSITION, sourcePosition);
 			checkALError();
@@ -335,7 +335,7 @@ public class SourceLWJGLOpenAL extends Source {
 		calculateDistance();
 		calculateGain();
 
-		if(channel != null && channel.attachedSource == this && channelOpenAL != null && channelOpenAL.ALSource != null) {
+		if (channel != null && channel.attachedSource == this && channelOpenAL != null && channelOpenAL.ALSource != null) {
 			AL10.alSourcef(channelOpenAL.ALSource.get(0), AL10.AL_GAIN, (gain * sourceVolume * (float) Math.abs(fadeOutGain) * fadeInGain));
 			checkALError();
 		}
@@ -346,7 +346,7 @@ public class SourceLWJGLOpenAL extends Source {
 	 * Checks the source's pitch.
 	 */
 	private void checkPitch() {
-		if(channel != null && channel.attachedSource == this && LibraryLWJGLOpenAL.alPitchSupported() && channelOpenAL != null && channelOpenAL.ALSource != null) {
+		if (channel != null && channel.attachedSource == this && LibraryLWJGLOpenAL.alPitchSupported() && channelOpenAL != null && channelOpenAL.ALSource != null) {
 			AL10.alSourcef(channelOpenAL.ALSource.get(0), AL10.AL_PITCH, pitch);
 			checkALError();
 		}
@@ -362,8 +362,8 @@ public class SourceLWJGLOpenAL extends Source {
 		super.setLooping(lp);
 
 		// make sure we are assigned to a channel:
-		if(channel != null && channel.attachedSource == this && channelOpenAL != null && channelOpenAL.ALSource != null) {
-			if(lp)
+		if (channel != null && channel.attachedSource == this && channelOpenAL != null && channelOpenAL.ALSource != null) {
+			if (lp)
 				AL10.alSourcei(channelOpenAL.ALSource.get(0), AL10.AL_LOOPING, AL10.AL_TRUE);
 			else
 				AL10.alSourcei(channelOpenAL.ALSource.get(0), AL10.AL_LOOPING, AL10.AL_FALSE);
@@ -380,9 +380,9 @@ public class SourceLWJGLOpenAL extends Source {
 	public void setAttenuation(int model) {
 		super.setAttenuation(model);
 		// make sure we are assigned to a channel:
-		if(channel != null && channel.attachedSource == this && channelOpenAL != null && channelOpenAL.ALSource != null) {
+		if (channel != null && channel.attachedSource == this && channelOpenAL != null && channelOpenAL.ALSource != null) {
 			// attenuation changed, so update the rolloff factor accordingly
-			if(model == SoundSystemConfig.ATTENUATION_ROLLOFF)
+			if (model == SoundSystemConfig.ATTENUATION_ROLLOFF)
 				AL10.alSourcef(channelOpenAL.ALSource.get(0), AL10.AL_ROLLOFF_FACTOR, distOrRoll);
 			else
 				AL10.alSourcef(channelOpenAL.ALSource.get(0), AL10.AL_ROLLOFF_FACTOR, 0.0f);
@@ -400,9 +400,9 @@ public class SourceLWJGLOpenAL extends Source {
 	public void setDistOrRoll(float dr) {
 		super.setDistOrRoll(dr);
 		// make sure we are assigned to a channel:
-		if(channel != null && channel.attachedSource == this && channelOpenAL != null && channelOpenAL.ALSource != null) {
+		if (channel != null && channel.attachedSource == this && channelOpenAL != null && channelOpenAL.ALSource != null) {
 			// if we are using rolloff attenuation, then dr is a rolloff factor:
-			if(attModel == SoundSystemConfig.ATTENUATION_ROLLOFF)
+			if (attModel == SoundSystemConfig.ATTENUATION_ROLLOFF)
 				AL10.alSourcef(channelOpenAL.ALSource.get(0), AL10.AL_ROLLOFF_FACTOR, dr);
 			else
 				AL10.alSourcef(channelOpenAL.ALSource.get(0), AL10.AL_ROLLOFF_FACTOR, 0.0f);
@@ -424,7 +424,7 @@ public class SourceLWJGLOpenAL extends Source {
 		sourceVelocity = BufferUtils.createFloatBuffer(3).put(new float[] { x, y, z });
 		sourceVelocity.flip();
 		// make sure we are assigned to a channel:
-		if(channel != null && channel.attachedSource == this && channelOpenAL != null && channelOpenAL.ALSource != null) {
+		if (channel != null && channel.attachedSource == this && channelOpenAL != null && channelOpenAL.ALSource != null) {
 			AL10.alSourcefv(channelOpenAL.ALSource.get(0), AL10.AL_VELOCITY, sourceVelocity);
 			checkALError();
 		}
@@ -448,19 +448,19 @@ public class SourceLWJGLOpenAL extends Source {
 	 */
 	@Override
 	public void play(Channel c) {
-		if(!active()) {
-			if(toLoop)
+		if (!active()) {
+			if (toLoop)
 				toPlay = true;
 			return;
 		}
 
-		if(c == null) {
+		if (c == null) {
 			errorMessage("Unable to play source, because channel was null");
 			return;
 		}
 
 		boolean newChannel = (channel != c);
-		if(channel != null && channel.attachedSource != this)
+		if (channel != null && channel.attachedSource != this)
 			newChannel = true;
 
 		boolean wasPaused = paused();
@@ -471,13 +471,13 @@ public class SourceLWJGLOpenAL extends Source {
 
 		// Make sure the channel exists:
 		// check if we are already on this channel:
-		if(newChannel) {
+		if (newChannel) {
 			setPosition(position.x, position.y, position.z);
 			checkPitch();
 
 			// Send the source's attributes to the channel:
-			if(channelOpenAL != null && channelOpenAL.ALSource != null) {
-				if(LibraryLWJGLOpenAL.alPitchSupported()) {
+			if (channelOpenAL != null && channelOpenAL.ALSource != null) {
+				if (LibraryLWJGLOpenAL.alPitchSupported()) {
 					AL10.alSourcef(channelOpenAL.ALSource.get(0), AL10.AL_PITCH, pitch);
 					checkALError();
 				}
@@ -488,22 +488,22 @@ public class SourceLWJGLOpenAL extends Source {
 
 				checkALError();
 
-				if(attModel == SoundSystemConfig.ATTENUATION_ROLLOFF)
+				if (attModel == SoundSystemConfig.ATTENUATION_ROLLOFF)
 					AL10.alSourcef(channelOpenAL.ALSource.get(0), AL10.AL_ROLLOFF_FACTOR, distOrRoll);
 				else
 					AL10.alSourcef(channelOpenAL.ALSource.get(0), AL10.AL_ROLLOFF_FACTOR, 0.0f);
 				checkALError();
 
-				if(toLoop && (!toStream))
+				if (toLoop && (!toStream))
 					AL10.alSourcei(channelOpenAL.ALSource.get(0), AL10.AL_LOOPING, AL10.AL_TRUE);
 				else
 					AL10.alSourcei(channelOpenAL.ALSource.get(0), AL10.AL_LOOPING, AL10.AL_FALSE);
 				checkALError();
 			}
-			if(!toStream) {
+			if (!toStream) {
 				// This is not a streaming source, so make sure there is
 				// a sound buffer loaded to play:
-				if(myBuffer == null) {
+				if (myBuffer == null) {
 					errorMessage("No sound buffer to play");
 					return;
 				}
@@ -513,36 +513,36 @@ public class SourceLWJGLOpenAL extends Source {
 		}
 
 		// See if we are already playing:
-		if(!playing()) {
-			if(toStream && !wasPaused) {
-				if(codec == null) {
+		if (!playing()) {
+			if (toStream && !wasPaused) {
+				if (codec == null) {
 					errorMessage("Decoder null in method 'play'");
 					return;
 				}
-				if(codec.getAudioFormat() == null)
+				if (codec.getAudioFormat() == null)
 					codec.initialize(filenameURL.getURL());
 
 				AudioFormat audioFormat = codec.getAudioFormat();
 
-				if(audioFormat == null) {
+				if (audioFormat == null) {
 					errorMessage("Audio Format null in method 'play'");
 					return;
 				}
 
 				int soundFormat = 0;
-				if(audioFormat.getChannels() == 1) {
-					if(audioFormat.getSampleSizeInBits() == 8) {
+				if (audioFormat.getChannels() == 1) {
+					if (audioFormat.getSampleSizeInBits() == 8) {
 						soundFormat = AL10.AL_FORMAT_MONO8;
-					} else if(audioFormat.getSampleSizeInBits() == 16) {
+					} else if (audioFormat.getSampleSizeInBits() == 16) {
 						soundFormat = AL10.AL_FORMAT_MONO16;
 					} else {
 						errorMessage("Illegal sample size in method 'play'");
 						return;
 					}
-				} else if(audioFormat.getChannels() == 2) {
-					if(audioFormat.getSampleSizeInBits() == 8) {
+				} else if (audioFormat.getChannels() == 2) {
+					if (audioFormat.getSampleSizeInBits() == 8) {
 						soundFormat = AL10.AL_FORMAT_STEREO8;
-					} else if(audioFormat.getSampleSizeInBits() == 16) {
+					} else if (audioFormat.getSampleSizeInBits() == 16) {
 						soundFormat = AL10.AL_FORMAT_STEREO16;
 					} else {
 						errorMessage("Illegal sample size in method 'play'");
@@ -558,7 +558,7 @@ public class SourceLWJGLOpenAL extends Source {
 				preLoad = true;
 			}
 			channel.play();
-			if(pitch != 1.0f)
+			if (pitch != 1.0f)
 				checkPitch();
 		}
 	}
@@ -570,15 +570,15 @@ public class SourceLWJGLOpenAL extends Source {
 	 */
 	@Override
 	public boolean preLoad() {
-		if(codec == null)
+		if (codec == null)
 			return false;
 
 		codec.initialize(filenameURL.getURL());
 		LinkedList<byte[]> preLoadBuffers = new LinkedList<byte[]>();
-		for(int i = 0; i < SoundSystemConfig.getNumberStreamingBuffers(); i++) {
+		for ( int i = 0; i < SoundSystemConfig.getNumberStreamingBuffers(); i++ ) {
 			soundBuffer = codec.read();
 
-			if(soundBuffer == null || soundBuffer.audioData == null)
+			if (soundBuffer == null || soundBuffer.audioData == null)
 				break;
 
 			preLoadBuffers.add(soundBuffer.audioData);
@@ -610,7 +610,7 @@ public class SourceLWJGLOpenAL extends Source {
 	 * Calculates this source's distance from the listener.
 	 */
 	private void calculateDistance() {
-		if(listenerPosition != null) {
+		if (listenerPosition != null) {
 			// Calculate the source's distance from the listener:
 			double dX = position.x - listenerPosition.get(0);
 			double dY = position.y - listenerPosition.get(1);
@@ -625,17 +625,17 @@ public class SourceLWJGLOpenAL extends Source {
 	 */
 	private void calculateGain() {
 		// If using linear attenuation, calculate the source's gain:
-		if(attModel == SoundSystemConfig.ATTENUATION_LINEAR) {
-			if(distanceFromListener <= 0) {
+		if (attModel == SoundSystemConfig.ATTENUATION_LINEAR) {
+			if (distanceFromListener <= 0) {
 				gain = 1.0f;
-			} else if(distanceFromListener >= distOrRoll) {
+			} else if (distanceFromListener >= distOrRoll) {
 				gain = 0.0f;
 			} else {
 				gain = 1.0f - (distanceFromListener / distOrRoll);
 			}
-			if(gain > 1.0f)
+			if (gain > 1.0f)
 				gain = 1.0f;
-			if(gain < 0.0f)
+			if (gain < 0.0f)
 				gain = 0.0f;
 		} else {
 			gain = 1.0f;

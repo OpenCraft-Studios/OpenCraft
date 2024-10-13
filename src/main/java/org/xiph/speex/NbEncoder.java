@@ -230,7 +230,7 @@ public class NbEncoder extends NbCodec implements Encoder {
 		/* Copy new data in input buffer */
 		System.arraycopy(frmBuf, frameSize, frmBuf, 0, bufSize - frameSize);
 		frmBuf[bufSize - frameSize] = in[0] - preemph * pre_mem;
-		for(i = 1; i < frameSize; i++)
+		for ( i = 1; i < frameSize; i++ )
 			frmBuf[bufSize - frameSize + i] = in[i] - preemph * in[i - 1];
 		pre_mem = in[frameSize - 1];
 
@@ -240,7 +240,7 @@ public class NbEncoder extends NbCodec implements Encoder {
 		System.arraycopy(swBuf, frameSize, swBuf, 0, bufSize - frameSize);
 
 		/* Window for analysis */
-		for(i = 0; i < windowSize; i++)
+		for ( i = 0; i < windowSize; i++ )
 			buf2[i] = frmBuf[i + frmIdx] * window[i];
 
 		/* Compute auto-correlation */
@@ -250,7 +250,7 @@ public class NbEncoder extends NbCodec implements Encoder {
 		autocorr[0] *= lpc_floor; /* Noise floor in auto-correlation domain */
 
 		/* Lag windowing: equivalent to filtering in the power-spectrum domain */
-		for(i = 0; i < lpcSize + 1; i++)
+		for ( i = 0; i < lpcSize + 1; i++ )
 			autocorr[i] *= lagWindow[i];
 
 		/* Levinson-Durbin */
@@ -261,28 +261,28 @@ public class NbEncoder extends NbCodec implements Encoder {
 		/* LPC to LSPs (x-domain) transform */
 		int roots = Lsp.lpc2lsp(lpc, lpcSize, lsp, 15, 0.2f);
 		/* Check if we found all the roots */
-		if(roots == lpcSize) {
+		if (roots == lpcSize) {
 			/* LSP x-domain to angle domain*/
-			for(i = 0; i < lpcSize; i++)
+			for ( i = 0; i < lpcSize; i++ )
 				lsp[i] = (float) Math.acos(lsp[i]);
 		} else {
 			/* Search again if we can afford it */
-			if(complexity > 1)
+			if (complexity > 1)
 				roots = Lsp.lpc2lsp(lpc, lpcSize, lsp, 11, 0.05f);
-			if(roots == lpcSize) {
+			if (roots == lpcSize) {
 				/* LSP x-domain to angle domain*/
-				for(i = 0; i < lpcSize; i++)
+				for ( i = 0; i < lpcSize; i++ )
 					lsp[i] = (float) Math.acos(lsp[i]);
 			} else {
 				/*If we can't find all LSP's, do some damage control and use previous filter*/
-				for(i = 0; i < lpcSize; i++) {
+				for ( i = 0; i < lpcSize; i++ ) {
 					lsp[i] = old_lsp[i];
 				}
 			}
 		}
 
 		float lsp_dist = 0;
-		for(i = 0; i < lpcSize; i++)
+		for ( i = 0; i < lpcSize; i++ )
 			lsp_dist += (old_lsp[i] - lsp[i]) * (old_lsp[i] - lsp[i]);
 
 		/* Whole frame analysis (open-loop estimation of pitch and excitation gain) */
@@ -290,22 +290,22 @@ public class NbEncoder extends NbCodec implements Encoder {
 		int ol_pitch;
 		float ol_pitch_coef;
 		{
-			if(first != 0)
-				for(i = 0; i < lpcSize; i++)
+			if (first != 0)
+				for ( i = 0; i < lpcSize; i++ )
 					interp_lsp[i] = lsp[i];
 			else
-				for(i = 0; i < lpcSize; i++)
+				for ( i = 0; i < lpcSize; i++ )
 					interp_lsp[i] = .375f * old_lsp[i] + .625f * lsp[i];
 
 			Lsp.enforce_margin(interp_lsp, lpcSize, .002f);
 
 			/* Compute interpolated LPCs (unquantized) for whole frame*/
-			for(i = 0; i < lpcSize; i++)
+			for ( i = 0; i < lpcSize; i++ )
 				interp_lsp[i] = (float) Math.cos(interp_lsp[i]);
 			m_lsp.lsp2lpc(interp_lsp, interp_lpc, lpcSize);
 
 			/*Open-loop pitch*/
-			if(submodes[submodeID] == null || vbr_enabled != 0 || vad_enabled != 0 || submodes[submodeID].forced_pitch_gain != 0 || submodes[submodeID].lbr_pitch != -1) {
+			if (submodes[submodeID] == null || vbr_enabled != 0 || vad_enabled != 0 || submodes[submodeID].forced_pitch_gain != 0 || submodes[submodeID].lbr_pitch != -1) {
 				int[] nol_pitch = new int[6];
 				float[] nol_pitch_coef = new float[6];
 
@@ -318,8 +318,8 @@ public class NbEncoder extends NbCodec implements Encoder {
 				ol_pitch = nol_pitch[0];
 				ol_pitch_coef = nol_pitch_coef[0];
 				/*Try to remove pitch multiples*/
-				for(i = 1; i < 6; i++) {
-					if((nol_pitch_coef[i] > .85 * ol_pitch_coef) && (Math.abs(nol_pitch[i] - ol_pitch / 2.0) <= 1 || Math.abs(nol_pitch[i] - ol_pitch / 3.0) <= 1 || Math.abs(nol_pitch[i] - ol_pitch / 4.0) <= 1 || Math.abs(nol_pitch[i] - ol_pitch / 5.0) <= 1)) {
+				for ( i = 1; i < 6; i++ ) {
+					if ((nol_pitch_coef[i] > .85 * ol_pitch_coef) && (Math.abs(nol_pitch[i] - ol_pitch / 2.0) <= 1 || Math.abs(nol_pitch[i] - ol_pitch / 3.0) <= 1 || Math.abs(nol_pitch[i] - ol_pitch / 4.0) <= 1 || Math.abs(nol_pitch[i] - ol_pitch / 5.0) <= 1)) {
 						/*ol_pitch_coef=nol_pitch_coef[i];*/
 						ol_pitch = nol_pitch[i];
 					}
@@ -336,34 +336,34 @@ public class NbEncoder extends NbCodec implements Encoder {
 
 			/* Compute open-loop excitation gain */
 			ol_gain = 0;
-			for(i = 0; i < frameSize; i++)
+			for ( i = 0; i < frameSize; i++ )
 				ol_gain += excBuf[excIdx + i] * excBuf[excIdx + i];
 
 			ol_gain = (float) Math.sqrt(1 + ol_gain / frameSize);
 		}
 
 		/*VBR stuff*/
-		if(vbr != null && (vbr_enabled != 0 || vad_enabled != 0)) {
-			if(abr_enabled != 0) {
+		if (vbr != null && (vbr_enabled != 0 || vad_enabled != 0)) {
+			if (abr_enabled != 0) {
 				float qual_change = 0;
-				if(abr_drift2 * abr_drift > 0) {
+				if (abr_drift2 * abr_drift > 0) {
 					/* Only adapt if long-term and short-term drift are the same sign */
 					qual_change = -.00001f * abr_drift / (1 + abr_count);
-					if(qual_change > .05f)
+					if (qual_change > .05f)
 						qual_change = .05f;
-					if(qual_change < -.05f)
+					if (qual_change < -.05f)
 						qual_change = -.05f;
 				}
 				vbr_quality += qual_change;
-				if(vbr_quality > 10)
+				if (vbr_quality > 10)
 					vbr_quality = 10;
-				if(vbr_quality < 0)
+				if (vbr_quality < 0)
 					vbr_quality = 0;
 			}
 			relative_quality = vbr.analysis(in, frameSize, ol_pitch, ol_pitch_coef);
 			/*if (delta_qual<0)*/
 			/*  delta_qual*=.1*(3+st->vbr_quality);*/
-			if(vbr_enabled != 0) {
+			if (vbr_enabled != 0) {
 				int mode;
 				int choice = 0;
 				float min_diff = 100;
@@ -372,19 +372,19 @@ public class NbEncoder extends NbCodec implements Encoder {
 					int v1;
 					float thresh;
 					v1 = (int) Math.floor(vbr_quality);
-					if(v1 == 10)
+					if (v1 == 10)
 						thresh = Vbr.nb_thresh[mode][v1];
 					else
 						thresh = (vbr_quality - v1) * Vbr.nb_thresh[mode][v1 + 1] + (1 + v1 - vbr_quality) * Vbr.nb_thresh[mode][v1];
-					if(relative_quality > thresh && relative_quality - thresh < min_diff) {
+					if (relative_quality > thresh && relative_quality - thresh < min_diff) {
 						choice = mode;
 						min_diff = relative_quality - thresh;
 					}
 					mode--;
 				}
 				mode = choice;
-				if(mode == 0) {
-					if(dtx_count == 0 || lsp_dist > .05 || dtx_enabled == 0 || dtx_count > 20) {
+				if (mode == 0) {
+					if (dtx_count == 0 || lsp_dist > .05 || dtx_enabled == 0 || dtx_count > 20) {
 						mode = 1;
 						dtx_count = 1;
 					} else {
@@ -396,7 +396,7 @@ public class NbEncoder extends NbCodec implements Encoder {
 				}
 				setMode(mode);
 
-				if(abr_enabled != 0) {
+				if (abr_enabled != 0) {
 					int bitrate;
 					bitrate = getBitRate();
 					abr_drift += (bitrate - abr_enabled);
@@ -407,8 +407,8 @@ public class NbEncoder extends NbCodec implements Encoder {
 			} else {
 				/*VAD only case*/
 				int mode;
-				if(relative_quality < 2) {
-					if(dtx_count == 0 || lsp_dist > .05 || dtx_enabled == 0 || dtx_count > 20) {
+				if (relative_quality < 2) {
+					if (dtx_count == 0 || lsp_dist > .05 || dtx_enabled == 0 || dtx_count > 20) {
 						dtx_count = 1;
 						mode = 1;
 					} else {
@@ -433,11 +433,11 @@ public class NbEncoder extends NbCodec implements Encoder {
 		bits.pack(submodeID, NB_SUBMODE_BITS);
 
 		/* If null mode (no transmission), just set a couple things to zero*/
-		if(submodes[submodeID] == null) {
-			for(i = 0; i < frameSize; i++)
+		if (submodes[submodeID] == null) {
+			for ( i = 0; i < frameSize; i++ )
 				excBuf[excIdx + i] = exc2Buf[exc2Idx + i] = swBuf[swIdx + i] = VERY_SMALL;
 
-			for(i = 0; i < lpcSize; i++)
+			for ( i = 0; i < lpcSize; i++ )
 				mem_sw[i] = 0;
 			first = 1;
 			bounded_pitch = 1;
@@ -446,7 +446,7 @@ public class NbEncoder extends NbCodec implements Encoder {
 			Filters.iir_mem2(excBuf, excIdx, interp_qlpc, frmBuf, frmIdx, frameSize, lpcSize, mem_sp);
 
 			in[0] = frmBuf[frmIdx] + preemph * pre_mem2;
-			for(i = 1; i < frameSize; i++)
+			for ( i = 1; i < frameSize; i++ )
 				in[i] = frmBuf[frmIdx = i] + preemph * in[i - 1];
 			pre_mem2 = in[frameSize - 1];
 
@@ -454,8 +454,8 @@ public class NbEncoder extends NbCodec implements Encoder {
 		}
 
 		/* LSP Quantization */
-		if(first != 0) {
-			for(i = 0; i < lpcSize; i++)
+		if (first != 0) {
+			for ( i = 0; i < lpcSize; i++ )
 				old_lsp[i] = lsp[i];
 		}
 
@@ -468,16 +468,16 @@ public class NbEncoder extends NbCodec implements Encoder {
 		//#endif
 
 		/*If we use low bit-rate pitch mode, transmit open-loop pitch*/
-		if(submodes[submodeID].lbr_pitch != -1) {
+		if (submodes[submodeID].lbr_pitch != -1) {
 			bits.pack(ol_pitch - min_pitch, 7);
 		}
 
-		if(submodes[submodeID].forced_pitch_gain != 0) {
+		if (submodes[submodeID].forced_pitch_gain != 0) {
 			int quant;
 			quant = (int) Math.floor(.5 + 15 * ol_pitch_coef);
-			if(quant > 15)
+			if (quant > 15)
 				quant = 15;
-			if(quant < 0)
+			if (quant < 0)
 				quant = 0;
 			bits.pack(quant, 4);
 			ol_pitch_coef = (float) 0.066667 * quant;
@@ -486,17 +486,17 @@ public class NbEncoder extends NbCodec implements Encoder {
 		/*Quantize and transmit open-loop excitation gain*/
 		{
 			int qe = (int) (Math.floor(0.5 + 3.5 * Math.log(ol_gain)));
-			if(qe < 0)
+			if (qe < 0)
 				qe = 0;
-			if(qe > 31)
+			if (qe > 31)
 				qe = 31;
 			ol_gain = (float) Math.exp(qe / 3.5);
 			bits.pack(qe, 5);
 		}
 
 		/* Special case for first frame */
-		if(first != 0) {
-			for(i = 0; i < lpcSize; i++)
+		if (first != 0) {
+			for ( i = 0; i < lpcSize; i++ )
 				old_qlsp[i] = qlsp[i];
 		}
 
@@ -507,11 +507,11 @@ public class NbEncoder extends NbCodec implements Encoder {
 		syn_resp = new float[subframeSize];
 		mem = new float[lpcSize];
 		orig = new float[frameSize];
-		for(i = 0; i < frameSize; i++)
+		for ( i = 0; i < frameSize; i++ )
 			orig[i] = frmBuf[frmIdx + i];
 
 		/* Loop on sub-frames */
-		for(int sub = 0; sub < nbSubframes; sub++) {
+		for ( int sub = 0; sub < nbSubframes; sub++ ) {
 			float tmp;
 			int offset;
 			int sp, sw, exc, exc2;
@@ -530,9 +530,9 @@ public class NbEncoder extends NbCodec implements Encoder {
 
 			/* LSP interpolation (quantized and unquantized) */
 			tmp = (float) (1.0 + sub) / nbSubframes;
-			for(i = 0; i < lpcSize; i++)
+			for ( i = 0; i < lpcSize; i++ )
 				interp_lsp[i] = (1 - tmp) * old_lsp[i] + tmp * lsp[i];
-			for(i = 0; i < lpcSize; i++)
+			for ( i = 0; i < lpcSize; i++ )
 				interp_qlsp[i] = (1 - tmp) * old_qlsp[i] + tmp * qlsp[i];
 
 			/* Make sure the filters are stable */
@@ -540,64 +540,64 @@ public class NbEncoder extends NbCodec implements Encoder {
 			Lsp.enforce_margin(interp_qlsp, lpcSize, .002f);
 
 			/* Compute interpolated LPCs (quantized and unquantized) */
-			for(i = 0; i < lpcSize; i++)
+			for ( i = 0; i < lpcSize; i++ )
 				interp_lsp[i] = (float) Math.cos(interp_lsp[i]);
 			m_lsp.lsp2lpc(interp_lsp, interp_lpc, lpcSize);
 
-			for(i = 0; i < lpcSize; i++)
+			for ( i = 0; i < lpcSize; i++ )
 				interp_qlsp[i] = (float) Math.cos(interp_qlsp[i]);
 			m_lsp.lsp2lpc(interp_qlsp, interp_qlpc, lpcSize);
 
 			/* Compute analysis filter gain at w=pi (for use in SB-CELP) */
 			tmp = 1;
 			pi_gain[sub] = 0;
-			for(i = 0; i <= lpcSize; i++) {
+			for ( i = 0; i <= lpcSize; i++ ) {
 				pi_gain[sub] += tmp * interp_qlpc[i];
 				tmp = -tmp;
 			}
 
 			/* Compute bandwidth-expanded (unquantized) LPCs for perceptual weighting */
 			Filters.bw_lpc(gamma1, interp_lpc, bw_lpc1, lpcSize);
-			if(gamma2 >= 0)
+			if (gamma2 >= 0)
 				Filters.bw_lpc(gamma2, interp_lpc, bw_lpc2, lpcSize);
 			else {
 				bw_lpc2[0] = 1;
 				bw_lpc2[1] = -preemph;
-				for(i = 2; i <= lpcSize; i++)
+				for ( i = 2; i <= lpcSize; i++ )
 					bw_lpc2[i] = 0;
 			}
 
 			/* Compute impulse response of A(z/g1) / ( A(z)*A(z/g2) )*/
-			for(i = 0; i < subframeSize; i++)
+			for ( i = 0; i < subframeSize; i++ )
 				excBuf[exc + i] = 0;
 			excBuf[exc] = 1;
 			Filters.syn_percep_zero(excBuf, exc, interp_qlpc, bw_lpc1, bw_lpc2, syn_resp, subframeSize, lpcSize);
 
 			/* Reset excitation */
-			for(i = 0; i < subframeSize; i++)
+			for ( i = 0; i < subframeSize; i++ )
 				excBuf[exc + i] = 0;
-			for(i = 0; i < subframeSize; i++)
+			for ( i = 0; i < subframeSize; i++ )
 				exc2Buf[exc2 + i] = 0;
 
 			/* Compute zero response of A(z/g1) / ( A(z/g2) * A(z) ) */
-			for(i = 0; i < lpcSize; i++)
+			for ( i = 0; i < lpcSize; i++ )
 				mem[i] = mem_sp[i];
 			Filters.iir_mem2(excBuf, exc, interp_qlpc, excBuf, exc, subframeSize, lpcSize, mem);
 
-			for(i = 0; i < lpcSize; i++)
+			for ( i = 0; i < lpcSize; i++ )
 				mem[i] = mem_sw[i];
 			Filters.filter_mem2(excBuf, exc, bw_lpc1, bw_lpc2, res, 0, subframeSize, lpcSize, mem, 0);
 
 			/* Compute weighted signal */
-			for(i = 0; i < lpcSize; i++)
+			for ( i = 0; i < lpcSize; i++ )
 				mem[i] = mem_sw[i];
 			Filters.filter_mem2(frmBuf, sp, bw_lpc1, bw_lpc2, swBuf, sw, subframeSize, lpcSize, mem, 0);
 
 			/* Compute target signal */
-			for(i = 0; i < subframeSize; i++)
+			for ( i = 0; i < subframeSize; i++ )
 				target[i] = swBuf[sw + i] - res[i];
 
-			for(i = 0; i < subframeSize; i++)
+			for ( i = 0; i < subframeSize; i++ )
 				excBuf[exc + i] = exc2Buf[exc2 + i] = 0;
 
 			/* If we have a long-term predictor (otherwise, something's wrong) */
@@ -605,14 +605,14 @@ public class NbEncoder extends NbCodec implements Encoder {
 			//    {
 			int pit_min, pit_max;
 			/* Long-term prediction */
-			if(submodes[submodeID].lbr_pitch != -1) {
+			if (submodes[submodeID].lbr_pitch != -1) {
 				/* Low bit-rate pitch handling */
 				int margin;
 				margin = submodes[submodeID].lbr_pitch;
-				if(margin != 0) {
-					if(ol_pitch < min_pitch + margin - 1)
+				if (margin != 0) {
+					if (ol_pitch < min_pitch + margin - 1)
 						ol_pitch = min_pitch + margin - 1;
-					if(ol_pitch > max_pitch - margin)
+					if (ol_pitch > max_pitch - margin)
 						ol_pitch = max_pitch - margin;
 					pit_min = ol_pitch - margin + 1;
 					pit_max = ol_pitch + margin;
@@ -625,7 +625,7 @@ public class NbEncoder extends NbCodec implements Encoder {
 			}
 
 			/* Force pitch to use only the current frame if needed */
-			if(bounded_pitch != 0 && pit_max > offset)
+			if (bounded_pitch != 0 && pit_max > offset)
 				pit_max = offset;
 
 			/* Perform pitch search */
@@ -639,7 +639,7 @@ public class NbEncoder extends NbCodec implements Encoder {
 
 			/* Update target for adaptive codebook contribution */
 			Filters.syn_percep_zero(excBuf, exc, interp_qlpc, bw_lpc1, bw_lpc2, res, subframeSize, lpcSize);
-			for(i = 0; i < subframeSize; i++)
+			for ( i = 0; i < subframeSize; i++ )
 				target[i] -= res[i];
 
 			/* Quantization of innovation */
@@ -648,11 +648,11 @@ public class NbEncoder extends NbCodec implements Encoder {
 				float ener = 0, ener_1;
 
 				innovptr = sub * subframeSize;
-				for(i = 0; i < subframeSize; i++)
+				for ( i = 0; i < subframeSize; i++ )
 					innov[innovptr + i] = 0;
 
 				Filters.residue_percep_zero(target, 0, interp_qlpc, bw_lpc1, bw_lpc2, buf2, subframeSize, lpcSize);
-				for(i = 0; i < subframeSize; i++)
+				for ( i = 0; i < subframeSize; i++ )
 					ener += buf2[i] * buf2[i];
 				ener = (float) Math.sqrt(.1f + ener / subframeSize);
 				/*for (i=0;i<subframeSize;i++)
@@ -662,10 +662,10 @@ public class NbEncoder extends NbCodec implements Encoder {
 				ener /= ol_gain;
 
 				/* Calculate gain correction for the sub-frame (if any) */
-				if(submodes[submodeID].have_subframe_gain != 0) {
+				if (submodes[submodeID].have_subframe_gain != 0) {
 					int qe;
 					ener = (float) Math.log(ener);
-					if(submodes[submodeID].have_subframe_gain == 3) {
+					if (submodes[submodeID].have_subframe_gain == 3) {
 						qe = VQ.index(ener, exc_gain_quant_scal3, 8);
 						bits.pack(qe, 3);
 						ener = exc_gain_quant_scal3[qe];
@@ -686,7 +686,7 @@ public class NbEncoder extends NbCodec implements Encoder {
 				ener_1 = 1 / ener;
 
 				/* Normalize innovation */
-				for(i = 0; i < subframeSize; i++)
+				for ( i = 0; i < subframeSize; i++ )
 					target[i] *= ener_1;
 
 				/* Quantize innovation */
@@ -696,54 +696,54 @@ public class NbEncoder extends NbCodec implements Encoder {
 				submodes[submodeID].innovation.quant(target, interp_qlpc, bw_lpc1, bw_lpc2, lpcSize, subframeSize, innov, innovptr, syn_resp, bits, complexity);
 
 				/* De-normalize innovation and update excitation */
-				for(i = 0; i < subframeSize; i++)
+				for ( i = 0; i < subframeSize; i++ )
 					innov[innovptr + i] *= ener;
-				for(i = 0; i < subframeSize; i++)
+				for ( i = 0; i < subframeSize; i++ )
 					excBuf[exc + i] += innov[innovptr + i];
 				//      } else {
 				//        speex_error("No fixed codebook");
 				//      }
 
 				/* In some (rare) modes, we do a second search (more bits) to reduce noise even more */
-				if(submodes[submodeID].double_codebook != 0) {
+				if (submodes[submodeID].double_codebook != 0) {
 					float[] innov2 = new float[subframeSize];
 					//          for (i=0;i<subframeSize;i++)
 					//            innov2[i]=0;
-					for(i = 0; i < subframeSize; i++)
+					for ( i = 0; i < subframeSize; i++ )
 						target[i] *= 2.2;
 					submodes[submodeID].innovation.quant(target, interp_qlpc, bw_lpc1, bw_lpc2, lpcSize, subframeSize, innov2, 0, syn_resp, bits, complexity);
-					for(i = 0; i < subframeSize; i++)
+					for ( i = 0; i < subframeSize; i++ )
 						innov2[i] *= ener * (1 / 2.2);
-					for(i = 0; i < subframeSize; i++)
+					for ( i = 0; i < subframeSize; i++ )
 						excBuf[exc + i] += innov2[i];
 				}
 
-				for(i = 0; i < subframeSize; i++)
+				for ( i = 0; i < subframeSize; i++ )
 					target[i] *= ener;
 			}
 
 			/*Keep the previous memory*/
-			for(i = 0; i < lpcSize; i++)
+			for ( i = 0; i < lpcSize; i++ )
 				mem[i] = mem_sp[i];
 			/* Final signal synthesis from excitation */
 			Filters.iir_mem2(excBuf, exc, interp_qlpc, frmBuf, sp, subframeSize, lpcSize, mem_sp);
 
 			/* Compute weighted signal again, from synthesized speech (not sure it's the right thing) */
 			Filters.filter_mem2(frmBuf, sp, bw_lpc1, bw_lpc2, swBuf, sw, subframeSize, lpcSize, mem_sw, 0);
-			for(i = 0; i < subframeSize; i++)
+			for ( i = 0; i < subframeSize; i++ )
 				exc2Buf[exc2 + i] = excBuf[exc + i];
 		}
 
 		/* Store the LSPs for interpolation in the next frame */
-		if(submodeID >= 1) {
-			for(i = 0; i < lpcSize; i++)
+		if (submodeID >= 1) {
+			for ( i = 0; i < lpcSize; i++ )
 				old_lsp[i] = lsp[i];
-			for(i = 0; i < lpcSize; i++)
+			for ( i = 0; i < lpcSize; i++ )
 				old_qlsp[i] = qlsp[i];
 		}
 
-		if(submodeID == 1) {
-			if(dtx_count != 0) {
+		if (submodeID == 1) {
+			if (dtx_count != 0) {
 				bits.pack(15, 4);
 			} else {
 				bits.pack(0, 4);
@@ -756,7 +756,7 @@ public class NbEncoder extends NbCodec implements Encoder {
 		{
 			float ener = 0, err = 0;
 			float snr;
-			for(i = 0; i < frameSize; i++) {
+			for ( i = 0; i < frameSize; i++ ) {
 				ener += frmBuf[frmIdx + i] * frmBuf[frmIdx + i];
 				err += (frmBuf[frmIdx + i] - orig[i]) * (frmBuf[frmIdx + i] - orig[i]);
 			}
@@ -766,11 +766,11 @@ public class NbEncoder extends NbCodec implements Encoder {
 
 		/* Replace input by synthesized speech */
 		in[0] = frmBuf[frmIdx] + preemph * pre_mem2;
-		for(i = 1; i < frameSize; i++)
+		for ( i = 1; i < frameSize; i++ )
 			in[i] = frmBuf[frmIdx + i] + preemph * in[i - 1];
 		pre_mem2 = in[frameSize - 1];
 
-		if(submodes[submodeID].innovation instanceof NoiseSearch || submodeID == 0)
+		if (submodes[submodeID].innovation instanceof NoiseSearch || submodeID == 0)
 			bounded_pitch = 1;
 		else
 			bounded_pitch = 0;
@@ -797,10 +797,10 @@ public class NbEncoder extends NbCodec implements Encoder {
 	 * @param quality
 	 */
 	public void setQuality(int quality) {
-		if(quality < 0) {
+		if (quality < 0) {
 			quality = 0;
 		}
-		if(quality > 10) {
+		if (quality > 10) {
 			quality = 10;
 		}
 		submodeID = submodeSelect = NB_QUALITY_MAP[quality];
@@ -812,7 +812,7 @@ public class NbEncoder extends NbCodec implements Encoder {
 	 * @return the bitrate.
 	 */
 	public int getBitRate() {
-		if(submodes[submodeID] != null)
+		if (submodes[submodeID] != null)
 			return sampling_rate * submodes[submodeID].bits_per_frame / frameSize;
 		else
 			return sampling_rate * (NB_SUBMODE_BITS + 1) / frameSize;
@@ -834,7 +834,7 @@ public class NbEncoder extends NbCodec implements Encoder {
 	 * @param mode
 	 */
 	public void setMode(int mode) {
-		if(mode < 0) {
+		if (mode < 0) {
 			mode = 0;
 		}
 		submodeID = submodeSelect = mode;
@@ -855,9 +855,9 @@ public class NbEncoder extends NbCodec implements Encoder {
 	 * @param bitrate
 	 */
 	public void setBitRate(final int bitrate) {
-		for(int i = 10; i >= 0; i--) {
+		for ( int i = 10; i >= 0; i-- ) {
 			setQuality(i);
-			if(getBitRate() <= bitrate)
+			if (getBitRate() <= bitrate)
 				return;
 		}
 	}
@@ -931,12 +931,12 @@ public class NbEncoder extends NbCodec implements Encoder {
 			while(i >= 0) {
 				setQuality(i);
 				rate = getBitRate();
-				if(rate <= target)
+				if (rate <= target)
 					break;
 				i--;
 			}
 			vbr_qual = i;
-			if(vbr_qual < 0)
+			if (vbr_qual < 0)
 				vbr_qual = 0;
 			setVbrQuality(vbr_qual);
 			abr_count = 0;
@@ -951,9 +951,9 @@ public class NbEncoder extends NbCodec implements Encoder {
 	 * @param quality
 	 */
 	public void setVbrQuality(float quality) {
-		if(quality < 0f)
+		if (quality < 0f)
 			quality = 0f;
-		if(quality > 10f)
+		if (quality > 10f)
 			quality = 10f;
 		vbr_quality = quality;
 	}
@@ -973,9 +973,9 @@ public class NbEncoder extends NbCodec implements Encoder {
 	 * @param complexity
 	 */
 	public void setComplexity(int complexity) {
-		if(complexity < 0)
+		if (complexity < 0)
 			complexity = 0;
-		if(complexity > 10)
+		if (complexity > 10)
 			complexity = 10;
 		this.complexity = complexity;
 	}

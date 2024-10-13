@@ -38,7 +38,7 @@ public class FlowerBlock extends Block {
 	}
 
 	protected final void checkFlowerChange(final World world, final int xCoord, final int yCoord, final int zCoord) {
-		if(!this.canBlockStay(world, xCoord, yCoord, zCoord)) {
+		if (!this.canBlockStay(world, xCoord, yCoord, zCoord)) {
 			this.dropBlockAsItem(world, xCoord, yCoord, zCoord, world.getBlockMetadata(xCoord, yCoord, zCoord));
 			world.setBlockWithNotify(xCoord, yCoord, zCoord, 0);
 		}

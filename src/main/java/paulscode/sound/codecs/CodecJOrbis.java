@@ -219,18 +219,18 @@ public class CodecJOrbis implements ICodec {
 	public boolean initialize(URL url) {
 		initialized(SET, false);
 
-		if(joggStreamState != null)
+		if (joggStreamState != null)
 			joggStreamState.clear();
-		if(jorbisBlock != null)
+		if (jorbisBlock != null)
 			jorbisBlock.clear();
-		if(jorbisDspState != null)
+		if (jorbisDspState != null)
 			jorbisDspState.clear();
-		if(jorbisInfo != null)
+		if (jorbisInfo != null)
 			jorbisInfo.clear();
-		if(joggSyncState != null)
+		if (joggSyncState != null)
 			joggSyncState.clear();
 
-		if(inputStream != null) {
+		if (inputStream != null) {
 			try {
 				inputStream.close();
 			} catch(IOException ioe) {
@@ -264,7 +264,7 @@ public class CodecJOrbis implements ICodec {
 			cleanup();
 			return false;
 		}
-		if(urlConnection != null) {
+		if (urlConnection != null) {
 			try {
 				inputStream = urlConnection.getInputStream();
 			} catch(IOException ioe) {
@@ -282,7 +282,7 @@ public class CodecJOrbis implements ICodec {
 		buffer = joggSyncState.data;
 
 		try {
-			if(!readHeader()) {
+			if (!readHeader()) {
 				errorMessage("Error reading the header");
 				return false;
 			}
@@ -328,13 +328,13 @@ public class CodecJOrbis implements ICodec {
 		byte[] returnBuffer = null;
 
 		while(!endOfStream(GET, XXX) && (returnBuffer == null || returnBuffer.length < SoundSystemConfig.getStreamingBufferSize())) {
-			if(returnBuffer == null)
+			if (returnBuffer == null)
 				returnBuffer = readBytes();
 			else
 				returnBuffer = appendByteArrays(returnBuffer, readBytes());
 		}
 
-		if(returnBuffer == null)
+		if (returnBuffer == null)
 			return null;
 
 		return new SoundBuffer(returnBuffer, audioFormat);
@@ -352,13 +352,13 @@ public class CodecJOrbis implements ICodec {
 		byte[] returnBuffer = null;
 
 		while(!endOfStream(GET, XXX)) {
-			if(returnBuffer == null)
+			if (returnBuffer == null)
 				returnBuffer = readBytes();
 			else
 				returnBuffer = appendByteArrays(returnBuffer, readBytes());
 		}
 
-		if(returnBuffer == null)
+		if (returnBuffer == null)
 			return null;
 
 		return new SoundBuffer(returnBuffer, audioFormat);
@@ -383,7 +383,7 @@ public class CodecJOrbis implements ICodec {
 		jorbisInfo.clear();
 		joggSyncState.clear();
 
-		if(inputStream != null) {
+		if (inputStream != null) {
 			try {
 				inputStream.close();
 			} catch(IOException ioe) {
@@ -419,14 +419,14 @@ public class CodecJOrbis implements ICodec {
 		index = joggSyncState.buffer(bufferSize);
 		// Read in a buffer of data:
 		int bytes = inputStream.read(joggSyncState.data, index, bufferSize);
-		if(bytes < 0)
+		if (bytes < 0)
 			bytes = 0;
 		// Let JOrbis know how many bytes we got:
 		joggSyncState.wrote(bytes);
 
-		if(joggSyncState.pageout(joggPage) != 1) {
+		if (joggSyncState.pageout(joggPage) != 1) {
 			// Finished reading the entire file:
-			if(bytes < bufferSize)
+			if (bytes < bufferSize)
 				return true;
 
 			errorMessage("Ogg header not recognized in method 'readHeader'.");
@@ -438,17 +438,17 @@ public class CodecJOrbis implements ICodec {
 
 		jorbisInfo.init();
 		jorbisComment.init();
-		if(joggStreamState.pagein(joggPage) < 0) {
+		if (joggStreamState.pagein(joggPage) < 0) {
 			errorMessage("Problem with first Ogg header page in method " + "'readHeader'.");
 			return false;
 		}
 
-		if(joggStreamState.packetout(joggPacket) != 1) {
+		if (joggStreamState.packetout(joggPacket) != 1) {
 			errorMessage("Problem with first Ogg header packet in method " + "'readHeader'.");
 			return false;
 		}
 
-		if(jorbisInfo.synthesis_headerin(jorbisComment, joggPacket) < 0) {
+		if (jorbisInfo.synthesis_headerin(jorbisComment, joggPacket) < 0) {
 			errorMessage("File does not contain Vorbis header in method " + "'readHeader'.");
 			return false;
 		}
@@ -457,16 +457,16 @@ public class CodecJOrbis implements ICodec {
 		while(i < 2) {
 			while(i < 2) {
 				int result = joggSyncState.pageout(joggPage);
-				if(result == 0)
+				if (result == 0)
 					break;
-				if(result == 1) {
+				if (result == 1) {
 					joggStreamState.pagein(joggPage);
 					while(i < 2) {
 						result = joggStreamState.packetout(joggPacket);
-						if(result == 0)
+						if (result == 0)
 							break;
 
-						if(result == -1) {
+						if (result == -1) {
 							errorMessage("Secondary Ogg header corrupt in " + "method 'readHeader'.");
 							return false;
 						}
@@ -478,9 +478,9 @@ public class CodecJOrbis implements ICodec {
 			}
 			index = joggSyncState.buffer(bufferSize);
 			bytes = inputStream.read(joggSyncState.data, index, bufferSize);
-			if(bytes < 0)
+			if (bytes < 0)
 				bytes = 0;
-			if(bytes == 0 && i < 2) {
+			if (bytes == 0 && i < 2) {
 				errorMessage("End of file reached before finished reading" + "Ogg header in method 'readHeader'");
 				return false;
 			}
@@ -500,13 +500,13 @@ public class CodecJOrbis implements ICodec {
 	 * @return Array containing the converted audio data.
 	 */
 	private byte[] readBytes() {
-		if(!initialized(GET, XXX))
+		if (!initialized(GET, XXX))
 			return null;
 
-		if(endOfStream(GET, XXX))
+		if (endOfStream(GET, XXX))
 			return null;
 
-		if(convertedBuffer == null)
+		if (convertedBuffer == null)
 			convertedBuffer = new byte[convertedBufferSize];
 		byte[] returnBuffer = null;
 
@@ -519,7 +519,7 @@ public class CodecJOrbis implements ICodec {
 				break;
 			default: {
 				joggStreamState.pagein(joggPage);
-				if(joggPage.granulepos() == 0) {
+				if (joggPage.granulepos() == 0) {
 					endOfStream(SET, true);
 					return null;
 				}
@@ -532,22 +532,22 @@ public class CodecJOrbis implements ICodec {
 						case (-1):
 							break;
 						default: {
-							if(jorbisBlock.synthesis(joggPacket) == 0)
+							if (jorbisBlock.synthesis(joggPacket) == 0)
 								jorbisDspState.synthesis_blockin(jorbisBlock);
 
 							while((samples = jorbisDspState.synthesis_pcmout(pcmInfo, pcmIndex)) > 0) {
 								pcmf = pcmInfo[0];
 								bout = (samples < convertedBufferSize ? samples : convertedBufferSize);
-								for(i = 0; i < jorbisInfo.channels; i++) {
+								for ( i = 0; i < jorbisInfo.channels; i++ ) {
 									ptr = i * 2;
 									mono = pcmIndex[i];
-									for(j = 0; j < bout; j++) {
+									for ( j = 0; j < bout; j++ ) {
 										val = (int) (pcmf[i][mono + j] * 32767.);
-										if(val > 32767)
+										if (val > 32767)
 											val = 32767;
-										if(val < -32768)
+										if (val < -32768)
 											val = -32768;
-										if(val < 0)
+										if (val < 0)
 											val = val | 0x8000;
 										convertedBuffer[ptr] = (byte) (val);
 										convertedBuffer[ptr + 1] = (byte) (val >>> 8);
@@ -562,12 +562,12 @@ public class CodecJOrbis implements ICodec {
 					}
 				}
 
-				if(joggPage.eos() != 0)
+				if (joggPage.eos() != 0)
 					endOfStream(SET, true);
 			}
 		}
 
-		if(!endOfStream(GET, XXX)) {
+		if (!endOfStream(GET, XXX)) {
 			index = joggSyncState.buffer(bufferSize);
 			buffer = joggSyncState.data;
 			try {
@@ -576,11 +576,11 @@ public class CodecJOrbis implements ICodec {
 				printStackTrace(e);
 				return null;
 			}
-			if(count == -1)
+			if (count == -1)
 				return returnBuffer;
 
 			joggSyncState.wrote(count);
-			if(count == 0)
+			if (count == 0)
 				endOfStream(SET, true);
 		}
 
@@ -595,7 +595,7 @@ public class CodecJOrbis implements ICodec {
 	 * @return True if steam is initialized.
 	 */
 	private synchronized boolean initialized(boolean action, boolean value) {
-		if(action == SET)
+		if (action == SET)
 			initialized = value;
 		return initialized;
 	}
@@ -608,7 +608,7 @@ public class CodecJOrbis implements ICodec {
 	 * @return True if end of stream was reached.
 	 */
 	private synchronized boolean endOfStream(boolean action, boolean value) {
-		if(action == SET)
+		if (action == SET)
 			endOfStream = value;
 		return endOfStream;
 	}
@@ -623,7 +623,7 @@ public class CodecJOrbis implements ICodec {
 	 */
 	private static byte[] trimArray(byte[] array, int maxLength) {
 		byte[] trimmedArray = null;
-		if(array != null && array.length > maxLength) {
+		if (array != null && array.length > maxLength) {
 			trimmedArray = new byte[maxLength];
 			System.arraycopy(array, 0, trimmedArray, 0, maxLength);
 		}
@@ -644,21 +644,21 @@ public class CodecJOrbis implements ICodec {
 		int bytes = arrayTwoBytes;
 
 		// Make sure we aren't trying to append more than is there:
-		if(arrayTwo == null || arrayTwo.length == 0)
+		if (arrayTwo == null || arrayTwo.length == 0)
 			bytes = 0;
-		else if(arrayTwo.length < arrayTwoBytes)
+		else if (arrayTwo.length < arrayTwoBytes)
 			bytes = arrayTwo.length;
 
-		if(arrayOne == null && (arrayTwo == null || bytes <= 0)) {
+		if (arrayOne == null && (arrayTwo == null || bytes <= 0)) {
 			// no data, just return
 			return null;
-		} else if(arrayOne == null) {
+		} else if (arrayOne == null) {
 			// create the new array, same length as arrayTwo:
 			newArray = new byte[bytes];
 			// fill the new array with the contents of arrayTwo:
 			System.arraycopy(arrayTwo, 0, newArray, 0, bytes);
 			arrayTwo = null;
-		} else if(arrayTwo == null || bytes <= 0) {
+		} else if (arrayTwo == null || bytes <= 0) {
 			// create the new array, same length as arrayOne:
 			newArray = new byte[arrayOne.length];
 			// fill the new array with the contents of arrayOne:
@@ -687,16 +687,16 @@ public class CodecJOrbis implements ICodec {
 	 */
 	private static byte[] appendByteArrays(byte[] arrayOne, byte[] arrayTwo) {
 		byte[] newArray;
-		if(arrayOne == null && arrayTwo == null) {
+		if (arrayOne == null && arrayTwo == null) {
 			// no data, just return
 			return null;
-		} else if(arrayOne == null) {
+		} else if (arrayOne == null) {
 			// create the new array, same length as arrayTwo:
 			newArray = new byte[arrayTwo.length];
 			// fill the new array with the contents of arrayTwo:
 			System.arraycopy(arrayTwo, 0, newArray, 0, arrayTwo.length);
 			arrayTwo = null;
-		} else if(arrayTwo == null) {
+		} else if (arrayTwo == null) {
 			// create the new array, same length as arrayOne:
 			newArray = new byte[arrayOne.length];
 			// fill the new array with the contents of arrayOne:

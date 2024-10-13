@@ -181,10 +181,10 @@ public class SpeexDecoder {
 	 * @return the number of bytes processed and just read.
 	 */
 	public int getProcessedData(final byte[] data, final int offset) {
-		if(outputSize <= 0) {
+		if (outputSize <= 0) {
 			return outputSize;
 		}
-		for(int i = 0; i < outputSize; i++) {
+		for ( int i = 0; i < outputSize; i++ ) {
 			int dx = offset + (i << 1);
 			data[dx] = (byte) (outputData[i] & 0xff);
 			data[dx + 1] = (byte) ((outputData[i] >> 8) & 0xff);
@@ -203,7 +203,7 @@ public class SpeexDecoder {
 	 * @return the number of samples processed and just read.
 	 */
 	public int getProcessedData(final short[] data, final int offset) {
-		if(outputSize <= 0) {
+		if (outputSize <= 0) {
 			return outputSize;
 		}
 		System.arraycopy(outputData, 0, data, offset, outputSize);
@@ -231,7 +231,7 @@ public class SpeexDecoder {
 	 * @throws StreamCorruptedException If the input stream is invalid.
 	 */
 	public void processData(final byte[] data, final int offset, final int len) throws StreamCorruptedException {
-		if(data == null) {
+		if (data == null) {
 			processData(true);
 		} else {
 			/* read packet bytes into bitstream */
@@ -249,23 +249,23 @@ public class SpeexDecoder {
 	public void processData(final boolean lost) throws StreamCorruptedException {
 		int i;
 		/* decode the bitstream */
-		if(lost)
+		if (lost)
 			decoder.decode(null, decodedData);
 		else
 			decoder.decode(bits, decodedData);
-		if(channels == 2)
+		if (channels == 2)
 			decoder.decodeStereo(decodedData, frameSize);
 
 		/* PCM saturation */
-		for(i = 0; i < frameSize * channels; i++) {
-			if(decodedData[i] > 32767.0f)
+		for ( i = 0; i < frameSize * channels; i++ ) {
+			if (decodedData[i] > 32767.0f)
 				decodedData[i] = 32767.0f;
-			else if(decodedData[i] < -32768.0f)
+			else if (decodedData[i] < -32768.0f)
 				decodedData[i] = -32768.0f;
 		}
 
 		/* convert to short and save to buffer */
-		for(i = 0; i < frameSize * channels; i++, outputSize++) {
+		for ( i = 0; i < frameSize * channels; i++, outputSize++ ) {
 			outputData[outputSize] = (decodedData[i] > 0) ? (short) (decodedData[i] + .5) : (short) (decodedData[i] - .5);
 		}
 	}

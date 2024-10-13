@@ -25,9 +25,9 @@ public class TileEntitySign extends TileEntity {
 	@Override
 	public void readFromNBT(final NBTTagCompound ae) {
 		super.readFromNBT(ae);
-		for(int i = 0; i < 4; ++i) {
+		for ( int i = 0; i < 4; ++i ) {
 			this.signText[i] = ae.getString(new StringBuilder().append("Text").append(i + 1).toString());
-			if(this.signText[i].length() > 15) {
+			if (this.signText[i].length() > 15) {
 				this.signText[i] = this.signText[i].substring(0, 15);
 			}
 		}

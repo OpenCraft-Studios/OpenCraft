@@ -38,7 +38,7 @@ public class SoundManager {
 		public final String[] alternateNames;
 
 		SoundType(String... alternateNames) {
-			if(alternateNames == null) {
+			if (alternateNames == null) {
 				this.alternateNames = new String[0];
 			} else {
 				this.alternateNames = alternateNames;
@@ -46,12 +46,12 @@ public class SoundManager {
 		}
 
 		public static SoundType fromString(String name) {
-			for(SoundType type : values()) {
-				if(name.contains(type.name().toLowerCase())) {
+			for ( SoundType type : values() ) {
+				if (name.contains(type.name().toLowerCase())) {
 					return type;
 				}
-				for(String alternateName : type.alternateNames) {
-					if(name.contains(alternateName)) {
+				for ( String alternateName : type.alternateNames ) {
+					if (name.contains(alternateName)) {
 						return type;
 					}
 				}
@@ -68,7 +68,7 @@ public class SoundManager {
 	public void loadSoundSettings(GameSettings var1) {
 		this.soundPoolStreaming.isGetRandomSound = false;
 		this.options = var1;
-		if(!this.loaded && (var1 == null || var1.sound || var1.music)) {
+		if (!this.loaded && (var1 == null || var1.sound || var1.music)) {
 			this.tryToSetLibraryAndCodecs();
 		}
 
@@ -98,18 +98,18 @@ public class SoundManager {
 	}
 
 	public void onSoundOptionsChanged() {
-		if(!this.loaded && (this.options.music || this.options.sound)) {
+		if (!this.loaded && (this.options.music || this.options.sound)) {
 			this.tryToSetLibraryAndCodecs();
 		}
 
-		if(!this.options.music) {
+		if (!this.options.music) {
 			this.sndSystem.stop("BgMusic");
 		}
 
 	}
 
 	public void shutdown() {
-		if(!this.loaded)
+		if (!this.loaded)
 			return;
 
 		this.sndSystem.cleanup();
@@ -120,7 +120,7 @@ public class SoundManager {
 		name = name.substring(name.indexOf("/") + 1).replace("%20", " ").replace("/", ".").replaceAll("[0-9]", "");
 		final String path = resourceURL.getPath();
 
-		if(!switch(SoundType.fromString(path)) {
+		if (!switch(SoundType.fromString(path)) {
 			case MENUMUSIC -> addMenuMusic(name, resourceURL);
 			case SOUND -> addSound(name, resourceURL);
 			case MUSIC -> addIngameMusic(name, resourceURL);
@@ -147,11 +147,11 @@ public class SoundManager {
 	}
 
 	public void playRandomMusicIfReady() {
-		if(this.loaded && this.options.music) {
-			if(!this.sndSystem.playing("BgMusic") && !this.sndSystem.playing("streaming")) {
-				if(this.currentMusicTheme.equals("menu")) {
+		if (this.loaded && this.options.music) {
+			if (!this.sndSystem.playing("BgMusic") && !this.sndSystem.playing("streaming")) {
+				if (this.currentMusicTheme.equals("menu")) {
 					SoundPoolEntry var1 = this.soundPoolMenuMusic.getRandomSound();
-					if(var1 != null) {
+					if (var1 != null) {
 						this.ticksBeforeMusic = 12000; // Improved random ticks
 						this.sndSystem.stop("BgMusic");
 						this.sndSystem.backgroundMusic("BgMusic", var1.soundUrl, var1.soundName, false);
@@ -159,13 +159,13 @@ public class SoundManager {
 					} else {
 						System.err.println("No menu music found!");
 					}
-				} else if(this.currentMusicTheme.equals("ingame")) {
-					if(this.ticksBeforeMusic > 0) {
+				} else if (this.currentMusicTheme.equals("ingame")) {
+					if (this.ticksBeforeMusic > 0) {
 						--this.ticksBeforeMusic;
 						return;
 					}
 					SoundPoolEntry var1 = this.soundPoolIngameMusic.getRandomSound();
-					if(var1 != null) {
+					if (var1 != null) {
 						this.ticksBeforeMusic = this.rand.nextInt(12000) + 12000; // Improved random ticks
 						this.sndSystem.stop("BgMusic");
 						this.sndSystem.backgroundMusic("BgMusic", var1.soundUrl, var1.soundName, false);
@@ -177,15 +177,15 @@ public class SoundManager {
 	}
 
 	public void stopSound(String var1) {
-		if(sndSystem == null)
+		if (sndSystem == null)
 			return; // TODO: Temporary fix to OpenCraft problem
 
 		this.sndSystem.stop(var1);
 	}
 
 	public void setListener(EntityLiving var1, float var2) {
-		if(this.loaded && this.options.sound) {
-			if(var1 != null) {
+		if (this.loaded && this.options.sound) {
+			if (var1 != null) {
 				float var3 = var1.prevRotationYaw + (var1.rotationYaw - var1.prevRotationYaw) * var2;
 				double var4 = var1.prevPosX + (var1.posX - var1.prevPosX) * (double) var2;
 				double var6 = var1.prevPosY + (var1.posY - var1.prevPosY) * (double) var2;
@@ -205,16 +205,16 @@ public class SoundManager {
 	}
 
 	public void playStreaming(String var1, float var2, float var3, float var4, float var5, float var6) {
-		if(this.loaded && this.options.music) {
+		if (this.loaded && this.options.music) {
 			String var7 = "streaming";
-			if(this.sndSystem.playing("streaming")) {
+			if (this.sndSystem.playing("streaming")) {
 				this.sndSystem.stop("streaming");
 			}
 
-			if(var1 != null) {
+			if (var1 != null) {
 				SoundPoolEntry var8 = this.soundPoolStreaming.getRandomSoundFromSoundPool(var1);
-				if(var8 != null && var5 > 0.0F) {
-					if(this.sndSystem.playing("BgMusic")) {
+				if (var8 != null && var5 > 0.0F) {
+					if (this.sndSystem.playing("BgMusic")) {
 						this.sndSystem.stop("BgMusic");
 					}
 
@@ -229,22 +229,22 @@ public class SoundManager {
 	}
 
 	public void playSound(String var1, float var2, float var3, float var4, float var5, float var6) {
-		if(this.loaded && this.options.sound) {
-			if(!soundPoolSounds.contains(var1)) {
+		if (this.loaded && this.options.sound) {
+			if (!soundPoolSounds.contains(var1)) {
 				System.err.println("Sound not found: " + var1);
 			}
 			SoundPoolEntry var7 = this.soundPoolSounds.getRandomSoundFromSoundPool(var1);
-			if(var7 != null && var5 > 0.0F) {
+			if (var7 != null && var5 > 0.0F) {
 				this.playedSoundsCount = (this.playedSoundsCount + 1) % 256;
 				String var8 = "sound_" + this.playedSoundsCount;
 				float var9 = 16.0F;
-				if(var5 > 1.0F) {
+				if (var5 > 1.0F) {
 					var9 *= var5;
 				}
 
 				this.sndSystem.newSource(var5 > 1.0F, var8, var7.soundUrl, var7.soundName, false, var2, var3, var4, 2, var9);
 				this.sndSystem.setPitch(var8, var6);
-				if(var5 > 1.0F) {
+				if (var5 > 1.0F) {
 					var5 = 1.0F;
 				}
 
@@ -256,13 +256,13 @@ public class SoundManager {
 	}
 
 	public void playSoundFX(String var1, float var2, float var3) {
-		if(this.loaded && this.options.sound) {
+		if (this.loaded && this.options.sound) {
 			SoundPoolEntry var4 = this.soundPoolSounds.getRandomSoundFromSoundPool(var1);
-			if(var4 != null) {
+			if (var4 != null) {
 				this.playedSoundsCount = (this.playedSoundsCount + 1) % 256;
 				String var5 = "sound_" + this.playedSoundsCount;
 				this.sndSystem.newSource(false, var5, var4.soundUrl, var4.soundName, false, 0.0F, 0.0F, 0.0F, 0, 0.0F);
-				if(var2 > 1.0F) {
+				if (var2 > 1.0F) {
 					var2 = 1.0F;
 				}
 

@@ -151,38 +151,38 @@ public class NbDecoder extends NbCodec implements Decoder {
 		float best_pitch_gain = 0;
 		float pitch_average = 0;
 
-		if(bits == null && dtx_enabled != 0) {
+		if (bits == null && dtx_enabled != 0) {
 			submodeID = 0;
 		} else {
 			/* If bits is NULL, consider the packet to be lost (what could we do anyway) */
-			if(bits == null) {
+			if (bits == null) {
 				decodeLost(out);
 				return 0;
 			}
 			/* Search for next narrowband block (handle requests, skip wideband blocks) */
 			do {
-				if(bits.unpack(1) != 0) { /* Skip wideband block (for compatibility) */
+				if (bits.unpack(1) != 0) { /* Skip wideband block (for compatibility) */
 					//Wideband
 					/* Get the sub-mode that was used */
 					m = bits.unpack(SbCodec.SB_SUBMODE_BITS);
 					int advance = SbCodec.SB_FRAME_SIZE[m];
-					if(advance < 0) {
+					if (advance < 0) {
 						throw new StreamCorruptedException("Invalid sideband mode encountered (1st sideband): " + m);
 						//return -2;
 					}
 					advance -= (SbCodec.SB_SUBMODE_BITS + 1);
 					bits.advance(advance);
-					if(bits.unpack(1) != 0) { /* Skip ultra-wideband block (for compatibility) */
+					if (bits.unpack(1) != 0) { /* Skip ultra-wideband block (for compatibility) */
 						/* Get the sub-mode that was used */
 						m = bits.unpack(SbCodec.SB_SUBMODE_BITS);
 						advance = SbCodec.SB_FRAME_SIZE[m];
-						if(advance < 0) {
+						if (advance < 0) {
 							throw new StreamCorruptedException("Invalid sideband mode encountered. (2nd sideband): " + m);
 							//return -2;
 						}
 						advance -= (SbCodec.SB_SUBMODE_BITS + 1);
 						bits.advance(advance);
-						if(bits.unpack(1) != 0) { /* Sanity check */
+						if (bits.unpack(1) != 0) { /* Sanity check */
 							throw new StreamCorruptedException("More than two sideband layers found");
 							//return -2;
 						}
@@ -192,13 +192,13 @@ public class NbDecoder extends NbCodec implements Decoder {
 
 				/* Get the sub-mode that was used */
 				m = bits.unpack(NB_SUBMODE_BITS);
-				if(m == 15) { /* We found a terminator */
+				if (m == 15) { /* We found a terminator */
 					return 1;
-				} else if(m == 14) { /* Speex in-band request */
+				} else if (m == 14) { /* Speex in-band request */
 					inband.speexInbandRequest(bits);
-				} else if(m == 13) { /* User in-band request */
+				} else if (m == 13) { /* User in-band request */
 					inband.userInbandRequest(bits);
-				} else if(m > 8) { /* Invalid mode */
+				} else if (m > 8) { /* Invalid mode */
 					throw new StreamCorruptedException("Invalid mode encountered: " + m);
 					//return -2;
 				}
@@ -211,14 +211,14 @@ public class NbDecoder extends NbCodec implements Decoder {
 		System.arraycopy(excBuf, frameSize, excBuf, 0, bufSize - frameSize);
 
 		/* If null mode (no transmission), just set a couple things to zero*/
-		if(submodes[submodeID] == null) {
+		if (submodes[submodeID] == null) {
 			Filters.bw_lpc(.93f, interp_qlpc, lpc, 10);
 
 			float innov_gain = 0;
-			for(i = 0; i < frameSize; i++)
+			for ( i = 0; i < frameSize; i++ )
 				innov_gain += innov[i] * innov[i];
 			innov_gain = (float) Math.sqrt(innov_gain / frameSize);
-			for(i = excIdx; i < excIdx + frameSize; i++) {
+			for ( i = excIdx; i < excIdx + frameSize; i++ ) {
 				excBuf[i] = 3 * innov_gain * (random.nextFloat() - .5f);
 			}
 			first = 1;
@@ -227,7 +227,7 @@ public class NbDecoder extends NbCodec implements Decoder {
 			Filters.iir_mem2(excBuf, excIdx, lpc, frmBuf, frmIdx, frameSize, lpcSize, mem_sp);
 
 			out[0] = frmBuf[frmIdx] + preemph * pre_mem;
-			for(i = 1; i < frameSize; i++)
+			for ( i = 1; i < frameSize; i++ )
 				out[i] = frmBuf[frmIdx + i] + preemph * out[i - 1];
 			pre_mem = out[frameSize - 1];
 			count_lost = 0;
@@ -238,27 +238,27 @@ public class NbDecoder extends NbCodec implements Decoder {
 		submodes[submodeID].lsqQuant.unquant(qlsp, lpcSize, bits);
 
 		/*Damp memory if a frame was lost and the LSP changed too much*/
-		if(count_lost != 0) {
+		if (count_lost != 0) {
 			float lsp_dist = 0, fact;
-			for(i = 0; i < lpcSize; i++)
+			for ( i = 0; i < lpcSize; i++ )
 				lsp_dist += Math.abs(old_qlsp[i] - qlsp[i]);
 			fact = (float) (.6 * Math.exp(-.2 * lsp_dist));
-			for(i = 0; i < 2 * lpcSize; i++)
+			for ( i = 0; i < 2 * lpcSize; i++ )
 				mem_sp[i] *= fact;
 		}
 
 		/* Handle first frame and lost-packet case */
-		if(first != 0 || count_lost != 0) {
-			for(i = 0; i < lpcSize; i++)
+		if (first != 0 || count_lost != 0) {
+			for ( i = 0; i < lpcSize; i++ )
 				old_qlsp[i] = qlsp[i];
 		}
 
 		/* Get open-loop pitch estimation for low bit-rate pitch coding */
-		if(submodes[submodeID].lbr_pitch != -1) {
+		if (submodes[submodeID].lbr_pitch != -1) {
 			ol_pitch = min_pitch + bits.unpack(7);
 		}
 
-		if(submodes[submodeID].forced_pitch_gain != 0) {
+		if (submodes[submodeID].forced_pitch_gain != 0) {
 			int quant = bits.unpack(4);
 			ol_pitch_coef = 0.066667f * quant;
 		}
@@ -268,18 +268,18 @@ public class NbDecoder extends NbCodec implements Decoder {
 		ol_gain = (float) Math.exp(qe / 3.5);
 
 		/* unpacks unused dtx bits */
-		if(submodeID == 1) {
+		if (submodeID == 1) {
 			int extra = bits.unpack(4);
-			if(extra == 15)
+			if (extra == 15)
 				dtx_enabled = 1;
 			else
 				dtx_enabled = 0;
 		}
-		if(submodeID > 1)
+		if (submodeID > 1)
 			dtx_enabled = 0;
 
 		/*Loop on subframes */
-		for(sub = 0; sub < nbSubframes; sub++) {
+		for ( sub = 0; sub < nbSubframes; sub++ ) {
 			int offset, spIdx, extIdx;
 			float tmp;
 			/* Offset relative to start of frame */
@@ -291,19 +291,19 @@ public class NbDecoder extends NbCodec implements Decoder {
 
 			/* LSP interpolation (quantized and unquantized) */
 			tmp = (1.0f + sub) / nbSubframes;
-			for(i = 0; i < lpcSize; i++)
+			for ( i = 0; i < lpcSize; i++ )
 				interp_qlsp[i] = (1 - tmp) * old_qlsp[i] + tmp * qlsp[i];
 
 			/* Make sure the LSP's are stable */
 			Lsp.enforce_margin(interp_qlsp, lpcSize, .002f);
 
 			/* Compute interpolated LPCs (unquantized) */
-			for(i = 0; i < lpcSize; i++)
+			for ( i = 0; i < lpcSize; i++ )
 				interp_qlsp[i] = (float) Math.cos(interp_qlsp[i]);
 			m_lsp.lsp2lpc(interp_qlsp, interp_qlpc, lpcSize);
 
 			/* Compute enhanced synthesis filter */
-			if(enhanced) {
+			if (enhanced) {
 				float r = .9f;
 				float k1, k2, k3;
 
@@ -318,27 +318,27 @@ public class NbDecoder extends NbCodec implements Decoder {
 			/* Compute analysis filter at w=pi */
 			tmp = 1;
 			pi_gain[sub] = 0;
-			for(i = 0; i <= lpcSize; i++) {
+			for ( i = 0; i <= lpcSize; i++ ) {
 				pi_gain[sub] += tmp * interp_qlpc[i];
 				tmp = -tmp;
 			}
 
 			/* Reset excitation */
-			for(i = 0; i < subframeSize; i++)
+			for ( i = 0; i < subframeSize; i++ )
 				excBuf[extIdx + i] = 0;
 
 			/*Adaptive codebook contribution*/
 			int pit_min, pit_max;
 
 			/* Handle pitch constraints if any */
-			if(submodes[submodeID].lbr_pitch != -1) {
+			if (submodes[submodeID].lbr_pitch != -1) {
 				int margin = submodes[submodeID].lbr_pitch;
-				if(margin != 0) {
+				if (margin != 0) {
 					pit_min = ol_pitch - margin + 1;
-					if(pit_min < min_pitch)
+					if (pit_min < min_pitch)
 						pit_min = min_pitch;
 					pit_max = ol_pitch + margin;
-					if(pit_max > max_pitch)
+					if (pit_max > max_pitch)
 						pit_max = max_pitch;
 				} else {
 					pit_min = pit_max = ol_pitch;
@@ -352,25 +352,25 @@ public class NbDecoder extends NbCodec implements Decoder {
 			pitch = submodes[submodeID].ltp.unquant(excBuf, extIdx, pit_min, ol_pitch_coef, subframeSize, pitch_gain, bits, count_lost, offset, last_pitch_gain);
 
 			/* If we had lost frames, check energy of last received frame */
-			if(count_lost != 0 && ol_gain < last_ol_gain) {
+			if (count_lost != 0 && ol_gain < last_ol_gain) {
 				float fact = ol_gain / (last_ol_gain + 1);
-				for(i = 0; i < subframeSize; i++)
+				for ( i = 0; i < subframeSize; i++ )
 					excBuf[excIdx + i] *= fact;
 			}
 
 			tmp = Math.abs(pitch_gain[0] + pitch_gain[1] + pitch_gain[2]);
 			tmp = Math.abs(pitch_gain[1]);
-			if(pitch_gain[0] > 0)
+			if (pitch_gain[0] > 0)
 				tmp += pitch_gain[0];
 			else
 				tmp -= .5 * pitch_gain[0];
-			if(pitch_gain[2] > 0)
+			if (pitch_gain[2] > 0)
 				tmp += pitch_gain[2];
 			else
 				tmp -= .5 * pitch_gain[0];
 
 			pitch_average += tmp;
-			if(tmp > best_pitch_gain) {
+			if (tmp > best_pitch_gain) {
 				best_pitch = pitch;
 				best_pitch_gain = tmp;
 			}
@@ -379,48 +379,48 @@ public class NbDecoder extends NbCodec implements Decoder {
 			int q_energy, ivi = sub * subframeSize;
 			float ener;
 
-			for(i = ivi; i < ivi + subframeSize; i++)
+			for ( i = ivi; i < ivi + subframeSize; i++ )
 				innov[i] = 0.0f;
 
 			/* Decode sub-frame gain correction */
-			if(submodes[submodeID].have_subframe_gain == 3) {
+			if (submodes[submodeID].have_subframe_gain == 3) {
 				q_energy = bits.unpack(3);
 				ener = (float) (ol_gain * Math.exp(exc_gain_quant_scal3[q_energy]));
-			} else if(submodes[submodeID].have_subframe_gain == 1) {
+			} else if (submodes[submodeID].have_subframe_gain == 1) {
 				q_energy = bits.unpack(1);
 				ener = (float) (ol_gain * Math.exp(exc_gain_quant_scal1[q_energy]));
 			} else {
 				ener = ol_gain;
 			}
 
-			if(submodes[submodeID].innovation != null) {
+			if (submodes[submodeID].innovation != null) {
 				/* Fixed codebook contribution */
 				submodes[submodeID].innovation.unquant(innov, ivi, subframeSize, bits);
 			}
 
 			/* De-normalize innovation and update excitation */
-			for(i = ivi; i < ivi + subframeSize; i++)
+			for ( i = ivi; i < ivi + subframeSize; i++ )
 				innov[i] *= ener;
 
 			/*  Vocoder mode */
-			if(submodeID == 1) {
+			if (submodeID == 1) {
 				float g = ol_pitch_coef;
 
-				for(i = 0; i < subframeSize; i++)
+				for ( i = 0; i < subframeSize; i++ )
 					excBuf[extIdx + i] = 0;
 				while(voc_offset < subframeSize) {
-					if(voc_offset >= 0)
+					if (voc_offset >= 0)
 						excBuf[extIdx + voc_offset] = (float) Math.sqrt(1.0f * ol_pitch);
 					voc_offset += ol_pitch;
 				}
 				voc_offset -= subframeSize;
 
 				g = .5f + 2 * (g - .6f);
-				if(g < 0)
+				if (g < 0)
 					g = 0;
-				if(g > 1)
+				if (g > 1)
 					g = 1;
-				for(i = 0; i < subframeSize; i++) {
+				for ( i = 0; i < subframeSize; i++ ) {
 					float itmp = excBuf[extIdx + i];
 					excBuf[extIdx + i] = .8f * g * excBuf[extIdx + i] * ol_gain + .6f * g * voc_m1 * ol_gain + .5f * g * innov[ivi + i] - .5f * g * voc_m2 + (1 - g) * innov[ivi + i];
 					voc_m1 = itmp;
@@ -429,36 +429,36 @@ public class NbDecoder extends NbCodec implements Decoder {
 					excBuf[extIdx + i] -= voc_mean;
 				}
 			} else {
-				for(i = 0; i < subframeSize; i++)
+				for ( i = 0; i < subframeSize; i++ )
 					excBuf[extIdx + i] += innov[ivi + i];
 			}
 
 			/* Decode second codebook (only for some modes) */
-			if(submodes[submodeID].double_codebook != 0) {
-				for(i = 0; i < subframeSize; i++)
+			if (submodes[submodeID].double_codebook != 0) {
+				for ( i = 0; i < subframeSize; i++ )
 					innov2[i] = 0;
 				submodes[submodeID].innovation.unquant(innov2, 0, subframeSize, bits);
-				for(i = 0; i < subframeSize; i++)
+				for ( i = 0; i < subframeSize; i++ )
 					innov2[i] *= ener * (1 / 2.2);
-				for(i = 0; i < subframeSize; i++)
+				for ( i = 0; i < subframeSize; i++ )
 					excBuf[extIdx + i] += innov2[i];
 			}
 
-			for(i = 0; i < subframeSize; i++)
+			for ( i = 0; i < subframeSize; i++ )
 				frmBuf[spIdx + i] = excBuf[extIdx + i];
 
 			/* Signal synthesis */
-			if(enhanced && submodes[submodeID].comb_gain > 0) {
+			if (enhanced && submodes[submodeID].comb_gain > 0) {
 				filters.comb_filter(excBuf, extIdx, frmBuf, spIdx, subframeSize, pitch, pitch_gain, submodes[submodeID].comb_gain);
 			}
 
-			if(enhanced) {
+			if (enhanced) {
 				/* Use enhanced LPC filter */
 				Filters.filter_mem2(frmBuf, spIdx, awk2, awk1, subframeSize, lpcSize, mem_sp, lpcSize);
 				Filters.filter_mem2(frmBuf, spIdx, awk3, interp_qlpc, subframeSize, lpcSize, mem_sp, 0);
 			} else {
 				/* Use regular filter */
-				for(i = 0; i < lpcSize; i++)
+				for ( i = 0; i < lpcSize; i++ )
 					mem_sp[lpcSize + i] = 0;
 				Filters.iir_mem2(frmBuf, spIdx, interp_qlpc, frmBuf, spIdx, subframeSize, lpcSize, mem_sp);
 			}
@@ -466,12 +466,12 @@ public class NbDecoder extends NbCodec implements Decoder {
 
 		/*Copy output signal*/
 		out[0] = frmBuf[frmIdx] + preemph * pre_mem;
-		for(i = 1; i < frameSize; i++)
+		for ( i = 1; i < frameSize; i++ )
 			out[i] = frmBuf[frmIdx + i] + preemph * out[i - 1];
 		pre_mem = out[frameSize - 1];
 
 		/* Store the LSPs for interpolation in the next frame */
-		for(i = 0; i < lpcSize; i++)
+		for ( i = 0; i < lpcSize; i++ )
 			old_qlsp[i] = qlsp[i];
 
 		/* The next frame will not be the first (Duh!) */
@@ -480,7 +480,7 @@ public class NbDecoder extends NbCodec implements Decoder {
 		last_pitch = best_pitch;
 		last_pitch_gain = .25f * pitch_average;
 		pitch_gain_buf[pitch_gain_buf_idx++] = last_pitch_gain;
-		if(pitch_gain_buf_idx > 2) /* rollover */
+		if (pitch_gain_buf_idx > 2) /* rollover */
 			pitch_gain_buf_idx = 0;
 		last_ol_gain = ol_gain;
 
@@ -501,11 +501,11 @@ public class NbDecoder extends NbCodec implements Decoder {
 		// median3(a, b, c) = (a<b ? (b<c ? b : (a<c ? c : a))
 		//                         : (c<b ? b : (c<a ? c : a)))
 		gain_med = (pitch_gain_buf[0] < pitch_gain_buf[1] ? (pitch_gain_buf[1] < pitch_gain_buf[2] ? pitch_gain_buf[1] : (pitch_gain_buf[0] < pitch_gain_buf[2] ? pitch_gain_buf[2] : pitch_gain_buf[0])) : (pitch_gain_buf[2] < pitch_gain_buf[1] ? pitch_gain_buf[1] : (pitch_gain_buf[2] < pitch_gain_buf[0] ? pitch_gain_buf[2] : pitch_gain_buf[0])));
-		if(gain_med < last_pitch_gain)
+		if (gain_med < last_pitch_gain)
 			last_pitch_gain = gain_med;
 
 		pitch_gain = last_pitch_gain;
-		if(pitch_gain > .95f)
+		if (pitch_gain > .95f)
 			pitch_gain = .95f;
 
 		pitch_gain *= fact;
@@ -514,7 +514,7 @@ public class NbDecoder extends NbCodec implements Decoder {
 		System.arraycopy(frmBuf, frameSize, frmBuf, 0, bufSize - frameSize);
 		System.arraycopy(excBuf, frameSize, excBuf, 0, bufSize - frameSize);
 
-		for(int sub = 0; sub < nbSubframes; sub++) {
+		for ( int sub = 0; sub < nbSubframes; sub++ ) {
 			int offset;
 			int spIdx, extIdx;
 			/* Offset relative to start of frame */
@@ -526,10 +526,10 @@ public class NbDecoder extends NbCodec implements Decoder {
 			/* Excitation after post-filter*/
 
 			/* Calculate perceptually enhanced LPC filter */
-			if(enhanced) {
+			if (enhanced) {
 				float r = .9f;
 				float k1, k2, k3;
-				if(submodes[submodeID] != null) {
+				if (submodes[submodeID] != null) {
 					k1 = submodes[submodeID].lpc_enh_k1;
 					k2 = submodes[submodeID].lpc_enh_k2;
 				} else {
@@ -546,10 +546,10 @@ public class NbDecoder extends NbCodec implements Decoder {
 			pitch_gain=.95;*/
 			{
 				float innov_gain = 0;
-				for(i = 0; i < frameSize; i++)
+				for ( i = 0; i < frameSize; i++ )
 					innov_gain += innov[i] * innov[i];
 				innov_gain = (float) Math.sqrt(innov_gain / frameSize);
-				for(i = 0; i < subframeSize; i++) {
+				for ( i = 0; i < subframeSize; i++ ) {
 					//#if 0
 					//          excBuf[extIdx+i] = pitch_gain*excBuf[extIdx+i-last_pitch] + fact*((float)Math.sqrt(1-pitch_gain))*innov[i+offset];
 					//          /*Just so it give the same lost packets as with if 0*/
@@ -560,30 +560,30 @@ public class NbDecoder extends NbCodec implements Decoder {
 					//#endif
 				}
 			}
-			for(i = 0; i < subframeSize; i++)
+			for ( i = 0; i < subframeSize; i++ )
 				frmBuf[spIdx + i] = excBuf[extIdx + i];
 
 			/* Signal synthesis */
-			if(enhanced) {
+			if (enhanced) {
 				/* Use enhanced LPC filter */
 				Filters.filter_mem2(frmBuf, spIdx, awk2, awk1, subframeSize, lpcSize, mem_sp, lpcSize);
 				Filters.filter_mem2(frmBuf, spIdx, awk3, interp_qlpc, subframeSize, lpcSize, mem_sp, 0);
 			} else {
 				/* Use regular filter */
-				for(i = 0; i < lpcSize; i++)
+				for ( i = 0; i < lpcSize; i++ )
 					mem_sp[lpcSize + i] = 0;
 				Filters.iir_mem2(frmBuf, spIdx, interp_qlpc, frmBuf, spIdx, subframeSize, lpcSize, mem_sp);
 			}
 		}
 
 		out[0] = frmBuf[0] + preemph * pre_mem;
-		for(i = 1; i < frameSize; i++)
+		for ( i = 1; i < frameSize; i++ )
 			out[i] = frmBuf[i] + preemph * out[i - 1];
 		pre_mem = out[frameSize - 1];
 		first = 0;
 		count_lost++;
 		pitch_gain_buf[pitch_gain_buf_idx++] = pitch_gain;
-		if(pitch_gain_buf_idx > 2) /* rollover */
+		if (pitch_gain_buf_idx > 2) /* rollover */
 			pitch_gain_buf_idx = 0;
 
 		return 0;

@@ -140,7 +140,7 @@ public class SoundSystem {
 		// create the message logger:
 		logger = SoundSystemConfig.getLogger();
 		// if the user didn't create one, then do it now:
-		if(logger == null) {
+		if (logger == null) {
 			logger = new SoundSystemLogger();
 			SoundSystemConfig.setLogger(logger);
 		}
@@ -149,7 +149,7 @@ public class SoundSystem {
 
 		LinkedList<Class> libraries = SoundSystemConfig.getLibraries();
 
-		if(libraries != null) {
+		if (libraries != null) {
 			ListIterator<Class> i = libraries.listIterator();
 			Class c;
 			while(i.hasNext()) {
@@ -181,7 +181,7 @@ public class SoundSystem {
 		// create the message logger:
 		logger = SoundSystemConfig.getLogger();
 		// if the user didn't create one, then do it now:
-		if(logger == null) {
+		if (logger == null) {
 			logger = new SoundSystemLogger();
 			SoundSystemConfig.setLogger(logger);
 		}
@@ -247,17 +247,17 @@ public class SoundSystem {
 			killException = true;
 		}
 
-		if(!killException) {
+		if (!killException) {
 			// wait up to 5 seconds for command thread to end:
-			for(int i = 0; i < 50; i++) {
-				if(!commandThread.alive())
+			for ( int i = 0; i < 50; i++ ) {
+				if (!commandThread.alive())
 					break;
 				snooze(100);
 			}
 		}
 
 		// Let user know if there was a problem ending the command thread
-		if(killException || commandThread.alive()) {
+		if (killException || commandThread.alive()) {
 			errorMessage("Command thread did not die!", 0);
 			message("Ignoring errors... continuing clean-up.", 0);
 		}
@@ -266,7 +266,7 @@ public class SoundSystem {
 		currentLibrary(SET, null);
 		try {
 			// Stop all sources and shut down the sound library:
-			if(soundLibrary != null)
+			if (soundLibrary != null)
 				soundLibrary.cleanup();
 		} catch(Exception e) {
 			errorMessage("Problem during Library.cleanup()!", 0);
@@ -275,7 +275,7 @@ public class SoundSystem {
 
 		try {
 			// remove any queued commands:
-			if(commandQueue != null)
+			if (commandQueue != null)
 				commandQueue.clear();
 		} catch(Exception e) {
 			errorMessage("Unable to clear the command queue!", 0);
@@ -284,7 +284,7 @@ public class SoundSystem {
 
 		try {
 			// empty the source management list:
-			if(sourcePlayList != null)
+			if (sourcePlayList != null)
 				sourcePlayList.clear();
 		} catch(Exception e) {
 			errorMessage("Unable to clear the source management list!", 0);
@@ -310,7 +310,7 @@ public class SoundSystem {
 	 * placed into either the ManageSources queue or CommandQueue to be processed.
 	 */
 	public void interruptCommandThread() {
-		if(commandThread == null) {
+		if (commandThread == null) {
 			errorMessage("Command Thread null in method " + "'interruptCommandThread'", 0);
 			return;
 		}
@@ -458,7 +458,7 @@ public class SoundSystem {
 	 */
 	public void fadeOut(String sourcename, String filename, long milis) {
 		FilenameURL fu = null;
-		if(filename != null)
+		if (filename != null)
 			fu = new FilenameURL(filename);
 		// Queue a command to fade out:
 		CommandQueue(new CommandObject(CommandObject.FADE_OUT, sourcename, fu, milis));
@@ -486,7 +486,7 @@ public class SoundSystem {
 	 */
 	public void fadeOut(String sourcename, URL url, String identifier, long milis) {
 		FilenameURL fu = null;
-		if(url != null && identifier != null)
+		if (url != null && identifier != null)
 			fu = new FilenameURL(url, identifier);
 		// Queue a command to fade out:
 		CommandQueue(new CommandObject(CommandObject.FADE_OUT, sourcename, fu, milis));
@@ -871,7 +871,7 @@ public class SoundSystem {
 	 */
 	public float getVolume(String sourcename) {
 		synchronized(SoundSystemConfig.THREAD_SYNC) {
-			if(soundLibrary != null)
+			if (soundLibrary != null)
 				return soundLibrary.getVolume(sourcename);
 			else
 				return 0.0f;
@@ -896,7 +896,7 @@ public class SoundSystem {
 	 * @return Float value representing the source pitch (0.5f - 2.0f).
 	 */
 	public float getPitch(String sourcename) {
-		if(soundLibrary != null)
+		if (soundLibrary != null)
 			return soundLibrary.getPitch(sourcename);
 		else
 			return 1.0f;
@@ -1246,12 +1246,12 @@ public class SoundSystem {
 			String midiSourcename = "";
 			boolean midiToLoop = true;
 
-			if(soundLibrary != null) {
+			if (soundLibrary != null) {
 				currentLibrary(SET, null);
 				sourceMap = copySources(soundLibrary.getSources());
 				listenerData = soundLibrary.getListenerData();
 				midiChannel = soundLibrary.getMidiChannel();
-				if(midiChannel != null) {
+				if (midiChannel != null) {
 					wasMidiChannel = true;
 					midiToLoop = midiChannel.getLooping();
 					midiSourcename = midiChannel.getSourcename();
@@ -1277,7 +1277,7 @@ public class SoundSystem {
 				errorMessage("The specified library did not load properly", 1);
 			}
 
-			if(errorCheck(soundLibrary == null, "Library null after " + "initialization in method 'switchLibrary'", 1)) {
+			if (errorCheck(soundLibrary == null, "Library null after " + "initialization in method 'switchLibrary'", 1)) {
 				SoundSystemException sse = new SoundSystemException(className + " did not load properly.  " + "Library was null after initialization.", SoundSystemException.LIBRARY_NULL);
 				lastException(SET, sse);
 				initialized(SET, true);
@@ -1293,8 +1293,8 @@ public class SoundSystem {
 			}
 
 			soundLibrary.setListenerData(listenerData);
-			if(wasMidiChannel) {
-				if(midiChannel != null)
+			if (wasMidiChannel) {
+				if (midiChannel != null)
 					midiChannel.cleanup();
 				midiChannel = new MidiChannel(midiToLoop, midiSourcename, midiFilenameURL);
 				soundLibrary.setMidiChannel(midiChannel);
@@ -1323,18 +1323,18 @@ public class SoundSystem {
 		CommandQueue(new CommandObject(CommandObject.NEW_LIBRARY, libraryClass));
 		commandThread.interrupt();
 
-		for(int x = 0; (!initialized(GET, XXX)) && (x < 100); x++) {
+		for ( int x = 0; (!initialized(GET, XXX)) && (x < 100); x++ ) {
 			snooze(400);
 			commandThread.interrupt();
 		}
 
-		if(!initialized(GET, XXX)) {
+		if (!initialized(GET, XXX)) {
 			SoundSystemException sse = new SoundSystemException(className + " did not load after 30 seconds.", SoundSystemException.LIBRARY_NULL);
 			lastException(SET, sse);
 			throw sse;
 		} else {
 			SoundSystemException sse = lastException(GET, null);
-			if(sse != null)
+			if (sse != null)
 				throw sse;
 		}
 		return true;
@@ -1353,7 +1353,7 @@ public class SoundSystem {
 		initialized(SET, false);
 
 		String headerMessage = "Initializing ";
-		if(soundLibrary != null) {
+		if (soundLibrary != null) {
 			currentLibrary(SET, null);
 			// we are switching libraries
 			headerMessage = "Switching to ";
@@ -1375,7 +1375,7 @@ public class SoundSystem {
 			errorMessage("The specified library did not load properly", 1);
 		}
 
-		if(errorCheck(soundLibrary == null, "Library null after " + "initialization in method 'newLibrary'", 1)) {
+		if (errorCheck(soundLibrary == null, "Library null after " + "initialization in method 'newLibrary'", 1)) {
 			lastException(SET, new SoundSystemException(className + " did not load properly.  " + "Library was null after initialization.", SoundSystemException.LIBRARY_NULL));
 			importantMessage("Switching to silent mode", 1);
 
@@ -1409,7 +1409,7 @@ public class SoundSystem {
 	 */
 	private void CommandInitialize() {
 		try {
-			if(errorCheck(soundLibrary == null, "Library null after " + "initialization in method 'CommandInitialize'", 1)) {
+			if (errorCheck(soundLibrary == null, "Library null after " + "initialization in method 'CommandInitialize'", 1)) {
 				SoundSystemException sse = new SoundSystemException(className + " did not load properly.  " + "Library was null after initialization.", SoundSystemException.LIBRARY_NULL);
 				lastException(SET, sse);
 				throw sse;
@@ -1429,7 +1429,7 @@ public class SoundSystem {
 	 * @param filenameURL Filename/URL of the sound file to load.
 	 */
 	private void CommandLoadSound(FilenameURL filenameURL) {
-		if(soundLibrary != null)
+		if (soundLibrary != null)
 			soundLibrary.loadSound(filenameURL);
 		else
 			errorMessage("Variable 'soundLibrary' null in method 'CommandLoadSound'", 0);
@@ -1446,7 +1446,7 @@ public class SoundSystem {
 	 * @param identifier What to call the sample.
 	 */
 	private void CommandLoadSound(SoundBuffer buffer, String identifier) {
-		if(soundLibrary != null)
+		if (soundLibrary != null)
 			soundLibrary.loadSound(buffer, identifier);
 		else
 			errorMessage("Variable 'soundLibrary' null in method 'CommandLoadSound'", 0);
@@ -1460,7 +1460,7 @@ public class SoundSystem {
 	 * @param filename Filename or string identifyer of sound to unload.
 	 */
 	private void CommandUnloadSound(String filename) {
-		if(soundLibrary != null)
+		if (soundLibrary != null)
 			soundLibrary.unloadSound(filename);
 		else
 			errorMessage("Variable 'soundLibrary' null in method 'CommandLoadSound'", 0);
@@ -1477,7 +1477,7 @@ public class SoundSystem {
 	 * @param filenameURL Filename/URL of the sound file to play next.
 	 */
 	private void CommandQueueSound(String sourcename, FilenameURL filenameURL) {
-		if(soundLibrary != null)
+		if (soundLibrary != null)
 			soundLibrary.queueSound(sourcename, filenameURL);
 		else
 			errorMessage("Variable 'soundLibrary' null in method 'CommandQueueSound'", 0);
@@ -1494,7 +1494,7 @@ public class SoundSystem {
 	 * @param filename   Filename/identifier of the sound file to remove from the queue.
 	 */
 	private void CommandDequeueSound(String sourcename, String filename) {
-		if(soundLibrary != null)
+		if (soundLibrary != null)
 			soundLibrary.dequeueSound(sourcename, filename);
 		else
 			errorMessage("Variable 'soundLibrary' null in method 'CommandDequeueSound'", 0);
@@ -1517,7 +1517,7 @@ public class SoundSystem {
 	 * @param milis       Number of miliseconds the fadeout should take.
 	 */
 	private void CommandFadeOut(String sourcename, FilenameURL filenameURL, long milis) {
-		if(soundLibrary != null)
+		if (soundLibrary != null)
 			soundLibrary.fadeOut(sourcename, filenameURL, milis);
 		else
 			errorMessage("Variable 'soundLibrary' null in method 'CommandFadeOut'", 0);
@@ -1541,7 +1541,7 @@ public class SoundSystem {
 	 * @param milisIn     Number of miliseconds the fadein should take.
 	 */
 	private void CommandFadeOutIn(String sourcename, FilenameURL filenameURL, long milisOut, long milisIn) {
-		if(soundLibrary != null)
+		if (soundLibrary != null)
 			soundLibrary.fadeOutIn(sourcename, filenameURL, milisOut, milisIn);
 		else
 			errorMessage("Variable 'soundLibrary' null in method 'CommandFadeOutIn'", 0);
@@ -1561,7 +1561,7 @@ public class SoundSystem {
 	 * called directly - please use the checkFadeVolumes() method instead.
 	 */
 	private void CommandCheckFadeVolumes() {
-		if(soundLibrary != null)
+		if (soundLibrary != null)
 			soundLibrary.checkFadeVolumes();
 		else
 			errorMessage("Variable 'soundLibrary' null in method " + "'CommandCheckFadeVolumes'", 0);
@@ -1584,8 +1584,8 @@ public class SoundSystem {
 	 * @param distORroll  Either the fading distance or rolloff factor, depending on the value of "attmodel".
 	 */
 	private void CommandNewSource(boolean priority, boolean toStream, boolean toLoop, String sourcename, FilenameURL filenameURL, float x, float y, float z, int attModel, float distORroll) {
-		if(soundLibrary != null) {
-			if(filenameURL.getFilename().matches(SoundSystemConfig.EXTENSION_MIDI) && !SoundSystemConfig.midiCodec()) {
+		if (soundLibrary != null) {
+			if (filenameURL.getFilename().matches(SoundSystemConfig.EXTENSION_MIDI) && !SoundSystemConfig.midiCodec()) {
 				soundLibrary.loadMidi(toLoop, sourcename, filenameURL);
 			} else {
 				soundLibrary.newSource(priority, toStream, toLoop, sourcename, filenameURL, x, y, z, attModel, distORroll);
@@ -1609,7 +1609,7 @@ public class SoundSystem {
 	 * @param distOrRoll  Either the fading distance or rolloff factor, depending on the value of "attmodel".
 	 */
 	private void CommandRawDataStream(AudioFormat audioFormat, boolean priority, String sourcename, float x, float y, float z, int attModel, float distOrRoll) {
-		if(soundLibrary != null)
+		if (soundLibrary != null)
 			soundLibrary.rawDataStream(audioFormat, priority, sourcename, x, y, z, attModel, distOrRoll);
 		else
 			errorMessage("Variable 'soundLibrary' null in method 'CommandRawDataStream'", 0);
@@ -1634,8 +1634,8 @@ public class SoundSystem {
 	 * @param temporary   Whether or not the source should be removed after it finishes playing.
 	 */
 	private void CommandQuickPlay(boolean priority, boolean toStream, boolean toLoop, String sourcename, FilenameURL filenameURL, float x, float y, float z, int attModel, float distORroll, boolean temporary) {
-		if(soundLibrary != null) {
-			if(filenameURL.getFilename().matches(SoundSystemConfig.EXTENSION_MIDI) && !SoundSystemConfig.midiCodec()) {
+		if (soundLibrary != null) {
+			if (filenameURL.getFilename().matches(SoundSystemConfig.EXTENSION_MIDI) && !SoundSystemConfig.midiCodec()) {
 				soundLibrary.loadMidi(toLoop, sourcename, filenameURL);
 			} else {
 				soundLibrary.quickPlay(priority, toStream, toLoop, sourcename, filenameURL, x, y, z, attModel, distORroll, temporary);
@@ -1655,7 +1655,7 @@ public class SoundSystem {
 	 * @param z          Destination Z coordinate.
 	 */
 	private void CommandSetPosition(String sourcename, float x, float y, float z) {
-		if(soundLibrary != null)
+		if (soundLibrary != null)
 			soundLibrary.setPosition(sourcename, x, y, z);
 		else
 			errorMessage("Variable 'soundLibrary' null in method 'CommandMoveSource'", 0);
@@ -1670,7 +1670,7 @@ public class SoundSystem {
 	 * @param value      New volume, float value ( 0.0f - 1.0f ).
 	 */
 	private void CommandSetVolume(String sourcename, float value) {
-		if(soundLibrary != null)
+		if (soundLibrary != null)
 			soundLibrary.setVolume(sourcename, value);
 		else
 			errorMessage("Variable 'soundLibrary' null in method 'CommandSetVolume'", 0);
@@ -1685,7 +1685,7 @@ public class SoundSystem {
 	 * @param value      New pitch, float value ( 0.5f - 2.0f ).
 	 */
 	private void CommandSetPitch(String sourcename, float value) {
-		if(soundLibrary != null)
+		if (soundLibrary != null)
 			soundLibrary.setPitch(sourcename, value);
 		else
 			errorMessage("Variable 'soundLibrary' null in method 'CommandSetPitch'", 0);
@@ -1701,7 +1701,7 @@ public class SoundSystem {
 	 * @param pri        Setting this to true makes this source a priority source.
 	 */
 	private void CommandSetPriority(String sourcename, boolean pri) {
-		if(soundLibrary != null)
+		if (soundLibrary != null)
 			soundLibrary.setPriority(sourcename, pri);
 		else
 			errorMessage("Variable 'soundLibrary' null in method 'CommandSetPriority'", 0);
@@ -1716,7 +1716,7 @@ public class SoundSystem {
 	 * @param lp         This source should loop.
 	 */
 	private void CommandSetLooping(String sourcename, boolean lp) {
-		if(soundLibrary != null)
+		if (soundLibrary != null)
 			soundLibrary.setLooping(sourcename, lp);
 		else
 			errorMessage("Variable 'soundLibrary' null in method 'CommandSetLooping'", 0);
@@ -1733,7 +1733,7 @@ public class SoundSystem {
 	 * @param model      Attenuation model to use.
 	 */
 	private void CommandSetAttenuation(String sourcename, int model) {
-		if(soundLibrary != null)
+		if (soundLibrary != null)
 			soundLibrary.setAttenuation(sourcename, model);
 		else
 			errorMessage("Variable 'soundLibrary' null in method 'CommandSetAttenuation'", 0);
@@ -1748,7 +1748,7 @@ public class SoundSystem {
 	 * @param dr         Either the fading distance or rolloff factor, depending on the attenuation model used.
 	 */
 	private void CommandSetDistOrRoll(String sourcename, float dr) {
-		if(soundLibrary != null)
+		if (soundLibrary != null)
 			soundLibrary.setDistOrRoll(sourcename, dr);
 		else
 			errorMessage("Variable 'soundLibrary' null in method 'CommandSetDistOrRoll'", 0);
@@ -1764,7 +1764,7 @@ public class SoundSystem {
 	 * @param dopplerFactor New Doppler factor, for determining Doppler effect scale.
 	 */
 	private void CommandChangeDopplerFactor(float dopplerFactor) {
-		if(soundLibrary != null) {
+		if (soundLibrary != null) {
 			SoundSystemConfig.setDopplerFactor(dopplerFactor);
 			soundLibrary.dopplerChanged();
 		} else
@@ -1781,7 +1781,7 @@ public class SoundSystem {
 	 * @param dopplerVelocity New Doppler velocity, for use in Doppler effect.
 	 */
 	private void CommandChangeDopplerVelocity(float dopplerVelocity) {
-		if(soundLibrary != null) {
+		if (soundLibrary != null) {
 			SoundSystemConfig.setDopplerVelocity(dopplerVelocity);
 			soundLibrary.dopplerChanged();
 		} else
@@ -1801,7 +1801,7 @@ public class SoundSystem {
 	 * @param z          Source's velocity along the world z-axis.
 	 */
 	private void CommandSetVelocity(String sourcename, float x, float y, float z) {
-		if(soundLibrary != null)
+		if (soundLibrary != null)
 			soundLibrary.setVelocity(sourcename, x, y, z);
 		else
 			errorMessage("Variable 'soundLibrary' null in method 'CommandVelocity'", 0);
@@ -1819,7 +1819,7 @@ public class SoundSystem {
 	 * @param z Velocity along the world z-axis.
 	 */
 	private void CommandSetListenerVelocity(float x, float y, float z) {
-		if(soundLibrary != null)
+		if (soundLibrary != null)
 			soundLibrary.setListenerVelocity(x, y, z);
 		else
 			errorMessage("Variable 'soundLibrary' null in method 'CommandSetListenerVelocity'", 0);
@@ -1833,7 +1833,7 @@ public class SoundSystem {
 	 * @param sourcename Identifier for the source.
 	 */
 	private void CommandPlay(String sourcename) {
-		if(soundLibrary != null)
+		if (soundLibrary != null)
 			soundLibrary.play(sourcename);
 		else
 			errorMessage("Variable 'soundLibrary' null in method 'CommandPlay'", 0);
@@ -1850,7 +1850,7 @@ public class SoundSystem {
 	 * @param buffer     Byte buffer containing raw audio data to stream.
 	 */
 	private void CommandFeedRawAudioData(String sourcename, byte[] buffer) {
-		if(soundLibrary != null)
+		if (soundLibrary != null)
 			soundLibrary.feedRawAudioData(sourcename, buffer);
 		else
 			errorMessage("Variable 'soundLibrary' null in method 'CommandFeedRawAudioData'", 0);
@@ -1864,7 +1864,7 @@ public class SoundSystem {
 	 * @param sourcename Identifier for the source.
 	 */
 	private void CommandPause(String sourcename) {
-		if(soundLibrary != null)
+		if (soundLibrary != null)
 			soundLibrary.pause(sourcename);
 		else
 			errorMessage("Variable 'soundLibrary' null in method 'CommandPause'", 0);
@@ -1878,7 +1878,7 @@ public class SoundSystem {
 	 * @param sourcename Identifier for the source.
 	 */
 	private void CommandStop(String sourcename) {
-		if(soundLibrary != null)
+		if (soundLibrary != null)
 			soundLibrary.stop(sourcename);
 		else
 			errorMessage("Variable 'soundLibrary' null in method 'CommandStop'", 0);
@@ -1892,7 +1892,7 @@ public class SoundSystem {
 	 * @param sourcename Identifier for the source.
 	 */
 	private void CommandRewind(String sourcename) {
-		if(soundLibrary != null)
+		if (soundLibrary != null)
 			soundLibrary.rewind(sourcename);
 		else
 			errorMessage("Variable 'soundLibrary' null in method 'CommandRewind'", 0);
@@ -1906,7 +1906,7 @@ public class SoundSystem {
 	 * @param sourcename Identifier for the source.
 	 */
 	private void CommandFlush(String sourcename) {
-		if(soundLibrary != null)
+		if (soundLibrary != null)
 			soundLibrary.flush(sourcename);
 		else
 			errorMessage("Variable 'soundLibrary' null in method 'CommandFlush'", 0);
@@ -1928,7 +1928,7 @@ public class SoundSystem {
 	 * @param temporary  True or False.
 	 */
 	private void CommandSetTemporary(String sourcename, boolean temporary) {
-		if(soundLibrary != null)
+		if (soundLibrary != null)
 			soundLibrary.setTemporary(sourcename, temporary);
 		else
 			errorMessage("Variable 'soundLibrary' null in method 'CommandSetActive'", 0);
@@ -1942,7 +1942,7 @@ public class SoundSystem {
 	 * @param sourcename Identifier for the source.
 	 */
 	private void CommandRemoveSource(String sourcename) {
-		if(soundLibrary != null)
+		if (soundLibrary != null)
 			soundLibrary.removeSource(sourcename);
 		else
 			errorMessage("Variable 'soundLibrary' null in method 'CommandRemoveSource'", 0);
@@ -1958,7 +1958,7 @@ public class SoundSystem {
 	 * @param z Z offset.
 	 */
 	private void CommandMoveListener(float x, float y, float z) {
-		if(soundLibrary != null)
+		if (soundLibrary != null)
 			soundLibrary.moveListener(x, y, z);
 		else
 			errorMessage("Variable 'soundLibrary' null in method 'CommandMoveListener'", 0);
@@ -1974,7 +1974,7 @@ public class SoundSystem {
 	 * @param z Destination Z coordinate.
 	 */
 	private void CommandSetListenerPosition(float x, float y, float z) {
-		if(soundLibrary != null)
+		if (soundLibrary != null)
 			soundLibrary.setListenerPosition(x, y, z);
 		else
 			errorMessage("Variable 'soundLibrary' null in method 'CommandSetListenerPosition'", 0);
@@ -1989,7 +1989,7 @@ public class SoundSystem {
 	 * @param angle radian offset.
 	 */
 	private void CommandTurnListener(float angle) {
-		if(soundLibrary != null)
+		if (soundLibrary != null)
 			soundLibrary.turnListener(angle);
 		else
 			errorMessage("Variable 'soundLibrary' null in method 'CommandTurnListener'", 0);
@@ -2003,7 +2003,7 @@ public class SoundSystem {
 	 * @param angle radians.
 	 */
 	private void CommandSetListenerAngle(float angle) {
-		if(soundLibrary != null)
+		if (soundLibrary != null)
 			soundLibrary.setListenerAngle(angle);
 		else
 			errorMessage("Variable 'soundLibrary' null in method 'CommandSetListenerAngle'", 0);
@@ -2022,7 +2022,7 @@ public class SoundSystem {
 	 * @param upZ   Z coordinate of the (normalized) look-at vector.
 	 */
 	private void CommandSetListenerOrientation(float lookX, float lookY, float lookZ, float upX, float upY, float upZ) {
-		if(soundLibrary != null)
+		if (soundLibrary != null)
 			soundLibrary.setListenerOrientation(lookX, lookY, lookZ, upX, upY, upZ);
 		else
 			errorMessage("Variable 'soundLibrary' null in method 'CommandSetListenerOrientation'", 0);
@@ -2037,7 +2037,7 @@ public class SoundSystem {
 	 * @param sourcename Identifier for the source.
 	 */
 	private void CommandCull(String sourcename) {
-		if(soundLibrary != null)
+		if (soundLibrary != null)
 			soundLibrary.cull(sourcename);
 		else
 			errorMessage("Variable 'soundLibrary' null in method 'CommandCull'", 0);
@@ -2051,7 +2051,7 @@ public class SoundSystem {
 	 * @param sourcename Identifier for the source.
 	 */
 	private void CommandActivate(String sourcename) {
-		if(soundLibrary != null)
+		if (soundLibrary != null)
 			soundLibrary.activate(sourcename);
 		else
 			errorMessage("Variable 'soundLibrary' null in method 'CommandActivate'", 0);
@@ -2065,7 +2065,7 @@ public class SoundSystem {
 	 * @param value New volume, float value ( 0.0f - 1.0f ).
 	 */
 	private void CommandSetMasterVolume(float value) {
-		if(soundLibrary != null)
+		if (soundLibrary != null)
 			soundLibrary.setMasterVolume(value);
 		else
 			errorMessage("Variable 'soundLibrary' null in method 'CommandSetMasterVolume'", 0);
@@ -2107,7 +2107,7 @@ public class SoundSystem {
 	 */
 	public boolean CommandQueue(CommandObject newCommand) {
 		synchronized(SoundSystemConfig.THREAD_SYNC) {
-			if(newCommand == null) {
+			if (newCommand == null) {
 				// New command is null - that means execute all queued commands.
 				boolean activations = false;
 				CommandObject commandObject;
@@ -2117,7 +2117,7 @@ public class SoundSystem {
 					// Grab the oldest command in the queue:
 					commandObject = commandQueue.remove(0);
 					// See what it is, and execute the proper Command method:
-					if(commandObject != null) {
+					if (commandObject != null) {
 						switch(commandObject.Command) {
 							case CommandObject.INITIALIZE:
 								CommandInitialize();
@@ -2255,7 +2255,7 @@ public class SoundSystem {
 
 				// If any sources were reactivated, check if they need to be
 				// replayed:
-				if(activations)
+				if (activations)
 					soundLibrary.replaySources();
 
 				// Now that we have the correct sources culled and activated, we
@@ -2264,7 +2264,7 @@ public class SoundSystem {
 				while(sourcePlayList != null && sourcePlayList.size() > 0) {
 					// Grab the oldest command in the queue:
 					commandObject = sourcePlayList.remove(0);
-					if(commandObject != null) {
+					if (commandObject != null) {
 						// See what it is, and execute the proper Command method:
 						switch(commandObject.Command) {
 							case CommandObject.PLAY:
@@ -2280,7 +2280,7 @@ public class SoundSystem {
 				return (commandQueue != null && commandQueue.size() > 0);
 			} else {
 				// make sure the commandQueue exists:
-				if(commandQueue == null)
+				if (commandQueue == null)
 					return false;
 				// queue a new command
 				commandQueue.add(newCommand);
@@ -2298,7 +2298,7 @@ public class SoundSystem {
 	 */
 	public void removeTemporarySources() {
 		synchronized(SoundSystemConfig.THREAD_SYNC) {
-			if(soundLibrary != null)
+			if (soundLibrary != null)
 				soundLibrary.removeTemporarySources();
 		}
 	}
@@ -2311,12 +2311,12 @@ public class SoundSystem {
 	 */
 	public boolean playing(String sourcename) {
 		synchronized(SoundSystemConfig.THREAD_SYNC) {
-			if(soundLibrary == null)
+			if (soundLibrary == null)
 				return false;
 
 			Source src = soundLibrary.getSources().get(sourcename);
 
-			if(src == null)
+			if (src == null)
 				return false;
 
 			return src.playing();
@@ -2330,11 +2330,11 @@ public class SoundSystem {
 	 */
 	public boolean playing() {
 		synchronized(SoundSystemConfig.THREAD_SYNC) {
-			if(soundLibrary == null)
+			if (soundLibrary == null)
 				return false;
 
 			HashMap<String, Source> sourceMap = soundLibrary.getSources();
-			if(sourceMap == null)
+			if (sourceMap == null)
 				return false;
 
 			Set<String> keys = sourceMap.keySet();
@@ -2345,8 +2345,8 @@ public class SoundSystem {
 			while(iter.hasNext()) {
 				sourcename = iter.next();
 				source = sourceMap.get(sourcename);
-				if(source != null)
-					if(source.playing())
+				if (source != null)
+					if (source.playing())
 						return true;
 			}
 
@@ -2375,7 +2375,7 @@ public class SoundSystem {
 		while(iter.hasNext()) {
 			sourcename = iter.next();
 			source = sourceMap.get(sourcename);
-			if(source != null)
+			if (source != null)
 				returnMap.put(sourcename, new Source(source, null));
 		}
 		return returnMap;
@@ -2391,7 +2391,7 @@ public class SoundSystem {
 		// create the message logger:
 		SoundSystemLogger logger = SoundSystemConfig.getLogger();
 		// if the user didn't create one, then do it now:
-		if(logger == null) {
+		if (logger == null) {
 			logger = new SoundSystemLogger();
 			SoundSystemConfig.setLogger(logger);
 		}
@@ -2400,7 +2400,7 @@ public class SoundSystem {
 
 		boolean comp = SoundSystemConfig.libraryCompatible(libraryClass);
 
-		if(comp)
+		if (comp)
 			logger.message("...yes", 1);
 		else
 			logger.message("...no", 1);
@@ -2454,7 +2454,7 @@ public class SoundSystem {
 	 */
 	private static boolean initialized(boolean action, boolean value) {
 		synchronized(SoundSystemConfig.THREAD_SYNC) {
-			if(action == SET)
+			if (action == SET)
 				initialized = value;
 			return initialized;
 		}
@@ -2469,7 +2469,7 @@ public class SoundSystem {
 	 */
 	private static Class currentLibrary(boolean action, Class value) {
 		synchronized(SoundSystemConfig.THREAD_SYNC) {
-			if(action == SET)
+			if (action == SET)
 				currentLibrary = value;
 			return currentLibrary;
 		}
@@ -2485,7 +2485,7 @@ public class SoundSystem {
 	 */
 	private static SoundSystemException lastException(boolean action, SoundSystemException e) {
 		synchronized(SoundSystemConfig.THREAD_SYNC) {
-			if(action == SET)
+			if (action == SET)
 				lastException = e;
 			return lastException;
 		}

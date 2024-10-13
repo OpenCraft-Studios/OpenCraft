@@ -31,7 +31,7 @@ public class CompressedStreamTools {
 
 	public static NBTTagCompound read(final DataInput dataInput) throws IOException {
 		final NBTBase tag = NBTBase.readTag(dataInput);
-		if(tag instanceof NBTTagCompound) {
+		if (tag instanceof NBTTagCompound) {
 			return (NBTTagCompound) tag;
 		}
 		throw new IOException("Root tag must be a named compound tag");

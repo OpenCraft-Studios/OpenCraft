@@ -104,7 +104,7 @@ public class Stereo {
 		int i, tmp;
 		float e_left = 0, e_right = 0, e_tot = 0;
 		float balance, e_ratio;
-		for(i = 0; i < frameSize; i++) {
+		for ( i = 0; i < frameSize; i++ ) {
 			e_left += data[2 * i] * data[2 * i];
 			e_right += data[2 * i + 1] * data[2 * i + 1];
 			data[i] = .5f * (data[2 * i] + data[2 * i + 1]);
@@ -118,12 +118,12 @@ public class Stereo {
 		balance = (float) (4 * Math.log(balance));
 
 		/*Pack balance*/
-		if(balance > 0)
+		if (balance > 0)
 			bits.pack(0, 1);
 		else
 			bits.pack(1, 1);
 		balance = (float) Math.floor(.5f + Math.abs(balance));
-		if(balance > 30)
+		if (balance > 30)
 			balance = 31;
 		bits.pack((int) balance, 5);
 
@@ -144,7 +144,7 @@ public class Stereo {
 		int i;
 		float e_tot = 0, e_left, e_right, e_sum;
 
-		for(i = frameSize - 1; i >= 0; i--) {
+		for ( i = frameSize - 1; i >= 0; i-- ) {
 			e_tot += data[i] * data[i];
 		}
 		e_sum = e_tot / e_ratio;
@@ -153,7 +153,7 @@ public class Stereo {
 		e_left = (float) Math.sqrt(e_left / (e_tot + .01f));
 		e_right = (float) Math.sqrt(e_right / (e_tot + .01f));
 
-		for(i = frameSize - 1; i >= 0; i--) {
+		for ( i = frameSize - 1; i >= 0; i-- ) {
 			float ftmp = data[i];
 			smooth_left = .98f * smooth_left + .02f * e_left;
 			smooth_right = .98f * smooth_right + .02f * e_right;
@@ -170,7 +170,7 @@ public class Stereo {
 	public void init(Bits bits) {
 		float sign = 1;
 		int tmp;
-		if(bits.unpack(1) != 0)
+		if (bits.unpack(1) != 0)
 			sign = -1;
 		tmp = bits.unpack(5);
 		balance = (float) Math.exp(sign * .25 * tmp);

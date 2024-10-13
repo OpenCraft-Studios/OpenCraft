@@ -14,24 +14,24 @@ public class ItemPainting extends Item {
 
 	@Override
 	public boolean onItemUse(final ItemStack hw, final EntityPlayer gi, final World fe, final int xCoord, final int yCoord, final int zCoord, final int integer7) {
-		if(integer7 == 0) {
+		if (integer7 == 0) {
 			return false;
 		}
-		if(integer7 == 1) {
+		if (integer7 == 1) {
 			return false;
 		}
 		int integer8 = 0;
-		if(integer7 == 4) {
+		if (integer7 == 4) {
 			integer8 = 1;
 		}
-		if(integer7 == 3) {
+		if (integer7 == 3) {
 			integer8 = 2;
 		}
-		if(integer7 == 5) {
+		if (integer7 == 5) {
 			integer8 = 3;
 		}
 		final EntityPainting entity = new EntityPainting(fe, xCoord, yCoord, zCoord, integer8);
-		if(entity.onValidSurface()) {
+		if (entity.onValidSurface()) {
 			fe.entityJoinedWorld(entity);
 			--hw.stackSize;
 		}

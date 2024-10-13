@@ -16,13 +16,13 @@ public class SaplingBlock extends FlowerBlock {
 	@Override
 	public void updateTick(final World world, final int xCoord, final int yCoord, final int zCoord, final Random random) {
 		super.updateTick(world, xCoord, yCoord, zCoord, random);
-		if(world.getBlockLightValue(xCoord, yCoord + 1, zCoord) >= 9 && random.nextInt(5) == 0) {
+		if (world.getBlockLightValue(xCoord, yCoord + 1, zCoord) >= 9 && random.nextInt(5) == 0) {
 			final int blockMetadata = world.getBlockMetadata(xCoord, yCoord, zCoord);
-			if(blockMetadata < 15) {
+			if (blockMetadata < 15) {
 				world.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, blockMetadata + 1);
 			} else {
 				world.setBlock(xCoord, yCoord, zCoord, 0);
-				if(!new WorldGenTrees().generate(world, random, xCoord, yCoord, zCoord)) {
+				if (!new WorldGenTrees().generate(world, random, xCoord, yCoord, zCoord)) {
 					world.setBlock(xCoord, yCoord, zCoord, this.blockID);
 				}
 			}

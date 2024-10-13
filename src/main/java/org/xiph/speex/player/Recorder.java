@@ -109,7 +109,7 @@ public class Recorder extends Player {
 	 */
 	public static void main(final String[] args) {
 		String filename = null;
-		if(args.length > 0) {
+		if (args.length > 0) {
 			filename = args[0];
 		}
 		final Recorder recorder = new Recorder(filename);
@@ -159,7 +159,7 @@ public class Recorder extends Player {
 	 * @throws IOException
 	 */
 	protected InputStream getAudioStream() throws IOException {
-		if(audio == null) {
+		if (audio == null) {
 			return new BufferedInputStream(audioFile.openStream());
 		} else {
 			return new ByteArrayInputStream(audio);
@@ -201,7 +201,7 @@ public class Recorder extends Player {
 			// Stop the thread
 			thread = null;
 			// Close the line
-			if(line != null) {
+			if (line != null) {
 				line.stop();
 				line.close();
 				line = null;
@@ -266,7 +266,7 @@ public class Recorder extends Player {
 				} catch(IOException e) {
 					e.printStackTrace();
 				}
-				if(read > 0) {
+				if (read > 0) {
 					out.write(buffer, 0, read);
 				}
 			}
@@ -283,22 +283,22 @@ public class Recorder extends Player {
 	 * Implemented from ActionListener interface.
 	 */
 	public void actionPerformed(final ActionEvent e) {
-		if(e.getSource() == timer) {
+		if (e.getSource() == timer) {
 			progressBar.setValue(getProgress());
 		} else {
-			if("Play".equals(e.getActionCommand())) {
+			if ("Play".equals(e.getActionCommand())) {
 				playIt();
-			} else if("Record".equals(e.getActionCommand())) {
+			} else if ("Record".equals(e.getActionCommand())) {
 				recordIt();
-			} else if("Pause".equals(e.getActionCommand())) {
-				if(state == STATE_PAUSED) {
+			} else if ("Pause".equals(e.getActionCommand())) {
+				if (state == STATE_PAUSED) {
 					playIt();
-				} else if(state == STATE_REC_PAUSED) {
+				} else if (state == STATE_REC_PAUSED) {
 					recordIt();
 				} else {
 					pauseIt();
 				}
-			} else if("Stop".equals(e.getActionCommand())) {
+			} else if ("Stop".equals(e.getActionCommand())) {
 				stopIt();
 			} else {
 			}
@@ -315,9 +315,9 @@ public class Recorder extends Player {
 		stopButton.setEnabled(false);
 		oldstate = state;
 		state = STATE_STOPPED;
-		if(oldstate == STATE_PLAYING || oldstate == STATE_PAUSED) {
+		if (oldstate == STATE_PLAYING || oldstate == STATE_PAUSED) {
 			playback.stop();
-		} else if(oldstate == STATE_RECORDING || oldstate == STATE_REC_PAUSED) {
+		} else if (oldstate == STATE_RECORDING || oldstate == STATE_REC_PAUSED) {
 			capture.stop();
 		}
 		timer.stop();
@@ -338,10 +338,10 @@ public class Recorder extends Player {
 		stopButton.setEnabled(false);
 		oldstate = state;
 		state = STATE_PLAYING;
-		if(oldstate == STATE_STOPPED) {
+		if (oldstate == STATE_STOPPED) {
 			playback.setupSound();
 		}
-		if(playback.thread == null || !playback.thread.isAlive()) {
+		if (playback.thread == null || !playback.thread.isAlive()) {
 			playback.start();
 		}
 		playback.line.start();
@@ -361,12 +361,12 @@ public class Recorder extends Player {
 		pauseButton.setEnabled(false);
 		stopButton.setEnabled(false);
 		oldstate = state;
-		if(oldstate == STATE_PLAYING) {
+		if (oldstate == STATE_PLAYING) {
 			state = STATE_PAUSED;
 			playback.line.stop();
 			recordButton.setEnabled(false);
 			playButton.setEnabled(true);
-		} else if(oldstate == STATE_RECORDING) {
+		} else if (oldstate == STATE_RECORDING) {
 			state = STATE_REC_PAUSED;
 			capture.line.stop();
 			recordButton.setEnabled(true);
@@ -387,10 +387,10 @@ public class Recorder extends Player {
 		stopButton.setEnabled(false);
 		oldstate = state;
 		state = STATE_RECORDING;
-		if(oldstate == STATE_STOPPED) {
+		if (oldstate == STATE_STOPPED) {
 			capture.setupSound();
 		}
-		if(capture.thread == null || !capture.thread.isAlive()) {
+		if (capture.thread == null || !capture.thread.isAlive()) {
 			capture.start();
 		}
 		capture.line.start();
@@ -408,9 +408,9 @@ public class Recorder extends Player {
 	 */
 	protected int getProgress() {
 		audioLength = 500000;
-		if(state == STATE_PLAYING || state == STATE_PAUSED) {
+		if (state == STATE_PLAYING || state == STATE_PAUSED) {
 			return super.getProgress();
-		} else if(state == STATE_RECORDING || state == STATE_REC_PAUSED) {
+		} else if (state == STATE_RECORDING || state == STATE_REC_PAUSED) {
 			return capture.line.getFramePosition() * 1000 / audioLength;
 		} else {
 			return 0;

@@ -24,10 +24,10 @@ public class TextureWaterFlowFX extends TextureFX {
 	@Override
 	public void onTick() {
 		++this.field_1134_k;
-		for(int i = 0; i < 16; ++i) {
-			for(int j = 0; j < 16; ++j) {
+		for ( int i = 0; i < 16; ++i ) {
+			for ( int j = 0; j < 16; ++j ) {
 				float n = 0.0f;
-				for(int k = j - 2; k <= j; ++k) {
+				for ( int k = j - 2; k <= j; ++k ) {
 					final int n2 = i & 0xF;
 					final int n3 = k & 0xF;
 					n += this.field_1138_g[n2 + n3 * 16];
@@ -35,18 +35,18 @@ public class TextureWaterFlowFX extends TextureFX {
 				this.field_1137_h[i + j * 16] = n / 3.2f + this.field_1136_i[i + j * 16] * 0.8f;
 			}
 		}
-		for(int i = 0; i < 16; ++i) {
-			for(int j = 0; j < 16; ++j) {
+		for ( int i = 0; i < 16; ++i ) {
+			for ( int j = 0; j < 16; ++j ) {
 				final float[] field_1136_i = this.field_1136_i;
 				final int n4 = i + j * 16;
 				field_1136_i[n4] += this.field_1135_j[i + j * 16] * 0.05f;
-				if(this.field_1136_i[i + j * 16] < 0.0f) {
+				if (this.field_1136_i[i + j * 16] < 0.0f) {
 					this.field_1136_i[i + j * 16] = 0.0f;
 				}
 				final float[] field_1135_j = this.field_1135_j;
 				final int n5 = i + j * 16;
 				field_1135_j[n5] -= 0.3f;
-				if(Math.random() < 0.2) {
+				if (Math.random() < 0.2) {
 					this.field_1135_j[i + j * 16] = 0.5f;
 				}
 			}
@@ -54,12 +54,12 @@ public class TextureWaterFlowFX extends TextureFX {
 		final float[] field_1137_h = this.field_1137_h;
 		this.field_1137_h = this.field_1138_g;
 		this.field_1138_g = field_1137_h;
-		for(int j = 0; j < 256; ++j) {
+		for ( int j = 0; j < 256; ++j ) {
 			float n = this.field_1138_g[j - this.field_1134_k * 16 & 0xFF];
-			if(n > 1.0f) {
+			if (n > 1.0f) {
 				n = 1.0f;
 			}
-			if(n < 0.0f) {
+			if (n < 0.0f) {
 				n = 0.0f;
 			}
 			final float n6 = n * n;
@@ -67,7 +67,7 @@ public class TextureWaterFlowFX extends TextureFX {
 			int n3 = (int) (50.0f + n6 * 64.0f);
 			int n7 = 255;
 			final int n8 = (int) (146.0f + n6 * 50.0f);
-			if(this.anaglyphEnabled) {
+			if (this.anaglyphEnabled) {
 				final int n9 = (n2 * 30 + n3 * 59 + n7 * 11) / 100;
 				final int n10 = (n2 * 30 + n3 * 70) / 100;
 				final int n11 = (n2 * 30 + n7 * 70) / 100;

@@ -37,7 +37,7 @@ public class Main {
 		final File root;
 		final File jarFile;
 		URL classURL = Main.class.getResource(classPath);
-		if(classURL.getProtocol().equals("jar")) {
+		if (classURL.getProtocol().equals("jar")) {
 			JarURLConnection jarConn = null;
 			try {
 				jarConn = (JarURLConnection) classURL.openConnection();
@@ -46,7 +46,7 @@ public class Main {
 			}
 			jarFile = new File(jarConn.getJarFileURL().getFile());
 			root = jarFile.getParentFile();
-		} else if(classURL.getProtocol().equals("file")) {
+		} else if (classURL.getProtocol().equals("file")) {
 			root = new File(classURL.getFile().replace(classPath, ""));
 			jarFile = null;
 		} else {
@@ -69,10 +69,10 @@ public class Main {
 
 	public static String version() {
 		String commitId = "COMMIT_ID_UNKNOWN";
-		if(RESOURCES.jarFile != null) {
+		if (RESOURCES.jarFile != null) {
 			try {
 				String result = new BufferedReader(new InputStreamReader(resourcesAt(GIT_INFO).getFirst().openStream())).lines().collect(Collectors.joining("\n"));
-				for(String line : result.split("\n")) {
+				for ( String line : result.split("\n") ) {
 					commitId = updateVersionIfInString(commitId, line);
 				}
 			} catch(IOException e) {
@@ -80,10 +80,10 @@ public class Main {
 			}
 		} else {
 			File gitProperties = new File(RESOURCES.resourcesRoot, GIT_INFO);
-			if(gitProperties.exists()) {
+			if (gitProperties.exists()) {
 				try {
 					List<String> lines = Files.readAllLines(gitProperties.toPath());
-					for(String line : lines) {
+					for ( String line : lines ) {
 						commitId = updateVersionIfInString(commitId, line);
 					}
 				} catch(IOException e) {
@@ -95,7 +95,7 @@ public class Main {
 	}
 
 	public static String updateVersionIfInString(String version, String line) {
-		if(line.startsWith("git.commit.id.abbrev")) {
+		if (line.startsWith("git.commit.id.abbrev")) {
 			return line.split("=")[1];
 		} else {
 			return version;
@@ -110,11 +110,11 @@ public class Main {
 		List<URL> resources = new ArrayList<>();
 		while(true) {
 			ZipEntry entry = zip.getNextEntry();
-			if(entry == null) {
+			if (entry == null) {
 				break;
 			}
 			final String name = entry.getName();
-			if(name.startsWith(prefix) && !entry.isDirectory()) {
+			if (name.startsWith(prefix) && !entry.isDirectory()) {
 				resources.add(Main.class.getClassLoader().getResource(name));
 			}
 		}

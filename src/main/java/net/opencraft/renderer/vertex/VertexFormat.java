@@ -15,7 +15,7 @@ public class VertexFormat {
 	public VertexFormat(VertexFormat vertexFormatIn) {
 		this();
 
-		for(int i = 0; i < vertexFormatIn.getElementCount(); ++i) {
+		for ( int i = 0; i < vertexFormatIn.getElementCount(); ++i ) {
 			this.addElement(vertexFormatIn.getElement(i));
 		}
 
@@ -35,7 +35,7 @@ public class VertexFormat {
 	}
 
 	public VertexFormat addElement(VertexFormatElement element) {
-		if(element.isPositionElement() && this.hasPosition()) {
+		if (element.isPositionElement() && this.hasPosition()) {
 			//LOGGER.warn("VertexFormat error: Trying to add a position VertexFormatElement when one already exists, ignoring.");
 			return this;
 		} else {
@@ -84,9 +84,9 @@ public class VertexFormat {
 	public String toString() {
 		String s = "format: " + this.elements.size() + " elements: ";
 
-		for(int i = 0; i < this.elements.size(); ++i) {
+		for ( int i = 0; i < this.elements.size(); ++i ) {
 			s = s + this.elements.get(i).toString();
-			if(i != this.elements.size() - 1) {
+			if (i != this.elements.size() - 1) {
 				s = s + " ";
 			}
 		}
@@ -97,9 +97,9 @@ public class VertexFormat {
 	private boolean hasPosition() {
 		int i = 0;
 
-		for(int j = this.elements.size(); i < j; ++i) {
+		for ( int j = this.elements.size(); i < j; ++i ) {
 			VertexFormatElement vertexformatelement = this.elements.get(i);
-			if(vertexformatelement.isPositionElement()) {
+			if (vertexformatelement.isPositionElement()) {
 				return true;
 			}
 		}
@@ -132,11 +132,11 @@ public class VertexFormat {
 	}
 
 	public boolean equals(Object p_equals_1_) {
-		if(this == p_equals_1_) {
+		if (this == p_equals_1_) {
 			return true;
-		} else if(p_equals_1_ != null && this.getClass() == p_equals_1_.getClass()) {
+		} else if (p_equals_1_ != null && this.getClass() == p_equals_1_.getClass()) {
 			VertexFormat vertexformat = (VertexFormat) p_equals_1_;
-			if(this.vertexSize != vertexformat.vertexSize) {
+			if (this.vertexSize != vertexformat.vertexSize) {
 				return false;
 			} else {
 				return !this.elements.equals(vertexformat.elements) ? false : this.offsets.equals(vertexformat.offsets);

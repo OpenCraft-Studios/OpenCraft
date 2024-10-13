@@ -36,42 +36,42 @@ public class ItemBucket extends Item {
 		final float n7 = cos * n4;
 		final double n8 = 5.0;
 		final MovingObjectPosition rayTraceBlocks_do_do = fe.rayTraceBlocks_do_do(vector, vector.add(n5 * n8, n6 * n8, n7 * n8), this.isFull == 0);
-		if(rayTraceBlocks_do_do == null) {
+		if (rayTraceBlocks_do_do == null) {
 			return hw;
 		}
-		if(rayTraceBlocks_do_do.typeOfHit == 0) {
+		if (rayTraceBlocks_do_do.typeOfHit == 0) {
 			int blockX = rayTraceBlocks_do_do.blockX;
 			int blockY = rayTraceBlocks_do_do.blockY;
 			int blockZ = rayTraceBlocks_do_do.blockZ;
-			if(this.isFull == 0) {
-				if(fe.getBlockMaterial(blockX, blockY, blockZ) == Material.WATER && fe.getBlockMetadata(blockX, blockY, blockZ) == 0) {
+			if (this.isFull == 0) {
+				if (fe.getBlockMaterial(blockX, blockY, blockZ) == Material.WATER && fe.getBlockMetadata(blockX, blockY, blockZ) == 0) {
 					fe.setBlockWithNotify(blockX, blockY, blockZ, 0);
 					return new ItemStack(Item.bucketWater);
 				}
-				if(fe.getBlockMaterial(blockX, blockY, blockZ) == Material.LAVA && fe.getBlockMetadata(blockX, blockY, blockZ) == 0) {
+				if (fe.getBlockMaterial(blockX, blockY, blockZ) == Material.LAVA && fe.getBlockMetadata(blockX, blockY, blockZ) == 0) {
 					fe.setBlockWithNotify(blockX, blockY, blockZ, 0);
 					return new ItemStack(Item.bucketLava);
 				}
 			} else {
-				if(rayTraceBlocks_do_do.sideHit == 0) {
+				if (rayTraceBlocks_do_do.sideHit == 0) {
 					--blockY;
 				}
-				if(rayTraceBlocks_do_do.sideHit == 1) {
+				if (rayTraceBlocks_do_do.sideHit == 1) {
 					++blockY;
 				}
-				if(rayTraceBlocks_do_do.sideHit == 2) {
+				if (rayTraceBlocks_do_do.sideHit == 2) {
 					--blockZ;
 				}
-				if(rayTraceBlocks_do_do.sideHit == 3) {
+				if (rayTraceBlocks_do_do.sideHit == 3) {
 					++blockZ;
 				}
-				if(rayTraceBlocks_do_do.sideHit == 4) {
+				if (rayTraceBlocks_do_do.sideHit == 4) {
 					--blockX;
 				}
-				if(rayTraceBlocks_do_do.sideHit == 5) {
+				if (rayTraceBlocks_do_do.sideHit == 5) {
 					++blockX;
 				}
-				if(fe.getBlockId(blockX, blockY, blockZ) == 0 || !fe.getBlockMaterial(blockX, blockY, blockZ).isSolid()) {
+				if (fe.getBlockId(blockX, blockY, blockZ) == 0 || !fe.getBlockMaterial(blockX, blockY, blockZ).isSolid()) {
 					fe.setBlockAndMetadataWithNotify(blockX, blockY, blockZ, this.isFull, 0);
 					return new ItemStack(Item.bucketEmpty);
 				}

@@ -27,20 +27,20 @@ public class WorldGenMinable extends WorldGenerator {
 		final double n5 = integer5 + 8 - cos(n) * this.numberOfBlocks / 8.0f;
 		final double n6 = integer4 + random.nextInt(3) + 2;
 		final double n7 = integer4 + random.nextInt(3) + 2;
-		for(int i = 0; i <= this.numberOfBlocks; ++i) {
+		for ( int i = 0; i <= this.numberOfBlocks; ++i ) {
 			final double n8 = n2 + (n3 - n2) * i / this.numberOfBlocks;
 			final double n9 = n6 + (n7 - n6) * i / this.numberOfBlocks;
 			final double n10 = n4 + (n5 - n4) * i / this.numberOfBlocks;
 			final double n11 = random.nextDouble() * this.numberOfBlocks / 16.0;
 			final double n12 = (sin(i * PI_f / this.numberOfBlocks) + 1.0f) * n11 + 1.0;
 			final double n13 = (sin(i * PI_f / this.numberOfBlocks) + 1.0f) * n11 + 1.0;
-			for(int j = (int) (n8 - n12 / 2.0); j <= (int) (n8 + n12 / 2.0); ++j) {
-				for(int k = (int) (n9 - n13 / 2.0); k <= (int) (n9 + n13 / 2.0); ++k) {
-					for(int l = (int) (n10 - n12 / 2.0); l <= (int) (n10 + n12 / 2.0); ++l) {
+			for ( int j = (int) (n8 - n12 / 2.0); j <= (int) (n8 + n12 / 2.0); ++j ) {
+				for ( int k = (int) (n9 - n13 / 2.0); k <= (int) (n9 + n13 / 2.0); ++k ) {
+					for ( int l = (int) (n10 - n12 / 2.0); l <= (int) (n10 + n12 / 2.0); ++l ) {
 						final double n14 = (j + 0.5 - n8) / (n12 / 2.0);
 						final double n15 = (k + 0.5 - n9) / (n13 / 2.0);
 						final double n16 = (l + 0.5 - n10) / (n12 / 2.0);
-						if(n14 * n14 + n15 * n15 + n16 * n16 < 1.0 && fe.getBlockId(j, k, l) == Block.stone.blockID) {
+						if (n14 * n14 + n15 * n15 + n16 * n16 < 1.0 && fe.getBlockId(j, k, l) == Block.stone.blockID) {
 							fe.setBlock(j, k, l, this.minableBlockId);
 						}
 					}

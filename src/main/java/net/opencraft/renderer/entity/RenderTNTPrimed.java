@@ -18,12 +18,12 @@ public class RenderTNTPrimed extends Render<EntityTNTPrimed> {
 	public void doRender(final EntityTNTPrimed entityLiving, final double xCoord, final double sqrt_double, final double yCoord, final float nya1, final float nya2) {
 		GL11.glPushMatrix();
 		GL11.glTranslatef((float) xCoord, (float) sqrt_double, (float) yCoord);
-		if(entityLiving.fuse - nya2 + 1.0f < 10.0f) {
+		if (entityLiving.fuse - nya2 + 1.0f < 10.0f) {
 			float n = 1.0f - (entityLiving.fuse - nya2 + 1.0f) / 10.0f;
-			if(n < 0.0f) {
+			if (n < 0.0f) {
 				n = 0.0f;
 			}
-			if(n > 1.0f) {
+			if (n > 1.0f) {
 				n = 1.0f;
 			}
 			n *= n;
@@ -34,7 +34,7 @@ public class RenderTNTPrimed extends Render<EntityTNTPrimed> {
 		float n = (1.0f - (entityLiving.fuse - nya2 + 1.0f) / 100.0f) * 0.8f;
 		this.loadTexture("/assets/terrain.png");
 		this.blockRenderer.renderBlockOnInventory(Block.tnt);
-		if(entityLiving.fuse / 5 % 2 == 0) {
+		if (entityLiving.fuse / 5 % 2 == 0) {
 			GL11.glDisable(3553);
 			GL11.glDisable(2896);
 			GL11.glEnable(3042);

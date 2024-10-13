@@ -28,9 +28,9 @@ public class ChunkProviderClient implements IChunkProvider {
 	public Chunk provideChunk(final int integer1, final int integer2) {
 		final int n = (integer1 & 0xF) | (integer2 & 0xF) * 16;
 		try {
-			if(!this.chunkExists(integer1, integer2)) {
+			if (!this.chunkExists(integer1, integer2)) {
 				Chunk c = this.c(integer1, integer2);
-				if(c == null) {
+				if (c == null) {
 					c = new Chunk(this.worldObj, this.byteSomething, integer1, integer2);
 					c.q = true;
 					c.neverSave = true;

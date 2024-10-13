@@ -180,7 +180,7 @@ public class CodecJOgg implements ICodec {
 		initialized(SET, false);
 		cleanup();
 
-		if(url == null) {
+		if (url == null) {
 			errorMessage("url null in method 'initialize'");
 			cleanup();
 			return false;
@@ -207,7 +207,7 @@ public class CodecJOgg implements ICodec {
 			cleanup();
 			return false;
 		}
-		if(myAudioInputStream == null) {
+		if (myAudioInputStream == null) {
 			errorMessage("Unable to set up audio input stream in method " + "'initialize'");
 			cleanup();
 			return false;
@@ -235,7 +235,7 @@ public class CodecJOgg implements ICodec {
 	 * @return The audio data wrapped into a SoundBuffer context.
 	 */
 	public SoundBuffer read() {
-		if(myAudioInputStream == null) {
+		if (myAudioInputStream == null) {
 			endOfStream(SET, true);
 			return null;
 		}
@@ -244,7 +244,7 @@ public class CodecJOgg implements ICodec {
 		AudioFormat audioFormat = myAudioInputStream.getFormat();
 
 		// Check to make sure there is an audio format:
-		if(audioFormat == null) {
+		if (audioFormat == null) {
 			errorMessage("Audio Format null in method 'read'");
 			endOfStream(SET, true);
 			return null;
@@ -259,7 +259,7 @@ public class CodecJOgg implements ICodec {
 		try {
 			// Read until buffer is full or end of stream is reached:
 			while((!endOfStream(GET, XXX)) && (bytesRead < streamBuffer.length)) {
-				if((cnt = myAudioInputStream.read(streamBuffer, bytesRead, streamBuffer.length - bytesRead)) <= 0) {
+				if ((cnt = myAudioInputStream.read(streamBuffer, bytesRead, streamBuffer.length - bytesRead)) <= 0) {
 					endOfStream(SET, true);
 					break;
 				}
@@ -278,17 +278,17 @@ public class CodecJOgg implements ICodec {
 		}
 
 		// Return null if no data was read:
-		if(bytesRead <= 0) {
+		if (bytesRead <= 0) {
 			endOfStream(SET, true);
 			return null;
 		}
 
 		// Reverse the byte order if necessary (required for some .ogg files):
-		if(reverseBytes)
+		if (reverseBytes)
 			reverseBytes(streamBuffer, 0, bytesRead);
 
 		// If we didn't fill the stream buffer entirely, trim it down to size:
-		if(bytesRead < streamBuffer.length)
+		if (bytesRead < streamBuffer.length)
 			streamBuffer = trimArray(streamBuffer, bytesRead);
 
 		// Insert the converted data into a ByteBuffer:
@@ -311,7 +311,7 @@ public class CodecJOgg implements ICodec {
 	 */
 	public SoundBuffer readAll() {
 		// Check to make sure there is an audio format:
-		if(myAudioFormat == null) {
+		if (myAudioFormat == null) {
 			errorMessage("Audio Format null in method 'readAll'");
 			return null;
 		}
@@ -321,7 +321,7 @@ public class CodecJOgg implements ICodec {
 
 		// Determine how much data will be read in:
 		int fileSize = myAudioFormat.getChannels() * (int) myAudioInputStream.getFrameLength() * myAudioFormat.getSampleSizeInBits() / 8;
-		if(fileSize > 0) {
+		if (fileSize > 0) {
 			// Allocate memory for the audio data:
 			fullBuffer = new byte[myAudioFormat.getChannels() * (int) myAudioInputStream.getFrameLength() * myAudioFormat.getSampleSizeInBits() / 8];
 			int read = 0, total = 0;
@@ -353,7 +353,7 @@ public class CodecJOgg implements ICodec {
 				try {
 					// Read until small buffer is filled or end of file reached:
 					while(bytesRead < smallBuffer.length) {
-						if((cnt = myAudioInputStream.read(smallBuffer, bytesRead, smallBuffer.length - bytesRead)) <= 0) {
+						if ((cnt = myAudioInputStream.read(smallBuffer, bytesRead, smallBuffer.length - bytesRead)) <= 0) {
 							endOfStream(SET, true);
 							break;
 						}
@@ -366,7 +366,7 @@ public class CodecJOgg implements ICodec {
 				}
 
 				// Reverse byte order if necessary:
-				if(reverseBytes)
+				if (reverseBytes)
 					reverseBytes(smallBuffer, 0, bytesRead);
 
 				// Keep track of the total number of bytes read:
@@ -406,22 +406,22 @@ public class CodecJOgg implements ICodec {
 	 * Closes the audio stream and remove references to all instantiated objects.
 	 */
 	public void cleanup() {
-		if(myLogicalOggStream != null)
+		if (myLogicalOggStream != null)
 			try {
 				myLogicalOggStream.close();
 			} catch(Exception e) {
 			}
-		if(myVorbisStream != null)
+		if (myVorbisStream != null)
 			try {
 				myVorbisStream.close();
 			} catch(Exception e) {
 			}
-		if(myOggInputStream != null)
+		if (myOggInputStream != null)
 			try {
 				myOggInputStream.close();
 			} catch(Exception e) {
 			}
-		if(myAudioInputStream != null)
+		if (myAudioInputStream != null)
 			try {
 				myAudioInputStream.close();
 			} catch(Exception e) {
@@ -450,7 +450,7 @@ public class CodecJOgg implements ICodec {
 	 * @return True if steam is initialized.
 	 */
 	private synchronized boolean initialized(boolean action, boolean value) {
-		if(action == SET)
+		if (action == SET)
 			initialized = value;
 		return initialized;
 	}
@@ -463,7 +463,7 @@ public class CodecJOgg implements ICodec {
 	 * @return True if end of stream was reached.
 	 */
 	private synchronized boolean endOfStream(boolean action, boolean value) {
-		if(action == SET)
+		if (action == SET)
 			endOfStream = value;
 		return endOfStream;
 	}
@@ -478,7 +478,7 @@ public class CodecJOgg implements ICodec {
 	 */
 	private static byte[] trimArray(byte[] array, int maxLength) {
 		byte[] trimmedArray = null;
-		if(array != null && array.length > maxLength) {
+		if (array != null && array.length > maxLength) {
 			trimmedArray = new byte[maxLength];
 			System.arraycopy(array, 0, trimmedArray, 0, maxLength);
 		}
@@ -497,7 +497,7 @@ public class CodecJOgg implements ICodec {
 		dest.order(ByteOrder.nativeOrder());
 		ByteBuffer src = ByteBuffer.wrap(audio_bytes);
 		src.order(ByteOrder.LITTLE_ENDIAN);
-		if(two_bytes_data) {
+		if (two_bytes_data) {
 			ShortBuffer dest_short = dest.asShortBuffer();
 			ShortBuffer src_short = src.asShortBuffer();
 			while(src_short.hasRemaining()) {
@@ -510,7 +510,7 @@ public class CodecJOgg implements ICodec {
 		}
 		dest.rewind();
 
-		if(!dest.hasArray()) {
+		if (!dest.hasArray()) {
 			byte[] arrayBackedBuffer = new byte[dest.capacity()];
 			dest.get(arrayBackedBuffer);
 			dest.clear();
@@ -532,16 +532,16 @@ public class CodecJOgg implements ICodec {
 	 */
 	private static byte[] appendByteArrays(byte[] arrayOne, byte[] arrayTwo, int length) {
 		byte[] newArray;
-		if(arrayOne == null && arrayTwo == null) {
+		if (arrayOne == null && arrayTwo == null) {
 			// no data, just return
 			return null;
-		} else if(arrayOne == null) {
+		} else if (arrayOne == null) {
 			// create the new array, same length as arrayTwo:
 			newArray = new byte[length];
 			// fill the new array with the contents of arrayTwo:
 			System.arraycopy(arrayTwo, 0, newArray, 0, length);
 			arrayTwo = null;
-		} else if(arrayTwo == null) {
+		} else if (arrayTwo == null) {
 			// create the new array, same length as arrayOne:
 			newArray = new byte[arrayOne.length];
 			// fill the new array with the contents of arrayOne:
@@ -579,7 +579,7 @@ public class CodecJOgg implements ICodec {
 	public static void reverseBytes(byte[] buffer, int offset, int size) {
 
 		byte b;
-		for(int i = offset; i < (offset + size); i += 2) {
+		for ( int i = offset; i < (offset + size); i += 2 ) {
 			b = buffer[i];
 			buffer[i] = buffer[i + 1];
 			buffer[i + 1] = b;

@@ -29,7 +29,7 @@ public class RenderArrow extends Render<EntityArrow> {
 		float f11 = 0.05625f;
 		GL11.glEnable((int) 32826);
 		float f12 = (float) entityLiving.arrowShake - nya2;
-		if(f12 > 0.0f) {
+		if (f12 > 0.0f) {
 			float f13 = -sin(f12 * 3.0f) * f12;
 			GL11.glRotatef((float) f13, (float) 0.0f, (float) 0.0f, (float) 1.0f);
 		}
@@ -50,7 +50,7 @@ public class RenderArrow extends Render<EntityArrow> {
 		t.vertexUV(-7.0, -2.0, 2.0, f8, f10);
 		t.vertexUV(-7.0, -2.0, -2.0, f7, f10);
 		t.draw();
-		for(int i = 0; i < 4; ++i) {
+		for ( int i = 0; i < 4; ++i ) {
 			GL11.glRotatef((float) 90.0f, (float) 1.0f, (float) 0.0f, (float) 0.0f);
 			GL11.glNormal3f((float) 0.0f, (float) 0.0f, (float) f11);
 			t.beginQuads();

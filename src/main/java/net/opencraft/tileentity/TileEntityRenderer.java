@@ -31,13 +31,13 @@ public class TileEntityRenderer {
 		this.m = new HashMap<>();
 		m.put(TileEntitySign.class, new TileEntitySignRenderer());
 		this.m.put(TileEntityMobSpawner.class, new TileEntityMobSpawnerRenderer());
-		for(TileEntitySpecialRenderer<?> t : this.m.values())
+		for ( TileEntitySpecialRenderer<?> t : this.m.values() )
 			t.setTileEntityRenderer(this);
 	}
 
 	public TileEntitySpecialRenderer a(final Class class1) {
 		TileEntitySpecialRenderer a = (TileEntitySpecialRenderer) this.m.get(class1);
-		if(a == null && class1 != TileEntity.class) {
+		if (a == null && class1 != TileEntity.class) {
 			a = this.a(class1.getSuperclass());
 			this.m.put(class1, a);
 		}
@@ -65,7 +65,7 @@ public class TileEntityRenderer {
 	}
 
 	public void a(final TileEntity bk, final float float2) {
-		if(bk.getDistanceFrom(this.j, this.k, this.l) < 4096.0) {
+		if (bk.getDistanceFrom(this.j, this.k, this.l) < 4096.0) {
 			final float lightBrightness = this.f.getLightBrightness(bk.xCoord, bk.yCoord, bk.zCoord);
 			GL11.glColor3f(lightBrightness, lightBrightness, lightBrightness);
 			this.renderTileEntityAt(bk, bk.xCoord - TileEntityRenderer.b, bk.yCoord - TileEntityRenderer.c, bk.zCoord - TileEntityRenderer.d, float2);
@@ -74,7 +74,7 @@ public class TileEntityRenderer {
 
 	public void renderTileEntityAt(final TileEntity bk, final double double2, final double double3, final double double4, final float float5) {
 		final TileEntitySpecialRenderer b = this.b(bk);
-		if(b != null) {
+		if (b != null) {
 			b.renderTileEntityMobSpawner(bk, double2, double3, double4, float5);
 		}
 	}

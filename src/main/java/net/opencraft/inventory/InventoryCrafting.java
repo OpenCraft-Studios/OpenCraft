@@ -29,17 +29,17 @@ public class InventoryCrafting implements IInventory {
 	}
 
 	public ItemStack decrStackSize(final int integer1, final int integer2) {
-		if(this.stackList[integer1] == null) {
+		if (this.stackList[integer1] == null) {
 			return null;
 		}
-		if(this.stackList[integer1].stackSize <= integer2) {
+		if (this.stackList[integer1].stackSize <= integer2) {
 			final ItemStack itemStack = this.stackList[integer1];
 			this.stackList[integer1] = null;
 			this.eventHandler.onCraftMatrixChanged(this);
 			return itemStack;
 		}
 		final ItemStack splitStack = this.stackList[integer1].splitStack(integer2);
-		if(this.stackList[integer1].stackSize == 0) {
+		if (this.stackList[integer1].stackSize == 0) {
 			this.stackList[integer1] = null;
 		}
 		this.eventHandler.onCraftMatrixChanged(this);

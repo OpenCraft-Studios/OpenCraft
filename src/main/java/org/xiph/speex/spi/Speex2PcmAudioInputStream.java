@@ -158,25 +158,25 @@ public class Speex2PcmAudioInputStream extends FilteredAudioInputStream {
 		while(!initialised) {
 			int readsize = prebuf.length - precount - 1;
 			int avail = in.available();
-			if(!blocking && avail <= 0) {
+			if (!blocking && avail <= 0) {
 				return;
 			}
 			readsize = (avail > 0 ? Math.min(avail, readsize) : readsize);
 			int n = in.read(prebuf, precount, readsize);
-			if(n < 0) {
+			if (n < 0) {
 				throw new StreamCorruptedException("Incomplete Ogg Headers");
 			}
-			if(n == 0) {
+			if (n == 0) {
 				// This should never happen.
 				//assert false : "Read 0 bytes from stream - possible infinate loop";
 			}
 			precount += n;
-			if(decoder == null && precount >= 108) { // we can process the speex header
-				if(!(new String(prebuf, 0, 4).equals("OggS"))) {
+			if (decoder == null && precount >= 108) { // we can process the speex header
+				if (!(new String(prebuf, 0, 4).equals("OggS"))) {
 					throw new StreamCorruptedException("The given stream does not appear to be Ogg.");
 				}
 				streamSerialNumber = readInt(prebuf, 14);
-				if(!(new String(prebuf, 28, 8).equals("Speex   "))) {
+				if (!(new String(prebuf, 28, 8).equals("Speex   "))) {
 					throw new StreamCorruptedException("The given stream does not appear to be Ogg Speex.");
 				}
 				sampleRate = readInt(prebuf, 28 + 36);
@@ -206,14 +206,14 @@ public class Speex2PcmAudioInputStream extends FilteredAudioInputStream {
 				outputData = new byte[2 * frameSize * channelCount * framesPerPacket];
 				bits.init();
 			}
-			if(decoder != null && precount >= 108 + 27) { // we can process the comment (skip them)
+			if (decoder != null && precount >= 108 + 27) { // we can process the comment (skip them)
 				packetsPerOggPage = 0xff & prebuf[108 + 26];
-				if(precount >= 108 + 27 + packetsPerOggPage) {
+				if (precount >= 108 + 27 + packetsPerOggPage) {
 					int size = 0;
-					for(int i = 0; i < packetsPerOggPage; i++) {
+					for ( int i = 0; i < packetsPerOggPage; i++ ) {
 						size += 0xff & prebuf[108 + 27 + i];
 					}
-					if(precount >= 108 + 27 + packetsPerOggPage + size) { // we have read the complete comment page
+					if (precount >= 108 + 27 + packetsPerOggPage + size) { // we have read the complete comment page
 						prepos = 108 + 27 + packetsPerOggPage + size;
 						packetsPerOggPage = 0;
 						packetCount = 255;
@@ -240,14 +240,14 @@ public class Speex2PcmAudioInputStream extends FilteredAudioInputStream {
 		}
 		while(true) {
 			int read = in.read(prebuf, precount, prebuf.length - precount);
-			if(read < 0) { // inputstream has ended
+			if (read < 0) { // inputstream has ended
 				while(prepos < precount) { // still data to decode
-					if(packetCount >= packetsPerOggPage) { // read new Ogg Page header
+					if (packetCount >= packetsPerOggPage) { // read new Ogg Page header
 						readOggPageHeader();
 					}
-					if(packetCount < packetsPerOggPage) { // Ogg Page might be empty (0 packets)
+					if (packetCount < packetsPerOggPage) { // Ogg Page might be empty (0 packets)
 						int n = packetSizes[packetCount++];
-						if((precount - prepos) < n) { // we don't have enough data for a complete speex frame
+						if ((precount - prepos) < n) { // we don't have enough data for a complete speex frame
 							throw new StreamCorruptedException("Incompleted last Speex packet");
 						}
 						// do last stuff here
@@ -267,14 +267,14 @@ public class Speex2PcmAudioInputStream extends FilteredAudioInputStream {
 			}
 			// if read=0 but the prebuffer contains data, it is decoded and returned.
 			// if read=0 but the prebuffer is almost empty, it loops back to read.
-			else if(read >= 0) {
+			else if (read >= 0) {
 				precount += read;
 				// do stuff here
-				if(packetCount >= packetsPerOggPage) { // read new Ogg Page header
+				if (packetCount >= packetsPerOggPage) { // read new Ogg Page header
 					readOggPageHeader();
 				}
-				if(packetCount < packetsPerOggPage) { // read the next packet
-					if((precount - prepos) >= packetSizes[packetCount]) { // we have enough data, lets start decoding
+				if (packetCount < packetsPerOggPage) { // read the next packet
+					if ((precount - prepos) >= packetSizes[packetCount]) { // we have enough data, lets start decoding
 						while(((precount - prepos) >= packetSizes[packetCount]) && (packetCount < packetsPerOggPage)) { // lets decode all we can
 							int n = packetSizes[packetCount++];
 							decode(prebuf, prepos, n);
@@ -287,7 +287,7 @@ public class Speex2PcmAudioInputStream extends FilteredAudioInputStream {
 							}
 							System.arraycopy(outputData, 0, buf, count, outputData.length);
 							count += outputData.length;
-							if(packetCount >= packetsPerOggPage) { // read new Ogg Page header
+							if (packetCount >= packetsPerOggPage) { // read new Ogg Page header
 								readOggPageHeader();
 							}
 						}
@@ -316,20 +316,20 @@ public class Speex2PcmAudioInputStream extends FilteredAudioInputStream {
 		int outputSize = 0;
 		/* read packet bytes into bitstream */
 		bits.read_from(data, offset, len);
-		for(int frame = 0; frame < framesPerPacket; frame++) {
+		for ( int frame = 0; frame < framesPerPacket; frame++ ) {
 			/* decode the bitstream */
 			decoder.decode(bits, decodedData);
-			if(channelCount == 2)
+			if (channelCount == 2)
 				decoder.decodeStereo(decodedData, frameSize);
 			/* PCM saturation */
-			for(i = 0; i < frameSize * channelCount; i++) {
-				if(decodedData[i] > 32767.0f)
+			for ( i = 0; i < frameSize * channelCount; i++ ) {
+				if (decodedData[i] > 32767.0f)
 					decodedData[i] = 32767.0f;
-				else if(decodedData[i] < -32768.0f)
+				else if (decodedData[i] < -32768.0f)
 					decodedData[i] = -32768.0f;
 			}
 			/* convert to short and save to buffer */
-			for(i = 0; i < frameSize * channelCount; i++) {
+			for ( i = 0; i < frameSize * channelCount; i++ ) {
 				val = (decodedData[i] > 0) ? (short) (decodedData[i] + .5) : (short) (decodedData[i] - .5);
 				outputData[outputSize++] = (byte) (val & 0xff);
 				outputData[outputSize++] = (byte) ((val >> 8) & 0xff);
@@ -351,30 +351,30 @@ public class Speex2PcmAudioInputStream extends FilteredAudioInputStream {
 		}
 		checkIfStillOpen();
 		// Sanity check
-		if(n <= 0) {
+		if (n <= 0) {
 			return 0;
 		}
 		// Skip buffered data if there is any
-		if(pos < count) {
+		if (pos < count) {
 			return super.skip(n);
 		}
 		// Nothing in the buffers to skip
 		else {
 			int decodedPacketSize = 2 * framesPerPacket * frameSize * channelCount;
-			if(markpos < 0 && n >= decodedPacketSize) {
+			if (markpos < 0 && n >= decodedPacketSize) {
 				// We aren't buffering and skipping more than a complete Speex packet:
 				// Lets try to skip complete Speex packets without decoding
-				if(packetCount >= packetsPerOggPage) { // read new Ogg Page header
+				if (packetCount >= packetsPerOggPage) { // read new Ogg Page header
 					readOggPageHeader();
 				}
-				if(packetCount < packetsPerOggPage) { // read the next packet
+				if (packetCount < packetsPerOggPage) { // read the next packet
 					int skipped = 0;
-					if((precount - prepos) < packetSizes[packetCount]) { // we don't have enough data
+					if ((precount - prepos) < packetSizes[packetCount]) { // we don't have enough data
 						int avail = in.available();
-						if(avail > 0) {
+						if (avail > 0) {
 							int size = Math.min(prebuf.length - precount, avail);
 							int read = in.read(prebuf, precount, size);
-							if(read < 0) { // inputstream has ended
+							if (read < 0) { // inputstream has ended
 								throw new IOException("End of stream but there are still supposed to be packets to decode");
 							}
 							precount += read;
@@ -384,7 +384,7 @@ public class Speex2PcmAudioInputStream extends FilteredAudioInputStream {
 						prepos += packetSizes[packetCount++];
 						skipped += decodedPacketSize;
 						n -= decodedPacketSize;
-						if(packetCount >= packetsPerOggPage) { // read new Ogg Page header
+						if (packetCount >= packetsPerOggPage) { // read new Ogg Page header
 							readOggPageHeader();
 						}
 					}
@@ -419,18 +419,18 @@ public class Speex2PcmAudioInputStream extends FilteredAudioInputStream {
 	 * @see #in
 	 */
 	public synchronized int available() throws IOException {
-		if(!initialised) {
+		if (!initialised) {
 			initialise(false);
-			if(!initialised) {
+			if (!initialised) {
 				return 0;
 			}
 		}
 		int avail = super.available();
-		if(packetCount >= packetsPerOggPage) { // read new Ogg Page header
+		if (packetCount >= packetsPerOggPage) { // read new Ogg Page header
 			readOggPageHeader();
 		}
 		// See how much we could decode from the underlying stream.
-		if(packetCount < packetsPerOggPage) {
+		if (packetCount < packetsPerOggPage) {
 			int undecoded = precount - prepos + in.available();
 			int size = packetSizes[packetCount];
 			int tempCount = 0;
@@ -456,38 +456,38 @@ public class Speex2PcmAudioInputStream extends FilteredAudioInputStream {
 	 */
 	private void readOggPageHeader() throws IOException {
 		int packets = 0;
-		if(precount - prepos < 27) {
+		if (precount - prepos < 27) {
 			int avail = in.available();
-			if(avail > 0) {
+			if (avail > 0) {
 				int size = Math.min(prebuf.length - precount, avail);
 				int read = in.read(prebuf, precount, size);
-				if(read < 0) { // inputstream has ended
+				if (read < 0) { // inputstream has ended
 					throw new IOException("End of stream but available was positive");
 				}
 				precount += read;
 			}
 		}
-		if(precount - prepos >= 27) { // can read beginning of Page header
-			if(!(new String(prebuf, prepos, 4).equals("OggS"))) {
+		if (precount - prepos >= 27) { // can read beginning of Page header
+			if (!(new String(prebuf, prepos, 4).equals("OggS"))) {
 				throw new StreamCorruptedException("Lost Ogg Sync");
 			}
-			if(streamSerialNumber != readInt(prebuf, prepos + 14)) {
+			if (streamSerialNumber != readInt(prebuf, prepos + 14)) {
 				throw new StreamCorruptedException("Ogg Stream Serial Number mismatch");
 			}
 			packets = 0xff & prebuf[prepos + 26];
 		}
-		if(precount - prepos < 27 + packets) {
+		if (precount - prepos < 27 + packets) {
 			int avail = in.available();
-			if(avail > 0) {
+			if (avail > 0) {
 				int size = Math.min(prebuf.length - precount, avail);
 				int read = in.read(prebuf, precount, size);
-				if(read < 0) { // inputstream has ended
+				if (read < 0) { // inputstream has ended
 					throw new IOException("End of stream but available was positive");
 				}
 				precount += read;
 			}
 		}
-		if(precount - prepos >= 27 + packets) { // can read entire Page header
+		if (precount - prepos >= 27 + packets) { // can read entire Page header
 			System.arraycopy(prebuf, prepos + 27, packetSizes, 0, packets);
 			packetCount = 0;
 			prepos += 27 + packets;

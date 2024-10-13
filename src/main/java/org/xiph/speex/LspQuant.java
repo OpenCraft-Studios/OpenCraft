@@ -120,7 +120,7 @@ public abstract class LspQuant implements Codebook {
 	 */
 	protected void unpackPlus(final float[] lsp, final int[] tab, final Bits bits, final float k, final int ti, final int li) {
 		int id = bits.unpack(6);
-		for(int i = 0; i < ti; i++)
+		for ( int i = 0; i < ti; i++ )
 			lsp[i + li] += k * (float) tab[id * ti + i];
 	}
 
@@ -142,19 +142,19 @@ public abstract class LspQuant implements Codebook {
 		float best_dist = 0;
 		int best_id = 0;
 		int ptr = 0;
-		for(i = 0; i < nbVec; i++) {
+		for ( i = 0; i < nbVec; i++ ) {
 			dist = 0;
-			for(j = 0; j < nbDim; j++) {
+			for ( j = 0; j < nbDim; j++ ) {
 				tmp = (x[xs + j] - cdbk[ptr++]);
 				dist += tmp * tmp;
 			}
-			if(dist < best_dist || i == 0) {
+			if (dist < best_dist || i == 0) {
 				best_dist = dist;
 				best_id = i;
 			}
 		}
 
-		for(j = 0; j < nbDim; j++)
+		for ( j = 0; j < nbDim; j++ )
 			x[xs + j] -= cdbk[best_id * nbDim + j];
 
 		return best_id;
@@ -180,18 +180,18 @@ public abstract class LspQuant implements Codebook {
 		float best_dist = 0;
 		int best_id = 0;
 		int ptr = 0;
-		for(i = 0; i < nbVec; i++) {
+		for ( i = 0; i < nbVec; i++ ) {
 			dist = 0;
-			for(j = 0; j < nbDim; j++) {
+			for ( j = 0; j < nbDim; j++ ) {
 				tmp = (x[xs + j] - cdbk[ptr++]);
 				dist += weight[ws + j] * tmp * tmp;
 			}
-			if(dist < best_dist || i == 0) {
+			if (dist < best_dist || i == 0) {
 				best_dist = dist;
 				best_id = i;
 			}
 		}
-		for(j = 0; j < nbDim; j++)
+		for ( j = 0; j < nbDim; j++ )
 			x[xs + j] -= cdbk[best_id * nbDim + j];
 		return best_id;
 	}

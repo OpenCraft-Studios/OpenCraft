@@ -64,37 +64,37 @@ public class FireBlock extends Block {
 	@Override
 	public void updateTick(final World world, final int xCoord, final int yCoord, final int zCoord, final Random random) {
 		final int blockMetadata = world.getBlockMetadata(xCoord, yCoord, zCoord);
-		if(blockMetadata < 15) {
+		if (blockMetadata < 15) {
 			world.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, blockMetadata + 1);
 			world.scheduleBlockUpdate(xCoord, yCoord, zCoord, this.blockID);
 		}
-		if(!this.canNeighborCatchFire(world, xCoord, yCoord, zCoord)) {
-			if(!world.isBlockNormalCube(xCoord, yCoord - 1, zCoord) || blockMetadata > 3) {
+		if (!this.canNeighborCatchFire(world, xCoord, yCoord, zCoord)) {
+			if (!world.isBlockNormalCube(xCoord, yCoord - 1, zCoord) || blockMetadata > 3) {
 				world.setBlockWithNotify(xCoord, yCoord, zCoord, 0);
 			}
 			return;
 		}
-		if(!this.canBlockCatchFire(world, xCoord, yCoord - 1, zCoord) && blockMetadata == 15 && random.nextInt(4) == 0) {
+		if (!this.canBlockCatchFire(world, xCoord, yCoord - 1, zCoord) && blockMetadata == 15 && random.nextInt(4) == 0) {
 			world.setBlockWithNotify(xCoord, yCoord, zCoord, 0);
 			return;
 		}
-		if(blockMetadata % 5 == 0 && blockMetadata > 5) {
+		if (blockMetadata % 5 == 0 && blockMetadata > 5) {
 			this.tryToCatchBlockOnFire(world, xCoord + 1, yCoord, zCoord, 300, random);
 			this.tryToCatchBlockOnFire(world, xCoord - 1, yCoord, zCoord, 300, random);
 			this.tryToCatchBlockOnFire(world, xCoord, yCoord - 1, zCoord, 100, random);
 			this.tryToCatchBlockOnFire(world, xCoord, yCoord + 1, zCoord, 200, random);
 			this.tryToCatchBlockOnFire(world, xCoord, yCoord, zCoord - 1, 300, random);
 			this.tryToCatchBlockOnFire(world, xCoord, yCoord, zCoord + 1, 300, random);
-			for(int i = xCoord - 1; i <= xCoord + 1; ++i) {
-				for(int j = zCoord - 1; j <= zCoord + 1; ++j) {
-					for(int k = yCoord - 1; k <= yCoord + 4; ++k) {
-						if(i != xCoord || k != yCoord || j != zCoord) {
+			for ( int i = xCoord - 1; i <= xCoord + 1; ++i ) {
+				for ( int j = zCoord - 1; j <= zCoord + 1; ++j ) {
+					for ( int k = yCoord - 1; k <= yCoord + 4; ++k ) {
+						if (i != xCoord || k != yCoord || j != zCoord) {
 							int n = 100;
-							if(k > yCoord + 1) {
+							if (k > yCoord + 1) {
 								n += (k - (yCoord + 1)) * 100;
 							}
 							final int chanceOfNeighborsEncouragingFire = this.getChanceOfNeighborsEncouragingFire(world, i, k, j);
-							if(chanceOfNeighborsEncouragingFire > 0 && random.nextInt(n) <= chanceOfNeighborsEncouragingFire) {
+							if (chanceOfNeighborsEncouragingFire > 0 && random.nextInt(n) <= chanceOfNeighborsEncouragingFire) {
 								world.setBlockWithNotify(i, k, j, this.blockID);
 							}
 						}
@@ -105,14 +105,14 @@ public class FireBlock extends Block {
 	}
 
 	private void tryToCatchBlockOnFire(final World world, final int xCoord, final int yCoord, final int zCoord, final int nya4, final Random random) {
-		if(random.nextInt(nya4) < this.abilityToCatchFire[world.getBlockId(xCoord, yCoord, zCoord)]) {
+		if (random.nextInt(nya4) < this.abilityToCatchFire[world.getBlockId(xCoord, yCoord, zCoord)]) {
 			final boolean b = world.getBlockId(xCoord, yCoord, zCoord) == Block.tnt.blockID;
-			if(random.nextInt(2) == 0) {
+			if (random.nextInt(2) == 0) {
 				world.setBlockWithNotify(xCoord, yCoord, zCoord, this.blockID);
 			} else {
 				world.setBlockWithNotify(xCoord, yCoord, zCoord, 0);
 			}
-			if(b) {
+			if (b) {
 				Block.tnt.onBlockDestroyedByPlayer(world, xCoord, yCoord, zCoord, 0);
 			}
 		}
@@ -124,7 +124,7 @@ public class FireBlock extends Block {
 
 	private int getChanceOfNeighborsEncouragingFire(final World world, final int xCoord, final int yCoord, final int zCoord) {
 		final int nya4 = 0;
-		if(world.getBlockId(xCoord, yCoord, zCoord) != 0) {
+		if (world.getBlockId(xCoord, yCoord, zCoord) != 0) {
 			return 0;
 		}
 		int nya5 = this.getChanceToEncourageFire(world, xCoord + 1, yCoord, zCoord, nya4);
@@ -147,7 +147,7 @@ public class FireBlock extends Block {
 
 	public int getChanceToEncourageFire(final World world, final int xCoord, final int yCoord, final int zCoord, final int nya4) {
 		final int n = this.chanceToEncourageFire[world.getBlockId(xCoord, yCoord, zCoord)];
-		if(n > nya4) {
+		if (n > nya4) {
 			return n;
 		}
 		return nya4;
@@ -160,14 +160,14 @@ public class FireBlock extends Block {
 
 	@Override
 	public void onNeighborBlockChange(final World world, final int xCoord, final int yCoord, final int zCoord, final int nya4) {
-		if(!world.isBlockNormalCube(xCoord, yCoord - 1, zCoord) && !this.canNeighborCatchFire(world, xCoord, yCoord, zCoord)) {
+		if (!world.isBlockNormalCube(xCoord, yCoord - 1, zCoord) && !this.canNeighborCatchFire(world, xCoord, yCoord, zCoord)) {
 			world.setBlockWithNotify(xCoord, yCoord, zCoord, 0);
 		}
 	}
 
 	@Override
 	public void onBlockAdded(final World world, final int xCoord, final int yCoord, final int zCoord) {
-		if(!world.isBlockNormalCube(xCoord, yCoord - 1, zCoord) && !this.canNeighborCatchFire(world, xCoord, yCoord, zCoord)) {
+		if (!world.isBlockNormalCube(xCoord, yCoord - 1, zCoord) && !this.canNeighborCatchFire(world, xCoord, yCoord, zCoord)) {
 			world.setBlockWithNotify(xCoord, yCoord, zCoord, 0);
 			return;
 		}
@@ -176,51 +176,51 @@ public class FireBlock extends Block {
 
 	@Override
 	public void randomDisplayTick(final World world, final int xCoord, final int yCoord, final int zCoord, final Random random) {
-		if(random.nextInt(24) == 0) {
+		if (random.nextInt(24) == 0) {
 			world.playSoundEffect((xCoord + 0.5f), (yCoord + 0.5f), (zCoord + 0.5f), "fire.fire", 1.0f + random.nextFloat(), random.nextFloat() * 0.7f + 0.3f);
 		}
-		if(world.isBlockNormalCube(xCoord, yCoord - 1, zCoord) || Block.fire.canBlockCatchFire(world, xCoord, yCoord - 1, zCoord)) {
-			for(int i = 0; i < 3; ++i) {
+		if (world.isBlockNormalCube(xCoord, yCoord - 1, zCoord) || Block.fire.canBlockCatchFire(world, xCoord, yCoord - 1, zCoord)) {
+			for ( int i = 0; i < 3; ++i ) {
 				final float n = xCoord + random.nextFloat();
 				final float n2 = yCoord + random.nextFloat() * 0.5f + 0.5f;
 				final float n3 = zCoord + random.nextFloat();
 				world.spawnParticle("largesmoke", n, n2, n3, 0.0, 0.0, 0.0);
 			}
 		} else {
-			if(Block.fire.canBlockCatchFire(world, xCoord - 1, yCoord, zCoord)) {
-				for(int i = 0; i < 2; ++i) {
+			if (Block.fire.canBlockCatchFire(world, xCoord - 1, yCoord, zCoord)) {
+				for ( int i = 0; i < 2; ++i ) {
 					final float n = xCoord + random.nextFloat() * 0.1f;
 					final float n2 = yCoord + random.nextFloat();
 					final float n3 = zCoord + random.nextFloat();
 					world.spawnParticle("largesmoke", n, n2, n3, 0.0, 0.0, 0.0);
 				}
 			}
-			if(Block.fire.canBlockCatchFire(world, xCoord + 1, yCoord, zCoord)) {
-				for(int i = 0; i < 2; ++i) {
+			if (Block.fire.canBlockCatchFire(world, xCoord + 1, yCoord, zCoord)) {
+				for ( int i = 0; i < 2; ++i ) {
 					final float n = xCoord + 1 - random.nextFloat() * 0.1f;
 					final float n2 = yCoord + random.nextFloat();
 					final float n3 = zCoord + random.nextFloat();
 					world.spawnParticle("largesmoke", n, n2, n3, 0.0, 0.0, 0.0);
 				}
 			}
-			if(Block.fire.canBlockCatchFire(world, xCoord, yCoord, zCoord - 1)) {
-				for(int i = 0; i < 2; ++i) {
+			if (Block.fire.canBlockCatchFire(world, xCoord, yCoord, zCoord - 1)) {
+				for ( int i = 0; i < 2; ++i ) {
 					final float n = xCoord + random.nextFloat();
 					final float n2 = yCoord + random.nextFloat();
 					final float n3 = zCoord + random.nextFloat() * 0.1f;
 					world.spawnParticle("largesmoke", n, n2, n3, 0.0, 0.0, 0.0);
 				}
 			}
-			if(Block.fire.canBlockCatchFire(world, xCoord, yCoord, zCoord + 1)) {
-				for(int i = 0; i < 2; ++i) {
+			if (Block.fire.canBlockCatchFire(world, xCoord, yCoord, zCoord + 1)) {
+				for ( int i = 0; i < 2; ++i ) {
 					final float n = xCoord + random.nextFloat();
 					final float n2 = yCoord + random.nextFloat();
 					final float n3 = zCoord + 1 - random.nextFloat() * 0.1f;
 					world.spawnParticle("largesmoke", n, n2, n3, 0.0, 0.0, 0.0);
 				}
 			}
-			if(Block.fire.canBlockCatchFire(world, xCoord, yCoord + 1, zCoord)) {
-				for(int i = 0; i < 2; ++i) {
+			if (Block.fire.canBlockCatchFire(world, xCoord, yCoord + 1, zCoord)) {
+				for ( int i = 0; i < 2; ++i ) {
 					final float n = xCoord + random.nextFloat();
 					final float n2 = yCoord + 1 - random.nextFloat() * 0.1f;
 					final float n3 = zCoord + random.nextFloat();

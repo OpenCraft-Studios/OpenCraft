@@ -27,7 +27,7 @@ public class TexturedQuad {
 
 	public void flipFace() {
 		final PositionTextureVertex[] vertexPositions = new PositionTextureVertex[this.vertexPositions.length];
-		for(int i = 0; i < this.vertexPositions.length; ++i) {
+		for ( int i = 0; i < this.vertexPositions.length; ++i ) {
 			vertexPositions[i] = this.vertexPositions[this.vertexPositions.length - i - 1];
 		}
 		this.vertexPositions = vertexPositions;
@@ -37,7 +37,7 @@ public class TexturedQuad {
 		final Vec3 normalize = this.vertexPositions[1].vec.subtract(this.vertexPositions[2].vec).cross(this.vertexPositions[1].vec.subtract(this.vertexPositions[0].vec)).normalize();
 		ag.beginQuads();
 		ag.setNormal((float) normalize.x, (float) normalize.y, (float) normalize.z);
-		for(int i = 0; i < 4; ++i) {
+		for ( int i = 0; i < 4; ++i ) {
 			final PositionTextureVertex positionTextureVertex = this.vertexPositions[i];
 			ag.vertexUV((float) positionTextureVertex.vec.x * float2, (float) positionTextureVertex.vec.y * float2, (float) positionTextureVertex.vec.z * float2, positionTextureVertex.texturePositionX, positionTextureVertex.texturePositionY);
 		}

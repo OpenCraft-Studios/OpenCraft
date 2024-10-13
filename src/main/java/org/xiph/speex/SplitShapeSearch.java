@@ -148,7 +148,7 @@ public class SplitShapeSearch extends CbSearch {
 		float[] best_dist;
 
 		int N = complexity;
-		if(N > 10)
+		if (N > 10)
 			N = 10;
 
 		resp = new float[shape_cb_size * subvect_size];
@@ -158,19 +158,19 @@ public class SplitShapeSearch extends CbSearch {
 		ndist = new float[N];
 		odist = new float[N];
 
-		for(i = 0; i < N; i++) {
-			for(j = 0; j < nb_subvect; j++)
+		for ( i = 0; i < N; i++ ) {
+			for ( j = 0; j < nb_subvect; j++ )
 				nind[i][j] = oind[i][j] = -1;
 		}
 
-		for(j = 0; j < N; j++)
-			for(i = 0; i < nsf; i++)
+		for ( j = 0; j < N; j++ )
+			for ( i = 0; i < nsf; i++ )
 				ot[j][i] = target[i];
 
 		//    System.arraycopy(target, 0, t, 0, nsf);
 
 		/* Pre-compute codewords response and energy */
-		for(i = 0; i < shape_cb_size; i++) {
+		for ( i = 0; i < shape_cb_size; i++ ) {
 			int res;
 			int shape;
 
@@ -178,44 +178,44 @@ public class SplitShapeSearch extends CbSearch {
 			shape = i * subvect_size;
 
 			/* Compute codeword response using convolution with impulse response */
-			for(j = 0; j < subvect_size; j++) {
+			for ( j = 0; j < subvect_size; j++ ) {
 				resp[res + j] = 0;
-				for(k = 0; k <= j; k++)
+				for ( k = 0; k <= j; k++ )
 					resp[res + j] += 0.03125 * shape_cb[shape + k] * r[j - k];
 			}
 
 			/* Compute codeword energy */
 			E[i] = 0;
-			for(j = 0; j < subvect_size; j++)
+			for ( j = 0; j < subvect_size; j++ )
 				E[i] += resp[res + j] * resp[res + j];
 		}
 
-		for(j = 0; j < N; j++)
+		for ( j = 0; j < N; j++ )
 			odist[j] = 0;
 		/*For all subvectors*/
-		for(i = 0; i < nb_subvect; i++) {
+		for ( i = 0; i < nb_subvect; i++ ) {
 			int offset = i * subvect_size;
 			/*"erase" nbest list*/
-			for(j = 0; j < N; j++)
+			for ( j = 0; j < N; j++ )
 				ndist[j] = -1;
 
 			/*For all n-bests of previous subvector*/
-			for(j = 0; j < N; j++) {
+			for ( j = 0; j < N; j++ ) {
 				/*Find new n-best based on previous n-best j*/
-				if(have_sign != 0)
+				if (have_sign != 0)
 					VQ.nbest_sign(ot[j], offset, resp, subvect_size, shape_cb_size, E, N, best_index, best_dist);
 				else
 					VQ.nbest(ot[j], offset, resp, subvect_size, shape_cb_size, E, N, best_index, best_dist);
 
 				/*For all new n-bests*/
-				for(k = 0; k < N; k++) {
+				for ( k = 0; k < N; k++ ) {
 					float[] ct;
 					float err = 0;
 					ct = ot[j];
 					/*update target*/
 
 					/*previous target*/
-					for(m = offset; m < offset + subvect_size; m++)
+					for ( m = offset; m < offset + subvect_size; m++ )
 						t[m] = ct[m];
 
 					/* New code: update only enough of the target to calculate error*/
@@ -224,58 +224,58 @@ public class SplitShapeSearch extends CbSearch {
 						int res;
 						float sign = 1;
 						rind = best_index[k];
-						if(rind >= shape_cb_size) {
+						if (rind >= shape_cb_size) {
 							sign = -1;
 							rind -= shape_cb_size;
 						}
 						res = rind * subvect_size;
-						if(sign > 0)
-							for(m = 0; m < subvect_size; m++)
+						if (sign > 0)
+							for ( m = 0; m < subvect_size; m++ )
 								t[offset + m] -= resp[res + m];
 						else
-							for(m = 0; m < subvect_size; m++)
+							for ( m = 0; m < subvect_size; m++ )
 								t[offset + m] += resp[res + m];
 					}
 
 					/*compute error (distance)*/
 					err = odist[j];
-					for(m = offset; m < offset + subvect_size; m++)
+					for ( m = offset; m < offset + subvect_size; m++ )
 						err += t[m] * t[m];
 					/*update n-best list*/
-					if(err < ndist[N - 1] || ndist[N - 1] < -.5) {
+					if (err < ndist[N - 1] || ndist[N - 1] < -.5) {
 
 						/*previous target (we don't care what happened before*/
-						for(m = offset + subvect_size; m < nsf; m++)
+						for ( m = offset + subvect_size; m < nsf; m++ )
 							t[m] = ct[m];
 						/* New code: update the rest of the target only if it's worth it */
-						for(m = 0; m < subvect_size; m++) {
+						for ( m = 0; m < subvect_size; m++ ) {
 							float g;
 							int rind;
 							float sign = 1;
 							rind = best_index[k];
-							if(rind >= shape_cb_size) {
+							if (rind >= shape_cb_size) {
 								sign = -1;
 								rind -= shape_cb_size;
 							}
 
 							g = sign * 0.03125f * shape_cb[rind * subvect_size + m];
 							q = subvect_size - m;
-							for(n = offset + subvect_size; n < nsf; n++, q++)
+							for ( n = offset + subvect_size; n < nsf; n++, q++ )
 								t[n] -= g * r[q];
 						}
 
-						for(m = 0; m < N; m++) {
-							if(err < ndist[m] || ndist[m] < -.5) {
-								for(n = N - 1; n > m; n--) {
-									for(q = offset + subvect_size; q < nsf; q++)
+						for ( m = 0; m < N; m++ ) {
+							if (err < ndist[m] || ndist[m] < -.5) {
+								for ( n = N - 1; n > m; n-- ) {
+									for ( q = offset + subvect_size; q < nsf; q++ )
 										nt[n][q] = nt[n - 1][q];
-									for(q = 0; q < nb_subvect; q++)
+									for ( q = 0; q < nb_subvect; q++ )
 										nind[n][q] = nind[n - 1][q];
 									ndist[n] = ndist[n - 1];
 								}
-								for(q = offset + subvect_size; q < nsf; q++)
+								for ( q = offset + subvect_size; q < nsf; q++ )
 									nt[m][q] = t[q];
-								for(q = 0; q < nb_subvect; q++)
+								for ( q = 0; q < nb_subvect; q++ )
 									nind[m][q] = oind[j][q];
 								nind[m][i] = best_index[k];
 								ndist[m] = err;
@@ -284,7 +284,7 @@ public class SplitShapeSearch extends CbSearch {
 						}
 					}
 				}
-				if(i == 0)
+				if (i == 0)
 					break;
 			}
 
@@ -296,39 +296,39 @@ public class SplitShapeSearch extends CbSearch {
 				ot = nt;
 				nt = tmp2;
 			}
-			for(j = 0; j < N; j++)
-				for(m = 0; m < nb_subvect; m++)
+			for ( j = 0; j < N; j++ )
+				for ( m = 0; m < nb_subvect; m++ )
 					oind[j][m] = nind[j][m];
-			for(j = 0; j < N; j++)
+			for ( j = 0; j < N; j++ )
 				odist[j] = ndist[j];
 		}
 
 		/*save indices*/
-		for(i = 0; i < nb_subvect; i++) {
+		for ( i = 0; i < nb_subvect; i++ ) {
 			ind[i] = nind[0][i];
 			bits.pack(ind[i], shape_bits + have_sign);
 		}
 
 		/* Put everything back together */
-		for(i = 0; i < nb_subvect; i++) {
+		for ( i = 0; i < nb_subvect; i++ ) {
 			int rind;
 			float sign = 1;
 			rind = ind[i];
-			if(rind >= shape_cb_size) {
+			if (rind >= shape_cb_size) {
 				sign = -1;
 				rind -= shape_cb_size;
 			}
 
-			for(j = 0; j < subvect_size; j++)
+			for ( j = 0; j < subvect_size; j++ )
 				e[subvect_size * i + j] = sign * 0.03125f * shape_cb[rind * subvect_size + j];
 		}
 		/* Update excitation */
-		for(j = 0; j < nsf; j++)
+		for ( j = 0; j < nsf; j++ )
 			exc[es + j] += e[j];
 
 		/* Update target */
 		Filters.syn_percep_zero(e, 0, ak, awk1, awk2, r2, nsf, p);
-		for(j = 0; j < nsf; j++)
+		for ( j = 0; j < nsf; j++ )
 			target[j] -= r2[j];
 	}
 
@@ -344,8 +344,8 @@ public class SplitShapeSearch extends CbSearch {
 		int i, j;
 
 		/* Decode codewords and gains */
-		for(i = 0; i < nb_subvect; i++) {
-			if(have_sign != 0)
+		for ( i = 0; i < nb_subvect; i++ ) {
+			if (have_sign != 0)
 				signs[i] = bits.unpack(1);
 			else
 				signs[i] = 0;
@@ -353,11 +353,11 @@ public class SplitShapeSearch extends CbSearch {
 		}
 
 		/* Compute decoded excitation */
-		for(i = 0; i < nb_subvect; i++) {
+		for ( i = 0; i < nb_subvect; i++ ) {
 			float s = 1.0f;
-			if(signs[i] != 0)
+			if (signs[i] != 0)
 				s = -1.0f;
-			for(j = 0; j < subvect_size; j++) {
+			for ( j = 0; j < subvect_size; j++ ) {
 				exc[es + subvect_size * i + j] += s * 0.03125f * (float) shape_cb[ind[i] * subvect_size + j];
 			}
 		}

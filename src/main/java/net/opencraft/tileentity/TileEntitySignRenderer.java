@@ -28,9 +28,9 @@ public class TileEntitySignRenderer extends TileEntitySpecialRenderer<TileEntity
 		GL11.glScalef(n, -n, n);
 		GL11.glNormal3f(0.0f, 0.0f, -1.0f * n);
 		final FontRenderer fontRenderer = this.getFontRenderer();
-		for(int i = 0; i < jn.signText.length; ++i) {
+		for ( int i = 0; i < jn.signText.length; ++i ) {
 			final String s = jn.signText[i];
-			if(i == jn.lineBeingEdited) {
+			if (i == jn.lineBeingEdited) {
 				final String string = "> " + s + " <";
 				fontRenderer.drawString2(string, -fontRenderer.getStringWidth(string) / 2, i * 10 - jn.signText.length * 5, 0);
 			} else {

@@ -27,23 +27,23 @@ public abstract class GuiScreen extends GuiElement {
 	}
 
 	public void drawScreen(final int integer1, final int integer2, final float float3) {
-		for(int i = 0; i < this.controlList.size(); ++i) {
+		for ( int i = 0; i < this.controlList.size(); ++i ) {
 			((GuiButton) this.controlList.get(i)).drawButton(this.id, integer1, integer2);
 		}
 	}
 
 	protected void keyTyped(final char character, final int integer) {
-		if(integer == 1) {
+		if (integer == 1) {
 			this.id.displayGuiScreen(null);
 			this.id.setIngameFocus();
 		}
 	}
 
 	protected void drawSlotInventory(final int integer1, final int integer2, final int integer3) {
-		if(integer3 == 0) {
-			for(GuiElement guiElement : this.controlList) {
+		if (integer3 == 0) {
+			for ( GuiElement guiElement : this.controlList ) {
 				final GuiButton iq = (GuiButton) guiElement;
-				if(iq.mousePressed(integer1, integer2)) {
+				if (iq.mousePressed(integer1, integer2)) {
 					this.id.sndManager.playSoundFX("random.click", 1.0f, 1.0f);
 					this.actionPerformed(iq);
 				}
@@ -52,8 +52,8 @@ public abstract class GuiScreen extends GuiElement {
 	}
 
 	protected void b(final int integer1, final int integer2, final int integer3) {
-		if(integer3 == 0) {
-			for(int i = 0; i < this.controlList.size(); ++i) {
+		if (integer3 == 0) {
+			for ( int i = 0; i < this.controlList.size(); ++i ) {
 				final GuiButton iq = (GuiButton) this.controlList.get(i);
 				iq.mouseReleased(integer1, integer2);
 			}
@@ -75,13 +75,13 @@ public abstract class GuiScreen extends GuiElement {
 	}
 
 	public void handleInputEvents() {
-		for(MouseHandler.ButtonEvent event : this.id.mouse.buttons.events) {
+		for ( MouseHandler.ButtonEvent event : this.id.mouse.buttons.events ) {
 			this.handleMouseEvent(event);
 		}
 		// TODO plz fix
 		// TODO: What should be fixed here?
-		for(int key : this.id.keyboard.pressedKeys) {
-			if(glfwGetKeyName(key, glfwGetKeyScancode(key)) != null)
+		for ( int key : this.id.keyboard.pressedKeys ) {
+			if (glfwGetKeyName(key, glfwGetKeyScancode(key)) != null)
 				this.handleKeyboardInput(glfwGetKeyName(key, glfwGetKeyScancode(key)).charAt(0), key);
 		}
 	}
@@ -89,7 +89,7 @@ public abstract class GuiScreen extends GuiElement {
 	public void handleMouseEvent(MouseHandler.ButtonEvent event) {
 		final int n = ((int) id.mouse.position.x) * this.width / this.id.width;
 		final int n2 = this.height - ((int) id.mouse.position.y) * this.height / this.id.height - 1;
-		if(event.isPressed()) {
+		if (event.isPressed()) {
 			this.drawSlotInventory(n, n2, event.buttonNumber());
 		} else {
 			this.b(n, n2, event.buttonNumber());
@@ -111,7 +111,7 @@ public abstract class GuiScreen extends GuiElement {
 	}
 
 	public void b(final int integer) {
-		if(this.id.world != null) {
+		if (this.id.world != null) {
 			this.drawGradientRect(0, 0, this.width, this.height, 1610941696, -1607454656);
 		} else {
 			GL11.glDisable(2896);

@@ -58,7 +58,7 @@ public class SoundSystemLogger {
 		String messageText;
 		// Determine how many spaces to indent:
 		String spacer = "";
-		for(int x = 0; x < indent; x++) {
+		for ( int x = 0; x < indent; x++ ) {
 			spacer += "    ";
 		}
 		// indent the message:
@@ -78,7 +78,7 @@ public class SoundSystemLogger {
 		String messageText;
 		// Determine how many spaces to indent:
 		String spacer = "";
-		for(int x = 0; x < indent; x++) {
+		for ( int x = 0; x < indent; x++ ) {
 			spacer += "    ";
 		}
 		// indent the message:
@@ -98,7 +98,7 @@ public class SoundSystemLogger {
 	 * @return True if error is true.
 	 */
 	public boolean errorCheck(boolean error, String classname, String message, int indent) {
-		if(error)
+		if (error)
 			errorMessage(classname, message, indent);
 		return error;
 	}
@@ -115,7 +115,7 @@ public class SoundSystemLogger {
 		String headerLine, messageText;
 		// Determine how many spaces to indent:
 		String spacer = "";
-		for(int x = 0; x < indent; x++) {
+		for ( int x = 0; x < indent; x++ ) {
 			spacer += "    ";
 		}
 		// indent the header:
@@ -137,17 +137,17 @@ public class SoundSystemLogger {
 	public void printStackTrace(Exception e, int indent) {
 		printExceptionMessage(e, indent);
 		importantMessage("STACK TRACE:", indent);
-		if(e == null)
+		if (e == null)
 			return;
 
 		StackTraceElement[] stack = e.getStackTrace();
-		if(stack == null)
+		if (stack == null)
 			return;
 
 		StackTraceElement line;
-		for(int x = 0; x < stack.length; x++) {
+		for ( int x = 0; x < stack.length; x++ ) {
 			line = stack[x];
-			if(line != null)
+			if (line != null)
 				message(line.toString(), indent + 1);
 		}
 	}
@@ -160,7 +160,7 @@ public class SoundSystemLogger {
 	 */
 	public void printExceptionMessage(Exception e, int indent) {
 		importantMessage("ERROR MESSAGE:", indent);
-		if(e.getMessage() == null)
+		if (e.getMessage() == null)
 			message("(none)", indent + 1);
 		else
 			message(e.getMessage(), indent + 1);

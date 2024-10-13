@@ -43,16 +43,16 @@ public class GuiMainMenu extends GuiScreen {
 
 	@Override
 	protected void actionPerformed(final GuiButton iq) {
-		if(iq.buttonId == 0) {
+		if (iq.buttonId == 0) {
 			this.id.displayGuiScreen(new GuiOptions(this, this.id.options));
 		}
-		if(iq.buttonId == 1) {
+		if (iq.buttonId == 1) {
 			this.id.displayGuiScreen(new GuiCreateWorld(this));
 		}
-		if(iq.buttonId == 2) {
+		if (iq.buttonId == 2) {
 			this.id.displayGuiScreen(new GuiMultiplayer(this));
 		}
-		if(iq.buttonId == 3) {
+		if (iq.buttonId == 3) {
 			this.id.shutdown();
 		}
 	}

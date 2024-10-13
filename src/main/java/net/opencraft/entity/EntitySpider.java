@@ -17,10 +17,10 @@ public class EntitySpider extends EntityMonster {
 
 	@Override
 	protected Entity findPlayerToAttack() {
-		if(this.getEntityBrightness(1.0f) < 0.5f) {
+		if (this.getEntityBrightness(1.0f) < 0.5f) {
 			final double distanceSqToEntity = this.world.player.getDistanceSqToEntity(this);
 			final double n = 16.0;
-			if(distanceSqToEntity < n * n) {
+			if (distanceSqToEntity < n * n) {
 				return this.world.player;
 			}
 		}
@@ -29,12 +29,12 @@ public class EntitySpider extends EntityMonster {
 
 	@Override
 	protected void attackEntity(final Entity entity, final float xCoord) {
-		if(this.getEntityBrightness(1.0f) > 0.5f && this.rand.nextInt(100) == 0) {
+		if (this.getEntityBrightness(1.0f) > 0.5f && this.rand.nextInt(100) == 0) {
 			this.playerToAttack = null;
 			return;
 		}
-		if(xCoord > 2.0f && xCoord < 6.0f && this.rand.nextInt(10) == 0) {
-			if(this.onGround) {
+		if (xCoord > 2.0f && xCoord < 6.0f && this.rand.nextInt(10) == 0) {
+			if (this.onGround) {
 				final double n = entity.posX - this.posX;
 				final double n2 = entity.posZ - this.posZ;
 				final float sqrt_double = Mth.sqrt_double(n * n + n2 * n2);

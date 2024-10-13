@@ -17,9 +17,9 @@ public class EntitySkeleton extends EntityMonster {
 
 	@Override
 	public void onLivingUpdate() {
-		if(this.world.isDaytime()) {
+		if (this.world.isDaytime()) {
 			final float entityBrightness = this.getEntityBrightness(1.0f);
-			if(entityBrightness > 0.5f && this.world.canBlockSeeTheSky(Mth.floor_double(this.posX), Mth.floor_double(this.posY), Mth.floor_double(this.posZ)) && this.rand.nextFloat() * 30.0f < (entityBrightness - 0.4f) * 2.0f) {
+			if (entityBrightness > 0.5f && this.world.canBlockSeeTheSky(Mth.floor_double(this.posX), Mth.floor_double(this.posY), Mth.floor_double(this.posZ)) && this.rand.nextFloat() * 30.0f < (entityBrightness - 0.4f) * 2.0f) {
 				this.fire = 300;
 			}
 		}
@@ -28,10 +28,10 @@ public class EntitySkeleton extends EntityMonster {
 
 	@Override
 	protected void attackEntity(final Entity entity, final float xCoord) {
-		if(xCoord < 10.0f) {
+		if (xCoord < 10.0f) {
 			final double xCoord2 = entity.posX - this.posX;
 			final double zCoord = entity.posZ - this.posZ;
-			if(this.attackTime == 0) {
+			if (this.attackTime == 0) {
 				final EntityArrow entityArrow;
 				final EntityArrow entity2 = entityArrow = new EntityArrow(this.world, this);
 				entityArrow.posY += 1.399999976158142;

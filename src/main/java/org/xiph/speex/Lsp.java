@@ -127,7 +127,7 @@ public class Lsp {
 		/* Evaluate polynomial and return value also free memory space */
 		sum = coef[m2] + coef[m2 - 1] * x;
 		x *= 2;
-		for(i = 2; i <= m2; i++) {
+		for ( i = 2; i <= m2; i++ ) {
 			T[i] = x * T[i - 1] - T[i - 2];
 			sum += coef[m2 - i] * T[i];
 		}
@@ -184,13 +184,13 @@ public class Lsp {
 		q = qx;
 		P[px++] = 1.0f;
 		Q[qx++] = 1.0f;
-		for(i = 1; i <= m; i++) {
+		for ( i = 1; i <= m; i++ ) {
 			P[px++] = a[i] + a[lpcrdr + 1 - i] - P[p++];
 			Q[qx++] = a[i] - a[lpcrdr + 1 - i] + Q[q++];
 		}
 		px = 0;
 		qx = 0;
-		for(i = 0; i < m; i++) {
+		for ( i = 0; i < m; i++ ) {
 			P[px] = 2 * P[px];
 			Q[qx] = 2 * Q[qx];
 			px++;
@@ -205,8 +205,8 @@ public class Lsp {
 		xr = 0; /* initialise xr to zero */
 		xl = 1.0f; /* start at point xl = 1 */
 
-		for(j = 0; j < lpcrdr; j++) {
-			if(j % 2 != 0) /* determines whether P' or Q' is eval. */
+		for ( j = 0; j < lpcrdr; j++ ) {
+			if (j % 2 != 0) /* determines whether P' or Q' is eval. */
 				pt = Q;
 			else
 				pt = P;
@@ -217,7 +217,7 @@ public class Lsp {
 				float dd;
 				/* Modified by JMV to provide smaller steps around x=+-1 */
 				dd = (float) (delta * (1 - .9 * xl * xl));
-				if(Math.abs(psuml) < .2)
+				if (Math.abs(psuml) < .2)
 					dd *= .5;
 
 				xr = xl - dd; /* interval spacing */
@@ -234,14 +234,14 @@ public class Lsp {
 				between xm and xr else set interval between xl and xr and repeat till
 				root is located within the specified limits */
 
-				if((psumr * psuml) < 0.0) {
+				if ((psumr * psuml) < 0.0) {
 					roots++;
 
 					psumm = psuml;
-					for(k = 0; k <= nb; k++) {
+					for ( k = 0; k <= nb; k++ ) {
 						xm = (xl + xr) / 2; /* bisect the interval */
 						psumm = cheb_poly_eva(pt, xm, lpcrdr);
-						if(psumm * psuml > 0.) {
+						if (psumm * psuml > 0.) {
 							psuml = psumm;
 							xl = xm;
 						} else {
@@ -276,7 +276,7 @@ public class Lsp {
 		int n1, n2, n3, n4 = 0;
 		int m = lpcrdr / 2;
 
-		for(i = 0; i < 4 * m + 2; i++) {
+		for ( i = 0; i < 4 * m + 2; i++ ) {
 			pw[i] = 0.0f;
 		}
 
@@ -286,10 +286,10 @@ public class Lsp {
 		/* reconstruct P(z) and Q(z) by  cascading second order
 		polynomials in form 1 - 2xz(-1) +z(-2), where x is the
 		LSP coefficient */
-		for(j = 0; j <= lpcrdr; j++) {
+		for ( j = 0; j <= lpcrdr; j++ ) {
 			int i2 = 0;
 
-			for(i = 0; i < m; i++, i2 += 2) {
+			for ( i = 0; i < m; i++, i2 += 2 ) {
 				n1 = i * 4;
 				n2 = n1 + 1;
 				n3 = n2 + 1;
@@ -323,17 +323,17 @@ public class Lsp {
 	public static void enforce_margin(final float[] lsp, final int len, final float margin) {
 		int i;
 
-		if(lsp[0] < margin)
+		if (lsp[0] < margin)
 			lsp[0] = margin;
 
-		if(lsp[len - 1] > (float) Math.PI - margin)
+		if (lsp[len - 1] > (float) Math.PI - margin)
 			lsp[len - 1] = (float) Math.PI - margin;
 
-		for(i = 1; i < len - 1; i++) {
-			if(lsp[i] < lsp[i - 1] + margin)
+		for ( i = 1; i < len - 1; i++ ) {
+			if (lsp[i] < lsp[i - 1] + margin)
 				lsp[i] = lsp[i - 1] + margin;
 
-			if(lsp[i] > lsp[i + 1] - margin)
+			if (lsp[i] > lsp[i + 1] - margin)
 				lsp[i] = .5f * (lsp[i] + lsp[i + 1] - margin);
 		}
 	}

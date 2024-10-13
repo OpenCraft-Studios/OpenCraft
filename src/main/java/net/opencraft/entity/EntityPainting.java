@@ -35,13 +35,13 @@ public class EntityPainting extends Entity {
 		this.yPosition = y;
 		this.zPosition = z;
 		List<EnumArt> list = new ArrayList<>();
-		for(final EnumArt art : EnumArt.values()) {
+		for ( final EnumArt art : EnumArt.values() ) {
 			this.art = art;
 			this.setDirection(direction);
-			if(this.onValidSurface())
+			if (this.onValidSurface())
 				list.add(art);
 		}
-		if(list.size() > 0)
+		if (list.size() > 0)
 			this.art = list.get(this.rand.nextInt(list.size()));
 
 		this.setDirection(direction);
@@ -55,7 +55,7 @@ public class EntityPainting extends Entity {
 		float n2 = (float) this.art.sizeX;
 		float n3 = (float) this.art.sizeY;
 		float n4 = (float) this.art.sizeX;
-		if(direction == 0 || direction == 2) {
+		if (direction == 0 || direction == 2) {
 			n4 = 0.5f;
 		} else {
 			n2 = 0.5f;
@@ -67,28 +67,28 @@ public class EntityPainting extends Entity {
 		float n6 = this.yPosition + 0.5f;
 		float n7 = this.zPosition + 0.5f;
 		final float n8 = 0.5625f;
-		if(direction == 0) {
+		if (direction == 0) {
 			n7 -= n8;
 		}
-		if(direction == 1) {
+		if (direction == 1) {
 			n5 -= n8;
 		}
-		if(direction == 2) {
+		if (direction == 2) {
 			n7 += n8;
 		}
-		if(direction == 3) {
+		if (direction == 3) {
 			n5 += n8;
 		}
-		if(direction == 0) {
+		if (direction == 0) {
 			n5 -= this.getArtSize(this.art.sizeX);
 		}
-		if(direction == 1) {
+		if (direction == 1) {
 			n7 += this.getArtSize(this.art.sizeX);
 		}
-		if(direction == 2) {
+		if (direction == 2) {
 			n5 += this.getArtSize(this.art.sizeX);
 		}
-		if(direction == 3) {
+		if (direction == 3) {
 			n7 -= this.getArtSize(this.art.sizeX);
 		}
 		n6 += this.getArtSize(this.art.sizeY);
@@ -98,10 +98,10 @@ public class EntityPainting extends Entity {
 	}
 
 	private float getArtSize(final int integer) {
-		if(integer == 32) {
+		if (integer == 32) {
 			return 0.5f;
 		}
-		if(integer == 64) {
+		if (integer == 64) {
 			return 0.5f;
 		}
 		return 0.0f;
@@ -109,7 +109,7 @@ public class EntityPainting extends Entity {
 
 	@Override
 	public void onUpdate() {
-		if(this.tickCounter1++ == 100 && !this.onValidSurface()) {
+		if (this.tickCounter1++ == 100 && !this.onValidSurface()) {
 			this.tickCounter1 = 0;
 			this.setEntityDead();
 			this.world.entityJoinedWorld(new EntityItem(this.world, this.posX, this.posY, this.posZ, new ItemStack(Item.painting)));
@@ -117,7 +117,7 @@ public class EntityPainting extends Entity {
 	}
 
 	public boolean onValidSurface() {
-		if(this.world.getCollidingBoundingBoxes(this, this.boundingBox).size() > 0) {
+		if (this.world.getCollidingBoundingBoxes(this, this.boundingBox).size() > 0) {
 			return false;
 		}
 		final int n = this.art.sizeX / 16;
@@ -125,35 +125,35 @@ public class EntityPainting extends Entity {
 		int n3 = this.xPosition;
 		int n4 = this.yPosition;
 		int n5 = this.zPosition;
-		if(this.direction == 0) {
+		if (this.direction == 0) {
 			n3 = Mth.floor_double(this.posX - this.art.sizeX / 32.0f);
 		}
-		if(this.direction == 1) {
+		if (this.direction == 1) {
 			n5 = Mth.floor_double(this.posZ - this.art.sizeX / 32.0f);
 		}
-		if(this.direction == 2) {
+		if (this.direction == 2) {
 			n3 = Mth.floor_double(this.posX - this.art.sizeX / 32.0f);
 		}
-		if(this.direction == 3) {
+		if (this.direction == 3) {
 			n5 = Mth.floor_double(this.posZ - this.art.sizeX / 32.0f);
 		}
 		n4 = Mth.floor_double(this.posY - this.art.sizeY / 32.0f);
-		for(int i = 0; i < n; ++i) {
-			for(int j = 0; j < n2; ++j) {
+		for ( int i = 0; i < n; ++i ) {
+			for ( int j = 0; j < n2; ++j ) {
 				Material material;
-				if(this.direction == 0 || this.direction == 2) {
+				if (this.direction == 0 || this.direction == 2) {
 					material = this.world.getBlockMaterial(n3 + i, n4 + j, this.zPosition);
 				} else {
 					material = this.world.getBlockMaterial(this.xPosition, n4 + j, n5 + i);
 				}
-				if(!material.isSolid()) {
+				if (!material.isSolid()) {
 					return false;
 				}
 			}
 		}
 		final List entitiesWithinAABBExcludingEntity = this.world.getEntitiesWithinAABBExcludingEntity(this, this.boundingBox);
-		for(int j = 0; j < entitiesWithinAABBExcludingEntity.size(); ++j) {
-			if(entitiesWithinAABBExcludingEntity.get(j) instanceof EntityPainting) {
+		for ( int j = 0; j < entitiesWithinAABBExcludingEntity.size(); ++j ) {
+			if (entitiesWithinAABBExcludingEntity.get(j) instanceof EntityPainting) {
 				return false;
 			}
 		}
@@ -186,12 +186,12 @@ public class EntityPainting extends Entity {
 		this.yPosition = nbtTagCompound.getInteger("TileY");
 		this.zPosition = nbtTagCompound.getInteger("TileZ");
 		final String string = nbtTagCompound.getString("Motive");
-		for(final EnumArt art : EnumArt.values()) {
-			if(art.title.equals(string)) {
+		for ( final EnumArt art : EnumArt.values() ) {
+			if (art.title.equals(string)) {
 				this.art = art;
 			}
 		}
-		if(this.art == null) {
+		if (this.art == null) {
 			this.art = EnumArt.Kebab;
 		}
 		this.setDirection(this.direction);

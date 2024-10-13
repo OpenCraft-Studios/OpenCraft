@@ -107,7 +107,7 @@ public class Bits {
 	public void advance(final int n) {
 		bytePtr += n >> 3;
 		bitPtr += n & 7;
-		if(bitPtr > 7) {
+		if (bitPtr > 7) {
 			bitPtr -= 8;
 			bytePtr++;
 		}
@@ -139,7 +139,7 @@ public class Bits {
 	 * @param len
 	 */
 	public void read_from(final byte[] newbytes, final int offset, final int len) {
-		for(int i = 0; i < len; i++)
+		for ( int i = 0; i < len; i++ )
 			bytes[i] = newbytes[offset + i];
 		bytePtr = 0;
 		bitPtr = 0;
@@ -157,7 +157,7 @@ public class Bits {
 			d <<= 1;
 			d |= ((bytes[bytePtr] & 0xFF) >> (7 - bitPtr)) & 1;
 			bitPtr++;
-			if(bitPtr == 8) {
+			if (bitPtr == 8) {
 				bitPtr = 0;
 				bytePtr++;
 			}
@@ -188,7 +188,7 @@ public class Bits {
 			bit = (d >> (nbBits - 1)) & 1;
 			bytes[bytePtr] |= bit << (7 - bitPtr);
 			bitPtr++;
-			if(bitPtr == 8) {
+			if (bitPtr == 8) {
 				bitPtr = 0;
 				bytePtr++;
 			}

@@ -25,9 +25,9 @@ public class CropsBlock extends FlowerBlock {
 	@Override
 	public void updateTick(final World world, final int xCoord, final int yCoord, final int zCoord, final Random random) {
 		super.updateTick(world, xCoord, yCoord, zCoord, random);
-		if(world.getBlockLightValue(xCoord, yCoord + 1, zCoord) >= 9) {
+		if (world.getBlockLightValue(xCoord, yCoord + 1, zCoord) >= 9) {
 			int blockMetadata = world.getBlockMetadata(xCoord, yCoord, zCoord);
-			if(blockMetadata < 7 && random.nextInt((int) (100.0f / this.updateTick(world, xCoord, yCoord, zCoord))) == 0) {
+			if (blockMetadata < 7 && random.nextInt((int) (100.0f / this.updateTick(world, xCoord, yCoord, zCoord))) == 0) {
 				++blockMetadata;
 				world.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, blockMetadata);
 			}
@@ -47,23 +47,23 @@ public class CropsBlock extends FlowerBlock {
 		final boolean b = blockId3 == this.blockID || blockId4 == this.blockID;
 		final boolean b2 = blockId == this.blockID || blockId2 == this.blockID;
 		final boolean b3 = blockId5 == this.blockID || blockId6 == this.blockID || blockId7 == this.blockID || blockId8 == this.blockID;
-		for(int i = xCoord - 1; i <= xCoord + 1; ++i) {
-			for(int j = zCoord - 1; j <= zCoord + 1; ++j) {
+		for ( int i = xCoord - 1; i <= xCoord + 1; ++i ) {
+			for ( int j = zCoord - 1; j <= zCoord + 1; ++j ) {
 				final int blockId9 = world.getBlockId(i, yCoord - 1, j);
 				float n2 = 0.0f;
-				if(blockId9 == Block.tilledField.blockID) {
+				if (blockId9 == Block.tilledField.blockID) {
 					n2 = 1.0f;
-					if(world.getBlockMetadata(i, yCoord - 1, j) > 0) {
+					if (world.getBlockMetadata(i, yCoord - 1, j) > 0) {
 						n2 = 3.0f;
 					}
 				}
-				if(i != xCoord || j != zCoord) {
+				if (i != xCoord || j != zCoord) {
 					n2 /= 4.0f;
 				}
 				n += n2;
 			}
 		}
-		if(b3 || (b && b2)) {
+		if (b3 || (b && b2)) {
 			n /= 2.0f;
 		}
 		return n;
@@ -71,7 +71,7 @@ public class CropsBlock extends FlowerBlock {
 
 	@Override
 	public int getBlockTextureFromSideAndMetadata(final int textureIndexSlot, int metadataValue) {
-		if(metadataValue < 0) {
+		if (metadataValue < 0) {
 			metadataValue = 7;
 		}
 		return this.blockIndexInTexture + metadataValue;
@@ -85,8 +85,8 @@ public class CropsBlock extends FlowerBlock {
 	@Override
 	public void onBlockDestroyedByPlayer(final World world, final int xCoord, final int yCoord, final int zCoord, final int nya4) {
 		super.onBlockDestroyedByPlayer(world, xCoord, yCoord, zCoord, nya4);
-		for(int i = 0; i < 3; ++i) {
-			if(world.rand.nextInt(15) <= nya4) {
+		for ( int i = 0; i < 3; ++i ) {
+			if (world.rand.nextInt(15) <= nya4) {
 				final float n = 0.7f;
 				final EntityItem entity = new EntityItem(world, xCoord + (world.rand.nextFloat() * n + (1.0f - n) * 0.5f), yCoord + (world.rand.nextFloat() * n + (1.0f - n) * 0.5f), zCoord + (world.rand.nextFloat() * n + (1.0f - n) * 0.5f), new ItemStack(Item.seeds));
 				entity.delayBeforeCanPickup = 10;
@@ -98,7 +98,7 @@ public class CropsBlock extends FlowerBlock {
 	@Override
 	public int idDropped(final int blockid, final Random random) {
 		System.out.println(new StringBuilder().append("Get resource: ").append(blockid).toString());
-		if(blockid == 7) {
+		if (blockid == 7) {
 			return Item.wheat.shiftedIndex;
 		}
 		return -1;

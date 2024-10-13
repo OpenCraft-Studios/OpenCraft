@@ -53,7 +53,7 @@ public class EntityPlayer extends EntityLiving {
 		this.yOffset = 1.62f;
 		this.setSize(0.6f, 1.8f);
 		super.preparePlayerToSpawn();
-		if(this.world != null) {
+		if (this.world != null) {
 			this.world.player = this;
 		}
 		this.health = 20;
@@ -63,7 +63,7 @@ public class EntityPlayer extends EntityLiving {
 	@Override
 	public void onLivingUpdate() {
 		this.world.playSoundEffect(this.posX, this.posY, this.posZ, "calm", 0.0f);
-		if(this.world.difficultySetting == 0 && this.health < 20 && this.ticksExisted % 20 * 4 == 0) {
+		if (this.world.difficultySetting == 0 && this.health < 20 && this.ticksExisted % 20 * 4 == 0) {
 			this.heal(1);
 		}
 		this.inventory.decrementAnimations();
@@ -71,21 +71,21 @@ public class EntityPlayer extends EntityLiving {
 		super.onLivingUpdate();
 		float sqrt_double = Mth.sqrt_double(this.motionX * this.motionX + this.motionZ * this.motionZ);
 		float n = (float) Math.atan(-this.motionY * 0.20000000298023224) * 15.0f;
-		if(sqrt_double > 0.1f) {
+		if (sqrt_double > 0.1f) {
 			sqrt_double = 0.1f;
 		}
-		if(!this.onGround || this.health <= 0) {
+		if (!this.onGround || this.health <= 0) {
 			sqrt_double = 0.0f;
 		}
-		if(this.onGround || this.health <= 0) {
+		if (this.onGround || this.health <= 0) {
 			n = 0.0f;
 		}
 		this.cameraYaw += (sqrt_double - this.cameraYaw) * 0.4f;
 		this.cameraPitch += (n - this.cameraPitch) * 0.8f;
-		if(this.health > 0) {
+		if (this.health > 0) {
 			final List entitiesWithinAABBExcludingEntity = this.world.getEntitiesWithinAABBExcludingEntity(this, this.boundingBox.expand(1.0, 0.0, 1.0));
-			if(entitiesWithinAABBExcludingEntity != null) {
-				for(int i = 0; i < entitiesWithinAABBExcludingEntity.size(); ++i) {
+			if (entitiesWithinAABBExcludingEntity != null) {
+				for ( int i = 0; i < entitiesWithinAABBExcludingEntity.size(); ++i ) {
 					this.collideWithPlayer((Entity) entitiesWithinAABBExcludingEntity.get(i));
 				}
 			}
@@ -105,11 +105,11 @@ public class EntityPlayer extends EntityLiving {
 		this.setSize(0.2f, 0.2f);
 		this.setPosition(this.posX, this.posY, this.posZ);
 		this.motionY = 0.10000000149011612;
-		if(this.username.equals("Notch")) {
+		if (this.username.equals("Notch")) {
 			this.dropPlayerItemWithRandomChoice(new ItemStack(Item.appleRed, 1), true);
 		}
 		this.inventory.dropAllItems();
-		if(entity != null) {
+		if (entity != null) {
 			this.motionX = -cos(toRadians(attackedAtYaw + rotationYaw)) * 0.1f;
 			this.motionZ = -sin(toRadians(attackedAtYaw + rotationYaw)) * 0.1f;
 		} else {
@@ -130,13 +130,13 @@ public class EntityPlayer extends EntityLiving {
 	}
 
 	public void dropPlayerItemWithRandomChoice(final ItemStack hw, final boolean boolean2) {
-		if(hw == null) {
+		if (hw == null) {
 			return;
 		}
 		final EntityItem entity = new EntityItem(this.world, this.posX, this.posY - 0.30000001192092896, this.posZ, hw);
 		entity.delayBeforeCanPickup = 40;
 		float n = 0.1f;
-		if(boolean2) {
+		if (boolean2) {
 			final float n2 = this.rand.nextFloat() * 0.5f;
 			final float n3 = this.rand.nextFloat() * PI_TIMES_2_f;
 			entity.motionX = -sin(n3) * n2;
@@ -162,10 +162,10 @@ public class EntityPlayer extends EntityLiving {
 
 	public float getCurrentPlayerStrVsBlock(final Block gs) {
 		float strVsBlock = this.inventory.getStrVsBlock(gs);
-		if(this.isInsideOfMaterial(Material.WATER)) {
+		if (this.isInsideOfMaterial(Material.WATER)) {
 			strVsBlock /= 5.0f;
 		}
-		if(!this.onGround) {
+		if (!this.onGround) {
 			strVsBlock /= 5.0f;
 		}
 		return strVsBlock;
@@ -202,20 +202,20 @@ public class EntityPlayer extends EntityLiving {
 	@Override
 	public boolean attackEntityFrom(final Entity entity, int nya1) {
 		this.entityAge = 0;
-		if(this.health <= 0) {
+		if (this.health <= 0) {
 			return false;
 		}
-		if(this.heartsLife > this.heartsHalvesLife / 2.0f) {
+		if (this.heartsLife > this.heartsHalvesLife / 2.0f) {
 			return false;
 		}
-		if(entity instanceof EntityMonster || entity instanceof EntityArrow) {
-			if(this.world.difficultySetting == 0) {
+		if (entity instanceof EntityMonster || entity instanceof EntityArrow) {
+			if (this.world.difficultySetting == 0) {
 				nya1 = 0;
 			}
-			if(this.world.difficultySetting == 1) {
+			if (this.world.difficultySetting == 1) {
 				nya1 = nya1 / 3 + 1;
 			}
-			if(this.world.difficultySetting == 3) {
+			if (this.world.difficultySetting == 3) {
 				nya1 = nya1 * 3 / 2;
 			}
 		}

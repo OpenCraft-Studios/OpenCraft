@@ -47,14 +47,14 @@ public class EntityItem extends Entity {
 	@Override
 	public void onUpdate() {
 		super.onUpdate();
-		if(this.delayBeforeCanPickup > 0) {
+		if (this.delayBeforeCanPickup > 0) {
 			--this.delayBeforeCanPickup;
 		}
 		this.prevPosX = this.posX;
 		this.prevPosY = this.posY;
 		this.prevPosZ = this.posZ;
 		this.motionY -= 0.03999999910593033;
-		if(this.world.getBlockMaterial(Mth.floor_double(this.posX), Mth.floor_double(this.posY), Mth.floor_double(this.posZ)) == Material.LAVA) {
+		if (this.world.getBlockMaterial(Mth.floor_double(this.posX), Mth.floor_double(this.posY), Mth.floor_double(this.posZ)) == Material.LAVA) {
 			this.motionY = 0.20000000298023224;
 			this.motionX = (this.rand.nextFloat() - this.rand.nextFloat()) * 0.2f;
 			this.motionZ = (this.rand.nextFloat() - this.rand.nextFloat()) * 0.2f;
@@ -66,14 +66,14 @@ public class EntityItem extends Entity {
 		this.motionX *= 0.9800000190734863;
 		this.motionY *= 0.9800000190734863;
 		this.motionZ *= 0.9800000190734863;
-		if(this.onGround) {
+		if (this.onGround) {
 			this.motionX *= 0.699999988079071;
 			this.motionZ *= 0.699999988079071;
 			this.motionY *= -0.5;
 		}
 		++this.field_803_e;
 		++this.age;
-		if(this.age >= 6000) {
+		if (this.age >= 6000) {
 			this.setEntityDead();
 		}
 	}
@@ -90,7 +90,7 @@ public class EntityItem extends Entity {
 		final double n = double1 - floor_double;
 		final double n2 = double2 - floor_double2;
 		final double n3 = double3 - floor_double3;
-		if(Block.opaqueCubeLookup[this.world.getBlockId(floor_double, floor_double2, floor_double3)]) {
+		if (Block.opaqueCubeLookup[this.world.getBlockId(floor_double, floor_double2, floor_double3)]) {
 			final boolean b = !Block.opaqueCubeLookup[this.world.getBlockId(floor_double - 1, floor_double2, floor_double3)];
 			final boolean b2 = !Block.opaqueCubeLookup[this.world.getBlockId(floor_double + 1, floor_double2, floor_double3)];
 			final boolean b3 = !Block.opaqueCubeLookup[this.world.getBlockId(floor_double, floor_double2 - 1, floor_double3)];
@@ -99,47 +99,47 @@ public class EntityItem extends Entity {
 			final boolean b6 = !Block.opaqueCubeLookup[this.world.getBlockId(floor_double, floor_double2, floor_double3 + 1)];
 			int n4 = -1;
 			double n5 = 9999.0;
-			if(b && n < n5) {
+			if (b && n < n5) {
 				n5 = n;
 				n4 = 0;
 			}
-			if(b2 && 1.0 - n < n5) {
+			if (b2 && 1.0 - n < n5) {
 				n5 = 1.0 - n;
 				n4 = 1;
 			}
-			if(b3 && n2 < n5) {
+			if (b3 && n2 < n5) {
 				n5 = n2;
 				n4 = 2;
 			}
-			if(b4 && 1.0 - n2 < n5) {
+			if (b4 && 1.0 - n2 < n5) {
 				n5 = 1.0 - n2;
 				n4 = 3;
 			}
-			if(b5 && n3 < n5) {
+			if (b5 && n3 < n5) {
 				n5 = n3;
 				n4 = 4;
 			}
-			if(b6 && 1.0 - n3 < n5) {
+			if (b6 && 1.0 - n3 < n5) {
 				n5 = 1.0 - n3;
 				n4 = 5;
 			}
 			final float n6 = this.rand.nextFloat() * 0.2f + 0.1f;
-			if(n4 == 0) {
+			if (n4 == 0) {
 				this.motionX = -n6;
 			}
-			if(n4 == 1) {
+			if (n4 == 1) {
 				this.motionX = n6;
 			}
-			if(n4 == 2) {
+			if (n4 == 2) {
 				this.motionY = -n6;
 			}
-			if(n4 == 3) {
+			if (n4 == 3) {
 				this.motionY = n6;
 			}
-			if(n4 == 4) {
+			if (n4 == 4) {
 				this.motionZ = -n6;
 			}
-			if(n4 == 5) {
+			if (n4 == 5) {
 				this.motionZ = n6;
 			}
 		}
@@ -154,7 +154,7 @@ public class EntityItem extends Entity {
 	@Override
 	public boolean attackEntityFrom(final Entity entity, final int nya1) {
 		this.health -= nya1;
-		if(this.health <= 0) {
+		if (this.health <= 0) {
 			this.setEntityDead();
 		}
 		return false;
@@ -174,7 +174,7 @@ public class EntityItem extends Entity {
 
 	@Override
 	public void onCollideWithPlayer(final EntityPlayer entityPlayer) {
-		if(this.delayBeforeCanPickup == 0 && entityPlayer.inventory.addItemStackToInventory(this.item)) {
+		if (this.delayBeforeCanPickup == 0 && entityPlayer.inventory.addItemStackToInventory(this.item)) {
 			this.world.playSound((Entity) this, "random.pop", 0.2f, ((this.rand.nextFloat() - this.rand.nextFloat()) * 0.7f + 1.0f) * 2.0f);
 			entityPlayer.onItemPickup(this);
 			this.setEntityDead();

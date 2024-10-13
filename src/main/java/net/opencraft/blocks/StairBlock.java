@@ -45,22 +45,22 @@ public class StairBlock extends Block {
 	@Override
 	public void getCollidingBoundingBoxes(World world, int xCoord, int yCoord, final int zCoord, AABB aabb, List<AABB> arrayList) {
 		final int blockMetadata = world.getBlockMetadata(xCoord, yCoord, zCoord);
-		if(blockMetadata == 0) {
+		if (blockMetadata == 0) {
 			this.setShape(0.0f, 0.0f, 0.0f, 0.5f, 0.5f, 1.0f);
 			super.getCollidingBoundingBoxes(world, xCoord, yCoord, zCoord, aabb, arrayList);
 			this.setShape(0.5f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f);
 			super.getCollidingBoundingBoxes(world, xCoord, yCoord, zCoord, aabb, arrayList);
-		} else if(blockMetadata == 1) {
+		} else if (blockMetadata == 1) {
 			this.setShape(0.0f, 0.0f, 0.0f, 0.5f, 1.0f, 1.0f);
 			super.getCollidingBoundingBoxes(world, xCoord, yCoord, zCoord, aabb, arrayList);
 			this.setShape(0.5f, 0.0f, 0.0f, 1.0f, 0.5f, 1.0f);
 			super.getCollidingBoundingBoxes(world, xCoord, yCoord, zCoord, aabb, arrayList);
-		} else if(blockMetadata == 2) {
+		} else if (blockMetadata == 2) {
 			this.setShape(0.0f, 0.0f, 0.0f, 1.0f, 0.5f, 0.5f);
 			super.getCollidingBoundingBoxes(world, xCoord, yCoord, zCoord, aabb, arrayList);
 			this.setShape(0.0f, 0.0f, 0.5f, 1.0f, 1.0f, 1.0f);
 			super.getCollidingBoundingBoxes(world, xCoord, yCoord, zCoord, aabb, arrayList);
-		} else if(blockMetadata == 3) {
+		} else if (blockMetadata == 3) {
 			this.setShape(0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.5f);
 			super.getCollidingBoundingBoxes(world, xCoord, yCoord, zCoord, aabb, arrayList);
 			this.setShape(0.0f, 0.0f, 0.5f, 1.0f, 0.5f, 1.0f);
@@ -71,7 +71,7 @@ public class StairBlock extends Block {
 
 	@Override
 	public void onNeighborBlockChange(final World world, final int xCoord, final int yCoord, final int zCoord, final int nya4) {
-		if(world.getBlockMaterial(xCoord, yCoord + 1, zCoord).isSolid()) {
+		if (world.getBlockMaterial(xCoord, yCoord + 1, zCoord).isSolid()) {
 			world.setBlockWithNotify(xCoord, yCoord, zCoord, this.modelBlock.blockID);
 		} else {
 			this.g(world, xCoord, yCoord, zCoord);
@@ -88,51 +88,51 @@ public class StairBlock extends Block {
 	}
 
 	private void g(final World world, final int xCoord, final int yCoord, final int zCoord) {
-		if(!this.i(world, xCoord, yCoord, zCoord)) {
+		if (!this.i(world, xCoord, yCoord, zCoord)) {
 			return;
 		}
 		int metadataValue = -1;
-		if(this.i(world, xCoord + 1, yCoord + 1, zCoord)) {
+		if (this.i(world, xCoord + 1, yCoord + 1, zCoord)) {
 			metadataValue = 0;
 		}
-		if(this.i(world, xCoord - 1, yCoord + 1, zCoord)) {
+		if (this.i(world, xCoord - 1, yCoord + 1, zCoord)) {
 			metadataValue = 1;
 		}
-		if(this.i(world, xCoord, yCoord + 1, zCoord + 1)) {
+		if (this.i(world, xCoord, yCoord + 1, zCoord + 1)) {
 			metadataValue = 2;
 		}
-		if(this.i(world, xCoord, yCoord + 1, zCoord - 1)) {
+		if (this.i(world, xCoord, yCoord + 1, zCoord - 1)) {
 			metadataValue = 3;
 		}
-		if(metadataValue < 0) {
-			if(this.h(world, xCoord + 1, yCoord, zCoord) && !this.h(world, xCoord - 1, yCoord, zCoord)) {
+		if (metadataValue < 0) {
+			if (this.h(world, xCoord + 1, yCoord, zCoord) && !this.h(world, xCoord - 1, yCoord, zCoord)) {
 				metadataValue = 0;
 			}
-			if(this.h(world, xCoord - 1, yCoord, zCoord) && !this.h(world, xCoord + 1, yCoord, zCoord)) {
+			if (this.h(world, xCoord - 1, yCoord, zCoord) && !this.h(world, xCoord + 1, yCoord, zCoord)) {
 				metadataValue = 1;
 			}
-			if(this.h(world, xCoord, yCoord, zCoord + 1) && !this.h(world, xCoord, yCoord, zCoord - 1)) {
+			if (this.h(world, xCoord, yCoord, zCoord + 1) && !this.h(world, xCoord, yCoord, zCoord - 1)) {
 				metadataValue = 2;
 			}
-			if(this.h(world, xCoord, yCoord, zCoord - 1) && !this.h(world, xCoord, yCoord, zCoord + 1)) {
+			if (this.h(world, xCoord, yCoord, zCoord - 1) && !this.h(world, xCoord, yCoord, zCoord + 1)) {
 				metadataValue = 3;
 			}
 		}
-		if(metadataValue < 0) {
-			if(this.i(world, xCoord - 1, yCoord - 1, zCoord)) {
+		if (metadataValue < 0) {
+			if (this.i(world, xCoord - 1, yCoord - 1, zCoord)) {
 				metadataValue = 0;
 			}
-			if(this.i(world, xCoord + 1, yCoord - 1, zCoord)) {
+			if (this.i(world, xCoord + 1, yCoord - 1, zCoord)) {
 				metadataValue = 1;
 			}
-			if(this.i(world, xCoord, yCoord - 1, zCoord - 1)) {
+			if (this.i(world, xCoord, yCoord - 1, zCoord - 1)) {
 				metadataValue = 2;
 			}
-			if(this.i(world, xCoord, yCoord - 1, zCoord + 1)) {
+			if (this.i(world, xCoord, yCoord - 1, zCoord + 1)) {
 				metadataValue = 3;
 			}
 		}
-		if(metadataValue >= 0) {
+		if (metadataValue >= 0) {
 			world.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, metadataValue);
 		}
 	}

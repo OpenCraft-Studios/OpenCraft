@@ -102,10 +102,10 @@ public class SpeexFormatConvertionProvider extends FormatConversionProvider {
 	 * @return array of supported target format encodings.
 	 */
 	public AudioFormat.Encoding[] getTargetEncodings(final AudioFormat sourceFormat) {
-		if(sourceFormat.getEncoding().equals(AudioFormat.Encoding.PCM_SIGNED)) {
+		if (sourceFormat.getEncoding().equals(AudioFormat.Encoding.PCM_SIGNED)) {
 			AudioFormat.Encoding[] encodings = { SpeexEncoding.SPEEX_Q0, SpeexEncoding.SPEEX_Q1, SpeexEncoding.SPEEX_Q2, SpeexEncoding.SPEEX_Q3, SpeexEncoding.SPEEX_Q4, SpeexEncoding.SPEEX_Q5, SpeexEncoding.SPEEX_Q6, SpeexEncoding.SPEEX_Q7, SpeexEncoding.SPEEX_Q8, SpeexEncoding.SPEEX_Q9, SpeexEncoding.SPEEX_Q10, SpeexEncoding.SPEEX_VBR0, SpeexEncoding.SPEEX_VBR1, SpeexEncoding.SPEEX_VBR2, SpeexEncoding.SPEEX_VBR3, SpeexEncoding.SPEEX_VBR4, SpeexEncoding.SPEEX_VBR5, SpeexEncoding.SPEEX_VBR6, SpeexEncoding.SPEEX_VBR7, SpeexEncoding.SPEEX_VBR8, SpeexEncoding.SPEEX_VBR9, SpeexEncoding.SPEEX_VBR10 };
 			return encodings;
-		} else if(sourceFormat.getEncoding() instanceof SpeexEncoding) {
+		} else if (sourceFormat.getEncoding() instanceof SpeexEncoding) {
 			AudioFormat.Encoding[] encodings = { AudioFormat.Encoding.PCM_SIGNED };
 			return encodings;
 		} else {
@@ -124,8 +124,8 @@ public class SpeexFormatConvertionProvider extends FormatConversionProvider {
 	 * @return array of supported target formats.
 	 */
 	public AudioFormat[] getTargetFormats(final AudioFormat.Encoding targetEncoding, final AudioFormat sourceFormat) {
-		if(sourceFormat.getEncoding().equals(AudioFormat.Encoding.PCM_SIGNED) && targetEncoding instanceof SpeexEncoding) {
-			if(sourceFormat.getChannels() > 2 || sourceFormat.getChannels() <= 0 || sourceFormat.isBigEndian()) {
+		if (sourceFormat.getEncoding().equals(AudioFormat.Encoding.PCM_SIGNED) && targetEncoding instanceof SpeexEncoding) {
+			if (sourceFormat.getChannels() > 2 || sourceFormat.getChannels() <= 0 || sourceFormat.isBigEndian()) {
 				AudioFormat[] formats = {};
 				return formats;
 			} else {
@@ -135,7 +135,7 @@ public class SpeexFormatConvertionProvider extends FormatConversionProvider {
 					false) }; // little endian
 				return formats;
 			}
-		} else if(sourceFormat.getEncoding() instanceof SpeexEncoding && targetEncoding.equals(AudioFormat.Encoding.PCM_SIGNED)) {
+		} else if (sourceFormat.getEncoding() instanceof SpeexEncoding && targetEncoding.equals(AudioFormat.Encoding.PCM_SIGNED)) {
 			AudioFormat[] formats = { new AudioFormat(sourceFormat.getSampleRate(), 16, // sample size in bits
 				sourceFormat.getChannels(), true, // signed
 				false) }; // little endian (for PCM wav)
@@ -158,16 +158,16 @@ public class SpeexFormatConvertionProvider extends FormatConversionProvider {
 	 *                                     is not supported.
 	 */
 	public AudioInputStream getAudioInputStream(final AudioFormat.Encoding targetEncoding, final AudioInputStream sourceStream) {
-		if(isConversionSupported(targetEncoding, sourceStream.getFormat())) {
+		if (isConversionSupported(targetEncoding, sourceStream.getFormat())) {
 			AudioFormat[] formats = getTargetFormats(targetEncoding, sourceStream.getFormat());
-			if(formats != null && formats.length > 0) {
+			if (formats != null && formats.length > 0) {
 				AudioFormat sourceFormat = sourceStream.getFormat();
 				AudioFormat targetFormat = formats[0];
-				if(sourceFormat.equals(targetFormat)) {
+				if (sourceFormat.equals(targetFormat)) {
 					return sourceStream;
-				} else if(sourceFormat.getEncoding() instanceof SpeexEncoding && targetFormat.getEncoding().equals(AudioFormat.Encoding.PCM_SIGNED)) {
+				} else if (sourceFormat.getEncoding() instanceof SpeexEncoding && targetFormat.getEncoding().equals(AudioFormat.Encoding.PCM_SIGNED)) {
 					return new Speex2PcmAudioInputStream(sourceStream, targetFormat, -1);
-				} else if(sourceFormat.getEncoding().equals(AudioFormat.Encoding.PCM_SIGNED) && targetFormat.getEncoding() instanceof SpeexEncoding) {
+				} else if (sourceFormat.getEncoding().equals(AudioFormat.Encoding.PCM_SIGNED) && targetFormat.getEncoding() instanceof SpeexEncoding) {
 					return new Pcm2SpeexAudioInputStream(sourceStream, targetFormat, -1);
 				} else {
 					throw new IllegalArgumentException("unable to convert " + sourceFormat.toString() + " to " + targetFormat.toString());
@@ -192,15 +192,15 @@ public class SpeexFormatConvertionProvider extends FormatConversionProvider {
 	 *                                     is not supported.
 	 */
 	public AudioInputStream getAudioInputStream(final AudioFormat targetFormat, final AudioInputStream sourceStream) {
-		if(isConversionSupported(targetFormat, sourceStream.getFormat())) {
+		if (isConversionSupported(targetFormat, sourceStream.getFormat())) {
 			AudioFormat[] formats = getTargetFormats(targetFormat.getEncoding(), sourceStream.getFormat());
-			if(formats != null && formats.length > 0) {
+			if (formats != null && formats.length > 0) {
 				AudioFormat sourceFormat = sourceStream.getFormat();
-				if(sourceFormat.equals(targetFormat)) {
+				if (sourceFormat.equals(targetFormat)) {
 					return sourceStream;
-				} else if(sourceFormat.getEncoding() instanceof SpeexEncoding && targetFormat.getEncoding().equals(AudioFormat.Encoding.PCM_SIGNED)) {
+				} else if (sourceFormat.getEncoding() instanceof SpeexEncoding && targetFormat.getEncoding().equals(AudioFormat.Encoding.PCM_SIGNED)) {
 					return new Speex2PcmAudioInputStream(sourceStream, targetFormat, -1);
-				} else if(sourceFormat.getEncoding().equals(AudioFormat.Encoding.PCM_SIGNED) && targetFormat.getEncoding() instanceof SpeexEncoding) {
+				} else if (sourceFormat.getEncoding().equals(AudioFormat.Encoding.PCM_SIGNED) && targetFormat.getEncoding() instanceof SpeexEncoding) {
 					return new Pcm2SpeexAudioInputStream(sourceStream, targetFormat, -1);
 				} else {
 					throw new IllegalArgumentException("unable to convert " + sourceFormat.toString() + " to " + targetFormat.toString());

@@ -279,7 +279,7 @@ public class Source {
 		this.velocity = new Vector3D(0, 0, 0);
 		this.temporary = temporary;
 
-		if(toStream && filenameURL != null)
+		if (toStream && filenameURL != null)
 			codec = SoundSystemConfig.getCodec(filenameURL.getFilename());
 	}
 
@@ -311,7 +311,7 @@ public class Source {
 
 		this.soundBuffer = soundBuffer;
 
-		if(toStream && filenameURL != null)
+		if (toStream && filenameURL != null)
 			codec = SoundSystemConfig.getCodec(filenameURL.getFilename());
 	}
 
@@ -353,11 +353,11 @@ public class Source {
 	 * Shuts the source down and removes references to all instantiated objects.
 	 */
 	public void cleanup() {
-		if(codec != null)
+		if (codec != null)
 			codec.cleanup();
 
 		synchronized(soundSequenceLock) {
-			if(soundSequenceQueue != null)
+			if (soundSequenceQueue != null)
 				soundSequenceQueue.clear();
 			soundSequenceQueue = null;
 		}
@@ -377,17 +377,17 @@ public class Source {
 	 * @param filenameURL The filename/URL of the sound file to stream next.
 	 */
 	public void queueSound(FilenameURL filenameURL) {
-		if(!toStream) {
+		if (!toStream) {
 			errorMessage("Method 'queueSound' may only be used for " + "streaming and MIDI sources.");
 			return;
 		}
-		if(filenameURL == null) {
+		if (filenameURL == null) {
 			errorMessage("File not specified in method 'queueSound'");
 			return;
 		}
 
 		synchronized(soundSequenceLock) {
-			if(soundSequenceQueue == null)
+			if (soundSequenceQueue == null)
 				soundSequenceQueue = new LinkedList<FilenameURL>();
 			soundSequenceQueue.add(filenameURL);
 		}
@@ -401,20 +401,20 @@ public class Source {
 	 * @param filename Filename/identifier of a sound file to remove from the queue.
 	 */
 	public void dequeueSound(String filename) {
-		if(!toStream) {
+		if (!toStream) {
 			errorMessage("Method 'dequeueSound' may only be used for " + "streaming and MIDI sources.");
 			return;
 		}
-		if(filename == null || filename.equals("")) {
+		if (filename == null || filename.equals("")) {
 			errorMessage("Filename not specified in method 'dequeueSound'");
 			return;
 		}
 
 		synchronized(soundSequenceLock) {
-			if(soundSequenceQueue != null) {
+			if (soundSequenceQueue != null) {
 				ListIterator<FilenameURL> i = soundSequenceQueue.listIterator();
 				while(i.hasNext()) {
-					if(i.next().getFilename().equals(filename)) {
+					if (i.next().getFilename().equals(filename)) {
 						i.remove();
 						break;
 					}
@@ -436,11 +436,11 @@ public class Source {
 	 * @param milis       Number of miliseconds the fadeout should take.
 	 */
 	public void fadeOut(FilenameURL filenameURL, long milis) {
-		if(!toStream) {
+		if (!toStream) {
 			errorMessage("Method 'fadeOut' may only be used for " + "streaming and MIDI sources.");
 			return;
 		}
-		if(milis < 0) {
+		if (milis < 0) {
 			errorMessage("Miliseconds may not be negative in method " + "'fadeOut'.");
 			return;
 		}
@@ -451,11 +451,11 @@ public class Source {
 		lastFadeCheck = System.currentTimeMillis();
 
 		synchronized(soundSequenceLock) {
-			if(soundSequenceQueue != null)
+			if (soundSequenceQueue != null)
 				soundSequenceQueue.clear();
 
-			if(filenameURL != null) {
-				if(soundSequenceQueue == null)
+			if (filenameURL != null) {
+				if (soundSequenceQueue == null)
 					soundSequenceQueue = new LinkedList<FilenameURL>();
 				soundSequenceQueue.add(filenameURL);
 			}
@@ -477,15 +477,15 @@ public class Source {
 	 * @param milisIn     Number of miliseconds the fadein should take.
 	 */
 	public void fadeOutIn(FilenameURL filenameURL, long milisOut, long milisIn) {
-		if(!toStream) {
+		if (!toStream) {
 			errorMessage("Method 'fadeOutIn' may only be used for " + "streaming and MIDI sources.");
 			return;
 		}
-		if(filenameURL == null) {
+		if (filenameURL == null) {
 			errorMessage("Filename/URL not specified in method 'fadeOutIn'.");
 			return;
 		}
-		if(milisOut < 0 || milisIn < 0) {
+		if (milisOut < 0 || milisIn < 0) {
 			errorMessage("Miliseconds may not be negative in method " + "'fadeOutIn'.");
 			return;
 		}
@@ -497,7 +497,7 @@ public class Source {
 		lastFadeCheck = System.currentTimeMillis();
 
 		synchronized(soundSequenceLock) {
-			if(soundSequenceQueue == null)
+			if (soundSequenceQueue == null)
 				soundSequenceQueue = new LinkedList<FilenameURL>();
 			soundSequenceQueue.clear();
 			soundSequenceQueue.add(filenameURL);
@@ -513,21 +513,21 @@ public class Source {
 	 * @return True if this source is in the process of fading out.
 	 */
 	public boolean checkFadeOut() {
-		if(!toStream)
+		if (!toStream)
 			return false;
 
-		if(fadeOutGain == -1.0f && fadeInGain == 1.0f)
+		if (fadeOutGain == -1.0f && fadeInGain == 1.0f)
 			return false;
 
 		long currentTime = System.currentTimeMillis();
 		long milisPast = currentTime - lastFadeCheck;
 		lastFadeCheck = currentTime;
 
-		if(fadeOutGain >= 0.0f) {
-			if(fadeOutMilis == 0) {
+		if (fadeOutGain >= 0.0f) {
+			if (fadeOutMilis == 0) {
 				fadeOutGain = -1.0f;
 				fadeInGain = 0.0f;
-				if(!incrementSoundSequence()) {
+				if (!incrementSoundSequence()) {
 					stop();
 				}
 				positionChanged();
@@ -536,10 +536,10 @@ public class Source {
 			} else {
 				float fadeOutReduction = ((float) milisPast) / ((float) fadeOutMilis);
 				fadeOutGain -= fadeOutReduction;
-				if(fadeOutGain <= 0.0f) {
+				if (fadeOutGain <= 0.0f) {
 					fadeOutGain = -1.0f;
 					fadeInGain = 0.0f;
-					if(!incrementSoundSequence())
+					if (!incrementSoundSequence())
 						stop();
 					positionChanged();
 					preLoad = true;
@@ -550,15 +550,15 @@ public class Source {
 			return true;
 		}
 
-		if(fadeInGain < 1.0f) {
+		if (fadeInGain < 1.0f) {
 			fadeOutGain = -1.0f;
-			if(fadeInMilis == 0) {
+			if (fadeInMilis == 0) {
 				fadeOutGain = -1.0f;
 				fadeInGain = 1.0f;
 			} else {
 				float fadeInIncrease = ((float) milisPast) / ((float) fadeInMilis);
 				fadeInGain += fadeInIncrease;
-				if(fadeInGain >= 1.0f) {
+				if (fadeInGain >= 1.0f) {
 					fadeOutGain = -1.0f;
 					fadeInGain = 1.0f;
 				}
@@ -578,15 +578,15 @@ public class Source {
 	 * @return True if there was something in the queue.
 	 */
 	public boolean incrementSoundSequence() {
-		if(!toStream) {
+		if (!toStream) {
 			errorMessage("Method 'incrementSoundSequence' may only be used " + "for streaming and MIDI sources.");
 			return false;
 		}
 
 		synchronized(soundSequenceLock) {
-			if(soundSequenceQueue != null && soundSequenceQueue.size() > 0) {
+			if (soundSequenceQueue != null && soundSequenceQueue.size() > 0) {
 				filenameURL = soundSequenceQueue.remove(0);
-				if(codec != null)
+				if (codec != null)
 					codec.cleanup();
 				codec = SoundSystemConfig.getCodec(filenameURL.getFilename());
 				return true;
@@ -604,23 +604,23 @@ public class Source {
 	 * @return False if there is nothing in the queue to read from.
 	 */
 	public boolean readBuffersFromNextSoundInSequence() {
-		if(!toStream) {
+		if (!toStream) {
 			errorMessage("Method 'readBuffersFromNextSoundInSequence' may " + "only be used for streaming sources.");
 			return false;
 		}
 
 		synchronized(soundSequenceLock) {
-			if(soundSequenceQueue != null && soundSequenceQueue.size() > 0) {
-				if(nextCodec != null)
+			if (soundSequenceQueue != null && soundSequenceQueue.size() > 0) {
+				if (nextCodec != null)
 					nextCodec.cleanup();
 				nextCodec = SoundSystemConfig.getCodec(soundSequenceQueue.get(0).getFilename());
 				nextCodec.initialize(soundSequenceQueue.get(0).getURL());
 
 				SoundBuffer buffer = null;
-				for(int i = 0; i < SoundSystemConfig.getNumberStreamingBuffers() && !nextCodec.endOfStream(); i++) {
+				for ( int i = 0; i < SoundSystemConfig.getNumberStreamingBuffers() && !nextCodec.endOfStream(); i++ ) {
 					buffer = nextCodec.read();
-					if(buffer != null) {
-						if(nextBuffers == null)
+					if (buffer != null) {
+						if (nextBuffers == null)
 							nextBuffers = new LinkedList<SoundBuffer>();
 						nextBuffers.add(buffer);
 					}
@@ -637,7 +637,7 @@ public class Source {
 	 * @return Number of sounds left in the queue, or zero if none.
 	 */
 	public int getSoundSequenceQueueSize() {
-		if(soundSequenceQueue == null)
+		if (soundSequenceQueue == null)
 			return 0;
 		return soundSequenceQueue.size();
 	}
@@ -744,9 +744,9 @@ public class Source {
 	 */
 	public void setPitch(float value) {
 		float newPitch = value;
-		if(newPitch < 0.5f)
+		if (newPitch < 0.5f)
 			newPitch = 0.5f;
-		else if(newPitch > 2.0f)
+		else if (newPitch > 2.0f)
 			newPitch = 2.0f;
 		pitch = newPitch;
 	}
@@ -808,11 +808,11 @@ public class Source {
 	 * @return Number of prior buffers that have been processed, or -1 if unable to queue the buffer (if the source was culled, for example).
 	 */
 	public int feedRawAudioData(Channel c, byte[] buffer) {
-		if(!active(GET, XXX)) {
+		if (!active(GET, XXX)) {
 			toPlay = true;
 			return -1;
 		}
-		if(channel != c) {
+		if (channel != c) {
 			channel = c;
 			channel.close();
 			channel.setAudioFormat(rawDataFormat);
@@ -832,12 +832,12 @@ public class Source {
 	 * @param c Channel to play on.
 	 */
 	public void play(Channel c) {
-		if(!active(GET, XXX)) {
-			if(toLoop)
+		if (!active(GET, XXX)) {
+			if (toLoop)
 				toPlay = true;
 			return;
 		}
-		if(channel != c) {
+		if (channel != c) {
 			channel = c;
 			channel.close();
 		}
@@ -853,63 +853,63 @@ public class Source {
 	 * @return False when stream has finished playing.
 	 */
 	public boolean stream() {
-		if(channel == null)
+		if (channel == null)
 			return false;
 
-		if(preLoad) {
-			if(rawDataStream)
+		if (preLoad) {
+			if (rawDataStream)
 				preLoad = false;
 			else
 				return preLoad();
 		}
 
-		if(rawDataStream) {
-			if(stopped() || paused())
+		if (rawDataStream) {
+			if (stopped() || paused())
 				return true;
-			if(channel.buffersProcessed() > 0)
+			if (channel.buffersProcessed() > 0)
 				channel.processBuffer();
 			return true;
 		} else {
-			if(codec == null)
+			if (codec == null)
 				return false;
-			if(stopped())
+			if (stopped())
 				return false;
-			if(paused())
+			if (paused())
 				return true;
 
 			int processed = channel.buffersProcessed();
 
 			SoundBuffer buffer = null;
-			for(int i = 0; i < processed; i++) {
+			for ( int i = 0; i < processed; i++ ) {
 				buffer = codec.read();
-				if(buffer != null) {
-					if(buffer.audioData != null)
+				if (buffer != null) {
+					if (buffer.audioData != null)
 						channel.queueBuffer(buffer.audioData);
 					buffer.cleanup();
 					buffer = null;
 					return true;
-				} else if(codec.endOfStream()) {
+				} else if (codec.endOfStream()) {
 					synchronized(soundSequenceLock) {
-						if(SoundSystemConfig.getStreamQueueFormatsMatch()) {
-							if(soundSequenceQueue != null && soundSequenceQueue.size() > 0) {
-								if(codec != null)
+						if (SoundSystemConfig.getStreamQueueFormatsMatch()) {
+							if (soundSequenceQueue != null && soundSequenceQueue.size() > 0) {
+								if (codec != null)
 									codec.cleanup();
 								filenameURL = soundSequenceQueue.remove(0);
 								codec = SoundSystemConfig.getCodec(filenameURL.getFilename());
 								codec.initialize(filenameURL.getURL());
 								buffer = codec.read();
-								if(buffer != null) {
-									if(buffer.audioData != null)
+								if (buffer != null) {
+									if (buffer.audioData != null)
 										channel.queueBuffer(buffer.audioData);
 									buffer.cleanup();
 									buffer = null;
 									return true;
 								}
-							} else if(toLoop) {
+							} else if (toLoop) {
 								codec.initialize(filenameURL.getURL());
 								buffer = codec.read();
-								if(buffer != null) {
-									if(buffer.audioData != null)
+								if (buffer != null) {
+									if (buffer.audioData != null)
 										channel.queueBuffer(buffer.audioData);
 									buffer.cleanup();
 									buffer = null;
@@ -965,28 +965,28 @@ public class Source {
 	 * @return False if the end of the stream was reached.
 	 */
 	public boolean preLoad() {
-		if(channel == null)
+		if (channel == null)
 			return false;
 
-		if(codec == null)
+		if (codec == null)
 			return false;
 
 		SoundBuffer buffer = null;
 
 		boolean noNextBuffers = false;
 		synchronized(soundSequenceLock) {
-			if(nextBuffers == null || nextBuffers.isEmpty())
+			if (nextBuffers == null || nextBuffers.isEmpty())
 				noNextBuffers = true;
 		}
 
-		if(nextCodec != null && !noNextBuffers) {
+		if (nextCodec != null && !noNextBuffers) {
 			codec = nextCodec;
 			nextCodec = null;
 			synchronized(soundSequenceLock) {
 				while(!nextBuffers.isEmpty()) {
 					buffer = nextBuffers.remove(0);
-					if(buffer != null) {
-						if(buffer.audioData != null)
+					if (buffer != null) {
+						if (buffer.audioData != null)
 							channel.queueBuffer(buffer.audioData);
 						buffer.cleanup();
 						buffer = null;
@@ -998,10 +998,10 @@ public class Source {
 			URL url = filenameURL.getURL();
 
 			codec.initialize(url);
-			for(int i = 0; i < SoundSystemConfig.getNumberStreamingBuffers(); i++) {
+			for ( int i = 0; i < SoundSystemConfig.getNumberStreamingBuffers(); i++ ) {
 				buffer = codec.read();
-				if(buffer != null) {
-					if(buffer.audioData != null)
+				if (buffer != null) {
+					if (buffer.audioData != null)
 						channel.queueBuffer(buffer.audioData);
 					buffer.cleanup();
 					buffer = null;
@@ -1018,7 +1018,7 @@ public class Source {
 	public void pause() {
 		toPlay = false;
 		paused(SET, true);
-		if(channel != null)
+		if (channel != null)
 			channel.pause();
 		else
 			errorMessage("Channel null in method 'pause'");
@@ -1031,7 +1031,7 @@ public class Source {
 		toPlay = false;
 		stopped(SET, true);
 		paused(SET, false);
-		if(channel != null)
+		if (channel != null)
 			channel.stop();
 		else
 			errorMessage("Channel null in method 'stop'");
@@ -1041,13 +1041,13 @@ public class Source {
 	 * Rewinds the source. If the source was paused, then it is stopped.
 	 */
 	public void rewind() {
-		if(paused(GET, XXX)) {
+		if (paused(GET, XXX)) {
 			stop();
 		}
-		if(channel != null) {
+		if (channel != null) {
 			boolean rePlay = playing();
 			channel.rewind();
-			if(toStream && rePlay) {
+			if (toStream && rePlay) {
 				stop();
 				play(channel);
 			}
@@ -1059,7 +1059,7 @@ public class Source {
 	 * Dequeues any previously queued data.
 	 */
 	public void flush() {
-		if(channel != null)
+		if (channel != null)
 			channel.flush();
 		else
 			errorMessage("Channel null in method 'flush'");
@@ -1070,14 +1070,14 @@ public class Source {
 	 * the activate() is called.
 	 */
 	public void cull() {
-		if(!active(GET, XXX))
+		if (!active(GET, XXX))
 			return;
-		if(playing() && toLoop)
+		if (playing() && toLoop)
 			toPlay = true;
-		if(rawDataStream)
+		if (rawDataStream)
 			toPlay = true;
 		active(SET, false);
-		if(channel != null)
+		if (channel != null)
 			channel.close();
 		channel = null;
 	}
@@ -1104,9 +1104,9 @@ public class Source {
 	 * @return True or False
 	 */
 	public boolean playing() {
-		if(channel == null || channel.attachedSource != this)
+		if (channel == null || channel.attachedSource != this)
 			return false;
-		else if(paused() || stopped())
+		else if (paused() || stopped())
 			return false;
 		else
 			return channel.playing();
@@ -1136,7 +1136,7 @@ public class Source {
 	 * @return miliseconds, or -1 if not playing or unable to calculate
 	 */
 	public float millisecondsPlayed() {
-		if(channel == null)
+		if (channel == null)
 			return (-1);
 		else
 			return channel.millisecondsPlayed();
@@ -1148,7 +1148,7 @@ public class Source {
 	 * @return True or False
 	 */
 	private synchronized boolean active(boolean action, boolean value) {
-		if(action == SET)
+		if (action == SET)
 			active = value;
 		return active;
 	}
@@ -1159,7 +1159,7 @@ public class Source {
 	 * @return True or False
 	 */
 	private synchronized boolean stopped(boolean action, boolean value) {
-		if(action == SET)
+		if (action == SET)
 			stopped = value;
 		return stopped;
 	}
@@ -1170,7 +1170,7 @@ public class Source {
 	 * @return True or False
 	 */
 	private synchronized boolean paused(boolean action, boolean value) {
-		if(action == SET)
+		if (action == SET)
 			paused = value;
 		return paused;
 	}
@@ -1183,7 +1183,7 @@ public class Source {
 	public String getClassName() {
 		String libTitle = SoundSystemConfig.getLibraryTitle(libraryType);
 
-		if(libTitle.equals("No Sound"))
+		if (libTitle.equals("No Sound"))
 			return "Source";
 		else
 			return "Source" + libTitle;

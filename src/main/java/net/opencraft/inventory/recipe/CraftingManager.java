@@ -57,9 +57,9 @@ public class CraftingManager {
 		int i = 0;
 		int integer1 = 0;
 		int integer2 = 0;
-		if(arr[i] instanceof String[]) {
+		if (arr[i] instanceof String[]) {
 			final String[] array = (String[]) arr[i++];
-			for(int j = 0; j < array.length; ++j) {
+			for ( int j = 0; j < array.length; ++j ) {
 				final String s2 = array[j];
 				++integer2;
 				integer1 = s2.length();
@@ -77,18 +77,18 @@ public class CraftingManager {
 		while(i < arr.length) {
 			final Character c = (Character) arr[i];
 			int k = 0;
-			if(arr[i + 1] instanceof Item) {
+			if (arr[i + 1] instanceof Item) {
 				k = ((Item) arr[i + 1]).shiftedIndex;
-			} else if(arr[i + 1] instanceof Block) {
+			} else if (arr[i + 1] instanceof Block) {
 				k = ((Block) arr[i + 1]).blockID;
 			}
 			((Map) hashMap).put(c, k);
 			i += 2;
 		}
 		final int[] arr2 = new int[integer1 * integer2];
-		for(int k = 0; k < integer1 * integer2; ++k) {
+		for ( int k = 0; k < integer1 * integer2; ++k ) {
 			final char char1 = s.charAt(k);
-			if(((Map) hashMap).containsKey(char1)) {
+			if (((Map) hashMap).containsKey(char1)) {
 				arr2[k] = (int) ((Map) hashMap).get(char1);
 			} else {
 				arr2[k] = -1;
@@ -98,9 +98,9 @@ public class CraftingManager {
 	}
 
 	public ItemStack findMatchingRecipe(final int[] arr) {
-		for(int i = 0; i < this.recipes.size(); ++i) {
+		for ( int i = 0; i < this.recipes.size(); ++i ) {
 			final IRecipe recipe = (IRecipe) this.recipes.get(i);
-			if(recipe.matchRecipe(arr)) {
+			if (recipe.matchRecipe(arr)) {
 				return recipe.createResult(arr);
 			}
 		}

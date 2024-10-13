@@ -44,10 +44,10 @@ public class EntityLavaFX extends EntityFX {
 		this.prevPosX = this.posX;
 		this.prevPosY = this.posY;
 		this.prevPosZ = this.posZ;
-		if(this.particleAge++ >= this.particleMaxAge) {
+		if (this.particleAge++ >= this.particleMaxAge) {
 			this.setEntityDead();
 		}
-		if(this.rand.nextFloat() > this.particleAge / (float) this.particleMaxAge) {
+		if (this.rand.nextFloat() > this.particleAge / (float) this.particleMaxAge) {
 			this.world.spawnParticle("smoke", this.posX, this.posY, this.posZ, this.motionX, this.motionY, this.motionZ);
 		}
 		this.motionY -= 0.03;
@@ -55,7 +55,7 @@ public class EntityLavaFX extends EntityFX {
 		this.motionX *= 0.9990000128746033;
 		this.motionY *= 0.9990000128746033;
 		this.motionZ *= 0.9990000128746033;
-		if(this.onGround) {
+		if (this.onGround) {
 			this.motionX *= 0.699999988079071;
 			this.motionZ *= 0.699999988079071;
 		}

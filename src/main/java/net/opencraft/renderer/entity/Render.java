@@ -99,11 +99,11 @@ public abstract class Render<T extends Entity> {
 		final double double8 = double4 - n2;
 		final Tessellator instance = Tessellator.instance;
 		instance.beginQuads();
-		for(int i = floor_double; i <= floor_double2; ++i) {
-			for(int j = floor_double3; j <= floor_double4; ++j) {
-				for(int k = floor_double5; k <= floor_double6; ++k) {
+		for ( int i = floor_double; i <= floor_double2; ++i ) {
+			for ( int j = floor_double3; j <= floor_double4; ++j ) {
+				for ( int k = floor_double5; k <= floor_double6; ++k ) {
 					final int blockId = worldFromRenderManager.getBlockId(i, j - 1, k);
-					if(blockId > 0 && worldFromRenderManager.getBlockLightValue(i, j, k) > 3) {
+					if (blockId > 0 && worldFromRenderManager.getBlockLightValue(i, j, k) > 3) {
 						this.renderShadowOnBlock(Block.blocksList[blockId], double2, double3, double4, i, j, k, float5, shadowSize, double6, double7, double8);
 					}
 				}
@@ -121,14 +121,14 @@ public abstract class Render<T extends Entity> {
 
 	private void renderShadowOnBlock(final Block gs, final double double2, final double double3, final double double4, final int integer5, final int integer6, final int integer7, final float float8, final float float9, final double double10, final double double11, final double double12) {
 		final Tessellator instance = Tessellator.instance;
-		if(!gs.renderAsNormalBlock()) {
+		if (!gs.renderAsNormalBlock()) {
 			return;
 		}
 		double n = (float8 - (double3 - (integer6 + double11)) / 2.0) * 0.5 * this.getWorldFromRenderManager().getLightBrightness(integer5, integer6, integer7);
-		if(n < 0.0) {
+		if (n < 0.0) {
 			return;
 		}
-		if(n > 1.0) {
+		if (n > 1.0) {
 			n = 1.0;
 		}
 		instance.setColorRGBA_F(1.0f, 1.0f, 1.0f, (float) n);
@@ -223,13 +223,13 @@ public abstract class Render<T extends Entity> {
 	}
 
 	public void doRenderShadowAndFire(final Entity eq, final double double2, final double double3, final double double4, final float float5, final float float6) {
-		if(this.renderManager.options.fancyGraphics && this.shadowSize > 0.0f) {
+		if (this.renderManager.options.fancyGraphics && this.shadowSize > 0.0f) {
 			final float float7 = (float) ((1.0 - this.renderManager.func_851_a(eq.posX, eq.posY, eq.posZ) / 256.0) * this.field_194_c);
-			if(float7 > 0.0f) {
+			if (float7 > 0.0f) {
 				this.renderShadow(eq, double2, double3, double4, float7, float6);
 			}
 		}
-		if(eq.fire > 0) {
+		if (eq.fire > 0) {
 			this.renderEntityOnFire(eq, double2, double3, double4, float6);
 		}
 	}

@@ -165,7 +165,7 @@ public class SpeexAudioFileReader extends AudioFileReader {
 		try {
 			// If we can't read the format of this stream, we must restore stream to
 			// beginning so other providers can attempt to read the stream.
-			if(bitStream.markSupported()) {
+			if (bitStream.markSupported()) {
 				// maximum number of bytes to determine the stream encoding:
 				// Size of 1st Ogg Packet (Speex header) = OGG_HEADERSIZE + SPEEX_HEADERSIZE + 1
 				// Size of 2nd Ogg Packet (Comment)      = OGG_HEADERSIZE + comment_size + 1
@@ -183,7 +183,7 @@ public class SpeexAudioFileReader extends AudioFileReader {
 			int segments = 0;
 			int bodybytes = 0;
 			DataInputStream dis = new DataInputStream(bitStream);
-			if(baos == null)
+			if (baos == null)
 				baos = new ByteArrayOutputStream(128);
 			int origchksum;
 			int chksum;
@@ -197,12 +197,12 @@ public class SpeexAudioFileReader extends AudioFileReader {
 			header[25] = 0;
 			chksum = OggCrc.checksum(0, header, 0, OGG_HEADERSIZE);
 			// make sure its a OGG header
-			if(!OGGID.equals(new String(header, 0, 4))) {
+			if (!OGGID.equals(new String(header, 0, 4))) {
 				throw new UnsupportedAudioFileException("missing ogg id!");
 			}
 			// how many segments are there?
 			segments = header[SEGOFFSET] & 0xFF;
-			if(segments > 1) {
+			if (segments > 1) {
 				throw new UnsupportedAudioFileException("Corrupt Speex Header: more than 1 segments");
 			}
 			dis.readFully(header, OGG_HEADERSIZE, segments);
@@ -210,7 +210,7 @@ public class SpeexAudioFileReader extends AudioFileReader {
 			chksum = OggCrc.checksum(chksum, header, OGG_HEADERSIZE, segments);
 			// get the number of bytes in the segment
 			bodybytes = header[OGG_HEADERSIZE] & 0xFF;
-			if(bodybytes != SPEEX_HEADERSIZE) {
+			if (bodybytes != SPEEX_HEADERSIZE) {
 				throw new UnsupportedAudioFileException("Corrupt Speex Header: size=" + bodybytes);
 			}
 			// read the Speex header
@@ -218,7 +218,7 @@ public class SpeexAudioFileReader extends AudioFileReader {
 			baos.write(header, OGG_HEADERSIZE + 1, bodybytes);
 			chksum = OggCrc.checksum(chksum, header, OGG_HEADERSIZE + 1, bodybytes);
 			// make sure its a Speex header
-			if(!SPEEXID.equals(new String(header, OGG_HEADERSIZE + 1, 8))) {
+			if (!SPEEXID.equals(new String(header, OGG_HEADERSIZE + 1, 8))) {
 				throw new UnsupportedAudioFileException("Corrupt Speex Header: missing Speex ID");
 			}
 			mode = readInt(header, OGG_HEADERSIZE + 1 + 40);
@@ -227,29 +227,29 @@ public class SpeexAudioFileReader extends AudioFileReader {
 			int nframes = readInt(header, OGG_HEADERSIZE + 1 + 64);
 			boolean vbr = readInt(header, OGG_HEADERSIZE + 1 + 60) == 1;
 			// Checksum
-			if(chksum != origchksum)
+			if (chksum != origchksum)
 				throw new IOException("Ogg CheckSums do not match");
 			// Calculate frameSize
-			if(!vbr) {
+			if (!vbr) {
 				// Frames size is a constant so:
 				// Read Comment Packet the Ogg Header of 1st data packet;
 				// the array table_segment repeats the frame size over and over.
 			}
 			// Calculate frameRate
-			if(mode >= 0 && mode <= 2 && nframes > 0) {
+			if (mode >= 0 && mode <= 2 && nframes > 0) {
 				frameRate = ((float) sampleRate) / ((mode == 0 ? 160f : (mode == 1 ? 320f : 640f)) * ((float) nframes));
 			}
 			format = new AudioFormat(SpeexEncoding.SPEEX, (float) sampleRate, AudioSystem.NOT_SPECIFIED, channels, frameSize, frameRate, false);
 		} catch(UnsupportedAudioFileException e) {
 			// reset the stream for other providers
-			if(bitStream.markSupported()) {
+			if (bitStream.markSupported()) {
 				bitStream.reset();
 			}
 			// just rethrow this exception
 			throw e;
 		} catch(IOException ioe) {
 			// reset the stream for other providers
-			if(bitStream.markSupported()) {
+			if (bitStream.markSupported()) {
 				bitStream.reset();
 			}
 			throw new UnsupportedAudioFileException(ioe.getMessage());

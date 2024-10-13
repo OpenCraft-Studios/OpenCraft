@@ -27,7 +27,7 @@ public class AABB {
 	}
 
 	public static AABB getBoundingBoxFromPool(final double aabbMinX, final double aabbMinY, final double aabbMinZ, final double aabbMaxX, final double aabbMaxY, final double aabbMaxZ) {
-		if(AABB.numBoundingBoxesInUse >= AABB.boundingBoxes.size()) {
+		if (AABB.numBoundingBoxesInUse >= AABB.boundingBoxes.size()) {
 			AABB.boundingBoxes.add(getBoundingBox(0.0, 0.0, 0.0, 0.0, 0.0, 0.0));
 		}
 		return ((AABB) AABB.boundingBoxes.get(AABB.numBoundingBoxesInUse++)).setBounds(aabbMinX, aabbMinY, aabbMinZ, aabbMaxX, aabbMaxY, aabbMaxZ);
@@ -59,22 +59,22 @@ public class AABB {
 		double maxX = this.maxX;
 		double maxY = this.maxY;
 		double maxZ = this.maxZ;
-		if(xCoord < 0.0) {
+		if (xCoord < 0.0) {
 			minX += xCoord;
 		}
-		if(xCoord > 0.0) {
+		if (xCoord > 0.0) {
 			maxX += xCoord;
 		}
-		if(yCoord < 0.0) {
+		if (yCoord < 0.0) {
 			minY += yCoord;
 		}
-		if(yCoord > 0.0) {
+		if (yCoord > 0.0) {
 			maxY += yCoord;
 		}
-		if(zCoord < 0.0) {
+		if (zCoord < 0.0) {
 			minZ += zCoord;
 		}
-		if(zCoord > 0.0) {
+		if (zCoord > 0.0) {
 			maxZ += zCoord;
 		}
 		return getBoundingBoxFromPool(minX, minY, minZ, maxX, maxY, maxZ);
@@ -89,21 +89,21 @@ public class AABB {
 	}
 
 	public double calculateXOffset(final AABB aabb, double offsetX) {
-		if(aabb.maxY <= this.minY || aabb.minY >= this.maxY) {
+		if (aabb.maxY <= this.minY || aabb.minY >= this.maxY) {
 			return offsetX;
 		}
-		if(aabb.maxZ <= this.minZ || aabb.minZ >= this.maxZ) {
+		if (aabb.maxZ <= this.minZ || aabb.minZ >= this.maxZ) {
 			return offsetX;
 		}
-		if(offsetX > 0.0 && aabb.maxX <= this.minX) {
+		if (offsetX > 0.0 && aabb.maxX <= this.minX) {
 			final double n = this.minX - aabb.maxX;
-			if(n < offsetX) {
+			if (n < offsetX) {
 				offsetX = n;
 			}
 		}
-		if(offsetX < 0.0 && aabb.minX >= this.maxX) {
+		if (offsetX < 0.0 && aabb.minX >= this.maxX) {
 			final double n = this.maxX - aabb.minX;
-			if(n > offsetX) {
+			if (n > offsetX) {
 				offsetX = n;
 			}
 		}
@@ -111,21 +111,21 @@ public class AABB {
 	}
 
 	public double calculateYOffset(final AABB aabb, double offsetY) {
-		if(aabb.maxX <= this.minX || aabb.minX >= this.maxX) {
+		if (aabb.maxX <= this.minX || aabb.minX >= this.maxX) {
 			return offsetY;
 		}
-		if(aabb.maxZ <= this.minZ || aabb.minZ >= this.maxZ) {
+		if (aabb.maxZ <= this.minZ || aabb.minZ >= this.maxZ) {
 			return offsetY;
 		}
-		if(offsetY > 0.0 && aabb.maxY <= this.minY) {
+		if (offsetY > 0.0 && aabb.maxY <= this.minY) {
 			final double n = this.minY - aabb.maxY;
-			if(n < offsetY) {
+			if (n < offsetY) {
 				offsetY = n;
 			}
 		}
-		if(offsetY < 0.0 && aabb.minY >= this.maxY) {
+		if (offsetY < 0.0 && aabb.minY >= this.maxY) {
 			final double n = this.maxY - aabb.minY;
-			if(n > offsetY) {
+			if (n > offsetY) {
 				offsetY = n;
 			}
 		}
@@ -133,21 +133,21 @@ public class AABB {
 	}
 
 	public double calculateZOffset(final AABB aabb, double offsetZ) {
-		if(aabb.maxX <= this.minX || aabb.minX >= this.maxX) {
+		if (aabb.maxX <= this.minX || aabb.minX >= this.maxX) {
 			return offsetZ;
 		}
-		if(aabb.maxY <= this.minY || aabb.minY >= this.maxY) {
+		if (aabb.maxY <= this.minY || aabb.minY >= this.maxY) {
 			return offsetZ;
 		}
-		if(offsetZ > 0.0 && aabb.maxZ <= this.minZ) {
+		if (offsetZ > 0.0 && aabb.maxZ <= this.minZ) {
 			final double n = this.minZ - aabb.maxZ;
-			if(n < offsetZ) {
+			if (n < offsetZ) {
 				offsetZ = n;
 			}
 		}
-		if(offsetZ < 0.0 && aabb.minZ >= this.maxZ) {
+		if (offsetZ < 0.0 && aabb.minZ >= this.maxZ) {
 			final double n = this.maxZ - aabb.minZ;
-			if(n > offsetZ) {
+			if (n > offsetZ) {
 				offsetZ = n;
 			}
 		}
@@ -183,63 +183,63 @@ public class AABB {
 		Vec3 intermediateWithYValue2 = var1.getIntermediateWithYValue(var2, this.maxY);
 		Vec3 intermediateWithZValue = var1.getIntermediateWithZValue(var2, this.minZ);
 		Vec3 intermediateWithZValue2 = var1.getIntermediateWithZValue(var2, this.maxZ);
-		if(!this.isVecInYZ(intermediateWithXValue)) {
+		if (!this.isVecInYZ(intermediateWithXValue)) {
 			intermediateWithXValue = null;
 		}
-		if(!this.isVecInYZ(intermediateWithXValue2)) {
+		if (!this.isVecInYZ(intermediateWithXValue2)) {
 			intermediateWithXValue2 = null;
 		}
-		if(!this.isVecInXZ(intermediateWithYValue)) {
+		if (!this.isVecInXZ(intermediateWithYValue)) {
 			intermediateWithYValue = null;
 		}
-		if(!this.isVecInXZ(intermediateWithYValue2)) {
+		if (!this.isVecInXZ(intermediateWithYValue2)) {
 			intermediateWithYValue2 = null;
 		}
-		if(!this.isVecInXY(intermediateWithZValue)) {
+		if (!this.isVecInXY(intermediateWithZValue)) {
 			intermediateWithZValue = null;
 		}
-		if(!this.isVecInXY(intermediateWithZValue2)) {
+		if (!this.isVecInXY(intermediateWithZValue2)) {
 			intermediateWithZValue2 = null;
 		}
 		Vec3 bo = null;
-		if(intermediateWithXValue != null && (bo == null || var1.distanceSquared(intermediateWithXValue) < var1.distanceSquared(bo))) {
+		if (intermediateWithXValue != null && (bo == null || var1.distanceSquared(intermediateWithXValue) < var1.distanceSquared(bo))) {
 			bo = intermediateWithXValue;
 		}
-		if(intermediateWithXValue2 != null && (bo == null || var1.distanceSquared(intermediateWithXValue2) < var1.distanceSquared(bo))) {
+		if (intermediateWithXValue2 != null && (bo == null || var1.distanceSquared(intermediateWithXValue2) < var1.distanceSquared(bo))) {
 			bo = intermediateWithXValue2;
 		}
-		if(intermediateWithYValue != null && (bo == null || var1.distanceSquared(intermediateWithYValue) < var1.distanceSquared(bo))) {
+		if (intermediateWithYValue != null && (bo == null || var1.distanceSquared(intermediateWithYValue) < var1.distanceSquared(bo))) {
 			bo = intermediateWithYValue;
 		}
-		if(intermediateWithYValue2 != null && (bo == null || var1.distanceSquared(intermediateWithYValue2) < var1.distanceSquared(bo))) {
+		if (intermediateWithYValue2 != null && (bo == null || var1.distanceSquared(intermediateWithYValue2) < var1.distanceSquared(bo))) {
 			bo = intermediateWithYValue2;
 		}
-		if(intermediateWithZValue != null && (bo == null || var1.distanceSquared(intermediateWithZValue) < var1.distanceSquared(bo))) {
+		if (intermediateWithZValue != null && (bo == null || var1.distanceSquared(intermediateWithZValue) < var1.distanceSquared(bo))) {
 			bo = intermediateWithZValue;
 		}
-		if(intermediateWithZValue2 != null && (bo == null || var1.distanceSquared(intermediateWithZValue2) < var1.distanceSquared(bo))) {
+		if (intermediateWithZValue2 != null && (bo == null || var1.distanceSquared(intermediateWithZValue2) < var1.distanceSquared(bo))) {
 			bo = intermediateWithZValue2;
 		}
-		if(bo == null) {
+		if (bo == null) {
 			return null;
 		}
 		int integer4 = -1;
-		if(bo == intermediateWithXValue) {
+		if (bo == intermediateWithXValue) {
 			integer4 = 4;
 		}
-		if(bo == intermediateWithXValue2) {
+		if (bo == intermediateWithXValue2) {
 			integer4 = 5;
 		}
-		if(bo == intermediateWithYValue) {
+		if (bo == intermediateWithYValue) {
 			integer4 = 0;
 		}
-		if(bo == intermediateWithYValue2) {
+		if (bo == intermediateWithYValue2) {
 			integer4 = 1;
 		}
-		if(bo == intermediateWithZValue) {
+		if (bo == intermediateWithZValue) {
 			integer4 = 2;
 		}
-		if(bo == intermediateWithZValue2) {
+		if (bo == intermediateWithZValue2) {
 			integer4 = 3;
 		}
 		return new MovingObjectPosition(0, 0, 0, integer4, bo);

@@ -21,7 +21,7 @@ public abstract class LiquidBlock extends Block {
 		this.unsure = 1;
 		final float n = 0.0f;
 		final float n2 = 0.0f;
-		if(material == Material.LAVA) {
+		if (material == Material.LAVA) {
 			this.unsure = 2;
 		}
 		this.setShape(0.0f + n2, 0.0f + n, 0.0f + n2, 1.0f + n2, 1.0f + n, 1.0f + n2);
@@ -30,25 +30,25 @@ public abstract class LiquidBlock extends Block {
 
 	@Override
 	public int getBlockTextureFromSide(final int textureIndexSlot) {
-		if(textureIndexSlot == 0 || textureIndexSlot == 1) {
+		if (textureIndexSlot == 0 || textureIndexSlot == 1) {
 			return this.blockIndexInTexture;
 		}
 		return this.blockIndexInTexture + 1;
 	}
 
 	protected int getFlowDecay(final World world, final int xCoord, final int yCoord, final int zCoord) {
-		if(world.getBlockMaterial(xCoord, yCoord, zCoord) != this.blockMaterial) {
+		if (world.getBlockMaterial(xCoord, yCoord, zCoord) != this.blockMaterial) {
 			return -1;
 		}
 		return world.getBlockMetadata(xCoord, yCoord, zCoord);
 	}
 
 	protected int getEffectiveFlowDecay(final IBlockAccess blockAccess, final int xCoord, final int yCoord, final int zCoord) {
-		if(blockAccess.getBlockMaterial(xCoord, yCoord, zCoord) != this.blockMaterial) {
+		if (blockAccess.getBlockMaterial(xCoord, yCoord, zCoord) != this.blockMaterial) {
 			return -1;
 		}
 		int blockMetadata = blockAccess.getBlockMetadata(xCoord, yCoord, zCoord);
-		if(blockMetadata >= 8) {
+		if (blockMetadata >= 8) {
 			blockMetadata = 0;
 		}
 		return blockMetadata;
@@ -97,60 +97,60 @@ public abstract class LiquidBlock extends Block {
 	private Vec3 getFlowVector(final IBlockAccess blockAccess, final int xCoord, final int yCoord, final int zCoord) {
 		Vec3 vec3D = Vec3.newTemp(0.0, 0.0, 0.0);
 		final int effectiveFlowDecay = this.getEffectiveFlowDecay(blockAccess, xCoord, yCoord, zCoord);
-		for(int i = 0; i < 4; ++i) {
+		for ( int i = 0; i < 4; ++i ) {
 			int n = xCoord;
 			int n2 = zCoord;
-			if(i == 0) {
+			if (i == 0) {
 				--n;
 			}
-			if(i == 1) {
+			if (i == 1) {
 				--n2;
 			}
-			if(i == 2) {
+			if (i == 2) {
 				++n;
 			}
-			if(i == 3) {
+			if (i == 3) {
 				++n2;
 			}
 			int n3 = this.getEffectiveFlowDecay(blockAccess, n, yCoord, n2);
-			if(n3 < 0) {
+			if (n3 < 0) {
 				n3 = this.getEffectiveFlowDecay(blockAccess, n, yCoord - 1, n2);
-				if(n3 >= 0) {
+				if (n3 >= 0) {
 					final int n4 = n3 - (effectiveFlowDecay - 8);
 					vec3D = vec3D.add((n - xCoord) * n4, (yCoord - yCoord) * n4, (n2 - zCoord) * n4);
 				}
-			} else if(n3 >= 0) {
+			} else if (n3 >= 0) {
 				final int n4 = n3 - effectiveFlowDecay;
 				vec3D = vec3D.add((n - xCoord) * n4, (yCoord - yCoord) * n4, (n2 - zCoord) * n4);
 			}
 		}
-		if(blockAccess.getBlockMetadata(xCoord, yCoord, zCoord) >= 8) {
+		if (blockAccess.getBlockMetadata(xCoord, yCoord, zCoord) >= 8) {
 			int n5 = 0;
-			if(n5 != 0 || this.shouldSideBeRendered(blockAccess, xCoord, yCoord, zCoord - 1, 2)) {
+			if (n5 != 0 || this.shouldSideBeRendered(blockAccess, xCoord, yCoord, zCoord - 1, 2)) {
 				n5 = 1;
 			}
-			if(n5 != 0 || this.shouldSideBeRendered(blockAccess, xCoord, yCoord, zCoord + 1, 3)) {
+			if (n5 != 0 || this.shouldSideBeRendered(blockAccess, xCoord, yCoord, zCoord + 1, 3)) {
 				n5 = 1;
 			}
-			if(n5 != 0 || this.shouldSideBeRendered(blockAccess, xCoord - 1, yCoord, zCoord, 4)) {
+			if (n5 != 0 || this.shouldSideBeRendered(blockAccess, xCoord - 1, yCoord, zCoord, 4)) {
 				n5 = 1;
 			}
-			if(n5 != 0 || this.shouldSideBeRendered(blockAccess, xCoord + 1, yCoord, zCoord, 5)) {
+			if (n5 != 0 || this.shouldSideBeRendered(blockAccess, xCoord + 1, yCoord, zCoord, 5)) {
 				n5 = 1;
 			}
-			if(n5 != 0 || this.shouldSideBeRendered(blockAccess, xCoord, yCoord + 1, zCoord - 1, 2)) {
+			if (n5 != 0 || this.shouldSideBeRendered(blockAccess, xCoord, yCoord + 1, zCoord - 1, 2)) {
 				n5 = 1;
 			}
-			if(n5 != 0 || this.shouldSideBeRendered(blockAccess, xCoord, yCoord + 1, zCoord + 1, 3)) {
+			if (n5 != 0 || this.shouldSideBeRendered(blockAccess, xCoord, yCoord + 1, zCoord + 1, 3)) {
 				n5 = 1;
 			}
-			if(n5 != 0 || this.shouldSideBeRendered(blockAccess, xCoord - 1, yCoord + 1, zCoord, 4)) {
+			if (n5 != 0 || this.shouldSideBeRendered(blockAccess, xCoord - 1, yCoord + 1, zCoord, 4)) {
 				n5 = 1;
 			}
-			if(n5 != 0 || this.shouldSideBeRendered(blockAccess, xCoord + 1, yCoord + 1, zCoord, 5)) {
+			if (n5 != 0 || this.shouldSideBeRendered(blockAccess, xCoord + 1, yCoord + 1, zCoord, 5)) {
 				n5 = 1;
 			}
-			if(n5 != 0) {
+			if (n5 != 0) {
 				vec3D = vec3D.normalize().add(0.0, -6.0, 0.0);
 			}
 		}
@@ -167,10 +167,10 @@ public abstract class LiquidBlock extends Block {
 
 	@Override
 	public int tickRate() {
-		if(this.blockMaterial == Material.WATER) {
+		if (this.blockMaterial == Material.WATER) {
 			return 5;
 		}
-		if(this.blockMaterial == Material.LAVA) {
+		if (this.blockMaterial == Material.LAVA) {
 			return 30;
 		}
 		return 0;
@@ -195,13 +195,13 @@ public abstract class LiquidBlock extends Block {
 
 	@Override
 	public void randomDisplayTick(final World world, final int xCoord, final int yCoord, final int zCoord, final Random random) {
-		if(this.blockMaterial == Material.WATER && random.nextInt(64) == 0) {
+		if (this.blockMaterial == Material.WATER && random.nextInt(64) == 0) {
 			final int blockMetadata = world.getBlockMetadata(xCoord, yCoord, zCoord);
-			if(blockMetadata > 0 && blockMetadata < 8) {
+			if (blockMetadata > 0 && blockMetadata < 8) {
 				world.playSoundEffect((xCoord + 0.5f), (yCoord + 0.5f), (zCoord + 0.5f), "liquid.water", random.nextFloat() * 0.25f + 0.75f, random.nextFloat() * 1.0f + 0.5f);
 			}
 		}
-		if(this.blockMaterial == Material.LAVA && world.getBlockMaterial(xCoord, yCoord + 1, zCoord) == Material.AIR && !world.isBlockNormalCube(xCoord, yCoord + 1, zCoord) && random.nextInt(100) == 0) {
+		if (this.blockMaterial == Material.LAVA && world.getBlockMaterial(xCoord, yCoord + 1, zCoord) == Material.AIR && !world.isBlockNormalCube(xCoord, yCoord + 1, zCoord) && random.nextInt(100) == 0) {
 			world.spawnParticle("lava", (xCoord + random.nextFloat()), yCoord + this.maxY, (zCoord + random.nextFloat()), 0.0, 0.0, 0.0);
 		}
 	}
@@ -217,31 +217,31 @@ public abstract class LiquidBlock extends Block {
 	}
 
 	private void checkForHarden(final World world, final int xCoord, final int yCoord, final int zCoord) {
-		if(world.getBlockId(xCoord, yCoord, zCoord) != this.blockID) {
+		if (world.getBlockId(xCoord, yCoord, zCoord) != this.blockID) {
 			return;
 		}
-		if(this.blockMaterial == Material.LAVA) {
+		if (this.blockMaterial == Material.LAVA) {
 			int n = 0;
-			if(n != 0 || world.getBlockMaterial(xCoord, yCoord, zCoord - 1) == Material.WATER) {
+			if (n != 0 || world.getBlockMaterial(xCoord, yCoord, zCoord - 1) == Material.WATER) {
 				n = 1;
 			}
-			if(n != 0 || world.getBlockMaterial(xCoord, yCoord, zCoord + 1) == Material.WATER) {
+			if (n != 0 || world.getBlockMaterial(xCoord, yCoord, zCoord + 1) == Material.WATER) {
 				n = 1;
 			}
-			if(n != 0 || world.getBlockMaterial(xCoord - 1, yCoord, zCoord) == Material.WATER) {
+			if (n != 0 || world.getBlockMaterial(xCoord - 1, yCoord, zCoord) == Material.WATER) {
 				n = 1;
 			}
-			if(n != 0 || world.getBlockMaterial(xCoord + 1, yCoord, zCoord) == Material.WATER) {
+			if (n != 0 || world.getBlockMaterial(xCoord + 1, yCoord, zCoord) == Material.WATER) {
 				n = 1;
 			}
-			if(n != 0 || world.getBlockMaterial(xCoord, yCoord + 1, zCoord) == Material.WATER) {
+			if (n != 0 || world.getBlockMaterial(xCoord, yCoord + 1, zCoord) == Material.WATER) {
 				n = 1;
 			}
-			if(n != 0) {
+			if (n != 0) {
 				final int blockMetadata = world.getBlockMetadata(xCoord, yCoord, zCoord);
-				if(blockMetadata == 0) {
+				if (blockMetadata == 0) {
 					world.setBlockWithNotify(xCoord, yCoord, zCoord, Block.obsidian.blockID);
-				} else if(blockMetadata <= 4) {
+				} else if (blockMetadata <= 4) {
 					world.setBlockWithNotify(xCoord, yCoord, zCoord, Block.cobblestone.blockID);
 				}
 				this.triggerLavaMixEffects(world, xCoord, yCoord, zCoord);
@@ -251,13 +251,13 @@ public abstract class LiquidBlock extends Block {
 
 	protected void triggerLavaMixEffects(final World world, final int xCoord, final int yCoord, final int zCoord) {
 		world.playSoundEffect((xCoord + 0.5f), (yCoord + 0.5f), (zCoord + 0.5f), "random.fizz", 0.5f, 2.6f + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.8f);
-		for(int i = 0; i < 8; ++i) {
+		for ( int i = 0; i < 8; ++i ) {
 			world.spawnParticle("largesmoke", xCoord + random(), yCoord + 1.2, zCoord + random(), 0.0, 0.0, 0.0);
 		}
 	}
 
 	public static float getPercentAir(int fluidSize) {
-		if(fluidSize >= 8) {
+		if (fluidSize >= 8) {
 			fluidSize = 0;
 		}
 		return (fluidSize + 1) / 9.0f;
@@ -265,13 +265,13 @@ public abstract class LiquidBlock extends Block {
 
 	public static double getFlowDirection(final IBlockAccess blockAccess, final int xCoord, final int yCoord, final int zCoord, final Material material) {
 		Vec3 vec3D = null;
-		if(material == Material.WATER) {
+		if (material == Material.WATER) {
 			vec3D = ((LiquidBlock) Block.waterMoving).getFlowVector(blockAccess, xCoord, yCoord, zCoord);
 		}
-		if(material == Material.LAVA) {
+		if (material == Material.LAVA) {
 			vec3D = ((LiquidBlock) Block.lavaMoving).getFlowVector(blockAccess, xCoord, yCoord, zCoord);
 		}
-		if(vec3D.x == 0.0 && vec3D.z == 0.0) {
+		if (vec3D.x == 0.0 && vec3D.z == 0.0) {
 			return -1000.0;
 		}
 		return atan2(vec3D.z, vec3D.x) - 1.5707963267948966;

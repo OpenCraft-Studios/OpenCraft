@@ -17,7 +17,7 @@ public class EntityMonster extends EntityCreature {
 
 	@Override
 	public void onLivingUpdate() {
-		if(this.getEntityBrightness(1.0f) > 0.5f) {
+		if (this.getEntityBrightness(1.0f) > 0.5f) {
 			this.entityAge += 2;
 		}
 		super.onLivingUpdate();
@@ -26,7 +26,7 @@ public class EntityMonster extends EntityCreature {
 	@Override
 	public void onUpdate() {
 		super.onUpdate();
-		if(this.world.difficultySetting == 0) {
+		if (this.world.difficultySetting == 0) {
 			this.setEntityDead();
 		}
 	}
@@ -35,7 +35,7 @@ public class EntityMonster extends EntityCreature {
 	protected Entity findPlayerToAttack() {
 		final double distanceSqToEntity = this.world.player.getDistanceSqToEntity(this);
 		final double n = 16.0;
-		if(distanceSqToEntity < n * n && this.canEntityBeSeen(this.world.player)) {
+		if (distanceSqToEntity < n * n && this.canEntityBeSeen(this.world.player)) {
 			return this.world.player;
 		}
 		return null;
@@ -43,8 +43,8 @@ public class EntityMonster extends EntityCreature {
 
 	@Override
 	public boolean attackEntityFrom(final Entity entity, final int nya1) {
-		if(super.attackEntityFrom(entity, nya1)) {
-			if(entity != this) {
+		if (super.attackEntityFrom(entity, nya1)) {
+			if (entity != this) {
 				this.playerToAttack = entity;
 			}
 			return true;
@@ -54,7 +54,7 @@ public class EntityMonster extends EntityCreature {
 
 	@Override
 	protected void attackEntity(final Entity entity, final float xCoord) {
-		if(xCoord < 2.5 && entity.boundingBox.maxY > this.boundingBox.minY && entity.boundingBox.minY < this.boundingBox.maxY) {
+		if (xCoord < 2.5 && entity.boundingBox.maxY > this.boundingBox.minY && entity.boundingBox.minY < this.boundingBox.maxY) {
 			this.attackTime = 20;
 			entity.attackEntityFrom(this, this.attackStrength);
 		}

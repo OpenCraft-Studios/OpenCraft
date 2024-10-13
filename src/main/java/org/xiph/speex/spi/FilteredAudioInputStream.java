@@ -163,7 +163,7 @@ public abstract class FilteredAudioInputStream extends AudioInputStream {
 	 * @exception IOException
 	 */
 	protected void checkIfStillOpen() throws IOException {
-		if(in == null)
+		if (in == null)
 			throw new IOException("Stream closed");
 	}
 
@@ -213,7 +213,7 @@ public abstract class FilteredAudioInputStream extends AudioInputStream {
 	public FilteredAudioInputStream(final InputStream in, final AudioFormat format, final long length, final int size, final int presize) {
 		super(in, format, length);
 		this.in = in;
-		if((size <= 0) || (presize <= 0)) {
+		if ((size <= 0) || (presize <= 0)) {
 			throw new IllegalArgumentException("Buffer size <= 0");
 		}
 		buf = new byte[size];
@@ -237,10 +237,10 @@ public abstract class FilteredAudioInputStream extends AudioInputStream {
 		makeSpace();
 		while(true) {
 			int read = in.read(prebuf, precount, prebuf.length - precount);
-			if(read < 0) { // inputstream has ended
+			if (read < 0) { // inputstream has ended
 				// do last stuff here
 				break;
-			} else if(read > 0) {
+			} else if (read > 0) {
 				// do stuff here
 				precount += read;
 				break;
@@ -254,20 +254,20 @@ public abstract class FilteredAudioInputStream extends AudioInputStream {
 	 * Free up some space in the buffers.
 	 */
 	protected void makeSpace() {
-		if(markpos < 0)
+		if (markpos < 0)
 			pos = 0; /* no mark: throw away the buffer */
-		else if(pos >= buf.length) /* no room left in buffer */
-			if(markpos > 0) { /* can throw away early part of the buffer */
+		else if (pos >= buf.length) /* no room left in buffer */
+			if (markpos > 0) { /* can throw away early part of the buffer */
 				int sz = pos - markpos;
 				System.arraycopy(buf, markpos, buf, 0, sz);
 				pos = sz;
 				markpos = 0;
-			} else if(buf.length >= marklimit) {
+			} else if (buf.length >= marklimit) {
 				markpos = -1; /* buffer got too big, invalidate mark */
 				pos = 0; /* drop buffer contents */
 			} else { /* grow buffer */
 				int nsz = pos * 2;
-				if(nsz > marklimit)
+				if (nsz > marklimit)
 					nsz = marklimit;
 				byte[] nbuf = new byte[nsz];
 				System.arraycopy(buf, 0, nbuf, 0, pos);
@@ -286,7 +286,7 @@ public abstract class FilteredAudioInputStream extends AudioInputStream {
 	 * @see #in
 	 */
 	public synchronized int read() throws IOException {
-		if(read(single, 0, 1) == -1) {
+		if (read(single, 0, 1) == -1) {
 			return (-1);
 		} else {
 			return (single[0] & 0xFF);
@@ -324,16 +324,16 @@ public abstract class FilteredAudioInputStream extends AudioInputStream {
 	 */
 	public synchronized int read(final byte[] b, final int off, final int len) throws IOException {
 		checkIfStillOpen();
-		if((off < 0) || (off > b.length) || (len < 0) || ((off + len) > b.length) || ((off + len) < 0)) {
+		if ((off < 0) || (off > b.length) || (len < 0) || ((off + len) > b.length) || ((off + len) < 0)) {
 			throw new IndexOutOfBoundsException();
-		} else if(len == 0) {
+		} else if (len == 0) {
 			return 0;
 		}
 		int avail = count - pos;
-		if(avail <= 0) {
+		if (avail <= 0) {
 			fill();
 			avail = count - pos;
-			if(avail <= 0)
+			if (avail <= 0)
 				return -1;
 		}
 		int cnt = (avail < len) ? avail : len;
@@ -353,13 +353,13 @@ public abstract class FilteredAudioInputStream extends AudioInputStream {
 	public synchronized long skip(final long n) throws IOException {
 		checkIfStillOpen();
 		// Sanity check
-		if(n <= 0) {
+		if (n <= 0) {
 			return 0;
 		}
 		// Skip buffered data if there is any
-		if(pos < count) {
+		if (pos < count) {
 			int avail = count - pos;
-			if(avail > n) {
+			if (avail > n) {
 				pos += n;
 				return n;
 			} else {
@@ -371,7 +371,7 @@ public abstract class FilteredAudioInputStream extends AudioInputStream {
 		else {
 			fill(); // This is potentially blocking (i.e. the read on the underlying inputStream could be blocking)
 			int avail = count - pos;
-			if(avail <= 0)
+			if (avail <= 0)
 				return 0;
 			long skipped = (avail < n) ? avail : n;
 			pos += skipped;
@@ -411,9 +411,9 @@ public abstract class FilteredAudioInputStream extends AudioInputStream {
 	 * @see #reset()
 	 */
 	public synchronized void mark(final int readlimit) {
-		if(readlimit > buf.length - pos) { // not enough room
+		if (readlimit > buf.length - pos) { // not enough room
 			byte[] newbuf;
-			if(readlimit <= buf.length) {
+			if (readlimit <= buf.length) {
 				newbuf = buf; // just shift buffer
 			} else {
 				newbuf = new byte[readlimit]; // need a new buffer
@@ -442,7 +442,7 @@ public abstract class FilteredAudioInputStream extends AudioInputStream {
 	 */
 	public synchronized void reset() throws IOException {
 		checkIfStillOpen();
-		if(markpos < 0)
+		if (markpos < 0)
 			throw new IOException("Attempt to reset when no mark is valid");
 		pos = markpos;
 	}
@@ -468,7 +468,7 @@ public abstract class FilteredAudioInputStream extends AudioInputStream {
 	 * @exception IOException if an I/O error occurs.
 	 */
 	public synchronized void close() throws IOException {
-		if(in == null)
+		if (in == null)
 			return;
 		in.close();
 		in = null;

@@ -40,7 +40,7 @@ public class ModelMinecart extends ModelBase {
 	@Override
 	public void render(final float nya1, final float nya2, final float nya3, final float nya4, final float nya5, final float nya6) {
 		this.sideModels[5].rotationPointY = 4.0f - nya3;
-		for(int i = 0; i < 6; ++i) {
+		for ( int i = 0; i < 6; ++i ) {
 			this.sideModels[i].render(nya6);
 		}
 	}

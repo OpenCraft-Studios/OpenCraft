@@ -49,7 +49,7 @@ public class GuiIngame extends GuiElement {
 		final FontRenderer font = this.mc.font;
 		this.mc.entityRenderer.setupOverlayRendering();
 		GL11.glEnable(3042);
-		if(this.mc.options.fancyGraphics) {
+		if (this.mc.options.fancyGraphics) {
 			this.renderVignette(this.mc.player.getEntityBrightness(float1), scaledWidth, scaledHeight);
 		}
 		GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
@@ -64,55 +64,55 @@ public class GuiIngame extends GuiElement {
 		this.drawTexturedModalRect(scaledWidth / 2 - 7, scaledHeight / 2 - 7, 0, 0, 16, 16);
 		GL11.glDisable(3042);
 		boolean b = this.mc.player.heartsLife / 3 % 2 == 1;
-		if(this.mc.player.heartsLife < 10) {
+		if (this.mc.player.heartsLife < 10) {
 			b = false;
 		}
 		final int health = this.mc.player.health;
 		final int prevHealth = this.mc.player.prevHealth;
 		this.rand.setSeed((long) (this.updateCounter * 312871L));
-		if(this.mc.playerController.shouldDrawHUD()) {
+		if (this.mc.playerController.shouldDrawHUD()) {
 			final int i = this.mc.player.getPlayerArmorValue();
-			for(int j = 0; j < 10; ++j) {
+			for ( int j = 0; j < 10; ++j ) {
 				int integer5 = scaledHeight - 32;
-				if(i > 0) {
+				if (i > 0) {
 					final int integer6 = scaledWidth / 2 + 91 - j * 8 - 9;
-					if(j * 2 + 1 < i) {
+					if (j * 2 + 1 < i) {
 						this.drawTexturedModalRect(integer6, integer5, 34, 9, 9, 9);
 					}
-					if(j * 2 + 1 == i) {
+					if (j * 2 + 1 == i) {
 						this.drawTexturedModalRect(integer6, integer5, 25, 9, 9, 9);
 					}
-					if(j * 2 + 1 > i) {
+					if (j * 2 + 1 > i) {
 						this.drawTexturedModalRect(integer6, integer5, 16, 9, 9, 9);
 					}
 				}
 				int n = 0;
-				if(b) {
+				if (b) {
 					n = 1;
 				}
 				final int integer7 = scaledWidth / 2 - 91 + j * 8;
-				if(health <= 4) {
+				if (health <= 4) {
 					integer5 += this.rand.nextInt(2);
 				}
 				this.drawTexturedModalRect(integer7, integer5, 16 + n * 9, 0, 9, 9);
-				if(b) {
-					if(j * 2 + 1 < prevHealth) {
+				if (b) {
+					if (j * 2 + 1 < prevHealth) {
 						this.drawTexturedModalRect(integer7, integer5, 70, 0, 9, 9);
 					}
-					if(j * 2 + 1 == prevHealth) {
+					if (j * 2 + 1 == prevHealth) {
 						this.drawTexturedModalRect(integer7, integer5, 79, 0, 9, 9);
 					}
 				}
-				if(j * 2 + 1 < health) {
+				if (j * 2 + 1 < health) {
 					this.drawTexturedModalRect(integer7, integer5, 52, 0, 9, 9);
 				}
-				if(j * 2 + 1 == health) {
+				if (j * 2 + 1 == health) {
 					this.drawTexturedModalRect(integer7, integer5, 61, 0, 9, 9);
 				}
 			}
-			if(this.mc.player.isInsideOfMaterial(Material.WATER)) {
-				for(int j = (int) ceil((this.mc.player.air - 2) * 10.0 / 300.0), integer5 = (int) ceil(this.mc.player.air * 10.0 / 300.0) - j, k = 0; k < j + integer5; ++k) {
-					if(k < j) {
+			if (this.mc.player.isInsideOfMaterial(Material.WATER)) {
+				for ( int j = (int) ceil((this.mc.player.air - 2) * 10.0 / 300.0), integer5 = (int) ceil(this.mc.player.air * 10.0 / 300.0) - j, k = 0; k < j + integer5; ++k ) {
+					if (k < j) {
 						this.drawTexturedModalRect(scaledWidth / 2 - 91 + k * 8, scaledHeight - 32 - 9, 16, 18, 9, 9);
 					} else {
 						this.drawTexturedModalRect(scaledWidth / 2 - 91 + k * 8, scaledHeight - 32 - 9, 25, 18, 9, 9);
@@ -126,14 +126,14 @@ public class GuiIngame extends GuiElement {
 		GL11.glRotatef(180.0f, 1.0f, 0.0f, 0.0f);
 		RenderHelper.enableStandardItemLighting();
 		GL11.glPopMatrix();
-		for(int i = 0; i < 9; ++i) {
+		for ( int i = 0; i < 9; ++i ) {
 			final int j = scaledWidth / 2 - 90 + i * 20 + 2;
 			final int integer5 = scaledHeight - 16 - 3;
 			this.renderInventorySlot(i, j, integer5, float1);
 		}
 		RenderHelper.disableStandardItemLighting();
 		GL11.glDisable(GL_FULLBRIGHT_RENDERING);
-		if(this.mc.options.showDebugInfo) {
+		if (this.mc.options.showDebugInfo) {
 			font.drawStringWithShadow2(Main.TITLE + " (" + this.mc.debug + ")", 2, 2, 16777215);
 			font.drawStringWithShadow2(this.mc.debugInfoRenders(), 2, 12, 16777215);
 			font.drawStringWithShadow2(this.mc.entityRenderingInfo(), 2, 22, 16777215);
@@ -152,8 +152,8 @@ public class GuiIngame extends GuiElement {
 
 		int i = 10;
 		final boolean b2 = true;
-		for(int integer5 = 0; integer5 < this.chatMessageList.size() && integer5 < i; ++integer5) {
-			if((chatMessageList.get(integer5)).updateCounter < 200 || b2) {
+		for ( int integer5 = 0; integer5 < this.chatMessageList.size() && integer5 < i; ++integer5 ) {
+			if ((chatMessageList.get(integer5)).updateCounter < 200 || b2) {
 				font.drawStringWithShadow2(((ChatLine) this.chatMessageList.get(integer5)).message, 2, scaledHeight - 8 - integer5 * 9 - 20, 16777215);
 			}
 		}
@@ -161,10 +161,10 @@ public class GuiIngame extends GuiElement {
 
 	private void renderVignette(float float1, final int integer2, final int integer3) {
 		float1 = 1.0f - float1;
-		if(float1 < 0.0f) {
+		if (float1 < 0.0f) {
 			float1 = 0.0f;
 		}
-		if(float1 > 1.0f) {
+		if (float1 > 1.0f) {
 			float1 = 1.0f;
 		}
 		this.prevVignetteBrightness += (float) ((float1 - this.prevVignetteBrightness) * 0.01);
@@ -188,11 +188,11 @@ public class GuiIngame extends GuiElement {
 
 	private void renderInventorySlot(final int integer1, final int integer2, final int integer3, final float float4) {
 		final ItemStack itemStack = this.mc.player.inventory.mainInventory[integer1];
-		if(itemStack == null) {
+		if (itemStack == null) {
 			return;
 		}
 		final float n = itemStack.animationsToGo - float4;
-		if(n > 0.0f) {
+		if (n > 0.0f) {
 			GL11.glPushMatrix();
 			final float n2 = 1.0f + n / 5.0f;
 			GL11.glTranslatef((float) (integer2 + 8), (float) (integer3 + 12), 0.0f);
@@ -200,7 +200,7 @@ public class GuiIngame extends GuiElement {
 			GL11.glTranslatef((float) (-(integer2 + 8)), (float) (-(integer3 + 12)), 0.0f);
 		}
 		GuiIngame.itemRenderer.drawItemIntoGui(this.mc.font, this.mc.renderer, itemStack, integer2, integer3);
-		if(n > 0.0f) {
+		if (n > 0.0f) {
 			GL11.glPopMatrix();
 		}
 		GuiIngame.itemRenderer.renderItemOverlayIntoGUI(this.mc.font, this.mc.renderer, itemStack, integer2, integer3);
@@ -208,7 +208,7 @@ public class GuiIngame extends GuiElement {
 
 	public void updateTick() {
 		++this.updateCounter;
-		for(int i = 0; i < this.chatMessageList.size(); ++i) {
+		for ( int i = 0; i < this.chatMessageList.size(); ++i ) {
 			final ChatLine chatLine = (ChatLine) this.chatMessageList.get(i);
 			++chatLine.updateCounter;
 		}

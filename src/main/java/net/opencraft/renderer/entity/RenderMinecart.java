@@ -29,20 +29,20 @@ public class RenderMinecart extends Render<EntityMinecart> {
 		final double double4 = 0.30000001192092896;
 		final Vec3 pos = entityLiving.getPos(double1, double2, double3);
 		float n = entityLiving.prevRotationPitch + (entityLiving.rotationPitch - entityLiving.prevRotationPitch) * nya2;
-		if(pos != null) {
+		if (pos != null) {
 			Vec3 posOffset = entityLiving.getPosOffset(double1, double2, double3, double4);
 			Vec3 posOffset2 = entityLiving.getPosOffset(double1, double2, double3, -double4);
-			if(posOffset == null) {
+			if (posOffset == null) {
 				posOffset = pos;
 			}
-			if(posOffset2 == null) {
+			if (posOffset2 == null) {
 				posOffset2 = pos;
 			}
 			xCoord += pos.x - double1;
 			sqrt_double += (posOffset.y + posOffset2.y) / 2.0 - double2;
 			yCoord += pos.z - double3;
 			final Vec3 addVector = posOffset2.add(-posOffset.x, -posOffset.y, -posOffset.z);
-			if(addVector.length() != 0) {
+			if (addVector.length() != 0) {
 				final Vec3 normalize = addVector.normalize();
 				nya1 = (float) (toRadians(atan2(normalize.z, normalize.x)));
 				n = (float) (Math.atan(normalize.y) * 73.0);
@@ -53,10 +53,10 @@ public class RenderMinecart extends Render<EntityMinecart> {
 		GL11.glRotatef(-n, 0.0f, 0.0f, 1.0f);
 		final float float1 = entityLiving.minecartTimeSinceHit - nya2;
 		float n2 = entityLiving.minecartCurrentDamage - nya2;
-		if(n2 < 0.0f) {
+		if (n2 < 0.0f) {
 			n2 = 0.0f;
 		}
-		if(float1 > 0.0f) {
+		if (float1 > 0.0f) {
 			GL11.glRotatef(sin(float1) * float1 * n2 / 10.0f * entityLiving.minecartRockDirection, 1.0f, 0.0f, 0.0f);
 		}
 		this.loadTexture("/assets/terrain.png");

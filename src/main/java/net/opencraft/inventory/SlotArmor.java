@@ -18,7 +18,7 @@ public class SlotArmor extends Slot {
 	}
 
 	public boolean isItemValid(ItemStack hw2) {
-		if(hw2.getItem() instanceof ItemArmor) {
+		if (hw2.getItem() instanceof ItemArmor) {
 			return ((ItemArmor) hw2.getItem()).armorType == this.armorType;
 		}
 		return false;

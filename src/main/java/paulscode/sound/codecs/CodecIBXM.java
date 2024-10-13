@@ -185,7 +185,7 @@ public class CodecIBXM implements ICodec {
 		initialized(SET, false);
 		cleanup();
 
-		if(url == null) {
+		if (url == null) {
 			errorMessage("url null in method 'initialize'");
 			cleanup();
 			return false;
@@ -201,9 +201,9 @@ public class CodecIBXM implements ICodec {
 			return false;
 		}
 
-		if(ibxm == null)
+		if (ibxm == null)
 			ibxm = new IBXM(48000);
-		if(myAudioFormat == null)
+		if (myAudioFormat == null)
 			myAudioFormat = new AudioFormat(48000, 16, 2, true, true);
 
 		try {
@@ -211,7 +211,7 @@ public class CodecIBXM implements ICodec {
 		} catch(IllegalArgumentException iae) {
 			errorMessage("Illegal argument in method 'initialize'");
 			printStackTrace(iae);
-			if(is != null) {
+			if (is != null) {
 				try {
 					is.close();
 				} catch(IOException ioe) {
@@ -221,7 +221,7 @@ public class CodecIBXM implements ICodec {
 		} catch(IOException ioe) {
 			errorMessage("Error loading module in method 'initialize'");
 			printStackTrace(ioe);
-			if(is != null) {
+			if (is != null) {
 				try {
 					is.close();
 				} catch(IOException ioe2) {
@@ -230,7 +230,7 @@ public class CodecIBXM implements ICodec {
 			return false;
 		}
 
-		if(is != null) {
+		if (is != null) {
 			try {
 				is.close();
 			} catch(IOException ioe) {
@@ -259,16 +259,16 @@ public class CodecIBXM implements ICodec {
 	 * @return The audio data wrapped into a SoundBuffer context.
 	 */
 	public SoundBuffer read() {
-		if(endOfStream(GET, XXX))
+		if (endOfStream(GET, XXX))
 			return null;
 
-		if(module == null) {
+		if (module == null) {
 			errorMessage("Module null in method 'read'");
 			return null;
 		}
 
 		// Check to make sure there is an audio format:
-		if(myAudioFormat == null) {
+		if (myAudioFormat == null) {
 			errorMessage("Audio Format null in method 'read'");
 			return null;
 		}
@@ -276,10 +276,10 @@ public class CodecIBXM implements ICodec {
 		int bufferFrameSize = (int) SoundSystemConfig.getStreamingBufferSize() / 4;
 
 		int frames = songDuration - playPosition;
-		if(frames > bufferFrameSize)
+		if (frames > bufferFrameSize)
 			frames = bufferFrameSize;
 
-		if(frames <= 0) {
+		if (frames <= 0) {
 			endOfStream(SET, true);
 			return null;
 		}
@@ -288,12 +288,12 @@ public class CodecIBXM implements ICodec {
 		ibxm.get_audio(outputBuffer, frames);
 
 		playPosition += frames;
-		if(playPosition >= songDuration) {
+		if (playPosition >= songDuration) {
 			endOfStream(SET, true);
 		}
 
 		// Reverse the byte order if necessary:
-		if(reverseBytes)
+		if (reverseBytes)
 			reverseBytes(outputBuffer, 0, frames * 4);
 
 		// Wrap the data into a SoundBuffer:
@@ -311,13 +311,13 @@ public class CodecIBXM implements ICodec {
 	 * @return the audio data wrapped into a SoundBuffer context.
 	 */
 	public SoundBuffer readAll() {
-		if(module == null) {
+		if (module == null) {
 			errorMessage("Module null in method 'readAll'");
 			return null;
 		}
 
 		// Check to make sure there is an audio format:
-		if(myAudioFormat == null) {
+		if (myAudioFormat == null) {
 			errorMessage("Audio Format null in method 'readAll'");
 			return null;
 		}
@@ -335,7 +335,7 @@ public class CodecIBXM implements ICodec {
 
 		while((!endOfStream(GET, XXX)) && (totalBytes < SoundSystemConfig.getMaxFileSize())) {
 			frames = songDuration - playPosition;
-			if(frames > bufferFrameSize)
+			if (frames > bufferFrameSize)
 				frames = bufferFrameSize;
 			ibxm.get_audio(outputBuffer, frames);
 			totalBytes += (frames * 4);
@@ -343,13 +343,13 @@ public class CodecIBXM implements ICodec {
 			fullBuffer = appendByteArrays(fullBuffer, outputBuffer, frames * 4);
 
 			playPosition += frames;
-			if(playPosition >= songDuration) {
+			if (playPosition >= songDuration) {
 				endOfStream(SET, true);
 			}
 		}
 
 		// Reverse the byte order if necessary:
-		if(reverseBytes)
+		if (reverseBytes)
 			reverseBytes(fullBuffer, 0, totalBytes);
 
 		// Wrap the data into a SoundBuffer:
@@ -399,14 +399,14 @@ public class CodecIBXM implements ICodec {
 		// Check if data is in XM format:
 		byte[] xm_header = new byte[60];
 		data_input_stream.readFully(xm_header);
-		if(FastTracker2.is_xm(xm_header))
+		if (FastTracker2.is_xm(xm_header))
 			return FastTracker2.load_xm(xm_header, data_input_stream);
 
 		// Check if data is in ScreamTracker 3 format:
 		byte[] s3m_header = new byte[96];
 		System.arraycopy(xm_header, 0, s3m_header, 0, 60);
 		data_input_stream.readFully(s3m_header, 60, 36);
-		if(ScreamTracker3.is_s3m(s3m_header))
+		if (ScreamTracker3.is_s3m(s3m_header))
 			return ScreamTracker3.load_s3m(s3m_header, data_input_stream);
 
 		// Check if data is in ProTracker format:
@@ -420,7 +420,7 @@ public class CodecIBXM implements ICodec {
 	 * Sets the Module instance to be played.
 	 */
 	private void setModule(Module m) {
-		if(m != null)
+		if (m != null)
 			module = m;
 		ibxm.set_module(module);
 		songDuration = ibxm.calculate_song_duration();
@@ -434,7 +434,7 @@ public class CodecIBXM implements ICodec {
 	 * @return True if steam is initialized.
 	 */
 	private synchronized boolean initialized(boolean action, boolean value) {
-		if(action == SET)
+		if (action == SET)
 			initialized = value;
 		return initialized;
 	}
@@ -447,7 +447,7 @@ public class CodecIBXM implements ICodec {
 	 * @return True if end of stream was reached.
 	 */
 	private synchronized boolean endOfStream(boolean action, boolean value) {
-		if(action == SET)
+		if (action == SET)
 			endOfStream = value;
 		return endOfStream;
 	}
@@ -462,7 +462,7 @@ public class CodecIBXM implements ICodec {
 	 */
 	private static byte[] trimArray(byte[] array, int maxLength) {
 		byte[] trimmedArray = null;
-		if(array != null && array.length > maxLength) {
+		if (array != null && array.length > maxLength) {
 			trimmedArray = new byte[maxLength];
 			System.arraycopy(array, 0, trimmedArray, 0, maxLength);
 		}
@@ -488,7 +488,7 @@ public class CodecIBXM implements ICodec {
 	public static void reverseBytes(byte[] buffer, int offset, int size) {
 
 		byte b;
-		for(int i = offset; i < (offset + size); i += 2) {
+		for ( int i = offset; i < (offset + size); i += 2 ) {
 			b = buffer[i];
 			buffer[i] = buffer[i + 1];
 			buffer[i + 1] = b;
@@ -507,7 +507,7 @@ public class CodecIBXM implements ICodec {
 		dest.order(ByteOrder.nativeOrder());
 		ByteBuffer src = ByteBuffer.wrap(audio_bytes);
 		src.order(ByteOrder.LITTLE_ENDIAN);
-		if(two_bytes_data) {
+		if (two_bytes_data) {
 			ShortBuffer dest_short = dest.asShortBuffer();
 			ShortBuffer src_short = src.asShortBuffer();
 			while(src_short.hasRemaining()) {
@@ -520,7 +520,7 @@ public class CodecIBXM implements ICodec {
 		}
 		dest.rewind();
 
-		if(!dest.hasArray()) {
+		if (!dest.hasArray()) {
 			byte[] arrayBackedBuffer = new byte[dest.capacity()];
 			dest.get(arrayBackedBuffer);
 			dest.clear();
@@ -542,16 +542,16 @@ public class CodecIBXM implements ICodec {
 	 */
 	private static byte[] appendByteArrays(byte[] arrayOne, byte[] arrayTwo, int length) {
 		byte[] newArray;
-		if(arrayOne == null && arrayTwo == null) {
+		if (arrayOne == null && arrayTwo == null) {
 			// no data, just return
 			return null;
-		} else if(arrayOne == null) {
+		} else if (arrayOne == null) {
 			// create the new array, same length as arrayTwo:
 			newArray = new byte[length];
 			// fill the new array with the contents of arrayTwo:
 			System.arraycopy(arrayTwo, 0, newArray, 0, length);
 			arrayTwo = null;
-		} else if(arrayTwo == null) {
+		} else if (arrayTwo == null) {
 			// create the new array, same length as arrayOne:
 			newArray = new byte[arrayOne.length];
 			// fill the new array with the contents of arrayOne:

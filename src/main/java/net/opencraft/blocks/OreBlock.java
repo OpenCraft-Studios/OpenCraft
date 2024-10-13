@@ -14,10 +14,10 @@ public class OreBlock extends Block {
 
 	@Override
 	public int idDropped(final int blockid, final Random random) {
-		if(this.blockID == Block.oreCoal.blockID) {
+		if (this.blockID == Block.oreCoal.blockID) {
 			return Item.coal.shiftedIndex;
 		}
-		if(this.blockID == Block.oreDiamond.blockID) {
+		if (this.blockID == Block.oreDiamond.blockID) {
 			return Item.diamond.shiftedIndex;
 		}
 		return this.blockID;

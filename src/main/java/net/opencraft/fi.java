@@ -39,20 +39,20 @@ public class fi {
 
 	public void a(final int integer) {
 		this.g.put(integer);
-		if(this.g.remaining() == 0) {
+		if (this.g.remaining() == 0) {
 			this.a();
 		}
 	}
 
 	public void a() {
-		if(!this.h) {
+		if (!this.h) {
 			return;
 		}
-		if(!this.i) {
+		if (!this.i) {
 			this.g.flip();
 			this.i = true;
 		}
-		if(this.g.remaining() > 0) {
+		if (this.g.remaining() > 0) {
 			GL11.glPushMatrix();
 			GL11.glTranslatef(this.a - this.d, this.b - this.e, this.c - this.f);
 			GL11.glCallLists(this.g);

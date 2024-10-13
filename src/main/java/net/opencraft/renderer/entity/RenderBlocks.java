@@ -40,37 +40,37 @@ public class RenderBlocks {
 	public boolean a(final Block gs, final int integer2, final int integer3, final int integer4) {
 		final int renderType = gs.getRenderType();
 		gs.setBlockBoundsBasedOnState(this.a, integer2, integer3, integer4);
-		if(renderType == 0) {
+		if (renderType == 0) {
 			return this.j(gs, integer2, integer3, integer4);
 		}
-		if(renderType == 4) {
+		if (renderType == 4) {
 			return this.i(gs, integer2, integer3, integer4);
 		}
-		if(renderType == 1) {
+		if (renderType == 1) {
 			return this.g(gs, integer2, integer3, integer4);
 		}
-		if(renderType == 6) {
+		if (renderType == 6) {
 			return this.h(gs, integer2, integer3, integer4);
 		}
-		if(renderType == 2) {
+		if (renderType == 2) {
 			return this.b(gs, integer2, integer3, integer4);
 		}
-		if(renderType == 3) {
+		if (renderType == 3) {
 			return this.c(gs, integer2, integer3, integer4);
 		}
-		if(renderType == 5) {
+		if (renderType == 5) {
 			return this.d(gs, integer2, integer3, integer4);
 		}
-		if(renderType == 8) {
+		if (renderType == 8) {
 			return this.f(gs, integer2, integer3, integer4);
 		}
-		if(renderType == 7) {
+		if (renderType == 7) {
 			return this.m(gs, integer2, integer3, integer4);
 		}
-		if(renderType == 9) {
+		if (renderType == 9) {
 			return this.e(gs, integer2, integer3, integer4);
 		}
-		if(renderType == 10) {
+		if (renderType == 10) {
 			return this.l(gs, integer2, integer3, integer4);
 		}
 		return renderType == 11 && this.k(gs, integer2, integer3, integer4);
@@ -80,20 +80,20 @@ public class RenderBlocks {
 		final int blockMetadata = this.a.getBlockMetadata(integer2, integer3, integer4);
 		final Tessellator instance = Tessellator.instance;
 		float blockBrightness = gs.getBlockBrightness(this.a, integer2, integer3, integer4);
-		if(Block.lightValue[gs.blockID] > 0) {
+		if (Block.lightValue[gs.blockID] > 0) {
 			blockBrightness = 1.0f;
 		}
 		instance.setColorOpaque_F(blockBrightness, blockBrightness, blockBrightness);
 		final double n = 0.4000000059604645;
 		final double n2 = 0.5 - n;
 		final double n3 = 0.20000000298023224;
-		if(blockMetadata == 1) {
+		if (blockMetadata == 1) {
 			this.a(gs, integer2 - n2, integer3 + n3, integer4, -n, 0.0);
-		} else if(blockMetadata == 2) {
+		} else if (blockMetadata == 2) {
 			this.a(gs, integer2 + n2, integer3 + n3, integer4, n, 0.0);
-		} else if(blockMetadata == 3) {
+		} else if (blockMetadata == 3) {
 			this.a(gs, integer2, integer3 + n3, integer4 - n2, 0.0, -n);
-		} else if(blockMetadata == 4) {
+		} else if (blockMetadata == 4) {
 			this.a(gs, integer2, integer3 + n3, integer4 + n2, 0.0, n);
 		} else {
 			this.a(gs, integer2, integer3, integer4, 0.0, 0.0);
@@ -104,7 +104,7 @@ public class RenderBlocks {
 	public boolean c(final Block gs, final int integer2, int integer3, final int integer4) {
 		final Tessellator instance = Tessellator.instance;
 		int n = gs.getBlockTextureFromSide(0);
-		if(this.b >= 0) {
+		if (this.b >= 0) {
 			n = this.b;
 		}
 		final float blockBrightness = gs.getBlockBrightness(this.a, integer2, integer3, integer4);
@@ -116,7 +116,7 @@ public class RenderBlocks {
 		double n6 = n3 / 256.0f;
 		double n7 = (n3 + 15.99f) / 256.0f;
 		float n8 = 1.4f;
-		if(this.a.isBlockNormalCube(integer2, integer3 - 1, integer4) || Block.fire.canBlockCatchFire(this.a, integer2, integer3 - 1, integer4)) {
+		if (this.a.isBlockNormalCube(integer2, integer3 - 1, integer4) || Block.fire.canBlockCatchFire(this.a, integer2, integer3 - 1, integer4)) {
 			double n9 = integer2 + 0.5 + 0.2;
 			double n10 = integer2 + 0.5 - 0.2;
 			double n11 = integer4 + 0.5 + 0.2;
@@ -176,18 +176,18 @@ public class RenderBlocks {
 		} else {
 			final float n17 = 0.2f;
 			final float n18 = 0.0625f;
-			if((integer2 + integer3 + integer4 & 0x1) == 0x1) {
+			if ((integer2 + integer3 + integer4 & 0x1) == 0x1) {
 				n4 = n2 / 256.0f;
 				n5 = (n2 + 15.99f) / 256.0f;
 				n6 = (n3 + 16) / 256.0f;
 				n7 = (n3 + 15.99f + 16.0f) / 256.0f;
 			}
-			if((integer2 / 2 + integer3 / 2 + integer4 / 2 & 0x1) == 0x1) {
+			if ((integer2 / 2 + integer3 / 2 + integer4 / 2 & 0x1) == 0x1) {
 				final double n10 = n5;
 				n5 = n4;
 				n4 = n10;
 			}
-			if(Block.fire.canBlockCatchFire(this.a, integer2 - 1, integer3, integer4)) {
+			if (Block.fire.canBlockCatchFire(this.a, integer2 - 1, integer3, integer4)) {
 				instance.vertexUV(integer2 + n17, integer3 + n8 + n18, integer4 + 1, n5, n6);
 				instance.vertexUV(integer2 + 0, integer3 + 0 + n18, integer4 + 1, n5, n7);
 				instance.vertexUV(integer2 + 0, integer3 + 0 + n18, integer4 + 0, n4, n7);
@@ -197,7 +197,7 @@ public class RenderBlocks {
 				instance.vertexUV(integer2 + 0, integer3 + 0 + n18, integer4 + 1, n5, n7);
 				instance.vertexUV(integer2 + n17, integer3 + n8 + n18, integer4 + 1, n5, n6);
 			}
-			if(Block.fire.canBlockCatchFire(this.a, integer2 + 1, integer3, integer4)) {
+			if (Block.fire.canBlockCatchFire(this.a, integer2 + 1, integer3, integer4)) {
 				instance.vertexUV(integer2 + 1 - n17, integer3 + n8 + n18, integer4 + 0, n4, n6);
 				instance.vertexUV(integer2 + 1 - 0, integer3 + 0 + n18, integer4 + 0, n4, n7);
 				instance.vertexUV(integer2 + 1 - 0, integer3 + 0 + n18, integer4 + 1, n5, n7);
@@ -207,7 +207,7 @@ public class RenderBlocks {
 				instance.vertexUV(integer2 + 1 - 0, integer3 + 0 + n18, integer4 + 0, n4, n7);
 				instance.vertexUV(integer2 + 1 - n17, integer3 + n8 + n18, integer4 + 0, n4, n6);
 			}
-			if(Block.fire.canBlockCatchFire(this.a, integer2, integer3, integer4 - 1)) {
+			if (Block.fire.canBlockCatchFire(this.a, integer2, integer3, integer4 - 1)) {
 				instance.vertexUV(integer2 + 0, integer3 + n8 + n18, integer4 + n17, n5, n6);
 				instance.vertexUV(integer2 + 0, integer3 + 0 + n18, integer4 + 0, n5, n7);
 				instance.vertexUV(integer2 + 1, integer3 + 0 + n18, integer4 + 0, n4, n7);
@@ -217,7 +217,7 @@ public class RenderBlocks {
 				instance.vertexUV(integer2 + 0, integer3 + 0 + n18, integer4 + 0, n5, n7);
 				instance.vertexUV(integer2 + 0, integer3 + n8 + n18, integer4 + n17, n5, n6);
 			}
-			if(Block.fire.canBlockCatchFire(this.a, integer2, integer3, integer4 + 1)) {
+			if (Block.fire.canBlockCatchFire(this.a, integer2, integer3, integer4 + 1)) {
 				instance.vertexUV(integer2 + 1, integer3 + n8 + n18, integer4 + 1 - n17, n4, n6);
 				instance.vertexUV(integer2 + 1, integer3 + 0 + n18, integer4 + 1 - 0, n4, n7);
 				instance.vertexUV(integer2 + 0, integer3 + 0 + n18, integer4 + 1 - 0, n5, n7);
@@ -227,7 +227,7 @@ public class RenderBlocks {
 				instance.vertexUV(integer2 + 1, integer3 + 0 + n18, integer4 + 1 - 0, n4, n7);
 				instance.vertexUV(integer2 + 1, integer3 + n8 + n18, integer4 + 1 - n17, n4, n6);
 			}
-			if(Block.fire.canBlockCatchFire(this.a, integer2, integer3 + 1, integer4)) {
+			if (Block.fire.canBlockCatchFire(this.a, integer2, integer3 + 1, integer4)) {
 				final double n10 = integer2 + 0.5 + 0.5;
 				final double n11 = integer2 + 0.5 - 0.5;
 				final double n12 = integer4 + 0.5 + 0.5;
@@ -242,7 +242,7 @@ public class RenderBlocks {
 				n7 = (n3 + 15.99f) / 256.0f;
 				++integer3;
 				n8 = -0.2f;
-				if((integer2 + integer3 + integer4 & 0x1) == 0x0) {
+				if ((integer2 + integer3 + integer4 & 0x1) == 0x0) {
 					instance.vertexUV(n14, integer3 + n8, integer4 + 0, n5, n6);
 					instance.vertexUV(n10, integer3 + 0, integer4 + 0, n5, n7);
 					instance.vertexUV(n10, integer3 + 0, integer4 + 1, n4, n7);
@@ -277,7 +277,7 @@ public class RenderBlocks {
 	public boolean d(final Block gs, final int integer2, final int integer3, final int integer4) {
 		final Tessellator instance = Tessellator.instance;
 		int n = gs.getBlockTextureFromSide(0);
-		if(this.b >= 0) {
+		if (this.b >= 0) {
 			n = this.b;
 		}
 		final float blockBrightness = gs.getBlockBrightness(this.a, integer2, integer3, integer4);
@@ -285,7 +285,7 @@ public class RenderBlocks {
 		int n2 = ((n & 0xF) << 4) + 16;
 		int n3 = (n & 0xF) << 4;
 		final int n4 = n & 0xF0;
-		if((integer2 + integer3 + integer4 & 0x1) == 0x1) {
+		if ((integer2 + integer3 + integer4 & 0x1) == 0x1) {
 			n2 = (n & 0xF) << 4;
 			n3 = ((n & 0xF) << 4) + 16;
 		}
@@ -299,25 +299,25 @@ public class RenderBlocks {
 		final double n12 = (n4 + 15.99f) / 256.0f;
 		final float n13 = 0.125f;
 		final float n14 = 0.05f;
-		if(this.a.isBlockNormalCube(integer2 - 1, integer3, integer4)) {
+		if (this.a.isBlockNormalCube(integer2 - 1, integer3, integer4)) {
 			instance.vertexUV(integer2 + n14, integer3 + 1 + n13, integer4 + 1 + n13, n5, n7);
 			instance.vertexUV(integer2 + n14, integer3 + 0 - n13, integer4 + 1 + n13, n5, n8);
 			instance.vertexUV(integer2 + n14, integer3 + 0 - n13, integer4 + 0 - n13, n6, n8);
 			instance.vertexUV(integer2 + n14, integer3 + 1 + n13, integer4 + 0 - n13, n6, n7);
 		}
-		if(this.a.isBlockNormalCube(integer2 + 1, integer3, integer4)) {
+		if (this.a.isBlockNormalCube(integer2 + 1, integer3, integer4)) {
 			instance.vertexUV(integer2 + 1 - n14, integer3 + 0 - n13, integer4 + 1 + n13, n6, n8);
 			instance.vertexUV(integer2 + 1 - n14, integer3 + 1 + n13, integer4 + 1 + n13, n6, n7);
 			instance.vertexUV(integer2 + 1 - n14, integer3 + 1 + n13, integer4 + 0 - n13, n5, n7);
 			instance.vertexUV(integer2 + 1 - n14, integer3 + 0 - n13, integer4 + 0 - n13, n5, n8);
 		}
-		if(this.a.isBlockNormalCube(integer2, integer3, integer4 - 1)) {
+		if (this.a.isBlockNormalCube(integer2, integer3, integer4 - 1)) {
 			instance.vertexUV(integer2 + 1 + n13, integer3 + 0 - n13, integer4 + n14, n10, n12);
 			instance.vertexUV(integer2 + 1 + n13, integer3 + 1 + n13, integer4 + n14, n10, n11);
 			instance.vertexUV(integer2 + 0 - n13, integer3 + 1 + n13, integer4 + n14, n9, n11);
 			instance.vertexUV(integer2 + 0 - n13, integer3 + 0 - n13, integer4 + n14, n9, n12);
 		}
-		if(this.a.isBlockNormalCube(integer2, integer3, integer4 + 1)) {
+		if (this.a.isBlockNormalCube(integer2, integer3, integer4 + 1)) {
 			instance.vertexUV(integer2 + 1 + n13, integer3 + 1 + n13, integer4 + 1 - n14, n9, n11);
 			instance.vertexUV(integer2 + 1 + n13, integer3 + 0 - n13, integer4 + 1 - n14, n9, n12);
 			instance.vertexUV(integer2 + 0 - n13, integer3 + 0 - n13, integer4 + 1 - n14, n10, n12);
@@ -330,7 +330,7 @@ public class RenderBlocks {
 		final Tessellator instance = Tessellator.instance;
 		final int blockMetadata = this.a.getBlockMetadata(integer2, integer3, integer4);
 		int n = gs.getBlockTextureFromSideAndMetadata(0, blockMetadata);
-		if(this.b >= 0) {
+		if (this.b >= 0) {
 			n = this.b;
 		}
 		final float blockBrightness = gs.getBlockBrightness(this.a, integer2, integer3, integer4);
@@ -354,26 +354,26 @@ public class RenderBlocks {
 		float n18 = integer3 + n8;
 		float n19 = integer3 + n8;
 		float n20 = integer3 + n8;
-		if(blockMetadata == 1 || blockMetadata == 2 || blockMetadata == 3 || blockMetadata == 7) {
+		if (blockMetadata == 1 || blockMetadata == 2 || blockMetadata == 3 || blockMetadata == 7) {
 			n12 = (n9 = (float) (integer2 + 1));
 			n11 = (n10 = (float) (integer2 + 0));
 			n14 = (n13 = (float) (integer4 + 1));
 			n16 = (n15 = (float) (integer4 + 0));
-		} else if(blockMetadata == 8) {
+		} else if (blockMetadata == 8) {
 			n10 = (n9 = (float) (integer2 + 0));
 			n12 = (n11 = (float) (integer2 + 1));
 			n16 = (n13 = (float) (integer4 + 1));
 			n15 = (n14 = (float) (integer4 + 0));
-		} else if(blockMetadata == 9) {
+		} else if (blockMetadata == 9) {
 			n12 = (n9 = (float) (integer2 + 0));
 			n11 = (n10 = (float) (integer2 + 1));
 			n14 = (n13 = (float) (integer4 + 0));
 			n16 = (n15 = (float) (integer4 + 1));
 		}
-		if(blockMetadata == 2 || blockMetadata == 4) {
+		if (blockMetadata == 2 || blockMetadata == 4) {
 			++n17;
 			++n20;
-		} else if(blockMetadata == 3 || blockMetadata == 5) {
+		} else if (blockMetadata == 3 || blockMetadata == 5) {
 			++n18;
 			++n19;
 		}
@@ -391,7 +391,7 @@ public class RenderBlocks {
 	public boolean f(final Block gs, final int integer2, final int integer3, final int integer4) {
 		final Tessellator instance = Tessellator.instance;
 		int n = gs.getBlockTextureFromSide(0);
-		if(this.b >= 0) {
+		if (this.b >= 0) {
 			n = this.b;
 		}
 		final float blockBrightness = gs.getBlockBrightness(this.a, integer2, integer3, integer4);
@@ -405,25 +405,25 @@ public class RenderBlocks {
 		final int blockMetadata = this.a.getBlockMetadata(integer2, integer3, integer4);
 		final float n8 = 0.0f;
 		final float n9 = 0.05f;
-		if(blockMetadata == 5) {
+		if (blockMetadata == 5) {
 			instance.vertexUV(integer2 + n9, integer3 + 1 + n8, integer4 + 1 + n8, n4, n6);
 			instance.vertexUV(integer2 + n9, integer3 + 0 - n8, integer4 + 1 + n8, n4, n7);
 			instance.vertexUV(integer2 + n9, integer3 + 0 - n8, integer4 + 0 - n8, n5, n7);
 			instance.vertexUV(integer2 + n9, integer3 + 1 + n8, integer4 + 0 - n8, n5, n6);
 		}
-		if(blockMetadata == 4) {
+		if (blockMetadata == 4) {
 			instance.vertexUV(integer2 + 1 - n9, integer3 + 0 - n8, integer4 + 1 + n8, n5, n7);
 			instance.vertexUV(integer2 + 1 - n9, integer3 + 1 + n8, integer4 + 1 + n8, n5, n6);
 			instance.vertexUV(integer2 + 1 - n9, integer3 + 1 + n8, integer4 + 0 - n8, n4, n6);
 			instance.vertexUV(integer2 + 1 - n9, integer3 + 0 - n8, integer4 + 0 - n8, n4, n7);
 		}
-		if(blockMetadata == 3) {
+		if (blockMetadata == 3) {
 			instance.vertexUV(integer2 + 1 + n8, integer3 + 0 - n8, integer4 + n9, n5, n7);
 			instance.vertexUV(integer2 + 1 + n8, integer3 + 1 + n8, integer4 + n9, n5, n6);
 			instance.vertexUV(integer2 + 0 - n8, integer3 + 1 + n8, integer4 + n9, n4, n6);
 			instance.vertexUV(integer2 + 0 - n8, integer3 + 0 - n8, integer4 + n9, n4, n7);
 		}
-		if(blockMetadata == 2) {
+		if (blockMetadata == 2) {
 			instance.vertexUV(integer2 + 1 + n8, integer3 + 1 + n8, integer4 + 1 - n9, n4, n6);
 			instance.vertexUV(integer2 + 1 + n8, integer3 + 0 - n8, integer4 + 1 - n9, n4, n7);
 			instance.vertexUV(integer2 + 0 - n8, integer3 + 0 - n8, integer4 + 1 - n9, n5, n7);
@@ -451,7 +451,7 @@ public class RenderBlocks {
 	public void a(final Block gs, double double2, final double double3, double double4, final double double5, final double double6) {
 		final Tessellator instance = Tessellator.instance;
 		int n = gs.getBlockTextureFromSide(0);
-		if(this.b >= 0) {
+		if (this.b >= 0) {
 			n = this.b;
 		}
 		final int n2 = (n & 0xF) << 4;
@@ -497,7 +497,7 @@ public class RenderBlocks {
 	public void a(final Block gs, final int integer, final double double3, final double double4, final double double5) {
 		final Tessellator instance = Tessellator.instance;
 		int n = gs.getBlockTextureFromSideAndMetadata(0, integer);
-		if(this.b >= 0) {
+		if (this.b >= 0) {
 			n = this.b;
 		}
 		final int n2 = (n & 0xF) << 4;
@@ -531,7 +531,7 @@ public class RenderBlocks {
 	public void b(final Block gs, final int integer, final double double3, final double double4, final double double5) {
 		final Tessellator instance = Tessellator.instance;
 		int n = gs.getBlockTextureFromSideAndMetadata(0, integer);
-		if(this.b >= 0) {
+		if (this.b >= 0) {
 			n = this.b;
 		}
 		final int n2 = (n & 0xF) << 4;
@@ -587,7 +587,7 @@ public class RenderBlocks {
 		final boolean shouldSideBeRendered = gs.shouldSideBeRendered(this.a, integer2, integer3 + 1, integer4, 1);
 		final boolean shouldSideBeRendered2 = gs.shouldSideBeRendered(this.a, integer2, integer3 - 1, integer4, 0);
 		final boolean[] array = { gs.shouldSideBeRendered(this.a, integer2, integer3, integer4 - 1, 2), gs.shouldSideBeRendered(this.a, integer2, integer3, integer4 + 1, 3), gs.shouldSideBeRendered(this.a, integer2 - 1, integer3, integer4, 4), gs.shouldSideBeRendered(this.a, integer2 + 1, integer3, integer4, 5) };
-		if(!shouldSideBeRendered && !shouldSideBeRendered2 && !array[0] && !array[1] && !array[2] && !array[3]) {
+		if (!shouldSideBeRendered && !shouldSideBeRendered2 && !array[0] && !array[1] && !array[2] && !array[3]) {
 			return false;
 		}
 		boolean b = false;
@@ -603,18 +603,18 @@ public class RenderBlocks {
 		final float a2 = this.a(integer2, integer3, integer4 + 1, blockMaterial);
 		final float a3 = this.a(integer2 + 1, integer3, integer4 + 1, blockMaterial);
 		final float a4 = this.a(integer2 + 1, integer3, integer4, blockMaterial);
-		if(this.d || shouldSideBeRendered) {
+		if (this.d || shouldSideBeRendered) {
 			b = true;
 			int i = gs.getBlockTextureFromSideAndMetadata(1, blockMetadata);
 			float n5 = (float) LiquidBlock.getFlowDirection(this.a, integer2, integer3, integer4, blockMaterial);
-			if(n5 > -999.0f) {
+			if (n5 > -999.0f) {
 				i = gs.getBlockTextureFromSideAndMetadata(2, blockMetadata);
 			}
 			final int yCoord = (i & 0xF) << 4;
 			final int zCoord = i & 0xF0;
 			double n6 = (yCoord + 8.0) / 256.0;
 			double n7 = (zCoord + 8.0) / 256.0;
-			if(n5 < -999.0f) {
+			if (n5 < -999.0f) {
 				n5 = 0.0f;
 			} else {
 				n6 = (yCoord + 16) / 256.0f;
@@ -629,53 +629,53 @@ public class RenderBlocks {
 			instance.vertexUV(integer2 + 1, integer3 + a3, integer4 + 1, n6 + n9 + n8, n7 + n9 - n8);
 			instance.vertexUV(integer2 + 1, integer3 + a4, integer4 + 0, n6 + n9 - n8, n7 - n9 - n8);
 		}
-		if(this.d || shouldSideBeRendered2) {
+		if (this.d || shouldSideBeRendered2) {
 			final float blockBrightness2 = gs.getBlockBrightness(this.a, integer2, integer3 - 1, integer4);
 			instance.setColorOpaque_F(n * blockBrightness2, n * blockBrightness2, n * blockBrightness2);
 			this.a(gs, (double) integer2, integer3, integer4, gs.getBlockTextureFromSide(0));
 			b = true;
 		}
-		for(int i = 0; i < 4; ++i) {
+		for ( int i = 0; i < 4; ++i ) {
 			int xCoord = integer2;
 			final int yCoord = integer3;
 			int zCoord = integer4;
-			if(i == 0) {
+			if (i == 0) {
 				--zCoord;
 			}
-			if(i == 1) {
+			if (i == 1) {
 				++zCoord;
 			}
-			if(i == 2) {
+			if (i == 2) {
 				--xCoord;
 			}
-			if(i == 3) {
+			if (i == 3) {
 				++xCoord;
 			}
 			final int blockTextureFromSideAndMetadata = gs.getBlockTextureFromSideAndMetadata(i + 2, blockMetadata);
 			final int n10 = (blockTextureFromSideAndMetadata & 0xF) << 4;
 			final int n11 = blockTextureFromSideAndMetadata & 0xF0;
-			if(this.d || array[i]) {
+			if (this.d || array[i]) {
 				float n8;
 				float n9;
 				float blockBrightness;
 				float n12;
 				float n13;
 				float n14;
-				if(i == 0) {
+				if (i == 0) {
 					n12 = a;
 					n8 = a4;
 					n9 = (float) integer2;
 					n13 = (float) (integer2 + 1);
 					blockBrightness = (float) integer4;
 					n14 = (float) integer4;
-				} else if(i == 1) {
+				} else if (i == 1) {
 					n12 = a3;
 					n8 = a2;
 					n9 = (float) (integer2 + 1);
 					n13 = (float) integer2;
 					blockBrightness = (float) (integer4 + 1);
 					n14 = (float) (integer4 + 1);
-				} else if(i == 2) {
+				} else if (i == 2) {
 					n12 = a2;
 					n8 = a;
 					n9 = (float) integer2;
@@ -697,7 +697,7 @@ public class RenderBlocks {
 				final double double6 = (n11 + (1.0f - n8) * 16.0f) / 256.0f;
 				final double n17 = (n11 + 16 - 0.01) / 256.0;
 				float blockBrightness3 = gs.getBlockBrightness(this.a, xCoord, yCoord, zCoord);
-				if(i < 2) {
+				if (i < 2) {
 					blockBrightness3 *= n3;
 				} else {
 					blockBrightness3 *= n4;
@@ -717,22 +717,22 @@ public class RenderBlocks {
 	private float a(final int integer1, final int integer2, final int integer3, final Material jy) {
 		int n = 0;
 		float n2 = 0.0f;
-		for(int i = 0; i < 4; ++i) {
+		for ( int i = 0; i < 4; ++i ) {
 			final int xCoord = integer1 - (i & 0x1);
 			final int zCoord = integer3 - (i >> 1 & 0x1);
-			if(this.a.getBlockMaterial(xCoord, integer2 + 1, zCoord) == jy) {
+			if (this.a.getBlockMaterial(xCoord, integer2 + 1, zCoord) == jy) {
 				return 1.0f;
 			}
 			final Material blockMaterial = this.a.getBlockMaterial(xCoord, integer2, zCoord);
-			if(blockMaterial == jy) {
+			if (blockMaterial == jy) {
 				final int blockMetadata = this.a.getBlockMetadata(xCoord, integer2, zCoord);
-				if(blockMetadata >= 8 || blockMetadata == 0) {
+				if (blockMetadata >= 8 || blockMetadata == 0) {
 					n2 += LiquidBlock.getPercentAir(blockMetadata) * 10.0f;
 					n += 10;
 				}
 				n2 += LiquidBlock.getPercentAir(blockMetadata);
 				++n;
-			} else if(!blockMaterial.isSolid()) {
+			} else if (!blockMaterial.isSolid()) {
 				++n2;
 				++n;
 			}
@@ -749,37 +749,37 @@ public class RenderBlocks {
 		instance.beginQuads();
 		final float blockBrightness = gs.getBlockBrightness(fe, integer3, integer4, integer5);
 		float n5 = gs.getBlockBrightness(fe, integer3, integer4 - 1, integer5);
-		if(n5 < blockBrightness) {
+		if (n5 < blockBrightness) {
 			n5 = blockBrightness;
 		}
 		instance.setColorOpaque_F(n * n5, n * n5, n * n5);
 		this.a(gs, -0.5, -0.5, -0.5, gs.getBlockTextureFromSide(0));
 		n5 = gs.getBlockBrightness(fe, integer3, integer4 + 1, integer5);
-		if(n5 < blockBrightness) {
+		if (n5 < blockBrightness) {
 			n5 = blockBrightness;
 		}
 		instance.setColorOpaque_F(n2 * n5, n2 * n5, n2 * n5);
 		this.b(gs, -0.5, -0.5, -0.5, gs.getBlockTextureFromSide(1));
 		n5 = gs.getBlockBrightness(fe, integer3, integer4, integer5 - 1);
-		if(n5 < blockBrightness) {
+		if (n5 < blockBrightness) {
 			n5 = blockBrightness;
 		}
 		instance.setColorOpaque_F(n3 * n5, n3 * n5, n3 * n5);
 		this.c(gs, -0.5, -0.5, -0.5, gs.getBlockTextureFromSide(2));
 		n5 = gs.getBlockBrightness(fe, integer3, integer4, integer5 + 1);
-		if(n5 < blockBrightness) {
+		if (n5 < blockBrightness) {
 			n5 = blockBrightness;
 		}
 		instance.setColorOpaque_F(n3 * n5, n3 * n5, n3 * n5);
 		this.d(gs, -0.5, -0.5, -0.5, gs.getBlockTextureFromSide(3));
 		n5 = gs.getBlockBrightness(fe, integer3 - 1, integer4, integer5);
-		if(n5 < blockBrightness) {
+		if (n5 < blockBrightness) {
 			n5 = blockBrightness;
 		}
 		instance.setColorOpaque_F(n4 * n5, n4 * n5, n4 * n5);
 		this.e(gs, -0.5, -0.5, -0.5, gs.getBlockTextureFromSide(4));
 		n5 = gs.getBlockBrightness(fe, integer3 + 1, integer4, integer5);
-		if(n5 < blockBrightness) {
+		if (n5 < blockBrightness) {
 			n5 = blockBrightness;
 		}
 		instance.setColorOpaque_F(n4 * n5, n4 * n5, n4 * n5);
@@ -812,69 +812,69 @@ public class RenderBlocks {
 		final float n15 = n3 * float7;
 		final float n16 = n4 * float7;
 		final float blockBrightness = gs.getBlockBrightness(this.a, integer2, integer3, integer4);
-		if(this.d || gs.shouldSideBeRendered(this.a, integer2, integer3 - 1, integer4, 0)) {
+		if (this.d || gs.shouldSideBeRendered(this.a, integer2, integer3 - 1, integer4, 0)) {
 			float n17 = gs.getBlockBrightness(this.a, integer2, integer3 - 1, integer4);
-			if(Block.lightValue[gs.blockID] > 0) {
+			if (Block.lightValue[gs.blockID] > 0) {
 				n17 = 1.0f;
 			}
 			instance.setColorOpaque_F(n5 * n17, n9 * n17, n13 * n17);
 			this.a(gs, (double) integer2, integer3, integer4, gs.getBlockTextureGeneric(this.a, integer2, integer3, integer4, 0));
 			b = true;
 		}
-		if(this.d || gs.shouldSideBeRendered(this.a, integer2, integer3 + 1, integer4, 1)) {
+		if (this.d || gs.shouldSideBeRendered(this.a, integer2, integer3 + 1, integer4, 1)) {
 			float n17 = gs.getBlockBrightness(this.a, integer2, integer3 + 1, integer4);
-			if(gs.maxY != 1.0 && !gs.blockMaterial.isLiquid()) {
+			if (gs.maxY != 1.0 && !gs.blockMaterial.isLiquid()) {
 				n17 = blockBrightness;
 			}
-			if(Block.lightValue[gs.blockID] > 0) {
+			if (Block.lightValue[gs.blockID] > 0) {
 				n17 = 1.0f;
 			}
 			instance.setColorOpaque_F(n6 * n17, n10 * n17, n14 * n17);
 			this.b(gs, (double) integer2, integer3, integer4, gs.getBlockTextureGeneric(this.a, integer2, integer3, integer4, 1));
 			b = true;
 		}
-		if(this.d || gs.shouldSideBeRendered(this.a, integer2, integer3, integer4 - 1, 2)) {
+		if (this.d || gs.shouldSideBeRendered(this.a, integer2, integer3, integer4 - 1, 2)) {
 			float n17 = gs.getBlockBrightness(this.a, integer2, integer3, integer4 - 1);
-			if(gs.minZ > 0.0) {
+			if (gs.minZ > 0.0) {
 				n17 = blockBrightness;
 			}
-			if(Block.lightValue[gs.blockID] > 0) {
+			if (Block.lightValue[gs.blockID] > 0) {
 				n17 = 1.0f;
 			}
 			instance.setColorOpaque_F(n7 * n17, n11 * n17, n15 * n17);
 			this.c(gs, integer2, integer3, integer4, gs.getBlockTextureGeneric(this.a, integer2, integer3, integer4, 2));
 			b = true;
 		}
-		if(this.d || gs.shouldSideBeRendered(this.a, integer2, integer3, integer4 + 1, 3)) {
+		if (this.d || gs.shouldSideBeRendered(this.a, integer2, integer3, integer4 + 1, 3)) {
 			float n17 = gs.getBlockBrightness(this.a, integer2, integer3, integer4 + 1);
-			if(gs.maxZ < 1.0) {
+			if (gs.maxZ < 1.0) {
 				n17 = blockBrightness;
 			}
-			if(Block.lightValue[gs.blockID] > 0) {
+			if (Block.lightValue[gs.blockID] > 0) {
 				n17 = 1.0f;
 			}
 			instance.setColorOpaque_F(n7 * n17, n11 * n17, n15 * n17);
 			this.d(gs, integer2, integer3, integer4, gs.getBlockTextureGeneric(this.a, integer2, integer3, integer4, 3));
 			b = true;
 		}
-		if(this.d || gs.shouldSideBeRendered(this.a, integer2 - 1, integer3, integer4, 4)) {
+		if (this.d || gs.shouldSideBeRendered(this.a, integer2 - 1, integer3, integer4, 4)) {
 			float n17 = gs.getBlockBrightness(this.a, integer2 - 1, integer3, integer4);
-			if(gs.minX > 0.0) {
+			if (gs.minX > 0.0) {
 				n17 = blockBrightness;
 			}
-			if(Block.lightValue[gs.blockID] > 0) {
+			if (Block.lightValue[gs.blockID] > 0) {
 				n17 = 1.0f;
 			}
 			instance.setColorOpaque_F(n8 * n17, n12 * n17, n16 * n17);
 			this.e(gs, integer2, integer3, integer4, gs.getBlockTextureGeneric(this.a, integer2, integer3, integer4, 4));
 			b = true;
 		}
-		if(this.d || gs.shouldSideBeRendered(this.a, integer2 + 1, integer3, integer4, 5)) {
+		if (this.d || gs.shouldSideBeRendered(this.a, integer2 + 1, integer3, integer4, 5)) {
 			float n17 = gs.getBlockBrightness(this.a, integer2 + 1, integer3, integer4);
-			if(gs.maxX < 1.0) {
+			if (gs.maxX < 1.0) {
 				n17 = blockBrightness;
 			}
-			if(Block.lightValue[gs.blockID] > 0) {
+			if (Block.lightValue[gs.blockID] > 0) {
 				n17 = 1.0f;
 			}
 			instance.setColorOpaque_F(n8 * n17, n12 * n17, n16 * n17);
@@ -892,34 +892,34 @@ public class RenderBlocks {
 		this.j(gs, integer2, integer3, integer4);
 		int n3 = 0;
 		boolean b2 = false;
-		if(this.a.getBlockId(integer2 - 1, integer3, integer4) == gs.blockID || this.a.getBlockId(integer2 + 1, integer3, integer4) == gs.blockID) {
+		if (this.a.getBlockId(integer2 - 1, integer3, integer4) == gs.blockID || this.a.getBlockId(integer2 + 1, integer3, integer4) == gs.blockID) {
 			n3 = 1;
 		}
-		if(this.a.getBlockId(integer2, integer3, integer4 - 1) == gs.blockID || this.a.getBlockId(integer2, integer3, integer4 + 1) == gs.blockID) {
+		if (this.a.getBlockId(integer2, integer3, integer4 - 1) == gs.blockID || this.a.getBlockId(integer2, integer3, integer4 + 1) == gs.blockID) {
 			b2 = true;
 		}
-		if(n3 == 0 && !b2) {
+		if (n3 == 0 && !b2) {
 			n3 = 1;
 		}
 		n = 0.4375f;
 		n2 = 0.5625f;
 		float n4 = 0.75f;
 		float n5 = 0.9375f;
-		if(n3 != 0) {
+		if (n3 != 0) {
 			gs.setShape(0.0f, n4, n, 1.0f, n5, n2);
 			this.j(gs, integer2, integer3, integer4);
 		}
-		if(b2) {
+		if (b2) {
 			gs.setShape(n, n4, 0.0f, n2, n5, 1.0f);
 			this.j(gs, integer2, integer3, integer4);
 		}
 		n4 = 0.375f;
 		n5 = 0.5625f;
-		if(n3 != 0) {
+		if (n3 != 0) {
 			gs.setShape(0.0f, n4, n, 1.0f, n5, n2);
 			this.j(gs, integer2, integer3, integer4);
 		}
-		if(b2) {
+		if (b2) {
 			gs.setShape(n, n4, 0.0f, n2, n5, 1.0f);
 			this.j(gs, integer2, integer3, integer4);
 		}
@@ -930,22 +930,22 @@ public class RenderBlocks {
 	public boolean l(final Block gs, final int integer2, final int integer3, final int integer4) {
 		final boolean b = false;
 		final int blockMetadata = this.a.getBlockMetadata(integer2, integer3, integer4);
-		if(blockMetadata == 0) {
+		if (blockMetadata == 0) {
 			gs.setShape(0.0f, 0.0f, 0.0f, 0.5f, 0.5f, 1.0f);
 			this.j(gs, integer2, integer3, integer4);
 			gs.setShape(0.5f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f);
 			this.j(gs, integer2, integer3, integer4);
-		} else if(blockMetadata == 1) {
+		} else if (blockMetadata == 1) {
 			gs.setShape(0.0f, 0.0f, 0.0f, 0.5f, 1.0f, 1.0f);
 			this.j(gs, integer2, integer3, integer4);
 			gs.setShape(0.5f, 0.0f, 0.0f, 1.0f, 0.5f, 1.0f);
 			this.j(gs, integer2, integer3, integer4);
-		} else if(blockMetadata == 2) {
+		} else if (blockMetadata == 2) {
 			gs.setShape(0.0f, 0.0f, 0.0f, 1.0f, 0.5f, 0.5f);
 			this.j(gs, integer2, integer3, integer4);
 			gs.setShape(0.0f, 0.0f, 0.5f, 1.0f, 1.0f, 1.0f);
 			this.j(gs, integer2, integer3, integer4);
-		} else if(blockMetadata == 3) {
+		} else if (blockMetadata == 3) {
 			gs.setShape(0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.5f);
 			this.j(gs, integer2, integer3, integer4);
 			gs.setShape(0.0f, 0.0f, 0.5f, 1.0f, 0.5f, 1.0f);
@@ -965,35 +965,35 @@ public class RenderBlocks {
 		final float n4 = 0.6f;
 		final float blockBrightness = gs.getBlockBrightness(this.a, integer2, integer3, integer4);
 		float n5 = gs.getBlockBrightness(this.a, integer2, integer3 - 1, integer4);
-		if(blockDoor.minY > 0.0) {
+		if (blockDoor.minY > 0.0) {
 			n5 = blockBrightness;
 		}
-		if(Block.lightValue[gs.blockID] > 0) {
+		if (Block.lightValue[gs.blockID] > 0) {
 			n5 = 1.0f;
 		}
 		instance.setColorOpaque_F(n * n5, n * n5, n * n5);
 		this.a(gs, (double) integer2, integer3, integer4, gs.getBlockTextureGeneric(this.a, integer2, integer3, integer4, 0));
 		b = true;
 		n5 = gs.getBlockBrightness(this.a, integer2, integer3 + 1, integer4);
-		if(blockDoor.maxY < 1.0) {
+		if (blockDoor.maxY < 1.0) {
 			n5 = blockBrightness;
 		}
-		if(Block.lightValue[gs.blockID] > 0) {
+		if (Block.lightValue[gs.blockID] > 0) {
 			n5 = 1.0f;
 		}
 		instance.setColorOpaque_F(n2 * n5, n2 * n5, n2 * n5);
 		this.b(gs, (double) integer2, integer3, integer4, gs.getBlockTextureGeneric(this.a, integer2, integer3, integer4, 1));
 		b = true;
 		n5 = gs.getBlockBrightness(this.a, integer2, integer3, integer4 - 1);
-		if(blockDoor.minZ > 0.0) {
+		if (blockDoor.minZ > 0.0) {
 			n5 = blockBrightness;
 		}
-		if(Block.lightValue[gs.blockID] > 0) {
+		if (Block.lightValue[gs.blockID] > 0) {
 			n5 = 1.0f;
 		}
 		instance.setColorOpaque_F(n3 * n5, n3 * n5, n3 * n5);
 		int n6 = gs.getBlockTextureGeneric(this.a, integer2, integer3, integer4, 2);
-		if(n6 < 0) {
+		if (n6 < 0) {
 			this.c = true;
 			n6 = -n6;
 		}
@@ -1001,15 +1001,15 @@ public class RenderBlocks {
 		b = true;
 		this.c = false;
 		n5 = gs.getBlockBrightness(this.a, integer2, integer3, integer4 + 1);
-		if(blockDoor.maxZ < 1.0) {
+		if (blockDoor.maxZ < 1.0) {
 			n5 = blockBrightness;
 		}
-		if(Block.lightValue[gs.blockID] > 0) {
+		if (Block.lightValue[gs.blockID] > 0) {
 			n5 = 1.0f;
 		}
 		instance.setColorOpaque_F(n3 * n5, n3 * n5, n3 * n5);
 		n6 = gs.getBlockTextureGeneric(this.a, integer2, integer3, integer4, 3);
-		if(n6 < 0) {
+		if (n6 < 0) {
 			this.c = true;
 			n6 = -n6;
 		}
@@ -1017,15 +1017,15 @@ public class RenderBlocks {
 		b = true;
 		this.c = false;
 		n5 = gs.getBlockBrightness(this.a, integer2 - 1, integer3, integer4);
-		if(blockDoor.minX > 0.0) {
+		if (blockDoor.minX > 0.0) {
 			n5 = blockBrightness;
 		}
-		if(Block.lightValue[gs.blockID] > 0) {
+		if (Block.lightValue[gs.blockID] > 0) {
 			n5 = 1.0f;
 		}
 		instance.setColorOpaque_F(n4 * n5, n4 * n5, n4 * n5);
 		n6 = gs.getBlockTextureGeneric(this.a, integer2, integer3, integer4, 4);
-		if(n6 < 0) {
+		if (n6 < 0) {
 			this.c = true;
 			n6 = -n6;
 		}
@@ -1033,15 +1033,15 @@ public class RenderBlocks {
 		b = true;
 		this.c = false;
 		n5 = gs.getBlockBrightness(this.a, integer2 + 1, integer3, integer4);
-		if(blockDoor.maxX < 1.0) {
+		if (blockDoor.maxX < 1.0) {
 			n5 = blockBrightness;
 		}
-		if(Block.lightValue[gs.blockID] > 0) {
+		if (Block.lightValue[gs.blockID] > 0) {
 			n5 = 1.0f;
 		}
 		instance.setColorOpaque_F(n4 * n5, n4 * n5, n4 * n5);
 		n6 = gs.getBlockTextureGeneric(this.a, integer2, integer3, integer4, 5);
-		if(n6 < 0) {
+		if (n6 < 0) {
 			this.c = true;
 			n6 = -n6;
 		}
@@ -1053,7 +1053,7 @@ public class RenderBlocks {
 
 	public void a(final Block gs, final double double2, final double double3, final double double4, int integer) {
 		final Tessellator instance = Tessellator.instance;
-		if(this.b >= 0) {
+		if (this.b >= 0) {
 			integer = this.b;
 		}
 		final int n = (integer & 0xF) << 4;
@@ -1062,11 +1062,11 @@ public class RenderBlocks {
 		double n4 = (n + gs.maxX * 16.0 - 0.01) / 256.0;
 		double n5 = (n2 + gs.minZ * 16.0) / 256.0;
 		double n6 = (n2 + gs.maxZ * 16.0 - 0.01) / 256.0;
-		if(gs.minX < 0.0 || gs.maxX > 1.0) {
+		if (gs.minX < 0.0 || gs.maxX > 1.0) {
 			n3 = (n + 0.0f) / 256.0f;
 			n4 = (n + 15.99f) / 256.0f;
 		}
-		if(gs.minZ < 0.0 || gs.maxZ > 1.0) {
+		if (gs.minZ < 0.0 || gs.maxZ > 1.0) {
 			n5 = (n2 + 0.0f) / 256.0f;
 			n6 = (n2 + 15.99f) / 256.0f;
 		}
@@ -1083,7 +1083,7 @@ public class RenderBlocks {
 
 	public void b(final Block gs, final double double2, final double double3, final double double4, int integer) {
 		final Tessellator instance = Tessellator.instance;
-		if(this.b >= 0) {
+		if (this.b >= 0) {
 			integer = this.b;
 		}
 		final int n = (integer & 0xF) << 4;
@@ -1092,11 +1092,11 @@ public class RenderBlocks {
 		double n4 = (n + gs.maxX * 16.0 - 0.01) / 256.0;
 		double n5 = (n2 + gs.minZ * 16.0) / 256.0;
 		double n6 = (n2 + gs.maxZ * 16.0 - 0.01) / 256.0;
-		if(gs.minX < 0.0 || gs.maxX > 1.0) {
+		if (gs.minX < 0.0 || gs.maxX > 1.0) {
 			n3 = (n + 0.0f) / 256.0f;
 			n4 = (n + 15.99f) / 256.0f;
 		}
-		if(gs.minZ < 0.0 || gs.maxZ > 1.0) {
+		if (gs.minZ < 0.0 || gs.maxZ > 1.0) {
 			n5 = (n2 + 0.0f) / 256.0f;
 			n6 = (n2 + 15.99f) / 256.0f;
 		}
@@ -1113,7 +1113,7 @@ public class RenderBlocks {
 
 	public void c(final Block gs, final double double2, final double double3, final double double4, int integer) {
 		final Tessellator instance = Tessellator.instance;
-		if(this.b >= 0) {
+		if (this.b >= 0) {
 			integer = this.b;
 		}
 		final int n = (integer & 0xF) << 4;
@@ -1122,16 +1122,16 @@ public class RenderBlocks {
 		double n4 = (n + gs.maxX * 16.0 - 0.01) / 256.0;
 		double n5 = (n2 + gs.minY * 16.0) / 256.0;
 		double n6 = (n2 + gs.maxY * 16.0 - 0.01) / 256.0;
-		if(this.c) {
+		if (this.c) {
 			final double n7 = n3;
 			n3 = n4;
 			n4 = n7;
 		}
-		if(gs.minX < 0.0 || gs.maxX > 1.0) {
+		if (gs.minX < 0.0 || gs.maxX > 1.0) {
 			n3 = (n + 0.0f) / 256.0f;
 			n4 = (n + 15.99f) / 256.0f;
 		}
-		if(gs.minY < 0.0 || gs.maxY > 1.0) {
+		if (gs.minY < 0.0 || gs.maxY > 1.0) {
 			n5 = (n2 + 0.0f) / 256.0f;
 			n6 = (n2 + 15.99f) / 256.0f;
 		}
@@ -1148,7 +1148,7 @@ public class RenderBlocks {
 
 	public void d(final Block gs, final double double2, final double double3, final double double4, int integer) {
 		final Tessellator instance = Tessellator.instance;
-		if(this.b >= 0) {
+		if (this.b >= 0) {
 			integer = this.b;
 		}
 		final int n = (integer & 0xF) << 4;
@@ -1157,16 +1157,16 @@ public class RenderBlocks {
 		double n4 = (n + gs.maxX * 16.0 - 0.01) / 256.0;
 		double n5 = (n2 + gs.minY * 16.0) / 256.0;
 		double n6 = (n2 + gs.maxY * 16.0 - 0.01) / 256.0;
-		if(this.c) {
+		if (this.c) {
 			final double n7 = n3;
 			n3 = n4;
 			n4 = n7;
 		}
-		if(gs.minX < 0.0 || gs.maxX > 1.0) {
+		if (gs.minX < 0.0 || gs.maxX > 1.0) {
 			n3 = (n + 0.0f) / 256.0f;
 			n4 = (n + 15.99f) / 256.0f;
 		}
-		if(gs.minY < 0.0 || gs.maxY > 1.0) {
+		if (gs.minY < 0.0 || gs.maxY > 1.0) {
 			n5 = (n2 + 0.0f) / 256.0f;
 			n6 = (n2 + 15.99f) / 256.0f;
 		}
@@ -1183,7 +1183,7 @@ public class RenderBlocks {
 
 	public void e(final Block gs, final double double2, final double double3, final double double4, int integer) {
 		final Tessellator instance = Tessellator.instance;
-		if(this.b >= 0) {
+		if (this.b >= 0) {
 			integer = this.b;
 		}
 		final int n = (integer & 0xF) << 4;
@@ -1192,16 +1192,16 @@ public class RenderBlocks {
 		double n4 = (n + gs.maxZ * 16.0 - 0.01) / 256.0;
 		double n5 = (n2 + gs.minY * 16.0) / 256.0;
 		double n6 = (n2 + gs.maxY * 16.0 - 0.01) / 256.0;
-		if(this.c) {
+		if (this.c) {
 			final double n7 = n3;
 			n3 = n4;
 			n4 = n7;
 		}
-		if(gs.minZ < 0.0 || gs.maxZ > 1.0) {
+		if (gs.minZ < 0.0 || gs.maxZ > 1.0) {
 			n3 = (n + 0.0f) / 256.0f;
 			n4 = (n + 15.99f) / 256.0f;
 		}
-		if(gs.minY < 0.0 || gs.maxY > 1.0) {
+		if (gs.minY < 0.0 || gs.maxY > 1.0) {
 			n5 = (n2 + 0.0f) / 256.0f;
 			n6 = (n2 + 15.99f) / 256.0f;
 		}
@@ -1218,7 +1218,7 @@ public class RenderBlocks {
 
 	public void f(final Block gs, final double double2, final double double3, final double double4, int integer) {
 		final Tessellator instance = Tessellator.instance;
-		if(this.b >= 0) {
+		if (this.b >= 0) {
 			integer = this.b;
 		}
 		final int n = (integer & 0xF) << 4;
@@ -1227,16 +1227,16 @@ public class RenderBlocks {
 		double n4 = (n + gs.maxZ * 16.0 - 0.01) / 256.0;
 		double n5 = (n2 + gs.minY * 16.0) / 256.0;
 		double n6 = (n2 + gs.maxY * 16.0 - 0.01) / 256.0;
-		if(this.c) {
+		if (this.c) {
 			final double n7 = n3;
 			n3 = n4;
 			n4 = n7;
 		}
-		if(gs.minZ < 0.0 || gs.maxZ > 1.0) {
+		if (gs.minZ < 0.0 || gs.maxZ > 1.0) {
 			n3 = (n + 0.0f) / 256.0f;
 			n4 = (n + 15.99f) / 256.0f;
 		}
-		if(gs.minY < 0.0 || gs.maxY > 1.0) {
+		if (gs.minY < 0.0 || gs.maxY > 1.0) {
 			n5 = (n2 + 0.0f) / 256.0f;
 			n6 = (n2 + 15.99f) / 256.0f;
 		}
@@ -1255,7 +1255,7 @@ public class RenderBlocks {
 		final int n = -1;
 		final Tessellator instance = Tessellator.instance;
 		final int renderType = gs.getRenderType();
-		if(renderType == 0) {
+		if (renderType == 0) {
 			GL11.glTranslatef(-0.5f, -0.5f, -0.5f);
 			instance.beginQuads();
 			instance.setNormal(0.0f, -1.0f, 0.0f);
@@ -1282,23 +1282,23 @@ public class RenderBlocks {
 			this.f(gs, 0.0, 0.0, 0.0, gs.getBlockTextureFromSide(5));
 			instance.draw();
 			GL11.glTranslatef(0.5f, 0.5f, 0.5f);
-		} else if(renderType == 1) {
+		} else if (renderType == 1) {
 			instance.beginQuads();
 			instance.setNormal(0.0f, -1.0f, 0.0f);
 			this.a(gs, n, -0.5, -0.5, -0.5);
 			instance.draw();
-		} else if(renderType == 6) {
+		} else if (renderType == 6) {
 			instance.beginQuads();
 			instance.setNormal(0.0f, -1.0f, 0.0f);
 			this.b(gs, n, -0.5, -0.5, -0.5);
 			instance.draw();
-		} else if(renderType == 2) {
+		} else if (renderType == 2) {
 			instance.beginQuads();
 			instance.setNormal(0.0f, -1.0f, 0.0f);
 			this.a(gs, -0.5, -0.5, -0.5, 0.0, 0.0);
 			instance.draw();
-		} else if(renderType != 3) {
-			if(renderType == 5) {
+		} else if (renderType != 3) {
+			if (renderType == 5) {
 			}
 		}
 	}

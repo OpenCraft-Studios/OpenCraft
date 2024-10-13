@@ -100,20 +100,20 @@ public class StreamThread extends SimpleThread {
 					iter = streamingSources.listIterator();
 					while(!dying() && iter.hasNext()) {
 						src = iter.next();
-						if(src == null) {
+						if (src == null) {
 							iter.remove();
-						} else if(src.stopped()) {
-							if(!src.rawDataStream)
+						} else if (src.stopped()) {
+							if (!src.rawDataStream)
 								iter.remove();
-						} else if(!src.active()) {
-							if(src.toLoop || src.rawDataStream)
+						} else if (!src.active()) {
+							if (src.toLoop || src.rawDataStream)
 								src.toPlay = true;
 							iter.remove();
-						} else if(!src.paused()) {
+						} else if (!src.paused()) {
 							src.checkFadeOut();
-							if((!src.stream()) && (!src.rawDataStream)) {
-								if(src.channel == null || !src.channel.processBuffer()) {
-									if(src.nextCodec == null) {
+							if ((!src.stream()) && (!src.rawDataStream)) {
+								if (src.channel == null || !src.channel.processBuffer()) {
+									if (src.nextCodec == null) {
 										src.readBuffersFromNextSoundInSequence();
 									}
 									/*
@@ -123,14 +123,14 @@ public class StreamThread extends SimpleThread {
 									}
 									
 									// check if this is a looping source
-									else*/ if(src.toLoop) {
+									else*/ if (src.toLoop) {
 										// wait for stream to finish playing
-										if(!src.playing()) {
+										if (!src.playing()) {
 											// Generate an EOS event:
 											SoundSystemConfig.notifyEOS(src.sourcename, src.getSoundSequenceQueueSize());
 											// Check if the source is currently
 											// in the process of fading out.
-											if(src.checkFadeOut()) {
+											if (src.checkFadeOut()) {
 												// Source is fading out.
 												// Keep looping until it
 												// finishes.
@@ -146,16 +146,16 @@ public class StreamThread extends SimpleThread {
 										}
 									} else {
 										// wait for stream to finish playing
-										if(!src.playing()) {
+										if (!src.playing()) {
 											// Generate an EOS event:
 											SoundSystemConfig.notifyEOS(src.sourcename, src.getSoundSequenceQueueSize());
 											// Check if the source is currently
 											// in the process of fading out
-											if(!src.checkFadeOut()) {
+											if (!src.checkFadeOut()) {
 												// Source is not fading out.
 												// Play anything else that is
 												// in the sound sequence queue.
-												if(src.incrementSoundSequence())
+												if (src.incrementSoundSequence())
 													src.preLoad = true;
 												else
 													iter.remove();  // finished
@@ -167,10 +167,10 @@ public class StreamThread extends SimpleThread {
 						}
 					}
 				}
-				if(!dying() && !streamingSources.isEmpty())
+				if (!dying() && !streamingSources.isEmpty())
 					snooze(20);  // sleep a bit so we don't peg the cpu
 			}
-			if(!dying() && streamingSources.isEmpty())
+			if (!dying() && streamingSources.isEmpty())
 				snooze(3600000);  // sleep until there is more to do.
 		}
 
@@ -186,11 +186,11 @@ public class StreamThread extends SimpleThread {
 	 */
 	public void watch(Source source) {
 		// make sure the source exists:
-		if(source == null)
+		if (source == null)
 			return;
 
 		// make sure we aren't already watching this source:
-		if(streamingSources.contains(source))
+		if (streamingSources.contains(source))
 			return;
 
 		ListIterator<Source> iter;
@@ -204,9 +204,9 @@ public class StreamThread extends SimpleThread {
 			iter = streamingSources.listIterator();
 			while(iter.hasNext()) {
 				src = iter.next();
-				if(src == null) {
+				if (src == null) {
 					iter.remove();
-				} else if(source.channel == src.channel) {
+				} else if (source.channel == src.channel) {
 					src.stop();
 					iter.remove();
 				}

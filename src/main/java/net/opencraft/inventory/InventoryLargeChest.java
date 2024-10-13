@@ -24,21 +24,21 @@ public class InventoryLargeChest implements IInventory {
 	}
 
 	public ItemStack getStackInSlot(final int integer) {
-		if(integer >= this.upperChest.getSizeInventory()) {
+		if (integer >= this.upperChest.getSizeInventory()) {
 			return this.lowerChest.getStackInSlot(integer - this.upperChest.getSizeInventory());
 		}
 		return this.upperChest.getStackInSlot(integer);
 	}
 
 	public ItemStack decrStackSize(final int integer1, final int integer2) {
-		if(integer1 >= this.upperChest.getSizeInventory()) {
+		if (integer1 >= this.upperChest.getSizeInventory()) {
 			return this.lowerChest.decrStackSize(integer1 - this.upperChest.getSizeInventory(), integer2);
 		}
 		return this.upperChest.decrStackSize(integer1, integer2);
 	}
 
 	public void setInventorySlotContents(final int integer, final ItemStack hw) {
-		if(integer >= this.upperChest.getSizeInventory()) {
+		if (integer >= this.upperChest.getSizeInventory()) {
 			this.lowerChest.setInventorySlotContents(integer - this.upperChest.getSizeInventory(), hw);
 		} else {
 			this.upperChest.setInventorySlotContents(integer, hw);

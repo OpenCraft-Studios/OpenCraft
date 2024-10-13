@@ -161,8 +161,8 @@ public class Library {
 		streamThread.interrupt();
 
 		// wait up to 5 seconds for stream thread to end:
-		for(int i = 0; i < 50; i++) {
-			if(!streamThread.alive())
+		for ( int i = 0; i < 50; i++ ) {
+			if (!streamThread.alive())
 				break;
 			try {
 				Thread.sleep(100);
@@ -170,18 +170,18 @@ public class Library {
 			}
 		}
 
-		if(streamThread.alive()) {
+		if (streamThread.alive()) {
 			errorMessage("Stream thread did not die!");
 			message("Ignoring errors... continuing clean-up.");
 		}
 
-		if(midiChannel != null) {
+		if (midiChannel != null) {
 			midiChannel.cleanup();
 			midiChannel = null;
 		}
 
 		Channel channel = null;
-		if(streamingChannels != null) {
+		if (streamingChannels != null) {
 			while(!streamingChannels.isEmpty()) {
 				channel = streamingChannels.remove(0);
 				channel.close();
@@ -191,7 +191,7 @@ public class Library {
 			streamingChannels.clear();
 			streamingChannels = null;
 		}
-		if(normalChannels != null) {
+		if (normalChannels != null) {
 			while(!normalChannels.isEmpty()) {
 				channel = normalChannels.remove(0);
 				channel.close();
@@ -211,7 +211,7 @@ public class Library {
 		while(iter.hasNext()) {
 			sourcename = iter.next();
 			source = sourceMap.get(sourcename);
-			if(source != null)
+			if (source != null)
 				source.cleanup();
 		}
 		sourceMap.clear();
@@ -228,16 +228,16 @@ public class Library {
 		Channel channel = null;
 
 		// create the streaming channels:
-		for(int x = 0; x < SoundSystemConfig.getNumberStreamingChannels(); x++) {
+		for ( int x = 0; x < SoundSystemConfig.getNumberStreamingChannels(); x++ ) {
 			channel = createChannel(SoundSystemConfig.TYPE_STREAMING);
-			if(channel == null)
+			if (channel == null)
 				break;
 			streamingChannels.add(channel);
 		}
 		// create the non-streaming channels:
-		for(int x = 0; x < SoundSystemConfig.getNumberNormalChannels(); x++) {
+		for ( int x = 0; x < SoundSystemConfig.getNumberNormalChannels(); x++ ) {
 			channel = createChannel(SoundSystemConfig.TYPE_NORMAL);
-			if(channel == null)
+			if (channel == null)
 				break;
 			normalChannels.add(channel);
 		}
@@ -315,7 +315,7 @@ public class Library {
 		Set<String> keys = sourceMap.keySet();
 		Iterator<String> iter = keys.iterator();
 
-		if(midiChannel != null)
+		if (midiChannel != null)
 			sourcenames.add(midiChannel.getSourcename());
 
 		// loop through and update the volume of all sources:
@@ -399,7 +399,7 @@ public class Library {
 	 */
 	public void setTemporary(String sourcename, boolean temporary) {
 		Source mySource = sourceMap.get(sourcename);
-		if(mySource != null)
+		if (mySource != null)
 			mySource.setTemporary(temporary);
 	}
 
@@ -413,7 +413,7 @@ public class Library {
 	 */
 	public void setPosition(String sourcename, float x, float y, float z) {
 		Source mySource = sourceMap.get(sourcename);
-		if(mySource != null)
+		if (mySource != null)
 			mySource.setPosition(x, y, z);
 	}
 
@@ -426,7 +426,7 @@ public class Library {
 	 */
 	public void setPriority(String sourcename, boolean pri) {
 		Source mySource = sourceMap.get(sourcename);
-		if(mySource != null)
+		if (mySource != null)
 			mySource.setPriority(pri);
 	}
 
@@ -439,7 +439,7 @@ public class Library {
 	 */
 	public void setLooping(String sourcename, boolean lp) {
 		Source mySource = sourceMap.get(sourcename);
-		if(mySource != null)
+		if (mySource != null)
 			mySource.setLooping(lp);
 	}
 
@@ -451,7 +451,7 @@ public class Library {
 	 */
 	public void setAttenuation(String sourcename, int model) {
 		Source mySource = sourceMap.get(sourcename);
-		if(mySource != null)
+		if (mySource != null)
 			mySource.setAttenuation(model);
 	}
 
@@ -463,7 +463,7 @@ public class Library {
 	 */
 	public void setDistOrRoll(String sourcename, float dr) {
 		Source mySource = sourceMap.get(sourcename);
-		if(mySource != null)
+		if (mySource != null)
 			mySource.setDistOrRoll(dr);
 	}
 
@@ -477,7 +477,7 @@ public class Library {
 	 */
 	public void setVelocity(String sourcename, float x, float y, float z) {
 		Source mySource = sourceMap.get(sourcename);
-		if(mySource != null)
+		if (mySource != null)
 			mySource.setVelocity(x, y, z);
 	}
 
@@ -504,17 +504,17 @@ public class Library {
 	 * @return miliseconds, or -1 if not playing or unable to calculate
 	 */
 	public float millisecondsPlayed(String sourcename) {
-		if(sourcename == null || sourcename.equals("")) {
+		if (sourcename == null || sourcename.equals("")) {
 			errorMessage("Sourcename not specified in method " + "'millisecondsPlayed'");
 			return -1;
 		}
 
-		if(midiSourcename(sourcename)) {
+		if (midiSourcename(sourcename)) {
 			errorMessage("Unable to calculate milliseconds for MIDI source.");
 			return -1;
 		} else {
 			Source source = sourceMap.get(sourcename);
-			if(source == null) {
+			if (source == null) {
 				errorMessage("Source '" + sourcename + "' not found in " + "method 'millisecondsPlayed'");
 			}
 			return source.millisecondsPlayed();
@@ -531,17 +531,17 @@ public class Library {
 	 * @return Number of prior buffers that have been processed, or -1 if unable to queue the buffer (if the source was culled, for example).
 	 */
 	public int feedRawAudioData(String sourcename, byte[] buffer) {
-		if(sourcename == null || sourcename.equals("")) {
+		if (sourcename == null || sourcename.equals("")) {
 			errorMessage("Sourcename not specified in method " + "'feedRawAudioData'");
 			return -1;
 		}
 
-		if(midiSourcename(sourcename)) {
+		if (midiSourcename(sourcename)) {
 			errorMessage("Raw audio data can not be fed to the " + "MIDI channel.");
 			return -1;
 		} else {
 			Source source = sourceMap.get(sourcename);
-			if(source == null) {
+			if (source == null) {
 				errorMessage("Source '" + sourcename + "' not found in " + "method 'feedRawAudioData'");
 			}
 			return feedRawAudioData(source, buffer);
@@ -558,22 +558,22 @@ public class Library {
 	 * @return Number of prior buffers that have been processed, or -1 if unable to queue the buffer (if the source was culled, for example).
 	 */
 	public int feedRawAudioData(Source source, byte[] buffer) {
-		if(source == null) {
+		if (source == null) {
 			errorMessage("Source parameter null in method " + "'feedRawAudioData'");
 			return -1;
 		}
-		if(!source.toStream) {
+		if (!source.toStream) {
 			errorMessage("Only a streaming source may be specified in " + "method 'feedRawAudioData'");
 			return -1;
 		}
-		if(!source.rawDataStream) {
+		if (!source.rawDataStream) {
 			errorMessage("Streaming source already associated with a " + "file or URL in method'feedRawAudioData'");
 			return -1;
 		}
 
-		if(!source.playing() || source.channel == null) {
+		if (!source.playing() || source.channel == null) {
 			Channel channel;
-			if(source.channel != null && (source.channel.attachedSource == source))
+			if (source.channel != null && (source.channel.attachedSource == source))
 				channel = source.channel;
 			else
 				channel = getNextChannel(source);
@@ -594,16 +594,16 @@ public class Library {
 	 * @param sourcename Name of the source to play.
 	 */
 	public void play(String sourcename) {
-		if(sourcename == null || sourcename.equals("")) {
+		if (sourcename == null || sourcename.equals("")) {
 			errorMessage("Sourcename not specified in method 'play'");
 			return;
 		}
 
-		if(midiSourcename(sourcename)) {
+		if (midiSourcename(sourcename)) {
 			midiChannel.play();
 		} else {
 			Source source = sourceMap.get(sourcename);
-			if(source == null) {
+			if (source == null) {
 				errorMessage("Source '" + sourcename + "' not found in " + "method 'play'");
 			}
 			play(source);
@@ -616,26 +616,26 @@ public class Library {
 	 * @param source The source to play.
 	 */
 	public void play(Source source) {
-		if(source == null)
+		if (source == null)
 			return;
 
 		// raw data streams will automatically play when data is sent to them,
 		// so no need to do anything here.
-		if(source.rawDataStream)
+		if (source.rawDataStream)
 			return;
 
-		if(!source.active())
+		if (!source.active())
 			return;
 
-		if(!source.playing()) {
+		if (!source.playing()) {
 			Channel channel = getNextChannel(source);
 
-			if(source != null && channel != null) {
-				if(source.channel != null && source.channel.attachedSource != source)
+			if (source != null && channel != null) {
+				if (source.channel != null && source.channel.attachedSource != source)
 					source.channel = null;
 				channel.attachedSource = source;
 				source.play(channel);
-				if(source.toStream) {
+				if (source.toStream) {
 					streamThread.watch(source);
 					streamThread.interrupt();
 				}
@@ -649,15 +649,15 @@ public class Library {
 	 * @param sourcename The source's name.
 	 */
 	public void stop(String sourcename) {
-		if(sourcename == null || sourcename.equals("")) {
+		if (sourcename == null || sourcename.equals("")) {
 			errorMessage("Sourcename not specified in method 'stop'");
 			return;
 		}
-		if(midiSourcename(sourcename)) {
+		if (midiSourcename(sourcename)) {
 			midiChannel.stop();
 		} else {
 			Source mySource = sourceMap.get(sourcename);
-			if(mySource != null)
+			if (mySource != null)
 				mySource.stop();
 		}
 	}
@@ -668,15 +668,15 @@ public class Library {
 	 * @param sourcename The source's name.
 	 */
 	public void pause(String sourcename) {
-		if(sourcename == null || sourcename.equals("")) {
+		if (sourcename == null || sourcename.equals("")) {
 			errorMessage("Sourcename not specified in method 'stop'");
 			return;
 		}
-		if(midiSourcename(sourcename)) {
+		if (midiSourcename(sourcename)) {
 			midiChannel.pause();
 		} else {
 			Source mySource = sourceMap.get(sourcename);
-			if(mySource != null)
+			if (mySource != null)
 				mySource.pause();
 		}
 	}
@@ -687,11 +687,11 @@ public class Library {
 	 * @param sourcename The source's name.
 	 */
 	public void rewind(String sourcename) {
-		if(midiSourcename(sourcename)) {
+		if (midiSourcename(sourcename)) {
 			midiChannel.rewind();
 		} else {
 			Source mySource = sourceMap.get(sourcename);
-			if(mySource != null)
+			if (mySource != null)
 				mySource.rewind();
 		}
 	}
@@ -702,11 +702,11 @@ public class Library {
 	 * @param sourcename The source's name.
 	 */
 	public void flush(String sourcename) {
-		if(midiSourcename(sourcename))
+		if (midiSourcename(sourcename))
 			errorMessage("You can not flush the MIDI channel");
 		else {
 			Source mySource = sourceMap.get(sourcename);
-			if(mySource != null)
+			if (mySource != null)
 				mySource.flush();
 		}
 	}
@@ -719,7 +719,7 @@ public class Library {
 	 */
 	public void cull(String sourcename) {
 		Source mySource = sourceMap.get(sourcename);
-		if(mySource != null)
+		if (mySource != null)
 			mySource.cull();
 	}
 
@@ -730,9 +730,9 @@ public class Library {
 	 */
 	public void activate(String sourcename) {
 		Source mySource = sourceMap.get(sourcename);
-		if(mySource != null) {
+		if (mySource != null) {
 			mySource.activate();
-			if(mySource.toPlay)
+			if (mySource.toPlay)
 				play(mySource);
 		}
 	}
@@ -744,7 +744,7 @@ public class Library {
 	 */
 	public void setMasterVolume(float value) {
 		SoundSystemConfig.setMasterGain(value);
-		if(midiChannel != null)
+		if (midiChannel != null)
 			midiChannel.resetGain();
 	}
 
@@ -755,15 +755,15 @@ public class Library {
 	 * @param value      A float value ( 0.0f - 1.0f ).
 	 */
 	public void setVolume(String sourcename, float value) {
-		if(midiSourcename(sourcename)) {
+		if (midiSourcename(sourcename)) {
 			midiChannel.setVolume(value);
 		} else {
 			Source mySource = sourceMap.get(sourcename);
-			if(mySource != null) {
+			if (mySource != null) {
 				float newVolume = value;
-				if(newVolume < 0.0f)
+				if (newVolume < 0.0f)
 					newVolume = 0.0f;
-				else if(newVolume > 1.0f)
+				else if (newVolume > 1.0f)
 					newVolume = 1.0f;
 
 				mySource.sourceVolume = newVolume;
@@ -780,11 +780,11 @@ public class Library {
 	 * @return Float value representing the source volume (0.0f - 1.0f).
 	 */
 	public float getVolume(String sourcename) {
-		if(midiSourcename(sourcename)) {
+		if (midiSourcename(sourcename)) {
 			return midiChannel.getVolume();
 		} else {
 			Source mySource = sourceMap.get(sourcename);
-			if(mySource != null)
+			if (mySource != null)
 				return mySource.sourceVolume;
 			else
 				return 0.0f;
@@ -798,13 +798,13 @@ public class Library {
 	 * @param value      A float value ( 0.5f - 2.0f ).
 	 */
 	public void setPitch(String sourcename, float value) {
-		if(!midiSourcename(sourcename)) {
+		if (!midiSourcename(sourcename)) {
 			Source mySource = sourceMap.get(sourcename);
-			if(mySource != null) {
+			if (mySource != null) {
 				float newPitch = value;
-				if(newPitch < 0.5f)
+				if (newPitch < 0.5f)
 					newPitch = 0.5f;
-				else if(newPitch > 2.0f)
+				else if (newPitch > 2.0f)
 					newPitch = 2.0f;
 
 				mySource.setPitch(newPitch);
@@ -820,9 +820,9 @@ public class Library {
 	 * @return Float value representing the source pitch (0.5f - 2.0f).
 	 */
 	public float getPitch(String sourcename) {
-		if(!midiSourcename(sourcename)) {
+		if (!midiSourcename(sourcename)) {
 			Source mySource = sourceMap.get(sourcename);
-			if(mySource != null)
+			if (mySource != null)
 				return mySource.getPitch();
 		}
 		return 1.0f;
@@ -859,7 +859,7 @@ public class Library {
 		while(iter.hasNext()) {
 			sourcename = iter.next();
 			source = sourceMap.get(sourcename);
-			if(source != null)
+			if (source != null)
 				source.positionChanged();
 		}
 	}
@@ -882,7 +882,7 @@ public class Library {
 		while(iter.hasNext()) {
 			sourcename = iter.next();
 			source = sourceMap.get(sourcename);
-			if(source != null)
+			if (source != null)
 				source.positionChanged();
 		}
 	}
@@ -905,7 +905,7 @@ public class Library {
 		while(iter.hasNext()) {
 			sourcename = iter.next();
 			source = sourceMap.get(sourcename);
-			if(source != null)
+			if (source != null)
 				source.positionChanged();
 		}
 	}
@@ -932,7 +932,7 @@ public class Library {
 		while(iter.hasNext()) {
 			sourcename = iter.next();
 			source = sourceMap.get(sourcename);
-			if(source != null)
+			if (source != null)
 				source.positionChanged();
 		}
 	}
@@ -953,7 +953,7 @@ public class Library {
 	 * @param srcMap Sources to copy.
 	 */
 	public void copySources(HashMap<String, Source> srcMap) {
-		if(srcMap == null)
+		if (srcMap == null)
 			return;
 		Set<String> keys = srcMap.keySet();
 		Iterator<String> iter = keys.iterator();
@@ -967,7 +967,7 @@ public class Library {
 		while(iter.hasNext()) {
 			sourcename = iter.next();
 			srcData = srcMap.get(sourcename);
-			if(srcData != null) {
+			if (srcData != null) {
 				loadSound(srcData.filenameURL);
 				sourceMap.put(sourcename, new Source(srcData, null));
 			}
@@ -981,7 +981,7 @@ public class Library {
 	 */
 	public void removeSource(String sourcename) {
 		Source mySource = sourceMap.get(sourcename);
-		if(mySource != null)
+		if (mySource != null)
 			mySource.cleanup(); // end the source, free memory
 		sourceMap.remove(sourcename);
 	}
@@ -999,7 +999,7 @@ public class Library {
 		while(iter.hasNext()) {
 			sourcename = iter.next();
 			srcData = sourceMap.get(sourcename);
-			if((srcData != null) && (srcData.temporary) && (!srcData.playing())) {
+			if ((srcData != null) && (srcData.temporary) && (!srcData.playing())) {
 				srcData.cleanup(); // end the source, free memory
 				iter.remove();
 			}
@@ -1022,11 +1022,11 @@ public class Library {
 	 * @return The next available channel, or null.
 	 */
 	private Channel getNextChannel(Source source) {
-		if(source == null)
+		if (source == null)
 			return null;
 
 		String sourcename = source.sourcename;
-		if(sourcename == null)
+		if (sourcename == null)
 			return null;
 
 		int x;
@@ -1036,7 +1036,7 @@ public class Library {
 		String[] sourceNames;
 		String name;
 
-		if(source.toStream) {
+		if (source.toStream) {
 			nextChannel = nextStreamingChannel;
 			channelList = streamingChannels;
 			sourceNames = streamingChannelSourceNames;
@@ -1049,63 +1049,63 @@ public class Library {
 		channels = channelList.size();
 
 		// Check if this source is already on a channel:
-		for(x = 0; x < channels; x++) {
-			if(sourcename.equals(sourceNames[x]))
+		for ( x = 0; x < channels; x++ ) {
+			if (sourcename.equals(sourceNames[x]))
 				return channelList.get(x);
 		}
 
 		int n = nextChannel;
 		Source src;
 		// Play on the next new or non-playing channel:
-		for(x = 0; x < channels; x++) {
+		for ( x = 0; x < channels; x++ ) {
 			name = sourceNames[n];
-			if(name == null)
+			if (name == null)
 				src = null;
 			else
 				src = sourceMap.get(name);
 
-			if(src == null || !src.playing()) {
-				if(source.toStream) {
+			if (src == null || !src.playing()) {
+				if (source.toStream) {
 					nextStreamingChannel = n + 1;
-					if(nextStreamingChannel >= channels)
+					if (nextStreamingChannel >= channels)
 						nextStreamingChannel = 0;
 				} else {
 					nextNormalChannel = n + 1;
-					if(nextNormalChannel >= channels)
+					if (nextNormalChannel >= channels)
 						nextNormalChannel = 0;
 				}
 				sourceNames[n] = sourcename;
 				return channelList.get(n);
 			}
 			n++;
-			if(n >= channels)
+			if (n >= channels)
 				n = 0;
 		}
 
 		n = nextChannel;
 		// Play on the next non-priority channel:
-		for(x = 0; x < channels; x++) {
+		for ( x = 0; x < channels; x++ ) {
 			name = sourceNames[n];
-			if(name == null)
+			if (name == null)
 				src = null;
 			else
 				src = sourceMap.get(name);
 
-			if(src == null || !src.playing() || !src.priority) {
-				if(source.toStream) {
+			if (src == null || !src.playing() || !src.priority) {
+				if (source.toStream) {
 					nextStreamingChannel = n + 1;
-					if(nextStreamingChannel >= channels)
+					if (nextStreamingChannel >= channels)
 						nextStreamingChannel = 0;
 				} else {
 					nextNormalChannel = n + 1;
-					if(nextNormalChannel >= channels)
+					if (nextNormalChannel >= channels)
 						nextNormalChannel = 0;
 				}
 				sourceNames[n] = sourcename;
 				return channelList.get(n);
 			}
 			n++;
-			if(n >= channels)
+			if (n >= channels)
 				n = 0;
 		}
 
@@ -1127,8 +1127,8 @@ public class Library {
 		while(iter.hasNext()) {
 			sourcename = iter.next();
 			source = sourceMap.get(sourcename);
-			if(source != null) {
-				if(source.toPlay && !source.playing()) {
+			if (source != null) {
+				if (source.toPlay && !source.playing()) {
 					play(sourcename);
 					source.toPlay = false;
 				}
@@ -1145,11 +1145,11 @@ public class Library {
 	 * @param filenameURL Filename/URL of the sound file to play next.
 	 */
 	public void queueSound(String sourcename, FilenameURL filenameURL) {
-		if(midiSourcename(sourcename)) {
+		if (midiSourcename(sourcename)) {
 			midiChannel.queueSound(filenameURL);
 		} else {
 			Source mySource = sourceMap.get(sourcename);
-			if(mySource != null)
+			if (mySource != null)
 				mySource.queueSound(filenameURL);
 		}
 	}
@@ -1163,11 +1163,11 @@ public class Library {
 	 * @param filename   Filename/identifier of the sound file to remove from the queue.
 	 */
 	public void dequeueSound(String sourcename, String filename) {
-		if(midiSourcename(sourcename)) {
+		if (midiSourcename(sourcename)) {
 			midiChannel.dequeueSound(filename);
 		} else {
 			Source mySource = sourceMap.get(sourcename);
-			if(mySource != null)
+			if (mySource != null)
 				mySource.dequeueSound(filename);
 		}
 	}
@@ -1187,11 +1187,11 @@ public class Library {
 	 * @param milis       Number of miliseconds the fadeout should take.
 	 */
 	public void fadeOut(String sourcename, FilenameURL filenameURL, long milis) {
-		if(midiSourcename(sourcename)) {
+		if (midiSourcename(sourcename)) {
 			midiChannel.fadeOut(filenameURL, milis);
 		} else {
 			Source mySource = sourceMap.get(sourcename);
-			if(mySource != null)
+			if (mySource != null)
 				mySource.fadeOut(filenameURL, milis);
 		}
 	}
@@ -1212,11 +1212,11 @@ public class Library {
 	 * @param milisIn     Number of miliseconds the fadein should take.
 	 */
 	public void fadeOutIn(String sourcename, FilenameURL filenameURL, long milisOut, long milisIn) {
-		if(midiSourcename(sourcename)) {
+		if (midiSourcename(sourcename)) {
 			midiChannel.fadeOutIn(filenameURL, milisOut, milisIn);
 		} else {
 			Source mySource = sourceMap.get(sourcename);
-			if(mySource != null)
+			if (mySource != null)
 				mySource.fadeOutIn(filenameURL, milisOut, milisIn);
 		}
 	}
@@ -1233,15 +1233,15 @@ public class Library {
 	 * acceptable for a particular situation).
 	 */
 	public void checkFadeVolumes() {
-		if(midiChannel != null)
+		if (midiChannel != null)
 			midiChannel.resetGain();
 		Channel c;
 		Source s;
-		for(int x = 0; x < streamingChannels.size(); x++) {
+		for ( int x = 0; x < streamingChannels.size(); x++ ) {
 			c = streamingChannels.get(x);
-			if(c != null) {
+			if (c != null) {
 				s = c.attachedSource;
-				if(s != null)
+				if (s != null)
 					s.checkFadeOut();
 			}
 		}
@@ -1257,17 +1257,17 @@ public class Library {
 	 * @param filenameURL Filename/URL of the MIDI file to load.
 	 */
 	public void loadMidi(boolean toLoop, String sourcename, FilenameURL filenameURL) {
-		if(filenameURL == null) {
+		if (filenameURL == null) {
 			errorMessage("Filename/URL not specified in method 'loadMidi'.");
 			return;
 		}
 
-		if(!filenameURL.getFilename().matches(SoundSystemConfig.EXTENSION_MIDI)) {
+		if (!filenameURL.getFilename().matches(SoundSystemConfig.EXTENSION_MIDI)) {
 			errorMessage("Filename/identifier doesn't end in '.mid' or" + "'.midi' in method loadMidi.");
 			return;
 		}
 
-		if(midiChannel == null) {
+		if (midiChannel == null) {
 			midiChannel = new MidiChannel(toLoop, sourcename, filenameURL);
 		} else {
 			midiChannel.switchSource(toLoop, sourcename, filenameURL);
@@ -1278,7 +1278,7 @@ public class Library {
 	 * Unloads the current Midi file.
 	 */
 	public void unloadMidi() {
-		if(midiChannel != null)
+		if (midiChannel != null)
 			midiChannel.cleanup();
 		midiChannel = null;
 	}
@@ -1290,13 +1290,13 @@ public class Library {
 	 * @return True if sourcename and midi sourcename match.
 	 */
 	public boolean midiSourcename(String sourcename) {
-		if(midiChannel == null || sourcename == null)
+		if (midiChannel == null || sourcename == null)
 			return false;
 
-		if(midiChannel.getSourcename() == null || sourcename.equals(""))
+		if (midiChannel.getSourcename() == null || sourcename.equals(""))
 			return false;
 
-		if(sourcename.equals(midiChannel.getSourcename()))
+		if (sourcename.equals(midiChannel.getSourcename()))
 			return true;
 
 		return false;
@@ -1327,7 +1327,7 @@ public class Library {
 	 * @param c New MIDI channel.
 	 */
 	public void setMidiChannel(MidiChannel c) {
-		if(midiChannel != null && midiChannel != c)
+		if (midiChannel != null && midiChannel != c)
 			midiChannel.cleanup();
 
 		midiChannel = c;
@@ -1346,7 +1346,7 @@ public class Library {
 		while(iter.hasNext()) {
 			sourcename = iter.next();
 			srcData = sourceMap.get(sourcename);
-			if(srcData != null) {
+			if (srcData != null) {
 				srcData.listenerMoved();
 			}
 		}

@@ -50,8 +50,8 @@ public class CanvasIsomPreview extends Canvas implements KeyListener, MouseListe
 		this.imageBufferList = Collections.synchronizedList((List) new LinkedList());
 		this.imageBuffers = new IsoImageBuffer[64][64];
 		this.dataFolder = OpenCraft.getGameDir();
-		for(int i = 0; i < 64; ++i) {
-			for(int j = 0; j < 64; ++j) {
+		for ( int i = 0; i < 64; ++i ) {
+			for ( int j = 0; j < 64; ++j ) {
 				this.imageBuffers[i][j] = new IsoImageBuffer(null, i, j);
 			}
 		}
@@ -71,8 +71,8 @@ public class CanvasIsomPreview extends Canvas implements KeyListener, MouseListe
 		this.worldObj.skylightSubtracted = 0;
 		synchronized(this.imageBufferList) {
 			this.imageBufferList.clear();
-			for(int i = 0; i < 64; ++i) {
-				for(int j = 0; j < 64; ++j) {
+			for ( int i = 0; i < 64; ++i ) {
+				for ( int j = 0; j < 64; ++j ) {
 					this.imageBuffers[i][j].setWorldAndChunkPosition(this.worldObj, i, j);
 				}
 			}
@@ -83,8 +83,8 @@ public class CanvasIsomPreview extends Canvas implements KeyListener, MouseListe
 		synchronized(this.imageBufferList) {
 			this.worldObj.skylightSubtracted = integer;
 			this.imageBufferList.clear();
-			for(int i = 0; i < 64; ++i) {
-				for(int j = 0; j < 64; ++j) {
+			for ( int i = 0; i < 64; ++i ) {
+				for ( int j = 0; j < 64; ++j ) {
 					this.imageBuffers[i][j].setWorldAndChunkPosition(this.worldObj, i, j);
 				}
 			}
@@ -93,7 +93,7 @@ public class CanvasIsomPreview extends Canvas implements KeyListener, MouseListe
 
 	public void startThreads() {
 		new ThreadRunIsoClient(this).start();
-		for(int i = 0; i < 1; ++i) {
+		for ( int i = 0; i < 1; ++i ) {
 			new Thread((Runnable) this).start();
 		}
 	}
@@ -104,7 +104,7 @@ public class CanvasIsomPreview extends Canvas implements KeyListener, MouseListe
 
 	private IsoImageBuffer getImageBuffer(final int integer1, final int integer2) {
 		final IsoImageBuffer isoImageBuffer = this.imageBuffers[integer1 & 0x3F][integer2 & 0x3F];
-		if(isoImageBuffer.chunkX == integer1 && isoImageBuffer.chunkZ == integer2) {
+		if (isoImageBuffer.chunkX == integer1 && isoImageBuffer.chunkZ == integer2) {
 			return isoImageBuffer;
 		}
 		synchronized(this.imageBufferList) {
@@ -119,12 +119,12 @@ public class CanvasIsomPreview extends Canvas implements KeyListener, MouseListe
 		while(this.running) {
 			IsoImageBuffer di = null;
 			synchronized(this.imageBufferList) {
-				if(this.imageBufferList.size() > 0) {
+				if (this.imageBufferList.size() > 0) {
 					di = (IsoImageBuffer) this.imageBufferList.remove(0);
 				}
 			}
-			if(di != null) {
-				if(this.field_1793_a - di.field_1350_g < 2) {
+			if (di != null) {
+				if (this.field_1793_a - di.field_1350_g < 2) {
 					terrainTextureManager.func_799_a(di);
 					this.repaint();
 				} else {
@@ -147,7 +147,7 @@ public class CanvasIsomPreview extends Canvas implements KeyListener, MouseListe
 
 	public void showNextBuffer() {
 		final BufferStrategy bufferStrategy = this.getBufferStrategy();
-		if(bufferStrategy == null) {
+		if (bufferStrategy == null) {
 			this.createBufferStrategy(2);
 			return;
 		}
@@ -163,7 +163,7 @@ public class CanvasIsomPreview extends Canvas implements KeyListener, MouseListe
 		graphics2D.translate(this.getWidth() / 2, this.getHeight() / 2);
 		graphics2D.scale((double) this.zoomLevel, (double) this.zoomLevel);
 		graphics2D.translate(this.field_1785_i, this.field_1784_j);
-		if(this.worldObj != null) {
+		if (this.worldObj != null) {
 			graphics2D.translate(-(this.worldObj.x + this.worldObj.z), -(-this.worldObj.x + this.worldObj.z) + 64);
 		}
 		final Rectangle clipBounds = graphics2D.getClipBounds();
@@ -174,24 +174,24 @@ public class CanvasIsomPreview extends Canvas implements KeyListener, MouseListe
 		final int n3 = clipBounds.x / n / 2 - 2 - n2;
 		final int n4 = (clipBounds.x + clipBounds.width) / n / 2 + 1 + n2;
 		final int n5 = clipBounds.y / n - 1 - n2 * 2;
-		for(int n6 = (clipBounds.y + clipBounds.height + 16 + 128) / n + 1 + n2 * 2, i = n5; i <= n6; ++i) {
-			for(int j = n3; j <= n4; ++j) {
+		for ( int n6 = (clipBounds.y + clipBounds.height + 16 + 128) / n + 1 + n2 * 2, i = n5; i <= n6; ++i ) {
+			for ( int j = n3; j <= n4; ++j ) {
 				final IsoImageBuffer imageBuffer = this.getImageBuffer(j - (i >> 1), j + (i + 1 >> 1));
 				imageBuffer.field_1350_g = this.field_1793_a;
-				if(!imageBuffer.field_1352_e) {
-					if(!imageBuffer.field_1349_h) {
+				if (!imageBuffer.field_1352_e) {
+					if (!imageBuffer.field_1349_h) {
 						imageBuffer.field_1349_h = true;
 						this.imageBufferList.add(imageBuffer);
 					}
 				} else {
 					imageBuffer.field_1349_h = false;
-					if(!imageBuffer.field_1351_f) {
+					if (!imageBuffer.field_1351_f) {
 						graphics2D.drawImage((Image) imageBuffer.field_1348_a, j * n * 2 + (i & 0x1) * n, i * n - 128 - 16, (ImageObserver) null);
 					}
 				}
 			}
 		}
-		if(this.displayHelpText) {
+		if (this.displayHelpText) {
 			graphics2D.setTransform(transform);
 			final int i = this.getHeight() - 32 - 4;
 			graphics2D.setColor(new Color(Integer.MIN_VALUE, true));
@@ -217,7 +217,7 @@ public class CanvasIsomPreview extends Canvas implements KeyListener, MouseListe
 	}
 
 	public void mouseClicked(final MouseEvent mouseEvent) {
-		if(mouseEvent.getClickCount() == 2) {
+		if (mouseEvent.getClickCount() == 2) {
 			this.zoomLevel = 3 - this.zoomLevel;
 			this.repaint();
 		}
@@ -240,57 +240,57 @@ public class CanvasIsomPreview extends Canvas implements KeyListener, MouseListe
 	}
 
 	public void keyPressed(final KeyEvent keyEvent) {
-		if(keyEvent.getKeyCode() == 48) {
+		if (keyEvent.getKeyCode() == 48) {
 			this.setTimeOfDay(11);
 		}
-		if(keyEvent.getKeyCode() == 49) {
+		if (keyEvent.getKeyCode() == 49) {
 			this.setTimeOfDay(10);
 		}
-		if(keyEvent.getKeyCode() == 50) {
+		if (keyEvent.getKeyCode() == 50) {
 			this.setTimeOfDay(9);
 		}
-		if(keyEvent.getKeyCode() == 51) {
+		if (keyEvent.getKeyCode() == 51) {
 			this.setTimeOfDay(7);
 		}
-		if(keyEvent.getKeyCode() == 52) {
+		if (keyEvent.getKeyCode() == 52) {
 			this.setTimeOfDay(6);
 		}
-		if(keyEvent.getKeyCode() == 53) {
+		if (keyEvent.getKeyCode() == 53) {
 			this.setTimeOfDay(5);
 		}
-		if(keyEvent.getKeyCode() == 54) {
+		if (keyEvent.getKeyCode() == 54) {
 			this.setTimeOfDay(3);
 		}
-		if(keyEvent.getKeyCode() == 55) {
+		if (keyEvent.getKeyCode() == 55) {
 			this.setTimeOfDay(2);
 		}
-		if(keyEvent.getKeyCode() == 56) {
+		if (keyEvent.getKeyCode() == 56) {
 			this.setTimeOfDay(1);
 		}
-		if(keyEvent.getKeyCode() == 57) {
+		if (keyEvent.getKeyCode() == 57) {
 			this.setTimeOfDay(0);
 		}
-		if(keyEvent.getKeyCode() == 112) {
+		if (keyEvent.getKeyCode() == 112) {
 			this.loadWorld("World1");
 		}
-		if(keyEvent.getKeyCode() == 113) {
+		if (keyEvent.getKeyCode() == 113) {
 			this.loadWorld("World2");
 		}
-		if(keyEvent.getKeyCode() == 114) {
+		if (keyEvent.getKeyCode() == 114) {
 			this.loadWorld("World3");
 		}
-		if(keyEvent.getKeyCode() == 115) {
+		if (keyEvent.getKeyCode() == 115) {
 			this.loadWorld("World4");
 		}
-		if(keyEvent.getKeyCode() == 116) {
+		if (keyEvent.getKeyCode() == 116) {
 			this.loadWorld("World5");
 		}
-		if(keyEvent.getKeyCode() == 32) {
+		if (keyEvent.getKeyCode() == 32) {
 			final int n = 0;
 			this.field_1784_j = n;
 			this.field_1785_i = n;
 		}
-		if(keyEvent.getKeyCode() == 27) {
+		if (keyEvent.getKeyCode() == 27) {
 			this.displayHelpText = !this.displayHelpText;
 		}
 		this.repaint();

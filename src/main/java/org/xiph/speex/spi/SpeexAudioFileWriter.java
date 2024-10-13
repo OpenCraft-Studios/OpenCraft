@@ -78,7 +78,7 @@ public class SpeexAudioFileWriter extends AudioFileWriter {
 	 *         length 0 is returned.
 	 */
 	public AudioFileFormat.Type[] getAudioFileTypes(final AudioInputStream stream) {
-		if(stream.getFormat().getEncoding() instanceof SpeexEncoding) {
+		if (stream.getFormat().getEncoding() instanceof SpeexEncoding) {
 			return SPEEX_FORMAT;
 		} else {
 			return NO_FORMAT;
@@ -105,7 +105,7 @@ public class SpeexAudioFileWriter extends AudioFileWriter {
 	 */
 	public int write(final AudioInputStream stream, final AudioFileFormat.Type fileType, final OutputStream out) throws IOException {
 		AudioFileFormat.Type[] formats = getAudioFileTypes(stream);
-		if(formats != null && formats.length > 0) {
+		if (formats != null && formats.length > 0) {
 			return write(stream, out);
 		} else {
 			throw new IllegalArgumentException("cannot write given file type");
@@ -128,7 +128,7 @@ public class SpeexAudioFileWriter extends AudioFileWriter {
 	 */
 	public int write(final AudioInputStream stream, final AudioFileFormat.Type fileType, final File out) throws IOException {
 		AudioFileFormat.Type[] formats = getAudioFileTypes(stream);
-		if(formats != null && formats.length > 0) {
+		if (formats != null && formats.length > 0) {
 			FileOutputStream fos = new FileOutputStream(out);
 			return write(stream, fos);
 		} else {

@@ -196,8 +196,8 @@ public class Block {
 		ladder = new LadderBlock(65, 83).setHardness(0.4f).setStepSound(Block.soundWoodFootstep);
 		rail = new RailBlock(66, 128).setHardness(1.0f).setStepSound(Block.soundMetalFootstep);
 		stairCobblestone = new StairBlock(67, Block.cobblestone);
-		for(int i = 0; i < 256; ++i) {
-			if(Block.blocksList[i] != null) {
+		for ( int i = 0; i < 256; ++i ) {
+			if (Block.blocksList[i] != null) {
 				Item.itemsList[i] = new ItemBlock(i - 256);
 			}
 		}
@@ -206,7 +206,7 @@ public class Block {
 	protected Block(final int blockid, final Material material) {
 		this.stepSound = Block.soundPowderFootstep;
 		this.blockParticleGravity = 1.0f;
-		if(Block.blocksList[blockid] != null) {
+		if (Block.blocksList[blockid] != null) {
 			throw new IllegalArgumentException(new StringBuilder().append("Slot ").append(blockid).append(" is already occupied by ").append(Block.blocksList[blockid]).append(" when adding ").append(this).toString());
 		}
 		this.blockMaterial = material;
@@ -257,7 +257,7 @@ public class Block {
 
 	protected Block setHardness(final float blockHardness) {
 		this.blockHardness = blockHardness;
-		if(this.blockResistance < blockHardness * 5.0f) {
+		if (this.blockResistance < blockHardness * 5.0f) {
 			this.blockResistance = blockHardness * 5.0f;
 		}
 		return this;
@@ -302,7 +302,7 @@ public class Block {
 
 	public void getCollidingBoundingBoxes(World world, int xCoord, int yCoord, int zCoord, AABB aabb, List<AABB> list) {
 		AABB aabb1 = this.getCollisionBoundingBoxFromPool(world, xCoord, yCoord, zCoord);
-		if(aabb1 != null && aabb.intersectsWith(aabb1)) {
+		if (aabb1 != null && aabb.intersectsWith(aabb1)) {
 			list.add(aabb1);
 		}
 	}
@@ -354,10 +354,10 @@ public class Block {
 	}
 
 	public float blockStrength(final EntityPlayer entityPlayer) {
-		if(this.blockHardness < 0.0f) {
+		if (this.blockHardness < 0.0f) {
 			return 0.0f;
 		}
-		if(!entityPlayer.canHarvestBlock(this)) {
+		if (!entityPlayer.canHarvestBlock(this)) {
 			return 1.0f / this.blockHardness / 100.0f;
 		}
 		return entityPlayer.getCurrentPlayerStrVsBlock(this) / this.blockHardness / 30.0f;
@@ -368,10 +368,10 @@ public class Block {
 	}
 
 	public void dropBlockAsItemWithChance(final World world, final int xCoord, final int yCoord, final int zCoord, final int nya4, final float nya5) {
-		for(int quantityDropped = this.quantityDropped(world.rand), i = 0; i < quantityDropped; ++i) {
-			if(world.rand.nextFloat() <= nya5) {
+		for ( int quantityDropped = this.quantityDropped(world.rand), i = 0; i < quantityDropped; ++i ) {
+			if (world.rand.nextFloat() <= nya5) {
 				final int idDropped = this.idDropped(nya4, world.rand);
-				if(idDropped > 0) {
+				if (idDropped > 0) {
 					final float n = 0.7f;
 					final EntityItem entity = new EntityItem(world, xCoord + (world.rand.nextFloat() * n + (1.0f - n) * 0.5), yCoord + (world.rand.nextFloat() * n + (1.0f - n) * 0.5), zCoord + (world.rand.nextFloat() * n + (1.0f - n) * 0.5), new ItemStack(idDropped));
 					entity.delayBeforeCanPickup = 10;
@@ -394,63 +394,63 @@ public class Block {
 		Vec3 intermediateWithYValue2 = var1.getIntermediateWithYValue(var2, this.maxY);
 		Vec3 intermediateWithZValue = var1.getIntermediateWithZValue(var2, this.minZ);
 		Vec3 intermediateWithZValue2 = var1.getIntermediateWithZValue(var2, this.maxZ);
-		if(!this.isVecInsideYZBounds(intermediateWithXValue)) {
+		if (!this.isVecInsideYZBounds(intermediateWithXValue)) {
 			intermediateWithXValue = null;
 		}
-		if(!this.isVecInsideYZBounds(intermediateWithXValue2)) {
+		if (!this.isVecInsideYZBounds(intermediateWithXValue2)) {
 			intermediateWithXValue2 = null;
 		}
-		if(!this.isVecInsideXZBounds(intermediateWithYValue)) {
+		if (!this.isVecInsideXZBounds(intermediateWithYValue)) {
 			intermediateWithYValue = null;
 		}
-		if(!this.isVecInsideXZBounds(intermediateWithYValue2)) {
+		if (!this.isVecInsideXZBounds(intermediateWithYValue2)) {
 			intermediateWithYValue2 = null;
 		}
-		if(!this.isVecInsideXYBounds(intermediateWithZValue)) {
+		if (!this.isVecInsideXYBounds(intermediateWithZValue)) {
 			intermediateWithZValue = null;
 		}
-		if(!this.isVecInsideXYBounds(intermediateWithZValue2)) {
+		if (!this.isVecInsideXYBounds(intermediateWithZValue2)) {
 			intermediateWithZValue2 = null;
 		}
 		Vec3 vec3D = null;
-		if(intermediateWithXValue != null && (vec3D == null || var1.distance(intermediateWithXValue) < var1.distance(vec3D))) {
+		if (intermediateWithXValue != null && (vec3D == null || var1.distance(intermediateWithXValue) < var1.distance(vec3D))) {
 			vec3D = intermediateWithXValue;
 		}
-		if(intermediateWithXValue2 != null && (vec3D == null || var1.distance(intermediateWithXValue2) < var1.distance(vec3D))) {
+		if (intermediateWithXValue2 != null && (vec3D == null || var1.distance(intermediateWithXValue2) < var1.distance(vec3D))) {
 			vec3D = intermediateWithXValue2;
 		}
-		if(intermediateWithYValue != null && (vec3D == null || var1.distance(intermediateWithYValue) < var1.distance(vec3D))) {
+		if (intermediateWithYValue != null && (vec3D == null || var1.distance(intermediateWithYValue) < var1.distance(vec3D))) {
 			vec3D = intermediateWithYValue;
 		}
-		if(intermediateWithYValue2 != null && (vec3D == null || var1.distance(intermediateWithYValue2) < var1.distance(vec3D))) {
+		if (intermediateWithYValue2 != null && (vec3D == null || var1.distance(intermediateWithYValue2) < var1.distance(vec3D))) {
 			vec3D = intermediateWithYValue2;
 		}
-		if(intermediateWithZValue != null && (vec3D == null || var1.distance(intermediateWithZValue) < var1.distance(vec3D))) {
+		if (intermediateWithZValue != null && (vec3D == null || var1.distance(intermediateWithZValue) < var1.distance(vec3D))) {
 			vec3D = intermediateWithZValue;
 		}
-		if(intermediateWithZValue2 != null && (vec3D == null || var1.distance(intermediateWithZValue2) < var1.distance(vec3D))) {
+		if (intermediateWithZValue2 != null && (vec3D == null || var1.distance(intermediateWithZValue2) < var1.distance(vec3D))) {
 			vec3D = intermediateWithZValue2;
 		}
-		if(vec3D == null) {
+		if (vec3D == null) {
 			return null;
 		}
 		int integer4 = -1;
-		if(vec3D == intermediateWithXValue) {
+		if (vec3D == intermediateWithXValue) {
 			integer4 = 4;
 		}
-		if(vec3D == intermediateWithXValue2) {
+		if (vec3D == intermediateWithXValue2) {
 			integer4 = 5;
 		}
-		if(vec3D == intermediateWithYValue) {
+		if (vec3D == intermediateWithYValue) {
 			integer4 = 0;
 		}
-		if(vec3D == intermediateWithYValue2) {
+		if (vec3D == intermediateWithYValue2) {
 			integer4 = 1;
 		}
-		if(vec3D == intermediateWithZValue) {
+		if (vec3D == intermediateWithZValue) {
 			integer4 = 2;
 		}
-		if(vec3D == intermediateWithZValue2) {
+		if (vec3D == intermediateWithZValue2) {
 			integer4 = 3;
 		}
 		return new MovingObjectPosition(xCoord, yCoord, zCoord, integer4, vec3D.add(xCoord, yCoord, zCoord));

@@ -37,10 +37,10 @@ public class GuiEditSign extends GuiScreen {
 
 	@Override
 	protected void actionPerformed(final GuiButton iq) {
-		if(!iq.enabled) {
+		if (!iq.enabled) {
 			return;
 		}
-		if(iq.buttonId == 0) {
+		if (iq.buttonId == 0) {
 			this.entitySign.onInventoryChanged();
 			this.id.displayGuiScreen(null);
 		}
@@ -48,16 +48,16 @@ public class GuiEditSign extends GuiScreen {
 
 	@Override
 	protected void keyTyped(final char character, final int integer) {
-		if(integer == 200) {
+		if (integer == 200) {
 			this.editLine = (this.editLine - 1 & 0x3);
 		}
-		if(integer == 208 || integer == 28) {
+		if (integer == 208 || integer == 28) {
 			this.editLine = (this.editLine + 1 & 0x3);
 		}
-		if(integer == 14 && this.entitySign.signText[this.editLine].length() > 0) {
+		if (integer == 14 && this.entitySign.signText[this.editLine].length() > 0) {
 			this.entitySign.signText[this.editLine] = this.entitySign.signText[this.editLine].substring(0, this.entitySign.signText[this.editLine].length() - 1);
 		}
-		if("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 ,.:-_'*!\"#%/()=+?[]{}<>".indexOf((int) character) >= 0 && this.entitySign.signText[this.editLine].length() < 15) {
+		if ("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 ,.:-_'*!\"#%/()=+?[]{}<>".indexOf((int) character) >= 0 && this.entitySign.signText[this.editLine].length() < 15) {
 			final StringBuilder sb = new StringBuilder();
 			final String[] signText = this.entitySign.signText;
 			final int editLine = this.editLine;
@@ -74,7 +74,7 @@ public class GuiEditSign extends GuiScreen {
 		final float n = 60.0f;
 		GL11.glScalef(-n, -n, -n);
 		GL11.glRotatef(180.0f, 0.0f, 1.0f, 0.0f);
-		if(this.updateCounter / 6 % 2 == 0) {
+		if (this.updateCounter / 6 % 2 == 0) {
 			this.entitySign.lineBeingEdited = this.editLine;
 		}
 		GL11.glRotatef(this.entitySign.getBlockMetadata() * 360 / 16.0f, 0.0f, 1.0f, 0.0f);

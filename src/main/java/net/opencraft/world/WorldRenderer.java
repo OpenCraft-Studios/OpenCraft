@@ -71,7 +71,7 @@ public class WorldRenderer {
 	}
 
 	public void a(final int integer1, final int integer2, final int integer3) {
-		if(integer1 == this.c && integer2 == this.d && integer3 == this.e) {
+		if (integer1 == this.c && integer2 == this.d && integer3 == this.e) {
 			return;
 		}
 		this.b();
@@ -100,7 +100,7 @@ public class WorldRenderer {
 	}
 
 	public void a() {
-		if(!this.u) {
+		if (!this.u) {
 			return;
 		}
 		++WorldRenderer.chunksUpdated;
@@ -110,7 +110,7 @@ public class WorldRenderer {
 		final int n = this.c + this.f;
 		final int n2 = this.d + this.g;
 		final int n3 = this.e + this.h;
-		for(int i = 0; i < 2; ++i) {
+		for ( int i = 0; i < 2; ++i ) {
 			this.p[i] = true;
 		}
 		Chunk.isLit = false;
@@ -120,16 +120,16 @@ public class WorldRenderer {
 		final int n4 = 1;
 		final ChunkCache iv = new ChunkCache(this.a, c - n4, d - n4, e - n4, n + n4, n2 + n4, n3 + n4);
 		final RenderBlocks renderBlocks = new RenderBlocks(iv);
-		for(int j = 0; j < 2; ++j) {
+		for ( int j = 0; j < 2; ++j ) {
 			boolean b = false;
 			boolean b2 = false;
 			int n5 = 0;
-			for(int k = d; k < n2; ++k) {
-				for(int l = e; l < n3; ++l) {
-					for(int integer2 = c; integer2 < n; ++integer2) {
+			for ( int k = d; k < n2; ++k ) {
+				for ( int l = e; l < n3; ++l ) {
+					for ( int integer2 = c; integer2 < n; ++integer2 ) {
 						final int blockId = iv.getBlockId(integer2, k, l);
-						if(blockId > 0) {
-							if(n5 == 0) {
+						if (blockId > 0) {
+							if (n5 == 0) {
 								n5 = 1;
 								GL11.glNewList(this.C + j, 4864);
 								GL11.glPushMatrix();
@@ -141,24 +141,24 @@ public class WorldRenderer {
 								WorldRenderer.tessellator.beginQuads();
 								WorldRenderer.tessellator.setTranslationD(-this.c, -this.d, -this.e);
 							}
-							if(j == 0 && Block.blocksList[blockId] instanceof ContainerBlock) {
+							if (j == 0 && Block.blocksList[blockId] instanceof ContainerBlock) {
 								final TileEntity blockTileEntity = iv.getBlockTileEntity(integer2, k, l);
-								if(TileEntityRenderer.instance.a(blockTileEntity)) {
+								if (TileEntityRenderer.instance.a(blockTileEntity)) {
 									this.B.add(blockTileEntity);
 								}
 							}
 							final Block gs = Block.blocksList[blockId];
 							final int renderBlockPass = gs.getRenderBlockPass();
-							if(renderBlockPass != j) {
+							if (renderBlockPass != j) {
 								b = true;
-							} else if(renderBlockPass == j) {
+							} else if (renderBlockPass == j) {
 								b2 |= renderBlocks.a(gs, integer2, k, l);
 							}
 						}
 					}
 				}
 			}
-			if(n5 != 0) {
+			if (n5 != 0) {
 				WorldRenderer.tessellator.draw();
 				GL11.glPopMatrix();
 				GL11.glEndList();
@@ -166,10 +166,10 @@ public class WorldRenderer {
 			} else {
 				b2 = false;
 			}
-			if(b2) {
+			if (b2) {
 				this.p[j] = false;
 			}
-			if(!b) {
+			if (!b) {
 				break;
 			}
 		}
@@ -191,7 +191,7 @@ public class WorldRenderer {
 	}
 
 	public void b() {
-		for(int i = 0; i < 2; ++i) {
+		for ( int i = 0; i < 2; ++i ) {
 			this.p[i] = true;
 		}
 		this.isInFrustum = false;
@@ -204,10 +204,10 @@ public class WorldRenderer {
 	}
 
 	public int a(final int integer) {
-		if(!this.isInFrustum) {
+		if (!this.isInFrustum) {
 			return -1;
 		}
-		if(!this.p[integer]) {
+		if (!this.p[integer]) {
 			return this.C + integer;
 		}
 		return -1;

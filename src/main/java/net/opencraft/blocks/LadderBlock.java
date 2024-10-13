@@ -17,16 +17,16 @@ public class LadderBlock extends Block {
 	public AABB getCollisionBoundingBoxFromPool(final World world, final int xCoord, final int yCoord, final int zCoord) {
 		final int blockMetadata = world.getBlockMetadata(xCoord, yCoord, zCoord);
 		final float n = 0.125f;
-		if(blockMetadata == 2) {
+		if (blockMetadata == 2) {
 			this.setShape(0.0f, 0.0f, 1.0f - n, 1.0f, 1.0f, 1.0f);
 		}
-		if(blockMetadata == 3) {
+		if (blockMetadata == 3) {
 			this.setShape(0.0f, 0.0f, 0.0f, 1.0f, 1.0f, n);
 		}
-		if(blockMetadata == 4) {
+		if (blockMetadata == 4) {
 			this.setShape(1.0f - n, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f);
 		}
-		if(blockMetadata == 5) {
+		if (blockMetadata == 5) {
 			this.setShape(0.0f, 0.0f, 0.0f, n, 1.0f, 1.0f);
 		}
 		return super.getCollisionBoundingBoxFromPool(world, xCoord, yCoord, zCoord);
@@ -36,16 +36,16 @@ public class LadderBlock extends Block {
 	public AABB getSelectedBoundingBoxFromPool(final World world, final int xCoord, final int yCoord, final int zCoord) {
 		final int blockMetadata = world.getBlockMetadata(xCoord, yCoord, zCoord);
 		final float n = 0.125f;
-		if(blockMetadata == 2) {
+		if (blockMetadata == 2) {
 			this.setShape(0.0f, 0.0f, 1.0f - n, 1.0f, 1.0f, 1.0f);
 		}
-		if(blockMetadata == 3) {
+		if (blockMetadata == 3) {
 			this.setShape(0.0f, 0.0f, 0.0f, 1.0f, 1.0f, n);
 		}
-		if(blockMetadata == 4) {
+		if (blockMetadata == 4) {
 			this.setShape(1.0f - n, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f);
 		}
-		if(blockMetadata == 5) {
+		if (blockMetadata == 5) {
 			this.setShape(0.0f, 0.0f, 0.0f, n, 1.0f, 1.0f);
 		}
 		return super.getSelectedBoundingBoxFromPool(world, xCoord, yCoord, zCoord);
@@ -74,16 +74,16 @@ public class LadderBlock extends Block {
 	@Override
 	public void onBlockPlaced(final World world, final int xCoord, final int yCoord, final int zCoord, final int nya4) {
 		int blockMetadata = world.getBlockMetadata(xCoord, yCoord, zCoord);
-		if((blockMetadata == 0 || nya4 == 2) && world.isBlockNormalCube(xCoord, yCoord, zCoord + 1)) {
+		if ((blockMetadata == 0 || nya4 == 2) && world.isBlockNormalCube(xCoord, yCoord, zCoord + 1)) {
 			blockMetadata = 2;
 		}
-		if((blockMetadata == 0 || nya4 == 3) && world.isBlockNormalCube(xCoord, yCoord, zCoord - 1)) {
+		if ((blockMetadata == 0 || nya4 == 3) && world.isBlockNormalCube(xCoord, yCoord, zCoord - 1)) {
 			blockMetadata = 3;
 		}
-		if((blockMetadata == 0 || nya4 == 4) && world.isBlockNormalCube(xCoord + 1, yCoord, zCoord)) {
+		if ((blockMetadata == 0 || nya4 == 4) && world.isBlockNormalCube(xCoord + 1, yCoord, zCoord)) {
 			blockMetadata = 4;
 		}
-		if((blockMetadata == 0 || nya4 == 5) && world.isBlockNormalCube(xCoord - 1, yCoord, zCoord)) {
+		if ((blockMetadata == 0 || nya4 == 5) && world.isBlockNormalCube(xCoord - 1, yCoord, zCoord)) {
 			blockMetadata = 5;
 		}
 		world.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, blockMetadata);
@@ -93,19 +93,19 @@ public class LadderBlock extends Block {
 	public void onNeighborBlockChange(final World world, final int xCoord, final int yCoord, final int zCoord, final int nya4) {
 		final int blockMetadata = world.getBlockMetadata(xCoord, yCoord, zCoord);
 		boolean b = false;
-		if(blockMetadata == 2 && world.isBlockNormalCube(xCoord, yCoord, zCoord + 1)) {
+		if (blockMetadata == 2 && world.isBlockNormalCube(xCoord, yCoord, zCoord + 1)) {
 			b = true;
 		}
-		if(blockMetadata == 3 && world.isBlockNormalCube(xCoord, yCoord, zCoord - 1)) {
+		if (blockMetadata == 3 && world.isBlockNormalCube(xCoord, yCoord, zCoord - 1)) {
 			b = true;
 		}
-		if(blockMetadata == 4 && world.isBlockNormalCube(xCoord + 1, yCoord, zCoord)) {
+		if (blockMetadata == 4 && world.isBlockNormalCube(xCoord + 1, yCoord, zCoord)) {
 			b = true;
 		}
-		if(blockMetadata == 5 && world.isBlockNormalCube(xCoord - 1, yCoord, zCoord)) {
+		if (blockMetadata == 5 && world.isBlockNormalCube(xCoord - 1, yCoord, zCoord)) {
 			b = true;
 		}
-		if(!b) {
+		if (!b) {
 			this.dropBlockAsItem(world, xCoord, yCoord, zCoord, blockMetadata);
 			world.setBlockWithNotify(xCoord, yCoord, zCoord, 0);
 		}

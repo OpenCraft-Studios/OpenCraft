@@ -26,21 +26,21 @@ public class GuiInventory extends GuiContainer {
 		this.iInventory = new InventoryCraftResult();
 		this.allowUserInput = true;
 		this.inventorySlots.add(new SlotCrafting(this, this.inventoryCrafting, this.iInventory, 0, 144, 36));
-		for(int i = 0; i < 2; ++i) {
-			for(int j = 0; j < 2; ++j) {
+		for ( int i = 0; i < 2; ++i ) {
+			for ( int j = 0; j < 2; ++j ) {
 				this.inventorySlots.add(new Slot(this, this.inventoryCrafting, j + i * 2, 88 + j * 18, 26 + i * 18));
 			}
 		}
-		for(int i = 0; i < 4; ++i) {
+		for ( int i = 0; i < 4; ++i ) {
 			final int j = i;
 			this.inventorySlots.add(new SlotArmor(this, this, kd, kd.getSizeInventory() - 1 - i, 8, 8 + i * 18, j));
 		}
-		for(int i = 0; i < 3; ++i) {
-			for(int j = 0; j < 9; ++j) {
+		for ( int i = 0; i < 3; ++i ) {
+			for ( int j = 0; j < 9; ++j ) {
 				this.inventorySlots.add(new Slot(this, kd, j + (i + 1) * 9, 8 + j * 18, 84 + i * 18));
 			}
 		}
-		for(int i = 0; i < 9; ++i) {
+		for ( int i = 0; i < 9; ++i ) {
 			this.inventorySlots.add(new Slot(this, kd, i, 8 + i * 18, 142));
 		}
 	}
@@ -48,9 +48,9 @@ public class GuiInventory extends GuiContainer {
 	@Override
 	public void onGuiClosed() {
 		super.onGuiClosed();
-		for(int i = 0; i < this.inventoryCrafting.getSizeInventory(); ++i) {
+		for ( int i = 0; i < this.inventoryCrafting.getSizeInventory(); ++i ) {
 			final ItemStack stackInSlot = this.inventoryCrafting.getStackInSlot(i);
-			if(stackInSlot != null) {
+			if (stackInSlot != null) {
 				this.id.player.dropPlayerItem(stackInSlot);
 			}
 		}
@@ -59,12 +59,12 @@ public class GuiInventory extends GuiContainer {
 	@Override
 	public void onCraftMatrixChanged(final IInventory kd) {
 		final int[] arr = new int[9];
-		for(int i = 0; i < 3; ++i) {
-			for(int j = 0; j < 3; ++j) {
+		for ( int i = 0; i < 3; ++i ) {
+			for ( int j = 0; j < 3; ++j ) {
 				int itemID = -1;
-				if(i < 2 && j < 2) {
+				if (i < 2 && j < 2) {
 					final ItemStack stackInSlot = this.inventoryCrafting.getStackInSlot(i + j * 2);
-					if(stackInSlot != null) {
+					if (stackInSlot != null) {
 						itemID = stackInSlot.itemID;
 					}
 				}

@@ -14,7 +14,7 @@ public class StaticLiquidBlock extends LiquidBlock {
 	@Override
 	public void onNeighborBlockChange(final World world, final int xCoord, final int yCoord, final int zCoord, final int nya4) {
 		super.onNeighborBlockChange(world, xCoord, yCoord, zCoord, nya4);
-		if(world.getBlockId(xCoord, yCoord, zCoord) == this.blockID) {
+		if (world.getBlockId(xCoord, yCoord, zCoord) == this.blockID) {
 			this.updateTick(world, xCoord, yCoord, zCoord);
 		}
 	}

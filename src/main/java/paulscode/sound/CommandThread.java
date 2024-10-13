@@ -99,7 +99,7 @@ public class CommandThread extends SimpleThread {
 		long previousTime = System.currentTimeMillis();
 		long currentTime = previousTime;
 
-		if(soundSystem == null) {
+		if (soundSystem == null) {
 			errorMessage("SoundSystem was null in method run().", 0);
 			cleanup();
 			return;
@@ -117,13 +117,13 @@ public class CommandThread extends SimpleThread {
 
 			// Remove temporary sources every ten seconds:
 			currentTime = System.currentTimeMillis();
-			if((!dying()) && ((currentTime - previousTime) > 10000)) {
+			if ((!dying()) && ((currentTime - previousTime) > 10000)) {
 				previousTime = currentTime;
 				soundSystem.removeTemporarySources();
 			}
 
 			// Wait for more commands:
-			if(!dying())
+			if (!dying())
 				snooze(3600000);
 		}
 

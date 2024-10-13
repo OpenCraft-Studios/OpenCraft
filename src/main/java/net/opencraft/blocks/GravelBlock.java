@@ -12,7 +12,7 @@ public class GravelBlock extends SandBlock {
 
 	@Override
 	public int idDropped(final int blockid, final Random random) {
-		if(random.nextInt(10) == 0) {
+		if (random.nextInt(10) == 0) {
 			return Item.flint.shiftedIndex;
 		}
 		return this.blockID;

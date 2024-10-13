@@ -22,11 +22,11 @@ public class TileEntityMobSpawnerRenderer extends TileEntitySpecialRenderer<Tile
 		GL11.glPushMatrix();
 		GL11.glTranslatef((float) double2 + 0.5f, (float) double3, (float) double4 + 0.5f);
 		Entity entityInWorld = (Entity) this.entityHashMap.get(cs.getMobID);
-		if(entityInWorld == null) {
+		if (entityInWorld == null) {
 			entityInWorld = EntityList.createEntityInWorld(cs.getMobID, null);
 			this.entityHashMap.put(cs.getMobID, entityInWorld);
 		}
-		if(entityInWorld != null) {
+		if (entityInWorld != null) {
 			entityInWorld.setWorld(cs.worldObj);
 			final float n = 0.4375f;
 			GL11.glTranslatef(0.0f, 0.4f, 0.0f);

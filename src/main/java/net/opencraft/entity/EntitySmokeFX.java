@@ -34,10 +34,10 @@ public class EntitySmokeFX extends EntityFX {
 	@Override
 	public void renderParticle(final Tessellator ag, final float float2, final float float3, final float float4, final float float5, final float float6, final float float7) {
 		float n = (this.particleAge + float2) / this.particleMaxAge * 32.0f;
-		if(n < 0.0f) {
+		if (n < 0.0f) {
 			n = 0.0f;
 		}
-		if(n > 1.0f) {
+		if (n > 1.0f) {
 			n = 1.0f;
 		}
 		this.particleScale = this.smokeParticleScale * n;
@@ -49,20 +49,20 @@ public class EntitySmokeFX extends EntityFX {
 		this.prevPosX = this.posX;
 		this.prevPosY = this.posY;
 		this.prevPosZ = this.posZ;
-		if(this.particleAge++ >= this.particleMaxAge) {
+		if (this.particleAge++ >= this.particleMaxAge) {
 			this.setEntityDead();
 		}
 		this.particleTextureIndex = 7 - this.particleAge * 8 / this.particleMaxAge;
 		this.motionY += 0.004;
 		this.moveEntity(this.motionX, this.motionY, this.motionZ);
-		if(this.posY == this.prevPosY) {
+		if (this.posY == this.prevPosY) {
 			this.motionX *= 1.1;
 			this.motionZ *= 1.1;
 		}
 		this.motionX *= 0.9599999785423279;
 		this.motionY *= 0.9599999785423279;
 		this.motionZ *= 0.9599999785423279;
-		if(this.onGround) {
+		if (this.onGround) {
 			this.motionX *= 0.699999988079071;
 			this.motionZ *= 0.699999988079071;
 		}

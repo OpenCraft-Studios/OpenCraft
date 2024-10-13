@@ -24,10 +24,10 @@ public class LogBlock extends Block {
 
 	@Override
 	public int getBlockTextureFromSide(final int textureIndexSlot) {
-		if(textureIndexSlot == 1) {
+		if (textureIndexSlot == 1) {
 			return 21;
 		}
-		if(textureIndexSlot == 0) {
+		if (textureIndexSlot == 0) {
 			return 21;
 		}
 		return 20;

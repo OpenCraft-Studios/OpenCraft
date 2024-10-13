@@ -92,7 +92,7 @@ public class OggSpeexWriter extends AudioFileWriter {
 	 * Builds an Ogg Speex Writer.
 	 */
 	public OggSpeexWriter() {
-		if(streamSerialNumber == 0)
+		if (streamSerialNumber == 0)
 			streamSerialNumber = new Random().nextInt();
 		dataBuffer = new byte[65565];
 		dataBufferPtr = 0;
@@ -215,10 +215,10 @@ public class OggSpeexWriter extends AudioFileWriter {
 	 * @exception IOException
 	 */
 	public void writePacket(final byte[] data, final int offset, final int len) throws IOException {
-		if(len <= 0) { // nothing to write
+		if (len <= 0) { // nothing to write
 			return;
 		}
-		if(packetCount > PACKETS_PER_OGG_PAGE) {
+		if (packetCount > PACKETS_PER_OGG_PAGE) {
 			flush(false);
 		}
 		System.arraycopy(data, offset, dataBuffer, dataBufferPtr, len);

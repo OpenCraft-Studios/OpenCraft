@@ -25,7 +25,7 @@ public class NextTickListEntry implements Comparable<NextTickListEntry> {
 
 	@Override
 	public boolean equals(final Object object) {
-		if(object instanceof NextTickListEntry) {
+		if (object instanceof NextTickListEntry) {
 			final NextTickListEntry nextTickListEntry = (NextTickListEntry) object;
 			return this.xCoord == nextTickListEntry.xCoord && this.yCoord == nextTickListEntry.yCoord && this.zCoord == nextTickListEntry.zCoord && this.blockID == nextTickListEntry.blockID;
 		}
@@ -44,16 +44,16 @@ public class NextTickListEntry implements Comparable<NextTickListEntry> {
 
 	@Override
 	public int compareTo(final NextTickListEntry cz) {
-		if(this.scheduledTime < cz.scheduledTime) {
+		if (this.scheduledTime < cz.scheduledTime) {
 			return -1;
 		}
-		if(this.scheduledTime > cz.scheduledTime) {
+		if (this.scheduledTime > cz.scheduledTime) {
 			return 1;
 		}
-		if(this.tickEntryID < cz.tickEntryID) {
+		if (this.tickEntryID < cz.tickEntryID) {
 			return -1;
 		}
-		if(this.tickEntryID > cz.tickEntryID) {
+		if (this.tickEntryID > cz.tickEntryID) {
 			return 1;
 		}
 		return 0;

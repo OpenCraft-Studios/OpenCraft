@@ -15,7 +15,7 @@ public class SoundPool {
 	public SoundPoolEntry addSound(String soundName, URL resourceURL) {
 		SoundPoolEntry sound = new SoundPoolEntry(soundName, resourceURL);
 
-		if(!this.nameToSoundPoolEntriesMapping.containsKey(sound.soundNameNoExt)) {
+		if (!this.nameToSoundPoolEntriesMapping.containsKey(sound.soundNameNoExt)) {
 			this.nameToSoundPoolEntriesMapping.put(sound.soundNameNoExt, new ArrayList<>());
 		}
 
@@ -37,7 +37,7 @@ public class SoundPool {
 	 */
 	public SoundPoolEntry getRandomSoundFromSoundPool(String name) {
 		List<SoundPoolEntry> entriesMatchingName = this.nameToSoundPoolEntriesMapping.get(name);
-		if(entriesMatchingName == null) {
+		if (entriesMatchingName == null) {
 			System.err.println("Can't play random sound" + name + "! sound pool is empty!");
 			return null;
 		} else {
@@ -46,7 +46,7 @@ public class SoundPool {
 	}
 
 	public SoundPoolEntry getRandomSound() {
-		if(allSoundPoolEntries.isEmpty()) {
+		if (allSoundPoolEntries.isEmpty()) {
 			System.err.println("Can't play random sound! sound pool is empty!");
 			return null;
 		} else {

@@ -44,7 +44,7 @@ public class GlStateManager {
 	}
 
 	public static void alphaFunc(int func, float ref) {
-		if(func != alphaState.func || ref != alphaState.ref) {
+		if (func != alphaState.func || ref != alphaState.ref) {
 			alphaState.func = func;
 			alphaState.ref = ref;
 			GL11.glAlphaFunc(func, ref);
@@ -76,7 +76,7 @@ public class GlStateManager {
 	}
 
 	public static void colorMaterial(int face, int mode) {
-		if(face != colorMaterialState.face || mode != colorMaterialState.mode) {
+		if (face != colorMaterialState.face || mode != colorMaterialState.mode) {
 			colorMaterialState.face = face;
 			colorMaterialState.mode = mode;
 			GL11.glColorMaterial(face, mode);
@@ -92,14 +92,14 @@ public class GlStateManager {
 	}
 
 	public static void depthFunc(int depthFunc) {
-		if(depthFunc != depthState.depthFunc) {
+		if (depthFunc != depthState.depthFunc) {
 			depthState.depthFunc = depthFunc;
 			GL11.glDepthFunc(depthFunc);
 		}
 	}
 
 	public static void depthMask(boolean flagIn) {
-		if(flagIn != depthState.maskEnabled) {
+		if (flagIn != depthState.maskEnabled) {
 			depthState.maskEnabled = flagIn;
 			GL11.glDepthMask(flagIn);
 		}
@@ -114,7 +114,7 @@ public class GlStateManager {
 	}
 
 	public static void blendFunc(int srcFactor, int dstFactor) {
-		if(srcFactor != blendState.srcFactor || dstFactor != blendState.dstFactor) {
+		if (srcFactor != blendState.srcFactor || dstFactor != blendState.dstFactor) {
 			blendState.srcFactor = srcFactor;
 			blendState.dstFactor = dstFactor;
 			GL11.glBlendFunc(srcFactor, dstFactor);
@@ -122,7 +122,7 @@ public class GlStateManager {
 	}
 
 	public static void tryBlendFuncSeparate(int srcFactor, int dstFactor, int srcFactorAlpha, int dstFactorAlpha) {
-		if(srcFactor != blendState.srcFactor || dstFactor != blendState.dstFactor || srcFactorAlpha != blendState.srcFactorAlpha || dstFactorAlpha != blendState.dstFactorAlpha) {
+		if (srcFactor != blendState.srcFactor || dstFactor != blendState.dstFactor || srcFactorAlpha != blendState.srcFactorAlpha || dstFactorAlpha != blendState.dstFactorAlpha) {
 			blendState.srcFactor = srcFactor;
 			blendState.dstFactor = dstFactor;
 			blendState.srcFactorAlpha = srcFactorAlpha;
@@ -140,28 +140,28 @@ public class GlStateManager {
 	}
 
 	public static void setFog(int param) {
-		if(param != fogState.mode) {
+		if (param != fogState.mode) {
 			fogState.mode = param;
 			GL11.glFogi(GL11.GL_FOG_MODE, param);
 		}
 	}
 
 	public static void setFogDensity(float param) {
-		if(param != fogState.density) {
+		if (param != fogState.density) {
 			fogState.density = param;
 			GL11.glFogf(GL11.GL_FOG_DENSITY, param);
 		}
 	}
 
 	public static void setFogStart(float param) {
-		if(param != fogState.start) {
+		if (param != fogState.start) {
 			fogState.start = param;
 			GL11.glFogf(GL11.GL_FOG_START, param);
 		}
 	}
 
 	public static void setFogEnd(float param) {
-		if(param != fogState.end) {
+		if (param != fogState.end) {
 			fogState.end = param;
 			GL11.glFogf(GL11.GL_FOG_END, param);
 		}
@@ -176,7 +176,7 @@ public class GlStateManager {
 	}
 
 	public static void cullFace(int mode) {
-		if(mode != cullState.mode) {
+		if (mode != cullState.mode) {
 			cullState.mode = mode;
 			GL11.glCullFace(mode);
 		}
@@ -191,7 +191,7 @@ public class GlStateManager {
 	}
 
 	public static void doPolygonOffset(float factor, float units) {
-		if(factor != polygonOffsetState.factor || units != polygonOffsetState.units) {
+		if (factor != polygonOffsetState.factor || units != polygonOffsetState.units) {
 			polygonOffsetState.factor = factor;
 			polygonOffsetState.units = units;
 			GL11.glPolygonOffset(factor, units);
@@ -207,7 +207,7 @@ public class GlStateManager {
 	}
 
 	public static void colorLogicOp(int opcode) {
-		if(opcode != colorLogicState.opcode) {
+		if (opcode != colorLogicState.opcode) {
 			colorLogicState.opcode = opcode;
 			GL11.glLogicOp(opcode);
 		}
@@ -224,7 +224,7 @@ public class GlStateManager {
 	public static void texGen(GlStateManager.TexGen texGen, int param) {
 		GlStateManager.TexGenCoord glstatemanager$texgencoord = texGenCoord(texGen);
 
-		if(param != glstatemanager$texgencoord.param) {
+		if (param != glstatemanager$texgencoord.param) {
 			glstatemanager$texgencoord.param = param;
 			GL11.glTexGeni(glstatemanager$texgencoord.coord, GL11.GL_TEXTURE_GEN_MODE, param);
 		}
@@ -254,7 +254,7 @@ public class GlStateManager {
 	}
 
 	public static void setActiveTexture(int texture) {
-		if(activeTextureUnit != texture - OpenGlHelper.defaultTexUnit) {
+		if (activeTextureUnit != texture - OpenGlHelper.defaultTexUnit) {
 			activeTextureUnit = texture - OpenGlHelper.defaultTexUnit;
 			OpenGlHelper.setActiveTexture(texture);
 		}
@@ -275,15 +275,15 @@ public class GlStateManager {
 	public static void deleteTexture(int texture) {
 		GL11.glDeleteTextures(texture);
 
-		for(GlStateManager.TextureState glstatemanager$texturestate : textureState) {
-			if(glstatemanager$texturestate.textureName == texture) {
+		for ( GlStateManager.TextureState glstatemanager$texturestate : textureState ) {
+			if (glstatemanager$texturestate.textureName == texture) {
 				glstatemanager$texturestate.textureName = -1;
 			}
 		}
 	}
 
 	public static void bindTexture(int texture) {
-		if(texture != textureState[activeTextureUnit].textureName) {
+		if (texture != textureState[activeTextureUnit].textureName) {
 			textureState[activeTextureUnit].textureName = texture;
 			GL11.glBindTexture(GL11.GL_TEXTURE_2D, texture);
 		}
@@ -298,7 +298,7 @@ public class GlStateManager {
 	}
 
 	public static void shadeModel(int mode) {
-		if(mode != activeShadeModel) {
+		if (mode != activeShadeModel) {
 			activeShadeModel = mode;
 			GL11.glShadeModel(mode);
 		}
@@ -317,7 +317,7 @@ public class GlStateManager {
 	}
 
 	public static void colorMask(boolean red, boolean green, boolean blue, boolean alpha) {
-		if(red != colorMaskState.red || green != colorMaskState.green || blue != colorMaskState.blue || alpha != colorMaskState.alpha) {
+		if (red != colorMaskState.red || green != colorMaskState.green || blue != colorMaskState.blue || alpha != colorMaskState.alpha) {
 			colorMaskState.red = red;
 			colorMaskState.green = green;
 			colorMaskState.blue = blue;
@@ -327,14 +327,14 @@ public class GlStateManager {
 	}
 
 	public static void clearDepth(double depth) {
-		if(depth != clearState.depth) {
+		if (depth != clearState.depth) {
 			clearState.depth = depth;
 			GL11.glClearDepth(depth);
 		}
 	}
 
 	public static void clearColor(float red, float green, float blue, float alpha) {
-		if(red != clearState.color.red || green != clearState.color.green || blue != clearState.color.blue || alpha != clearState.color.alpha) {
+		if (red != clearState.color.red || green != clearState.color.green || blue != clearState.color.blue || alpha != clearState.color.alpha) {
 			clearState.color.red = red;
 			clearState.color.green = green;
 			clearState.color.blue = blue;
@@ -396,7 +396,7 @@ public class GlStateManager {
 	}
 
 	public static void color(float colorRed, float colorGreen, float colorBlue, float colorAlpha) {
-		if(colorRed != colorState.red || colorGreen != colorState.green || colorBlue != colorState.blue || colorAlpha != colorState.alpha) {
+		if (colorRed != colorState.red || colorGreen != colorState.green || colorBlue != colorState.blue || colorAlpha != colorState.alpha) {
 			colorState.red = colorRed;
 			colorState.green = colorGreen;
 			colorState.blue = colorBlue;
@@ -418,11 +418,11 @@ public class GlStateManager {
 	}
 
 	static {
-		for(int i = 0; i < 8; ++i) {
+		for ( int i = 0; i < 8; ++i ) {
 			lightState[i] = new GlStateManager.BooleanState(16384 + i);
 		}
 
-		for(int j = 0; j < 8; ++j) {
+		for ( int j = 0; j < 8; ++j ) {
 			textureState[j] = new GlStateManager.TextureState();
 		}
 	}
@@ -481,10 +481,10 @@ public class GlStateManager {
 		}
 
 		public void setState(boolean state) {
-			if(state != this.currentState) {
+			if (state != this.currentState) {
 				this.currentState = state;
 
-				if(state) {
+				if (state) {
 					GL11.glEnable(this.capability);
 				} else {
 					GL11.glDisable(this.capability);
@@ -767,7 +767,7 @@ public class GlStateManager {
 	private static final GlStateManager.BlendState BLEND = new GlStateManager.BlendState();
 
 	public static void blendFuncSeparate(int srcFactor, int dstFactor, int srcFactorAlpha, int dstFactorAlpha) {
-		if(srcFactor != BLEND.srcFactor || dstFactor != BLEND.dstFactor || srcFactorAlpha != BLEND.srcFactorAlpha || dstFactorAlpha != BLEND.dstFactorAlpha) {
+		if (srcFactor != BLEND.srcFactor || dstFactor != BLEND.dstFactor || srcFactorAlpha != BLEND.srcFactorAlpha || dstFactorAlpha != BLEND.dstFactorAlpha) {
 			BLEND.srcFactor = srcFactor;
 			BLEND.dstFactor = dstFactor;
 			BLEND.srcFactorAlpha = srcFactorAlpha;

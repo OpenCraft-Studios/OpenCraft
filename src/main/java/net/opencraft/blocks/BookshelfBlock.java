@@ -13,7 +13,7 @@ public class BookshelfBlock extends Block {
 
 	@Override
 	public int getBlockTextureFromSide(final int textureIndexSlot) {
-		if(textureIndexSlot <= 1) {
+		if (textureIndexSlot <= 1) {
 			return 4;
 		}
 		return this.blockIndexInTexture;

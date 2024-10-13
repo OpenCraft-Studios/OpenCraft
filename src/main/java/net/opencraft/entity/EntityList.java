@@ -20,7 +20,7 @@ public class EntityList {
 		Entity entity = null;
 		try {
 			final Class clazz = (Class) EntityList.stringToClassMapping.get(string);
-			if(clazz != null) {
+			if (clazz != null) {
 				entity = (Entity) clazz.getConstructor(new Class[] { World.class }).newInstance(new Object[] { world });
 			}
 		} catch(Exception ex) {
@@ -33,13 +33,13 @@ public class EntityList {
 		Entity entity = null;
 		try {
 			final Class clazz = (Class) EntityList.stringToClassMapping.get(nbt.getString("id"));
-			if(clazz != null) {
+			if (clazz != null) {
 				entity = (Entity) clazz.getConstructor(new Class[] { World.class }).newInstance(new Object[] { world });
 			}
 		} catch(Exception ex) {
 			ex.printStackTrace();
 		}
-		if(entity != null) {
+		if (entity != null) {
 			entity.readFromNBT(nbt);
 		} else {
 			System.out.println("Skipping Entity with id " + nbt.getString("id"));

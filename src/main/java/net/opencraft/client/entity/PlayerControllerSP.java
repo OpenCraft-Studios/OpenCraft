@@ -57,14 +57,14 @@ public class PlayerControllerSP extends PlayerController {
 		final int blockMetadata = this.mc.world.getBlockMetadata(xCoord, yCoord, zCoord);
 		final boolean sendBlockRemoved = super.sendBlockRemoved(xCoord, yCoord, zCoord);
 		final ItemStack currentEquippedItem = this.mc.player.getCurrentEquippedItem();
-		if(currentEquippedItem != null) {
+		if (currentEquippedItem != null) {
 			currentEquippedItem.onDestroyBlock(blockId, xCoord, yCoord, zCoord);
-			if(currentEquippedItem.stackSize == 0) {
+			if (currentEquippedItem.stackSize == 0) {
 				currentEquippedItem.onItemDestroyedByUse(this.mc.player);
 				this.mc.player.displayGUIInventory();
 			}
 		}
-		if(sendBlockRemoved && this.mc.player.canHarvestBlock(Block.blocksList[blockId])) {
+		if (sendBlockRemoved && this.mc.player.canHarvestBlock(Block.blocksList[blockId])) {
 			Block.blocksList[blockId].dropBlockAsItem(this.mc.world, xCoord, yCoord, zCoord, blockMetadata);
 		}
 		return sendBlockRemoved;
@@ -73,10 +73,10 @@ public class PlayerControllerSP extends PlayerController {
 	@Override
 	public void clickBlock(final int xCoord, final int yCoord, final int zCoord) {
 		final int blockId = this.mc.world.getBlockId(xCoord, yCoord, zCoord);
-		if(blockId > 0 && this.curBlockDamage == 0.0f) {
+		if (blockId > 0 && this.curBlockDamage == 0.0f) {
 			Block.blocksList[blockId].onBlockClicked(this.mc.world, xCoord, yCoord, zCoord, this.mc.player);
 		}
-		if(blockId > 0 && Block.blocksList[blockId].blockStrength(this.mc.player) >= 1.0f) {
+		if (blockId > 0 && Block.blocksList[blockId].blockStrength(this.mc.player) >= 1.0f) {
 			this.sendBlockRemoved(xCoord, yCoord, zCoord);
 		}
 	}
@@ -90,23 +90,23 @@ public class PlayerControllerSP extends PlayerController {
 	@Override
 	public void sendBlockRemoving(final int integer1, final int integer2, final int integer3, final int integer4) {
 
-		if(this.blockHitWait > 0) {
+		if (this.blockHitWait > 0) {
 			--this.blockHitWait;
 			return;
 		}
 		super.sendBlockRemoving(integer1, integer2, integer3, integer4);
-		if(integer1 == this.field_1074_c && integer2 == this.field_1073_d && integer3 == this.field_1072_e) {
+		if (integer1 == this.field_1074_c && integer2 == this.field_1073_d && integer3 == this.field_1072_e) {
 			final int blockId = this.mc.world.getBlockId(integer1, integer2, integer3);
-			if(blockId == 0) {
+			if (blockId == 0) {
 				return;
 			}
 			final Block block = Block.blocksList[blockId];
 			this.curBlockDamage += block.blockStrength(this.mc.player);
-			if(this.field_1069_h % 4.0f == 0.0f && block != null) {
+			if (this.field_1069_h % 4.0f == 0.0f && block != null) {
 				this.mc.sndManager.playSound(block.stepSound.stepSoundDir2(), integer1 + 0.5f, integer2 + 0.5f, integer3 + 0.5f, (block.stepSound.soundVolume() + 1.0f) / 8.0f, block.stepSound.soundPitch() * 0.5f);
 			}
 			++this.field_1069_h;
-			if(this.curBlockDamage >= 1.0f) {
+			if (this.curBlockDamage >= 1.0f) {
 				this.sendBlockRemoved(integer1, integer2, integer3);
 				this.curBlockDamage = 0.0f;
 				this.prevBlockDamage = 0.0f;
@@ -125,7 +125,7 @@ public class PlayerControllerSP extends PlayerController {
 
 	@Override
 	public void setPartialTime(final float float1) {
-		if(this.curBlockDamage <= 0.0f) {
+		if (this.curBlockDamage <= 0.0f) {
 			this.mc.ingameGUI.damageGuiPartialTime = 0.0f;
 			this.mc.renderGlobal.damagePartialTime = 0.0f;
 		} else {

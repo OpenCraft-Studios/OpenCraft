@@ -19,7 +19,7 @@ public class ItemTool extends Item {
 		this.blocksEffectiveAgainst = block;
 		this.maxStackSize = 1;
 		this.maxDamage = 32 << integer3;
-		if(integer3 == 3) {
+		if (integer3 == 3) {
 			this.maxDamage *= 2;
 		}
 		this.efficiencyOnProperMaterial = (float) ((integer3 + 1) * 2);
@@ -28,8 +28,8 @@ public class ItemTool extends Item {
 
 	@Override
 	public float getStrVsBlock(final ItemStack hw, final Block gs) {
-		for(int i = 0; i < this.blocksEffectiveAgainst.length; ++i) {
-			if(this.blocksEffectiveAgainst[i] == gs) {
+		for ( int i = 0; i < this.blocksEffectiveAgainst.length; ++i ) {
+			if (this.blocksEffectiveAgainst[i] == gs) {
 				return this.efficiencyOnProperMaterial;
 			}
 		}

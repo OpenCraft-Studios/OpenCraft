@@ -154,7 +154,7 @@ public class Pcm2SpeexAudioInputStream extends FilteredAudioInputStream {
 		super(in, format, length, size);
 		// Ogg initialisation
 		granulepos = 0;
-		if(streamSerialNumber == 0)
+		if (streamSerialNumber == 0)
 			streamSerialNumber = new Random().nextInt();
 		packetsPerOggPage = DEFAULT_PACKETS_PER_OGG_PAGE;
 		packetCount = 0;
@@ -162,17 +162,17 @@ public class Pcm2SpeexAudioInputStream extends FilteredAudioInputStream {
 		// Speex initialisation
 		framesPerPacket = DEFAULT_FRAMES_PER_PACKET;
 		int samplerate = (int) format.getSampleRate();
-		if(samplerate < 0)
+		if (samplerate < 0)
 			samplerate = DEFAULT_SAMPLERATE;
 		channels = format.getChannels();
-		if(channels < 0)
+		if (channels < 0)
 			channels = DEFAULT_CHANNELS;
-		if(mode < 0)
+		if (mode < 0)
 			mode = (samplerate < 12000) ? 0 : ((samplerate < 24000) ? 1 : 2);
 		this.mode = mode;
 		AudioFormat.Encoding encoding = format.getEncoding();
-		if(quality < 0) {
-			if(encoding instanceof SpeexEncoding) {
+		if (quality < 0) {
+			if (encoding instanceof SpeexEncoding) {
 				quality = ((SpeexEncoding) encoding).getQuality();
 			} else {
 				quality = DEFAULT_QUALITY;
@@ -180,7 +180,7 @@ public class Pcm2SpeexAudioInputStream extends FilteredAudioInputStream {
 		}
 		encoder = new SpeexEncoder();
 		encoder.init(mode, quality, samplerate, channels);
-		if(encoding instanceof SpeexEncoding && ((SpeexEncoding) encoding).isVBR()) {
+		if (encoding instanceof SpeexEncoding && ((SpeexEncoding) encoding).isVBR()) {
 			setVbr(true);
 		} else {
 			setVbr(false);
@@ -198,7 +198,7 @@ public class Pcm2SpeexAudioInputStream extends FilteredAudioInputStream {
 	 * @param serialNumber
 	 */
 	public void setSerialNumber(final int serialNumber) {
-		if(first) {
+		if (first) {
 			this.streamSerialNumber = serialNumber;
 		}
 	}
@@ -212,7 +212,7 @@ public class Pcm2SpeexAudioInputStream extends FilteredAudioInputStream {
 	 * @see #DEFAULT_FRAMES_PER_PACKET
 	 */
 	public void setFramesPerPacket(int framesPerPacket) {
-		if(framesPerPacket <= 0) {
+		if (framesPerPacket <= 0) {
 			framesPerPacket = DEFAULT_FRAMES_PER_PACKET;
 		}
 		this.framesPerPacket = framesPerPacket;
@@ -227,10 +227,10 @@ public class Pcm2SpeexAudioInputStream extends FilteredAudioInputStream {
 	 * @see #DEFAULT_PACKETS_PER_OGG_PAGE
 	 */
 	public void setPacketsPerOggPage(int packetsPerOggPage) {
-		if(packetsPerOggPage <= 0) {
+		if (packetsPerOggPage <= 0) {
 			packetsPerOggPage = DEFAULT_PACKETS_PER_OGG_PAGE;
 		}
-		if(packetsPerOggPage > 255) {
+		if (packetsPerOggPage > 255) {
 			packetsPerOggPage = 255;
 		}
 		this.packetsPerOggPage = packetsPerOggPage;
@@ -244,7 +244,7 @@ public class Pcm2SpeexAudioInputStream extends FilteredAudioInputStream {
 	 */
 	public void setComment(final String comment, final boolean appendVersion) {
 		this.comment = comment;
-		if(appendVersion) {
+		if (appendVersion) {
 			this.comment += SpeexEncoder.VERSION;
 		}
 	}
@@ -256,7 +256,7 @@ public class Pcm2SpeexAudioInputStream extends FilteredAudioInputStream {
 	 */
 	public void setQuality(final int quality) {
 		encoder.getEncoder().setQuality(quality);
-		if(encoder.getEncoder().getVbr()) {
+		if (encoder.getEncoder().getVbr()) {
 			encoder.getEncoder().setVbrQuality((float) quality);
 		}
 	}
@@ -290,33 +290,33 @@ public class Pcm2SpeexAudioInputStream extends FilteredAudioInputStream {
 	 */
 	protected void fill() throws IOException {
 		makeSpace();
-		if(first) {
+		if (first) {
 			writeHeaderFrames();
 			first = false;
 		}
 		while(true) {
-			if((prebuf.length - prepos) < framesPerPacket * frameSize * packetsPerOggPage) { // grow prebuf
+			if ((prebuf.length - prepos) < framesPerPacket * frameSize * packetsPerOggPage) { // grow prebuf
 				int nsz = prepos + framesPerPacket * frameSize * packetsPerOggPage;
 				byte[] nbuf = new byte[nsz];
 				System.arraycopy(prebuf, 0, nbuf, 0, precount);
 				prebuf = nbuf;
 			}
 			int read = in.read(prebuf, precount, prebuf.length - precount);
-			if(read < 0) { // inputstream has ended
-				if((precount - prepos) % 2 != 0) { // we don't have a complete last PCM sample
+			if (read < 0) { // inputstream has ended
+				if ((precount - prepos) % 2 != 0) { // we don't have a complete last PCM sample
 					throw new StreamCorruptedException("Incompleted last PCM sample when stream ended");
 				}
 				while(prepos < precount) { // still data to encode
-					if((precount - prepos) < framesPerPacket * frameSize) {
+					if ((precount - prepos) < framesPerPacket * frameSize) {
 						// fill end of frame with zeros
-						for(; precount < (prepos + framesPerPacket * frameSize); precount++) {
+						for ( ; precount < (prepos + framesPerPacket * frameSize); precount++ ) {
 							prebuf[precount] = 0;
 						}
 					}
-					if(packetCount == 0) {
+					if (packetCount == 0) {
 						writeOggPageHeader(packetsPerOggPage, 0);
 					}
-					for(int i = 0; i < framesPerPacket; i++) {
+					for ( int i = 0; i < framesPerPacket; i++ ) {
 						encoder.processData(prebuf, prepos, frameSize);
 						prepos += frameSize;
 					}
@@ -331,12 +331,12 @@ public class Pcm2SpeexAudioInputStream extends FilteredAudioInputStream {
 					encoder.getProcessedData(buf, oggCount);
 					oggCount += size;
 					packetCount++;
-					if(packetCount >= packetsPerOggPage) {
+					if (packetCount >= packetsPerOggPage) {
 						writeOggPageChecksum();
 						return;
 					}
 				}
-				if(packetCount > 0) {
+				if (packetCount > 0) {
 					// we have less than the normal number of packets in this page.
 					buf[count + 5] = (byte) (0xff & 4); // set page header type to end of stream
 					buf[count + 26] = (byte) (0xff & packetCount);
@@ -345,15 +345,15 @@ public class Pcm2SpeexAudioInputStream extends FilteredAudioInputStream {
 					writeOggPageChecksum();
 				}
 				return;
-			} else if(read > 0) {
+			} else if (read > 0) {
 				precount += read;
-				if((precount - prepos) >= framesPerPacket * frameSize * packetsPerOggPage) { // enough data to encode frame
+				if ((precount - prepos) >= framesPerPacket * frameSize * packetsPerOggPage) { // enough data to encode frame
 					while((precount - prepos) >= framesPerPacket * frameSize * packetsPerOggPage) { // lets encode all we can
-						if(packetCount == 0) {
+						if (packetCount == 0) {
 							writeOggPageHeader(packetsPerOggPage, 0);
 						}
 						while(packetCount < packetsPerOggPage) {
-							for(int i = 0; i < framesPerPacket; i++) {
+							for ( int i = 0; i < framesPerPacket; i++ ) {
 								encoder.processData(prebuf, prepos, frameSize);
 								prepos += frameSize;
 							}
@@ -369,7 +369,7 @@ public class Pcm2SpeexAudioInputStream extends FilteredAudioInputStream {
 							oggCount += size;
 							packetCount++;
 						}
-						if(packetCount >= packetsPerOggPage) {
+						if (packetCount >= packetsPerOggPage) {
 							writeOggPageChecksum();
 						}
 					}
@@ -383,9 +383,9 @@ public class Pcm2SpeexAudioInputStream extends FilteredAudioInputStream {
 				}
 			} else { // read == 0
 				// read 0 bytes from underlying stream yet it is not finished.
-				if(precount >= prebuf.length) {
+				if (precount >= prebuf.length) {
 					// no more room in buffer
-					if(prepos > 0) {
+					if (prepos > 0) {
 						// free some space
 						System.arraycopy(prebuf, prepos, prebuf, 0, precount - prepos);
 						precount -= prepos;
@@ -420,7 +420,7 @@ public class Pcm2SpeexAudioInputStream extends FilteredAudioInputStream {
 	public synchronized int available() throws IOException {
 		int avail = super.available();
 		int unencoded = precount - prepos + in.available();
-		if(encoder.getEncoder().getVbr()) {
+		if (encoder.getEncoder().getVbr()) {
 			switch(mode) {
 				case 0: // Narrowband
 					// ogg header size = 27 + packetsPerOggPage
@@ -440,7 +440,7 @@ public class Pcm2SpeexAudioInputStream extends FilteredAudioInputStream {
 		} else {
 			// Calculate size of a packet of Speex data.
 			int spxpacketsize = encoder.getEncoder().getEncodedFrameSize();
-			if(channels > 1) {
+			if (channels > 1) {
 				spxpacketsize += 17; // 1+4(14=inband)+4(9=stereo)+8(stereo data)
 			}
 			spxpacketsize *= framesPerPacket;
@@ -512,7 +512,7 @@ public class Pcm2SpeexAudioInputStream extends FilteredAudioInputStream {
 	 */
 	private void writeHeaderFrames() {
 		int length = comment.length();
-		if(length > 247) {
+		if (length > 247) {
 			comment = comment.substring(0, 247);
 			length = 247;
 		}

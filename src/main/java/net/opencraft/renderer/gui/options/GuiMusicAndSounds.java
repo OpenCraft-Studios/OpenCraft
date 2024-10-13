@@ -21,7 +21,7 @@ public class GuiMusicAndSounds extends GuiScreen {
 	@Override
 	public void initGui() {
 		this.controlList.clear();
-		for(int i = 0; i < 2; ++i) {
+		for ( int i = 0; i < 2; ++i ) {
 			this.controlList.add(new GuiSmallButton(i, this.width / 2 - 155 + i % 2 * 160, this.height / 6 + 24 * (i >> 1), this.options.getKeyBinding(i)));
 		}
 		this.controlList.add(new GuiButton(200, this.width / 2 - 100, this.height / 6 + 168, "Done", 200, 20));
@@ -29,14 +29,14 @@ public class GuiMusicAndSounds extends GuiScreen {
 
 	@Override
 	protected void actionPerformed(final GuiButton iq) {
-		if(!iq.enabled) {
+		if (!iq.enabled) {
 			return;
 		}
-		if(iq.buttonId < 100) {
+		if (iq.buttonId < 100) {
 			this.options.setOptionFloatValue(iq.buttonId, 1);
 			iq.displayString = this.options.getKeyBinding(iq.buttonId);
 		}
-		if(iq.buttonId == 200) {
+		if (iq.buttonId == 200) {
 			this.id.displayGuiScreen(this.parentScreen);
 		}
 	}

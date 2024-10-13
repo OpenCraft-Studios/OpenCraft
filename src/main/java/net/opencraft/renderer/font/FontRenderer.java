@@ -40,23 +40,23 @@ public class FontRenderer {
 		int n9 = bi.getHeight();
 		int[] nArray = new int[n8 * n9];
 		bi.getRGB(0, 0, n8, n9, nArray, 0, n8);
-		for(int i = 0; i < 128; ++i) {
+		for ( int i = 0; i < 128; ++i ) {
 			n7 = i % 16;
 			n6 = i / 16;
 			boolean bl = false;
-			for(n5 = 0; n5 < 8 && !bl; ++n5) {
+			for ( n5 = 0; n5 < 8 && !bl; ++n5 ) {
 				n4 = n7 * 8 + n5;
 				bl = true;
-				for(n3 = 0; n3 < 8 && bl; ++n3) {
+				for ( n3 = 0; n3 < 8 && bl; ++n3 ) {
 					n2 = (n6 * 8 + n3) * n8;
 					n = nArray[n4 + n2] & 0xFF;
-					if(n <= 128) {
+					if (n <= 128) {
 						continue;
 					}
 					bl = false;
 				}
 			}
-			if(i == 32) {
+			if (i == 32) {
 				n5 = 4;
 			}
 			this.charWidth[i] = n5;
@@ -64,7 +64,7 @@ public class FontRenderer {
 		this.fontTextureName = id2.loadTexture(string);
 		this.fontDisplayLists = GLAllocation.generateDisplayLists(288);
 		Tessellator ag2 = Tessellator.instance;
-		for(n7 = 0; n7 < 256; ++n7) {
+		for ( n7 = 0; n7 < 256; ++n7 ) {
 			GL11.glNewList((int) (this.fontDisplayLists + n7), (int) 4864);
 			ag2.beginQuads();
 			n6 = n7 % 16 * 8;
@@ -78,13 +78,13 @@ public class FontRenderer {
 			GL11.glTranslatef((float) this.charWidth[n7], (float) 0.0f, (float) 0.0f);
 			GL11.glEndList();
 		}
-		for(n7 = 0; n7 < 32; ++n7) {
+		for ( n7 = 0; n7 < 32; ++n7 ) {
 			n6 = (n7 & 8) * 8;
 			n5 = (n7 & 1) * 191 + n6;
 			int n10 = ((n7 & 2) >> 1) * 191 + n6;
 			n4 = ((n7 & 4) >> 2) * 191 + n6;
 			int n11 = n3 = n7 >= 16 ? 1 : 0;
-			if(ja2.anaglyph) {
+			if (ja2.anaglyph) {
 				n2 = (n4 * 30 + n10 * 59 + n5 * 11) / 100;
 				n = (n4 * 30 + n10 * 70) / 100;
 				int n12 = (n4 * 30 + n5 * 70) / 100;
@@ -93,7 +93,7 @@ public class FontRenderer {
 				n5 = n12;
 			}
 			n7 += 2;
-			if(n3 != 0) {
+			if (n3 != 0) {
 				n4 /= 4;
 				n10 /= 4;
 				n5 /= 4;
@@ -112,10 +112,10 @@ public class FontRenderer {
 	}
 
 	public void renderString2(final String string, final int xCoord, final int yCoord, int combinedColor, final boolean isShadow) {
-		if(string == null) {
+		if (string == null) {
 			return;
 		}
-		if(isShadow) {
+		if (isShadow) {
 			combinedColor = (combinedColor & 0xFCFCFC) >> 2;
 		}
 		GL11.glBindTexture(3553, this.fontTextureName);
@@ -128,14 +128,14 @@ public class FontRenderer {
 		this.buffer.clear();
 		GL11.glPushMatrix();
 		GL11.glTranslatef((float) xCoord, (float) yCoord, 0.0f);
-		for(int i = 0; i < string.length(); ++i) {
+		for ( int i = 0; i < string.length(); ++i ) {
 			while(string.charAt(i) == '&' && string.length() > i + 1) {
 				int index = "0123456789abcdef".indexOf((int) string.charAt(i + 1));
-				if(index < 0 || index > 15) {
+				if (index < 0 || index > 15) {
 					index = 15;
 				}
 				this.buffer.put(this.fontDisplayLists + 256 + index + (isShadow ? 16 : 0));
-				if(this.buffer.remaining() == 0) {
+				if (this.buffer.remaining() == 0) {
 					this.buffer.flip();
 					GL11.glCallLists(this.buffer);
 					this.buffer.clear();
@@ -143,7 +143,7 @@ public class FontRenderer {
 				i += 2;
 			}
 			this.buffer.put(this.fontDisplayLists + string.charAt(i));
-			if(this.buffer.remaining() == 0) {
+			if (this.buffer.remaining() == 0) {
 				this.buffer.flip();
 				GL11.glCallLists(this.buffer);
 				this.buffer.clear();
@@ -155,12 +155,12 @@ public class FontRenderer {
 	}
 
 	public int getStringWidth(final String string) {
-		if(string == null) {
+		if (string == null) {
 			return 0;
 		}
 		int n = 0;
-		for(int i = 0; i < string.length(); ++i) {
-			if(string.charAt(i) == '&') {
+		for ( int i = 0; i < string.length(); ++i ) {
+			if (string.charAt(i) == '&') {
 				++i;
 			} else {
 				n += this.charWidth[string.charAt(i)];

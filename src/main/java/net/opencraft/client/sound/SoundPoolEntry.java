@@ -13,7 +13,7 @@ public class SoundPoolEntry {
 	public SoundPoolEntry(final String string, final URL uRL) {
 		this.soundName = string;
 		this.soundUrl = uRL;
-		if(string.contains(".")) {
+		if (string.contains(".")) {
 			this.soundNameNoExt = string.substring(0, string.lastIndexOf("."));
 		} else {
 			this.soundNameNoExt = string;

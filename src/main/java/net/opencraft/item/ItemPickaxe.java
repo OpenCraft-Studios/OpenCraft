@@ -16,16 +16,16 @@ public class ItemPickaxe extends ItemTool {
 
 	@Override
 	public boolean canHarvestBlock(final Block gs) {
-		if(gs == Block.obsidian) {
+		if (gs == Block.obsidian) {
 			return this.getHarvestLevel == 3;
 		}
-		if(gs == Block.blockDiamond || gs == Block.oreDiamond) {
+		if (gs == Block.blockDiamond || gs == Block.oreDiamond) {
 			return this.getHarvestLevel >= 2;
 		}
-		if(gs == Block.blockGold || gs == Block.oreGold) {
+		if (gs == Block.blockGold || gs == Block.oreGold) {
 			return this.getHarvestLevel >= 2;
 		}
-		if(gs == Block.blockSteel || gs == Block.oreIron) {
+		if (gs == Block.blockSteel || gs == Block.oreIron) {
 			return this.getHarvestLevel >= 1;
 		}
 		return gs.blockMaterial == Material.ROCK || gs.blockMaterial == Material.METAL;

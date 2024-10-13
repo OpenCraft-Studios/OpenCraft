@@ -16,7 +16,7 @@ public class TileEntity {
 	public int zCoord;
 
 	private static void addMapping(final Class class1, final String string) {
-		if(TileEntity.classToNameMap.containsKey(string)) {
+		if (TileEntity.classToNameMap.containsKey(string)) {
 			throw new IllegalArgumentException("Duplicate id: " + string);
 		}
 		TileEntity.nameToClassMap.put(string, class1);
@@ -31,7 +31,7 @@ public class TileEntity {
 
 	public void writeToNBT(final NBTTagCompound ae) {
 		final String string2 = (String) TileEntity.classToNameMap.get(this.getClass());
-		if(string2 == null) {
+		if (string2 == null) {
 			throw new RuntimeException(new StringBuilder().append(this.getClass()).append(" is missing a mapping! This is a bug!").toString());
 		}
 		ae.setString("id", string2);
@@ -47,13 +47,13 @@ public class TileEntity {
 		TileEntity tileEntity = null;
 		try {
 			final Class clazz = (Class) TileEntity.nameToClassMap.get(ae.getString("id"));
-			if(clazz != null) {
+			if (clazz != null) {
 				tileEntity = (TileEntity) clazz.newInstance();
 			}
 		} catch(Exception ex) {
 			ex.printStackTrace();
 		}
-		if(tileEntity != null) {
+		if (tileEntity != null) {
 			tileEntity.readFromNBT(ae);
 		} else {
 			System.out.println("Skipping TileEntity with id " + ae.getString("id"));

@@ -90,10 +90,10 @@ public class VQ {
 		int i;
 		float min_dist = 0;
 		int best_index = 0;
-		for(i = 0; i < entries; i++) {
+		for ( i = 0; i < entries; i++ ) {
 			float dist = in - codebook[i];
 			dist = dist * dist;
-			if(i == 0 || dist < min_dist) {
+			if (i == 0 || dist < min_dist) {
 				min_dist = dist;
 				best_index = i;
 			}
@@ -114,13 +114,13 @@ public class VQ {
 		int i, j, k = 0;
 		float min_dist = 0;
 		int best_index = 0;
-		for(i = 0; i < entries; i++) {
+		for ( i = 0; i < entries; i++ ) {
 			float dist = 0;
-			for(j = 0; j < len; j++) {
+			for ( j = 0; j < len; j++ ) {
 				float tmp = in[j] - codebook[k++];
 				dist += tmp * tmp;
 			}
-			if(i == 0 || dist < min_dist) {
+			if (i == 0 || dist < min_dist) {
 				min_dist = dist;
 				best_index = i;
 			}
@@ -143,12 +143,12 @@ public class VQ {
 	 */
 	public static final void nbest(final float[] in, final int offset, final float[] codebook, final int len, final int entries, final float[] E, final int N, final int[] nbest, final float[] best_dist) {
 		int i, j, k, l = 0, used = 0;
-		for(i = 0; i < entries; i++) {
+		for ( i = 0; i < entries; i++ ) {
 			float dist = .5f * E[i];
-			for(j = 0; j < len; j++)
+			for ( j = 0; j < len; j++ )
 				dist -= in[offset + j] * codebook[l++];
-			if(i < N || dist < best_dist[N - 1]) {
-				for(k = N - 1; (k >= 1) && (k > used || dist < best_dist[k - 1]); k--) {
+			if (i < N || dist < best_dist[N - 1]) {
+				for ( k = N - 1; (k >= 1) && (k > used || dist < best_dist[k - 1]); k-- ) {
 					best_dist[k] = best_dist[k - 1];
 					nbest[k] = nbest[k - 1];
 				}
@@ -174,26 +174,26 @@ public class VQ {
 	 */
 	public static final void nbest_sign(final float[] in, final int offset, final float[] codebook, final int len, final int entries, final float[] E, final int N, final int[] nbest, final float[] best_dist) {
 		int i, j, k, l = 0, sign, used = 0;
-		for(i = 0; i < entries; i++) {
+		for ( i = 0; i < entries; i++ ) {
 			float dist = 0;
-			for(j = 0; j < len; j++)
+			for ( j = 0; j < len; j++ )
 				dist -= in[offset + j] * codebook[l++];
-			if(dist > 0) {
+			if (dist > 0) {
 				sign = 1;
 				dist = -dist;
 			} else {
 				sign = 0;
 			}
 			dist += .5 * E[i];
-			if(i < N || dist < best_dist[N - 1]) {
-				for(k = N - 1; (k >= 1) && (k > used || dist < best_dist[k - 1]); k--) {
+			if (i < N || dist < best_dist[N - 1]) {
+				for ( k = N - 1; (k >= 1) && (k > used || dist < best_dist[k - 1]); k-- ) {
 					best_dist[k] = best_dist[k - 1];
 					nbest[k] = nbest[k - 1];
 				}
 				best_dist[k] = dist;
 				nbest[k] = i;
 				used++;
-				if(sign != 0)
+				if (sign != 0)
 					nbest[k] += entries;
 			}
 		}

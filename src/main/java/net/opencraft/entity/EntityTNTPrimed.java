@@ -47,12 +47,12 @@ public class EntityTNTPrimed extends Entity {
 		this.motionX *= 0.9800000190734863;
 		this.motionY *= 0.9800000190734863;
 		this.motionZ *= 0.9800000190734863;
-		if(this.onGround) {
+		if (this.onGround) {
 			this.motionX *= 0.699999988079071;
 			this.motionZ *= 0.699999988079071;
 			this.motionY *= -0.5;
 		}
-		if(this.fuse-- <= 0) {
+		if (this.fuse-- <= 0) {
 			this.setEntityDead();
 			this.createExplosion();
 		} else {

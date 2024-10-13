@@ -35,10 +35,10 @@ public class GuiCreateWorld extends GuiScreen {
 		final String[] worldNames = World.getSaveNames(gameDir);
 		final int worldCount = worldNames.length;
 
-		for(int i = 0; i < worldCount; ++i) {
+		for ( int i = 0; i < worldCount; ++i ) {
 			final NBTTagCompound potentiallySavesFolderLocation = World.potentiallySavesFolderLocation(gameDir, worldNames[i]);
 
-			if(potentiallySavesFolderLocation == null) {
+			if (potentiallySavesFolderLocation == null) {
 				continue;
 			}
 			String stringrererer = (worldNames[i] + " (" + potentiallySavesFolderLocation.getLong("SizeOnDisk") / 1024L * 100L / 1024L / 100.0f + " MB)");
@@ -60,33 +60,33 @@ public class GuiCreateWorld extends GuiScreen {
 
 	@Override
 	protected void actionPerformed(final GuiButton iq) {
-		if(!iq.enabled) {
+		if (!iq.enabled) {
 			return;
 		}
-		if(iq.buttonId == -20) {
+		if (iq.buttonId == -20) {
 			final String[] worldNames = World.getSaveNames(OpenCraft.getGameDir());
 			int maximumWorldNumber = 0;
-			for(String worldName : worldNames) {
+			for ( String worldName : worldNames ) {
 				final int numberFromWorldName = Integer.parseInt(worldName.substring(5));
-				if(numberFromWorldName > maximumWorldNumber) {
+				if (numberFromWorldName > maximumWorldNumber) {
 					maximumWorldNumber = numberFromWorldName;
 				}
 			}
 			this.actionPerformed(maximumWorldNumber + 1);
-		} else if(iq.buttonId == -5) {
+		} else if (iq.buttonId == -5) {
 			this.id.displayGuiScreen(new GuiDeleteWorld(this));
-		} else if(iq.buttonId == -6) {
+		} else if (iq.buttonId == -6) {
 			this.id.displayGuiScreen(this.parentGuiScreen);
 		}
 
-		if(iq.buttonId >= 0) {
+		if (iq.buttonId >= 0) {
 			this.actionPerformed(iq.buttonId);
 		}
 	}
 
 	public void actionPerformed(final int integer) {
 		this.id.displayGuiScreen(null);
-		if(this.createClicked) {
+		if (this.createClicked) {
 			return;
 		}
 		this.createClicked = true;

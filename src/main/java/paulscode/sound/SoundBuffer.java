@@ -75,9 +75,9 @@ public class SoundBuffer {
 	 * @param maxLength Maximum size this buffer may be.
 	 */
 	public void trimData(int maxLength) {
-		if(audioData == null || maxLength == 0)
+		if (audioData == null || maxLength == 0)
 			audioData = null;
-		else if(audioData.length > maxLength) {
+		else if (audioData.length > maxLength) {
 			byte[] trimmedArray = new byte[maxLength];
 			System.arraycopy(audioData, 0, trimmedArray, 0, maxLength);
 			audioData = trimmedArray;

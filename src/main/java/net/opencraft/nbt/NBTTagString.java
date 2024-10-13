@@ -14,7 +14,7 @@ public class NBTTagString extends NBTBase {
 
 	public NBTTagString(final String string) {
 		this.stringValue = string;
-		if(string == null) {
+		if (string == null) {
 			throw new IllegalArgumentException("Empty string not allowed");
 		}
 	}

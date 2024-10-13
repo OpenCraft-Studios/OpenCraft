@@ -35,7 +35,7 @@ public class GuiButton extends GuiElement {
 	}
 
 	public void drawButton(final OpenCraft aw, final int integer2, final int integer3) {
-		if(!this.enabled2) {
+		if (!this.enabled2) {
 			return;
 		}
 		final FontRenderer fontRenderer = aw.font;
@@ -43,16 +43,16 @@ public class GuiButton extends GuiElement {
 		GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 		int n = 1;
 		final boolean b = integer2 >= this.xPosition && integer3 >= this.yPosition && integer2 < this.xPosition + this.width && integer3 < this.yPosition + this.height;
-		if(!this.enabled) {
+		if (!this.enabled) {
 			n = 0;
-		} else if(b) {
+		} else if (b) {
 			n = 2;
 		}
 		this.drawTexturedModalRect(this.xPosition, this.yPosition, 0, 46 + n * 20, this.width / 2, this.height);
 		this.drawTexturedModalRect(this.xPosition + this.width / 2, this.yPosition, 200 - this.width / 2, 46 + n * 20, this.width / 2, this.height);
-		if(!this.enabled) {
+		if (!this.enabled) {
 			this.drawCenteredString(fontRenderer, this.displayString, this.xPosition + this.width / 2, this.yPosition + (this.height - 8) / 2, -6250336);
-		} else if(b) {
+		} else if (b) {
 			this.drawCenteredString(fontRenderer, this.displayString, this.xPosition + this.width / 2, this.yPosition + (this.height - 8) / 2, 16777120);
 		} else {
 			this.drawCenteredString(fontRenderer, this.displayString, this.xPosition + this.width / 2, this.yPosition + (this.height - 8) / 2, 14737632);

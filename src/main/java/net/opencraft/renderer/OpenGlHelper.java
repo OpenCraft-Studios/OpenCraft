@@ -81,7 +81,7 @@ public class OpenGlHelper {
 		arbMultitexture = contextCapabilities.GL_ARB_multitexture && !contextCapabilities.OpenGL13;
 		arbTextureEnvCombine = contextCapabilities.GL_ARB_texture_env_combine && !contextCapabilities.OpenGL13;
 
-		if(arbMultitexture) {
+		if (arbMultitexture) {
 			logText = logText + "Using ARB_multitexture.\n";
 			defaultTexUnit = 33984;
 			lightmapTexUnit = 33985;
@@ -93,7 +93,7 @@ public class OpenGlHelper {
 			GL_TEXTURE2 = 33986;
 		}
 
-		if(arbTextureEnvCombine) {
+		if (arbTextureEnvCombine) {
 			logText = logText + "Using ARB_texture_env_combine.\n";
 			GL_COMBINE = 34160;
 			GL_INTERPOLATE = 34165;
@@ -141,10 +141,10 @@ public class OpenGlHelper {
 		openGL14 = contextCapabilities.OpenGL14 || contextCapabilities.GL_EXT_blend_func_separate;
 		framebufferSupported = openGL14 && (contextCapabilities.GL_ARB_framebuffer_object || contextCapabilities.GL_EXT_framebuffer_object || contextCapabilities.OpenGL30);
 
-		if(framebufferSupported) {
+		if (framebufferSupported) {
 			logText = logText + "Using framebuffer objects because ";
 
-			if(contextCapabilities.OpenGL30) {
+			if (contextCapabilities.OpenGL30) {
 				logText = logText + "OpenGL 3.0 is supported and separate blending is supported.\n";
 				framebufferType = 0;
 				GL_FRAMEBUFFER = 36160;
@@ -156,7 +156,7 @@ public class OpenGlHelper {
 				GL_FB_INCOMPLETE_MISS_ATTACH = 36055;
 				GL_FB_INCOMPLETE_DRAW_BUFFER = 36059;
 				GL_FB_INCOMPLETE_READ_BUFFER = 36060;
-			} else if(contextCapabilities.GL_ARB_framebuffer_object) {
+			} else if (contextCapabilities.GL_ARB_framebuffer_object) {
 				logText = logText + "ARB_framebuffer_object is supported and separate blending is supported.\n";
 				framebufferType = 1;
 				GL_FRAMEBUFFER = 36160;
@@ -168,7 +168,7 @@ public class OpenGlHelper {
 				GL_FB_INCOMPLETE_ATTACHMENT = 36054;
 				GL_FB_INCOMPLETE_DRAW_BUFFER = 36059;
 				GL_FB_INCOMPLETE_READ_BUFFER = 36060;
-			} else if(contextCapabilities.GL_EXT_framebuffer_object) {
+			} else if (contextCapabilities.GL_EXT_framebuffer_object) {
 				logText = logText + "EXT_framebuffer_object is supported.\n";
 				framebufferType = 2;
 				GL_FRAMEBUFFER = 36160;
@@ -194,8 +194,8 @@ public class OpenGlHelper {
 		shadersAvailable = openGL21 || contextCapabilities.GL_ARB_vertex_shader && contextCapabilities.GL_ARB_fragment_shader && contextCapabilities.GL_ARB_shader_objects;
 		logText = logText + "Shaders are " + (shadersAvailable ? "" : "not ") + "available because ";
 
-		if(shadersAvailable) {
-			if(contextCapabilities.OpenGL21) {
+		if (shadersAvailable) {
+			if (contextCapabilities.OpenGL21) {
 				logText = logText + "OpenGL 2.1 is supported.\n";
 				arbShaders = false;
 				GL_LINK_STATUS = 35714;
@@ -224,8 +224,8 @@ public class OpenGlHelper {
 		vboSupported = contextCapabilities.OpenGL15 || arbVbo;
 		logText = logText + "VBOs are " + (vboSupported ? "" : "not ") + "available because ";
 
-		if(vboSupported) {
-			if(arbVbo) {
+		if (vboSupported) {
+			if (arbVbo) {
 				logText = logText + "ARB_vertex_buffer_object is supported.\n";
 				GL_STATIC_DRAW = 35044;
 				GL_ARRAY_BUFFER = 34962;
@@ -238,8 +238,8 @@ public class OpenGlHelper {
 
 		ati = s.contains("ati");
 
-		if(ati) {
-			if(vboSupported) {
+		if (ati) {
+			if (vboSupported) {
 				vboSupportedAti = true;
 			} else {
 				// GameSettings.Options.RENDER_DISTANCE.setValueMax(16.0F);
@@ -261,7 +261,7 @@ public class OpenGlHelper {
 	}
 
 	public static void glAttachShader(int program, int shaderIn) {
-		if(arbShaders) {
+		if (arbShaders) {
 			ARBShaderObjects.glAttachObjectARB(program, shaderIn);
 		} else {
 			GL20.glAttachShader(program, shaderIn);
@@ -269,7 +269,7 @@ public class OpenGlHelper {
 	}
 
 	public static void glDeleteShader(int p_153180_0_) {
-		if(arbShaders) {
+		if (arbShaders) {
 			ARBShaderObjects.glDeleteObjectARB(p_153180_0_);
 		} else {
 			GL20.glDeleteShader(p_153180_0_);
@@ -284,7 +284,7 @@ public class OpenGlHelper {
 	}
 
 	public static void glShaderSource(int shaderIn, ByteBuffer string) {
-		if(arbShaders) {
+		if (arbShaders) {
 			ARBShaderObjects.glShaderSourceARB(shaderIn, string.toString());
 		} else {
 			GL20.glShaderSource(shaderIn, string.toString());
@@ -292,7 +292,7 @@ public class OpenGlHelper {
 	}
 
 	public static void glCompileShader(int shaderIn) {
-		if(arbShaders) {
+		if (arbShaders) {
 			ARBShaderObjects.glCompileShaderARB(shaderIn);
 		} else {
 			GL20.glCompileShader(shaderIn);
@@ -312,7 +312,7 @@ public class OpenGlHelper {
 	}
 
 	public static void glUseProgram(int program) {
-		if(arbShaders) {
+		if (arbShaders) {
 			ARBShaderObjects.glUseProgramObjectARB(program);
 		} else {
 			GL20.glUseProgram(program);
@@ -324,7 +324,7 @@ public class OpenGlHelper {
 	}
 
 	public static void glDeleteProgram(int program) {
-		if(arbShaders) {
+		if (arbShaders) {
 			ARBShaderObjects.glDeleteObjectARB(program);
 		} else {
 			GL20.glDeleteProgram(program);
@@ -332,7 +332,7 @@ public class OpenGlHelper {
 	}
 
 	public static void glLinkProgram(int program) {
-		if(arbShaders) {
+		if (arbShaders) {
 			ARBShaderObjects.glLinkProgramARB(program);
 		} else {
 			GL20.glLinkProgram(program);
@@ -344,7 +344,7 @@ public class OpenGlHelper {
 	}
 
 	public static void glUniform1(int location, IntBuffer values) {
-		if(arbShaders) {
+		if (arbShaders) {
 			ARBShaderObjects.glUniform1ivARB(location, values);
 		} else {
 			GL20.glUniform1iv(location, values);
@@ -352,7 +352,7 @@ public class OpenGlHelper {
 	}
 
 	public static void glUniform1i(int location, int v0) {
-		if(arbShaders) {
+		if (arbShaders) {
 			ARBShaderObjects.glUniform1iARB(location, v0);
 		} else {
 			GL20.glUniform1i(location, v0);
@@ -360,7 +360,7 @@ public class OpenGlHelper {
 	}
 
 	public static void glUniform1(int location, FloatBuffer values) {
-		if(arbShaders) {
+		if (arbShaders) {
 			ARBShaderObjects.glUniform1fvARB(location, values);
 		} else {
 			GL20.glUniform1fv(location, values);
@@ -368,7 +368,7 @@ public class OpenGlHelper {
 	}
 
 	public static void glUniform2(int location, IntBuffer values) {
-		if(arbShaders) {
+		if (arbShaders) {
 			ARBShaderObjects.glUniform2ivARB(location, values);
 		} else {
 			GL20.glUniform2iv(location, values);
@@ -376,7 +376,7 @@ public class OpenGlHelper {
 	}
 
 	public static void glUniform2(int location, FloatBuffer values) {
-		if(arbShaders) {
+		if (arbShaders) {
 			ARBShaderObjects.glUniform2fvARB(location, values);
 		} else {
 			GL20.glUniform2fv(location, values);
@@ -384,7 +384,7 @@ public class OpenGlHelper {
 	}
 
 	public static void glUniform3(int location, IntBuffer values) {
-		if(arbShaders) {
+		if (arbShaders) {
 			ARBShaderObjects.glUniform3ivARB(location, values);
 		} else {
 			GL20.glUniform3iv(location, values);
@@ -392,7 +392,7 @@ public class OpenGlHelper {
 	}
 
 	public static void glUniform3(int location, FloatBuffer values) {
-		if(arbShaders) {
+		if (arbShaders) {
 			ARBShaderObjects.glUniform3fvARB(location, values);
 		} else {
 			GL20.glUniform3fv(location, values);
@@ -400,7 +400,7 @@ public class OpenGlHelper {
 	}
 
 	public static void glUniform4(int location, IntBuffer values) {
-		if(arbShaders) {
+		if (arbShaders) {
 			ARBShaderObjects.glUniform4ivARB(location, values);
 		} else {
 			GL20.glUniform4iv(location, values);
@@ -408,7 +408,7 @@ public class OpenGlHelper {
 	}
 
 	public static void glUniform4(int location, FloatBuffer values) {
-		if(arbShaders) {
+		if (arbShaders) {
 			ARBShaderObjects.glUniform4fvARB(location, values);
 		} else {
 			GL20.glUniform4fv(location, values);
@@ -416,7 +416,7 @@ public class OpenGlHelper {
 	}
 
 	public static void glUniformMatrix2(int location, boolean transpose, FloatBuffer matrices) {
-		if(arbShaders) {
+		if (arbShaders) {
 			ARBShaderObjects.glUniformMatrix2fvARB(location, transpose, matrices);
 		} else {
 			GL20.glUniformMatrix2fv(location, transpose, matrices);
@@ -424,7 +424,7 @@ public class OpenGlHelper {
 	}
 
 	public static void glUniformMatrix3(int location, boolean transpose, FloatBuffer matrices) {
-		if(arbShaders) {
+		if (arbShaders) {
 			ARBShaderObjects.glUniformMatrix3fvARB(location, transpose, matrices);
 		} else {
 			GL20.glUniformMatrix3fv(location, transpose, matrices);
@@ -432,7 +432,7 @@ public class OpenGlHelper {
 	}
 
 	public static void glUniformMatrix4(int location, boolean transpose, FloatBuffer matrices) {
-		if(arbShaders) {
+		if (arbShaders) {
 			ARBShaderObjects.glUniformMatrix4fvARB(location, transpose, matrices);
 		} else {
 			GL20.glUniformMatrix4fv(location, transpose, matrices);
@@ -448,7 +448,7 @@ public class OpenGlHelper {
 	}
 
 	public static void glBindBuffer(int target, int buffer) {
-		if(arbVbo) {
+		if (arbVbo) {
 			ARBVertexBufferObject.glBindBufferARB(target, buffer);
 		} else {
 			GL15.glBindBuffer(target, buffer);
@@ -456,7 +456,7 @@ public class OpenGlHelper {
 	}
 
 	public static void glBufferData(int target, ByteBuffer data, int usage) {
-		if(arbVbo) {
+		if (arbVbo) {
 			ARBVertexBufferObject.glBufferDataARB(target, data, usage);
 		} else {
 			GL15.glBufferData(target, data, usage);
@@ -464,7 +464,7 @@ public class OpenGlHelper {
 	}
 
 	public static void glDeleteBuffers(int buffer) {
-		if(arbVbo) {
+		if (arbVbo) {
 			ARBVertexBufferObject.glDeleteBuffersARB(buffer);
 		} else {
 			GL15.glDeleteBuffers(buffer);
@@ -476,7 +476,7 @@ public class OpenGlHelper {
 	}
 
 	public static void glBindFramebuffer(int target, int framebufferIn) {
-		if(framebufferSupported) {
+		if (framebufferSupported) {
 			switch(framebufferType) {
 				case 0:
 					GL30.glBindFramebuffer(target, framebufferIn);
@@ -493,7 +493,7 @@ public class OpenGlHelper {
 	}
 
 	public static void glBindRenderbuffer(int target, int renderbuffer) {
-		if(framebufferSupported) {
+		if (framebufferSupported) {
 			switch(framebufferType) {
 				case 0:
 					GL30.glBindRenderbuffer(target, renderbuffer);
@@ -510,7 +510,7 @@ public class OpenGlHelper {
 	}
 
 	public static void glDeleteRenderbuffers(int renderbuffer) {
-		if(framebufferSupported) {
+		if (framebufferSupported) {
 			switch(framebufferType) {
 				case 0:
 					GL30.glDeleteRenderbuffers(renderbuffer);
@@ -527,7 +527,7 @@ public class OpenGlHelper {
 	}
 
 	public static void glDeleteFramebuffers(int framebufferIn) {
-		if(framebufferSupported) {
+		if (framebufferSupported) {
 			switch(framebufferType) {
 				case 0:
 					GL30.glDeleteFramebuffers(framebufferIn);
@@ -548,7 +548,7 @@ public class OpenGlHelper {
 	 * fbo, or returns -1 if not supported.
 	 */
 	public static int glGenFramebuffers() {
-		if(!framebufferSupported) {
+		if (!framebufferSupported) {
 			return -1;
 		} else {
 			switch(framebufferType) {
@@ -568,7 +568,7 @@ public class OpenGlHelper {
 	}
 
 	public static int glGenRenderbuffers() {
-		if(!framebufferSupported) {
+		if (!framebufferSupported) {
 			return -1;
 		} else {
 			switch(framebufferType) {
@@ -588,7 +588,7 @@ public class OpenGlHelper {
 	}
 
 	public static void glRenderbufferStorage(int target, int internalFormat, int width, int height) {
-		if(framebufferSupported) {
+		if (framebufferSupported) {
 			switch(framebufferType) {
 				case 0:
 					GL30.glRenderbufferStorage(target, internalFormat, width, height);
@@ -605,7 +605,7 @@ public class OpenGlHelper {
 	}
 
 	public static void glFramebufferRenderbuffer(int target, int attachment, int renderBufferTarget, int renderBuffer) {
-		if(framebufferSupported) {
+		if (framebufferSupported) {
 			switch(framebufferType) {
 				case 0:
 					GL30.glFramebufferRenderbuffer(target, attachment, renderBufferTarget, renderBuffer);
@@ -622,7 +622,7 @@ public class OpenGlHelper {
 	}
 
 	public static int glCheckFramebufferStatus(int target) {
-		if(!framebufferSupported) {
+		if (!framebufferSupported) {
 			return -1;
 		} else {
 			switch(framebufferType) {
@@ -642,7 +642,7 @@ public class OpenGlHelper {
 	}
 
 	public static void glFramebufferTexture2D(int target, int attachment, int textarget, int texture, int level) {
-		if(framebufferSupported) {
+		if (framebufferSupported) {
 			switch(framebufferType) {
 				case 0:
 					GL30.glFramebufferTexture2D(target, attachment, textarget, texture, level);
@@ -662,7 +662,7 @@ public class OpenGlHelper {
 	 * Sets the current lightmap texture to the specified OpenGL constant
 	 */
 	public static void setActiveTexture(int texture) {
-		if(arbMultitexture) {
+		if (arbMultitexture) {
 			ARBMultitexture.glActiveTextureARB(texture);
 		} else {
 			GL13.glActiveTexture(texture);
@@ -673,7 +673,7 @@ public class OpenGlHelper {
 	 * Sets the current lightmap texture to the specified OpenGL constant
 	 */
 	public static void setClientActiveTexture(int texture) {
-		if(arbMultitexture) {
+		if (arbMultitexture) {
 			ARBMultitexture.glClientActiveTextureARB(texture);
 		} else {
 			GL13.glClientActiveTexture(texture);
@@ -684,7 +684,7 @@ public class OpenGlHelper {
 	 * Sets the current coordinates of the given lightmap texture
 	 */
 	public static void setLightmapTextureCoords(int target, float p_77475_1_, float p_77475_2_) {
-		if(arbMultitexture) {
+		if (arbMultitexture) {
 			ARBMultitexture.glMultiTexCoord2fARB(target, p_77475_1_, p_77475_2_);
 		} else {
 			GL13.glMultiTexCoord2f(target, p_77475_1_, p_77475_2_);
@@ -692,8 +692,8 @@ public class OpenGlHelper {
 	}
 
 	public static void glBlendFunc(int sFactorRGB, int dFactorRGB, int sfactorAlpha, int dfactorAlpha) {
-		if(openGL14) {
-			if(extBlendFuncSeparate) {
+		if (openGL14) {
+			if (extBlendFuncSeparate) {
 				EXTBlendFuncSeparate.glBlendFuncSeparateEXT(sFactorRGB, dFactorRGB, sfactorAlpha, dfactorAlpha);
 			} else {
 				GL14.glBlendFuncSeparate(sFactorRGB, dFactorRGB, sfactorAlpha, dfactorAlpha);

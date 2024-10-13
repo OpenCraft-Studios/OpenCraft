@@ -32,28 +32,28 @@ public class RenderItem extends Render<EntityItem> {
 		final float n = sin((entityLiving.age + nya2) / 10.0f + entityLiving.hoverStart) * 0.1f + 0.1f;
 		final float n2 = toDegrees((entityLiving.age + nya2) / 20.0f + entityLiving.hoverStart);
 		int n3 = 1;
-		if(entityLiving.item.stackSize > 1) {
+		if (entityLiving.item.stackSize > 1) {
 			n3 = 2;
 		}
-		if(entityLiving.item.stackSize > 5) {
+		if (entityLiving.item.stackSize > 5) {
 			n3 = 3;
 		}
-		if(entityLiving.item.stackSize > 20) {
+		if (entityLiving.item.stackSize > 20) {
 			n3 = 4;
 		}
 		GL11.glTranslatef((float) xCoord, (float) sqrt_double + n, (float) yCoord);
 		GL11.glEnable(32826);
-		if(item.itemID < 256 && Block.blocksList[item.itemID].getRenderType() == 0) {
+		if (item.itemID < 256 && Block.blocksList[item.itemID].getRenderType() == 0) {
 			GL11.glRotatef(n2, 0.0f, 1.0f, 0.0f);
 			this.loadTexture("/assets/terrain.png");
 			float n4 = 0.25f;
-			if(!Block.blocksList[item.itemID].renderAsNormalBlock() && item.itemID != Block.slabSingle.blockID) {
+			if (!Block.blocksList[item.itemID].renderAsNormalBlock() && item.itemID != Block.slabSingle.blockID) {
 				n4 = 0.5f;
 			}
 			GL11.glScalef(n4, n4, n4);
-			for(int i = 0; i < n3; ++i) {
+			for ( int i = 0; i < n3; ++i ) {
 				GL11.glPushMatrix();
-				if(i > 0) {
+				if (i > 0) {
 					final float n5 = (this.random.nextFloat() * 2.0f - 1.0f) * 0.2f / n4;
 					final float n6 = (this.random.nextFloat() * 2.0f - 1.0f) * 0.2f / n4;
 					final float n7 = (this.random.nextFloat() * 2.0f - 1.0f) * 0.2f / n4;
@@ -65,7 +65,7 @@ public class RenderItem extends Render<EntityItem> {
 		} else {
 			GL11.glScalef(0.5f, 0.5f, 0.5f);
 			final int iconIndex = item.getIconIndex();
-			if(item.itemID < 256) {
+			if (item.itemID < 256) {
 				this.loadTexture("/assets/terrain.png");
 			} else {
 				this.loadTexture("/assets/gui/items.png");
@@ -78,9 +78,9 @@ public class RenderItem extends Render<EntityItem> {
 			final float n9 = 1.0f;
 			final float n10 = 0.5f;
 			final float n11 = 0.25f;
-			for(int j = 0; j < n3; ++j) {
+			for ( int j = 0; j < n3; ++j ) {
 				GL11.glPushMatrix();
-				if(j > 0) {
+				if (j > 0) {
 					GL11.glTranslatef((this.random.nextFloat() * 2.0f - 1.0f) * 0.3f, (this.random.nextFloat() * 2.0f - 1.0f) * 0.3f, (this.random.nextFloat() * 2.0f - 1.0f) * 0.3f);
 				}
 				GL11.glRotatef(180.0f - this.renderManager.playerViewY, 0.0f, 1.0f, 0.0f);
@@ -99,10 +99,10 @@ public class RenderItem extends Render<EntityItem> {
 	}
 
 	public void drawItemIntoGui(final FontRenderer ej, final Renderer id, final ItemStack hw, final int integer4, final int integer5) {
-		if(hw == null) {
+		if (hw == null) {
 			return;
 		}
-		if(hw.itemID < 256 && Block.blocksList[hw.itemID].getRenderType() == 0) {
+		if (hw.itemID < 256 && Block.blocksList[hw.itemID].getRenderType() == 0) {
 			final int itemID = hw.itemID;
 			id.bindTexture(id.loadTexture("/assets/terrain.png"));
 			final Block gs = Block.blocksList[itemID];
@@ -115,9 +115,9 @@ public class RenderItem extends Render<EntityItem> {
 			GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 			this.renderBlocks.renderBlockOnInventory(gs);
 			GL11.glPopMatrix();
-		} else if(hw.getIconIndex() >= 0) {
+		} else if (hw.getIconIndex() >= 0) {
 			GL11.glDisable(2896);
-			if(hw.itemID < 256) {
+			if (hw.itemID < 256) {
 				id.bindTexture(id.loadTexture("/assets/terrain.png"));
 			} else {
 				id.bindTexture(id.loadTexture("/assets/gui/items.png"));
@@ -128,10 +128,10 @@ public class RenderItem extends Render<EntityItem> {
 	}
 
 	public void renderItemOverlayIntoGUI(final FontRenderer ej, final Renderer id, final ItemStack hw, final int integer4, final int integer5) {
-		if(hw == null) {
+		if (hw == null) {
 			return;
 		}
-		if(hw.stackSize > 1) {
+		if (hw.stackSize > 1) {
 			final String string = new StringBuilder().append("").append(hw.stackSize).toString();
 			GL11.glDisable(2896);
 			GL11.glDisable(2929);
@@ -139,7 +139,7 @@ public class RenderItem extends Render<EntityItem> {
 			GL11.glEnable(2896);
 			GL11.glEnable(2929);
 		}
-		if(hw.itemDamage > 0) {
+		if (hw.itemDamage > 0) {
 			final int integer6 = 13 - hw.itemDamage * 13 / hw.isItemStackDamageable();
 			final int n = 255 - hw.itemDamage * 255 / hw.isItemStackDamageable();
 			GL11.glDisable(2896);

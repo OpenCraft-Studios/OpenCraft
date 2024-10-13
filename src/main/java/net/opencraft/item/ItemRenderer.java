@@ -50,10 +50,10 @@ public class ItemRenderer {
 		GL11.glPopMatrix();
 		final float lightBrightness = this.a.world.getLightBrightness(Mth.floor_double(thePlayer.posX), Mth.floor_double(thePlayer.posY), Mth.floor_double(thePlayer.posZ));
 		GL11.glColor4f(lightBrightness, lightBrightness, lightBrightness, 1.0f);
-		if(this.b != null) {
+		if (this.b != null) {
 			GL11.glPushMatrix();
 			final float n2 = 0.8f;
-			if(this.f) {
+			if (this.f) {
 				final float n3 = (this.e + float1) / 8.0f;
 				final float n4 = sin(n3 * PI_f);
 				final float n5 = sin(sqrt(n3) * PI_f);
@@ -62,7 +62,7 @@ public class ItemRenderer {
 			GL11.glTranslatef(0.7f * n2, -0.65f * n2 - (1.0f - n) * 0.6f, -0.9f * n2);
 			GL11.glRotatef(45.0f, 0.0f, 1.0f, 0.0f);
 			GL11.glEnable(32826);
-			if(this.f) {
+			if (this.f) {
 				final float n3 = (this.e + float1) / 8.0f;
 				final float n4 = sin(n3 * n3 * PI_f);
 				final float n5 = sin(sqrt(n3) * PI_f);
@@ -72,11 +72,11 @@ public class ItemRenderer {
 			}
 			final float n3 = 0.4f;
 			GL11.glScalef(n3, n3, n3);
-			if(this.b.itemID < 256 && Block.blocksList[this.b.itemID].getRenderType() == 0) {
+			if (this.b.itemID < 256 && Block.blocksList[this.b.itemID].getRenderType() == 0) {
 				GL11.glBindTexture(3553, this.a.renderer.loadTexture("/assets/terrain.png"));
 				this.g.renderBlockOnInventory(Block.blocksList[this.b.itemID]);
 			} else {
-				if(this.b.itemID < 256) {
+				if (this.b.itemID < 256) {
 					GL11.glBindTexture(3553, this.a.renderer.loadTexture("/assets/terrain.png"));
 				} else {
 					GL11.glBindTexture(3553, this.a.renderer.loadTexture("/assets/gui/items.png"));
@@ -113,7 +113,7 @@ public class ItemRenderer {
 				instance.draw();
 				instance.beginQuads();
 				instance.setNormal(-1.0f, 0.0f, 0.0f);
-				for(int i = 0; i < 16; ++i) {
+				for ( int i = 0; i < 16; ++i ) {
 					final float n14 = i / 16.0f;
 					final float n15 = n6 + (n5 - n6) * n14 - 0.001953125f;
 					final float n16 = n9 * n14;
@@ -125,7 +125,7 @@ public class ItemRenderer {
 				instance.draw();
 				instance.beginQuads();
 				instance.setNormal(1.0f, 0.0f, 0.0f);
-				for(int i = 0; i < 16; ++i) {
+				for ( int i = 0; i < 16; ++i ) {
 					final float n14 = i / 16.0f;
 					final float n15 = n6 + (n5 - n6) * n14 - 0.001953125f;
 					final float n16 = n9 * n14 + 0.0625f;
@@ -137,7 +137,7 @@ public class ItemRenderer {
 				instance.draw();
 				instance.beginQuads();
 				instance.setNormal(0.0f, 1.0f, 0.0f);
-				for(int i = 0; i < 16; ++i) {
+				for ( int i = 0; i < 16; ++i ) {
 					final float n14 = i / 16.0f;
 					final float n15 = n8 + (n7 - n8) * n14 - 0.001953125f;
 					final float n16 = n9 * n14 + 0.0625f;
@@ -149,7 +149,7 @@ public class ItemRenderer {
 				instance.draw();
 				instance.beginQuads();
 				instance.setNormal(0.0f, -1.0f, 0.0f);
-				for(int i = 0; i < 16; ++i) {
+				for ( int i = 0; i < 16; ++i ) {
 					final float n14 = i / 16.0f;
 					final float n15 = n8 + (n7 - n8) * n14 - 0.001953125f;
 					final float n16 = n9 * n14;
@@ -165,7 +165,7 @@ public class ItemRenderer {
 		} else {
 			GL11.glPushMatrix();
 			final float n2 = 0.8f;
-			if(this.f) {
+			if (this.f) {
 				final float n3 = (this.e + float1) / 8.0f;
 				final float n4 = sin(n3 * PI_f);
 				final float n5 = sin(sqrt(n3) * PI_f);
@@ -174,7 +174,7 @@ public class ItemRenderer {
 			GL11.glTranslatef(0.8f * n2, -0.75f * n2 - (1.0f - n) * 0.6f, -0.9f * n2);
 			GL11.glRotatef(45.0f, 0.0f, 1.0f, 0.0f);
 			GL11.glEnable(32826);
-			if(this.f) {
+			if (this.f) {
 				final float n3 = (this.e + float1) / 8.0f;
 				final float n4 = sin(n3 * n3 * PI_f);
 				final float n5 = sin(sqrt(n3) * PI_f);
@@ -200,22 +200,22 @@ public class ItemRenderer {
 
 	public void renderOverlays(final float float1) {
 		GL11.glDisable(3008);
-		if(this.a.player.fire > 0) {
+		if (this.a.player.fire > 0) {
 			final int xCoord = this.a.renderer.loadTexture("/assets/terrain.png");
 			GL11.glBindTexture(3553, xCoord);
 			this.d(float1);
 		}
-		if(this.a.world.player.isEntityInsideOpaqueBlock()) {
+		if (this.a.world.player.isEntityInsideOpaqueBlock()) {
 			final int xCoord = Mth.floor_double(this.a.player.posX);
 			final int floor_double = Mth.floor_double(this.a.player.posY);
 			final int floor_double2 = Mth.floor_double(this.a.player.posZ);
 			GL11.glBindTexture(3553, this.a.renderer.loadTexture("/assets/terrain.png"));
 			final int blockId = this.a.world.getBlockId(xCoord, floor_double, floor_double2);
-			if(Block.blocksList[blockId] != null) {
+			if (Block.blocksList[blockId] != null) {
 				this.a(float1, Block.blocksList[blockId].getBlockTextureFromSide(2));
 			}
 		}
-		if(this.a.player.isInsideOfMaterial(Material.WATER)) {
+		if (this.a.player.isInsideOfMaterial(Material.WATER)) {
 			final int xCoord = this.a.renderer.loadTexture("/assets/water.png");
 			GL11.glBindTexture(3553, xCoord);
 			this.c(float1);
@@ -281,7 +281,7 @@ public class ItemRenderer {
 		GL11.glEnable(3042);
 		GL11.glBlendFunc(770, 771);
 		final float n = 1.0f;
-		for(int i = 0; i < 2; ++i) {
+		for ( int i = 0; i < 2; ++i ) {
 			GL11.glPushMatrix();
 			final int n2 = Block.fire.blockIndexInTexture + i * 16;
 			final int n3 = (n2 & 0xF) << 4;
@@ -311,9 +311,9 @@ public class ItemRenderer {
 
 	public void updateEquippedItem() {
 		this.d = this.c;
-		if(this.f) {
+		if (this.f) {
 			++this.e;
-			if(this.e == 8) {
+			if (this.e == 8) {
 				this.e = 0;
 				this.f = false;
 			}
@@ -321,14 +321,14 @@ public class ItemRenderer {
 		final ItemStack currentItem = this.a.player.inventory.getCurrentItem();
 		final float n = 0.4f;
 		float n2 = ((currentItem == this.b) ? 1.0f : 0.0f) - this.c;
-		if(n2 < -n) {
+		if (n2 < -n) {
 			n2 = -n;
 		}
-		if(n2 > n) {
+		if (n2 > n) {
 			n2 = n;
 		}
 		this.c += n2;
-		if(this.c < 0.1f) {
+		if (this.c < 0.1f) {
 			this.b = currentItem;
 		}
 	}

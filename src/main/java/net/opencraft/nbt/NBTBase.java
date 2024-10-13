@@ -20,7 +20,7 @@ public abstract class NBTBase {
 	public abstract byte getType();
 
 	public String getKey() {
-		if(this.key == null) {
+		if (this.key == null) {
 			return "";
 		}
 		return this.key;
@@ -35,7 +35,7 @@ public abstract class NBTBase {
 		try {
 
 			final byte byte1 = dataInput.readByte();
-			if(byte1 == 0) {
+			if (byte1 == 0) {
 				return new NBTTagEnd();
 			}
 			final NBTBase tagOfType = createTagOfType(byte1);
@@ -52,7 +52,7 @@ public abstract class NBTBase {
 		try {
 
 			dataOutput.writeByte((int) hm.getType());
-			if(hm.getType() == 0) {
+			if (hm.getType() == 0) {
 				return;
 			}
 			dataOutput.writeUTF(hm.getKey());

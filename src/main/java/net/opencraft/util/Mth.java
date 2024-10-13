@@ -23,7 +23,7 @@ public class Mth {
 	}
 
 	public static int roundUp(int number, int interval) {
-		if(interval == 0)
+		if (interval == 0)
 			return 0;
 
 		int mod = Math.floorMod(number, interval);

@@ -29,10 +29,10 @@ public class GuiMultiplayer extends GuiScreen {
 
 	@Override
 	protected void actionPerformed(final GuiButton iq) {
-		if(!iq.enabled) {
+		if (!iq.enabled) {
 			return;
 		}
-		if(iq.buttonId == -6) {
+		if (iq.buttonId == -6) {
 			this.id.displayGuiScreen(this.parentGuiScreen);
 		}
 	}

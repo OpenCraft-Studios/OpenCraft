@@ -18,14 +18,14 @@ public class NBTTagList extends NBTBase {
 
 	@Override
 	public void writeTagContents(final DataOutput dataOutput) throws IOException {
-		if(this.tagList.size() > 0) {
+		if (this.tagList.size() > 0) {
 			this.tagType = ((NBTBase) this.tagList.get(0)).getType();
 		} else {
 			this.tagType = 1;
 		}
 		dataOutput.writeByte((int) this.tagType);
 		dataOutput.writeInt(this.tagList.size());
-		for(int i = 0; i < this.tagList.size(); ++i) {
+		for ( int i = 0; i < this.tagList.size(); ++i ) {
 			((NBTBase) this.tagList.get(i)).writeTagContents(dataOutput);
 		}
 	}
@@ -35,7 +35,7 @@ public class NBTTagList extends NBTBase {
 		this.tagType = dataInput.readByte();
 		final int int1 = dataInput.readInt();
 		this.tagList = (List) new ArrayList();
-		for(int i = 0; i < int1; ++i) {
+		for ( int i = 0; i < int1; ++i ) {
 			final NBTBase tagOfType = NBTBase.createTagOfType(this.tagType);
 			tagOfType.readTagContents(dataInput);
 			this.tagList.add(tagOfType);

@@ -24,16 +24,16 @@ public class TileEntityChest extends TileEntity implements IInventory {
 	}
 
 	public ItemStack decrStackSize(final int integer1, final int integer2) {
-		if(this.chestContents[integer1] == null) {
+		if (this.chestContents[integer1] == null) {
 			return null;
 		}
-		if(this.chestContents[integer1].stackSize <= integer2) {
+		if (this.chestContents[integer1].stackSize <= integer2) {
 			final ItemStack itemStack = this.chestContents[integer1];
 			this.chestContents[integer1] = null;
 			return itemStack;
 		}
 		final ItemStack splitStack = this.chestContents[integer1].splitStack(integer2);
-		if(this.chestContents[integer1].stackSize == 0) {
+		if (this.chestContents[integer1].stackSize == 0) {
 			this.chestContents[integer1] = null;
 		}
 		return splitStack;
@@ -41,7 +41,7 @@ public class TileEntityChest extends TileEntity implements IInventory {
 
 	public void setInventorySlotContents(final int integer, final ItemStack hw) {
 		this.chestContents[integer] = hw;
-		if(hw != null && hw.stackSize > this.getInventoryStackLimit()) {
+		if (hw != null && hw.stackSize > this.getInventoryStackLimit()) {
 			hw.stackSize = this.getInventoryStackLimit();
 		}
 	}
@@ -55,10 +55,10 @@ public class TileEntityChest extends TileEntity implements IInventory {
 		super.readFromNBT(ae);
 		final NBTTagList tagList = ae.getTagList("Items");
 		this.chestContents = new ItemStack[this.getSizeInventory()];
-		for(int i = 0; i < tagList.tagCount(); ++i) {
+		for ( int i = 0; i < tagList.tagCount(); ++i ) {
 			final NBTTagCompound ae2 = (NBTTagCompound) tagList.tagAt(i);
 			final int n = ae2.getByte("Slot") & 0xFF;
-			if(n >= 0 && n < this.chestContents.length) {
+			if (n >= 0 && n < this.chestContents.length) {
 				this.chestContents[n] = new ItemStack(ae2);
 			}
 		}
@@ -68,8 +68,8 @@ public class TileEntityChest extends TileEntity implements IInventory {
 	public void writeToNBT(final NBTTagCompound ae) {
 		super.writeToNBT(ae);
 		final NBTTagList hm = new NBTTagList();
-		for(int i = 0; i < this.chestContents.length; ++i) {
-			if(this.chestContents[i] != null) {
+		for ( int i = 0; i < this.chestContents.length; ++i ) {
+			if (this.chestContents[i] != null) {
 				final NBTTagCompound nbtTagCompound = new NBTTagCompound();
 				nbtTagCompound.setByte("Slot", (byte) i);
 				this.chestContents[i].writeToNBT(nbtTagCompound);

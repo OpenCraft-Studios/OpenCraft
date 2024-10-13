@@ -44,16 +44,16 @@ public class DownloadResourcesJob implements Job {
 	public int loadSounds(final URL resourceURL) throws IOException {
 		int count = 0;
 
-		if(!resourceURL.getFile().contains("jar")) {
+		if (!resourceURL.getFile().contains("jar")) {
 			File file = new File(resourceURL.getFile());
-			if(file.isDirectory()) {
+			if (file.isDirectory()) {
 				File soundsDir = new File(file, SOUNDS_PATH);
-				if(soundsDir.exists()) {
+				if (soundsDir.exists()) {
 					List<File> filesToCheck = new ArrayList<>();
 					filesToCheck.add(soundsDir);
 					while(!filesToCheck.isEmpty()) {
 						File f = filesToCheck.removeFirst();
-						if(f.isDirectory()) {
+						if (f.isDirectory()) {
 							Collections.addAll(filesToCheck, f.listFiles());
 						} else {
 							oc.sndManager.registerSound(f.toURI().toURL());
@@ -67,11 +67,11 @@ public class DownloadResourcesJob implements Job {
 			zip = new ZipInputStream(resourceURL.openStream());
 			while(true) {
 				ZipEntry e = zip.getNextEntry();
-				if(e == null) {
+				if (e == null) {
 					break;
 				}
 				String name = e.getName();
-				if(name.startsWith(SOUNDS_PATH) && !e.isDirectory()) {
+				if (name.startsWith(SOUNDS_PATH) && !e.isDirectory()) {
 					oc.sndManager.registerSound(getClass().getClassLoader().getResource(name));
 					count++;
 				}
@@ -79,7 +79,7 @@ public class DownloadResourcesJob implements Job {
 			zip.close();
 		}
 
-		if(count == 0) {
+		if (count == 0) {
 			throw new IOException("No sounds found in resources!" + resourceURL);
 		}
 		return count;

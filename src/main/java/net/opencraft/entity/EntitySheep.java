@@ -18,9 +18,9 @@ public class EntitySheep extends EntityAnimal {
 
 	@Override
 	public boolean attackEntityFrom(final Entity entity, final int nya1) {
-		if(!this.sheared && entity instanceof EntityLiving) {
+		if (!this.sheared && entity instanceof EntityLiving) {
 			this.sheared = true;
-			for(int n = 1 + this.rand.nextInt(3), i = 0; i < n; ++i) {
+			for ( int n = 1 + this.rand.nextInt(3), i = 0; i < n; ++i ) {
 				final EntityItem entityDropItem;
 				final EntityItem entityItem = entityDropItem = this.entityDropItem(Block.woolGray.blockID, 1, 1.0f);
 				entityDropItem.motionY += this.rand.nextFloat() * 0.05f;

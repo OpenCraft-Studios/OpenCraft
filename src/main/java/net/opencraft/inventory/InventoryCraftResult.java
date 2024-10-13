@@ -24,7 +24,7 @@ public class InventoryCraftResult implements IInventory {
 	}
 
 	public ItemStack decrStackSize(final int integer1, final int integer2) {
-		if(this.a[integer1] != null) {
+		if (this.a[integer1] != null) {
 			final ItemStack itemStack = this.a[integer1];
 			this.a[integer1] = null;
 			return itemStack;

@@ -98,9 +98,9 @@ public class NoiseSearch extends CbSearch {
 		float[] tmp = new float[nsf];
 		Filters.residue_percep_zero(target, 0, ak, awk1, awk2, tmp, nsf, p);
 
-		for(i = 0; i < nsf; i++)
+		for ( i = 0; i < nsf; i++ )
 			exc[es + i] += tmp[i];
-		for(i = 0; i < nsf; i++)
+		for ( i = 0; i < nsf; i++ )
 			target[i] = 0;
 	}
 
@@ -113,7 +113,7 @@ public class NoiseSearch extends CbSearch {
 	 * @param bits - Speex bits buffer.
 	 */
 	public final void unquant(float[] exc, int es, int nsf, Bits bits) {
-		for(int i = 0; i < nsf; i++) {
+		for ( int i = 0; i < nsf; i++ ) {
 			exc[es + i] += (float) (3.0 * (Math.random() - .5));
 		}
 	}

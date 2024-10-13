@@ -110,12 +110,12 @@ public abstract class Entity {
 	}
 
 	protected void preparePlayerToSpawn() {
-		if(this.world == null) {
+		if (this.world == null) {
 			return;
 		}
 		while(this.posY > 0.0) {
 			this.setPosition(this.posX, this.posY, this.posZ);
-			if(this.world.getCollidingBoundingBoxes(this, this.boundingBox).size() == 0) {
+			if (this.world.getCollidingBoundingBoxes(this, this.boundingBox).size() == 0) {
 				break;
 			}
 			++this.posY;
@@ -155,10 +155,10 @@ public abstract class Entity {
 		final float rotationYaw = this.rotationYaw;
 		this.rotationYaw += (float) (nya1 * 0.15);
 		this.rotationPitch -= (float) (nya2 * 0.15);
-		if(this.rotationPitch < -90.0f) {
+		if (this.rotationPitch < -90.0f) {
 			this.rotationPitch = -90.0f;
 		}
-		if(this.rotationPitch > 90.0f) {
+		if (this.rotationPitch > 90.0f) {
 			this.rotationPitch = 90.0f;
 		}
 		this.prevRotationPitch += this.rotationPitch - rotationPitch;
@@ -170,7 +170,7 @@ public abstract class Entity {
 	}
 
 	public void onEntityUpdate() {
-		if(this.ridingEntity != null && this.ridingEntity.isDead) {
+		if (this.ridingEntity != null && this.ridingEntity.isDead) {
 			this.ridingEntity = null;
 		}
 		++this.ticksExisted;
@@ -180,20 +180,20 @@ public abstract class Entity {
 		this.prevPosZ = this.posZ;
 		this.prevRotationPitch = this.rotationPitch;
 		this.prevRotationYaw = this.rotationYaw;
-		if(this.handleWaterMovement()) {
-			if(!this.inWater && !this.isFirstUpdate) {
+		if (this.handleWaterMovement()) {
+			if (!this.inWater && !this.isFirstUpdate) {
 				float volume = (float) (sqrt(this.motionX * this.motionX * 0.20000000298023224 + this.motionY * this.motionY + this.motionZ * this.motionZ * 0.20000000298023224) * 0.2f);
-				if(volume > 1.0f) {
+				if (volume > 1.0f) {
 					volume = 1.0f;
 				}
 				this.world.playSound(this, "random.splash", volume, 1.0f + (this.rand.nextFloat() - this.rand.nextFloat()) * 0.4f);
 				final float n = (float) Mth.floor_double(this.boundingBox.minY);
-				for(int n2 = 0; n2 < 1.0f + this.width * 20.0f; ++n2) {
+				for ( int n2 = 0; n2 < 1.0f + this.width * 20.0f; ++n2 ) {
 					final float n3 = (this.rand.nextFloat() * 2.0f - 1.0f) * this.width;
 					final float n4 = (this.rand.nextFloat() * 2.0f - 1.0f) * this.width;
 					this.world.spawnParticle("bubble", this.posX + n3, (double) (n + 1.0f), this.posZ + n4, this.motionX, this.motionY - this.rand.nextFloat() * 0.2f, this.motionZ);
 				}
-				for(int n2 = 0; n2 < 1.0f + this.width * 20.0f; ++n2) {
+				for ( int n2 = 0; n2 < 1.0f + this.width * 20.0f; ++n2 ) {
 					final float n3 = (this.rand.nextFloat() * 2.0f - 1.0f) * this.width;
 					final float n4 = (this.rand.nextFloat() * 2.0f - 1.0f) * this.width;
 					this.world.spawnParticle("splash", this.posX + n3, (double) (n + 1.0f), this.posZ + n4, this.motionX, this.motionY, this.motionZ);
@@ -205,17 +205,17 @@ public abstract class Entity {
 		} else {
 			this.inWater = false;
 		}
-		if(this.fire > 0) {
-			if(this.fire % 20 == 0) {
+		if (this.fire > 0) {
+			if (this.fire % 20 == 0) {
 				this.attackEntityFrom(null, 1);
 			}
 			--this.fire;
 		}
-		if(this.handleLavaMovement()) {
+		if (this.handleLavaMovement()) {
 			this.attackEntityFrom(null, 10);
 			this.fire = 600;
 		}
-		if(this.posY < -64.0) {
+		if (this.posY < -64.0) {
 			this.kill();
 		}
 		this.isFirstUpdate = false;
@@ -231,7 +231,7 @@ public abstract class Entity {
 	}
 
 	public void moveEntity(double xCoord, double yCoord, double zCoord) {
-		if(this.noClip) {
+		if (this.noClip) {
 			this.boundingBox.offset(xCoord, yCoord, zCoord);
 			this.posX = (this.boundingBox.minX + this.boundingBox.maxX) / 2.0;
 			this.posY = this.boundingBox.minY + this.yOffset - this.ySize;
@@ -245,29 +245,29 @@ public abstract class Entity {
 		final double n3 = zCoord;
 		final AABB copy = this.boundingBox.copy();
 		final List collidingBoundingBoxes = this.world.getCollidingBoundingBoxes(this, this.boundingBox.addCoord(xCoord, yCoord, zCoord));
-		for(int i = 0; i < collidingBoundingBoxes.size(); ++i) {
+		for ( int i = 0; i < collidingBoundingBoxes.size(); ++i ) {
 			yCoord = ((AABB) collidingBoundingBoxes.get(i)).calculateYOffset(this.boundingBox, yCoord);
 		}
 		this.boundingBox.offset(0.0, yCoord, 0.0);
-		if(!this.field_9293_aM && n2 != yCoord) {
+		if (!this.field_9293_aM && n2 != yCoord) {
 			yCoord = (xCoord = (zCoord = 0.0));
 		}
 		final boolean b = this.onGround || (n2 != yCoord && n2 < 0.0);
-		for(int j = 0; j < collidingBoundingBoxes.size(); ++j) {
+		for ( int j = 0; j < collidingBoundingBoxes.size(); ++j ) {
 			xCoord = ((AABB) collidingBoundingBoxes.get(j)).calculateXOffset(this.boundingBox, xCoord);
 		}
 		this.boundingBox.offset(xCoord, 0.0, 0.0);
-		if(!this.field_9293_aM && n != xCoord) {
+		if (!this.field_9293_aM && n != xCoord) {
 			yCoord = (xCoord = (zCoord = 0.0));
 		}
-		for(int j = 0; j < collidingBoundingBoxes.size(); ++j) {
+		for ( int j = 0; j < collidingBoundingBoxes.size(); ++j ) {
 			zCoord = ((AABB) collidingBoundingBoxes.get(j)).calculateZOffset(this.boundingBox, zCoord);
 		}
 		this.boundingBox.offset(0.0, 0.0, zCoord);
-		if(!this.field_9293_aM && n3 != zCoord) {
+		if (!this.field_9293_aM && n3 != zCoord) {
 			yCoord = (xCoord = (zCoord = 0.0));
 		}
-		if(this.stepHeight > 0.0f && b && this.ySize < 0.05f && (n != xCoord || n3 != zCoord)) {
+		if (this.stepHeight > 0.0f && b && this.ySize < 0.05f && (n != xCoord || n3 != zCoord)) {
 			final double n4 = xCoord;
 			final double n5 = yCoord;
 			final double n6 = zCoord;
@@ -277,28 +277,28 @@ public abstract class Entity {
 			final AABB copy2 = this.boundingBox.copy();
 			this.boundingBox.setBB(copy);
 			final List collidingBoundingBoxes2 = this.world.getCollidingBoundingBoxes(this, this.boundingBox.addCoord(xCoord, yCoord, zCoord));
-			for(int k = 0; k < collidingBoundingBoxes2.size(); ++k) {
+			for ( int k = 0; k < collidingBoundingBoxes2.size(); ++k ) {
 				yCoord = ((AABB) collidingBoundingBoxes2.get(k)).calculateYOffset(this.boundingBox, yCoord);
 			}
 			this.boundingBox.offset(0.0, yCoord, 0.0);
-			if(!this.field_9293_aM && n2 != yCoord) {
+			if (!this.field_9293_aM && n2 != yCoord) {
 				yCoord = (xCoord = (zCoord = 0.0));
 			}
-			for(int k = 0; k < collidingBoundingBoxes2.size(); ++k) {
+			for ( int k = 0; k < collidingBoundingBoxes2.size(); ++k ) {
 				xCoord = ((AABB) collidingBoundingBoxes2.get(k)).calculateXOffset(this.boundingBox, xCoord);
 			}
 			this.boundingBox.offset(xCoord, 0.0, 0.0);
-			if(!this.field_9293_aM && n != xCoord) {
+			if (!this.field_9293_aM && n != xCoord) {
 				yCoord = (xCoord = (zCoord = 0.0));
 			}
-			for(int k = 0; k < collidingBoundingBoxes2.size(); ++k) {
+			for ( int k = 0; k < collidingBoundingBoxes2.size(); ++k ) {
 				zCoord = ((AABB) collidingBoundingBoxes2.get(k)).calculateZOffset(this.boundingBox, zCoord);
 			}
 			this.boundingBox.offset(0.0, 0.0, zCoord);
-			if(!this.field_9293_aM && n3 != zCoord) {
+			if (!this.field_9293_aM && n3 != zCoord) {
 				yCoord = (xCoord = (zCoord = 0.0));
 			}
-			if(n4 * n4 + n6 * n6 >= xCoord * xCoord + zCoord * zCoord) {
+			if (n4 * n4 + n6 * n6 >= xCoord * xCoord + zCoord * zCoord) {
 				xCoord = n4;
 				yCoord = n5;
 				zCoord = n6;
@@ -313,35 +313,35 @@ public abstract class Entity {
 		this.isCollidedHorizontally = (n != xCoord || n3 != zCoord);
 		this.onGround = (n2 != yCoord && n2 < 0.0);
 		this.beenAttacked = (this.isCollidedHorizontally || n2 != yCoord);
-		if(this.onGround) {
-			if(this.fallDistance > 0.0f) {
+		if (this.onGround) {
+			if (this.fallDistance > 0.0f) {
 				this.fall(this.fallDistance);
 				this.fallDistance = 0.0f;
 			}
-		} else if(yCoord < 0.0) {
+		} else if (yCoord < 0.0) {
 			this.fallDistance -= (float) yCoord;
 		}
-		if(n != xCoord) {
+		if (n != xCoord) {
 			this.motionX = 0.0;
 		}
-		if(n2 != yCoord) {
+		if (n2 != yCoord) {
 			this.motionY = 0.0;
 		}
-		if(n3 != zCoord) {
+		if (n3 != zCoord) {
 			this.motionZ = 0.0;
 		}
 		final double n4 = this.posX - posX;
 		final double n5 = this.posZ - posZ;
 		this.distanceWalkedModified += (float) (sqrt(n4 * n4 + n5 * n5) * 0.6);
-		if(this.canTriggerWalking) {
+		if (this.canTriggerWalking) {
 			final int floor_double = Mth.floor_double(this.posX);
 			final int floor_double2 = Mth.floor_double(this.posY - 0.20000000298023224 - this.yOffset);
 			final int floor_double3 = Mth.floor_double(this.posZ);
 			final int k = this.world.getBlockId(floor_double, floor_double2, floor_double3);
-			if(this.distanceWalkedModified > this.nextStepDistance && k > 0) {
+			if (this.distanceWalkedModified > this.nextStepDistance && k > 0) {
 				++this.nextStepDistance;
 				final StepSound stepSound = Block.blocksList[k].stepSound;
-				if(!Block.blocksList[k].blockMaterial.isLiquid()) {
+				if (!Block.blocksList[k].blockMaterial.isLiquid()) {
 					this.world.playSound(this, stepSound.stepSoundDir2(), stepSound.soundVolume() * 0.15f, stepSound.soundPitch());
 				}
 				Block.blocksList[k].onEntityWalking(this.world, floor_double, floor_double2, floor_double3, this);
@@ -349,18 +349,18 @@ public abstract class Entity {
 		}
 		this.ySize *= 0.4f;
 		final boolean handleWaterMovement = this.handleWaterMovement();
-		if(this.world.isBoundingBoxBurning(this.boundingBox)) {
+		if (this.world.isBoundingBoxBurning(this.boundingBox)) {
 			this.dealFireDamage(1);
-			if(!handleWaterMovement) {
+			if (!handleWaterMovement) {
 				++this.fire;
-				if(this.fire == 0) {
+				if (this.fire == 0) {
 					this.fire = 300;
 				}
 			}
-		} else if(this.fire <= 0) {
+		} else if (this.fire <= 0) {
 			this.fire = -this.fireResistance;
 		}
-		if(handleWaterMovement && this.fire > 0) {
+		if (handleWaterMovement && this.fire > 0) {
 			this.world.playSound(this, "random.fizz", 0.7f, 1.6f + (this.rand.nextFloat() - this.rand.nextFloat()) * 0.4f);
 			this.fire = -this.fireResistance;
 		}
@@ -469,12 +469,12 @@ public abstract class Entity {
 		double n = entity.posX - this.posX;
 		double n2 = entity.posZ - this.posZ;
 		double abs_max = max(abs(n), abs(n2));
-		if(abs_max >= 0.009999999776482582) {
+		if (abs_max >= 0.009999999776482582) {
 			abs_max = sqrt(abs_max);
 			n /= abs_max;
 			n2 /= abs_max;
 			double n3 = 1.0 / abs_max;
-			if(n3 > 1.0) {
+			if (n3 > 1.0) {
 				n3 = 1.0;
 			}
 			n *= n3;
@@ -528,7 +528,7 @@ public abstract class Entity {
 
 	public boolean addEntityID(final NBTTagCompound nbt) {
 		final String entityString = this.getEntityString();
-		if(this.isDead || entityString == null) {
+		if (this.isDead || entityString == null) {
 			return false;
 		}
 		nbt.setString("id", entityString);
@@ -591,7 +591,7 @@ public abstract class Entity {
 
 	protected NBTTagList newDoubleNBTList(final double... arr) {
 		final NBTTagList list = new NBTTagList();
-		for(int length = arr.length, i = 0; i < length; ++i) {
+		for ( int length = arr.length, i = 0; i < length; ++i ) {
 			list.setTag(new NBTTagDouble(arr[i]));
 		}
 		return list;
@@ -599,7 +599,7 @@ public abstract class Entity {
 
 	protected NBTTagList newFloatNBTList(final float... arr) {
 		final NBTTagList list = new NBTTagList();
-		for(int length = arr.length, i = 0; i < length; ++i) {
+		for ( int length = arr.length, i = 0; i < length; ++i ) {
 			list.setTag(new NBTTagFloat(arr[i]));
 		}
 		return list;
@@ -633,7 +633,7 @@ public abstract class Entity {
 	}
 
 	public void updateRidden() {
-		if(this.ridingEntity.isDead) {
+		if (this.ridingEntity.isDead) {
 			this.ridingEntity = null;
 			return;
 		}
@@ -659,16 +659,16 @@ public abstract class Entity {
 		double n = this.entityRiderYawDelta * 0.5;
 		double n2 = this.entityRiderPitchDelta * 0.5;
 		final float n3 = 10.0f;
-		if(n > n3) {
+		if (n > n3) {
 			n = n3;
 		}
-		if(n < -n3) {
+		if (n < -n3) {
 			n = -n3;
 		}
-		if(n2 > n3) {
+		if (n2 > n3) {
 			n2 = n3;
 		}
-		if(n2 < -n3) {
+		if (n2 < -n3) {
 			n2 = -n3;
 		}
 		this.entityRiderYawDelta -= n;
@@ -684,15 +684,15 @@ public abstract class Entity {
 	public void mountEntity(final Entity entity) {
 		this.entityRiderPitchDelta = 0.0;
 		this.entityRiderYawDelta = 0.0;
-		if(this.ridingEntity == entity) {
+		if (this.ridingEntity == entity) {
 			this.ridingEntity.riddenByEntity = null;
 			this.ridingEntity = null;
 			return;
 		}
-		if(this.ridingEntity != null) {
+		if (this.ridingEntity != null) {
 			this.ridingEntity.riddenByEntity = null;
 		}
-		if(entity.riddenByEntity != null) {
+		if (entity.riddenByEntity != null) {
 			entity.riddenByEntity.ridingEntity = null;
 		}
 		this.ridingEntity = entity;

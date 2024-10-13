@@ -27,7 +27,7 @@ public class TileEntityMobSpawner extends TileEntity {
 	@Override
 	public void updateEntity() {
 		this.yaw2 = this.yaw;
-		if(!this.anyPlayerInRange()) {
+		if (!this.anyPlayerInRange()) {
 			return;
 		}
 		double n = this.xCoord + this.worldObj.rand.nextFloat();
@@ -40,30 +40,30 @@ public class TileEntityMobSpawner extends TileEntity {
 			this.yaw -= 360.0;
 			this.yaw2 -= 360.0;
 		}
-		if(this.delay == -1) {
+		if (this.delay == -1) {
 			this.updateDelay();
 		}
-		if(this.delay > 0) {
+		if (this.delay > 0) {
 			--this.delay;
 			return;
 		}
-		for(int n4 = 4, i = 0; i < n4; ++i) {
+		for ( int n4 = 4, i = 0; i < n4; ++i ) {
 			final EntityLiving entity = (EntityLiving) EntityList.createEntityInWorld(this.getMobID, this.worldObj);
-			if(entity == null) {
+			if (entity == null) {
 				return;
 			}
-			if(this.worldObj.getEntitiesWithinAABB(entity.getClass(), AABB.getBoundingBoxFromPool(this.xCoord, this.yCoord, this.zCoord, this.xCoord + 1, this.yCoord + 1, this.zCoord + 1).expand(8.0, 4.0, 8.0)).size() >= 6) {
+			if (this.worldObj.getEntitiesWithinAABB(entity.getClass(), AABB.getBoundingBoxFromPool(this.xCoord, this.yCoord, this.zCoord, this.xCoord + 1, this.yCoord + 1, this.zCoord + 1).expand(8.0, 4.0, 8.0)).size() >= 6) {
 				this.updateDelay();
 				return;
 			}
-			if(entity != null) {
+			if (entity != null) {
 				final double n5 = this.xCoord + (this.worldObj.rand.nextDouble() - this.worldObj.rand.nextDouble()) * 4.0;
 				final double n6 = this.yCoord + this.worldObj.rand.nextInt(3) - 1;
 				final double n7 = this.zCoord + (this.worldObj.rand.nextDouble() - this.worldObj.rand.nextDouble()) * 4.0;
 				entity.setPositionAndRotation(n5, n6, n7, this.worldObj.rand.nextFloat() * 360.0f, 0.0f);
-				if(entity.getCanSpawnHere(n5, n6, n7)) {
+				if (entity.getCanSpawnHere(n5, n6, n7)) {
 					this.worldObj.entityJoinedWorld(entity);
-					for(int j = 0; j < 20; ++j) {
+					for ( int j = 0; j < 20; ++j ) {
 						n = this.xCoord + 0.5 + (this.worldObj.rand.nextFloat() - 0.5) * 2.0;
 						n2 = this.yCoord + 0.5 + (this.worldObj.rand.nextFloat() - 0.5) * 2.0;
 						n3 = this.zCoord + 0.5 + (this.worldObj.rand.nextFloat() - 0.5) * 2.0;

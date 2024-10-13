@@ -57,7 +57,7 @@ public class SignBlock extends ContainerBlock {
 
 	@Override
 	public void onNeighborBlockChange(final World world, final int xCoord, final int yCoord, final int zCoord, final int nya4) {
-		if(!world.isBlockNormalCube(xCoord, yCoord - 1, zCoord)) {
+		if (!world.isBlockNormalCube(xCoord, yCoord - 1, zCoord)) {
 			this.dropBlockAsItem(world, xCoord, yCoord, zCoord, world.getBlockMetadata(xCoord, yCoord, zCoord));
 			world.setBlockWithNotify(xCoord, yCoord, zCoord, 0);
 		}

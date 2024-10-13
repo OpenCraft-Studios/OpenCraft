@@ -84,63 +84,63 @@ public class NBTTagCompound extends NBTBase {
 	}
 
 	public byte getByte(final String string) {
-		if(!this.tagMap.containsKey(string)) {
+		if (!this.tagMap.containsKey(string)) {
 			return 0;
 		}
 		return ((NBTTagByte) this.tagMap.get(string)).byteValue;
 	}
 
 	public short getShort(final String string) {
-		if(!this.tagMap.containsKey(string)) {
+		if (!this.tagMap.containsKey(string)) {
 			return 0;
 		}
 		return ((NBTTagShort) this.tagMap.get(string)).shortValue;
 	}
 
 	public int getInteger(final String string) {
-		if(!this.tagMap.containsKey(string)) {
+		if (!this.tagMap.containsKey(string)) {
 			return 0;
 		}
 		return ((NBTTagInt) this.tagMap.get(string)).intValue;
 	}
 
 	public long getLong(final String string) {
-		if(!this.tagMap.containsKey(string)) {
+		if (!this.tagMap.containsKey(string)) {
 			return 0L;
 		}
 		return ((NBTTagLong) this.tagMap.get(string)).longValue;
 	}
 
 	public float getFloat(final String string) {
-		if(!this.tagMap.containsKey(string)) {
+		if (!this.tagMap.containsKey(string)) {
 			return 0.0f;
 		}
 		return ((NBTTagFloat) this.tagMap.get(string)).floatValue;
 	}
 
 	public String getString(final String string) {
-		if(!this.tagMap.containsKey(string)) {
+		if (!this.tagMap.containsKey(string)) {
 			return "";
 		}
 		return ((NBTTagString) this.tagMap.get(string)).stringValue;
 	}
 
 	public byte[] getByteArray(final String string) {
-		if(!this.tagMap.containsKey(string)) {
+		if (!this.tagMap.containsKey(string)) {
 			return new byte[0];
 		}
 		return ((NBTTagByteArray) this.tagMap.get(string)).byteArray;
 	}
 
 	public NBTTagCompound getCompoundTag(final String string) {
-		if(!this.tagMap.containsKey(string)) {
+		if (!this.tagMap.containsKey(string)) {
 			return new NBTTagCompound();
 		}
 		return (NBTTagCompound) this.tagMap.get(string);
 	}
 
 	public NBTTagList getTagList(final String string) {
-		if(!this.tagMap.containsKey(string)) {
+		if (!this.tagMap.containsKey(string)) {
 			return new NBTTagList();
 		}
 		return (NBTTagList) this.tagMap.get(string);

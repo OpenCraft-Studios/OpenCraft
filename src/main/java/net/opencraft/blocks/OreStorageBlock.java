@@ -12,10 +12,10 @@ public class OreStorageBlock extends Block {
 
 	@Override
 	public int getBlockTextureFromSide(final int textureIndexSlot) {
-		if(textureIndexSlot == 1) {
+		if (textureIndexSlot == 1) {
 			return this.blockIndexInTexture - 16;
 		}
-		if(textureIndexSlot == 0) {
+		if (textureIndexSlot == 0) {
 			return this.blockIndexInTexture + 16;
 		}
 		return this.blockIndexInTexture;

@@ -36,8 +36,8 @@ public class TextureGearsFX extends TextureFX {
 		this.gearsInt1 = (this.gearsInt1 + this.gearsInt2 & 0x3F);
 		final float sin = sin(gearsInt1 / 64.0f * PI_TIMES_2_f);
 		final float cos = cos(gearsInt1 / 64.0f * PI_TIMES_2_f);
-		for(int i = 0; i < 16; ++i) {
-			for(int j = 0; j < 16; ++j) {
+		for ( int i = 0; i < 16; ++i ) {
+			for ( int j = 0; j < 16; ++j ) {
 				final float n = (i / 15.0f - 0.5f) * 31.0f;
 				final float n2 = (j / 15.0f - 0.5f) * 31.0f;
 				final float n3 = cos * n - sin * n2;
@@ -45,10 +45,10 @@ public class TextureGearsFX extends TextureFX {
 				final int n5 = (int) (n3 + 16.0f);
 				final int n6 = (int) (n4 + 16.0f);
 				int n7 = 0;
-				if(n5 >= 0 && n6 >= 0 && n5 < 32 && n6 < 32) {
+				if (n5 >= 0 && n6 >= 0 && n5 < 32 && n6 < 32) {
 					n7 = this.gearsIntArray1[n5 + n6 * 32];
 					final int n8 = this.gearsIntArray2[i + j * 16];
-					if((n8 >> 24 & 0xFF) > 128) {
+					if ((n8 >> 24 & 0xFF) > 128) {
 						n7 = n8;
 					}
 				}

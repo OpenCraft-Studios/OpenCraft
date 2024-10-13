@@ -20,8 +20,8 @@ public class SlotCrafting extends Slot {
 
 	@Override
 	public void onPickupFromSlot() {
-		for(int i = 0; i < this.craftMatrix.getSizeInventory(); ++i) {
-			if(this.craftMatrix.getStackInSlot(i) != null) {
+		for ( int i = 0; i < this.craftMatrix.getSizeInventory(); ++i ) {
+			if (this.craftMatrix.getStackInSlot(i) != null) {
 				this.craftMatrix.decrStackSize(i, 1);
 			}
 		}

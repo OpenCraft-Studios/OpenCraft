@@ -146,7 +146,7 @@ public class Player extends JPanel implements ActionListener {
 	 */
 	public static void main(final String[] args) {
 		String filename = null;
-		if(args.length > 0) {
+		if (args.length > 0) {
 			filename = args[0];
 		}
 		final Player player = new Player(filename);
@@ -187,7 +187,7 @@ public class Player extends JPanel implements ActionListener {
 	 */
 	public void init() {
 		state = STATE_STOPPED;
-		if(!audioFilename.startsWith("http://") && !audioFilename.startsWith("file:/"))
+		if (!audioFilename.startsWith("http://") && !audioFilename.startsWith("file:/"))
 			audioFilename = "file:/" + audioFilename;
 		try {
 			audioFile = new URL(audioFilename);
@@ -208,7 +208,7 @@ public class Player extends JPanel implements ActionListener {
 	 * Stop the Player Component.
 	 */
 	public void stop() {
-		if(state != STATE_STOPPED) {
+		if (state != STATE_STOPPED) {
 			stopButton.doClick();
 		}
 	}
@@ -259,7 +259,7 @@ public class Player extends JPanel implements ActionListener {
 			// Stop the thread
 			thread = null;
 			// Close the line
-			if(line != null) {
+			if (line != null) {
 				line.stop();
 				line.close();
 				line = null;
@@ -280,7 +280,7 @@ public class Player extends JPanel implements ActionListener {
 			// We have to read in the sound file.
 			try {
 				audioStream = getAudioStream();
-				if(audioStream instanceof AudioInputStream) {
+				if (audioStream instanceof AudioInputStream) {
 					audioInputStream = (AudioInputStream) audioStream;
 				} else {
 					audioInputStream = AudioSystem.getAudioInputStream(audioStream);
@@ -314,7 +314,7 @@ public class Player extends JPanel implements ActionListener {
 			*/
 			info = new DataLine.Info(SourceDataLine.class, audioFormat);
 			// If the audioFormat is not directly supported
-			if(!AudioSystem.isLineSupported(info)) {
+			if (!AudioSystem.isLineSupported(info)) {
 				AudioFormat sourceFormat = audioFormat;
 				AudioFormat targetFormat = new AudioFormat(AudioFormat.Encoding.PCM_SIGNED, sourceFormat.getSampleRate(), 16, sourceFormat.getChannels(), sourceFormat.getChannels() * 2, sourceFormat.getSampleRate(), false);
 				audioInputStream = AudioSystem.getAudioInputStream(targetFormat, audioInputStream);
@@ -343,7 +343,7 @@ public class Player extends JPanel implements ActionListener {
 		 */
 		public void run() {
 			while(thread != null && state == STATE_PLAYING && read != -1) {
-				if(written >= read) {
+				if (written >= read) {
 					try {
 						read = audioInputStream.read(buffer, 0, buffer.length);
 						written = 0;
@@ -351,12 +351,12 @@ public class Player extends JPanel implements ActionListener {
 						e.printStackTrace();
 					}
 				}
-				if(read > written) {
+				if (read > written) {
 					int temp = line.write(buffer, written, read - written);
 					written += temp;
 				}
 			}
-			if(state == STATE_PLAYING) {
+			if (state == STATE_PLAYING) {
 				/*
 				Wait until all data are played. This is only necessary because of the
 				bug noted below. (If we do not wait, we would interrupt the playback by
@@ -382,18 +382,18 @@ public class Player extends JPanel implements ActionListener {
 	 * @param e
 	 */
 	public void actionPerformed(final ActionEvent e) {
-		if(e.getSource() == timer) {
+		if (e.getSource() == timer) {
 			progressBar.setValue(getProgress());
 		} else {
-			if("Play".equals(e.getActionCommand())) {
+			if ("Play".equals(e.getActionCommand())) {
 				playIt();
-			} else if("Pause".equals(e.getActionCommand())) {
-				if(state == STATE_PAUSED) {
+			} else if ("Pause".equals(e.getActionCommand())) {
+				if (state == STATE_PAUSED) {
 					playIt();
-				} else if(state == STATE_PLAYING) {
+				} else if (state == STATE_PLAYING) {
 					pauseIt();
 				}
-			} else if("Stop".equals(e.getActionCommand())) {
+			} else if ("Stop".equals(e.getActionCommand())) {
 				stopIt();
 			} else {
 			}
@@ -426,10 +426,10 @@ public class Player extends JPanel implements ActionListener {
 		stopButton.setEnabled(false);
 		oldstate = state;
 		state = STATE_PLAYING;
-		if(oldstate == STATE_STOPPED) {
+		if (oldstate == STATE_STOPPED) {
 			playback.setupSound();
 		}
-		if(playback.thread == null || !playback.thread.isAlive()) {
+		if (playback.thread == null || !playback.thread.isAlive()) {
 			playback.start();
 		}
 		playback.line.start();
@@ -462,7 +462,7 @@ public class Player extends JPanel implements ActionListener {
 	 */
 	protected int getProgress() {
 		audioLength = 500000;
-		if(state == STATE_PLAYING || state == STATE_PAUSED) {
+		if (state == STATE_PLAYING || state == STATE_PAUSED) {
 			return playback.line.getFramePosition() * 1000 / audioLength;
 		} else {
 			return 0;
@@ -581,7 +581,7 @@ public class Player extends JPanel implements ActionListener {
 	 */
 	protected static ImageIcon createImageIcon(final String path) {
 		URL imgURL = Player.class.getResource(path);
-		if(imgURL != null) {
+		if (imgURL != null) {
 			return new ImageIcon(imgURL);
 		} else {
 			System.err.println("Couldn't find file: " + path);

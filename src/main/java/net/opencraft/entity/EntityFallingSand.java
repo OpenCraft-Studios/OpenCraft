@@ -39,7 +39,7 @@ public class EntityFallingSand extends Entity {
 
 	@Override
 	public void onUpdate() {
-		if(this.blockID == 0) {
+		if (this.blockID == 0) {
 			this.setEntityDead();
 			return;
 		}
@@ -55,18 +55,18 @@ public class EntityFallingSand extends Entity {
 		final int floor_double = Mth.floor_double(this.posX);
 		final int floor_double2 = Mth.floor_double(this.posY);
 		final int floor_double3 = Mth.floor_double(this.posZ);
-		if(this.world.getBlockId(floor_double, floor_double2, floor_double3) == this.blockID) {
+		if (this.world.getBlockId(floor_double, floor_double2, floor_double3) == this.blockID) {
 			this.world.setBlockWithNotify(floor_double, floor_double2, floor_double3, 0);
 		}
-		if(this.onGround) {
+		if (this.onGround) {
 			this.motionX *= 0.699999988079071;
 			this.motionZ *= 0.699999988079071;
 			this.motionY *= -0.5;
 			this.setEntityDead();
-			if(!this.world.canBlockBePlacedAt(this.blockID, floor_double, floor_double2, floor_double3, true) || !this.world.setBlockWithNotify(floor_double, floor_double2, floor_double3, this.blockID)) {
+			if (!this.world.canBlockBePlacedAt(this.blockID, floor_double, floor_double2, floor_double3, true) || !this.world.setBlockWithNotify(floor_double, floor_double2, floor_double3, this.blockID)) {
 				this.dropItemWithOffset(this.blockID, 1);
 			}
-		} else if(this.fallTime > 100) {
+		} else if (this.fallTime > 100) {
 			this.dropItemWithOffset(this.blockID, 1);
 			this.setEntityDead();
 		}

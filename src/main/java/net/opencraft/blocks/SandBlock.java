@@ -35,9 +35,9 @@ public class SandBlock extends Block {
 	}
 
 	private void tryToFall(final World world, final int xCoord, final int yCoord, final int zCoord) {
-		if(canFallBelow(world, xCoord, yCoord - 1, zCoord) && yCoord >= 0) {
+		if (canFallBelow(world, xCoord, yCoord - 1, zCoord) && yCoord >= 0) {
 			final EntityFallingSand entity = new EntityFallingSand(world, xCoord + 0.5f, yCoord + 0.5f, zCoord + 0.5f, this.blockID);
-			if(SandBlock.fallInstantly) {
+			if (SandBlock.fallInstantly) {
 				while(!entity.isDead) {
 					entity.onUpdate();
 				}
@@ -54,10 +54,10 @@ public class SandBlock extends Block {
 
 	public static boolean canFallBelow(final World world, final int xCoord, final int yCoord, final int zCoord) {
 		final int blockId = world.getBlockId(xCoord, yCoord, zCoord);
-		if(blockId == 0) {
+		if (blockId == 0) {
 			return true;
 		}
-		if(blockId == Block.fire.blockID) {
+		if (blockId == Block.fire.blockID) {
 			return true;
 		}
 		final Material blockMaterial = Block.blocksList[blockId].blockMaterial;

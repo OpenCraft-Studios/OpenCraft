@@ -38,21 +38,21 @@ public class MovementInput {
 	public void updatePlayerMoveState() {
 		Vector2f movement = new Vector2f(0.0f, 0.0f);
 
-		if(isInputActive(GameSettings.PlayerInput.FORWARD)) {
+		if (isInputActive(GameSettings.PlayerInput.FORWARD)) {
 			movement.x += 1.0f;
 		}
-		if(isInputActive(GameSettings.PlayerInput.BACKWARD)) {
+		if (isInputActive(GameSettings.PlayerInput.BACKWARD)) {
 			movement.x -= 1.0f;
 		}
-		if(isInputActive(GameSettings.PlayerInput.LEFT)) {
+		if (isInputActive(GameSettings.PlayerInput.LEFT)) {
 			movement.y += 1.0f;
 		}
-		if(isInputActive(GameSettings.PlayerInput.RIGHT)) {
+		if (isInputActive(GameSettings.PlayerInput.RIGHT)) {
 			movement.y -= 1.0f;
 		}
 		jump = isInputActive(GameSettings.PlayerInput.JUMP);
 
-		if(movement.lengthSquared() > 0) {
+		if (movement.lengthSquared() > 0) {
 			movement.normalize();
 		}
 

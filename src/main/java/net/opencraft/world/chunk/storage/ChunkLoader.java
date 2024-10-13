@@ -33,21 +33,21 @@ public class ChunkLoader implements IChunkLoader {
 		final String string2 = Integer.toString(integer1 & 0x3F, 36);
 		final String string3 = Integer.toString(integer2 & 0x3F, 36);
 		final File file = new File(this.saveDir, string2);
-		if(!file.exists()) {
-			if(!this.createIfNecessary) {
+		if (!file.exists()) {
+			if (!this.createIfNecessary) {
 				return null;
 			}
 			file.mkdir();
 		}
 		final File file2 = new File(file, string3);
-		if(!file2.exists()) {
-			if(!this.createIfNecessary) {
+		if (!file2.exists()) {
+			if (!this.createIfNecessary) {
 				return null;
 			}
 			file2.mkdir();
 		}
 		final File file3 = new File(file2, string);
-		if(!file3.exists() && !this.createIfNecessary) {
+		if (!file3.exists() && !this.createIfNecessary) {
 			return null;
 		}
 		return file3;
@@ -55,7 +55,7 @@ public class ChunkLoader implements IChunkLoader {
 
 	public Chunk loadChunk(final World fe, final int integer2, final int integer3) {
 		final File chunkFileForXZ = this.chunkFileForXZ(integer2, integer3);
-		if(chunkFileForXZ != null && chunkFileForXZ.exists()) {
+		if (chunkFileForXZ != null && chunkFileForXZ.exists()) {
 			try {
 				return loadChunkIntoWorldFromCompound(fe, CompressedStreamTools.loadGzippedCompoundFromOutputStream((InputStream) new FileInputStream(chunkFileForXZ)).getCompoundTag("Level"));
 			} catch(Exception ex) {
@@ -67,7 +67,7 @@ public class ChunkLoader implements IChunkLoader {
 
 	public void saveChunk(final World fe, final Chunk jw) {
 		final File chunkFileForXZ = this.chunkFileForXZ(jw.xPosition, jw.zPosition);
-		if(chunkFileForXZ.exists()) {
+		if (chunkFileForXZ.exists()) {
 			fe.setSizeOnDisk -= chunkFileForXZ.length();
 		}
 		try {
@@ -79,7 +79,7 @@ public class ChunkLoader implements IChunkLoader {
 			this.storeChunkInCompound(jw, fe, nbtTagCompound);
 			CompressedStreamTools.writeGzippedCompoundToOutputStream(ae, (OutputStream) outputStream);
 			outputStream.close();
-			if(chunkFileForXZ.exists()) {
+			if (chunkFileForXZ.exists()) {
 				chunkFileForXZ.delete();
 			}
 			file.renameTo(chunkFileForXZ);
@@ -101,18 +101,18 @@ public class ChunkLoader implements IChunkLoader {
 		ae.setBoolean("TerrainPopulated", jw.isTerrainPopulated);
 		jw.hasEntities = false;
 		final NBTTagList hm = new NBTTagList();
-		for(int i = 0; i < jw.entities.length; ++i) {
-			for(final Entity entity : jw.entities[i]) {
+		for ( int i = 0; i < jw.entities.length; ++i ) {
+			for ( final Entity entity : jw.entities[i] ) {
 				jw.hasEntities = true;
 				final NBTTagCompound nbtTagCompound = new NBTTagCompound();
-				if(entity.addEntityID(nbtTagCompound)) {
+				if (entity.addEntityID(nbtTagCompound)) {
 					hm.setTag(nbtTagCompound);
 				}
 			}
 		}
 		ae.setTag("Entities", (NBTBase) hm);
 		final NBTTagList hm2 = new NBTTagList();
-		for(final TileEntity tileEntity : jw.chunkTileEntityMap.values()) {
+		for ( final TileEntity tileEntity : jw.chunkTileEntityMap.values() ) {
 			final NBTTagCompound nbtTagCompound2 = new NBTTagCompound();
 			tileEntity.writeToNBT(nbtTagCompound2);
 			hm2.setTag(nbtTagCompound2);
@@ -128,33 +128,33 @@ public class ChunkLoader implements IChunkLoader {
 		chunk.blocklightMap = new NibbleArray(ae.getByteArray("BlockLight"));
 		chunk.heightMap = ae.getByteArray("HeightMap");
 		chunk.isTerrainPopulated = ae.getBoolean("TerrainPopulated");
-		if(!chunk.data.isValid()) {
+		if (!chunk.data.isValid()) {
 			chunk.data = new NibbleArray(chunk.blocks.length);
 		}
-		if(chunk.heightMap == null || !chunk.skylightMap.isValid()) {
+		if (chunk.heightMap == null || !chunk.skylightMap.isValid()) {
 			chunk.heightMap = new byte[256];
 			chunk.skylightMap = new NibbleArray(chunk.blocks.length);
 			chunk.generateSkylightMap();
 		}
-		if(!chunk.blocklightMap.isValid()) {
+		if (!chunk.blocklightMap.isValid()) {
 			chunk.blocklightMap = new NibbleArray(chunk.blocks.length);
 			chunk.func_1014_a();
 		}
 		final NBTTagList tagList = ae.getTagList("Entities");
-		if(tagList != null) {
-			for(int i = 0; i < tagList.tagCount(); ++i) {
+		if (tagList != null) {
+			for ( int i = 0; i < tagList.tagCount(); ++i ) {
 				final Entity entityFromNBT = EntityList.createEntityFromNBT((NBTTagCompound) tagList.tagAt(i), fe);
 				chunk.hasEntities = true;
-				if(entityFromNBT != null) {
+				if (entityFromNBT != null) {
 					chunk.addEntity(entityFromNBT);
 				}
 			}
 		}
 		final NBTTagList tagList2 = ae.getTagList("TileEntities");
-		if(tagList2 != null) {
-			for(int j = 0; j < tagList2.tagCount(); ++j) {
+		if (tagList2 != null) {
+			for ( int j = 0; j < tagList2.tagCount(); ++j ) {
 				final TileEntity andLoadEntity = TileEntity.createAndLoadEntity((NBTTagCompound) tagList2.tagAt(j));
-				if(andLoadEntity != null) {
+				if (andLoadEntity != null) {
 					chunk.addTileEntity(andLoadEntity);
 				}
 			}

@@ -14,13 +14,13 @@ public class CraftingTableBlock extends Block {
 
 	@Override
 	public int getBlockTextureFromSide(final int textureIndexSlot) {
-		if(textureIndexSlot == 1) {
+		if (textureIndexSlot == 1) {
 			return this.blockIndexInTexture - 16;
 		}
-		if(textureIndexSlot == 0) {
+		if (textureIndexSlot == 0) {
 			return Block.planks.getBlockTextureFromSide(0);
 		}
-		if(textureIndexSlot == 2 || textureIndexSlot == 4) {
+		if (textureIndexSlot == 2 || textureIndexSlot == 4) {
 			return this.blockIndexInTexture + 1;
 		}
 		return this.blockIndexInTexture;

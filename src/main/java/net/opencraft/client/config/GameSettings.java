@@ -111,47 +111,47 @@ public class GameSettings {
 	}
 
 	public void setOptionFloatValue(final float key, float value) {
-		if(key == 0) {
+		if (key == 0) {
 			this.music = !this.music;
 			this.mc.sndManager.onSoundOptionsChanged();
 		}
-		if(key == 1) {
+		if (key == 1) {
 			this.sound = !this.sound;
 			this.mc.sndManager.onSoundOptionsChanged();
 		}
-		if(key == 2) {
+		if (key == 2) {
 			this.invertMouse = !this.invertMouse;
 		}
-		if(key == 3) {
+		if (key == 3) {
 			this.showDebugInfo = !this.showDebugInfo;
 		}
-		if(key == 4) {
+		if (key == 4) {
 			this.renderDistance = (this.renderDistance + (int) value & 0x3);
 		}
-		if(key == 5) {
+		if (key == 5) {
 			this.viewBobbing = !this.viewBobbing;
 		}
-		if(key == 6) {
+		if (key == 6) {
 			this.anaglyph = !this.anaglyph;
 			this.mc.renderer.refreshTextures();
 		}
-		if(key == 7) {
+		if (key == 7) {
 			this.limitFramerate = !this.limitFramerate;
 		}
-		if(key == 8) {
+		if (key == 8) {
 			this.difficulty = (this.difficulty + (int) value & 0x3);
 		}
-		if(key == 9) {
+		if (key == 9) {
 			this.fancyGraphics = !this.fancyGraphics;
 			this.mc.renderGlobal.fancyGraphics();
 		}
-		if(key == 10) {
+		if (key == 10) {
 			this.fov = value;
 		}
-		if(key == 11) {
+		if (key == 11) {
 			this.minimumBrightness = value;
-			if(mc.world != null) {
-				for(int i = 0; i < mc.world.worldAccesses.size(); ++i) {
+			if (mc.world != null) {
+				for ( int i = 0; i < mc.world.worldAccesses.size(); ++i ) {
 					((IWorldAccess) mc.world.worldAccesses.get(i)).updateAllRenderers();
 				}
 			}
@@ -160,88 +160,88 @@ public class GameSettings {
 	}
 
 	public String getKeyBinding(final int integer) {
-		if(integer == 0) {
+		if (integer == 0) {
 			return new StringBuilder().append("Music: ").append(this.music ? "ON" : "OFF").toString();
 		}
-		if(integer == 1) {
+		if (integer == 1) {
 			return new StringBuilder().append("Sound: ").append(this.sound ? "ON" : "OFF").toString();
 		}
-		if(integer == 2) {
+		if (integer == 2) {
 			return new StringBuilder().append("Invert mouse: ").append(this.invertMouse ? "ON" : "OFF").toString();
 		}
-		if(integer == 3) {
+		if (integer == 3) {
 			return new StringBuilder().append("Show FPS: ").append(this.showDebugInfo ? "ON" : "OFF").toString();
 		}
-		if(integer == 4) {
+		if (integer == 4) {
 			return "Render distance: " + GameSettings.RENDER_DISTANCES[this.renderDistance];
 		}
-		if(integer == 5) {
+		if (integer == 5) {
 			return new StringBuilder().append("View bobbing: ").append(this.viewBobbing ? "ON" : "OFF").toString();
 		}
-		if(integer == 6) {
+		if (integer == 6) {
 			return new StringBuilder().append("3d anaglyph: ").append(this.anaglyph ? "ON" : "OFF").toString();
 		}
-		if(integer == 7) {
+		if (integer == 7) {
 			return new StringBuilder().append("Limit framerate: ").append(this.limitFramerate ? "ON" : "OFF").toString();
 		}
-		if(integer == 8) {
+		if (integer == 8) {
 			return "Difficulty: " + GameSettings.DIFFICULTIES[this.difficulty];
 		}
-		if(integer == 9) {
+		if (integer == 9) {
 			return new StringBuilder().append("Graphics: ").append(this.fancyGraphics ? "FANCY" : "FAST").toString();
 		}
-		if(integer == 101) {
+		if (integer == 101) {
 			return new StringBuilder().append("Test: ").append(this.fov).toString();
 		}
 		return "";
 	}
 
 	public void loadOptions() {
-		if(!this.optionsFile.exists()) {
+		if (!this.optionsFile.exists()) {
 			return;
 		}
 		try(BufferedReader bufferedReader = new BufferedReader(new FileReader(this.optionsFile))) {
 			String line;
 			while((line = bufferedReader.readLine()) != null) {
 				final String[] split = line.split(":");
-				if(split[0].equals("music")) {
+				if (split[0].equals("music")) {
 					this.music = split[1].equals("true");
 				}
-				if(split[0].equals("sound")) {
+				if (split[0].equals("sound")) {
 					this.sound = split[1].equals("true");
 				}
-				if(split[0].equals("invertYMouse")) {
+				if (split[0].equals("invertYMouse")) {
 					this.invertMouse = split[1].equals("true");
 				}
-				if(split[0].equals("showFrameRate")) {
+				if (split[0].equals("showFrameRate")) {
 					this.showDebugInfo = split[1].equals("true");
 				}
-				if(split[0].equals("viewDistance")) {
+				if (split[0].equals("viewDistance")) {
 					this.renderDistance = Integer.parseInt(split[1]);
 				}
-				if(split[0].equals("bobView")) {
+				if (split[0].equals("bobView")) {
 					this.viewBobbing = split[1].equals("true");
 				}
-				if(split[0].equals("anaglyph3d")) {
+				if (split[0].equals("anaglyph3d")) {
 					this.anaglyph = split[1].equals("true");
 				}
-				if(split[0].equals("limitFramerate")) {
+				if (split[0].equals("limitFramerate")) {
 					this.limitFramerate = split[1].equals("true");
 				}
-				if(split[0].equals("difficulty")) {
+				if (split[0].equals("difficulty")) {
 					this.difficulty = Integer.parseInt(split[1]);
 				}
-				if(split[0].equals("fancyGraphics")) {
+				if (split[0].equals("fancyGraphics")) {
 					this.fancyGraphics = split[1].equals("true");
 				}
-				if(split[0].equals("FOV")) {
+				if (split[0].equals("FOV")) {
 					this.fov = Float.parseFloat(split[1]);
 				}
-				if(split[0].equals("minimumBrightness")) {
+				if (split[0].equals("minimumBrightness")) {
 					this.minimumBrightness = Float.parseFloat(split[1]);
 				}
-				for(PlayerInput input : PlayerInput.values()) {
-					if(split[0].equals("key_" + input.name())) {
+				for ( PlayerInput input : PlayerInput.values() ) {
+					if (split[0].equals("key_" + input.name())) {
 						this.keyBindings.put(input, Integer.parseInt(split[1]));
 					}
 				}
@@ -266,7 +266,7 @@ public class GameSettings {
 			s.println("fancyGraphics:" + fancyGraphics);
 			s.println("FOV:" + fov);
 			s.println("minimumBrightness:" + this.minimumBrightness);
-			for(PlayerInput input : PlayerInput.values()) {
+			for ( PlayerInput input : PlayerInput.values() ) {
 				s.println("key_" + input.name() + ":" + keyBindings.get(input));
 			}
 		} catch(Exception ex) {

@@ -25,19 +25,19 @@ public class GLAllocation {
 	 */
 	public static synchronized void generateDisplayLists(final IntBuffer intBuffer) {
 		GL11.glGenTextures(intBuffer);
-		for(int i = intBuffer.position(); i < intBuffer.limit(); ++i) {
+		for ( int i = intBuffer.position(); i < intBuffer.limit(); ++i ) {
 			GLAllocation.textureIDs.add(intBuffer.get(i));
 		}
 	}
 
 	public static synchronized void deleteTexturesAndDisplayLists() {
-		for(int i = 0; i < GLAllocation.displayLists.size(); i += 2) {
+		for ( int i = 0; i < GLAllocation.displayLists.size(); i += 2 ) {
 			GL11.glDeleteLists(GLAllocation.displayLists.get(i), GLAllocation.displayLists.get(i + 1));
 		}
 		final IntBuffer intBuffer = BufferUtils.createIntBuffer(GLAllocation.textureIDs.size());
 		intBuffer.flip();
 		GL11.glDeleteTextures(intBuffer);
-		for(int j = 0; j < GLAllocation.textureIDs.size(); ++j) {
+		for ( int j = 0; j < GLAllocation.textureIDs.size(); ++j ) {
 			intBuffer.put(GLAllocation.textureIDs.get(j));
 		}
 		intBuffer.flip();

@@ -106,7 +106,7 @@ public class XMLParser {
 			// Read raw data into the buffer:
 			do {
 				read = in.read(buffer);
-				if(read != -1)
+				if (read != -1)
 					bout.write(buffer, 0, read);
 			} while(read != -1);
 
@@ -120,7 +120,7 @@ public class XMLParser {
 				line = bufRead.readLine();
 
 				// TODO: Is this necessary? (Is newline already there?)
-				if(line != null)
+				if (line != null)
 					fullString = fullString + "\n" + line;
 			} while(line != null);
 		} catch(IOException e) {
@@ -129,25 +129,25 @@ public class XMLParser {
 
 		// Close all streams:
 
-		if(in != null) {
+		if (in != null) {
 			try {
 				in.close();
 			} catch(Exception e) {
 			}
 		}
-		if(bout != null) {
+		if (bout != null) {
 			try {
 				bout.close();
 			} catch(Exception e) {
 			}
 		}
-		if(bin != null) {
+		if (bin != null) {
 			try {
 				bin.close();
 			} catch(Exception e) {
 			}
 		}
-		if(bufRead != null) {
+		if (bufRead != null) {
 			try {
 				bufRead.close();
 			} catch(Exception e) {
@@ -175,12 +175,12 @@ public class XMLParser {
 		String[] splitText = seperateWords(text);
 
 		// Make sure there are some words:
-		if(splitText == null || splitText.length == 0)
+		if (splitText == null || splitText.length == 0)
 			return "";
 
 		// Seperate each word by a single space:
 		String parsedText = splitText[0];
-		for(int x = 1; x < splitText.length; x++) {
+		for ( int x = 1; x < splitText.length; x++ ) {
 			parsedText = parsedText + " " + splitText[x];
 		}
 
@@ -196,7 +196,7 @@ public class XMLParser {
 	 */
 	public static String[] seperateWords(String text) {
 		// Make sure there is something to process:
-		if(text == null)
+		if (text == null)
 			return null;
 
 		// Remove all leading spaces:
@@ -205,7 +205,7 @@ public class XMLParser {
 		}
 
 		// Make sure there is still something left to process:
-		if(text.length() == 0)
+		if (text.length() == 0)
 			return null;
 
 		// Split the string on whitespace:
@@ -222,10 +222,10 @@ public class XMLParser {
 	 */
 	protected static void errorMessage(String message) {
 		// Grab a handle to the logger if we don't already have one:
-		if(logger == null)
+		if (logger == null)
 			logger = SoundSystemConfig.getLogger();
 		// If a logger doesn't exist, make one:
-		if(logger == null) {
+		if (logger == null) {
 			logger = new SoundSystemLogger();
 			SoundSystemConfig.setLogger(logger);
 		}

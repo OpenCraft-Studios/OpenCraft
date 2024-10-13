@@ -121,33 +121,33 @@ public class Ltp3Tap extends Ltp {
 		float[] gains;
 
 		N = complexity;
-		if(N > 10)
+		if (N > 10)
 			N = 10;
 
 		nbest = new int[N];
 		gains = new float[N];
 
-		if(N == 0 || end < start) {
+		if (N == 0 || end < start) {
 			bits.pack(0, pitch_bits);
 			bits.pack(0, gain_bits);
-			for(i = 0; i < nsf; i++)
+			for ( i = 0; i < nsf; i++ )
 				exc[es + i] = 0;
 			return start;
 		}
 
 		best_exc = new float[nsf];
 
-		if(N > end - start + 1)
+		if (N > end - start + 1)
 			N = end - start + 1;
 		open_loop_nbest_pitch(sw, sws, start, end, nsf, nbest, gains, N);
 
-		for(i = 0; i < N; i++) {
+		for ( i = 0; i < N; i++ ) {
 			pitch = nbest[i];
-			for(j = 0; j < nsf; j++)
+			for ( j = 0; j < nsf; j++ )
 				exc[es + j] = 0;
 			err = pitch_gain_search_3tap(target, ak, awk1, awk2, exc, es, pitch, p, nsf, bits, exc2, e2s, r, cdbk_index);
-			if(err < best_err || best_err < 0) {
-				for(j = 0; j < nsf; j++)
+			if (err < best_err || best_err < 0) {
+				for ( j = 0; j < nsf; j++ )
 					best_exc[j] = exc[es + j];
 				best_err = err;
 				best_pitch = pitch;
@@ -157,7 +157,7 @@ public class Ltp3Tap extends Ltp {
 
 		bits.pack(best_pitch - start, pitch_bits);
 		bits.pack(best_gain_index, gain_bits);
-		for(i = 0; i < nsf; i++)
+		for ( i = 0; i < nsf; i++ )
 			exc[es + i] = best_exc[i];
 
 		return pitch;
@@ -189,22 +189,22 @@ public class Ltp3Tap extends Ltp {
 		gain[1] = 0.015625f * (float) gain_cdbk[gain_index * 3 + 1] + .5f;
 		gain[2] = 0.015625f * (float) gain_cdbk[gain_index * 3 + 2] + .5f;
 
-		if(count_lost != 0 && pitch > subframe_offset) {
+		if (count_lost != 0 && pitch > subframe_offset) {
 			float gain_sum = Math.abs(gain[1]);
 			float tmp = count_lost < 4 ? last_pitch_gain : 0.4f * last_pitch_gain;
-			if(tmp > .95f)
+			if (tmp > .95f)
 				tmp = .95f;
-			if(gain[0] > 0)
+			if (gain[0] > 0)
 				gain_sum += gain[0];
 			else
 				gain_sum -= .5f * gain[0];
-			if(gain[2] > 0)
+			if (gain[2] > 0)
 				gain_sum += gain[2];
 			else
 				gain_sum -= .5f * gain[0];
-			if(gain_sum > tmp) {
+			if (gain_sum > tmp) {
 				float fact = tmp / gain_sum;
-				for(i = 0; i < 3; i++)
+				for ( i = 0; i < 3; i++ )
 					gain[i] *= fact;
 			}
 		}
@@ -213,25 +213,25 @@ public class Ltp3Tap extends Ltp {
 		gain_val[1] = gain[1];
 		gain_val[2] = gain[2];
 
-		for(i = 0; i < 3; i++) {
+		for ( i = 0; i < 3; i++ ) {
 			int j, tmp1, tmp2, pp = pitch + 1 - i;
 
 			tmp1 = nsf;
-			if(tmp1 > pp)
+			if (tmp1 > pp)
 				tmp1 = pp;
 			tmp2 = nsf;
-			if(tmp2 > pp + pitch)
+			if (tmp2 > pp + pitch)
 				tmp2 = pp + pitch;
 
-			for(j = 0; j < tmp1; j++)
+			for ( j = 0; j < tmp1; j++ )
 				e[i][j] = exc[es + j - pp];
-			for(j = tmp1; j < tmp2; j++)
+			for ( j = tmp1; j < tmp2; j++ )
 				e[i][j] = exc[es + j - pp - pitch];
-			for(j = tmp2; j < nsf; j++)
+			for ( j = tmp2; j < nsf; j++ )
 				e[i][j] = 0;
 		}
 
-		for(i = 0; i < nsf; i++) {
+		for ( i = 0; i < nsf; i++ ) {
 			exc[es + i] = gain[0] * e[2][i] + gain[1] * e[1][i] + gain[2] * e[0][i];
 		}
 
@@ -271,33 +271,33 @@ public class Ltp3Tap extends Ltp {
 		x = new float[3][nsf];
 		e = new float[3][nsf];
 
-		for(i = 2; i >= 0; i--) {
+		for ( i = 2; i >= 0; i-- ) {
 			int pp = pitch + 1 - i;
-			for(j = 0; j < nsf; j++) {
-				if(j - pp < 0)
+			for ( j = 0; j < nsf; j++ ) {
+				if (j - pp < 0)
 					e[i][j] = exc2[e2s + j - pp];
-				else if(j - pp - pitch < 0)
+				else if (j - pp - pitch < 0)
 					e[i][j] = exc2[e2s + j - pp - pitch];
 				else
 					e[i][j] = 0;
 			}
 
-			if(i == 2)
+			if (i == 2)
 				Filters.syn_percep_zero(e[i], 0, ak, awk1, awk2, x[i], nsf, p);
 			else {
-				for(j = 0; j < nsf - 1; j++)
+				for ( j = 0; j < nsf - 1; j++ )
 					x[i][j + 1] = x[i + 1][j];
 				x[i][0] = 0;
-				for(j = 0; j < nsf; j++)
+				for ( j = 0; j < nsf; j++ )
 					x[i][j] += e[i][0] * r[j];
 			}
 		}
 
-		for(i = 0; i < 3; i++)
+		for ( i = 0; i < 3; i++ )
 			corr[i] = inner_prod(x[i], 0, target, 0, nsf);
 
-		for(i = 0; i < 3; i++)
-			for(j = 0; j <= i; j++)
+		for ( i = 0; i < 3; i++ )
+			for ( j = 0; j <= i; j++ )
 				A[i][j] = A[j][i] = inner_prod(x[i], 0, x[j], 0, nsf);
 
 		{
@@ -315,7 +315,7 @@ public class Ltp3Tap extends Ltp {
 			C[7] = A[1][1];
 			C[8] = A[0][0];
 
-			for(i = 0; i < gain_cdbk_size; i++) {
+			for ( i = 0; i < gain_cdbk_size; i++ ) {
 				float sum = 0;
 				float g0, g1, g2;
 				ptr = 3 * i;
@@ -334,17 +334,17 @@ public class Ltp3Tap extends Ltp {
 				sum -= .5f * C[8] * g2 * g2;
 
 				/* If true, force "safe" pitch values to handle packet loss better */
-				if(false) {
+				if (false) {
 					float tot = Math.abs(gain_cdbk[ptr + 1]);
-					if(gain_cdbk[ptr] > 0)
+					if (gain_cdbk[ptr] > 0)
 						tot += gain_cdbk[ptr];
-					if(gain_cdbk[ptr + 2] > 0)
+					if (gain_cdbk[ptr + 2] > 0)
 						tot += gain_cdbk[ptr + 2];
-					if(tot > 1)
+					if (tot > 1)
 						continue;
 				}
 
-				if(sum > best_sum || i == 0) {
+				if (sum > best_sum || i == 0) {
 					best_sum = sum;
 					best_cdbk = i;
 				}
@@ -356,14 +356,14 @@ public class Ltp3Tap extends Ltp {
 			cdbk_index[0] = best_cdbk;
 		}
 
-		for(i = 0; i < nsf; i++)
+		for ( i = 0; i < nsf; i++ )
 			exc[es + i] = gain[0] * e[2][i] + gain[1] * e[1][i] + gain[2] * e[0][i];
 
 		err1 = 0;
 		err2 = 0;
-		for(i = 0; i < nsf; i++)
+		for ( i = 0; i < nsf; i++ )
 			err1 += target[i] * target[i];
-		for(i = 0; i < nsf; i++)
+		for ( i = 0; i < nsf; i++ )
 			err2 += (target[i] - gain[2] * x[0][i] - gain[1] * x[1][i] - gain[0] * x[2][i]) * (target[i] - gain[2] * x[0][i] - gain[1] * x[1][i] - gain[0] * x[2][i]);
 
 		return err2;

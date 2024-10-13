@@ -158,7 +158,7 @@ public class SourceJavaSound extends Source {
 	@Override
 	public void changeSource(boolean priority, boolean toStream, boolean toLoop, String sourcename, FilenameURL filenameURL, SoundBuffer soundBuffer, float x, float y, float z, int attModel, float distOrRoll, boolean temporary) {
 		super.changeSource(priority, toStream, toLoop, sourcename, filenameURL, soundBuffer, x, y, z, attModel, distOrRoll, temporary);
-		if(channelJavaSound != null)
+		if (channelJavaSound != null)
 			channelJavaSound.setLooping(toLoop);
 		positionChanged();
 	}
@@ -248,19 +248,19 @@ public class SourceJavaSound extends Source {
 	 */
 	@Override
 	public void play(Channel c) {
-		if(!active()) {
-			if(toLoop)
+		if (!active()) {
+			if (toLoop)
 				toPlay = true;
 			return;
 		}
 
-		if(c == null) {
+		if (c == null) {
 			errorMessage("Unable to play source, because channel was null");
 			return;
 		}
 
 		boolean newChannel = (channel != c);
-		if(channel != null && channel.attachedSource != this)
+		if (channel != null && channel.attachedSource != this)
 			newChannel = true;
 
 		boolean wasPaused = paused();
@@ -272,14 +272,14 @@ public class SourceJavaSound extends Source {
 
 		// Make sure the channel exists:
 		// check if we are already on this channel:
-		if(newChannel) {
-			if(channelJavaSound != null)
+		if (newChannel) {
+			if (channelJavaSound != null)
 				channelJavaSound.setLooping(toLoop);
 
-			if(!toStream) {
+			if (!toStream) {
 				// This is not a streaming source, so make sure there is
 				// a sound buffer loaded to play:
-				if(soundBuffer == null) {
+				if (soundBuffer == null) {
 					errorMessage("No sound buffer to play");
 					return;
 				}
@@ -290,8 +290,8 @@ public class SourceJavaSound extends Source {
 		positionChanged();  // set new pan and gain
 
 		// See if we are already playing:
-		if(wasStopped || !playing()) {
-			if(toStream && !wasPaused) {
+		if (wasStopped || !playing()) {
+			if (toStream && !wasPaused) {
 				preLoad = true;
 			}
 			channel.play();
@@ -305,34 +305,34 @@ public class SourceJavaSound extends Source {
 	 */
 	@Override
 	public boolean preLoad() {
-		if(codec == null) {
+		if (codec == null) {
 			return false;
 		}
 
 		boolean noNextBuffers = false;
 		synchronized(soundSequenceLock) {
-			if(nextBuffers == null || nextBuffers.isEmpty())
+			if (nextBuffers == null || nextBuffers.isEmpty())
 				noNextBuffers = true;
 		}
 
 		LinkedList<byte[]> preLoadBuffers = new LinkedList<byte[]>();
-		if(nextCodec != null && !noNextBuffers) {
+		if (nextCodec != null && !noNextBuffers) {
 			codec = nextCodec;
 			nextCodec = null;
 			synchronized(soundSequenceLock) {
 				while(!nextBuffers.isEmpty()) {
 					soundBuffer = nextBuffers.remove(0);
-					if(soundBuffer != null && soundBuffer.audioData != null)
+					if (soundBuffer != null && soundBuffer.audioData != null)
 						preLoadBuffers.add(soundBuffer.audioData);
 				}
 			}
 		} else {
 			codec.initialize(filenameURL.getURL());
 
-			for(int i = 0; i < SoundSystemConfig.getNumberStreamingBuffers(); i++) {
+			for ( int i = 0; i < SoundSystemConfig.getNumberStreamingBuffers(); i++ ) {
 				soundBuffer = codec.read();
 
-				if(soundBuffer == null || soundBuffer.audioData == null)
+				if (soundBuffer == null || soundBuffer.audioData == null)
 					break;
 
 				preLoadBuffers.add(soundBuffer.audioData);
@@ -361,23 +361,23 @@ public class SourceJavaSound extends Source {
 		// Calculate the source's gain using the specified attenuation model:
 		switch(attModel) {
 			case SoundSystemConfig.ATTENUATION_LINEAR:
-				if(distanceFromListener <= 0) {
+				if (distanceFromListener <= 0) {
 					gain = 1.0f;
-				} else if(distanceFromListener >= distOrRoll) {
+				} else if (distanceFromListener >= distOrRoll) {
 					gain = 0.0f;
 				} else {
 					gain = 1.0f - (distanceFromListener / distOrRoll);
 				}
 				break;
 			case SoundSystemConfig.ATTENUATION_ROLLOFF:
-				if(distanceFromListener <= 0) {
+				if (distanceFromListener <= 0) {
 					gain = 1.0f;
 				} else {
 					float tweakFactor = 0.0005f;
 					float attenuationFactor = distOrRoll * distanceFromListener * distanceFromListener * tweakFactor;
 					// Make sure we don't do a division by zero:
 					// (rolloff should NEVER be negative)
-					if(attenuationFactor < 0)
+					if (attenuationFactor < 0)
 						attenuationFactor = 0;
 
 					gain = 1.0f / (1 + attenuationFactor);
@@ -388,15 +388,15 @@ public class SourceJavaSound extends Source {
 				break;
 		}
 		// make sure gain is between 0 and 1:
-		if(gain > 1.0f)
+		if (gain > 1.0f)
 			gain = 1.0f;
-		if(gain < 0.0f)
+		if (gain < 0.0f)
 			gain = 0.0f;
 
 		gain *= sourceVolume * SoundSystemConfig.getMasterGain() * (float) Math.abs(fadeOutGain) * fadeInGain;
 
 		// update the channel's gain:
-		if(channel != null && channel.attachedSource == this && channelJavaSound != null)
+		if (channel != null && channel.attachedSource == this && channelJavaSound != null)
 			channelJavaSound.setGain(gain);
 	}
 
@@ -413,8 +413,8 @@ public class SourceJavaSound extends Source {
 		float angle = (float) Math.atan2(x, z);
 		pan = (float) -Math.sin(angle);
 
-		if(channel != null && channel.attachedSource == this && channelJavaSound != null) {
-			if(attModel == SoundSystemConfig.ATTENUATION_NONE)
+		if (channel != null && channel.attachedSource == this && channelJavaSound != null) {
+			if (attModel == SoundSystemConfig.ATTENUATION_NONE)
 				channelJavaSound.setPan(0);
 			else
 				channelJavaSound.setPan(pan);
@@ -426,9 +426,9 @@ public class SourceJavaSound extends Source {
 	 * the listener.
 	 */
 	public void calculatePitch() {
-		if(channel != null && channel.attachedSource == this && channelJavaSound != null) {
+		if (channel != null && channel.attachedSource == this && channelJavaSound != null) {
 			// If not using Doppler effect, save some calculations:
-			if(SoundSystemConfig.getDopplerFactor() == 0) {
+			if (SoundSystemConfig.getDopplerFactor() == 0) {
 				channelJavaSound.setPitch(pitch);
 			} else {
 				float SS = 343.3f;
@@ -446,9 +446,9 @@ public class SourceJavaSound extends Source {
 				vls = min(vls, SS / DF);
 				float newPitch = pitch * (SS * DV - DF * vls) / (SS * DV - DF * vss);
 
-				if(newPitch < 0.5f)
+				if (newPitch < 0.5f)
 					newPitch = 0.5f;
-				else if(newPitch > 2.0f)
+				else if (newPitch > 2.0f)
 					newPitch = 2.0f;
 
 				channelJavaSound.setPitch(newPitch);
@@ -457,7 +457,7 @@ public class SourceJavaSound extends Source {
 	}
 
 	public float min(float a, float b) {
-		if(a < b)
+		if (a < b)
 			return a;
 		return b;
 	}

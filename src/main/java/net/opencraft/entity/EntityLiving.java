@@ -112,21 +112,21 @@ public class EntityLiving extends Entity {
 	@Override
 	public void onEntityUpdate() {
 		super.onEntityUpdate();
-		if(this.rand.nextInt(1000) < this.livingSoundTime++) {
+		if (this.rand.nextInt(1000) < this.livingSoundTime++) {
 			this.livingSoundTime = -80;
 			final String livingSound = this.livingSound();
-			if(livingSound != null) {
+			if (livingSound != null) {
 				this.world.playSound(this, livingSound, 1.0f, (this.rand.nextFloat() - this.rand.nextFloat()) * 0.2f + 1.0f);
 			}
 		}
-		if(this.isEntityAlive() && this.isEntityInsideOpaqueBlock()) {
+		if (this.isEntityAlive() && this.isEntityInsideOpaqueBlock()) {
 			this.attackEntityFrom(null, 1);
 		}
-		if(this.isEntityAlive() && this.isInsideOfMaterial(Material.WATER)) {
+		if (this.isEntityAlive() && this.isInsideOfMaterial(Material.WATER)) {
 			--this.air;
-			if(this.air == -20) {
+			if (this.air == -20) {
 				this.air = 0;
-				for(int i = 0; i < 8; ++i) {
+				for ( int i = 0; i < 8; ++i ) {
 					this.world.spawnParticle("bubble", this.posX + (this.rand.nextFloat() - this.rand.nextFloat()), this.posY + (this.rand.nextFloat() - this.rand.nextFloat()), this.posZ + (this.rand.nextFloat() - this.rand.nextFloat()), this.motionX, this.motionY, this.motionZ);
 				}
 				this.attackEntityFrom(null, 2);
@@ -136,21 +136,21 @@ public class EntityLiving extends Entity {
 			this.air = this.maxAir;
 		}
 		this.prevCameraPitch = this.cameraPitch;
-		if(this.attackTime > 0) {
+		if (this.attackTime > 0) {
 			--this.attackTime;
 		}
-		if(this.hurtTime > 0) {
+		if (this.hurtTime > 0) {
 			--this.hurtTime;
 		}
-		if(this.heartsLife > 0) {
+		if (this.heartsLife > 0) {
 			--this.heartsLife;
 		}
-		if(this.health <= 0) {
+		if (this.health <= 0) {
 			++this.deathTime;
-			if(this.deathTime > 20) {
+			if (this.deathTime > 20) {
 				this.onEntityDeath();
 				this.setEntityDead();
-				for(int i = 0; i < 20; ++i) {
+				for ( int i = 0; i < 20; ++i ) {
 					this.world.spawnParticle("explode", this.posX + this.rand.nextFloat() * this.width * 2.0f - this.width, this.posY + this.rand.nextFloat() * this.height, this.posZ + this.rand.nextFloat() * this.width * 2.0f - this.width, this.rand.nextGaussian() * 0.02, this.rand.nextGaussian() * 0.02, this.rand.nextGaussian() * 0.02);
 				}
 			}
@@ -162,7 +162,7 @@ public class EntityLiving extends Entity {
 	}
 
 	public void spawnExplosionParticle() {
-		for(int i = 0; i < 20; ++i) {
+		for ( int i = 0; i < 20; ++i ) {
 			final double xPosition = this.rand.nextGaussian() * 0.02;
 			final double yPosition = this.rand.nextGaussian() * 0.02;
 			final double zPosition = this.rand.nextGaussian() * 0.02;
@@ -189,38 +189,38 @@ public class EntityLiving extends Entity {
 		float n3 = 0.0f;
 		this.field_9362_u = this.rotationYawHead;
 		float n4 = 0.0f;
-		if(sqrt_double > 0.05f) {
+		if (sqrt_double > 0.05f) {
 			n4 = 1.0f;
 			n3 = sqrt_double * 3.0f;
 			renderYawOffset = (float) toRadians(atan2(n2, n)) - 90.0f;
 		}
-		if(!this.onGround) {
+		if (!this.onGround) {
 			n4 = 0.0f;
 		}
 		this.rotationYawHead += (n4 - this.rotationYawHead) * 0.3f;
 		float n5;
-		for(n5 = renderYawOffset - this.renderYawOffset; n5 < -180.0f; n5 += 360.0f) {
+		for ( n5 = renderYawOffset - this.renderYawOffset; n5 < -180.0f; n5 += 360.0f ) {
 		}
 		while(n5 >= 180.0f) {
 			n5 -= 360.0f;
 		}
 		this.renderYawOffset += n5 * 0.1f;
 		float n6;
-		for(n6 = this.rotationYaw - this.renderYawOffset; n6 < -180.0f; n6 += 360.0f) {
+		for ( n6 = this.rotationYaw - this.renderYawOffset; n6 < -180.0f; n6 += 360.0f ) {
 		}
 		while(n6 >= 180.0f) {
 			n6 -= 360.0f;
 		}
 		final boolean b = n6 < -90.0f || n6 >= 90.0f;
-		if(n6 < -75.0f) {
+		if (n6 < -75.0f) {
 			n6 = -75.0f;
 		}
-		if(n6 >= 75.0f) {
+		if (n6 >= 75.0f) {
 			n6 = 75.0f;
 		}
 		this.renderYawOffset = this.rotationYaw - n6;
 		this.renderYawOffset += n6 * 0.1f;
-		if(b) {
+		if (b) {
 			n3 *= -1.0f;
 		}
 		while(this.rotationYaw - this.prevRotationYaw < -180.0f) {
@@ -250,11 +250,11 @@ public class EntityLiving extends Entity {
 	}
 
 	public void heal(final int nya1) {
-		if(this.health <= 0) {
+		if (this.health <= 0) {
 			return;
 		}
 		this.health += nya1;
-		if(this.health > 20) {
+		if (this.health > 20) {
 			this.health = 20;
 		}
 		this.heartsLife = this.heartsHalvesLife / 2;
@@ -263,12 +263,12 @@ public class EntityLiving extends Entity {
 	@Override
 	public boolean attackEntityFrom(final Entity entity, final int nya1) {
 		this.entityAge = 0;
-		if(this.health <= 0) {
+		if (this.health <= 0) {
 			return false;
 		}
 		this.newRotationYaw = 1.5f;
-		if(this.heartsLife > this.heartsHalvesLife / 2.0f) {
-			if(this.prevHealth - nya1 >= this.health) {
+		if (this.heartsLife > this.heartsHalvesLife / 2.0f) {
+			if (this.prevHealth - nya1 >= this.health) {
 				return false;
 			}
 			this.health = this.prevHealth - nya1;
@@ -281,17 +281,17 @@ public class EntityLiving extends Entity {
 			this.hurtTime = n;
 		}
 		this.attackedAtYaw = 0.0f;
-		if(entity != null) {
+		if (entity != null) {
 			double nya2;
 			double nya3;
-			for(nya2 = entity.posX - this.posX, nya3 = entity.posZ - this.posZ; nya2 * nya2 + nya3 * nya3 < 1.0E-4; nya2 = (random() - random()) * 0.01, nya3 = (random() - random()) * 0.01) {
+			for ( nya2 = entity.posX - this.posX, nya3 = entity.posZ - this.posZ; nya2 * nya2 + nya3 * nya3 < 1.0E-4; nya2 = (random() - random()) * 0.01, nya3 = (random() - random()) * 0.01 ) {
 			}
 			this.attackedAtYaw = (float) toRadians(atan2(nya3, nya2)) - this.rotationYaw;
 			this.knockBack(entity, nya1, nya2, nya3);
 		} else {
 			this.attackedAtYaw = (float) ((int) (random() * 2.0) * 180);
 		}
-		if(this.health <= 0) {
+		if (this.health <= 0) {
 			this.world.playSound(this, this.getDeathSound(), 1.0f, (this.rand.nextFloat() - this.rand.nextFloat()) * 0.2f + 1.0f);
 			this.onDeath(entity);
 		} else {
@@ -321,19 +321,19 @@ public class EntityLiving extends Entity {
 		this.motionX -= nya2 / sqrt_double * n;
 		this.motionY += 0.4000000059604645;
 		this.motionZ -= nya3 / sqrt_double * n;
-		if(this.motionY > 0.4000000059604645) {
+		if (this.motionY > 0.4000000059604645) {
 			this.motionY = 0.4000000059604645;
 		}
 	}
 
 	public void onDeath(final Entity entity) {
-		if(this.scoreValue > 0 && entity != null) {
+		if (this.scoreValue > 0 && entity != null) {
 			entity.addToPlayerScore(this, this.scoreValue);
 		}
 		this.unused_flag = true;
 		final int scoreValue = this.scoreValue();
-		if(scoreValue > 0) {
-			for(int nextInt = this.rand.nextInt(3), i = 0; i < nextInt; ++i) {
+		if (scoreValue > 0) {
+			for ( int nextInt = this.rand.nextInt(3), i = 0; i < nextInt; ++i ) {
 				this.dropItemWithOffset(scoreValue, 1);
 			}
 		}
@@ -346,10 +346,10 @@ public class EntityLiving extends Entity {
 	@Override
 	protected void fall(final float nya1) {
 		final int nya2 = (int) ceil((double) (nya1 - 3.0f));
-		if(nya2 > 0) {
+		if (nya2 > 0) {
 			this.attackEntityFrom(null, nya2);
 			final int blockId = this.world.getBlockId(Mth.floor_double(this.posX), Mth.floor_double(this.posY - 0.20000000298023224 - this.yOffset), Mth.floor_double(this.posZ));
-			if(blockId > 0) {
+			if (blockId > 0) {
 				final StepSound stepSound = Block.blocksList[blockId].stepSound;
 				this.world.playSound(this, stepSound.stepSoundDir2(), stepSound.soundVolume() * 0.5f, stepSound.soundPitch() * 0.75f);
 			}
@@ -357,7 +357,7 @@ public class EntityLiving extends Entity {
 	}
 
 	public void moveEntityWithHeading(final float nya1, final float moveForward) {
-		if(this.handleWaterMovement()) {
+		if (this.handleWaterMovement()) {
 			final double n = this.posY;
 			this.moveFlying(nya1, moveForward, 0.02f);
 			this.moveEntity(this.motionX, this.motionY, this.motionZ);
@@ -365,10 +365,10 @@ public class EntityLiving extends Entity {
 			this.motionY *= 0.800000011920929;
 			this.motionZ *= 0.800000011920929;
 			this.motionY -= 0.02;
-			if(this.isCollidedHorizontally && this.isOffsetPositionInLiquid(this.motionX, this.motionY + 0.6000000238418579 - this.posY + n, this.motionZ)) {
+			if (this.isCollidedHorizontally && this.isOffsetPositionInLiquid(this.motionX, this.motionY + 0.6000000238418579 - this.posY + n, this.motionZ)) {
 				this.motionY = 0.30000001192092896;
 			}
-		} else if(this.handleLavaMovement()) {
+		} else if (this.handleLavaMovement()) {
 			final double n = this.posY;
 			this.moveFlying(nya1, moveForward, 0.02f);
 			this.moveEntity(this.motionX, this.motionY, this.motionZ);
@@ -376,26 +376,26 @@ public class EntityLiving extends Entity {
 			this.motionY *= 0.5;
 			this.motionZ *= 0.5;
 			this.motionY -= 0.02;
-			if(this.isCollidedHorizontally && this.isOffsetPositionInLiquid(this.motionX, this.motionY + 0.6000000238418579 - this.posY + n, this.motionZ)) {
+			if (this.isCollidedHorizontally && this.isOffsetPositionInLiquid(this.motionX, this.motionY + 0.6000000238418579 - this.posY + n, this.motionZ)) {
 				this.motionY = 0.30000001192092896;
 			}
 		} else {
 			this.moveFlying(nya1, moveForward, this.onGround ? 0.1f : 0.02f);
-			if(this.isOnLadder()) {
+			if (this.isOnLadder()) {
 				this.fallDistance = 0.0f;
-				if(this.motionY < -0.15) {
+				if (this.motionY < -0.15) {
 					this.motionY = -0.15;
 				}
 			}
 			this.moveEntity(this.motionX, this.motionY, this.motionZ);
-			if(this.isCollidedHorizontally && this.isOnLadder()) {
+			if (this.isCollidedHorizontally && this.isOnLadder()) {
 				this.motionY = 0.2;
 			}
 			this.motionX *= 0.9100000262260437;
 			this.motionY *= 0.9800000190734863;
 			this.motionZ *= 0.9100000262260437;
 			this.motionY -= 0.08;
-			if(this.onGround) {
+			if (this.onGround) {
 				final float n2 = 0.6f;
 				this.motionX *= n2;
 				this.motionZ *= n2;
@@ -405,7 +405,7 @@ public class EntityLiving extends Entity {
 		final double n = this.posX - this.prevPosX;
 		final double n3 = this.posZ - this.prevPosZ;
 		float n4 = Mth.sqrt_double(n * n + n3 * n3) * 4.0f;
-		if(n4 > 1.0f) {
+		if (n4 > 1.0f) {
 			n4 = 1.0f;
 		}
 		this.newRotationYaw += (n4 - this.newRotationYaw) * 0.4f;
@@ -428,7 +428,7 @@ public class EntityLiving extends Entity {
 
 	public void readEntityFromNBT(final NBTTagCompound nbtTagCompound) {
 		this.health = nbtTagCompound.getShort("Health");
-		if(!nbtTagCompound.hasKey("Health")) {
+		if (!nbtTagCompound.hasKey("Health")) {
 			this.health = 10;
 		}
 		this.hurtTime = nbtTagCompound.getShort("HurtTime");
@@ -444,23 +444,23 @@ public class EntityLiving extends Entity {
 	public void onLivingUpdate() {
 		++this.entityAge;
 		final Entity player = this.world.getPlayer();
-		if(player != null) {
+		if (player != null) {
 			final double n = player.posX - this.posX;
 			final double n2 = player.posY - this.posY;
 			final double n3 = player.posZ - this.posZ;
 			final double n4 = n * n + n2 * n2 + n3 * n3;
-			if(n4 > 16384.0) {
+			if (n4 > 16384.0) {
 				this.setEntityDead();
 			}
-			if(this.entityAge > 600 && this.rand.nextInt(800) == 0) {
-				if(n4 < 1024.0) {
+			if (this.entityAge > 600 && this.rand.nextInt(800) == 0) {
+				if (n4 < 1024.0) {
 					this.entityAge = 0;
 				} else {
 					this.setEntityDead();
 				}
 			}
 		}
-		if(this.health <= 0) {
+		if (this.health <= 0) {
 			this.isJumping = false;
 			this.moveStrafing = 0.0f;
 			this.moveForward = 0.0f;
@@ -470,12 +470,12 @@ public class EntityLiving extends Entity {
 		}
 		final boolean handleWaterMovement = this.handleWaterMovement();
 		final boolean handleLavaMovement = this.handleLavaMovement();
-		if(this.isJumping) {
-			if(handleWaterMovement) {
+		if (this.isJumping) {
+			if (handleWaterMovement) {
 				this.motionY += 0.03999999910593033;
-			} else if(handleLavaMovement) {
+			} else if (handleLavaMovement) {
 				this.motionY += 0.03999999910593033;
-			} else if(this.onGround) {
+			} else if (this.onGround) {
 				this.jump();
 			}
 		}
@@ -484,10 +484,10 @@ public class EntityLiving extends Entity {
 		this.randomYawVelocity *= 0.9f;
 		this.moveEntityWithHeading(this.moveStrafing, this.moveForward);
 		final List entitiesWithinAABBExcludingEntity = this.world.getEntitiesWithinAABBExcludingEntity(this, this.boundingBox.expand(0.20000000298023224, 0.0, 0.20000000298023224));
-		if(entitiesWithinAABBExcludingEntity != null && entitiesWithinAABBExcludingEntity.size() > 0) {
-			for(int i = 0; i < entitiesWithinAABBExcludingEntity.size(); ++i) {
+		if (entitiesWithinAABBExcludingEntity != null && entitiesWithinAABBExcludingEntity.size() > 0) {
+			for ( int i = 0; i < entitiesWithinAABBExcludingEntity.size(); ++i ) {
 				final Entity entity = (Entity) entitiesWithinAABBExcludingEntity.get(i);
-				if(entity.canBePushed()) {
+				if (entity.canBePushed()) {
 					entity.applyEntityCollision(this);
 				}
 			}
@@ -499,19 +499,19 @@ public class EntityLiving extends Entity {
 	}
 
 	protected void updatePlayerActionState() {
-		if(this.rand.nextFloat() < 0.07f) {
+		if (this.rand.nextFloat() < 0.07f) {
 			this.moveStrafing = (this.rand.nextFloat() - 0.5f) * this.moveSpeed;
 			this.moveForward = this.rand.nextFloat() * this.moveSpeed;
 		}
 		this.isJumping = (this.rand.nextFloat() < 0.01f);
-		if(this.rand.nextFloat() < 0.04f) {
+		if (this.rand.nextFloat() < 0.04f) {
 			this.randomYawVelocity = (this.rand.nextFloat() - 0.5f) * 60.0f;
 		}
 		this.rotationYaw += this.randomYawVelocity;
 		this.rotationPitch = this.defaultPitch;
 		final boolean handleWaterMovement = this.handleWaterMovement();
 		final boolean handleLavaMovement = this.handleLavaMovement();
-		if(handleWaterMovement || handleLavaMovement) {
+		if (handleWaterMovement || handleLavaMovement) {
 			this.isJumping = (this.rand.nextFloat() < 0.8f);
 		}
 	}

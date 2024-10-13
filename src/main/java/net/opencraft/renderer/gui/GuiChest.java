@@ -20,17 +20,17 @@ public class GuiChest extends GuiContainer {
 		this.inventoryRows = kd2.getSizeInventory() / 9;
 		this.ySize = n + this.inventoryRows * 18;
 		final int n2 = (this.inventoryRows - 4) * 18;
-		for(int i = 0; i < this.inventoryRows; ++i) {
-			for(int j = 0; j < 9; ++j) {
+		for ( int i = 0; i < this.inventoryRows; ++i ) {
+			for ( int j = 0; j < 9; ++j ) {
 				this.inventorySlots.add(new Slot(this, kd2, j + i * 9, 8 + j * 18, 18 + i * 18));
 			}
 		}
-		for(int i = 0; i < 3; ++i) {
-			for(int j = 0; j < 9; ++j) {
+		for ( int i = 0; i < 3; ++i ) {
+			for ( int j = 0; j < 9; ++j ) {
 				this.inventorySlots.add(new Slot(this, kd1, j + (i + 1) * 9, 8 + j * 18, 103 + i * 18 + n2));
 			}
 		}
-		for(int i = 0; i < 9; ++i) {
+		for ( int i = 0; i < 9; ++i ) {
 			this.inventorySlots.add(new Slot(this, kd1, i, 8 + i * 18, 161 + n2));
 		}
 	}

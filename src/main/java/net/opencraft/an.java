@@ -19,10 +19,10 @@ public class an extends dh {
 		this.a = random.nextDouble() * 256.0;
 		this.b = random.nextDouble() * 256.0;
 		this.c = random.nextDouble() * 256.0;
-		for(int i = 0; i < 256; ++i) {
+		for ( int i = 0; i < 256; ++i ) {
 			this.d[i] = i;
 		}
-		for(int i = 0; i < 256; ++i) {
+		for ( int i = 0; i < 256; ++i ) {
 			final int n = random.nextInt(256 - i) + i;
 			final int n2 = this.d[i];
 			this.d[i] = this.d[n];
@@ -38,13 +38,13 @@ public class an extends dh {
 		int n4 = (int) n;
 		int n5 = (int) n2;
 		int n6 = (int) n3;
-		if(n < n4) {
+		if (n < n4) {
 			--n4;
 		}
-		if(n2 < n5) {
+		if (n2 < n5) {
 			--n5;
 		}
-		if(n3 < n6) {
+		if (n3 < n6) {
 			--n6;
 		}
 		final int n7 = n4 & 0xFF;
@@ -92,34 +92,34 @@ public class an extends dh {
 		double b2 = 0.0;
 		double b3 = 0.0;
 		double b4 = 0.0;
-		for(int i = 0; i < integer5; ++i) {
+		for ( int i = 0; i < integer5; ++i ) {
 			double n4 = (integer2 + i) * double8 + this.a;
 			int n5 = (int) n4;
-			if(n4 < n5) {
+			if (n4 < n5) {
 				--n5;
 			}
 			final int n6 = n5 & 0xFF;
 			n4 -= n5;
 			final double n7 = n4 * n4 * n4 * (n4 * (n4 * 6.0 - 15.0) + 10.0);
-			for(int j = 0; j < integer7; ++j) {
+			for ( int j = 0; j < integer7; ++j ) {
 				double n8 = (integer4 + j) * double10 + this.c;
 				int n9 = (int) n8;
-				if(n8 < n9) {
+				if (n8 < n9) {
 					--n9;
 				}
 				final int n10 = n9 & 0xFF;
 				n8 -= n9;
 				final double double12 = n8 * n8 * n8 * (n8 * (n8 * 6.0 - 15.0) + 10.0);
-				for(int k = 0; k < integer6; ++k) {
+				for ( int k = 0; k < integer6; ++k ) {
 					double n11 = (integer3 + k) * double9 + this.b;
 					int n12 = (int) n11;
-					if(n11 < n12) {
+					if (n11 < n12) {
 						--n12;
 					}
 					final int n13 = n12 & 0xFF;
 					n11 -= n12;
 					final double n14 = n11 * n11 * n11 * (n11 * (n11 * 6.0 - 15.0) + 10.0);
-					if(k == 0 || n13 != n3) {
+					if (k == 0 || n13 != n3) {
 						n3 = n13;
 						final int n15 = this.d[n6] + n13;
 						final int n16 = this.d[n15] + n10;

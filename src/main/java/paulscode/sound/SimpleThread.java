@@ -160,7 +160,7 @@ public class SimpleThread extends Thread {
 	 * @return True while the thread is alive.
 	 */
 	private synchronized boolean alive(boolean action, boolean value) {
-		if(action == SET)
+		if (action == SET)
 			alive = value;
 		return alive;
 	}
@@ -173,7 +173,7 @@ public class SimpleThread extends Thread {
 	 * @return True if the thread should die.
 	 */
 	private synchronized boolean kill(boolean action, boolean value) {
-		if(action == SET)
+		if (action == SET)
 			kill = value;
 		return kill;
 	}

@@ -264,7 +264,7 @@ public class CodecJSpeex implements ICodec {
 		initialized(SET, false);
 		cleanup();
 
-		if(url == null) {
+		if (url == null) {
 			errorMessage("url null in method 'initialize'");
 			cleanup();
 			return false;
@@ -280,7 +280,7 @@ public class CodecJSpeex implements ICodec {
 		}
 		speexDecoder = new SpeexDecoder();
 
-		if(!processHeader())
+		if (!processHeader())
 			return false;
 
 		myAudioFormat = new AudioFormat((float) sampleRate, 16, channels, true, false);
@@ -329,11 +329,11 @@ public class CodecJSpeex implements ICodec {
 	 * @return The audio data wrapped into a SoundBuffer context.
 	 */
 	private SoundBuffer readBytes(int maxBytes) {
-		if(endOfStream(GET, XXX))
+		if (endOfStream(GET, XXX))
 			return null;
 
 		// Check to make sure there is an audio format:
-		if(myAudioFormat == null) {
+		if (myAudioFormat == null) {
 			errorMessage("Audio Format null in method 'read'");
 			return null;
 		}
@@ -341,23 +341,23 @@ public class CodecJSpeex implements ICodec {
 		byte[] fullBuffer = null;
 		int totalBytes = 0;
 		try {
-			if(getSourceFormat() == CONTAINER_FORMAT_OGG) {
-				for(; curseg < segments && totalBytes < maxBytes; curseg++) {
+			if (getSourceFormat() == CONTAINER_FORMAT_OGG) {
+				for ( ; curseg < segments && totalBytes < maxBytes; curseg++ ) {
 					bodybytes = header[OGG_HEADERSIZE + curseg] & 0xFF;
-					if(bodybytes == 255) {
+					if (bodybytes == 255) {
 						errorMessage("Unable to handle ogg body size 255 " + "in method 'readAll'");
 						return null;
 					}
 					dis.readFully(payload, 0, bodybytes);
 					chksum = OggCrc.checksum(chksum, payload, 0, bodybytes);
-					if(packetNo == 1) {
+					if (packetNo == 1) {
 						packetNo++;
 					} else {
 						speexDecoder.processData(payload, 0, bodybytes);
-						for(int i = 1; i < nframes; i++) {
+						for ( int i = 1; i < nframes; i++ ) {
 							speexDecoder.processData(false);
 						}
-						if((decsize = speexDecoder.getProcessedData(decdat, 0)) > 0) {
+						if ((decsize = speexDecoder.getProcessedData(decdat, 0)) > 0) {
 							fullBuffer = appendByteArrays(fullBuffer, decdat, decsize);
 							totalBytes += decsize;
 						}
@@ -375,7 +375,7 @@ public class CodecJSpeex implements ICodec {
 					chksum = OggCrc.checksum(0, header, 0, OGG_HEADERSIZE);
 
 					// make sure its a OGG header
-					if(!OGGID.equals(new String(header, 0, 4))) {
+					if (!OGGID.equals(new String(header, 0, 4))) {
 						errorMessage("missing ogg id in method 'readAll'");
 						return null;
 					}
@@ -384,9 +384,9 @@ public class CodecJSpeex implements ICodec {
 					dis.readFully(header, OGG_HEADERSIZE, segments);
 					chksum = OggCrc.checksum(chksum, header, OGG_HEADERSIZE, segments);
 
-					for(curseg = 0; curseg < segments && totalBytes < maxBytes; curseg++) {
+					for ( curseg = 0; curseg < segments && totalBytes < maxBytes; curseg++ ) {
 						bodybytes = header[OGG_HEADERSIZE + curseg] & 0xFF;
-						if(bodybytes == 255) {
+						if (bodybytes == 255) {
 							errorMessage("Unable to handle ogg body size " + "255 in method 'readAll'");
 							return null;
 						}
@@ -394,10 +394,10 @@ public class CodecJSpeex implements ICodec {
 						chksum = OggCrc.checksum(chksum, payload, 0, bodybytes);
 
 						speexDecoder.processData(payload, 0, bodybytes);
-						for(int i = 1; i < nframes; i++) {
+						for ( int i = 1; i < nframes; i++ ) {
 							speexDecoder.processData(false);
 						}
-						if((decsize = speexDecoder.getProcessedData(decdat, 0)) > 0) {
+						if ((decsize = speexDecoder.getProcessedData(decdat, 0)) > 0) {
 							fullBuffer = appendByteArrays(fullBuffer, decdat, decsize);
 							totalBytes += decsize;
 						}
@@ -408,10 +408,10 @@ public class CodecJSpeex implements ICodec {
 				while(!endOfStream(GET, XXX) && totalBytes < maxBytes) {
 					dis.readFully(payload, 0, bodybytes);
 					speexDecoder.processData(payload, 0, bodybytes);
-					for(int i = 1; i < nframes; i++) {
+					for ( int i = 1; i < nframes; i++ ) {
 						speexDecoder.processData(false);
 					}
-					if((decsize = speexDecoder.getProcessedData(decdat, 0)) > 0) {
+					if ((decsize = speexDecoder.getProcessedData(decdat, 0)) > 0) {
 						fullBuffer = appendByteArrays(fullBuffer, decdat, decsize);
 						totalBytes += decsize;
 					}
@@ -445,7 +445,7 @@ public class CodecJSpeex implements ICodec {
 		bodybytes = 0;
 		decsize = 0;
 
-		if(getSourceFormat() == CONTAINER_FORMAT_OGG) {
+		if (getSourceFormat() == CONTAINER_FORMAT_OGG) {
 			try {
 				dis.readFully(header, 0, OGG_HEADERSIZE);
 			} catch(IOException ioe) {
@@ -462,7 +462,7 @@ public class CodecJSpeex implements ICodec {
 			chksum = OggCrc.checksum(0, header, 0, OGG_HEADERSIZE);
 
 			// make sure its a OGG header
-			if(!OGGID.equals(new String(header, 0, 4))) {
+			if (!OGGID.equals(new String(header, 0, 4))) {
 				errorMessage("Ogg id missing in method 'processHeader'");
 				return false;
 			}
@@ -478,9 +478,9 @@ public class CodecJSpeex implements ICodec {
 
 			chksum = OggCrc.checksum(chksum, header, OGG_HEADERSIZE, segments);
 
-			for(curseg = 0; packetNo == 0; curseg++) {
+			for ( curseg = 0; packetNo == 0; curseg++ ) {
 				bodybytes = header[OGG_HEADERSIZE + curseg] & 0xFF;
-				if(bodybytes == 255) {
+				if (bodybytes == 255) {
 					errorMessage("Unable to handle ogg body size 255 in " + "method 'processHeader'");
 					return false;
 				}
@@ -493,7 +493,7 @@ public class CodecJSpeex implements ICodec {
 				}
 				chksum = OggCrc.checksum(chksum, payload, 0, bodybytes);
 
-				if(readSpeexHeader(payload, 0, bodybytes)) {
+				if (readSpeexHeader(payload, 0, bodybytes)) {
 					sampleRate = speexDecoder.getSampleRate();
 					channels = speexDecoder.getChannels();
 					packetNo++;
@@ -509,7 +509,7 @@ public class CodecJSpeex implements ICodec {
 				printStackTrace(ioe);
 				return false;
 			}
-			if(!RIFF.equals(new String(header, 0, 4)) && !WAVE.equals(new String(header, 8, 4))) {
+			if (!RIFF.equals(new String(header, 0, 4)) && !WAVE.equals(new String(header, 8, 4))) {
 				errorMessage("Containing file not in the wav format in " + "method 'processHeader'");
 				return false;
 			}
@@ -530,15 +530,15 @@ public class CodecJSpeex implements ICodec {
 					printStackTrace(ioe);
 					return false;
 				}
-				if(chunk.equals(FORMAT)) {
-					if(readShort(header, 0) != WAVE_FORMAT_SPEEX) {
+				if (chunk.equals(FORMAT)) {
+					if (readShort(header, 0) != WAVE_FORMAT_SPEEX) {
 						errorMessage("File is not a 'Wave Speex' file in " + "method 'processHeader'");
 						return false;
 					}
 					channels = readShort(header, 2);
 					sampleRate = readInt(header, 4);
 					bodybytes = readShort(header, 12);
-					if(readShort(header, 16) < 82) {
+					if (readShort(header, 16) < 82) {
 						errorMessage("Possibly corrupt Speex Wave file in " + "method 'processHeader'");
 						return false;
 					}
@@ -572,14 +572,14 @@ public class CodecJSpeex implements ICodec {
 	 * Closes the audio stream and remove references to all instantiated objects.
 	 */
 	public void cleanup() {
-		if(dis != null) {
+		if (dis != null) {
 			try {
 				dis.close();
 			} catch(IOException ioe) {
 			}
 			dis = null;
 		}
-		if(is != null) {
+		if (is != null) {
 			try {
 				is.close();
 			} catch(IOException ioe) {
@@ -617,11 +617,11 @@ public class CodecJSpeex implements ICodec {
 	 * @return False if there was an error.
 	 */
 	private boolean readSpeexHeader(final byte[] packet, final int offset, final int bytes) {
-		if(bytes != 80) {
+		if (bytes != 80) {
 			errorMessage("Header byte size not 80 in method " + "'readSpeexHeader'");
 			return false;
 		}
-		if(!"Speex   ".equals(new String(packet, offset, 8))) {
+		if (!"Speex   ".equals(new String(packet, offset, 8))) {
 			return false;
 		}
 		mode = packet[40 + offset] & 0xFF;
@@ -679,7 +679,7 @@ public class CodecJSpeex implements ICodec {
 	 * @param format Global format identifier.
 	 */
 	private static synchronized int sourceFormat(boolean action, int format) {
-		if(action == SET)
+		if (action == SET)
 			sourceFormat = format;
 		return sourceFormat;
 	}
@@ -692,7 +692,7 @@ public class CodecJSpeex implements ICodec {
 	 * @return True if steam is initialized.
 	 */
 	private synchronized boolean initialized(boolean action, boolean value) {
-		if(action == SET)
+		if (action == SET)
 			initialized = value;
 		return initialized;
 	}
@@ -705,7 +705,7 @@ public class CodecJSpeex implements ICodec {
 	 * @return True if end of stream was reached.
 	 */
 	private synchronized boolean endOfStream(boolean action, boolean value) {
-		if(action == SET)
+		if (action == SET)
 			endOfStream = value;
 		return endOfStream;
 	}
@@ -721,16 +721,16 @@ public class CodecJSpeex implements ICodec {
 	 */
 	private static byte[] appendByteArrays(byte[] arrayOne, byte[] arrayTwo, int length) {
 		byte[] newArray;
-		if(arrayOne == null && arrayTwo == null) {
+		if (arrayOne == null && arrayTwo == null) {
 			// no data, just return
 			return null;
-		} else if(arrayOne == null) {
+		} else if (arrayOne == null) {
 			// create the new array, same length as arrayTwo:
 			newArray = new byte[length];
 			// fill the new array with the contents of arrayTwo:
 			System.arraycopy(arrayTwo, 0, newArray, 0, length);
 			arrayTwo = null;
-		} else if(arrayTwo == null) {
+		} else if (arrayTwo == null) {
 			// create the new array, same length as arrayOne:
 			newArray = new byte[arrayOne.length];
 			// fill the new array with the contents of arrayOne:

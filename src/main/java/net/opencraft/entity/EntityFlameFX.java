@@ -37,10 +37,10 @@ public class EntityFlameFX extends EntityFX {
 	@Override
 	public float getEntityBrightness(final float float1) {
 		float n = (this.particleAge + float1) / this.particleMaxAge;
-		if(n < 0.0f) {
+		if (n < 0.0f) {
 			n = 0.0f;
 		}
-		if(n > 1.0f) {
+		if (n > 1.0f) {
 			n = 1.0f;
 		}
 		return super.getEntityBrightness(float1) * n + (1.0f - n);
@@ -51,14 +51,14 @@ public class EntityFlameFX extends EntityFX {
 		this.prevPosX = this.posX;
 		this.prevPosY = this.posY;
 		this.prevPosZ = this.posZ;
-		if(this.particleAge++ >= this.particleMaxAge) {
+		if (this.particleAge++ >= this.particleMaxAge) {
 			this.setEntityDead();
 		}
 		this.moveEntity(this.motionX, this.motionY, this.motionZ);
 		this.motionX *= 0.9599999785423279;
 		this.motionY *= 0.9599999785423279;
 		this.motionZ *= 0.9599999785423279;
-		if(this.onGround) {
+		if (this.onGround) {
 			this.motionX *= 0.699999988079071;
 			this.motionZ *= 0.699999988079071;
 		}

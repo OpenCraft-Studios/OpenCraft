@@ -10,7 +10,7 @@ public class GuiGameOver extends GuiScreen {
 		this.controlList.clear();
 		this.controlList.add(new GuiButton(1, this.width / 2 - 100, this.height / 4 + 72, "Respawn", 200, 20));
 		this.controlList.add(new GuiButton(2, this.width / 2 - 100, this.height / 4 + 96, "Title menu", 200, 20));
-		if(this.id.sessionData == null) {
+		if (this.id.sessionData == null) {
 			((GuiButton) this.controlList.get(1)).enabled = false;
 		}
 	}
@@ -21,13 +21,13 @@ public class GuiGameOver extends GuiScreen {
 
 	@Override
 	protected void actionPerformed(final GuiButton iq) {
-		if(iq.buttonId == 0) {
+		if (iq.buttonId == 0) {
 		}
-		if(iq.buttonId == 1) {
+		if (iq.buttonId == 1) {
 			this.id.respawn();
 			this.id.displayGuiScreen(null);
 		}
-		if(iq.buttonId == 2) {
+		if (iq.buttonId == 2) {
 			this.id.changeWorld1(null);
 			this.id.displayGuiScreen(new GuiMainMenu());
 		}

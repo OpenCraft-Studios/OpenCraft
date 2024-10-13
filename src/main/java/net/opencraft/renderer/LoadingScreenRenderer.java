@@ -37,7 +37,7 @@ public class LoadingScreenRenderer implements IProgressUpdate {
 	}
 
 	public void setLoadingProgress(final String string) {
-		if(this.mc.running) {
+		if (this.mc.running) {
 			this.currentlyDisplayedText = string;
 			final ScaledResolution scaledResolution = new ScaledResolution(this.mc.width, this.mc.height);
 			final int scaledWidth = scaledResolution.getScaledWidth();
@@ -51,35 +51,35 @@ public class LoadingScreenRenderer implements IProgressUpdate {
 			GL11.glTranslatef(0.0f, 0.0f, -200.0f);
 			return;
 		}
-		if(this.field_1005_e) {
+		if (this.field_1005_e) {
 			return;
 		}
 		throw new OpenCraftError();
 	}
 
 	public void displayLoadingString(final String string) {
-		if(this.mc.running) {
+		if (this.mc.running) {
 			this.field_1006_d = 0L;
 			this.field_1004_a = string;
 			this.setLoadingProgress(-1);
 			this.field_1006_d = 0L;
 			return;
 		}
-		if(this.field_1005_e) {
+		if (this.field_1005_e) {
 			return;
 		}
 		throw new OpenCraftError();
 	}
 
 	public void setLoadingProgress(final int integer) {
-		if(!this.mc.running) {
-			if(this.field_1005_e) {
+		if (!this.mc.running) {
+			if (this.field_1005_e) {
 				return;
 			}
 			throw new OpenCraftError();
 		} else {
 			final long currentTimeMillis = System.currentTimeMillis();
-			if(currentTimeMillis - this.field_1006_d < 20L) {
+			if (currentTimeMillis - this.field_1006_d < 20L) {
 				return;
 			}
 			this.field_1006_d = currentTimeMillis;
@@ -104,7 +104,7 @@ public class LoadingScreenRenderer implements IProgressUpdate {
 			instance.vertexUV(scaledWidth, 0.0, 0.0, scaledWidth / n, 0.0);
 			instance.vertexUV(0.0, 0.0, 0.0, 0.0, 0.0);
 			instance.draw();
-			if(integer >= 0) {
+			if (integer >= 0) {
 				final int n2 = 100;
 				final int n3 = 2;
 				final int n4 = scaledWidth / 2 - n2 / 2;

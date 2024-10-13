@@ -32,16 +32,16 @@ public class FurnaceBlock extends ContainerBlock {
 		final int blockId3 = world.getBlockId(xCoord - 1, yCoord, zCoord);
 		final int blockId4 = world.getBlockId(xCoord + 1, yCoord, zCoord);
 		int n = 3;
-		if(Block.opaqueCubeLookup[blockId] && !Block.opaqueCubeLookup[blockId2]) {
+		if (Block.opaqueCubeLookup[blockId] && !Block.opaqueCubeLookup[blockId2]) {
 			n = 3;
 		}
-		if(Block.opaqueCubeLookup[blockId2] && !Block.opaqueCubeLookup[blockId]) {
+		if (Block.opaqueCubeLookup[blockId2] && !Block.opaqueCubeLookup[blockId]) {
 			n = 2;
 		}
-		if(Block.opaqueCubeLookup[blockId3] && !Block.opaqueCubeLookup[blockId4]) {
+		if (Block.opaqueCubeLookup[blockId3] && !Block.opaqueCubeLookup[blockId4]) {
 			n = 5;
 		}
-		if(Block.opaqueCubeLookup[blockId4] && !Block.opaqueCubeLookup[blockId3]) {
+		if (Block.opaqueCubeLookup[blockId4] && !Block.opaqueCubeLookup[blockId3]) {
 			n = 4;
 		}
 		world.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, n);
@@ -49,16 +49,16 @@ public class FurnaceBlock extends ContainerBlock {
 
 	@Override
 	public int getBlockTextureGeneric(final IBlockAccess blockAccess, final int xCoord, final int yCoord, final int zCoord, final int metadataValue) {
-		if(metadataValue == 1) {
+		if (metadataValue == 1) {
 			return Block.stone.blockIndexInTexture;
 		}
-		if(metadataValue == 0) {
+		if (metadataValue == 0) {
 			return Block.stone.blockIndexInTexture;
 		}
-		if(metadataValue != blockAccess.getBlockMetadata(xCoord, yCoord, zCoord)) {
+		if (metadataValue != blockAccess.getBlockMetadata(xCoord, yCoord, zCoord)) {
 			return this.blockIndexInTexture;
 		}
-		if(this.isActive) {
+		if (this.isActive) {
 			return this.blockIndexInTexture + 16;
 		}
 		return this.blockIndexInTexture - 1;
@@ -66,7 +66,7 @@ public class FurnaceBlock extends ContainerBlock {
 
 	@Override
 	public void randomDisplayTick(final World world, final int xCoord, final int yCoord, final int zCoord, final Random random) {
-		if(!this.isActive) {
+		if (!this.isActive) {
 			return;
 		}
 		final int blockMetadata = world.getBlockMetadata(xCoord, yCoord, zCoord);
@@ -75,16 +75,16 @@ public class FurnaceBlock extends ContainerBlock {
 		final float n3 = zCoord + 0.5f;
 		final float n4 = 0.52f;
 		final float n5 = random.nextFloat() * 0.6f - 0.3f;
-		if(blockMetadata == 4) {
+		if (blockMetadata == 4) {
 			world.spawnParticle("smoke", (n - n4), n2, (n3 + n5), 0.0, 0.0, 0.0);
 			world.spawnParticle("flame", (n - n4), n2, (n3 + n5), 0.0, 0.0, 0.0);
-		} else if(blockMetadata == 5) {
+		} else if (blockMetadata == 5) {
 			world.spawnParticle("smoke", (n + n4), n2, (n3 + n5), 0.0, 0.0, 0.0);
 			world.spawnParticle("flame", (n + n4), n2, (n3 + n5), 0.0, 0.0, 0.0);
-		} else if(blockMetadata == 2) {
+		} else if (blockMetadata == 2) {
 			world.spawnParticle("smoke", (n + n5), n2, (n3 - n4), 0.0, 0.0, 0.0);
 			world.spawnParticle("flame", (n + n5), n2, (n3 - n4), 0.0, 0.0, 0.0);
-		} else if(blockMetadata == 3) {
+		} else if (blockMetadata == 3) {
 			world.spawnParticle("smoke", (n + n5), n2, (n3 + n4), 0.0, 0.0, 0.0);
 			world.spawnParticle("flame", (n + n5), n2, (n3 + n4), 0.0, 0.0, 0.0);
 		}
@@ -92,13 +92,13 @@ public class FurnaceBlock extends ContainerBlock {
 
 	@Override
 	public int getBlockTextureFromSide(final int textureIndexSlot) {
-		if(textureIndexSlot == 1) {
+		if (textureIndexSlot == 1) {
 			return Block.stone.blockID;
 		}
-		if(textureIndexSlot == 0) {
+		if (textureIndexSlot == 0) {
 			return Block.stone.blockID;
 		}
-		if(textureIndexSlot == 3) {
+		if (textureIndexSlot == 3) {
 			return this.blockIndexInTexture - 1;
 		}
 		return this.blockIndexInTexture;
@@ -118,7 +118,7 @@ public class FurnaceBlock extends ContainerBlock {
 	public static void updateFurnaceBlockState(final boolean isActive, final World world, final int xCoord, final int yCoord, final int zCoord) {
 		final int blockMetadata = world.getBlockMetadata(xCoord, yCoord, zCoord);
 		final TileEntity blockTileEntity = world.getBlockTileEntity(xCoord, yCoord, zCoord);
-		if(isActive) {
+		if (isActive) {
 			world.setBlockWithNotify(xCoord, yCoord, zCoord, Block.stoneOvenActive.blockID);
 		} else {
 			world.setBlockWithNotify(xCoord, yCoord, zCoord, Block.stoneOvenIdle.blockID);

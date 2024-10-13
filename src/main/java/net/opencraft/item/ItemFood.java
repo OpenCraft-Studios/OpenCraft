@@ -16,7 +16,7 @@ public class ItemFood extends Item {
 
 	@Override
 	public ItemStack onItemRightClick(final ItemStack hw, final World fe, final EntityPlayer gi) {
-		if(gi.health <= 20) {
+		if (gi.health <= 20) {
 			--hw.stackSize;
 			gi.heal(this.healAmount);
 			return hw;

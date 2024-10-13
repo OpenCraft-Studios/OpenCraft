@@ -105,9 +105,9 @@ public class FilenameURL {
 	 * @return URL interface to the file.
 	 */
 	public URL getURL() {
-		if(url == null) {
+		if (url == null) {
 			// Check if the file is online or inside the JAR:
-			if(filename.matches(SoundSystemConfig.PREFIX_URL)) {
+			if (filename.matches(SoundSystemConfig.PREFIX_URL)) {
 				// Online
 				try {
 					url = new URL(filename);

@@ -14,7 +14,7 @@ public class RecipesOreBlocks {
 	}
 
 	public void addRecipes(final CraftingManager gy) {
-		for(int i = 0; i < this.recipeItems.length; ++i) {
+		for ( int i = 0; i < this.recipeItems.length; ++i ) {
 			final Block gs = (Block) this.recipeItems[i][0];
 			final Item ge = (Item) this.recipeItems[i][1];
 			gy.addRecipe(new ItemStack(gs), "###", "###", "###", '#', ge);

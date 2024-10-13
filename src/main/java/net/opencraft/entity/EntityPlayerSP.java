@@ -23,13 +23,13 @@ public class EntityPlayerSP extends EntityPlayer {
 	public EntityPlayerSP(final OpenCraft aw, final World fe, final Session gg) {
 		super(fe);
 		this.mc = aw;
-		if(fe != null) {
-			if(fe.player != null) {
+		if (fe != null) {
+			if (fe.player != null) {
 				fe.setEntityDead(fe.player);
 			}
 			fe.player = this;
 		}
-		if(gg != null && gg.username != null && gg.username.length() > 0) {
+		if (gg != null && gg.username != null && gg.username.length() > 0) {
 			this.skinUrl = "http://www.minecraft.net/skin/" + gg.username + ".png";
 		}
 		this.username = gg.username;
@@ -92,12 +92,12 @@ public class EntityPlayerSP extends EntityPlayer {
 
 	public void a(final Entity eq) {
 		final int damageVsEntity = this.inventory.getDamageVsEntity(eq);
-		if(damageVsEntity > 0) {
+		if (damageVsEntity > 0) {
 			eq.attackEntityFrom(this, damageVsEntity);
 			final ItemStack currentEquippedItem = this.getCurrentEquippedItem();
-			if(currentEquippedItem != null && eq instanceof EntityLiving) {
+			if (currentEquippedItem != null && eq instanceof EntityLiving) {
 				currentEquippedItem.hitEntity((EntityLiving) eq);
-				if(currentEquippedItem.stackSize <= 0) {
+				if (currentEquippedItem.stackSize <= 0) {
 					currentEquippedItem.onItemDestroyedByUse(this);
 					this.displayGUIInventory();
 				}
@@ -116,13 +116,13 @@ public class EntityPlayerSP extends EntityPlayer {
 
 	@Override
 	public void c(final Entity eq) {
-		if(eq.interact(this)) {
+		if (eq.interact(this)) {
 			return;
 		}
 		final ItemStack currentEquippedItem = this.getCurrentEquippedItem();
-		if(currentEquippedItem != null && eq instanceof EntityLiving) {
+		if (currentEquippedItem != null && eq instanceof EntityLiving) {
 			currentEquippedItem.useItemOnEntity((EntityLiving) eq);
-			if(currentEquippedItem.stackSize <= 0) {
+			if (currentEquippedItem.stackSize <= 0) {
 				currentEquippedItem.onItemDestroyedByUse(this);
 				this.displayGUIInventory();
 			}

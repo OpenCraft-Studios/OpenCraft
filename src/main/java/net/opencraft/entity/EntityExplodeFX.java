@@ -31,7 +31,7 @@ public class EntityExplodeFX extends EntityFX {
 		this.prevPosX = this.posX;
 		this.prevPosY = this.posY;
 		this.prevPosZ = this.posZ;
-		if(this.particleAge++ >= this.particleMaxAge) {
+		if (this.particleAge++ >= this.particleMaxAge) {
 			this.setEntityDead();
 		}
 		this.particleTextureIndex = 7 - this.particleAge * 8 / this.particleMaxAge;
@@ -40,7 +40,7 @@ public class EntityExplodeFX extends EntityFX {
 		this.motionX *= 0.8999999761581421;
 		this.motionY *= 0.8999999761581421;
 		this.motionZ *= 0.8999999761581421;
-		if(this.onGround) {
+		if (this.onGround) {
 			this.motionX *= 0.699999988079071;
 			this.motionZ *= 0.699999988079071;
 		}

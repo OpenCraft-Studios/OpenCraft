@@ -14,9 +14,9 @@ public class ItemSaddle extends Item {
 
 	@Override
 	public void saddleEntity(final ItemStack hw, final EntityLiving ka) {
-		if(ka instanceof EntityPig) {
+		if (ka instanceof EntityPig) {
 			final EntityPig entityPig = (EntityPig) ka;
-			if(!entityPig.getSaddled) {
+			if (!entityPig.getSaddled) {
 				entityPig.getSaddled = true;
 				--hw.stackSize;
 			}

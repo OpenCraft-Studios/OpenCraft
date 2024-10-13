@@ -61,18 +61,18 @@ public class MouseHandler {
 		@Override
 		public void invoke(long window, int button, int action, int mods) {
 			this.mods = mods;
-			if(action == GLFW_PRESS) {
+			if (action == GLFW_PRESS) {
 				pressedButtons.add(button);
-				if(button == GLFW_MOUSE_BUTTON_1) {
+				if (button == GLFW_MOUSE_BUTTON_1) {
 					events.add(ButtonEvent.BUTTON_1_PRESS);
-				} else if(button == GLFW_MOUSE_BUTTON_2) {
+				} else if (button == GLFW_MOUSE_BUTTON_2) {
 					events.add(ButtonEvent.BUTTON_2_PRESS);
 				}
-			} else if(action == GLFW_RELEASE) {
+			} else if (action == GLFW_RELEASE) {
 				pressedButtons.remove(button);
-				if(button == GLFW_MOUSE_BUTTON_1) {
+				if (button == GLFW_MOUSE_BUTTON_1) {
 					events.add(ButtonEvent.BUTTON_1_RELEASE);
-				} else if(button == GLFW_MOUSE_BUTTON_2) {
+				} else if (button == GLFW_MOUSE_BUTTON_2) {
 					events.add(ButtonEvent.BUTTON_2_RELEASE);
 				}
 			}
@@ -114,7 +114,7 @@ public class MouseHandler {
 
 		@Override
 		public void invoke(long window, double deltaX, double deltaY) {
-			if(oc.player == null)
+			if (oc.player == null)
 				return;
 
 			oc.player.inventory.changeCurrentItem((int) deltaY);

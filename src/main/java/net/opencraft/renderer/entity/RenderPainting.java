@@ -36,8 +36,8 @@ public class RenderPainting extends Render<EntityPainting> {
 		final float n2 = -integer3 / 2.0f;
 		final float n3 = -0.5f;
 		final float n4 = 0.5f;
-		for(int i = 0; i < integer2 / 16; ++i) {
-			for(int j = 0; j < integer3 / 16; ++j) {
+		for ( int i = 0; i < integer2 / 16; ++i ) {
+			for ( int j = 0; j < integer3 / 16; ++j ) {
 				final float n5 = n + (i + 1) * 16;
 				final float n6 = n + i * 16;
 				final float n7 = n2 + (j + 1) * 16;
@@ -100,16 +100,16 @@ public class RenderPainting extends Render<EntityPainting> {
 		int nya1 = Mth.floor_double(cy.posX);
 		final int floor_double = Mth.floor_double(cy.posY + float3 / 16.0f);
 		int nya2 = Mth.floor_double(cy.posZ);
-		if(cy.direction == 0) {
+		if (cy.direction == 0) {
 			nya1 = Mth.floor_double(cy.posX + float2 / 16.0f);
 		}
-		if(cy.direction == 1) {
+		if (cy.direction == 1) {
 			nya2 = Mth.floor_double(cy.posZ - float2 / 16.0f);
 		}
-		if(cy.direction == 2) {
+		if (cy.direction == 2) {
 			nya1 = Mth.floor_double(cy.posX - float2 / 16.0f);
 		}
-		if(cy.direction == 3) {
+		if (cy.direction == 3) {
 			nya2 = Mth.floor_double(cy.posZ + float2 / 16.0f);
 		}
 		final float lightBrightness = this.renderManager.worldObj.getLightBrightness(nya1, floor_double, nya2);

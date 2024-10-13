@@ -61,14 +61,14 @@ public class RenderManager {
 		this.entityRenderMap.put(EntityTNTPrimed.class, new RenderTNTPrimed());
 		this.entityRenderMap.put(EntityFallingSand.class, new RenderFallingSand());
 		this.entityRenderMap.put(EntityMinecart.class, new RenderMinecart());
-		for(Render bq2 : this.entityRenderMap.values()) {
+		for ( Render bq2 : this.entityRenderMap.values() ) {
 			bq2.setRenderManager(this);
 		}
 	}
 
 	public Render getEntityClassRenderObject(Class clazz) {
 		Render bq2 = (Render) this.entityRenderMap.get(clazz);
-		if(bq2 == null && clazz != Entity.class) {
+		if (bq2 == null && clazz != Entity.class) {
 			bq2 = this.getEntityClassRenderObject(clazz.getSuperclass());
 			this.entityRenderMap.put(clazz, bq2);
 		}
@@ -104,7 +104,7 @@ public class RenderManager {
 
 	public void renderEntityWithPosYaw(Entity eq2, double d, double d2, double d3, float f2, float f3) {
 		Render bq2 = this.getEntityRenderObject(eq2);
-		if(bq2 != null) {
+		if (bq2 != null) {
 			bq2.doRender(eq2, d, d2, d3, f2, f3);
 			bq2.doRenderShadowAndFire(eq2, d, d2, d3, f2, f3);
 		}

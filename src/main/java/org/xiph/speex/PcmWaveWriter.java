@@ -236,7 +236,7 @@ public class PcmWaveWriter extends AudioFileWriter {
 		/* format subchunk: of size 16 */
 		chkid = "fmt ".getBytes();
 		raf.write(chkid, 0, chkid.length);
-		if(isPCM) {
+		if (isPCM) {
 			writeInt(raf, 16);                            // Size of format chunk
 			writeShort(raf, WAVE_FORMAT_PCM);             // Format tag: PCM
 			writeShort(raf, (short) channels);             // Number of channels

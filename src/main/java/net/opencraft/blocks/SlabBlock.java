@@ -13,7 +13,7 @@ public class SlabBlock extends Block {
 
 	public SlabBlock(final int blockid, final boolean doubleSlab) {
 		super(blockid, 6, Material.ROCK);
-		if(!(this.blockType = doubleSlab)) {
+		if (!(this.blockType = doubleSlab)) {
 			this.setShape(0.0f, 0.0f, 0.0f, 1.0f, 0.5f, 1.0f);
 		}
 		this.setLightOpacity(255);
@@ -21,7 +21,7 @@ public class SlabBlock extends Block {
 
 	@Override
 	public int getBlockTextureFromSide(final int textureIndexSlot) {
-		if(textureIndexSlot <= 1) {
+		if (textureIndexSlot <= 1) {
 			return 6;
 		}
 		return 5;
@@ -34,17 +34,17 @@ public class SlabBlock extends Block {
 
 	@Override
 	public void onNeighborBlockChange(final World world, final int xCoord, final int yCoord, final int zCoord, final int nya4) {
-		if(this != Block.slabSingle) {
+		if (this != Block.slabSingle) {
 			return;
 		}
 	}
 
 	@Override
 	public void onBlockAdded(final World world, final int xCoord, final int yCoord, final int zCoord) {
-		if(this != Block.slabSingle) {
+		if (this != Block.slabSingle) {
 			super.onBlockAdded(world, xCoord, yCoord, zCoord);
 		}
-		if(world.getBlockId(xCoord, yCoord - 1, zCoord) == SlabBlock.slabSingle.blockID) {
+		if (world.getBlockId(xCoord, yCoord - 1, zCoord) == SlabBlock.slabSingle.blockID) {
 			world.setBlockWithNotify(xCoord, yCoord, zCoord, 0);
 			world.setBlockWithNotify(xCoord, yCoord - 1, zCoord, Block.slabDouble.blockID);
 		}
@@ -62,7 +62,7 @@ public class SlabBlock extends Block {
 
 	@Override
 	public boolean shouldSideBeRendered(final IBlockAccess blockAccess, final int xCoord, final int yCoord, final int zCoord, final int nya4) {
-		if(this != Block.slabSingle) {
+		if (this != Block.slabSingle) {
 			super.shouldSideBeRendered(blockAccess, xCoord, yCoord, zCoord, nya4);
 		}
 		return nya4 == 1 || (super.shouldSideBeRendered(blockAccess, xCoord, yCoord, zCoord, nya4) && (nya4 == 0 || blockAccess.getBlockId(xCoord, yCoord, zCoord) != this.blockID));

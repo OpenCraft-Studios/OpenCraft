@@ -16,9 +16,9 @@ public class RecipesTools {
 	}
 
 	public void addRecipes(final CraftingManager gy) {
-		for(int i = 0; i < this.recipeItems[0].length; ++i) {
+		for ( int i = 0; i < this.recipeItems[0].length; ++i ) {
 			final Object o = this.recipeItems[0][i];
-			for(int j = 0; j < this.recipeItems.length - 1; ++j) {
+			for ( int j = 0; j < this.recipeItems.length - 1; ++j ) {
 				gy.addRecipe(new ItemStack((Item) this.recipeItems[j + 1][i]), this.recipePatterns[j], '#', Item.stick, 'X', o);
 			}
 		}

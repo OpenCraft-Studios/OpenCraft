@@ -96,7 +96,7 @@ public class Item {
 		this.maxStackSize = 64;
 		this.maxDamage = 32;
 		this.shiftedIndex = 256 + itemid;
-		if(Item.itemsList[256 + itemid] != null) {
+		if (Item.itemsList[256 + itemid] != null) {
 			System.out.println(new StringBuilder().append("CONFLICT @ ").append(itemid).toString());
 		}
 		Item.itemsList[256 + itemid] = this;

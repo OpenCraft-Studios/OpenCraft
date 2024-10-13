@@ -17,10 +17,10 @@ public class RenderSpider extends RenderLiving {
 	}
 
 	protected boolean shouldRenderPass(final EntitySpider eVar, final int i) {
-		if(i != 0) {
+		if (i != 0) {
 			return false;
 		}
-		if(i != 0) {
+		if (i != 0) {
 			return false;
 		}
 		this.loadTexture("/assets/mob/spider_eyes.png");

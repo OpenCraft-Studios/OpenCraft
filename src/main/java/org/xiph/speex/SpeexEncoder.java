@@ -223,11 +223,11 @@ public class SpeexEncoder {
 	 */
 	public boolean processData(final short[] data, final int offset, final int numShorts) {
 		int numSamplesRequired = channels * frameSize;
-		if(numShorts != numSamplesRequired) {
+		if (numShorts != numSamplesRequired) {
 			throw new IllegalArgumentException("SpeexEncoder requires " + numSamplesRequired + " samples to process a Frame, not " + numShorts);
 		}
 		// convert shorts into float samples,
-		for(int i = 0; i < numShorts; i++) {
+		for ( int i = 0; i < numShorts; i++ ) {
 			rawData[i] = (float) data[offset + i];
 		}
 		// encode the bitstream
@@ -243,11 +243,11 @@ public class SpeexEncoder {
 	 */
 	public boolean processData(final float[] data, final int numSamples) {
 		int numSamplesRequired = channels * frameSize;
-		if(numSamples != numSamplesRequired) {
+		if (numSamples != numSamplesRequired) {
 			throw new IllegalArgumentException("SpeexEncoder requires " + numSamplesRequired + " samples to process a Frame, not " + numSamples);
 		}
 		// encode the bitstream
-		if(channels == 2) {
+		if (channels == 2) {
 			Stereo.encode(bits, data, frameSize);
 		}
 		encoder.encode(bits, data);
@@ -271,13 +271,13 @@ public class SpeexEncoder {
 	 * @param length
 	 */
 	public static void mapPcm16bitLittleEndian2Float(final byte[] pcm16bitBytes, final int offsetInput, final float[] samples, final int offsetOutput, final int length) {
-		if(pcm16bitBytes.length - offsetInput < 2 * length) {
+		if (pcm16bitBytes.length - offsetInput < 2 * length) {
 			throw new IllegalArgumentException("Insufficient Samples to convert to floats");
 		}
-		if(samples.length - offsetOutput < length) {
+		if (samples.length - offsetOutput < length) {
 			throw new IllegalArgumentException("Insufficient float buffer to convert the samples");
 		}
-		for(int i = 0; i < length; i++) {
+		for ( int i = 0; i < length; i++ ) {
 			samples[offsetOutput + i] = (float) ((pcm16bitBytes[offsetInput + 2 * i] & 0xff) | (pcm16bitBytes[offsetInput + 2 * i + 1] << 8)); // no & 0xff at the end to keep the sign
 		}
 	}

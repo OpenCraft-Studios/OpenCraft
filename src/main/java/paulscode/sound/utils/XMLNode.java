@@ -86,11 +86,11 @@ public class XMLNode {
 		int rBracket = XMLText.indexOf(">");
 
 		// If we reached the end of the file, we are done:
-		if(lBracket == -1 || rBracket == -1)
+		if (lBracket == -1 || rBracket == -1)
 			return;
 
 		// Sanity check: Is this really XML we're looking at?)
-		if(rBracket <= lBracket) {
+		if (rBracket <= lBracket) {
 			errorMessage("Invalid XML syntax: '>' before '<'");
 			return;
 		}
@@ -102,17 +102,17 @@ public class XMLNode {
 		contents = XMLText.substring(lBracket + 1, rBracket);
 		processTagContents(contents);
 
-		if(verbose)
+		if (verbose)
 			displayParameters();
 
 		// Check if there is more after this tag:
-		if(rBracket + 1 >= XMLText.length())
+		if (rBracket + 1 >= XMLText.length())
 			return;
 		String XMLRemainder = XMLText.substring(rBracket + 1);
 
 		// If there are no more tags, we are done:
 		lBracket = XMLRemainder.indexOf("<");
-		if(lBracket == -1)
+		if (lBracket == -1)
 			return;
 
 		// Create the next node:
@@ -125,7 +125,7 @@ public class XMLNode {
 	 * @return Tag name, or "" for none.
 	 */
 	public String name() {
-		if(name == null)
+		if (name == null)
 			return "";
 
 		return name;
@@ -137,7 +137,7 @@ public class XMLNode {
 	 * @return Tag contents, or "" for none.
 	 */
 	public String contents() {
-		if(contents == null)
+		if (contents == null)
 			return "";
 
 		return contents;
@@ -167,7 +167,7 @@ public class XMLNode {
 	 * @return Parameter's value, or "" for none.
 	 */
 	public String get(String parameter) {
-		if(parameters == null)
+		if (parameters == null)
 			return "";
 
 		return parameters.get(parameter.toUpperCase());
@@ -196,7 +196,7 @@ public class XMLNode {
 		String val;
 
 		// Print "(none)" if there aren't any parameters:
-		if(!iter.hasNext())
+		if (!iter.hasNext())
 			System.out.println("    (none)");
 
 		// Loop through and print each parameter:
@@ -215,27 +215,27 @@ public class XMLNode {
 	 */
 	protected void processTagContents(String tagContents) {
 		String[] splitTag = XMLParser.seperateWords(tagContents);
-		if(splitTag.length > 0) {
+		if (splitTag.length > 0) {
 			// Store the tag name:
 			name = splitTag[0];
 
 			// If it is a comment tag, do nothing:
-			if(name.length() >= 3 && name.substring(0, 3).equals("!--"))
+			if (name.length() >= 3 && name.substring(0, 3).equals("!--"))
 				return;
 
 			// Get the parameters:
-			for(int x = 1; x < splitTag.length;) {
+			for ( int x = 1; x < splitTag.length; ) {
 				String paramText = splitTag[x];
-				if(paramText.equals("/"))
+				if (paramText.equals("/"))
 					break;
-				if(paramText.contains("=")) {
+				if (paramText.contains("=")) {
 					String[] pair = paramText.split("=");
-					if(pair == null || pair.length == 0) {
+					if (pair == null || pair.length == 0) {
 						errorMessage("Invalid XML syntax: paramater null");
 						return;
 					}
-					if(pair.length == 1) {
-						if(x + 1 >= splitTag.length) {
+					if (pair.length == 1) {
+						if (x + 1 >= splitTag.length) {
 							warningMessage("Value not specified for " + "parameter '" + pair[0] + "'");
 							parameters.put(pair[0].toUpperCase(), "");
 							x++;
@@ -248,13 +248,13 @@ public class XMLNode {
 						x++;
 					}
 				} else {
-					if(x + 1 >= splitTag.length) {
+					if (x + 1 >= splitTag.length) {
 						warningMessage("Value not specified for " + "parameter '" + splitTag[x] + "'");
 						parameters.put(splitTag[x].toUpperCase(), "");
 						x++;
 					} else {
-						if(splitTag[x + 1].equals("=")) {
-							if(x + 2 >= splitTag.length) {
+						if (splitTag[x + 1].equals("=")) {
+							if (x + 2 >= splitTag.length) {
 								warningMessage("Value not specified for " + "parameter '" + splitTag[x] + "'");
 								parameters.put(splitTag[x].toUpperCase(), "");
 								x = x + 2;
@@ -262,9 +262,9 @@ public class XMLNode {
 								parameters.put(splitTag[x].toUpperCase(), splitTag[x + 2]);
 								x = x + 3;
 							}
-						} else if(splitTag[x + 1].contains("=")) {
+						} else if (splitTag[x + 1].contains("=")) {
 							String[] eq = splitTag[x + 1].split("=");
-							if(eq == null || eq.length < 1) {
+							if (eq == null || eq.length < 1) {
 								warningMessage("Value not specified for " + "parameter '" + splitTag[x] + "'");
 								parameters.put(splitTag[x].toUpperCase(), "");
 								x = x + 2;
@@ -299,10 +299,10 @@ public class XMLNode {
 	 */
 	protected static void errorMessage(String message) {
 		// Grab a handle to the logger if we don't already have one:
-		if(logger == null)
+		if (logger == null)
 			logger = SoundSystemConfig.getLogger();
 		// If a logger doesn't exist, make one:
-		if(logger == null) {
+		if (logger == null) {
 			logger = new SoundSystemLogger();
 			SoundSystemConfig.setLogger(logger);
 		}
@@ -316,10 +316,10 @@ public class XMLNode {
 	 */
 	protected static void warningMessage(String message) {
 		// Grab a handle to the logger if we don't already have one:
-		if(logger == null)
+		if (logger == null)
 			logger = SoundSystemConfig.getLogger();
 		// If a logger doesn't exist, make one:
-		if(logger == null) {
+		if (logger == null) {
 			logger = new SoundSystemLogger();
 			SoundSystemConfig.setLogger(logger);
 		}

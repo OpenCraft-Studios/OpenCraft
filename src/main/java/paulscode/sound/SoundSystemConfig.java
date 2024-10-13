@@ -226,15 +226,15 @@ public class SoundSystemConfig {
 	 * @param libraryClass Derivitive of class 'Library'.
 	 */
 	public static void addLibrary(Class libraryClass) throws SoundSystemException {
-		if(libraryClass == null)
+		if (libraryClass == null)
 			throw new SoundSystemException("Parameter null in method 'addLibrary'", SoundSystemException.NULL_PARAMETER);
-		if(!Library.class.isAssignableFrom(libraryClass))
+		if (!Library.class.isAssignableFrom(libraryClass))
 			throw new SoundSystemException("The specified class does not " + "extend class 'Library' in method 'addLibrary'");
 
-		if(libraries == null)
+		if (libraries == null)
 			libraries = new LinkedList<Class>();
 
-		if(!libraries.contains(libraryClass))
+		if (!libraries.contains(libraryClass))
 			libraries.add(libraryClass);
 	}
 
@@ -244,7 +244,7 @@ public class SoundSystemConfig {
 	 * @param libraryClass Derivitive of class 'Library'.
 	 */
 	public static void removeLibrary(Class libraryClass) throws SoundSystemException {
-		if(libraries == null || libraryClass == null)
+		if (libraries == null || libraryClass == null)
 			return;
 
 		libraries.remove(libraryClass);
@@ -266,18 +266,18 @@ public class SoundSystemConfig {
 	 * @return True or false.
 	 */
 	public static boolean libraryCompatible(Class libraryClass) {
-		if(libraryClass == null) {
+		if (libraryClass == null) {
 			errorMessage("Parameter 'libraryClass' null in method" + "'librayCompatible'");
 			return false;
 		}
-		if(!Library.class.isAssignableFrom(libraryClass)) {
+		if (!Library.class.isAssignableFrom(libraryClass)) {
 			errorMessage("The specified class does not extend class " + "'Library' in method 'libraryCompatible'");
 			return false;
 		}
 
 		Object o = runMethod(libraryClass, "libraryCompatible", new Class[0], new Object[0]);
 
-		if(o == null) {
+		if (o == null) {
 			errorMessage("Method 'Library.libraryCompatible' returned " + "'null' in method 'libraryCompatible'");
 			return false;
 		}
@@ -292,17 +292,17 @@ public class SoundSystemConfig {
 	 * @return String containing the library title.
 	 */
 	public static String getLibraryTitle(Class libraryClass) {
-		if(libraryClass == null) {
+		if (libraryClass == null) {
 			errorMessage("Parameter 'libraryClass' null in method" + "'getLibrayTitle'");
 			return null;
 		}
-		if(!Library.class.isAssignableFrom(libraryClass)) {
+		if (!Library.class.isAssignableFrom(libraryClass)) {
 			errorMessage("The specified class does not extend class " + "'Library' in method 'getLibraryTitle'");
 			return null;
 		}
 
 		Object o = runMethod(libraryClass, "getTitle", new Class[0], new Object[0]);
-		if(o == null) {
+		if (o == null) {
 			errorMessage("Method 'Library.getTitle' returned " + "'null' in method 'getLibraryTitle'");
 			return null;
 		}
@@ -317,17 +317,17 @@ public class SoundSystemConfig {
 	 * @return String containing the library title.
 	 */
 	public static String getLibraryDescription(Class libraryClass) {
-		if(libraryClass == null) {
+		if (libraryClass == null) {
 			errorMessage("Parameter 'libraryClass' null in method" + "'getLibrayDescription'");
 			return null;
 		}
-		if(!Library.class.isAssignableFrom(libraryClass)) {
+		if (!Library.class.isAssignableFrom(libraryClass)) {
 			errorMessage("The specified class does not extend class " + "'Library' in method 'getLibraryDescription'");
 			return null;
 		}
 
 		Object o = runMethod(libraryClass, "getDescription", new Class[0], new Object[0]);
-		if(o == null) {
+		if (o == null) {
 			errorMessage("Method 'Library.getDescription' returned " + "'null' in method 'getLibraryDescription'");
 			return null;
 		}
@@ -342,17 +342,17 @@ public class SoundSystemConfig {
 	 * @return True if byte-order reversal is required.
 	 */
 	public static boolean reverseByteOrder(Class libraryClass) {
-		if(libraryClass == null) {
+		if (libraryClass == null) {
 			errorMessage("Parameter 'libraryClass' null in method" + "'reverseByteOrder'");
 			return false;
 		}
-		if(!Library.class.isAssignableFrom(libraryClass)) {
+		if (!Library.class.isAssignableFrom(libraryClass)) {
 			errorMessage("The specified class does not extend class " + "'Library' in method 'reverseByteOrder'");
 			return false;
 		}
 
 		Object o = runMethod(libraryClass, "reversByteOrder", new Class[0], new Object[0]);
-		if(o == null) {
+		if (o == null) {
 			errorMessage("Method 'Library.reverseByteOrder' returned " + "'null' in method 'getLibraryDescription'");
 			return false;
 		}
@@ -710,14 +710,14 @@ public class SoundSystemConfig {
 	 * @param iCodecClass Codec type to use for files with the specified extension.
 	 */
 	public static synchronized void setCodec(String extension, Class iCodecClass) throws SoundSystemException {
-		if(extension == null)
+		if (extension == null)
 			throw new SoundSystemException("Parameter 'extension' null in " + "method 'setCodec'.", SoundSystemException.NULL_PARAMETER);
-		if(iCodecClass == null)
+		if (iCodecClass == null)
 			throw new SoundSystemException("Parameter 'iCodecClass' null in " + "method 'setCodec'.", SoundSystemException.NULL_PARAMETER);
-		if(!ICodec.class.isAssignableFrom(iCodecClass))
+		if (!ICodec.class.isAssignableFrom(iCodecClass))
 			throw new SoundSystemException("The specified class does " + "not implement interface 'ICodec' in method 'setCodec'", SoundSystemException.CLASS_TYPE_MISMATCH);
 
-		if(codecs == null)
+		if (codecs == null)
 			codecs = new LinkedList<Codec>();
 
 		ListIterator<Codec> i = codecs.listIterator();
@@ -725,14 +725,14 @@ public class SoundSystemConfig {
 
 		while(i.hasNext()) {
 			codec = i.next();
-			if(extension.matches(codec.extensionRegX))
+			if (extension.matches(codec.extensionRegX))
 				i.remove();
 		}
 		codecs.add(new Codec(extension, iCodecClass));
 
 		// Let SoundSystem know if this is a MIDI codec, so it won't use
 		// javax.sound.midi anymore:
-		if(extension.matches(EXTENSION_MIDI))
+		if (extension.matches(EXTENSION_MIDI))
 			midiCodec = true;
 	}
 
@@ -744,7 +744,7 @@ public class SoundSystemConfig {
 	 * @return Codec to use for reading audio data.
 	 */
 	public static synchronized ICodec getCodec(String filename) {
-		if(codecs == null)
+		if (codecs == null)
 			return null;
 
 		ListIterator<Codec> i = codecs.listIterator();
@@ -752,7 +752,7 @@ public class SoundSystemConfig {
 
 		while(i.hasNext()) {
 			codec = i.next();
-			if(filename.matches(codec.extensionRegX))
+			if (filename.matches(codec.extensionRegX))
 				return codec.getInstance();
 		}
 
@@ -777,10 +777,10 @@ public class SoundSystemConfig {
 	 */
 	public static void addStreamListener(IStreamListener streamListener) {
 		synchronized(streamListenersLock) {
-			if(streamListeners == null)
+			if (streamListeners == null)
 				streamListeners = new LinkedList<IStreamListener>();
 
-			if(!streamListeners.contains(streamListener))
+			if (!streamListeners.contains(streamListener))
 				streamListeners.add(streamListener);
 		}
 	}
@@ -793,10 +793,10 @@ public class SoundSystemConfig {
 	public static void removeStreamListener(IStreamListener streamListener) {
 
 		synchronized(streamListenersLock) {
-			if(streamListeners == null)
+			if (streamListeners == null)
 				streamListeners = new LinkedList<IStreamListener>();
 
-			if(streamListeners.contains(streamListener))
+			if (streamListeners.contains(streamListener))
 				streamListeners.remove(streamListener);
 		}
 	}
@@ -810,7 +810,7 @@ public class SoundSystemConfig {
 	 */
 	public static void notifyEOS(String sourcename, int queueSize) {
 		synchronized(streamListenersLock) {
-			if(streamListeners == null)
+			if (streamListeners == null)
 				return;
 		}
 		final String srcName = sourcename;
@@ -821,13 +821,13 @@ public class SoundSystemConfig {
 			@Override
 			public void run() {
 				synchronized(streamListenersLock) {
-					if(streamListeners == null)
+					if (streamListeners == null)
 						return;
 					ListIterator<IStreamListener> i = streamListeners.listIterator();
 					IStreamListener streamListener;
 					while(i.hasNext()) {
 						streamListener = i.next();
-						if(streamListener == null)
+						if (streamListener == null)
 							i.remove();
 						else
 							streamListener.endOfStream(srcName, qSize);
@@ -848,7 +848,7 @@ public class SoundSystemConfig {
 	 * @param message Error message to display.
 	 */
 	private static void errorMessage(String message) {
-		if(logger != null)
+		if (logger != null)
 			logger.errorMessage("SoundSystemConfig", message, 0);
 	}
 
@@ -881,7 +881,7 @@ public class SoundSystemConfig {
 			errorMessage("NullPointerException thrown when attempting " + "to call method '" + method + "' in " + "method 'runMethod'");
 			return null;
 		}
-		if(m == null) {
+		if (m == null) {
 			errorMessage("Method '" + method + "' not found for the class " + "specified in method 'runMethod'");
 			return null;
 		}
@@ -940,12 +940,12 @@ public class SoundSystemConfig {
 		public Codec(String extension, Class iCodecClass) {
 			extensionRegX = "";
 			// Make sure an extension was specified:
-			if(extension != null && extension.length() > 0) {
+			if (extension != null && extension.length() > 0) {
 				// We are only interested in the file extension.  The filename
 				// can begin with whatever:
 				extensionRegX = ".*";
 				String c;
-				for(int x = 0; x < extension.length(); x++) {
+				for ( int x = 0; x < extension.length(); x++ ) {
 					// Each character could be either upper or lower case:
 					c = extension.substring(x, x + 1);
 					extensionRegX += "[" + c.toLowerCase(Locale.ENGLISH) + c.toUpperCase(Locale.ENGLISH) + "]";
@@ -958,7 +958,7 @@ public class SoundSystemConfig {
 		}
 
 		public ICodec getInstance() {
-			if(iCodecClass == null)
+			if (iCodecClass == null)
 				return null;
 
 			Object o = null;
@@ -978,7 +978,7 @@ public class SoundSystemConfig {
 				return null;
 			}
 
-			if(o == null) {
+			if (o == null) {
 				instantiationErrorMessage();
 				return null;
 			}

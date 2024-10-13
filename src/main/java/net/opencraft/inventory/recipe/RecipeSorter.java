@@ -12,10 +12,10 @@ public class RecipeSorter implements Comparator<IRecipe> {
 	}
 
 	public int compare(final IRecipe dw1, final IRecipe dw2) {
-		if(dw2.getRecipeSize() < dw1.getRecipeSize()) {
+		if (dw2.getRecipeSize() < dw1.getRecipeSize()) {
 			return -1;
 		}
-		if(dw2.getRecipeSize() > dw1.getRecipeSize()) {
+		if (dw2.getRecipeSize() > dw1.getRecipeSize()) {
 			return 1;
 		}
 		return 0;

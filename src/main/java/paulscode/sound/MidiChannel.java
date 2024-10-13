@@ -282,7 +282,7 @@ public class MidiChannel implements MetaEventListener {
 		loading(SET, true);
 		setLooping(true);
 
-		if(sequencer != null) {
+		if (sequencer != null) {
 			try {
 				sequencer.stop();
 				sequencer.close();
@@ -297,13 +297,13 @@ public class MidiChannel implements MetaEventListener {
 		sequence = null;
 
 		synchronized(sequenceQueueLock) {
-			if(sequenceQueue != null)
+			if (sequenceQueue != null)
 				sequenceQueue.clear();
 			sequenceQueue = null;
 		}
 
 		// End the fade effects thread if it exists:
-		if(fadeThread != null) {
+		if (fadeThread != null) {
 			boolean killException = false;
 			try {
 				fadeThread.kill();        // end the fade effects thread.
@@ -312,10 +312,10 @@ public class MidiChannel implements MetaEventListener {
 				killException = true;
 			}
 
-			if(!killException) {
+			if (!killException) {
 				// wait up to 5 seconds for fade effects thread to end:
-				for(int i = 0; i < 50; i++) {
-					if(!fadeThread.alive())
+				for ( int i = 0; i < 50; i++ ) {
+					if (!fadeThread.alive())
 						break;
 					try {
 						Thread.sleep(100);
@@ -325,7 +325,7 @@ public class MidiChannel implements MetaEventListener {
 			}
 
 			// Let user know if there was a problem ending the fade thread
-			if(killException || fadeThread.alive()) {
+			if (killException || fadeThread.alive()) {
 				errorMessage("MIDI fade effects thread did not die!");
 				message("Ignoring errors... continuing clean-up.");
 			}
@@ -342,13 +342,13 @@ public class MidiChannel implements MetaEventListener {
 	 * @param filenameURL MIDI sequence to play next.
 	 */
 	public void queueSound(FilenameURL filenameURL) {
-		if(filenameURL == null) {
+		if (filenameURL == null) {
 			errorMessage("Filename/URL not specified in method 'queueSound'");
 			return;
 		}
 
 		synchronized(sequenceQueueLock) {
-			if(sequenceQueue == null)
+			if (sequenceQueue == null)
 				sequenceQueue = new LinkedList<FilenameURL>();
 			sequenceQueue.add(filenameURL);
 		}
@@ -362,16 +362,16 @@ public class MidiChannel implements MetaEventListener {
 	 *                 queue.
 	 */
 	public void dequeueSound(String filename) {
-		if(filename == null || filename.equals("")) {
+		if (filename == null || filename.equals("")) {
 			errorMessage("Filename not specified in method 'dequeueSound'");
 			return;
 		}
 
 		synchronized(sequenceQueueLock) {
-			if(sequenceQueue != null) {
+			if (sequenceQueue != null) {
 				ListIterator<FilenameURL> i = sequenceQueue.listIterator();
 				while(i.hasNext()) {
-					if(i.next().getFilename().equals(filename)) {
+					if (i.next().getFilename().equals(filename)) {
 						i.remove();
 						break;
 					}
@@ -393,7 +393,7 @@ public class MidiChannel implements MetaEventListener {
 	 * @param milis       Number of miliseconds the fadeout should take.
 	 */
 	public void fadeOut(FilenameURL filenameURL, long milis) {
-		if(milis < 0) {
+		if (milis < 0) {
 			errorMessage("Miliseconds may not be negative in method " + "'fadeOut'.");
 			return;
 		}
@@ -404,16 +404,16 @@ public class MidiChannel implements MetaEventListener {
 		lastFadeCheck = System.currentTimeMillis();
 
 		synchronized(sequenceQueueLock) {
-			if(sequenceQueue != null)
+			if (sequenceQueue != null)
 				sequenceQueue.clear();
 
-			if(filenameURL != null) {
-				if(sequenceQueue == null)
+			if (filenameURL != null) {
+				if (sequenceQueue == null)
 					sequenceQueue = new LinkedList<FilenameURL>();
 				sequenceQueue.add(filenameURL);
 			}
 		}
-		if(fadeThread == null) {
+		if (fadeThread == null) {
 			fadeThread = new FadeThread();
 			fadeThread.start();
 		}
@@ -434,11 +434,11 @@ public class MidiChannel implements MetaEventListener {
 	 * @param milisIn     Number of miliseconds the fadein should take.
 	 */
 	public void fadeOutIn(FilenameURL filenameURL, long milisOut, long milisIn) {
-		if(filenameURL == null) {
+		if (filenameURL == null) {
 			errorMessage("Filename/URL not specified in method 'fadeOutIn'.");
 			return;
 		}
-		if(milisOut < 0 || milisIn < 0) {
+		if (milisOut < 0 || milisIn < 0) {
 			errorMessage("Miliseconds may not be negative in method " + "'fadeOutIn'.");
 			return;
 		}
@@ -449,12 +449,12 @@ public class MidiChannel implements MetaEventListener {
 		lastFadeCheck = System.currentTimeMillis();
 
 		synchronized(sequenceQueueLock) {
-			if(sequenceQueue == null)
+			if (sequenceQueue == null)
 				sequenceQueue = new LinkedList<FilenameURL>();
 			sequenceQueue.clear();
 			sequenceQueue.add(filenameURL);
 		}
-		if(fadeThread == null) {
+		if (fadeThread == null) {
 			fadeThread = new FadeThread();
 			fadeThread.start();
 		}
@@ -470,18 +470,18 @@ public class MidiChannel implements MetaEventListener {
 	 * @return True if this source is in the process of fading out.
 	 */
 	private synchronized boolean checkFadeOut() {
-		if(fadeOutGain == -1.0f && fadeInGain == 1.0f)
+		if (fadeOutGain == -1.0f && fadeInGain == 1.0f)
 			return false;
 
 		long currentTime = System.currentTimeMillis();
 		long milisPast = currentTime - lastFadeCheck;
 		lastFadeCheck = currentTime;
 
-		if(fadeOutGain >= 0.0f) {
-			if(fadeOutMilis == 0) {
+		if (fadeOutGain >= 0.0f) {
+			if (fadeOutMilis == 0) {
 				fadeOutGain = 0.0f;
 				fadeInGain = 0.0f;
-				if(!incrementSequence())
+				if (!incrementSequence())
 					stop();
 				rewind();
 				resetGain();
@@ -490,10 +490,10 @@ public class MidiChannel implements MetaEventListener {
 				float fadeOutReduction = ((float) milisPast) / ((float) fadeOutMilis);
 
 				fadeOutGain -= fadeOutReduction;
-				if(fadeOutGain <= 0.0f) {
+				if (fadeOutGain <= 0.0f) {
 					fadeOutGain = -1.0f;
 					fadeInGain = 0.0f;
-					if(!incrementSequence())
+					if (!incrementSequence())
 						stop();
 					rewind();
 					resetGain();
@@ -504,15 +504,15 @@ public class MidiChannel implements MetaEventListener {
 			return true;
 		}
 
-		if(fadeInGain < 1.0f) {
+		if (fadeInGain < 1.0f) {
 			fadeOutGain = -1.0f;
-			if(fadeInMilis == 0) {
+			if (fadeInMilis == 0) {
 				fadeOutGain = -1.0f;
 				fadeInGain = 1.0f;
 			} else {
 				float fadeInIncrease = ((float) milisPast) / ((float) fadeInMilis);
 				fadeInGain += fadeInIncrease;
-				if(fadeInGain >= 1.0f) {
+				if (fadeInGain >= 1.0f) {
 					fadeOutGain = -1.0f;
 					fadeInGain = 1.0f;
 				}
@@ -531,7 +531,7 @@ public class MidiChannel implements MetaEventListener {
 	private boolean incrementSequence() {
 		synchronized(sequenceQueueLock) {
 			// Is there a queue, and if so, is there anything in it:
-			if(sequenceQueue != null && sequenceQueue.size() > 0) {
+			if (sequenceQueue != null && sequenceQueue.size() > 0) {
 				// grab the next filename/URL from the queue:
 				filenameURL(SET, sequenceQueue.remove(0));
 
@@ -539,7 +539,7 @@ public class MidiChannel implements MetaEventListener {
 				loading(SET, true);
 
 				// Check if we have a sequencer:
-				if(sequencer == null) {
+				if (sequencer == null) {
 					// nope, try and get one now:
 					getSequencer();
 				} else {
@@ -556,7 +556,7 @@ public class MidiChannel implements MetaEventListener {
 					}
 				}
 				// We need to have a sequencer at this point:
-				if(sequencer == null) {
+				if (sequencer == null) {
 					errorMessage("Unable to set the sequence in method " + "'incrementSequence', because there wasn't " + "a sequencer to use.");
 
 					// Finished loading:
@@ -592,9 +592,9 @@ public class MidiChannel implements MetaEventListener {
 	 * paused.
 	 */
 	public void play() {
-		if(!loading()) {
+		if (!loading()) {
 			// Make sure there is a sequencer:
-			if(sequencer == null)
+			if (sequencer == null)
 				return;
 
 			try {
@@ -615,9 +615,9 @@ public class MidiChannel implements MetaEventListener {
 	 * Stops playback and rewinds to the beginning.
 	 */
 	public void stop() {
-		if(!loading()) {
+		if (!loading()) {
 			// Make sure there is a sequencer:
-			if(sequencer == null)
+			if (sequencer == null)
 				return;
 
 			try {
@@ -640,9 +640,9 @@ public class MidiChannel implements MetaEventListener {
 	 * Temporarily stops playback without rewinding.
 	 */
 	public void pause() {
-		if(!loading()) {
+		if (!loading()) {
 			// Make sure there is a sequencer:
-			if(sequencer == null)
+			if (sequencer == null)
 				return;
 
 			try {
@@ -661,9 +661,9 @@ public class MidiChannel implements MetaEventListener {
 	 * Returns playback to the beginning.
 	 */
 	public void rewind() {
-		if(!loading()) {
+		if (!loading()) {
 			// Make sure there is a sequencer:
-			if(sequencer == null)
+			if (sequencer == null)
 				return;
 
 			try {
@@ -777,12 +777,12 @@ public class MidiChannel implements MetaEventListener {
 	 */
 	private void reset() {
 		synchronized(sequenceQueueLock) {
-			if(sequenceQueue != null)
+			if (sequenceQueue != null)
 				sequenceQueue.clear();
 		}
 
 		// Check if we have a sequencer:
-		if(sequencer == null) {
+		if (sequencer == null) {
 			// nope, try and get one now:
 			getSequencer();
 		} else {
@@ -799,7 +799,7 @@ public class MidiChannel implements MetaEventListener {
 			}
 		}
 		// We need to have a sequencer at this point:
-		if(sequencer == null) {
+		if (sequencer == null) {
 			errorMessage("Unable to set the sequence in method " + "'reset', because there wasn't " + "a sequencer to use.");
 			return;
 		}
@@ -841,7 +841,7 @@ public class MidiChannel implements MetaEventListener {
 	 * @return True while looping.
 	 */
 	private synchronized boolean toLoop(boolean action, boolean value) {
-		if(action == SET)
+		if (action == SET)
 			toLoop = value;
 		return toLoop;
 	}
@@ -861,7 +861,7 @@ public class MidiChannel implements MetaEventListener {
 	 * @return True while a MIDI file is in the process of loading.
 	 */
 	private synchronized boolean loading(boolean action, boolean value) {
-		if(action == SET)
+		if (action == SET)
 			loading = value;
 		return loading;
 	}
@@ -892,7 +892,7 @@ public class MidiChannel implements MetaEventListener {
 	 * @return The source's name.
 	 */
 	private synchronized String sourcename(boolean action, String value) {
-		if(action == SET)
+		if (action == SET)
 			sourcename = value;
 		return sourcename;
 	}
@@ -932,7 +932,7 @@ public class MidiChannel implements MetaEventListener {
 	 * @return Path to the MIDI file.
 	 */
 	private synchronized FilenameURL filenameURL(boolean action, FilenameURL value) {
-		if(action == SET)
+		if (action == SET)
 			filenameURL = value;
 		return filenameURL;
 	}
@@ -943,18 +943,18 @@ public class MidiChannel implements MetaEventListener {
 	 * @param message Meta mssage describing the MIDI event.
 	 */
 	public void meta(MetaMessage message) {
-		if(message.getType() == END_OF_TRACK) {
+		if (message.getType() == END_OF_TRACK) {
 			// Generate an EOS event:
 			SoundSystemConfig.notifyEOS(sourcename, sequenceQueue.size());
 
 			// check if we should loop or not:
-			if(toLoop) {
+			if (toLoop) {
 				// looping
 				// Check if playback is in the process of fading out.
-				if(!checkFadeOut()) {
+				if (!checkFadeOut()) {
 					// Not fading out, progress to the next MIDI sequence if
 					// any are queued.
-					if(!incrementSequence()) {
+					if (!incrementSequence()) {
 						try {
 							// Rewind to the beginning.
 							sequencer.setMicrosecondPosition(0);
@@ -964,7 +964,7 @@ public class MidiChannel implements MetaEventListener {
 						} catch(Exception e) {
 						}
 					}
-				} else if(sequencer != null) {
+				} else if (sequencer != null) {
 					try {
 						// Rewind to the beginning.
 						sequencer.setMicrosecondPosition(0);
@@ -976,8 +976,8 @@ public class MidiChannel implements MetaEventListener {
 				}
 			} else {
 				//non-looping
-				if(!checkFadeOut()) {
-					if(!incrementSequence()) {
+				if (!checkFadeOut()) {
+					if (!incrementSequence()) {
 						try {
 							// stop playback:
 							sequencer.stop();
@@ -1008,21 +1008,21 @@ public class MidiChannel implements MetaEventListener {
 	 */
 	public void resetGain() {
 		// make sure the value for gain is valid (between 0 and 1)
-		if(gain < 0.0f)
+		if (gain < 0.0f)
 			gain = 0.0f;
-		if(gain > 1.0f)
+		if (gain > 1.0f)
 			gain = 1.0f;
 
 		int midiVolume = (int) (gain * SoundSystemConfig.getMasterGain() * (float) Math.abs(fadeOutGain) * fadeInGain * 127.0f);
-		if(synthesizer != null) {
+		if (synthesizer != null) {
 			javax.sound.midi.MidiChannel[] channels = synthesizer.getChannels();
-			for(int c = 0; channels != null && c < channels.length; c++) {
+			for ( int c = 0; channels != null && c < channels.length; c++ ) {
 				channels[c].controlChange(CHANGE_VOLUME, midiVolume);
 			}
-		} else if(synthDevice != null) {
+		} else if (synthDevice != null) {
 			try {
 				ShortMessage volumeMessage = new ShortMessage();
-				for(int i = 0; i < 16; i++) {
+				for ( int i = 0; i < 16; i++ ) {
 					volumeMessage.setMessage(ShortMessage.CONTROL_CHANGE, i, CHANGE_VOLUME, midiVolume);
 					synthDevice.getReceiver().send(volumeMessage, -1);
 				}
@@ -1030,17 +1030,17 @@ public class MidiChannel implements MetaEventListener {
 				errorMessage("Error resetting gain on MIDI device");
 				printStackTrace(e);
 			}
-		} else if(sequencer != null && sequencer instanceof Synthesizer) {
+		} else if (sequencer != null && sequencer instanceof Synthesizer) {
 			synthesizer = (Synthesizer) sequencer;
 			javax.sound.midi.MidiChannel[] channels = synthesizer.getChannels();
-			for(int c = 0; channels != null && c < channels.length; c++) {
+			for ( int c = 0; channels != null && c < channels.length; c++ ) {
 				channels[c].controlChange(CHANGE_VOLUME, midiVolume);
 			}
 		} else {
 			try {
 				Receiver receiver = MidiSystem.getReceiver();
 				ShortMessage volumeMessage = new ShortMessage();
-				for(int c = 0; c < 16; c++) {
+				for ( int c = 0; c < 16; c++ ) {
 					volumeMessage.setMessage(ShortMessage.CONTROL_CHANGE, c, CHANGE_VOLUME, midiVolume);
 					receiver.send(volumeMessage, -1);
 				}
@@ -1059,7 +1059,7 @@ public class MidiChannel implements MetaEventListener {
 	private void getSequencer() {
 		try {
 			sequencer = MidiSystem.getSequencer();
-			if(sequencer != null) {
+			if (sequencer != null) {
 				try {
 					sequencer.getTransmitter();
 				} catch(MidiUnavailableException mue) {
@@ -1071,13 +1071,13 @@ public class MidiChannel implements MetaEventListener {
 			message("Unable to open the default MIDI sequencer");
 			sequencer = null;
 		} catch(Exception e) {
-			if(e instanceof InterruptedException) {
+			if (e instanceof InterruptedException) {
 				message("Caught InterruptedException while attempting to " + "open the default MIDI sequencer.  Trying again.");
 				sequencer = null;
 			}
 			try {
 				sequencer = MidiSystem.getSequencer();
-				if(sequencer != null) {
+				if (sequencer != null) {
 					try {
 						sequencer.getTransmitter();
 					} catch(MidiUnavailableException mue) {
@@ -1094,11 +1094,11 @@ public class MidiChannel implements MetaEventListener {
 			}
 		}
 
-		if(sequencer == null)
+		if (sequencer == null)
 			sequencer = openSequencer("Real Time Sequencer");
-		if(sequencer == null)
+		if (sequencer == null)
 			sequencer = openSequencer("Java Sound Sequencer");
-		if(sequencer == null) {
+		if (sequencer == null) {
 			errorMessage("Failed to find an available MIDI sequencer");
 			return;
 		}
@@ -1112,12 +1112,12 @@ public class MidiChannel implements MetaEventListener {
 	 * @param midiSource URL to a MIDI file.
 	 */
 	private void setSequence(URL midiSource) {
-		if(sequencer == null) {
+		if (sequencer == null) {
 			errorMessage("Unable to update the sequence in method " + "'setSequence', because variable 'sequencer' " + "is null");
 			return;
 		}
 
-		if(midiSource == null) {
+		if (midiSource == null) {
 			errorMessage("Unable to load Midi file in method 'setSequence'.");
 			return;
 		}
@@ -1133,7 +1133,7 @@ public class MidiChannel implements MetaEventListener {
 			printStackTrace(imde);
 			return;
 		}
-		if(sequence == null) {
+		if (sequence == null) {
 			errorMessage("MidiSystem 'getSequence' method returned null " + "in method 'setSequence'.");
 		} else {
 			try {
@@ -1157,18 +1157,18 @@ public class MidiChannel implements MetaEventListener {
 	 * attempted. If none can be loaded, then MIDI is not possible on this system.
 	 */
 	private void getSynthesizer() {
-		if(sequencer == null) {
+		if (sequencer == null) {
 			errorMessage("Unable to load a Synthesizer in method " + "'getSynthesizer', because variable 'sequencer' " + "is null");
 			return;
 		}
 
 		// Check if an alternate MIDI synthesizer was specified to use
 		String overrideMIDISynthesizer = SoundSystemConfig.getOverrideMIDISynthesizer();
-		if(overrideMIDISynthesizer != null && !overrideMIDISynthesizer.equals("")) {
+		if (overrideMIDISynthesizer != null && !overrideMIDISynthesizer.equals("")) {
 			// Try and open the specified device:
 			synthDevice = openMidiDevice(overrideMIDISynthesizer);
 			// See if we got it:
-			if(synthDevice != null) {
+			if (synthDevice != null) {
 				// Got it, try and link it to the sequencer:
 				try {
 					sequencer.getTransmitter().setReceiver(synthDevice.getReceiver());
@@ -1184,7 +1184,7 @@ public class MidiChannel implements MetaEventListener {
 		// No alternate MIDI synthesizer was specified, or unable to use it.
 
 		// If the squencer were also a synthesizer, that would make things easy:
-		if(sequencer instanceof Synthesizer) {
+		if (sequencer instanceof Synthesizer) {
 			synthesizer = (Synthesizer) sequencer;
 		} else {
 			// Try getting the default synthesizer first:
@@ -1197,14 +1197,14 @@ public class MidiChannel implements MetaEventListener {
 			}
 
 			// See if we were sucessful:
-			if(synthesizer == null) {
+			if (synthesizer == null) {
 				// Try for the common MIDI synthesizers:
 				synthDevice = openMidiDevice("Java Sound Synthesizer");
-				if(synthDevice == null)
+				if (synthDevice == null)
 					synthDevice = openMidiDevice("Microsoft GS Wavetable");
-				if(synthDevice == null)
+				if (synthDevice == null)
 					synthDevice = openMidiDevice("Gervill");
-				if(synthDevice == null) {
+				if (synthDevice == null) {
 					// Still nothing, MIDI is not going to work
 					errorMessage("Failed to find an available MIDI " + "synthesizer");
 					return;
@@ -1212,7 +1212,7 @@ public class MidiChannel implements MetaEventListener {
 			}
 
 			// Are we using the default synthesizer or something else?
-			if(synthesizer == null) {
+			if (synthesizer == null) {
 				// Link the sequencer and synthesizer:
 				try {
 					sequencer.getTransmitter().setReceiver(synthDevice.getReceiver());
@@ -1221,7 +1221,7 @@ public class MidiChannel implements MetaEventListener {
 				}
 			} else {
 				// Bug-fix for multiple-receivers playing simultaneously
-				if(synthesizer.getDefaultSoundbank() == null) {
+				if (synthesizer.getDefaultSoundbank() == null) {
 					// Link the sequencer to the default receiver:
 					try {
 						sequencer.getTransmitter().setReceiver(MidiSystem.getReceiver());
@@ -1250,7 +1250,7 @@ public class MidiChannel implements MetaEventListener {
 	private Sequencer openSequencer(String containsString) {
 		Sequencer s = null;
 		s = (Sequencer) openMidiDevice(containsString);
-		if(s == null)
+		if (s == null)
 			return null;
 		try {
 			s.getTransmitter();
@@ -1274,7 +1274,7 @@ public class MidiChannel implements MetaEventListener {
 		message("Searching for MIDI device with name containing '" + containsString + "'");
 		MidiDevice device = null;
 		MidiDevice.Info[] midiDevices = MidiSystem.getMidiDeviceInfo();
-		for(int i = 0; i < midiDevices.length; i++) {
+		for ( int i = 0; i < midiDevices.length; i++ ) {
 			device = null;
 			try {
 				device = MidiSystem.getMidiDevice(midiDevices[i]);
@@ -1282,11 +1282,11 @@ public class MidiChannel implements MetaEventListener {
 				message("    Problem in method 'getMidiDevice':  " + "MIDIUnavailableException was thrown");
 				device = null;
 			}
-			if(device != null && midiDevices[i].getName().contains(containsString)) {
+			if (device != null && midiDevices[i].getName().contains(containsString)) {
 				message("    Found MIDI device named '" + midiDevices[i].getName() + "'");
-				if(device instanceof Synthesizer)
+				if (device instanceof Synthesizer)
 					message("        *this is a Synthesizer instance");
-				if(device instanceof Sequencer)
+				if (device instanceof Sequencer)
 					message("        *this is a Sequencer instance");
 				try {
 					device.open();
@@ -1362,7 +1362,7 @@ public class MidiChannel implements MetaEventListener {
 		public void run() {
 			while(!dying()) {
 				// if not currently fading in or out, put the thread to sleep
-				if(fadeOutGain == -1.0f && fadeInGain == 1.0f)
+				if (fadeOutGain == -1.0f && fadeInGain == 1.0f)
 					snooze(3600000);
 				checkFadeOut();
 				// only update every 50 miliseconds (no need to peg the cpu)

@@ -25,17 +25,17 @@ public class DoorBlock extends Block {
 
 	@Override
 	public int getBlockTextureFromSideAndMetadata(final int textureIndexSlot, final int metadataValue) {
-		if(textureIndexSlot == 0 || textureIndexSlot == 1) {
+		if (textureIndexSlot == 0 || textureIndexSlot == 1) {
 			return this.blockIndexInTexture;
 		}
 		final int state = this.getState(metadataValue);
-		if((state == 0 || state == 2) ^ textureIndexSlot <= 3) {
+		if ((state == 0 || state == 2) ^ textureIndexSlot <= 3) {
 			return this.blockIndexInTexture;
 		}
 		int n = state / 2 + ((textureIndexSlot & 0x1) ^ state);
 		n += (metadataValue & 0x4) / 4;
 		int n2 = this.blockIndexInTexture - (metadataValue & 0x8) * 2;
-		if((n & 0x1) != 0x0) {
+		if ((n & 0x1) != 0x0) {
 			n2 = -n2;
 		}
 		return n2;
@@ -76,16 +76,16 @@ public class DoorBlock extends Block {
 	public void setDoorRotation(final int metadataValue) {
 		final float n = 0.1875f;
 		this.setShape(0.0f, 0.0f, 0.0f, 1.0f, 2.0f, 1.0f);
-		if(metadataValue == 0) {
+		if (metadataValue == 0) {
 			this.setShape(0.0f, 0.0f, 0.0f, 1.0f, 1.0f, n);
 		}
-		if(metadataValue == 1) {
+		if (metadataValue == 1) {
 			this.setShape(1.0f - n, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f);
 		}
-		if(metadataValue == 2) {
+		if (metadataValue == 2) {
 			this.setShape(0.0f, 0.0f, 1.0f - n, 1.0f, 1.0f, 1.0f);
 		}
-		if(metadataValue == 3) {
+		if (metadataValue == 3) {
 			this.setShape(0.0f, 0.0f, 0.0f, n, 1.0f, 1.0f);
 		}
 	}
@@ -98,18 +98,18 @@ public class DoorBlock extends Block {
 	@Override
 	public boolean blockActivated(final World world, final int xCoord, final int yCoord, final int zCoord, final EntityPlayer entityPlayer) {
 		final int blockMetadata = world.getBlockMetadata(xCoord, yCoord, zCoord);
-		if((blockMetadata & 0x8) != 0x0) {
-			if(world.getBlockId(xCoord, yCoord - 1, zCoord) == this.blockID) {
+		if ((blockMetadata & 0x8) != 0x0) {
+			if (world.getBlockId(xCoord, yCoord - 1, zCoord) == this.blockID) {
 				this.blockActivated(world, xCoord, yCoord - 1, zCoord, entityPlayer);
 			}
 			return true;
 		}
-		if(world.getBlockId(xCoord, yCoord + 1, zCoord) == this.blockID) {
+		if (world.getBlockId(xCoord, yCoord + 1, zCoord) == this.blockID) {
 			world.setBlockMetadataWithNotify(xCoord, yCoord + 1, zCoord, (blockMetadata ^ 0x4) + 8);
 		}
 		world.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, blockMetadata ^ 0x4);
 		world.markBlocksDirty(xCoord, yCoord - 1, zCoord, xCoord, yCoord, zCoord);
-		if(random() < 0.5) {
+		if (random() < 0.5) {
 			world.playSoundEffect(xCoord + 0.5, yCoord + 0.5, zCoord + 0.5, "random.door_open", 1.0f, world.rand.nextFloat() * 0.1f + 0.9f);
 		} else {
 			world.playSoundEffect(xCoord + 0.5, yCoord + 0.5, zCoord + 0.5, "random.door_close", 1.0f, world.rand.nextFloat() * 0.1f + 0.9f);
@@ -120,24 +120,24 @@ public class DoorBlock extends Block {
 	@Override
 	public void onNeighborBlockChange(final World world, final int xCoord, final int yCoord, final int zCoord, final int nya4) {
 		final int blockMetadata = world.getBlockMetadata(xCoord, yCoord, zCoord);
-		if((blockMetadata & 0x8) != 0x0) {
-			if(world.getBlockId(xCoord, yCoord - 1, zCoord) != this.blockID) {
+		if ((blockMetadata & 0x8) != 0x0) {
+			if (world.getBlockId(xCoord, yCoord - 1, zCoord) != this.blockID) {
 				world.setBlockWithNotify(xCoord, yCoord, zCoord, 0);
 			}
 		} else {
 			boolean b = false;
-			if(world.getBlockId(xCoord, yCoord + 1, zCoord) != this.blockID) {
+			if (world.getBlockId(xCoord, yCoord + 1, zCoord) != this.blockID) {
 				world.setBlockWithNotify(xCoord, yCoord, zCoord, 0);
 				b = true;
 			}
-			if(!world.isBlockNormalCube(xCoord, yCoord - 1, zCoord)) {
+			if (!world.isBlockNormalCube(xCoord, yCoord - 1, zCoord)) {
 				world.setBlockWithNotify(xCoord, yCoord, zCoord, 0);
 				b = true;
-				if(world.getBlockId(xCoord, yCoord + 1, zCoord) == this.blockID) {
+				if (world.getBlockId(xCoord, yCoord + 1, zCoord) == this.blockID) {
 					world.setBlockWithNotify(xCoord, yCoord + 1, zCoord, 0);
 				}
 			}
-			if(b) {
+			if (b) {
 				this.dropBlockAsItem(world, xCoord, yCoord, zCoord, blockMetadata);
 			}
 		}
@@ -145,7 +145,7 @@ public class DoorBlock extends Block {
 
 	@Override
 	public int idDropped(final int blockid, final Random random) {
-		if((blockid & 0x8) != 0x0) {
+		if ((blockid & 0x8) != 0x0) {
 			return 0;
 		}
 		return Item.door.shiftedIndex;
@@ -158,7 +158,7 @@ public class DoorBlock extends Block {
 	}
 
 	public int getState(final int state) {
-		if((state & 0x4) == 0x0) {
+		if ((state & 0x4) == 0x0) {
 			return state - 1 & 0x3;
 		}
 		return state & 0x3;

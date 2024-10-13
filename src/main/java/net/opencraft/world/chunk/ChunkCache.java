@@ -21,18 +21,18 @@ public class ChunkCache implements IBlockAccess {
 		final int n = integer5 >> 4;
 		final int n2 = integer7 >> 4;
 		this.chunkArray = new Chunk[n - this.chunkX + 1][n2 - this.chunkZ + 1];
-		for(int i = this.chunkX; i <= n; ++i) {
-			for(int j = this.chunkZ; j <= n2; ++j) {
+		for ( int i = this.chunkX; i <= n; ++i ) {
+			for ( int j = this.chunkZ; j <= n2; ++j ) {
 				this.chunkArray[i - this.chunkX][j - this.chunkZ] = world.getChunkFromChunkCoords(i, j);
 			}
 		}
 	}
 
 	public int getBlockId(final int xCoord, final int yCoord, final int zCoord) {
-		if(yCoord < 0) {
+		if (yCoord < 0) {
 			return 0;
 		}
-		if(yCoord >= 128) {
+		if (yCoord >= 128) {
 			return 0;
 		}
 		return this.chunkArray[(xCoord >> 4) - this.chunkX][(zCoord >> 4) - this.chunkZ].getBlockID(xCoord & 0xF, yCoord, zCoord & 0xF);
@@ -51,38 +51,38 @@ public class ChunkCache implements IBlockAccess {
 	}
 
 	public int getLightValueExt(final int xCoord, final int yCoord, final int zCoord, final boolean boolean4) {
-		if(xCoord < -32000000 || zCoord < -32000000 || xCoord >= 32000000 || zCoord > 32000000) {
+		if (xCoord < -32000000 || zCoord < -32000000 || xCoord >= 32000000 || zCoord > 32000000) {
 			return 15;
 		}
-		if(boolean4) {
+		if (boolean4) {
 			final int blockId = this.getBlockId(xCoord, yCoord, zCoord);
-			if(blockId == Block.slabSingle.blockID || blockId == Block.tilledField.blockID) {
+			if (blockId == Block.slabSingle.blockID || blockId == Block.tilledField.blockID) {
 				int lightValueExt = this.getLightValueExt(xCoord, yCoord + 1, zCoord, false);
 				final int lightValueExt2 = this.getLightValueExt(xCoord + 1, yCoord, zCoord, false);
 				final int lightValueExt3 = this.getLightValueExt(xCoord - 1, yCoord, zCoord, false);
 				final int lightValueExt4 = this.getLightValueExt(xCoord, yCoord, zCoord + 1, false);
 				final int lightValueExt5 = this.getLightValueExt(xCoord, yCoord, zCoord - 1, false);
-				if(lightValueExt2 > lightValueExt) {
+				if (lightValueExt2 > lightValueExt) {
 					lightValueExt = lightValueExt2;
 				}
-				if(lightValueExt3 > lightValueExt) {
+				if (lightValueExt3 > lightValueExt) {
 					lightValueExt = lightValueExt3;
 				}
-				if(lightValueExt4 > lightValueExt) {
+				if (lightValueExt4 > lightValueExt) {
 					lightValueExt = lightValueExt4;
 				}
-				if(lightValueExt5 > lightValueExt) {
+				if (lightValueExt5 > lightValueExt) {
 					lightValueExt = lightValueExt5;
 				}
 				return lightValueExt;
 			}
 		}
-		if(yCoord < 0) {
+		if (yCoord < 0) {
 			return 0;
 		}
-		if(yCoord >= 128) {
+		if (yCoord >= 128) {
 			int blockId = 15 - this.worldObj.skylightSubtracted;
-			if(blockId < 0) {
+			if (blockId < 0) {
 				blockId = 0;
 			}
 			return blockId;
@@ -93,10 +93,10 @@ public class ChunkCache implements IBlockAccess {
 	}
 
 	public int getBlockMetadata(final int xCoord, final int yCoord, final int zCoord) {
-		if(yCoord < 0) {
+		if (yCoord < 0) {
 			return 0;
 		}
-		if(yCoord >= 128) {
+		if (yCoord >= 128) {
 			return 0;
 		}
 		return this.chunkArray[(xCoord >> 4) - this.chunkX][(zCoord >> 4) - this.chunkZ].getBlockMetadata(xCoord & 0xF, yCoord, zCoord & 0xF);
@@ -104,7 +104,7 @@ public class ChunkCache implements IBlockAccess {
 
 	public Material getBlockMaterial(final int nya1, final int nya2, final int nya3) {
 		final int blockId = this.getBlockId(nya1, nya2, nya3);
-		if(blockId == 0) {
+		if (blockId == 0) {
 			return Material.AIR;
 		}
 		return Block.blocksList[blockId].blockMaterial;

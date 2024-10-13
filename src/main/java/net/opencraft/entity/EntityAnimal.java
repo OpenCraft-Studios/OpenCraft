@@ -14,7 +14,7 @@ public abstract class EntityAnimal extends EntityCreature {
 
 	@Override
 	protected float getBlockPathWeight(final int xCoord, final int yCoord, final int zCoord) {
-		if(this.world.getBlockId(xCoord, yCoord - 1, zCoord) == Block.grass.blockID) {
+		if (this.world.getBlockId(xCoord, yCoord - 1, zCoord) == Block.grass.blockID) {
 			return 10.0f;
 		}
 		return this.world.getLightBrightness(xCoord, yCoord, zCoord) - 0.5f;

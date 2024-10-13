@@ -11,7 +11,7 @@ public class RenderSkyboxCube {
 
 	// Constructor to initialize texture locations
 	public RenderSkyboxCube(String texture) {
-		for(int i = 0; i < 6; ++i) {
+		for ( int i = 0; i < 6; ++i ) {
 			this.locations[i] = "/assets/gui/panorama/panorama_" + i + ".png";
 		}
 	}
@@ -38,7 +38,7 @@ public class RenderSkyboxCube {
 		GL11.glDisable(GL11.GL_CULL_FACE);
 		GL11.glDepthMask(false);
 
-		for(int j = 0; j < 4; ++j) {
+		for ( int j = 0; j < 4; ++j ) {
 			GlStateManager.pushMatrix();
 			float f = ((float) (j % 2) / 2.0F - 0.5F) / 256.0F;
 			float f1 = ((float) (j / 2) / 2.0F - 0.5F) / 256.0F;
@@ -47,38 +47,38 @@ public class RenderSkyboxCube {
 			GL11.glRotatef(rotX, 1.0F, 0.0F, 0.0F);
 			GL11.glRotatef(rotY, 0.0F, 1.0F, 0.0F);
 
-			for(int i = 0; i < 6; ++i) {
+			for ( int i = 0; i < 6; ++i ) {
 				// Bind the texture for the current face
 				mc.renderer.bindTexture(mc.renderer.loadTexture(this.locations[i]));
 
 				tessellator.beginQuads();
 
-				if(i == 0) { // Front face
+				if (i == 0) { // Front face
 					tessellator.vertexUV(-1.0D, -1.0D, 1.0D, 0.0D, 0.0D);
 					tessellator.vertexUV(1.0D, -1.0D, 1.0D, 1.0D, 0.0D);
 					tessellator.vertexUV(1.0D, 1.0D, 1.0D, 1.0D, 1.0D);
 					tessellator.vertexUV(-1.0D, 1.0D, 1.0D, 0.0D, 1.0D);
-				} else if(i == 3) { // Left face
+				} else if (i == 3) { // Left face
 					tessellator.vertexUV(-1.0D, -1.0D, -1.0D, 0.0D, 0.0D);
 					tessellator.vertexUV(-1.0D, -1.0D, 1.0D, 1.0D, 0.0D);
 					tessellator.vertexUV(-1.0D, 1.0D, 1.0D, 1.0D, 1.0D);
 					tessellator.vertexUV(-1.0D, 1.0D, -1.0D, 0.0D, 1.0D);
-				} else if(i == 2) { // Back face
+				} else if (i == 2) { // Back face
 					tessellator.vertexUV(1.0D, -1.0D, -1.0D, 0.0D, 0.0D);
 					tessellator.vertexUV(-1.0D, -1.0D, -1.0D, 1.0D, 0.0D);
 					tessellator.vertexUV(-1.0D, 1.0D, -1.0D, 1.0D, 1.0D);
 					tessellator.vertexUV(1.0D, 1.0D, -1.0D, 0.0D, 1.0D);
-				} else if(i == 1) { // Right face
+				} else if (i == 1) { // Right face
 					tessellator.vertexUV(1.0D, -1.0D, 1.0D, 0.0D, 0.0D);
 					tessellator.vertexUV(1.0D, -1.0D, -1.0D, 1.0D, 0.0D);
 					tessellator.vertexUV(1.0D, 1.0D, -1.0D, 1.0D, 1.0D);
 					tessellator.vertexUV(1.0D, 1.0D, 1.0D, 0.0D, 1.0D);
-				} else if(i == 4) { // Bottom face
+				} else if (i == 4) { // Bottom face
 					tessellator.vertexUV(-1.0D, -1.0D, -1.0D, 0.0D, 0.0D);
 					tessellator.vertexUV(1.0D, -1.0D, -1.0D, 1.0D, 0.0D);
 					tessellator.vertexUV(1.0D, -1.0D, 1.0D, 1.0D, 1.0D);
 					tessellator.vertexUV(-1.0D, -1.0D, 1.0D, 0.0D, 1.0D);
-				} else if(i == 5) { // Top face
+				} else if (i == 5) { // Top face
 					tessellator.vertexUV(-1.0D, 1.0D, 1.0D, 0.0D, 0.0D);
 					tessellator.vertexUV(1.0D, 1.0D, 1.0D, 1.0D, 0.0D);
 					tessellator.vertexUV(1.0D, 1.0D, -1.0D, 1.0D, 1.0D);
