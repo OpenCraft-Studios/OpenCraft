@@ -1,7 +1,7 @@
 package net.opencraft.util;
 
 import java.io.*;
-import java.net.URI;
+import java.net.*;
 import java.util.*;
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -18,7 +18,7 @@ public class Splashes {
 		try (BufferedReader br = new BufferedReader(reader)) {
 		    List<String> lines = br.lines().collect(Collectors.toList());
 		    splashes = new ArrayList<>(lines);
-		} catch (IOException e) {
+		} catch (IOException ignored) {
 		    System.err.println("Failed to load splashes!");
 		}
 	}
@@ -28,7 +28,12 @@ public class Splashes {
 	}
 	
 	public void load(URI uri) {
-		throw new UnsupportedOperationException();
+		try {
+			InputStream is = uri.toURL().openStream();
+			load(is);
+		} catch (Exception ignored) {
+			System.err.println("Failed to load splashes!");
+		}
 	}
 	
 	/* Pick Random overload */
