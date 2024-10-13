@@ -151,11 +151,14 @@ public class OpenCraft implements Runnable {
 	}
 
 	public void init() {
-		glfwInit();
+		if (!glfwInit())
+			throw new IllegalStateException("Unable to initialize GLFW!");
+		
 		glfwWindowHint(GLFW_RESIZABLE, GL_TRUE);
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
 		glfwWindowHint(GLFW_DEPTH_BITS, 24); // Request 24 bits rendering
+		
 		this.window = glfwCreateWindow(width, height, Main.TITLE, NULL, NULL);
 		if (window == NULL)
 			throw new IllegalStateException("Failed to create the window!");
