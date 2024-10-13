@@ -1,26 +1,52 @@
 
 package net.opencraft.renderer.gui;
 
-import net.opencraft.client.Main;
-import net.opencraft.renderer.*;
-
 import static org.joml.Math.*;
 
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 import org.lwjgl.opengl.GL11;
+
+import com.google.common.collect.Lists;
+
+import net.opencraft.client.Main;
+import net.opencraft.renderer.*;
 
 public class GuiMainMenu extends GuiScreen {
 
 	private float updateCounter;
-	private String[] splashes;
+	
+	private List<String> splashes;
+	
 	private String currentSplash;
 	private final RenderSkybox panorama = new RenderSkybox(new RenderSkyboxCube("textures/gui/title/background/panorama"));
 
 	public GuiMainMenu() {
 		this.updateCounter = 0.0f;
 		// TODO: Arrays are not the best always...
-		this.splashes = new String[] { "Pre-beta!", "As seen on TV!", "Awesome!", "100% pure!", "May contain nuts!", "Better than Prey!", "More polygons!", "Sexy!", "Limited edition!", "Flashing letters!", "Made by Notch!", "Coming soon!", "Best in class!", "When it's finished!", "Absolutely dragon free!", "Excitement!", "More than 5000 sold!", "One of a kind!", "700+ hits on YouTube!", "Indev!", "Spiders everywhere!", "Check it out!", "Holy cow, man!", "It's a game!", "Made in Sweden!", "Uses LWJGL!", "Reticulating splines!", "OpenCraft!", "Yaaay!", "Alpha version!", "Singleplayer!", "Keyboard compatible!", "Undocumented!", "Ingots!", "Exploding creepers!", "That's not a moon!", "l33t!", "Create!", "Survive!", "Dungeon!", "Exclusive!", "The bee's knees!", "Down with O.P.P.!", "Classy!", "Wow!", "Not on steam!", "9.95 euro!", "Half price!", "Oh man!", "Check it out!", "Awesome community!", "Pixels!", "Teetsuuuuoooo!", "Kaaneeeedaaaa!", "Now with difficulty!",
-			"Enhanced!", "90% bug free!", "Pretty!", "12 herbs and spices!", "Fat free!", "Absolutely no memes!", "Free dental!", "Ask your doctor!", "Minors welcome!", "Cloud computing!", "Legal in Finland!", "Hard to label!", "Technically good!", "Bringing home the bacon!", "Indie!", "GOTY!", "Ceci n'est pas une title screen!", "Euclidian!", "Now in 3D!", "Inspirational!", "Herregud!", "Complex cellular automata!", "Yes, sir!", "Played by cowboys!", "OpenGL 1.1!", "Thousands of colors!", "Try it!", "Age of Wonders is better!", "Try the mushroom stew!", "Sensational!", "Hot tamale, hot hot tamale!", "Play him off, keyboard cat!", "Guaranteed!", "Macroscopic!", "Bring it on!", "Random splash!", "Call your mother!", "Monster infighting!", "Loved by millions!", "Ultimate edition!", "Freaky!", "You've got a brand new key!", "Water proof!", "Uninflammable!", "Whoa, dude!", "All inclusive!", "Tell your friends!", "NP is not in P!", "Notch <3 Ez!", "Music by C418!" };
-		this.currentSplash = this.splashes[(int) (Math.random() * this.splashes.length)];
+		loadSplashes();
+		
+		
+		selectRandomSplash();
+	}
+
+	private void selectRandomSplash() {
+		this.currentSplash = splashes.get((int) (Math.random() * splashes.size()));
+	}
+
+	private void loadSplashes() {
+		try (BufferedReader reader = new BufferedReader(new InputStreamReader(GuiMainMenu.class.getResourceAsStream("/assets/texts/splashes.txt")))) {
+		    List<String> lines = reader.lines().collect(Collectors.toList());
+		    splashes = new ArrayList<>(lines);
+		} catch (IOException e) {
+		    System.err.println("Failed to load splashes!");
+		    splashes = List.of("missigno");
+		}
+		
 	}
 
 	@Override
