@@ -154,6 +154,7 @@ public class OpenCraft implements Runnable {
 		glfwWindowHint(GLFW_RESIZABLE, GL_TRUE);
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
+		glfwWindowHint(GLFW_DEPTH_BITS, 24); // Request 24 bits rendering
 		window = glfwCreateWindow(width, height, Main.TITLE, 0, 0);
 		if (window == 0) {
 			throw new RuntimeException("Failed to create the GLFW window");
