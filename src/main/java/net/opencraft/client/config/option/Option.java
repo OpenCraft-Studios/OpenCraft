@@ -1,4 +1,4 @@
-package net.opencraft.client.config;
+package net.opencraft.client.config.option;
 
 import java.util.function.Supplier;
 

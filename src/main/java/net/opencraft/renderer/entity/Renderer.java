@@ -180,7 +180,7 @@ public class Renderer {
 			int n2 = array[i] >> 16 & 0xFF;
 			int n3 = array[i] >> 8 & 0xFF;
 			int n4 = array[i] & 0xFF;
-			if (this.settings != null && this.settings.anaglyph) {
+			if (settings != null && settings.anaglyph.get()) {
 				final int n5 = (n2 * 30 + n3 * 59 + n4 * 11) / 100;
 				final int n6 = (n2 * 30 + n3 * 70) / 100;
 				final int n7 = (n2 * 30 + n4 * 70) / 100;
@@ -263,7 +263,7 @@ public class Renderer {
 
 	public void updateDynamicTextures() {
 		for ( final TextureFX textureFX : this.effects ) {
-			textureFX.anaglyphEnabled = this.settings.anaglyph;
+			textureFX.anaglyphEnabled = this.settings.anaglyph.get();
 			textureFX.onTick();
 			this.byteBuffer.clear();
 			this.byteBuffer.put(textureFX.imageData);

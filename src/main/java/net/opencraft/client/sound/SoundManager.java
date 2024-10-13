@@ -65,10 +65,10 @@ public class SoundManager {
 		return soundPoolSounds.contains(soundName) || soundPoolStreaming.contains(soundName) || soundPoolIngameMusic.contains(soundName) || soundPoolMenuMusic.contains(soundName);
 	}
 
-	public void loadSoundSettings(GameSettings var1) {
+	public void loadSoundSettings(GameSettings options) {
 		this.soundPoolStreaming.isGetRandomSound = false;
-		this.options = var1;
-		if (!this.loaded && (var1 == null || var1.sound || var1.music)) {
+		this.options = options;
+		if (!this.loaded && (options == null || options.sound.get() || options.music.get())) {
 			this.tryToSetLibraryAndCodecs();
 		}
 
@@ -76,19 +76,19 @@ public class SoundManager {
 
 	private void tryToSetLibraryAndCodecs() {
 		try {
-			boolean var1 = this.options.sound;
-			boolean var2 = this.options.music;
-			this.options.sound = false;
-			this.options.music = false;
-			this.options.saveOptions();
+			boolean var1 = options.sound.get();
+			boolean var2 = options.music.get();
+			options.sound.set(false);
+			options.music.set(false);
+			options.saveOptions();
 			SoundSystemConfig.addLibrary(LibraryLWJGLOpenAL.class);
 			SoundSystemConfig.setCodec("ogg", CodecJOrbis.class);
 			SoundSystemConfig.setCodec("mus", CodecMus.class);
 			SoundSystemConfig.setCodec("wav", CodecWav.class);
 			this.sndSystem = new SoundSystem();
-			this.options.sound = var1;
-			this.options.music = var2;
-			this.options.saveOptions();
+			options.sound.set(var1);
+			options.music.set(var2);
+			options.saveOptions();
 		} catch(Throwable var3) {
 			var3.printStackTrace();
 			System.err.println("error linking with the LibraryJavaSound plug-in");
@@ -98,12 +98,12 @@ public class SoundManager {
 	}
 
 	public void onSoundOptionsChanged() {
-		if (!this.loaded && (this.options.music || this.options.sound)) {
+		if (!this.loaded && (this.options.music.get() || this.options.sound.get())) {
 			this.tryToSetLibraryAndCodecs();
 		}
 
-		if (!this.options.music) {
-			this.sndSystem.stop("BgMusic");
+		if (!options.music.get()) {
+			sndSystem.stop("BgMusic");
 		}
 
 	}
@@ -147,7 +147,7 @@ public class SoundManager {
 	}
 
 	public void playRandomMusicIfReady() {
-		if (this.loaded && this.options.music) {
+		if (loaded && options.music.get()) {
 			if (!this.sndSystem.playing("BgMusic") && !this.sndSystem.playing("streaming")) {
 				if (this.currentMusicTheme.equals("menu")) {
 					SoundPoolEntry var1 = this.soundPoolMenuMusic.getRandomSound();
@@ -184,7 +184,7 @@ public class SoundManager {
 	}
 
 	public void setListener(EntityLiving var1, float var2) {
-		if (this.loaded && this.options.sound) {
+		if (this.loaded && options.sound.get()) {
 			if (var1 != null) {
 				float var3 = var1.prevRotationYaw + (var1.rotationYaw - var1.prevRotationYaw) * var2;
 				double var4 = var1.prevPosX + (var1.posX - var1.prevPosX) * (double) var2;
@@ -205,7 +205,7 @@ public class SoundManager {
 	}
 
 	public void playStreaming(String var1, float var2, float var3, float var4, float var5, float var6) {
-		if (this.loaded && this.options.music) {
+		if (this.loaded && options.music.get()) {
 			String var7 = "streaming";
 			if (this.sndSystem.playing("streaming")) {
 				this.sndSystem.stop("streaming");
@@ -229,7 +229,7 @@ public class SoundManager {
 	}
 
 	public void playSound(String var1, float var2, float var3, float var4, float var5, float var6) {
-		if (this.loaded && this.options.sound) {
+		if (this.loaded && options.sound.get()) {
 			if (!soundPoolSounds.contains(var1)) {
 				System.err.println("Sound not found: " + var1);
 			}
@@ -256,7 +256,7 @@ public class SoundManager {
 	}
 
 	public void playSoundFX(String var1, float var2, float var3) {
-		if (this.loaded && this.options.sound) {
+		if (loaded && options.sound.get()) {
 			SoundPoolEntry var4 = this.soundPoolSounds.getRandomSoundFromSoundPool(var1);
 			if (var4 != null) {
 				this.playedSoundsCount = (this.playedSoundsCount + 1) % 256;

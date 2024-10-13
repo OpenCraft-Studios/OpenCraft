@@ -87,7 +87,7 @@ public final class FontRenderer {
 			int n10 = ((n7 & 2) >> 1) * 191 + n6;
 			n4 = ((n7 & 4) >> 2) * 191 + n6;
 			int n11 = n3 = n7 >= 16 ? 1 : 0;
-			if (options.anaglyph) {
+			if (options.anaglyph.get()) {
 				n2 = (n4 * 30 + n10 * 59 + n5 * 11) / 100;
 				n = (n4 * 30 + n10 * 70) / 100;
 				int n12 = (n4 * 30 + n5 * 70) / 100;

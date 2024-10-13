@@ -222,18 +222,18 @@ public class EntityRenderer {
 		GL11.glMatrixMode(GL11.GL_PROJECTION);
 		GL11.glLoadIdentity();
 		final float n = 0.07f;
-		if (oc.options.anaglyph)
+		if (oc.options.anaglyph.get())
 			GL11.glTranslatef(-(integer * 2 - 1) * n, 0.0f, 0.0f);
 
 		gluPerspective(this.getFOVModifier(float1), (float) oc.width / (float) oc.height, 0.05f,
 				this.farPlaneDistance);
 		GL11.glMatrixMode(GL11.GL_MODELVIEW);
 		GL11.glLoadIdentity();
-		if (oc.options.anaglyph) {
+		if (oc.options.anaglyph.get()) {
 			GL11.glTranslatef((integer * 2 - 1) * 0.1f, 0.0f, 0.0f);
 		}
 		this.hurtCameraEffect(float1);
-		if (oc.options.viewBobbing) {
+		if (oc.options.viewBobbing.get()) {
 			this.setupViewBobbing(float1);
 		}
 		this.h(float1);
@@ -255,12 +255,12 @@ public class EntityRenderer {
 
 	private void setupCameraTransform(final float float1, final int integer) {
 		GL11.glLoadIdentity();
-		if (oc.options.anaglyph) {
+		if (oc.options.anaglyph.get()) {
 			GL11.glTranslatef((integer * 2 - 1) * 0.1f, 0.0f, 0.0f);
 		}
 		GL11.glPushMatrix();
 		this.hurtCameraEffect(float1);
-		if (oc.options.viewBobbing) {
+		if (oc.options.viewBobbing.get()) {
 			this.setupViewBobbing(float1);
 		}
 		if (!oc.options.thirdPersonView) {
@@ -271,7 +271,7 @@ public class EntityRenderer {
 			this.itemRenderer.renderOverlays(float1);
 			this.hurtCameraEffect(float1);
 		}
-		if (oc.options.viewBobbing) {
+		if (oc.options.viewBobbing.get()) {
 			this.setupViewBobbing(float1);
 		}
 	}
@@ -286,10 +286,7 @@ public class EntityRenderer {
 		if (oc.inGameHasFocus) {
 			final int scaledHeight = (int) (oc.mouse.position.deltaX() * 1);
 			final int scaledWidth = (int) (oc.mouse.position.deltaY() * 1);
-			int invertVerticalMouse = 1;
-			if (oc.options.invertMouse) {
-				invertVerticalMouse = -1;
-			}
+			int directionY = oc.options.invertMouse.either(-1, 1);
 			final int n = scaledHeight;// + oc.mouseHelper.deltaX;
 			final int n2 = scaledWidth;// - oc.mouseHelper.deltaY;
 			if (scaledHeight != 0 || this.entityRendererInt1 != 0) {
@@ -303,7 +300,7 @@ public class EntityRenderer {
 			if (scaledWidth != 0)
 				this.entityRendererInt2 = scaledWidth;
 			
-			oc.player.setAngles((float) n, (float) (n2 * invertVerticalMouse));
+			oc.player.setAngles((float) n, (float) (n2 * directionY));
 		}
 		if (oc.skipRenderWorld) {
 			return;
@@ -341,12 +338,11 @@ public class EntityRenderer {
 		final double yCoord = thePlayer.lastTickPosY + (thePlayer.posY - thePlayer.lastTickPosY) * float1;
 		final double zCoord = thePlayer.lastTickPosZ + (thePlayer.posZ - thePlayer.lastTickPosZ) * float1;
 		for (int i = 0; i < 2; ++i) {
-			if (oc.options.anaglyph) {
-				if (i == 0) {
+			if (oc.options.anaglyph.get()) {
+				if (i == 0)
 					GL11.glColorMask(false, true, true, false);
-				} else {
+				else
 					GL11.glColorMask(true, false, false, false);
-				}
 			}
 			GL11.glViewport(0, 0, oc.width, oc.height);
 			this.updateFogColor(float1);
@@ -392,12 +388,11 @@ public class EntityRenderer {
 				GL11.glColorMask(false, false, false, false);
 				final int sortAndRender = renderGlobal.sortAndRender(thePlayer, 1, float1);
 				GL11.glColorMask(true, true, true, true);
-				if (oc.options.anaglyph) {
-					if (i == 0) {
+				if (oc.options.anaglyph.get()) {
+					if (i == 0)
 						GL11.glColorMask(false, true, true, false);
-					} else {
+					else
 						GL11.glColorMask(true, false, false, false);
-					}
 				}
 				if (sortAndRender > 0) {
 					renderGlobal.renderAllRenderLists(1, float1);
@@ -429,9 +424,8 @@ public class EntityRenderer {
 			this.setupFog(1);
 			GL11.glClear(256);
 			this.setupCameraTransform(float1, i);
-			if (!oc.options.anaglyph) {
+			if (!oc.options.anaglyph.get())
 				return;
-			}
 		}
 		GL11.glColorMask(true, true, true, false);
 	}
@@ -548,7 +542,7 @@ public class EntityRenderer {
 		this.fogColorRed *= n5;
 		this.fogColorGreen *= n5;
 		this.fogColorBlue *= n5;
-		if (oc.options.anaglyph) {
+		if (oc.options.anaglyph.get()) {
 			final float fogColorRed = (this.fogColorRed * 30.0f + this.fogColorGreen * 59.0f
 					+ this.fogColorBlue * 11.0f) / 100.0f;
 			final float fogColorGreen = (this.fogColorRed * 30.0f + this.fogColorGreen * 70.0f) / 100.0f;
@@ -572,7 +566,7 @@ public class EntityRenderer {
 			float n = 0.4f;
 			float n2 = 0.4f;
 			float n3 = 0.9f;
-			if (oc.options.anaglyph) {
+			if (oc.options.anaglyph.get()) {
 				final float n4 = (n * 30.0f + n2 * 59.0f + n3 * 11.0f) / 100.0f;
 				final float n5 = (n * 30.0f + n2 * 70.0f) / 100.0f;
 				final float n6 = (n * 30.0f + n3 * 70.0f) / 100.0f;
@@ -586,7 +580,7 @@ public class EntityRenderer {
 			float n = 0.4f;
 			float n2 = 0.3f;
 			float n3 = 0.3f;
-			if (oc.options.anaglyph) {
+			if (oc.options.anaglyph.get()) {
 				final float n4 = (n * 30.0f + n2 * 59.0f + n3 * 11.0f) / 100.0f;
 				final float n5 = (n * 30.0f + n2 * 70.0f) / 100.0f;
 				final float n6 = (n * 30.0f + n3 * 70.0f) / 100.0f;

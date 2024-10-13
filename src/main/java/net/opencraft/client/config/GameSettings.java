@@ -1,38 +1,37 @@
-
 package net.opencraft.client.config;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.PrintWriter;
+import static net.opencraft.OpenCraft.*;
+import static org.lwjgl.glfw.GLFW.*;
+
+import java.io.*;
 
 import com.google.common.collect.BiMap;
-import com.google.common.collect.EnumBiMap;
 import com.google.common.collect.EnumHashBiMap;
-import net.opencraft.OpenCraft;
-import net.opencraft.client.input.MovementInput;
+
+import net.opencraft.client.config.option.BooleanOption;
 import net.opencraft.world.IWorldAccess;
-
-import javax.swing.text.JTextComponent;
-
-import static org.lwjgl.glfw.GLFW.*;
 
 public class GameSettings {
 
 	private static final String[] RENDER_DISTANCES;
 	private static final String[] DIFFICULTIES;
 
-	public boolean music, sound;
-	public boolean invertMouse;
-	public boolean showDebugInfo;
-	public int renderDistance;
-	public boolean viewBobbing;
-	public boolean anaglyph;
+	public BooleanOption music = new BooleanOption(true);
+	public BooleanOption sound = new BooleanOption(true);
+
+	public BooleanOption invertMouse = new BooleanOption(false);
+	public BooleanOption showDebugInfo = new BooleanOption(false);
+
+	public BooleanOption viewBobbing = new BooleanOption(true);
+	public BooleanOption anaglyph = new BooleanOption(false);
+
 	public boolean limitFramerate;
+
+	// TODO: Create GraphicsConfiguration enum
 	public boolean fancyGraphics;
+
+	public int renderDistance;
 	public BiMap<PlayerInput, Integer> keyBindings = EnumHashBiMap.create(PlayerInput.class);
-	protected OpenCraft mc;
 	private final File optionsFile;
 	public int numberOfOptions;
 	public int difficulty;
@@ -46,27 +45,13 @@ public class GameSettings {
 	}
 
 	public enum PlayerInput {
-		FORWARD,
-		BACKWARD,
-		LEFT,
-		RIGHT,
-		JUMP,
-		INVENTORY,
-		DROP,
-		CHAT,
-		TOGGLE_FOG
+		FORWARD, BACKWARD, LEFT, RIGHT, JUMP, INVENTORY, DROP, CHAT, TOGGLE_FOG
 	}
 
-	public GameSettings(final OpenCraft aw, final File file) {
+	public GameSettings(final File file) {
 		setupKeybinds();
 
-		this.music = true;
-		this.sound = true;
-		this.invertMouse = false;
-		this.showDebugInfo = false;
 		this.renderDistance = 0;
-		this.viewBobbing = true;
-		this.anaglyph = false;
 		this.limitFramerate = false;
 		this.fancyGraphics = true;
 		this.numberOfOptions = 10;
@@ -74,7 +59,6 @@ public class GameSettings {
 		this.thirdPersonView = false;
 		this.fov = 100.0F;
 		this.minimumBrightness = 0.0F;
-		this.mc = aw;
 		this.optionsFile = new File(file, "options.txt");
 		this.loadOptions();
 	}
@@ -109,150 +93,145 @@ public class GameSettings {
 		this.saveOptions();
 	}
 
-	public void setOptionFloatValue(final float key, float value) {
-		if (key == 0) {
-			this.music = !this.music;
-			this.mc.sndManager.onSoundOptionsChanged();
-		}
-		if (key == 1) {
-			this.sound = !this.sound;
-			this.mc.sndManager.onSoundOptionsChanged();
-		}
-		if (key == 2) {
-			this.invertMouse = !this.invertMouse;
-		}
-		if (key == 3) {
-			this.showDebugInfo = !this.showDebugInfo;
-		}
-		if (key == 4) {
-			this.renderDistance = (this.renderDistance + (int) value & 0x3);
-		}
-		if (key == 5) {
-			this.viewBobbing = !this.viewBobbing;
-		}
-		if (key == 6) {
-			this.anaglyph = !this.anaglyph;
-			this.mc.renderer.refreshTextures();
-		}
-		if (key == 7) {
-			this.limitFramerate = !this.limitFramerate;
-		}
-		if (key == 8) {
-			this.difficulty = (this.difficulty + (int) value & 0x3);
-		}
-		if (key == 9) {
-			this.fancyGraphics = !this.fancyGraphics;
-			this.mc.renderGlobal.fancyGraphics();
-		}
-		if (key == 10) {
-			this.fov = value;
-		}
-		if (key == 11) {
-			this.minimumBrightness = value;
-			if (mc.world != null) {
-				for ( int i = 0; i < mc.world.worldAccesses.size(); ++i ) {
-					((IWorldAccess) mc.world.worldAccesses.get(i)).updateAllRenderers();
+	public void setOptionFloatValue(float key, float value) {
+		switch ((int) key) {
+			case 0:
+				this.music.toggle();
+				oc.sndManager.onSoundOptionsChanged();
+				break;
+
+			case 1:
+				this.sound.toggle();
+				oc.sndManager.onSoundOptionsChanged();
+				break;
+
+			case 2:
+				this.invertMouse.toggle();
+				break;
+
+			case 3:
+				this.showDebugInfo.toggle();
+				break;
+
+			case 4:
+				this.renderDistance = (this.renderDistance + (int) value & 0x3);
+				break;
+
+			case 5:
+				this.viewBobbing.toggle();
+				break;
+
+			case 6:
+				this.anaglyph.toggle();
+				oc.renderer.refreshTextures();
+				break;
+
+			case 7:
+				this.limitFramerate = !this.limitFramerate;
+				break;
+
+			case 8:
+				this.difficulty = (this.difficulty + (int) value & 0x3);
+				break;
+
+			case 9:
+				this.fancyGraphics = !this.fancyGraphics;
+				oc.renderGlobal.fancyGraphics();
+				break;
+
+			case 10:
+				this.fov = value;
+				break;
+
+			case 11:
+				this.minimumBrightness = value;
+				if (oc.world == null) 
+					break;
+				
+				for (int i = 0; i < oc.world.worldAccesses.size(); ++i) {
+					((IWorldAccess) oc.world.worldAccesses.get(i)).updateAllRenderers();
 				}
-			}
+				
+				break;
 		}
-		this.saveOptions();
+		saveOptions();
 	}
 
 	public String getKeyBinding(final int integer) {
-		if (integer == 0) {
-			return new StringBuilder().append("Music: ").append(this.music ? "ON" : "OFF").toString();
-		}
-		if (integer == 1) {
-			return new StringBuilder().append("Sound: ").append(this.sound ? "ON" : "OFF").toString();
-		}
-		if (integer == 2) {
-			return new StringBuilder().append("Invert mouse: ").append(this.invertMouse ? "ON" : "OFF").toString();
-		}
-		if (integer == 3) {
-			return new StringBuilder().append("Show FPS: ").append(this.showDebugInfo ? "ON" : "OFF").toString();
-		}
-		if (integer == 4) {
-			return "Render distance: " + GameSettings.RENDER_DISTANCES[this.renderDistance];
-		}
-		if (integer == 5) {
-			return new StringBuilder().append("View bobbing: ").append(this.viewBobbing ? "ON" : "OFF").toString();
-		}
-		if (integer == 6) {
-			return new StringBuilder().append("3d anaglyph: ").append(this.anaglyph ? "ON" : "OFF").toString();
-		}
-		if (integer == 7) {
-			return new StringBuilder().append("Limit framerate: ").append(this.limitFramerate ? "ON" : "OFF").toString();
-		}
-		if (integer == 8) {
-			return "Difficulty: " + GameSettings.DIFFICULTIES[this.difficulty];
-		}
-		if (integer == 9) {
-			return new StringBuilder().append("Graphics: ").append(this.fancyGraphics ? "FANCY" : "FAST").toString();
-		}
-		if (integer == 101) {
-			return new StringBuilder().append("Test: ").append(this.fov).toString();
-		}
-		return "";
+		return switch (integer) {
+			case 0 -> "Music: " + music.either("ON", "OFF");
+			case 1 -> "Sound: " + sound.either("ON", "OFF");
+			case 2 -> "Invert mouse: " + invertMouse.either("ON", "OFF");
+			case 3 -> "Show FPS: " + showDebugInfo.either("ON", "OFF");
+			case 4 -> "Render distance: " + GameSettings.RENDER_DISTANCES[this.renderDistance];
+			case 5 -> "View bobbing: " + this.viewBobbing.either("ON", "OFF");
+			case 6 -> "3d anaglyph: " + this.anaglyph.either("ON", "OFF");
+			case 7 -> "Limit framerate: " + (this.limitFramerate ? "ON" : "OFF");
+			case 8 -> "Difficulty: " + GameSettings.DIFFICULTIES[this.difficulty];
+			case 9 -> "Graphics: " + (this.fancyGraphics ? "FANCY" : "FAST");
+			case 101 -> "Test: " + this.fov;
+			default -> "";
+		};
 	}
 
 	public void loadOptions() {
 		if (!this.optionsFile.exists()) {
 			return;
 		}
-		try(BufferedReader bufferedReader = new BufferedReader(new FileReader(this.optionsFile))) {
+		try (BufferedReader bufferedReader = new BufferedReader(new FileReader(this.optionsFile))) {
 			String line;
-			while((line = bufferedReader.readLine()) != null) {
-				final String[] split = line.split(":");
-				if (split[0].equals("music")) {
-					this.music = split[1].equals("true");
+			while ((line = bufferedReader.readLine()) != null) {
+				final String[] tokens = line.split(":");
+				if (tokens[0].equals("music")) {
+					music.parse(tokens[1]);
 				}
-				if (split[0].equals("sound")) {
-					this.sound = split[1].equals("true");
+				if (tokens[0].equals("sound")) {
+					sound.parse(tokens[1]);
 				}
-				if (split[0].equals("invertYMouse")) {
-					this.invertMouse = split[1].equals("true");
+				if (tokens[0].equals("invertYMouse")) {
+					invertMouse.parse(tokens[1]);
 				}
-				if (split[0].equals("showFrameRate")) {
-					this.showDebugInfo = split[1].equals("true");
+				if (tokens[0].equals("showFrameRate")) {
+					showDebugInfo.parse(tokens[1]);
 				}
-				if (split[0].equals("viewDistance")) {
-					this.renderDistance = Integer.parseInt(split[1]);
+				if (tokens[0].equals("viewDistance")) {
+					this.renderDistance = Integer.parseInt(tokens[1]);
 				}
-				if (split[0].equals("bobView")) {
-					this.viewBobbing = split[1].equals("true");
+				if (tokens[0].equals("bobView")) {
+					this.viewBobbing.parse(tokens[1]);
 				}
-				if (split[0].equals("anaglyph3d")) {
-					this.anaglyph = split[1].equals("true");
+				if (tokens[0].equals("anaglyph3d")) {
+					this.anaglyph.parse(tokens[1]);
 				}
-				if (split[0].equals("limitFramerate")) {
-					this.limitFramerate = split[1].equals("true");
+				if (tokens[0].equals("limitFramerate")) {
+					this.limitFramerate = tokens[1].equals("true");
 				}
-				if (split[0].equals("difficulty")) {
-					this.difficulty = Integer.parseInt(split[1]);
+				if (tokens[0].equals("difficulty")) {
+					this.difficulty = Integer.parseInt(tokens[1]);
 				}
-				if (split[0].equals("fancyGraphics")) {
-					this.fancyGraphics = split[1].equals("true");
+				if (tokens[0].equals("fancyGraphics")) {
+					this.fancyGraphics = tokens[1].equals("true");
 				}
-				if (split[0].equals("FOV")) {
-					this.fov = Float.parseFloat(split[1]);
+				if (tokens[0].equals("FOV")) {
+					this.fov = Float.parseFloat(tokens[1]);
 				}
-				if (split[0].equals("minimumBrightness")) {
-					this.minimumBrightness = Float.parseFloat(split[1]);
+				if (tokens[0].equals("minimumBrightness")) {
+					this.minimumBrightness = Float.parseFloat(tokens[1]);
 				}
-				for ( PlayerInput input : PlayerInput.values() ) {
-					if (split[0].equals("key_" + input.name())) {
-						this.keyBindings.put(input, Integer.parseInt(split[1]));
+				for (PlayerInput input : PlayerInput.values()) {
+					if (tokens[0].equals("key_" + input.name())) {
+						this.keyBindings.put(input, Integer.parseInt(tokens[1]));
 					}
 				}
 			}
-		} catch(Exception ex) {
+		} catch (Exception ex) {
 			System.out.println("Failed to load options");
 			ex.printStackTrace();
 		}
 	}
 
 	public void saveOptions() {
-		try(PrintWriter s = new PrintWriter(new FileWriter(this.optionsFile))) {
+		try (PrintWriter s = new PrintWriter(new FileWriter(this.optionsFile))) {
 			s.println("music:" + music);
 			s.println("sound:" + sound);
 			s.println("invertYMouse:" + invertMouse);
@@ -265,10 +244,10 @@ public class GameSettings {
 			s.println("fancyGraphics:" + fancyGraphics);
 			s.println("FOV:" + fov);
 			s.println("minimumBrightness:" + this.minimumBrightness);
-			for ( PlayerInput input : PlayerInput.values() ) {
+			for (PlayerInput input : PlayerInput.values()) {
 				s.println("key_" + input.name() + ":" + keyBindings.get(input));
 			}
-		} catch(Exception ex) {
+		} catch (Exception ex) {
 			System.out.println("Failed to save options");
 			ex.printStackTrace();
 		}

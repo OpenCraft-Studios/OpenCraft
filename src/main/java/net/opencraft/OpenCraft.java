@@ -51,10 +51,8 @@ public class OpenCraft implements Runnable, GLFWFramebufferSizeCallbackI {
 	private static File gameDir;
 	public long window;
 	public PlayerController playerController;
-	private boolean fullscreen;
 	public int width;
 	public int height;
-	private OpenGlCapsChecker glCapabilities;
 	private Timer timer;
 	public World world;
 	public RenderGlobal renderGlobal;
@@ -112,7 +110,6 @@ public class OpenCraft implements Runnable, GLFWFramebufferSizeCallbackI {
 	public OpenCraft(int width, int height) {
 		oc = this;
 		this.playerController = new PlayerControllerSP(oc);
-		this.fullscreen = false;
 		this.timer = null;
 		this.sessionData = new Session("Notch", "1488228");
 		this.hideQuitButton = true;
@@ -172,7 +169,7 @@ public class OpenCraft implements Runnable, GLFWFramebufferSizeCallbackI {
 		timer = new Timer(20.0f);
 		invoke(NULL, width, height);
 		mcDataDir = getGameDir();
-		options = new GameSettings(oc, mcDataDir);
+		options = new GameSettings(mcDataDir);
 		renderer = new Renderer(options);
 		font = new FontRenderer(options, "/assets/default.png", renderer);
 		loadScreen();
@@ -190,7 +187,6 @@ public class OpenCraft implements Runnable, GLFWFramebufferSizeCallbackI {
 		glLoadIdentity();
 		glMatrixMode(5888);
 		checkGLError();
-		glCapabilities = new OpenGlCapsChecker();
 		sndManager.loadSoundSettings(options);
 		renderer.registerTextureFX(textureLavaFX);
 		renderer.registerTextureFX(textureWaterFX);
@@ -204,11 +200,7 @@ public class OpenCraft implements Runnable, GLFWFramebufferSizeCallbackI {
 		glViewport(0, 0, width, height);
 		displayGuiScreen(new GuiMainMenu());
 		effectRenderer = new EffectRenderer(world, renderer);
-		try {
-			new DownloadResourcesJob().run();
-		} catch (Exception ex4) {
-			ex4.printStackTrace();
-		}
+		new DownloadResourcesJob().run();
 		checkGLError();
 		ingameGUI = new GuiIngame(oc);
 		playerController.a();
@@ -437,6 +429,7 @@ public class OpenCraft implements Runnable, GLFWFramebufferSizeCallbackI {
 		}
 		inGameHasFocus = true;
 		glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+
 		displayGuiScreen(null);
 		mouseTicksRan = ticksRan + 10000;
 	}
@@ -636,30 +629,22 @@ public class OpenCraft implements Runnable, GLFWFramebufferSizeCallbackI {
 		}
 		if (currentScreen != null) {
 			currentScreen.handleInputEvents();
-			if (currentScreen != null) {
+			if (currentScreen != null)
 				currentScreen.updateScreen();
-			}
 		}
 		if (world != null) {
 			world.difficultySetting = options.difficulty;
 			// TODO: unify "nested" if's
 			if (!isGamePaused) {
 				entityRenderer.updateRenderer();
-			}
-			if (!isGamePaused) {
 				renderGlobal.updateClouds();
-			}
-			if (!isGamePaused) {
 				world.updateEntities();
-			}
-			if (!isGamePaused && !isMultiplayerWorld()) {
-				world.tick();
-			}
-			if (!isGamePaused) {
+				if (!isMultiplayerWorld())
+					world.tick();
+				
 				world.randomDisplayUpdates(Mth.floor_double(player.posX), Mth.floor_double(player.posY),
 						Mth.floor_double(player.posZ));
-			}
-			if (!isGamePaused) {
+				
 				effectRenderer.updateEffects();
 			}
 		}
@@ -757,10 +742,6 @@ public class OpenCraft implements Runnable, GLFWFramebufferSizeCallbackI {
 		}
 		world.func_656_j();
 		SandBlock.fallInstantly = false;
-	}
-
-	public OpenGlCapsChecker getOpenGlCapsChecker() {
-		return glCapabilities;
 	}
 
 	public String debugInfoRenders() {
