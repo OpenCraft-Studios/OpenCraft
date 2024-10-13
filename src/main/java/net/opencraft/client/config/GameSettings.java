@@ -23,8 +23,7 @@ public class GameSettings {
 	private static final String[] RENDER_DISTANCES;
 	private static final String[] DIFFICULTIES;
 
-	public boolean music;
-	public boolean sound;
+	public boolean music, sound;
 	public boolean invertMouse;
 	public boolean showDebugInfo;
 	public int renderDistance;

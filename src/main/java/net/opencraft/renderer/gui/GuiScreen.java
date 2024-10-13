@@ -75,12 +75,13 @@ public abstract class GuiScreen extends GuiElement {
 	}
 
 	public void handleInputEvents() {
-		for (MouseHandler.ButtonEvent event : oc.mouse.buttons.events) {
+		for (MouseHandler.ButtonEvent event : oc.mouse.buttons.events)
 			this.handleMouseEvent(event);
-		}
-		// TODO plz fix
-		// TODO: What should be fixed here?
+	
 		for (int key : oc.keyboard.pressedKeys) {
+			if (key == -1)
+				continue;
+			
 			if (glfwGetKeyName(key, glfwGetKeyScancode(key)) != null)
 				this.handleKeyboardInput(glfwGetKeyName(key, glfwGetKeyScancode(key)).charAt(0), key);
 		}
@@ -121,7 +122,7 @@ public abstract class GuiScreen extends GuiElement {
 			GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 			final float n = 32.0f;
 			instance.beginQuads();
-			instance.setColorOpaque_I(4210752);
+			instance.color(4210752);
 			instance.vertexUV(0.0, this.height, 0.0, 0.0, this.height / n + integer);
 			instance.vertexUV(this.width, this.height, 0.0, this.width / n, this.height / n + integer);
 			instance.vertexUV(this.width, 0.0, 0.0, this.width / n, 0 + integer);

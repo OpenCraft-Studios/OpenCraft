@@ -85,7 +85,7 @@ public class RenderItem extends Render<EntityItem> {
 				}
 				GL11.glRotatef(180.0f - this.renderManager.playerViewY, 0.0f, 1.0f, 0.0f);
 				instance.beginQuads();
-				instance.setNormal(0.0f, 1.0f, 0.0f);
+				instance.normal(0.0f, 1.0f, 0.0f);
 				instance.vertexUV(0.0f - n10, 0.0f - n11, 0.0, n5, n8);
 				instance.vertexUV(n9 - n10, 0.0f - n11, 0.0, n6, n8);
 				instance.vertexUV(n9 - n10, 1.0f - n11, 0.0, n6, n7);
@@ -135,7 +135,7 @@ public class RenderItem extends Render<EntityItem> {
 			final String string = new StringBuilder().append("").append(hw.stackSize).toString();
 			GL11.glDisable(2896);
 			GL11.glDisable(2929);
-			ej.drawStringWithShadow2(string, integer4 + 19 - 2 - ej.getStringWidth(string), integer5 + 6 + 3, 16777215);
+			ej.drawShadow(string, integer4 + 19 - 2 - ej.width(string), integer5 + 6 + 3, 16777215);
 			GL11.glEnable(2896);
 			GL11.glEnable(2929);
 		}
@@ -160,7 +160,7 @@ public class RenderItem extends Render<EntityItem> {
 
 	private void renderQuad(final Tessellator ag, final int integer2, final int integer3, final int integer4, final int integer5, final int integer6) {
 		ag.beginQuads();
-		ag.setColorOpaque_I(integer6);
+		ag.color(integer6);
 		ag.vertex(integer2 + 0, integer3 + 0, 0.0);
 		ag.vertex(integer2 + 0, integer3 + integer5, 0.0);
 		ag.vertex(integer2 + integer4, integer3 + integer5, 0.0);

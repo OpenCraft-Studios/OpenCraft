@@ -32,9 +32,9 @@ public class TileEntitySignRenderer extends TileEntitySpecialRenderer<TileEntity
 			final String s = jn.signText[i];
 			if (i == jn.lineBeingEdited) {
 				final String string = "> " + s + " <";
-				fontRenderer.drawString2(string, -fontRenderer.getStringWidth(string) / 2, i * 10 - jn.signText.length * 5, 0);
+				fontRenderer.draw(string, -fontRenderer.width(string) / 2, i * 10 - jn.signText.length * 5, 0);
 			} else {
-				fontRenderer.drawString2(s, -fontRenderer.getStringWidth(s) / 2, i * 10 - jn.signText.length * 5, 0);
+				fontRenderer.draw(s, -fontRenderer.width(s) / 2, i * 10 - jn.signText.length * 5, 0);
 			}
 		}
 		GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);

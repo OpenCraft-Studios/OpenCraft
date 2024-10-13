@@ -622,7 +622,7 @@ public class RenderGlobal implements IWorldAccess {
 		final float n10 = (float) (n7 * n4);
 		final float n11 = (float) (n8 * n4);
 		instance.beginQuads();
-		instance.setColorRGBA_F(float2, float3, float4, 0.8f);
+		instance.color(float2, float3, float4, 0.8f);
 		for ( int i = -n2 * n3; i < n2 * n3; i += n2 ) {
 			for ( int j = -n2 * n3; j < n2 * n3; j += n2 ) {
 				instance.vertexUV(i + 0, n9, j + n2, (i + 0) * n4 + n10, (j + n2) * n4 + n11);
@@ -690,24 +690,24 @@ public class RenderGlobal implements IWorldAccess {
 					final float n17 = n15 - n10;
 					final float n18 = n16 - n11;
 					if (n6 > -n3 - 1.0f) {
-						instance.setColorRGBA_F(float2 * 0.7f, float3 * 0.7f, float4 * 0.7f, 0.8f);
-						instance.setNormal(0.0f, -1.0f, 0.0f);
+						instance.color(float2 * 0.7f, float3 * 0.7f, float4 * 0.7f, 0.8f);
+						instance.normal(0.0f, -1.0f, 0.0f);
 						instance.vertexUV(n17 + 0.0f, n6 + 0.0f, n18 + n12, (n15 + 0.0f) * n9 + n7, (n16 + n12) * n9 + n8);
 						instance.vertexUV(n17 + n12, n6 + 0.0f, n18 + n12, (n15 + n12) * n9 + n7, (n16 + n12) * n9 + n8);
 						instance.vertexUV(n17 + n12, n6 + 0.0f, n18 + 0.0f, (n15 + n12) * n9 + n7, (n16 + 0.0f) * n9 + n8);
 						instance.vertexUV(n17 + 0.0f, n6 + 0.0f, n18 + 0.0f, (n15 + 0.0f) * n9 + n7, (n16 + 0.0f) * n9 + n8);
 					}
 					if (n6 <= n3 + 1.0f) {
-						instance.setColorRGBA_F(float2, float3, float4, 0.8f);
-						instance.setNormal(0.0f, 1.0f, 0.0f);
+						instance.color(float2, float3, float4, 0.8f);
+						instance.normal(0.0f, 1.0f, 0.0f);
 						instance.vertexUV(n17 + 0.0f, n6 + n3 - n14, n18 + n12, (n15 + 0.0f) * n9 + n7, (n16 + n12) * n9 + n8);
 						instance.vertexUV(n17 + n12, n6 + n3 - n14, n18 + n12, (n15 + n12) * n9 + n7, (n16 + n12) * n9 + n8);
 						instance.vertexUV(n17 + n12, n6 + n3 - n14, n18 + 0.0f, (n15 + n12) * n9 + n7, (n16 + 0.0f) * n9 + n8);
 						instance.vertexUV(n17 + 0.0f, n6 + n3 - n14, n18 + 0.0f, (n15 + 0.0f) * n9 + n7, (n16 + 0.0f) * n9 + n8);
 					}
-					instance.setColorRGBA_F(float2 * 0.9f, float3 * 0.9f, float4 * 0.9f, 0.8f);
+					instance.color(float2 * 0.9f, float3 * 0.9f, float4 * 0.9f, 0.8f);
 					if (j > -1) {
-						instance.setNormal(-1.0f, 0.0f, 0.0f);
+						instance.normal(-1.0f, 0.0f, 0.0f);
 						for ( int l = 0; l < n12; ++l ) {
 							instance.vertexUV(n17 + l + 0.0f, n6 + 0.0f, n18 + n12, (n15 + l + 0.5f) * n9 + n7, (n16 + n12) * n9 + n8);
 							instance.vertexUV(n17 + l + 0.0f, n6 + n3, n18 + n12, (n15 + l + 0.5f) * n9 + n7, (n16 + n12) * n9 + n8);
@@ -716,7 +716,7 @@ public class RenderGlobal implements IWorldAccess {
 						}
 					}
 					if (j <= 1) {
-						instance.setNormal(1.0f, 0.0f, 0.0f);
+						instance.normal(1.0f, 0.0f, 0.0f);
 						for ( int l = 0; l < n12; ++l ) {
 							instance.vertexUV(n17 + l + 1.0f - n14, n6 + 0.0f, n18 + n12, (n15 + l + 0.5f) * n9 + n7, (n16 + n12) * n9 + n8);
 							instance.vertexUV(n17 + l + 1.0f - n14, n6 + n3, n18 + n12, (n15 + l + 0.5f) * n9 + n7, (n16 + n12) * n9 + n8);
@@ -724,9 +724,9 @@ public class RenderGlobal implements IWorldAccess {
 							instance.vertexUV(n17 + l + 1.0f - n14, n6 + 0.0f, n18 + 0.0f, (n15 + l + 0.5f) * n9 + n7, (n16 + 0.0f) * n9 + n8);
 						}
 					}
-					instance.setColorRGBA_F(float2 * 0.8f, float3 * 0.8f, float4 * 0.8f, 0.8f);
+					instance.color(float2 * 0.8f, float3 * 0.8f, float4 * 0.8f, 0.8f);
 					if (k > -1) {
-						instance.setNormal(0.0f, 0.0f, -1.0f);
+						instance.normal(0.0f, 0.0f, -1.0f);
 						for ( int l = 0; l < n12; ++l ) {
 							instance.vertexUV(n17 + 0.0f, n6 + n3, n18 + l + 0.0f, (n15 + 0.0f) * n9 + n7, (n16 + l + 0.5f) * n9 + n8);
 							instance.vertexUV(n17 + n12, n6 + n3, n18 + l + 0.0f, (n15 + n12) * n9 + n7, (n16 + l + 0.5f) * n9 + n8);
@@ -735,7 +735,7 @@ public class RenderGlobal implements IWorldAccess {
 						}
 					}
 					if (k <= 1) {
-						instance.setNormal(0.0f, 0.0f, 1.0f);
+						instance.normal(0.0f, 0.0f, 1.0f);
 						for ( int l = 0; l < n12; ++l ) {
 							instance.vertexUV(n17 + 0.0f, n6 + n3, n18 + l + 1.0f - n14, (n15 + 0.0f) * n9 + n7, (n16 + l + 0.5f) * n9 + n8);
 							instance.vertexUV(n17 + n12, n6 + n3, n18 + l + 1.0f - n14, (n15 + n12) * n9 + n7, (n16 + l + 0.5f) * n9 + n8);

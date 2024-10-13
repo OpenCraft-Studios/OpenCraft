@@ -1,5 +1,6 @@
 package net.opencraft;
 
+import static net.opencraft.SharedConstants.*;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL43.*;
@@ -118,7 +119,7 @@ public class OpenCraft implements Runnable, GLFWFramebufferSizeCallbackI {
 		this.isGamePaused = false;
 		this.currentScreen = null;
 		this.loadingScreen = new LoadingScreenRenderer(oc);
-		this.entityRenderer = new EntityRenderer(oc);
+		this.entityRenderer = new EntityRenderer();
 		this.ticksRan = 0;
 		this.leftClickCounter = 0;
 		this.objectMouseOverString = null;
@@ -154,7 +155,7 @@ public class OpenCraft implements Runnable, GLFWFramebufferSizeCallbackI {
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
 		glfwWindowHint(GLFW_DEPTH_BITS, 24); // Request 24 bits rendering
 
-		this.window = glfwCreateWindow(width, height, Main.TITLE, NULL, NULL);
+		this.window = glfwCreateWindow(width, height, TITLE, NULL, NULL);
 		if (window == NULL)
 			throw new IllegalStateException("Failed to create the window!");
 
@@ -175,12 +176,6 @@ public class OpenCraft implements Runnable, GLFWFramebufferSizeCallbackI {
 		renderer = new Renderer(options);
 		font = new FontRenderer(options, "/assets/default.png", renderer);
 		loadScreen();
-		// TODO: remove
-		try {
-			// Controllers.create();
-		} catch (Exception ex2) {
-			ex2.printStackTrace();
-		}
 		checkGLError();
 		glEnable(GL_TEXTURE_2D);
 		glShadeModel(7425);
@@ -240,7 +235,7 @@ public class OpenCraft implements Runnable, GLFWFramebufferSizeCallbackI {
 		glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 		final float n = 32.0f;
 		t.beginQuads();
-		t.setColorOpaque_I(4210752);
+		t.color(4210752);
 		t.vertexUV(0.0, height, 0.0, 0.0, height / n + 0.0f);
 		t.vertexUV(width, height, 0.0, width / n, height / n + 0.0f);
 		t.vertexUV(width, 0.0, 0.0, width / n, 0.0);
@@ -250,7 +245,7 @@ public class OpenCraft implements Runnable, GLFWFramebufferSizeCallbackI {
 		glAlphaFunc(516, 0.1f);
 		// magic numbers for x and y coordinates because I have no idea how to calculate
 		// it
-		font.drawStringWithShadow2("Loading...", 32, 32, 0xFFFFFF);
+		font.drawShadow("Loading...", 32, 32, 0xFFFFFF);
 		glfwSwapBuffers(window);
 	}
 
@@ -304,12 +299,14 @@ public class OpenCraft implements Runnable, GLFWFramebufferSizeCallbackI {
 
 	@Override
 	public void run() {
-		running = true;
+		System.out.println("Running on thread " + Thread.currentThread().threadId() + " / " + Thread.currentThread().getName());
+		this.running = true;
+		
 		try {
 			init();
 		} catch (Exception exception) {
 			exception.printStackTrace();
-			stop();
+			destroy();
 		}
 		
 		try {
@@ -396,7 +393,7 @@ public class OpenCraft implements Runnable, GLFWFramebufferSizeCallbackI {
 		glDisable(3553);
 		final Tessellator instance = Tessellator.instance;
 		instance.begin(7);
-		instance.setColorOpaque_I(538968064);
+		instance.color(538968064);
 		instance.vertex(0.0, height - 100, 0.0);
 		instance.vertex(0.0, height, 0.0);
 		instance.vertex(OpenCraft.tickTimes.length, height, 0.0);
@@ -408,7 +405,7 @@ public class OpenCraft implements Runnable, GLFWFramebufferSizeCallbackI {
 		}
 		int i = (int) (n / 200000L / OpenCraft.tickTimes.length);
 		instance.begin(7);
-		instance.setColorOpaque_I(541065216);
+		instance.color(541065216);
 		instance.vertex(0.0, height - i, 0.0);
 		instance.vertex(0.0, height, 0.0);
 		instance.vertex(OpenCraft.tickTimes.length, height, 0.0);
@@ -422,7 +419,7 @@ public class OpenCraft implements Runnable, GLFWFramebufferSizeCallbackI {
 			n3 = n3 * n3 / 255;
 			int n4 = n3 * n3 / 255;
 			n4 = n4 * n4 / 255;
-			instance.setColorOpaque_I(-16777216 + n4 + n3 * 256 + n2 * 65536);
+			instance.color(-16777216 + n4 + n3 * 256 + n2 * 65536);
 			instance.vertex(j + 0.5f, height - OpenCraft.tickTimes[j] / 200000L + 0.5f, 0.0);
 			instance.vertex(j + 0.5f, height + 0.5f, 0.0);
 		}
@@ -453,9 +450,9 @@ public class OpenCraft implements Runnable, GLFWFramebufferSizeCallbackI {
 	}
 
 	public void displayInGameMenu() {
-		if (currentScreen != null) {
+		if (currentScreen != null)
 			return;
-		}
+		
 		displayGuiScreen(new GuiIngameMenu());
 	}
 

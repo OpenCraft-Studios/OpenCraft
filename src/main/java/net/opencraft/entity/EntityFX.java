@@ -92,7 +92,7 @@ public class EntityFX extends Entity {
 		final float n7 = (float) (this.prevPosY + (this.posY - this.prevPosY) * float2 - EntityFX.interpPosY);
 		final float n8 = (float) (this.prevPosZ + (this.posZ - this.prevPosZ) * float2 - EntityFX.interpPosZ);
 		final float entityBrightness = this.getEntityBrightness(float2);
-		ag.setColorOpaque_F(this.particleRed * entityBrightness, this.particleGreen * entityBrightness, this.particleBlue * entityBrightness);
+		ag.color(this.particleRed * entityBrightness, this.particleGreen * entityBrightness, this.particleBlue * entityBrightness);
 		ag.vertexUV(n6 - float3 * n5 - float6 * n5, n7 - float4 * n5, n8 - float5 * n5 - float7 * n5, n, n4);
 		ag.vertexUV(n6 - float3 * n5 + float6 * n5, n7 + float4 * n5, n8 - float5 * n5 + float7 * n5, n, n3);
 		ag.vertexUV(n6 + float3 * n5 + float6 * n5, n7 + float4 * n5, n8 + float5 * n5 + float7 * n5, n2, n3);

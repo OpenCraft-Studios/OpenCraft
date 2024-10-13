@@ -73,7 +73,7 @@ public class GuiInventory extends GuiContainer {
 
 	@Override
 	protected void drawGuiContainerForegroundLayer() {
-		this.fontRenderer.drawString2("Crafting", 86, 16, 4210752);
+		this.fontRenderer.draw("Crafting", 86, 16, 4210752);
 	}
 
 	@Override

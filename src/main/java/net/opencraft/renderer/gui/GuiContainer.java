@@ -1,4 +1,3 @@
-
 package net.opencraft.renderer.gui;
 
 import static net.opencraft.OpenCraft.*;
@@ -8,7 +7,7 @@ import java.util.List;
 
 import org.lwjgl.opengl.GL11;
 
-import net.opencraft.client.config.GameSettings;
+import net.opencraft.client.config.GameSettings.PlayerInput;
 import net.opencraft.entity.EntityPlayerSP;
 import net.opencraft.inventory.IInventory;
 import net.opencraft.inventory.Slot;
@@ -22,13 +21,13 @@ public abstract class GuiContainer extends GuiScreen {
 	private ItemStack itemStack;
 	public int xSize;
 	public int ySize;
-	protected List inventorySlots;
+	protected List<Slot> inventorySlots;
 
 	public GuiContainer() {
 		this.itemStack = null;
 		this.xSize = 176;
 		this.ySize = 166;
-		this.inventorySlots = (List) new ArrayList();
+		this.inventorySlots = new ArrayList<>();
 	}
 
 	@Override
@@ -100,7 +99,7 @@ public abstract class GuiContainer extends GuiScreen {
 
 	private Slot a(final int integer1, final int integer2) {
 		for ( int i = 0; i < this.inventorySlots.size(); ++i ) {
-			final Slot slot = (Slot) this.inventorySlots.get(i);
+			Slot slot = inventorySlots.get(i);
 			if (slot.isAtCursorPos(integer1, integer2)) {
 				return slot;
 			}
@@ -207,22 +206,18 @@ public abstract class GuiContainer extends GuiScreen {
 
 	@Override
 	protected void b(final int integer1, final int integer2, final int integer3) {
-		if (integer3 == 0) {
-		}
 	}
 
 	@Override
-	protected void keyTyped(final char character, final int integer) {
-		if (integer == 1 || integer == oc.options.keyBindings.get(GameSettings.PlayerInput.INVENTORY)) {
+	protected void keyTyped(char c, int keyCode) {
+		if (keyCode == 1 || keyCode == oc.options.keyBindings.get(PlayerInput.INVENTORY))
 			oc.displayGuiScreen(null);
-		}
 	}
 
 	@Override
 	public void onGuiClosed() {
-		if (this.itemStack != null) {
+		if (this.itemStack != null)
 			oc.player.dropPlayerItem(this.itemStack);
-		}
 	}
 
 	public void onCraftMatrixChanged(final IInventory kd) {
@@ -234,7 +229,7 @@ public abstract class GuiContainer extends GuiScreen {
 	}
 
 	static {
-		GuiContainer.itemRenderer = new RenderItem();//(RenderItem)RenderItem.RenderCreeper();
+		GuiContainer.itemRenderer = new RenderItem();
 	}
 
 }

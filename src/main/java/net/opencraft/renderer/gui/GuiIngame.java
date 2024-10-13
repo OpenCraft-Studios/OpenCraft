@@ -1,23 +1,21 @@
 
 package net.opencraft.renderer.gui;
 
+import static net.opencraft.SharedConstants.*;
 import static org.joml.Math.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import net.opencraft.OpenCraft;
-import net.opencraft.ScaledResolution;
+import java.util.*;
+
+import org.lwjgl.opengl.GL11;
+
+import net.opencraft.*;
 import net.opencraft.blocks.material.Material;
-import net.opencraft.client.Main;
 import net.opencraft.inventory.InventoryPlayer;
 import net.opencraft.item.ItemStack;
 import net.opencraft.renderer.Tessellator;
 import net.opencraft.renderer.entity.RenderHelper;
 import net.opencraft.renderer.entity.RenderItem;
 import net.opencraft.renderer.font.FontRenderer;
-
-import org.lwjgl.opengl.GL11;
 
 public class GuiIngame extends GuiElement {
 
@@ -134,27 +132,27 @@ public class GuiIngame extends GuiElement {
 		RenderHelper.disableStandardItemLighting();
 		GL11.glDisable(GL_FULLBRIGHT_RENDERING);
 		if (this.mc.options.showDebugInfo) {
-			font.drawStringWithShadow2(Main.TITLE + " (" + this.mc.fpsString + ")", 2, 2, 16777215);
-			font.drawStringWithShadow2(this.mc.debugInfoRenders(), 2, 12, 16777215);
-			font.drawStringWithShadow2(this.mc.entityRenderingInfo(), 2, 22, 16777215);
-			font.drawStringWithShadow2(this.mc.debugInfoEntities(), 2, 32, 16777215);
+			font.drawShadow(TITLE + " (" + this.mc.fpsString + ")", 2, 2, 16777215);
+			font.drawShadow(this.mc.debugInfoRenders(), 2, 12, 16777215);
+			font.drawShadow(this.mc.entityRenderingInfo(), 2, 22, 16777215);
+			font.drawShadow(this.mc.debugInfoEntities(), 2, 32, 16777215);
 			// display current coordinates and orientation
-			font.drawStringWithShadow2("X: " + this.mc.player.posX + " Y: " + this.mc.player.posY + " Z: " + this.mc.player.posZ, 2, 42, 16777215);
-			font.drawStringWithShadow2("Yaw: " + this.mc.player.rotationYaw + " Pitch: " + this.mc.player.rotationPitch, 2, 52, 16777215);
+			font.drawShadow("X: " + this.mc.player.posX + " Y: " + this.mc.player.posY + " Z: " + this.mc.player.posZ, 2, 42, 16777215);
+			font.drawShadow("Yaw: " + this.mc.player.rotationYaw + " Pitch: " + this.mc.player.rotationPitch, 2, 52, 16777215);
 			final long maxMemory = Runtime.getRuntime().maxMemory();
 			final long totalMemory = Runtime.getRuntime().totalMemory();
 			final long allocatedMemory = totalMemory - Runtime.getRuntime().freeMemory();
 			final String string = "Used memory: " + allocatedMemory * 100L / maxMemory + "% (" + allocatedMemory / 1024L / 1024L + "MB) of " + maxMemory / 1024L / 1024L + "MB";
-			this.drawString(font, string, scaledWidth - font.getStringWidth(string) - 2, 2, 14737632);
+			this.drawString(font, string, scaledWidth - font.width(string) - 2, 2, 14737632);
 			final String string2 = "Allocated memory: " + totalMemory * 100L / maxMemory + "% (" + totalMemory / 1024L / 1024L + "MB)";
-			this.drawString(font, string2, scaledWidth - font.getStringWidth(string2) - 2, 12, 14737632);
+			this.drawString(font, string2, scaledWidth - font.width(string2) - 2, 12, 14737632);
 		}
 
 		int i = 10;
 		final boolean b2 = true;
 		for ( int integer5 = 0; integer5 < this.chatMessageList.size() && integer5 < i; ++integer5 ) {
 			if ((chatMessageList.get(integer5)).updateCounter < 200 || b2) {
-				font.drawStringWithShadow2(((ChatLine) this.chatMessageList.get(integer5)).message, 2, scaledHeight - 8 - integer5 * 9 - 20, 16777215);
+				font.drawShadow(((ChatLine) this.chatMessageList.get(integer5)).message, 2, scaledHeight - 8 - integer5 * 9 - 20, 16777215);
 			}
 		}
 	}

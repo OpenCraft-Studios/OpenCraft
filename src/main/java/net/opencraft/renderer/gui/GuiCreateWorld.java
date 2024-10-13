@@ -101,7 +101,7 @@ public class GuiCreateWorld extends GuiScreen {
 		this.drawDefaultBackground();
 		final Tessellator instance = Tessellator.instance;
 		this.drawCenteredString(this.fontRenderer, this.screenHeader, this.width / 2, 20, 16777215);
-		instance.setColorOpaque_I(16777215);
+		instance.color(16777215);
 		super.drawScreen(integer1, integer2, float3);
 	}
 

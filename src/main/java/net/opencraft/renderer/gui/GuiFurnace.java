@@ -30,8 +30,8 @@ public class GuiFurnace extends GuiContainer {
 
 	@Override
 	protected void drawGuiContainerForegroundLayer() {
-		this.fontRenderer.drawString2("Furnace", 60, 6, 4210752);
-		this.fontRenderer.drawString2("Inventory", 8, this.ySize - 96 + 2, 4210752);
+		this.fontRenderer.draw("Furnace", 60, 6, 4210752);
+		this.fontRenderer.draw("Inventory", 8, this.ySize - 96 + 2, 4210752);
 	}
 
 	@Override

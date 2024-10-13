@@ -29,10 +29,10 @@ public class GuiElement {
 		GL11.glBlendFunc(770, 771);
 		final Tessellator instance = Tessellator.instance;
 		instance.beginQuads();
-		instance.setColorRGBA_F(float5, float6, float7, float4);
+		instance.color(float5, float6, float7, float4);
 		instance.vertex(integer3, integer2, 0.0);
 		instance.vertex(integer1, integer2, 0.0);
-		instance.setColorRGBA_F(float9, float10, float11, float8);
+		instance.color(float9, float10, float11, float8);
 		instance.vertex(integer1, integer4, 0.0);
 		instance.vertex(integer3, integer4, 0.0);
 		instance.draw();
@@ -42,11 +42,11 @@ public class GuiElement {
 	}
 
 	public void drawCenteredString(final FontRenderer ej, final String string, final int integer3, final int integer4, final int integer5) {
-		ej.drawStringWithShadow2(string, integer3 - ej.getStringWidth(string) / 2, integer4, integer5);
+		ej.drawShadow(string, integer3 - ej.width(string) / 2, integer4, integer5);
 	}
 
 	public void drawString(final FontRenderer fontRenderer, final String string, final int xCoord, final int yCoord, final int combinedColor) {
-		fontRenderer.drawStringWithShadow2(string, xCoord, yCoord, combinedColor);
+		fontRenderer.drawShadow(string, xCoord, yCoord, combinedColor);
 	}
 
 	public void drawTexturedModalRect(final int x, final int y, final int u, final int v, final int width, final int height) {

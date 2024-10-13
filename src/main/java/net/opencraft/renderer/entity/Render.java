@@ -131,7 +131,7 @@ public abstract class Render<T extends Entity> {
 		if (n > 1.0) {
 			n = 1.0;
 		}
-		instance.setColorRGBA_F(1.0f, 1.0f, 1.0f, (float) n);
+		instance.color(1.0f, 1.0f, 1.0f, (float) n);
 		final double n2 = integer5 + gs.minX + double10;
 		final double n3 = integer5 + gs.maxX + double10;
 		final double n4 = integer6 + gs.minY + double11 + 0.015625;
@@ -153,32 +153,32 @@ public abstract class Render<T extends Entity> {
 		GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 		instance.beginQuads();
 		instance.setTranslationD(double2, double3, double4);
-		instance.setNormal(0.0f, 0.0f, -1.0f);
+		instance.normal(0.0f, 0.0f, -1.0f);
 		instance.vertex(en.minX, en.maxY, en.minZ);
 		instance.vertex(en.maxX, en.maxY, en.minZ);
 		instance.vertex(en.maxX, en.minY, en.minZ);
 		instance.vertex(en.minX, en.minY, en.minZ);
-		instance.setNormal(0.0f, 0.0f, 1.0f);
+		instance.normal(0.0f, 0.0f, 1.0f);
 		instance.vertex(en.minX, en.minY, en.maxZ);
 		instance.vertex(en.maxX, en.minY, en.maxZ);
 		instance.vertex(en.maxX, en.maxY, en.maxZ);
 		instance.vertex(en.minX, en.maxY, en.maxZ);
-		instance.setNormal(0.0f, -1.0f, 0.0f);
+		instance.normal(0.0f, -1.0f, 0.0f);
 		instance.vertex(en.minX, en.minY, en.minZ);
 		instance.vertex(en.maxX, en.minY, en.minZ);
 		instance.vertex(en.maxX, en.minY, en.maxZ);
 		instance.vertex(en.minX, en.minY, en.maxZ);
-		instance.setNormal(0.0f, 1.0f, 0.0f);
+		instance.normal(0.0f, 1.0f, 0.0f);
 		instance.vertex(en.minX, en.maxY, en.maxZ);
 		instance.vertex(en.maxX, en.maxY, en.maxZ);
 		instance.vertex(en.maxX, en.maxY, en.minZ);
 		instance.vertex(en.minX, en.maxY, en.minZ);
-		instance.setNormal(-1.0f, 0.0f, 0.0f);
+		instance.normal(-1.0f, 0.0f, 0.0f);
 		instance.vertex(en.minX, en.minY, en.maxZ);
 		instance.vertex(en.minX, en.maxY, en.maxZ);
 		instance.vertex(en.minX, en.maxY, en.minZ);
 		instance.vertex(en.minX, en.minY, en.minZ);
-		instance.setNormal(1.0f, 0.0f, 0.0f);
+		instance.normal(1.0f, 0.0f, 0.0f);
 		instance.vertex(en.maxX, en.minY, en.minZ);
 		instance.vertex(en.maxX, en.maxY, en.minZ);
 		instance.vertex(en.maxX, en.maxY, en.maxZ);

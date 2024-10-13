@@ -1,6 +1,7 @@
 
 package net.opencraft.renderer;
 
+import static org.joml.Math.*;
 import static org.lwjgl.opengl.ARBVertexBufferObject.*;
 import static org.lwjgl.opengl.GL11.*;
 
@@ -12,15 +13,15 @@ import org.lwjgl.opengl.GL;
 public class Tessellator {
 
 	public static final Tessellator instance;
-	private static boolean TRIANGLE_TESSELATION, c;
+	private static boolean triangulate, c;
 
 	private ByteBuffer d;
 	private IntBuffer e;
 	private FloatBuffer f;
 	private int[] g;
-	private int h, k, o, p, mode, v;
-	private boolean l, m, n, q;
-	private double i, j, s, t, u;
+	private int h, color, o, p, mode, C;
+	private boolean hasColor, hasTexture, n, noColor;
+	private double u, v, s, t, D;
 	private boolean drawing;
 	private boolean isARBCapable;
 	private int z, A, B;
@@ -28,12 +29,12 @@ public class Tessellator {
 
 	private Tessellator(final int integer) {
 		this.h = 0;
-		this.l = false;
-		this.m = false;
+		this.hasColor = false;
+		this.hasTexture = false;
 		this.n = false;
 		this.o = 0;
 		this.p = 0;
-		this.q = false;
+		this.noColor = false;
 		this.drawing = false;
 		this.isARBCapable = false;
 		this.z = 0;
@@ -68,7 +69,7 @@ public class Tessellator {
 				glBufferDataARB(34962, this.d, GL_STREAM_DRAW_ARB);
 				error = glGetError();
 			}
-			if (this.m) {
+			if (this.hasTexture) {
 				if (this.isARBCapable) {
 					glTexCoordPointer(2, 5126, 32, 12L);
 					error = glGetError();
@@ -80,7 +81,7 @@ public class Tessellator {
 				glEnableClientState(32888);
 				error = glGetError();
 			}
-			if (this.l) {
+			if (this.hasColor) {
 				if (this.isARBCapable) {
 					glColorPointer(4, 5121, 32, 20L);
 					error = glGetError();
@@ -116,16 +117,16 @@ public class Tessellator {
 			error = glGetError();
 			glEnableClientState(32884);
 			error = glGetError();
-			if (this.mode == GL_QUADS && Tessellator.TRIANGLE_TESSELATION) {
+			if (this.mode == GL_QUADS && triangulate) {
 				glDrawArrays(GL_TRIANGLES, 0, this.h);
 			} else {
 				glDrawArrays(this.mode, 0, this.h);
 			}
 			glDisableClientState(32884);
-			if (this.m) {
+			if (this.hasTexture) {
 				glDisableClientState(32888);
 			}
-			if (this.l) {
+			if (this.hasColor) {
 				glDisableClientState(32886);
 			}
 			if (this.n) {
@@ -143,7 +144,7 @@ public class Tessellator {
 	}
 
 	public void beginQuads() {
-		this.begin(7);
+		this.begin(GL_QUADS);
 	}
 
 	public void begin(int mode) {
@@ -154,59 +155,40 @@ public class Tessellator {
 		this.end();
 		this.mode = mode;
 		this.n = false;
-		this.l = false;
-		this.m = false;
-		this.q = false;
+		this.hasColor = false;
+		this.hasTexture = false;
+		this.noColor = false;
 	}
 
-	public void uv(final double double1, final double double2) {
-		this.m = true;
-		this.i = double1;
-		this.j = double2;
+	public void uv(double u, double v) {
+		this.hasTexture = true;
+		this.u = u;
+		this.v = v;
 	}
 
-	public void setColorOpaque_F(final float float1, final float float2, final float float3) {
-		this.a((int) (float1 * 255.0f), (int) (float2 * 255.0f), (int) (float3 * 255.0f));
+	public void color(final float float1, final float float2, final float float3) {
+		this.color((int) (float1 * 255.0f), (int) (float2 * 255.0f), (int) (float3 * 255.0f));
 	}
 
-	public void setColorRGBA_F(final float float1, final float float2, final float float3, final float float4) {
-		this.a((int) (float1 * 255.0f), (int) (float2 * 255.0f), (int) (float3 * 255.0f), (int) (float4 * 255.0f));
+	public void color(final float float1, final float float2, final float float3, final float float4) {
+		this.color((int) (float1 * 255.0f), (int) (float2 * 255.0f), (int) (float3 * 255.0f), (int) (float4 * 255.0f));
 	}
 
-	public void a(final int integer1, final int integer2, final int integer3) {
-		this.a(integer1, integer2, integer3, 255);
+	public void color(final int integer1, final int integer2, final int integer3) {
+		this.color(integer1, integer2, integer3, 255);
 	}
 
-	public void a(int integer1, int integer2, int integer3, int integer4) {
-		if (this.q) {
+	public void color(int r, int g, int b, int a) {
+		if (noColor)
 			return;
-		}
-		if (integer1 > 255) {
-			integer1 = 255;
-		}
-		if (integer2 > 255) {
-			integer2 = 255;
-		}
-		if (integer3 > 255) {
-			integer3 = 255;
-		}
-		if (integer4 > 255) {
-			integer4 = 255;
-		}
-		if (integer1 < 0) {
-			integer1 = 0;
-		}
-		if (integer2 < 0) {
-			integer2 = 0;
-		}
-		if (integer3 < 0) {
-			integer3 = 0;
-		}
-		if (integer4 < 0) {
-			integer4 = 0;
-		}
-		this.l = true;
-		this.k = (integer4 << 24 | integer3 << 16 | integer2 << 8 | integer1);
+		
+		r = clamp(0, 255, r);
+		g = clamp(0, 255, g);
+		b = clamp(0, 255, b);
+		a = clamp(0, 255, a);
+
+		this.hasColor = true;
+		this.color = (a << 24 | b << 16 | g << 8 | r);
 	}
 
 	public void vertexUV(double x, double y, double z, double u, double v) {
@@ -216,14 +198,14 @@ public class Tessellator {
 
 	public void vertex(final double double1, final double double2, final double double3) {
 		++this.p;
-		if (this.mode == 7 && Tessellator.TRIANGLE_TESSELATION && this.p % 4 == 0) {
-			for ( int i = 0; i < 2; ++i ) {
+		if (this.mode == GL_QUADS && Tessellator.triangulate && this.p % 4 == 0) {
+			for (int i = 0; i < 2; ++i) {
 				final int n = 8 * (3 - i);
-				if (this.m) {
+				if (this.hasTexture) {
 					this.g[this.o + 3] = this.g[this.o - n + 3];
 					this.g[this.o + 4] = this.g[this.o - n + 4];
 				}
-				if (this.l) {
+				if (this.hasColor) {
 					this.g[this.o + 5] = this.g[this.o - n + 5];
 				}
 				this.g[this.o + 0] = this.g[this.o - n + 0];
@@ -233,19 +215,19 @@ public class Tessellator {
 				this.o += 8;
 			}
 		}
-		if (this.m) {
-			this.g[this.o + 3] = Float.floatToRawIntBits((float) this.i);
-			this.g[this.o + 4] = Float.floatToRawIntBits((float) this.j);
+		if (this.hasTexture) {
+			this.g[this.o + 3] = Float.floatToRawIntBits((float) this.u);
+			this.g[this.o + 4] = Float.floatToRawIntBits((float) this.v);
 		}
-		if (this.l) {
-			this.g[this.o + 5] = this.k;
+		if (this.hasColor) {
+			this.g[this.o + 5] = this.color;
 		}
 		if (this.n) {
-			this.g[this.o + 6] = this.v;
+			this.g[this.o + 6] = this.C;
 		}
 		this.g[this.o + 0] = Float.floatToRawIntBits((float) (double1 + this.s));
 		this.g[this.o + 1] = Float.floatToRawIntBits((float) (double2 + this.t));
-		this.g[this.o + 2] = Float.floatToRawIntBits((float) (double3 + this.u));
+		this.g[this.o + 2] = Float.floatToRawIntBits((float) (double3 + this.D));
 		this.o += 8;
 		++this.h;
 		if (this.h % 4 == 0 && this.o >= this.B - 32) {
@@ -254,32 +236,32 @@ public class Tessellator {
 		}
 	}
 
-	public void setColorOpaque_I(final int integer) {
-		this.a(integer >> 16 & 0xFF, integer >> 8 & 0xFF, integer & 0xFF);
+	public void color(final int integer) {
+		this.color(integer >> 16 & 0xFF, integer >> 8 & 0xFF, integer & 0xFF);
 	}
 
 	public void c() {
-		this.q = true;
+		this.noColor = true;
 	}
 
-	public void setNormal(final float float1, final float float2, final float float3) {
-		if (!this.drawing) {
+	public void normal(final float float1, final float float2, final float float3) {
+		if (!this.drawing)
 			System.out.println("But..");
-		}
+
 		this.n = true;
-		this.v = ((byte) (float1 * 128.0f) | (byte) (float2 * 127.0f) << 8 | (byte) (float3 * 127.0f) << 16);
+		this.C = ((byte) (float1 * 128.0f) | (byte) (float2 * 127.0f) << 8 | (byte) (float3 * 127.0f) << 16);
 	}
 
 	public void setTranslationD(final double double1, final double double2, final double double3) {
 		this.s = double1;
 		this.t = double2;
-		this.u = double3;
+		this.D = double3;
 	}
 
 	static {
-		Tessellator.TRIANGLE_TESSELATION = true;
+		Tessellator.triangulate = true;
 		Tessellator.c = false;
-		instance = new Tessellator(2097152);
+		instance = new Tessellator(0x200000);
 	}
 
 }

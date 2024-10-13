@@ -83,7 +83,7 @@ public class RenderBlocks {
 		if (Block.lightValue[gs.blockID] > 0) {
 			blockBrightness = 1.0f;
 		}
-		instance.setColorOpaque_F(blockBrightness, blockBrightness, blockBrightness);
+		instance.color(blockBrightness, blockBrightness, blockBrightness);
 		final double n = 0.4000000059604645;
 		final double n2 = 0.5 - n;
 		final double n3 = 0.20000000298023224;
@@ -108,7 +108,7 @@ public class RenderBlocks {
 			n = this.b;
 		}
 		final float blockBrightness = gs.getBlockBrightness(this.a, integer2, integer3, integer4);
-		instance.setColorOpaque_F(blockBrightness, blockBrightness, blockBrightness);
+		instance.color(blockBrightness, blockBrightness, blockBrightness);
 		final int n2 = (n & 0xF) << 4;
 		final int n3 = n & 0xF0;
 		double n4 = n2 / 256.0f;
@@ -281,7 +281,7 @@ public class RenderBlocks {
 			n = this.b;
 		}
 		final float blockBrightness = gs.getBlockBrightness(this.a, integer2, integer3, integer4);
-		instance.setColorOpaque_F(blockBrightness, blockBrightness, blockBrightness);
+		instance.color(blockBrightness, blockBrightness, blockBrightness);
 		int n2 = ((n & 0xF) << 4) + 16;
 		int n3 = (n & 0xF) << 4;
 		final int n4 = n & 0xF0;
@@ -334,7 +334,7 @@ public class RenderBlocks {
 			n = this.b;
 		}
 		final float blockBrightness = gs.getBlockBrightness(this.a, integer2, integer3, integer4);
-		instance.setColorOpaque_F(blockBrightness, blockBrightness, blockBrightness);
+		instance.color(blockBrightness, blockBrightness, blockBrightness);
 		final int n2 = (n & 0xF) << 4;
 		final int n3 = n & 0xF0;
 		final double n4 = n2 / 256.0f;
@@ -395,7 +395,7 @@ public class RenderBlocks {
 			n = this.b;
 		}
 		final float blockBrightness = gs.getBlockBrightness(this.a, integer2, integer3, integer4);
-		instance.setColorOpaque_F(blockBrightness, blockBrightness, blockBrightness);
+		instance.color(blockBrightness, blockBrightness, blockBrightness);
 		final int n2 = (n & 0xF) << 4;
 		final int n3 = n & 0xF0;
 		final double n4 = n2 / 256.0f;
@@ -435,7 +435,7 @@ public class RenderBlocks {
 	public boolean g(final Block gs, final int integer2, final int integer3, final int integer4) {
 		final Tessellator instance = Tessellator.instance;
 		final float blockBrightness = gs.getBlockBrightness(this.a, integer2, integer3, integer4);
-		instance.setColorOpaque_F(blockBrightness, blockBrightness, blockBrightness);
+		instance.color(blockBrightness, blockBrightness, blockBrightness);
 		this.a(gs, this.a.getBlockMetadata(integer2, integer3, integer4), integer2, integer3, (double) integer4);
 		return true;
 	}
@@ -443,7 +443,7 @@ public class RenderBlocks {
 	public boolean h(final Block gs, final int integer2, final int integer3, final int integer4) {
 		final Tessellator instance = Tessellator.instance;
 		final float blockBrightness = gs.getBlockBrightness(this.a, integer2, integer3, integer4);
-		instance.setColorOpaque_F(blockBrightness, blockBrightness, blockBrightness);
+		instance.color(blockBrightness, blockBrightness, blockBrightness);
 		this.b(gs, this.a.getBlockMetadata(integer2, integer3, integer4), integer2, integer3 - 0.0625f, (double) integer4);
 		return true;
 	}
@@ -623,7 +623,7 @@ public class RenderBlocks {
 			final float n8 = sin(n5) * 8.0f / 256.0f;
 			final float n9 = cos(n5) * 8.0f / 256.0f;
 			final float blockBrightness = gs.getBlockBrightness(this.a, integer2, integer3, integer4);
-			instance.setColorOpaque_F(n2 * blockBrightness, n2 * blockBrightness, n2 * blockBrightness);
+			instance.color(n2 * blockBrightness, n2 * blockBrightness, n2 * blockBrightness);
 			instance.vertexUV(integer2 + 0, integer3 + a, integer4 + 0, n6 - n9 - n8, n7 - n9 + n8);
 			instance.vertexUV(integer2 + 0, integer3 + a2, integer4 + 1, n6 - n9 + n8, n7 + n9 + n8);
 			instance.vertexUV(integer2 + 1, integer3 + a3, integer4 + 1, n6 + n9 + n8, n7 + n9 - n8);
@@ -631,7 +631,7 @@ public class RenderBlocks {
 		}
 		if (this.d || shouldSideBeRendered2) {
 			final float blockBrightness2 = gs.getBlockBrightness(this.a, integer2, integer3 - 1, integer4);
-			instance.setColorOpaque_F(n * blockBrightness2, n * blockBrightness2, n * blockBrightness2);
+			instance.color(n * blockBrightness2, n * blockBrightness2, n * blockBrightness2);
 			this.a(gs, (double) integer2, integer3, integer4, gs.getBlockTextureFromSide(0));
 			b = true;
 		}
@@ -702,7 +702,7 @@ public class RenderBlocks {
 				} else {
 					blockBrightness3 *= n4;
 				}
-				instance.setColorOpaque_F(n2 * blockBrightness3, n2 * blockBrightness3, n2 * blockBrightness3);
+				instance.color(n2 * blockBrightness3, n2 * blockBrightness3, n2 * blockBrightness3);
 				instance.vertexUV(n9, integer3 + n12, blockBrightness, n15, double5);
 				instance.vertexUV(n13, integer3 + n8, n14, n16, double6);
 				instance.vertexUV(n13, integer3 + 0, n14, n16, n17);
@@ -752,37 +752,37 @@ public class RenderBlocks {
 		if (n5 < blockBrightness) {
 			n5 = blockBrightness;
 		}
-		instance.setColorOpaque_F(n * n5, n * n5, n * n5);
+		instance.color(n * n5, n * n5, n * n5);
 		this.a(gs, -0.5, -0.5, -0.5, gs.getBlockTextureFromSide(0));
 		n5 = gs.getBlockBrightness(fe, integer3, integer4 + 1, integer5);
 		if (n5 < blockBrightness) {
 			n5 = blockBrightness;
 		}
-		instance.setColorOpaque_F(n2 * n5, n2 * n5, n2 * n5);
+		instance.color(n2 * n5, n2 * n5, n2 * n5);
 		this.b(gs, -0.5, -0.5, -0.5, gs.getBlockTextureFromSide(1));
 		n5 = gs.getBlockBrightness(fe, integer3, integer4, integer5 - 1);
 		if (n5 < blockBrightness) {
 			n5 = blockBrightness;
 		}
-		instance.setColorOpaque_F(n3 * n5, n3 * n5, n3 * n5);
+		instance.color(n3 * n5, n3 * n5, n3 * n5);
 		this.c(gs, -0.5, -0.5, -0.5, gs.getBlockTextureFromSide(2));
 		n5 = gs.getBlockBrightness(fe, integer3, integer4, integer5 + 1);
 		if (n5 < blockBrightness) {
 			n5 = blockBrightness;
 		}
-		instance.setColorOpaque_F(n3 * n5, n3 * n5, n3 * n5);
+		instance.color(n3 * n5, n3 * n5, n3 * n5);
 		this.d(gs, -0.5, -0.5, -0.5, gs.getBlockTextureFromSide(3));
 		n5 = gs.getBlockBrightness(fe, integer3 - 1, integer4, integer5);
 		if (n5 < blockBrightness) {
 			n5 = blockBrightness;
 		}
-		instance.setColorOpaque_F(n4 * n5, n4 * n5, n4 * n5);
+		instance.color(n4 * n5, n4 * n5, n4 * n5);
 		this.e(gs, -0.5, -0.5, -0.5, gs.getBlockTextureFromSide(4));
 		n5 = gs.getBlockBrightness(fe, integer3 + 1, integer4, integer5);
 		if (n5 < blockBrightness) {
 			n5 = blockBrightness;
 		}
-		instance.setColorOpaque_F(n4 * n5, n4 * n5, n4 * n5);
+		instance.color(n4 * n5, n4 * n5, n4 * n5);
 		this.f(gs, -0.5, -0.5, -0.5, gs.getBlockTextureFromSide(5));
 		instance.draw();
 	}
@@ -817,7 +817,7 @@ public class RenderBlocks {
 			if (Block.lightValue[gs.blockID] > 0) {
 				n17 = 1.0f;
 			}
-			instance.setColorOpaque_F(n5 * n17, n9 * n17, n13 * n17);
+			instance.color(n5 * n17, n9 * n17, n13 * n17);
 			this.a(gs, (double) integer2, integer3, integer4, gs.getBlockTextureGeneric(this.a, integer2, integer3, integer4, 0));
 			b = true;
 		}
@@ -829,7 +829,7 @@ public class RenderBlocks {
 			if (Block.lightValue[gs.blockID] > 0) {
 				n17 = 1.0f;
 			}
-			instance.setColorOpaque_F(n6 * n17, n10 * n17, n14 * n17);
+			instance.color(n6 * n17, n10 * n17, n14 * n17);
 			this.b(gs, (double) integer2, integer3, integer4, gs.getBlockTextureGeneric(this.a, integer2, integer3, integer4, 1));
 			b = true;
 		}
@@ -841,7 +841,7 @@ public class RenderBlocks {
 			if (Block.lightValue[gs.blockID] > 0) {
 				n17 = 1.0f;
 			}
-			instance.setColorOpaque_F(n7 * n17, n11 * n17, n15 * n17);
+			instance.color(n7 * n17, n11 * n17, n15 * n17);
 			this.c(gs, integer2, integer3, integer4, gs.getBlockTextureGeneric(this.a, integer2, integer3, integer4, 2));
 			b = true;
 		}
@@ -853,7 +853,7 @@ public class RenderBlocks {
 			if (Block.lightValue[gs.blockID] > 0) {
 				n17 = 1.0f;
 			}
-			instance.setColorOpaque_F(n7 * n17, n11 * n17, n15 * n17);
+			instance.color(n7 * n17, n11 * n17, n15 * n17);
 			this.d(gs, integer2, integer3, integer4, gs.getBlockTextureGeneric(this.a, integer2, integer3, integer4, 3));
 			b = true;
 		}
@@ -865,7 +865,7 @@ public class RenderBlocks {
 			if (Block.lightValue[gs.blockID] > 0) {
 				n17 = 1.0f;
 			}
-			instance.setColorOpaque_F(n8 * n17, n12 * n17, n16 * n17);
+			instance.color(n8 * n17, n12 * n17, n16 * n17);
 			this.e(gs, integer2, integer3, integer4, gs.getBlockTextureGeneric(this.a, integer2, integer3, integer4, 4));
 			b = true;
 		}
@@ -877,7 +877,7 @@ public class RenderBlocks {
 			if (Block.lightValue[gs.blockID] > 0) {
 				n17 = 1.0f;
 			}
-			instance.setColorOpaque_F(n8 * n17, n12 * n17, n16 * n17);
+			instance.color(n8 * n17, n12 * n17, n16 * n17);
 			this.f(gs, integer2, integer3, integer4, gs.getBlockTextureGeneric(this.a, integer2, integer3, integer4, 5));
 			b = true;
 		}
@@ -971,7 +971,7 @@ public class RenderBlocks {
 		if (Block.lightValue[gs.blockID] > 0) {
 			n5 = 1.0f;
 		}
-		instance.setColorOpaque_F(n * n5, n * n5, n * n5);
+		instance.color(n * n5, n * n5, n * n5);
 		this.a(gs, (double) integer2, integer3, integer4, gs.getBlockTextureGeneric(this.a, integer2, integer3, integer4, 0));
 		b = true;
 		n5 = gs.getBlockBrightness(this.a, integer2, integer3 + 1, integer4);
@@ -981,7 +981,7 @@ public class RenderBlocks {
 		if (Block.lightValue[gs.blockID] > 0) {
 			n5 = 1.0f;
 		}
-		instance.setColorOpaque_F(n2 * n5, n2 * n5, n2 * n5);
+		instance.color(n2 * n5, n2 * n5, n2 * n5);
 		this.b(gs, (double) integer2, integer3, integer4, gs.getBlockTextureGeneric(this.a, integer2, integer3, integer4, 1));
 		b = true;
 		n5 = gs.getBlockBrightness(this.a, integer2, integer3, integer4 - 1);
@@ -991,7 +991,7 @@ public class RenderBlocks {
 		if (Block.lightValue[gs.blockID] > 0) {
 			n5 = 1.0f;
 		}
-		instance.setColorOpaque_F(n3 * n5, n3 * n5, n3 * n5);
+		instance.color(n3 * n5, n3 * n5, n3 * n5);
 		int n6 = gs.getBlockTextureGeneric(this.a, integer2, integer3, integer4, 2);
 		if (n6 < 0) {
 			this.c = true;
@@ -1007,7 +1007,7 @@ public class RenderBlocks {
 		if (Block.lightValue[gs.blockID] > 0) {
 			n5 = 1.0f;
 		}
-		instance.setColorOpaque_F(n3 * n5, n3 * n5, n3 * n5);
+		instance.color(n3 * n5, n3 * n5, n3 * n5);
 		n6 = gs.getBlockTextureGeneric(this.a, integer2, integer3, integer4, 3);
 		if (n6 < 0) {
 			this.c = true;
@@ -1023,7 +1023,7 @@ public class RenderBlocks {
 		if (Block.lightValue[gs.blockID] > 0) {
 			n5 = 1.0f;
 		}
-		instance.setColorOpaque_F(n4 * n5, n4 * n5, n4 * n5);
+		instance.color(n4 * n5, n4 * n5, n4 * n5);
 		n6 = gs.getBlockTextureGeneric(this.a, integer2, integer3, integer4, 4);
 		if (n6 < 0) {
 			this.c = true;
@@ -1039,7 +1039,7 @@ public class RenderBlocks {
 		if (Block.lightValue[gs.blockID] > 0) {
 			n5 = 1.0f;
 		}
-		instance.setColorOpaque_F(n4 * n5, n4 * n5, n4 * n5);
+		instance.color(n4 * n5, n4 * n5, n4 * n5);
 		n6 = gs.getBlockTextureGeneric(this.a, integer2, integer3, integer4, 5);
 		if (n6 < 0) {
 			this.c = true;
@@ -1258,43 +1258,43 @@ public class RenderBlocks {
 		if (renderType == 0) {
 			GL11.glTranslatef(-0.5f, -0.5f, -0.5f);
 			instance.beginQuads();
-			instance.setNormal(0.0f, -1.0f, 0.0f);
+			instance.normal(0.0f, -1.0f, 0.0f);
 			this.a(gs, 0.0, 0.0, 0.0, gs.getBlockTextureFromSide(0));
 			instance.draw();
 			instance.beginQuads();
-			instance.setNormal(0.0f, 1.0f, 0.0f);
+			instance.normal(0.0f, 1.0f, 0.0f);
 			this.b(gs, 0.0, 0.0, 0.0, gs.getBlockTextureFromSide(1));
 			instance.draw();
 			instance.beginQuads();
-			instance.setNormal(0.0f, 0.0f, -1.0f);
+			instance.normal(0.0f, 0.0f, -1.0f);
 			this.c(gs, 0.0, 0.0, 0.0, gs.getBlockTextureFromSide(2));
 			instance.draw();
 			instance.beginQuads();
-			instance.setNormal(0.0f, 0.0f, 1.0f);
+			instance.normal(0.0f, 0.0f, 1.0f);
 			this.d(gs, 0.0, 0.0, 0.0, gs.getBlockTextureFromSide(3));
 			instance.draw();
 			instance.beginQuads();
-			instance.setNormal(-1.0f, 0.0f, 0.0f);
+			instance.normal(-1.0f, 0.0f, 0.0f);
 			this.e(gs, 0.0, 0.0, 0.0, gs.getBlockTextureFromSide(4));
 			instance.draw();
 			instance.beginQuads();
-			instance.setNormal(1.0f, 0.0f, 0.0f);
+			instance.normal(1.0f, 0.0f, 0.0f);
 			this.f(gs, 0.0, 0.0, 0.0, gs.getBlockTextureFromSide(5));
 			instance.draw();
 			GL11.glTranslatef(0.5f, 0.5f, 0.5f);
 		} else if (renderType == 1) {
 			instance.beginQuads();
-			instance.setNormal(0.0f, -1.0f, 0.0f);
+			instance.normal(0.0f, -1.0f, 0.0f);
 			this.a(gs, n, -0.5, -0.5, -0.5);
 			instance.draw();
 		} else if (renderType == 6) {
 			instance.beginQuads();
-			instance.setNormal(0.0f, -1.0f, 0.0f);
+			instance.normal(0.0f, -1.0f, 0.0f);
 			this.b(gs, n, -0.5, -0.5, -0.5);
 			instance.draw();
 		} else if (renderType == 2) {
 			instance.beginQuads();
-			instance.setNormal(0.0f, -1.0f, 0.0f);
+			instance.normal(0.0f, -1.0f, 0.0f);
 			this.a(gs, -0.5, -0.5, -0.5, 0.0, 0.0);
 			instance.draw();
 		} else if (renderType != 3) {

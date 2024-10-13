@@ -98,7 +98,7 @@ public class LoadingScreenRenderer implements IProgressUpdate {
 			GL11.glBindTexture(3553, this.mc.renderer.loadTexture("/assets/dirt.png"));
 			final float n = 32.0f;
 			instance.beginQuads();
-			instance.setColorOpaque_I(4210752);
+			instance.color(4210752);
 			instance.vertexUV(0.0, scaledHeight, 0.0, 0.0, scaledHeight / n);
 			instance.vertexUV(scaledWidth, scaledHeight, 0.0, scaledWidth / n, scaledHeight / n);
 			instance.vertexUV(scaledWidth, 0.0, 0.0, scaledWidth / n, 0.0);
@@ -111,12 +111,12 @@ public class LoadingScreenRenderer implements IProgressUpdate {
 				final int n5 = scaledHeight / 2 + 16;
 				GL11.glDisable(3553);
 				instance.beginQuads();
-				instance.setColorOpaque_I(8421504);
+				instance.color(8421504);
 				instance.vertex(n4, n5, 0.0);
 				instance.vertex(n4, n5 + n3, 0.0);
 				instance.vertex(n4 + n2, n5 + n3, 0.0);
 				instance.vertex(n4 + n2, n5, 0.0);
-				instance.setColorOpaque_I(8454016);
+				instance.color(8454016);
 				instance.vertex(n4, n5, 0.0);
 				instance.vertex(n4, n5 + n3, 0.0);
 				instance.vertex(n4 + integer, n5 + n3, 0.0);
@@ -124,8 +124,8 @@ public class LoadingScreenRenderer implements IProgressUpdate {
 				instance.draw();
 				GL11.glEnable(3553);
 			}
-			this.mc.font.drawStringWithShadow2(this.currentlyDisplayedText, (scaledWidth - this.mc.font.getStringWidth(this.currentlyDisplayedText)) / 2, scaledHeight / 2 - 4 - 16, 16777215);
-			this.mc.font.drawStringWithShadow2(this.field_1004_a, (scaledWidth - this.mc.font.getStringWidth(this.field_1004_a)) / 2, scaledHeight / 2 - 4 + 8, 16777215);
+			this.mc.font.drawShadow(this.currentlyDisplayedText, (scaledWidth - this.mc.font.width(this.currentlyDisplayedText)) / 2, scaledHeight / 2 - 4 - 16, 16777215);
+			this.mc.font.drawShadow(this.field_1004_a, (scaledWidth - this.mc.font.width(this.field_1004_a)) / 2, scaledHeight / 2 - 4 + 8, 16777215);
 			glfwSwapBuffers(this.mc.window);
 			try {
 				Thread.yield();
