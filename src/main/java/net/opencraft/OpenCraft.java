@@ -2,6 +2,7 @@ package net.opencraft;
 
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL43.*;
 
 import java.io.File;
 
@@ -9,8 +10,7 @@ import javax.annotation.Nonnull;
 
 import org.lwjgl.glfw.GLFWFramebufferSizeCallback;
 import org.lwjgl.glfw.GLFWWindowFocusCallback;
-import org.lwjgl.opengl.GL;
-import org.lwjgl.opengl.GLUtil;
+import org.lwjgl.opengl.*;
 
 import net.opencraft.blocks.Block;
 import net.opencraft.blocks.SandBlock;
@@ -199,6 +199,7 @@ public class OpenCraft implements Runnable {
 		glClearDepth(1.0);
 		glEnable(2929);
 		glDepthFunc(515);
+		glDisable(GL_DEBUG_OUTPUT);
 		glEnable(3008);
 		glAlphaFunc(516, 0.1f);
 		glCullFace(1029);
