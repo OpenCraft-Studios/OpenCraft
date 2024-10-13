@@ -3,6 +3,7 @@ package net.opencraft;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL43.*;
+import static org.lwjgl.system.MemoryUtil.*;
 
 import java.io.File;
 
@@ -155,10 +156,10 @@ public class OpenCraft implements Runnable {
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
 		glfwWindowHint(GLFW_DEPTH_BITS, 24); // Request 24 bits rendering
-		window = glfwCreateWindow(width, height, Main.TITLE, 0, 0);
-		if (window == 0) {
-			throw new RuntimeException("Failed to create the GLFW window");
-		}
+		this.window = glfwCreateWindow(width, height, Main.TITLE, NULL, NULL);
+		if (window == NULL)
+			throw new IllegalStateException("Failed to create the window!");
+		
 		glfwMakeContextCurrent(window);
 		if (GL.createCapabilities() == null)
 			throw new RuntimeException("Failed to create OpenGL capabilities");
