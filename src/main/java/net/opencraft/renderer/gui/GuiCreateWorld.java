@@ -1,12 +1,14 @@
 
 package net.opencraft.renderer.gui;
 
+import static net.opencraft.OpenCraft.*;
+
+import java.io.File;
+
 import net.opencraft.OpenCraft;
 import net.opencraft.nbt.NBTTagCompound;
 import net.opencraft.renderer.Tessellator;
 import net.opencraft.world.World;
-
-import java.io.File;
 
 public class GuiCreateWorld extends GuiScreen {
 
@@ -74,9 +76,9 @@ public class GuiCreateWorld extends GuiScreen {
 			}
 			this.actionPerformed(maximumWorldNumber + 1);
 		} else if (iq.buttonId == -5) {
-			this.id.displayGuiScreen(new GuiDeleteWorld(this));
+			oc.displayGuiScreen(new GuiDeleteWorld(this));
 		} else if (iq.buttonId == -6) {
-			this.id.displayGuiScreen(this.parentGuiScreen);
+			oc.displayGuiScreen(this.parentGuiScreen);
 		}
 
 		if (iq.buttonId >= 0) {
@@ -85,13 +87,13 @@ public class GuiCreateWorld extends GuiScreen {
 	}
 
 	public void actionPerformed(final int integer) {
-		this.id.displayGuiScreen(null);
+		oc.displayGuiScreen(null);
 		if (this.createClicked) {
 			return;
 		}
 		this.createClicked = true;
-		this.id.startWorld(new StringBuilder().append("World").append(integer).toString());
-		this.id.displayGuiScreen(null);
+		oc.startWorld(new StringBuilder().append("World").append(integer).toString());
+		oc.displayGuiScreen(null);
 	}
 
 	@Override

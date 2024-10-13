@@ -1,12 +1,8 @@
 
 package net.opencraft.renderer.gui;
 
+import static net.opencraft.OpenCraft.*;
 import static org.joml.Math.*;
-
-import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
 
 import org.lwjgl.opengl.GL11;
 
@@ -52,19 +48,19 @@ public class GuiMainMenu extends GuiScreen {
 	protected void actionPerformed(GuiButton button) {
 		switch (button.buttonId) {
 			case 0:
-				this.id.displayGuiScreen(new GuiOptions(this, this.id.options));
+				oc.displayGuiScreen(new GuiOptions(this, oc.options));
 				break;
 
 			case 1:
-				this.id.displayGuiScreen(new GuiCreateWorld(this));
+				oc.displayGuiScreen(new GuiCreateWorld(this));
 				break;
 
 			case 2:
-				this.id.displayGuiScreen(new GuiMultiplayer(this));
+				oc.displayGuiScreen(new GuiMultiplayer(this));
 				break;
 
 			case 3:
-				this.id.shutdown();
+				oc.shutdown();
 				break;
 		}
 	}
@@ -74,7 +70,7 @@ public class GuiMainMenu extends GuiScreen {
 		this.panorama.render(partialTicks);
 		//this.drawDefaultBackground();
 		final Tessellator instance = Tessellator.instance;
-		GL11.glBindTexture(3553, this.id.renderer.loadTexture("/assets/gui/logo.png"));
+		GL11.glBindTexture(3553, oc.renderer.loadTexture("/assets/gui/logo.png"));
 		final int integer3 = 256;
 		final int integer4 = 49;
 		GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
@@ -98,8 +94,8 @@ public class GuiMainMenu extends GuiScreen {
 		this.drawString(this.fontRenderer, string2, this.width - this.fontRenderer.getStringWidth(string2) - 2, 12, 16777215);
 		super.drawScreen(mouseX, mouseY, partialTicks);
 
-		id.sndManager.currentMusicTheme = "menu";
-		id.sndManager.playRandomMusicIfReady();
+		oc.sndManager.currentMusicTheme = "menu";
+		oc.sndManager.playRandomMusicIfReady();
 	}
 
 }

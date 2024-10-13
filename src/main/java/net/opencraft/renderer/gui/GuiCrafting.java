@@ -1,15 +1,13 @@
 
 package net.opencraft.renderer.gui;
 
-import net.opencraft.inventory.IInventory;
-import net.opencraft.inventory.InventoryCraftResult;
-import net.opencraft.inventory.InventoryCrafting;
-import net.opencraft.inventory.InventoryPlayer;
-import net.opencraft.inventory.Slot;
-import net.opencraft.inventory.SlotCrafting;
+import static net.opencraft.OpenCraft.*;
+
+import org.lwjgl.opengl.GL11;
+
+import net.opencraft.inventory.*;
 import net.opencraft.inventory.recipe.CraftingManager;
 import net.opencraft.item.ItemStack;
-import org.lwjgl.opengl.GL11;
 
 public class GuiCrafting extends GuiContainer {
 
@@ -41,7 +39,7 @@ public class GuiCrafting extends GuiContainer {
 		for ( int i = 0; i < 9; ++i ) {
 			final ItemStack stackInSlot = this.inventoryCrafting.getStackInSlot(i);
 			if (stackInSlot != null) {
-				this.id.player.dropPlayerItem(stackInSlot);
+				oc.player.dropPlayerItem(stackInSlot);
 			}
 		}
 	}
@@ -71,9 +69,9 @@ public class GuiCrafting extends GuiContainer {
 
 	@Override
 	protected void drawGuiContainerBackgroundLayer(final float float1) {
-		final int texture = this.id.renderer.loadTexture("/assets/gui/crafting.png");
+		final int texture = oc.renderer.loadTexture("/assets/gui/crafting.png");
 		GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
-		this.id.renderer.bindTexture(texture);
+		oc.renderer.bindTexture(texture);
 		this.drawTexturedModalRect((this.width - this.xSize) / 2, (this.height - this.ySize) / 2, 0, 0, this.xSize, this.ySize);
 	}
 

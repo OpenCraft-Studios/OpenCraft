@@ -1,5 +1,7 @@
 package net.opencraft.renderer.gui;
 
+import static net.opencraft.OpenCraft.*;
+
 import net.opencraft.OpenCraft;
 import net.opencraft.world.World;
 
@@ -33,7 +35,7 @@ public class GuiMultiplayer extends GuiScreen {
 			return;
 		}
 		if (iq.buttonId == -6) {
-			this.id.displayGuiScreen(this.parentGuiScreen);
+			oc.displayGuiScreen(this.parentGuiScreen);
 		}
 	}
 
