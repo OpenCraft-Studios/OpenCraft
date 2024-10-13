@@ -1,4 +1,4 @@
-package net.opencraft.tests;
+package net.opencraft.jobs;
 
 import static net.opencraft.OpenCraft.*;
 

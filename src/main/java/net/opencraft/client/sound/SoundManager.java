@@ -1,6 +1,6 @@
 package net.opencraft.client.sound;
 
-import static net.opencraft.tests.DownloadResourcesJob.SOUNDS_PATH;
+import static net.opencraft.jobs.DownloadResourcesJob.*;
 import static org.joml.Math.*;
 
 import net.opencraft.client.config.GameSettings;
