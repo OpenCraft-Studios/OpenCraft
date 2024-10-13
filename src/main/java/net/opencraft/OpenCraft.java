@@ -70,8 +70,6 @@ public class OpenCraft implements Runnable, GLFWFramebufferSizeCallbackI {
 	public EntityRenderer entityRenderer;
 	private int ticksRan;
 	private int leftClickCounter;
-	private int tempDisplayWidth;
-	private int tempDisplayHeight;
 	public String objectMouseOverString;
 	public int rightClickDelayTimer;
 	public GuiIngame ingameGUI;
@@ -133,9 +131,7 @@ public class OpenCraft implements Runnable, GLFWFramebufferSizeCallbackI {
 		this.mouseTicksRan = 0;
 		this.isRaining = false;
 		this.systemTime = System.currentTimeMillis();
-		this.tempDisplayWidth = width;
-		this.tempDisplayHeight = height;
-		(new SleepingForeverThread("Timer hack thread")).start();
+		// why? (new SleepingForeverThread("Timer hack thread")).start();
 		this.width = width;
 		this.height = height;
 	}
