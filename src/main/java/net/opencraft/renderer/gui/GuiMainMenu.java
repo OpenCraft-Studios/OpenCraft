@@ -7,46 +7,27 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.lwjgl.opengl.GL11;
 
-import com.google.common.collect.Lists;
-
 import net.opencraft.client.Main;
 import net.opencraft.renderer.*;
+import net.opencraft.util.Splashes;
 
 public class GuiMainMenu extends GuiScreen {
 
 	private float updateCounter;
 	
-	private List<String> splashes;
+	private Splashes splashes = new Splashes();
 	
 	private String currentSplash;
 	private final RenderSkybox panorama = new RenderSkybox(new RenderSkyboxCube("textures/gui/title/background/panorama"));
 
 	public GuiMainMenu() {
 		this.updateCounter = 0.0f;
-		// TODO: Arrays are not the best always...
-		loadSplashes();
-		
-		
-		selectRandomSplash();
-	}
 
-	private void selectRandomSplash() {
-		this.currentSplash = splashes.get((int) (Math.random() * splashes.size()));
-	}
-
-	private void loadSplashes() {
-		try (BufferedReader reader = new BufferedReader(new InputStreamReader(GuiMainMenu.class.getResourceAsStream("/assets/texts/splashes.txt")))) {
-		    List<String> lines = reader.lines().collect(Collectors.toList());
-		    splashes = new ArrayList<>(lines);
-		} catch (IOException e) {
-		    System.err.println("Failed to load splashes!");
-		    splashes = List.of("missigno");
-		}
-		
+		splashes.load(getClass().getResourceAsStream("/assets/texts/splashes.txt"));
+		currentSplash = splashes.pickRandom();
 	}
 
 	@Override
