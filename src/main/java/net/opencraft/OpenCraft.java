@@ -295,17 +295,13 @@ public class OpenCraft implements Runnable, GLFWFramebufferSizeCallbackI {
 		try {
 			System.out.println("Stopping!");
 			changeWorld1(null);
-			try {
-				GLAllocation.deleteTexturesAndDisplayLists();
-			} catch(Exception ex2) {
-			}
+			GLAllocation.deleteTexturesAndDisplayLists();
 			sndManager.shutdown();
-			// Mouse.destroy();
-			// Keyboard.destroy();
 		} finally {
 			glfwDestroyWindow(window);
+			glfwTerminate();
 		}
-		Thread.currentThread().interrupt();
+		
 		System.gc();
 		System.exit(0);
 	}
