@@ -14,6 +14,7 @@ import java.util.stream.Collectors;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
+import static net.opencraft.OpenCraft.*;
 import static org.lwjgl.glfw.GLFW.*;
 
 import org.lwjgl.glfw.GLFWErrorCallback;
@@ -63,10 +64,9 @@ public class Main {
 
 		glfwSetErrorCallback(errorCallback = GLFWErrorCallback.createPrint(System.err));
 
-		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-		OpenCraft oc = new OpenCraft((int) (screenSize.width * INITIAL_WINDOW_SIZE_FACTOR), (int) (screenSize.height * INITIAL_WINDOW_SIZE_FACTOR));
-		System.out.println("Running on thread " + Thread.currentThread().threadId() + " / " + Thread.currentThread().getName());
+		oc = new OpenCraft(854, 480);
 		oc.run();
+		System.out.println("Running on thread " + Thread.currentThread().threadId() + " / " + Thread.currentThread().getName());
 	}
 
 	private static void checkMemoryCapacity() {
