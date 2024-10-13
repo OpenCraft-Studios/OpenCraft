@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 
 import javax.annotation.Nonnull;
 
-public class Splashes {
+public final class Splashes {
 
 	@Nonnull
 	private List<String> splashes = List.of("missigno");

@@ -246,13 +246,13 @@ public class Renderer {
 		if (skinHolder != null) {
 			--skinHolder.useCount;
 			if (skinHolder.useCount == 0) {
-				if (skinHolder.textureID >= 0) {
+				if (skinHolder.textureID >= 0)
 					this.deleteTexture(skinHolder.textureID);
-				}
+				
 				this.skinURLToTextureHolder.remove(string);
-			} else {
-				// TODO: chat bother System.out.println("SkinHolder not removed, use count: " + skinHolder.useCount);
-			}
+			}/* else {
+				chat bother System.out.println("SkinHolder not removed, use count: " + skinHolder.useCount);
+			}*/
 		}
 	}
 

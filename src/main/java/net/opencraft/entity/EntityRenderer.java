@@ -286,12 +286,9 @@ public class EntityRenderer {
 			if (scaledHeight != 0 || this.entityRendererInt1 != 0) {
 				//                System.out.println(new StringBuilder().append("xxo: ").append(entityRendererInt1).append(", ").append(this.entityRendererInt1).append(": ").append(this.entityRendererInt1).append(", xo: ").append(n).toString());
 			}
-			if (this.entityRendererInt1 != 0) {
-				this.entityRendererInt1 = 0;
-			}
-			if (this.entityRendererInt2 != 0) {
-				this.entityRendererInt2 = 0;
-			}
+			this.entityRendererInt1 = 0;
+			this.entityRendererInt2 = 0;
+			
 			if (scaledHeight != 0) {
 				this.entityRendererInt1 = scaledHeight;
 			}

@@ -2,7 +2,10 @@
 package net.opencraft.renderer.gui;
 
 import static net.opencraft.OpenCraft.*;
+import static net.opencraft.SharedConstants.*;
 import static org.joml.Math.*;
+
+import java.net.URI;
 
 import org.lwjgl.opengl.GL11;
 
@@ -22,7 +25,7 @@ public class GuiMainMenu extends GuiScreen {
 	public GuiMainMenu() {
 		this.updateCounter = 0.0f;
 
-		splashes.load(getClass().getResourceAsStream("/assets/texts/splashes.txt"));
+		splashes.load(URI.create(SPLASHES_URL));
 		currentSplash = splashes.pickRandom();
 	}
 
