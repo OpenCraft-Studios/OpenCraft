@@ -6,12 +6,14 @@ import static org.lwjgl.opengl.GL43.*;
 import static org.lwjgl.system.MemoryUtil.*;
 
 import java.io.File;
+import java.util.Objects;
 
 import javax.annotation.Nonnull;
 
 import org.lwjgl.glfw.GLFWFramebufferSizeCallback;
 import org.lwjgl.glfw.GLFWWindowFocusCallback;
-import org.lwjgl.opengl.*;
+import org.lwjgl.opengl.GL;
+import org.lwjgl.opengl.GLUtil;
 
 import net.opencraft.blocks.Block;
 import net.opencraft.blocks.SandBlock;
@@ -164,16 +166,14 @@ public class OpenCraft implements Runnable {
 			throw new IllegalStateException("Failed to create the window!");
 		
 		glfwMakeContextCurrent(window);
-		if (GL.createCapabilities() == null)
-			throw new RuntimeException("Failed to create OpenGL capabilities");
+		Objects.requireNonNull(GL.createCapabilities(), "Failed to create OpenGL capabilities");
 		glfwShowWindow(window);
 
 		glfwSetFramebufferSizeCallback(window, frameBufferResizeCallback = new GLFWFramebufferSizeCallback() {
 
 			@Override
 			public void invoke(long window, int width, int height) {
-				width = Math.max(1, width);
-				height = Math.max(1, height);
+				
 				resize(width, height);
 			}
 
@@ -558,18 +558,13 @@ public class OpenCraft implements Runnable {
 	}
 
 	private void resize(int width, int height) {
-		if (width <= 0) {
-			width = 1;
-		}
-		if (height <= 0) {
-			height = 1;
-		}
-		this.width = width;
-		this.height = height;
-		if (currentScreen != null) {
-			final ScaledResolution scaledResolution = new ScaledResolution(width, height);
-			currentScreen.setWorldAndResolution(oc, scaledResolution.getScaledWidth(), scaledResolution.getScaledHeight());
-		}
+		this.width = Math.max(1, width);
+		this.height = Math.max(1, height);
+		if (currentScreen == null)
+			return;
+		
+		final ScaledResolution scaledResolution = new ScaledResolution(width, height);
+		currentScreen.setWorldAndResolution(oc, scaledResolution.getScaledWidth(), scaledResolution.getScaledHeight());
 	}
 
 	private void clickMiddleMouseButton() {
