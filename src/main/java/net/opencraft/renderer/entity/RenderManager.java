@@ -16,7 +16,7 @@ import net.opencraft.entity.EntityLiving;
 import net.opencraft.entity.EntityMinecart;
 import net.opencraft.entity.EntityPainting;
 import net.opencraft.entity.EntityPig;
-import net.opencraft.entity.EntityPlayer;
+import net.opencraft.entity.Player;
 import net.opencraft.entity.EntitySheep;
 import net.opencraft.entity.EntitySkeleton;
 import net.opencraft.entity.EntitySpider;
@@ -36,7 +36,7 @@ public class RenderManager {
 	public static double renderPosZ;
 	public Renderer renderEngine;
 	public World worldObj;
-	public EntityPlayer livingPlayer;
+	public Player livingPlayer;
 	public float playerViewY;
 	public float playerViewX;
 	public GameSettings options;
@@ -51,7 +51,7 @@ public class RenderManager {
 		this.entityRenderMap.put(EntityCreeper.class, new RenderCreeper());
 		this.entityRenderMap.put(EntitySkeleton.class, new RenderLiving(new ModelSkeleton(), 0.5f));
 		this.entityRenderMap.put(EntityZombie.class, new RenderLiving(new ModelZombie(), 0.5f));
-		this.entityRenderMap.put(EntityPlayer.class, new RenderPlayer());
+		this.entityRenderMap.put(Player.class, new RenderPlayer());
 		this.entityRenderMap.put(EntityGiant.class, new RenderGiantZombie(new ModelZombie(), 0.5f, 6.0f));
 		this.entityRenderMap.put(EntityLiving.class, new RenderLiving(new ModelBiped(), 0.5f));
 		this.entityRenderMap.put(Entity.class, new RenderEntity());
@@ -79,7 +79,7 @@ public class RenderManager {
 		return this.getEntityClassRenderObject(eq2.getClass());
 	}
 
-	public void cacheActiveRenderInfo(World fe2, Renderer id2, FontRenderer ej2, EntityPlayer gi2, GameSettings ja2, float f2) {
+	public void cacheActiveRenderInfo(World fe2, Renderer id2, FontRenderer ej2, Player gi2, GameSettings ja2, float f2) {
 		this.worldObj = fe2;
 		this.renderEngine = id2;
 		this.options = ja2;

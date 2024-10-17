@@ -56,7 +56,7 @@ public class ChunkCache implements IBlockAccess {
 		}
 		if (boolean4) {
 			final int blockId = this.getBlockId(xCoord, yCoord, zCoord);
-			if (blockId == Block.slabSingle.blockID || blockId == Block.tilledField.blockID) {
+			if (blockId == Block.slabSingle.id || blockId == Block.tilledField.id) {
 				int lightValueExt = this.getLightValueExt(xCoord, yCoord + 1, zCoord, false);
 				final int lightValueExt2 = this.getLightValueExt(xCoord + 1, yCoord, zCoord, false);
 				final int lightValueExt3 = this.getLightValueExt(xCoord - 1, yCoord, zCoord, false);
@@ -107,11 +107,11 @@ public class ChunkCache implements IBlockAccess {
 		if (blockId == 0) {
 			return Material.AIR;
 		}
-		return Block.blocksList[blockId].blockMaterial;
+		return Block.BLOCKS[blockId].blockMaterial;
 	}
 
 	public boolean isBlockNormalCube(final int xCoord, final int yCoord, final int zCoord) {
-		final Block block = Block.blocksList[this.getBlockId(xCoord, yCoord, zCoord)];
+		final Block block = Block.BLOCKS[this.getBlockId(xCoord, yCoord, zCoord)];
 		return block != null && block.isOpaqueCube();
 	}
 

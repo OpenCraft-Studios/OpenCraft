@@ -1,7 +1,7 @@
 
 package net.opencraft.world.chunk;
 
-import net.opencraft.renderer.gui.IProgressUpdate;
+import net.opencraft.renderer.gui.IProgressListener;
 import net.opencraft.world.IChunkLoader;
 import net.opencraft.world.IChunkProvider;
 import net.opencraft.world.World;
@@ -51,7 +51,7 @@ public class ChunkProviderClient implements IChunkProvider {
 	public void populate(final IChunkProvider ch, final int integer2, final int integer3) {
 	}
 
-	public boolean saveChunks(final boolean boolean1, final IProgressUpdate jd) {
+	public boolean saveChunks(final boolean boolean1, final IProgressListener jd) {
 		return true;
 	}
 

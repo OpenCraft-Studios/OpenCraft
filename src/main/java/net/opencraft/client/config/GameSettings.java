@@ -20,12 +20,12 @@ public class GameSettings {
 	public BooleanOption sound = new BooleanOption(true);
 
 	public BooleanOption invertMouse = new BooleanOption(false);
-	public BooleanOption showDebugInfo = new BooleanOption(false);
+	public BooleanOption rawMouseInput = new BooleanOption(false);
 
+	public BooleanOption showDebugInfo = new BooleanOption(false);
 	public BooleanOption viewBobbing = new BooleanOption(true);
 	public BooleanOption anaglyph = new BooleanOption(false);
-
-	public boolean limitFramerate;
+	public BooleanOption limitFramerate = new BooleanOption(false);
 
 	// TODO: Create GraphicsConfiguration enum
 	public boolean fancyGraphics;
@@ -45,33 +45,24 @@ public class GameSettings {
 	}
 
 	public enum PlayerInput {
-		FORWARD,
-		BACKWARD,
-		LEFT,
-		RIGHT,
-		JUMP,
-		INVENTORY,
-		DROP,
-		CHAT,
-		TOGGLE_FOG
+		FORWARD, BACKWARD, LEFT, RIGHT, JUMP, INVENTORY, DROP, CHAT, TOGGLE_FOG
 	}
 
 	public GameSettings(final File file) {
-		setupKeybinds();
+		registerKeybinds();
 
-		this.renderDistance = 0;
-		this.limitFramerate = false;
-		this.fancyGraphics = true;
-		this.numberOfOptions = 10;
-		this.difficulty = 2;
-		this.thirdPersonView = false;
-		this.fov = 100.0F;
-		this.minimumBrightness = 0.0F;
-		this.optionsFile = new File(file, "options.txt");
+		renderDistance = 0;
+		fancyGraphics = true;
+		numberOfOptions = 10;
+		difficulty = 2;
+		thirdPersonView = false;
+		fov = 70F;
+		minimumBrightness = 0.0F;
+		optionsFile = new File(file, "options.txt");
 		this.loadOptions();
 	}
 
-	private void setupKeybinds() {
+	private void registerKeybinds() {
 		// Keybinds
 		keyBindings.put(PlayerInput.FORWARD, GLFW_KEY_W);
 		keyBindings.put(PlayerInput.BACKWARD, GLFW_KEY_S);
@@ -97,149 +88,166 @@ public class GameSettings {
 	}
 
 	public void setKeyBinding(PlayerInput input, final int keyCode) {
-		this.keyBindings.forcePut(input, keyCode);
-		this.saveOptions();
+		keyBindings.forcePut(input, keyCode);
 	}
 
-	public void setOptionFloatValue(float key, float value) {
-		switch((int) key) {
+	public void setOptionFloatValue(int key, float value) {
+		switch (key) {
 			case 0:
-				this.music.toggle();
+				music.toggle();
 				oc.sndManager.onSoundOptionsChanged();
 				break;
 
 			case 1:
-				this.sound.toggle();
+				sound.toggle();
 				oc.sndManager.onSoundOptionsChanged();
 				break;
 
 			case 2:
-				this.invertMouse.toggle();
+				invertMouse.toggle();
 				break;
 
 			case 3:
-				this.showDebugInfo.toggle();
+				showDebugInfo.toggle();
 				break;
 
 			case 4:
-				this.renderDistance = (this.renderDistance + (int) value & 0x3);
+				renderDistance = renderDistance + (int) value & 0x3;
 				break;
 
 			case 5:
-				this.viewBobbing.toggle();
+				viewBobbing.toggle();
 				break;
 
 			case 6:
-				this.anaglyph.toggle();
+				anaglyph.toggle();
 				oc.renderer.refreshTextures();
 				break;
 
 			case 7:
-				this.limitFramerate = !this.limitFramerate;
+				limitFramerate.toggle();
 				break;
 
 			case 8:
-				this.difficulty = (this.difficulty + (int) value & 0x3);
+				difficulty = difficulty + (int) value & 0x3;
 				break;
 
 			case 9:
-				this.fancyGraphics = !this.fancyGraphics;
+				fancyGraphics = !fancyGraphics;
 				oc.renderGlobal.fancyGraphics();
 				break;
 
 			case 10:
-				this.fov = value;
+				fov = value;
 				break;
 
 			case 11:
-				this.minimumBrightness = value;
+				minimumBrightness = value;
 				if (oc.world == null)
 					break;
 
-				for ( int i = 0; i < oc.world.worldAccesses.size(); ++i ) {
+				for (int i = 0; i < oc.world.worldAccesses.size(); ++i)
 					((IWorldAccess) oc.world.worldAccesses.get(i)).updateAllRenderers();
-				}
 
 				break;
 		}
-		saveOptions();
 	}
 
 	public String getKeyBinding(final int integer) {
-		return switch(integer) {
+		return switch (integer) {
 			case 0 -> "Music: " + music.either("ON", "OFF");
 			case 1 -> "Sound: " + sound.either("ON", "OFF");
 			case 2 -> "Invert mouse: " + invertMouse.either("ON", "OFF");
 			case 3 -> "Show FPS: " + showDebugInfo.either("ON", "OFF");
-			case 4 -> "Render distance: " + GameSettings.RENDER_DISTANCES[this.renderDistance];
-			case 5 -> "View bobbing: " + this.viewBobbing.either("ON", "OFF");
-			case 6 -> "3d anaglyph: " + this.anaglyph.either("ON", "OFF");
-			case 7 -> "Limit framerate: " + (this.limitFramerate ? "ON" : "OFF");
-			case 8 -> "Difficulty: " + GameSettings.DIFFICULTIES[this.difficulty];
-			case 9 -> "Graphics: " + (this.fancyGraphics ? "FANCY" : "FAST");
-			case 101 -> "Test: " + this.fov;
+			case 4 -> "Render distance: " + GameSettings.RENDER_DISTANCES[renderDistance];
+			case 5 -> "View bobbing: " + viewBobbing.either("ON", "OFF");
+			case 6 -> "3d anaglyph: " + anaglyph.either("ON", "OFF");
+			case 7 -> "Limit framerate: " + limitFramerate.either("ON", "OFF");
+			case 8 -> "Difficulty: " + GameSettings.DIFFICULTIES[difficulty];
+			case 9 -> "Graphics: " + (fancyGraphics ? "FANCY" : "FAST");
+			case 101 -> "Test: " + fov;
 			default -> "";
 		};
 	}
 
 	public void loadOptions() {
-		if (!this.optionsFile.exists()) {
+		if (!optionsFile.exists())
 			return;
-		}
-		try(BufferedReader bufferedReader = new BufferedReader(new FileReader(this.optionsFile))) {
+		try (BufferedReader bufferedReader = new BufferedReader(new FileReader(optionsFile))) {
 			String line;
-			while((line = bufferedReader.readLine()) != null) {
+			while ((line = bufferedReader.readLine()) != null) {
 				final String[] tokens = line.split(":");
-				if (tokens[0].equals("music")) {
-					music.parse(tokens[1]);
+				String name = tokens[0];
+				String value = tokens[1];
+
+				switch (name) {
+					case "music":
+						music.parse(value);
+						break;
+
+					case "sound":
+						sound.parse(value);
+						break;
+
+					case "invertYMouse":
+						invertMouse.parse(value);
+						break;
+
+					case "showFrameRate":
+						showDebugInfo.parse(value);
+						break;
+
+					case "viewDistance":
+						renderDistance = Integer.parseInt(value);
+						break;
+
+					case "bobView":
+						viewBobbing.parse(value);
+						break;
+
+					case "anaglyph3d":
+						anaglyph.parse(value);
+						break;
+
+					case "limitFramerate":
+						limitFramerate.parse(value);
+						break;
+
+					case "difficulty":
+						difficulty = Integer.parseInt(value);
+						break;
+
+					case "fancyGraphics":
+						fancyGraphics = value.equals("true");
+						break;
+
+					case "FOV":
+						fov = Float.parseFloat(value);
+						break;
+
+					case "minimumBrightness":
+						minimumBrightness = Float.parseFloat(value);
+						break;
+
+					case "rawMouseInput":
+						rawMouseInput.parse(value);
+						if (rawMouseInput.get() && glfwRawMouseMotionSupported())
+							glfwSetInputMode(oc.window, GLFW_RAW_MOUSE_MOTION, GLFW_TRUE);
+						break;
 				}
-				if (tokens[0].equals("sound")) {
-					sound.parse(tokens[1]);
-				}
-				if (tokens[0].equals("invertYMouse")) {
-					invertMouse.parse(tokens[1]);
-				}
-				if (tokens[0].equals("showFrameRate")) {
-					showDebugInfo.parse(tokens[1]);
-				}
-				if (tokens[0].equals("viewDistance")) {
-					this.renderDistance = Integer.parseInt(tokens[1]);
-				}
-				if (tokens[0].equals("bobView")) {
-					this.viewBobbing.parse(tokens[1]);
-				}
-				if (tokens[0].equals("anaglyph3d")) {
-					this.anaglyph.parse(tokens[1]);
-				}
-				if (tokens[0].equals("limitFramerate")) {
-					this.limitFramerate = tokens[1].equals("true");
-				}
-				if (tokens[0].equals("difficulty")) {
-					this.difficulty = Integer.parseInt(tokens[1]);
-				}
-				if (tokens[0].equals("fancyGraphics")) {
-					this.fancyGraphics = tokens[1].equals("true");
-				}
-				if (tokens[0].equals("FOV")) {
-					this.fov = Float.parseFloat(tokens[1]);
-				}
-				if (tokens[0].equals("minimumBrightness")) {
-					this.minimumBrightness = Float.parseFloat(tokens[1]);
-				}
-				for ( PlayerInput input : PlayerInput.values() ) {
-					if (tokens[0].equals("key_" + input.name())) {
-						this.keyBindings.put(input, Integer.parseInt(tokens[1]));
-					}
-				}
+
+				for (PlayerInput input : PlayerInput.values())
+					if (name.equals("key_" + input.name()))
+						keyBindings.put(input, Integer.parseInt(value));
 			}
-		} catch(Exception ex) {
+		} catch (Exception ex) {
 			System.out.println("Failed to load options");
 			ex.printStackTrace();
 		}
 	}
 
 	public void saveOptions() {
-		try(PrintWriter s = new PrintWriter(new FileWriter(this.optionsFile))) {
+		try (PrintWriter s = new PrintWriter(new FileWriter(optionsFile))) {
 			s.println("music:" + music);
 			s.println("sound:" + sound);
 			s.println("invertYMouse:" + invertMouse);
@@ -251,12 +259,12 @@ public class GameSettings {
 			s.println("difficulty:" + difficulty);
 			s.println("fancyGraphics:" + fancyGraphics);
 			s.println("FOV:" + fov);
-			s.println("minimumBrightness:" + this.minimumBrightness);
-			for ( PlayerInput input : PlayerInput.values() ) {
+			s.println("minimumBrightness:" + minimumBrightness);
+			s.println("rawMouseInput:" + rawMouseInput);
+			for (PlayerInput input : PlayerInput.values())
 				s.println("key_" + input.name() + ":" + keyBindings.get(input));
-			}
-		} catch(Exception ex) {
-			System.out.println("Failed to save options");
+		} catch (Exception ex) {
+			System.err.println("Failed to save options");
 			ex.printStackTrace();
 		}
 	}

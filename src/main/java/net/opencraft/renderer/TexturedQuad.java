@@ -41,7 +41,7 @@ public class TexturedQuad {
 			final PositionTextureVertex positionTextureVertex = this.vertexPositions[i];
 			ag.vertexUV((float) positionTextureVertex.vec.x * float2, (float) positionTextureVertex.vec.y * float2, (float) positionTextureVertex.vec.z * float2, positionTextureVertex.texturePositionX, positionTextureVertex.texturePositionY);
 		}
-		ag.draw();
+		ag.render();
 	}
 
 }

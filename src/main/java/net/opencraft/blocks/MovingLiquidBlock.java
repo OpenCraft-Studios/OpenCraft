@@ -20,7 +20,7 @@ public class MovingLiquidBlock extends LiquidBlock {
 	}
 
 	private void updateFlow(final World world, final int xCoord, final int yCoord, final int zCoord) {
-		world.setBlockAndMetadata(xCoord, yCoord, zCoord, this.blockID + 1, world.getBlockMetadata(xCoord, yCoord, zCoord));
+		world.setBlockAndMetadata(xCoord, yCoord, zCoord, this.id + 1, world.getBlockMetadata(xCoord, yCoord, zCoord));
 		world.markBlocksDirty(xCoord, yCoord, zCoord, xCoord, yCoord, zCoord);
 	}
 
@@ -60,8 +60,8 @@ public class MovingLiquidBlock extends LiquidBlock {
 					world.setBlockWithNotify(xCoord, yCoord, zCoord, 0);
 				} else {
 					world.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, flowDecay);
-					world.scheduleBlockUpdate(xCoord, yCoord, zCoord, this.blockID);
-					world.notifyBlocksOfNeighborChange(xCoord, yCoord, zCoord, this.blockID);
+					world.scheduleBlockUpdate(xCoord, yCoord, zCoord, this.id);
+					world.notifyBlocksOfNeighborChange(xCoord, yCoord, zCoord, this.id);
 				}
 			} else if (b) {
 				this.updateFlow(world, xCoord, yCoord, zCoord);
@@ -71,9 +71,9 @@ public class MovingLiquidBlock extends LiquidBlock {
 		}
 		if (this.liquidCanDisplaceBlock(world, xCoord, yCoord - 1, zCoord)) {
 			if (flowDecay >= 8) {
-				world.setBlockAndMetadataWithNotify(xCoord, yCoord - 1, zCoord, this.blockID, flowDecay);
+				world.setBlockAndMetadataWithNotify(xCoord, yCoord - 1, zCoord, this.id, flowDecay);
 			} else {
-				world.setBlockAndMetadataWithNotify(xCoord, yCoord - 1, zCoord, this.blockID, flowDecay + 8);
+				world.setBlockAndMetadataWithNotify(xCoord, yCoord - 1, zCoord, this.id, flowDecay + 8);
 			}
 		} else if (flowDecay >= 0 && (flowDecay == 0 || this.blockBlocksFlow(world, xCoord, yCoord - 1, zCoord))) {
 			final boolean[] optimalFlowDirections = this.getOptimalFlowDirections(world, xCoord, yCoord, zCoord);
@@ -106,10 +106,10 @@ public class MovingLiquidBlock extends LiquidBlock {
 				if (this.blockMaterial == Material.LAVA) {
 					this.triggerLavaMixEffects(world, xCoord, yCoord, zCoord);
 				} else {
-					Block.blocksList[blockId].dropBlockAsItem(world, xCoord, yCoord, zCoord, world.getBlockMetadata(xCoord, yCoord, zCoord));
+					Block.BLOCKS[blockId].dropBlockAsItem(world, xCoord, yCoord, zCoord, world.getBlockMetadata(xCoord, yCoord, zCoord));
 				}
 			}
-			world.setBlockAndMetadataWithNotify(xCoord, yCoord, zCoord, this.blockID, metadataValue);
+			world.setBlockAndMetadataWithNotify(xCoord, yCoord, zCoord, this.id, metadataValue);
 		}
 	}
 
@@ -196,7 +196,7 @@ public class MovingLiquidBlock extends LiquidBlock {
 
 	private boolean blockBlocksFlow(final World world, final int xCoord, final int yCoord, final int zCoord) {
 		final int blockId = world.getBlockId(xCoord, yCoord, zCoord);
-		return blockId == Block.door.blockID || blockId == Block.signPost.blockID || blockId == Block.ladder.blockID || (blockId != 0 && Block.blocksList[blockId].blockMaterial.isSolid());
+		return blockId == Block.door.id || blockId == Block.signPost.id || blockId == Block.ladder.id || (blockId != 0 && Block.BLOCKS[blockId].blockMaterial.isSolid());
 	}
 
 	protected int getSmallestFlowDecay(final World world, final int xCoord, final int yCoord, final int zCoord, final int nya4) {
@@ -221,8 +221,8 @@ public class MovingLiquidBlock extends LiquidBlock {
 	@Override
 	public void onBlockAdded(final World world, final int xCoord, final int yCoord, final int zCoord) {
 		super.onBlockAdded(world, xCoord, yCoord, zCoord);
-		if (world.getBlockId(xCoord, yCoord, zCoord) == this.blockID) {
-			world.scheduleBlockUpdate(xCoord, yCoord, zCoord, this.blockID);
+		if (world.getBlockId(xCoord, yCoord, zCoord) == this.id) {
+			world.scheduleBlockUpdate(xCoord, yCoord, zCoord, this.id);
 		}
 	}
 

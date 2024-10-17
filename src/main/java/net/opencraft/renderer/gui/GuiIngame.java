@@ -178,7 +178,7 @@ public class GuiIngame extends GuiElement {
 		instance.vertexUV(integer2, integer3, -90.0, 1.0, 1.0);
 		instance.vertexUV(integer2, 0.0, -90.0, 1.0, 0.0);
 		instance.vertexUV(0.0, 0.0, -90.0, 0.0, 0.0);
-		instance.draw();
+		instance.render();
 		GL11.glDepthMask(true);
 		GL11.glEnable(2929);
 		GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);

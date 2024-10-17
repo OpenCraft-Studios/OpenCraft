@@ -15,7 +15,7 @@ import net.opencraft.tileentity.TileEntityFurnace;
 import net.opencraft.tileentity.TileEntitySign;
 import net.opencraft.world.World;
 
-public class EntityPlayerSP extends EntityPlayer {
+public class EntityPlayerSP extends Player {
 
 	public MovementInput movementInput;
 	private OpenCraft mc;

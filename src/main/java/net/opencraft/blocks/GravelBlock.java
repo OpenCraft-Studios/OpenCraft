@@ -15,7 +15,7 @@ public class GravelBlock extends SandBlock {
 		if (random.nextInt(10) == 0) {
 			return Item.flint.shiftedIndex;
 		}
-		return this.blockID;
+		return this.id;
 	}
 
 }

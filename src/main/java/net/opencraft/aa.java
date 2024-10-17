@@ -16,7 +16,7 @@ public class aa extends ck {
 
 	@Override
 	protected ChunkPosition a(final World fe, final int integer2, final int integer3) {
-		return new ChunkPosition(integer2 + fe.rand.nextInt(256) - 128, fe.rand.nextInt(fe.rand.nextInt(fe.rand.nextInt(112) + 8) + 8), integer3 + fe.rand.nextInt(256) - 128);
+		return new ChunkPosition(integer2 + fe.random.nextInt(256) - 128, fe.random.nextInt(fe.random.nextInt(fe.random.nextInt(112) + 8) + 8), integer3 + fe.random.nextInt(256) - 128);
 	}
 
 }

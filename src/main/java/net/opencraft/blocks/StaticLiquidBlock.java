@@ -14,7 +14,7 @@ public class StaticLiquidBlock extends LiquidBlock {
 	@Override
 	public void onNeighborBlockChange(final World world, final int xCoord, final int yCoord, final int zCoord, final int nya4) {
 		super.onNeighborBlockChange(world, xCoord, yCoord, zCoord, nya4);
-		if (world.getBlockId(xCoord, yCoord, zCoord) == this.blockID) {
+		if (world.getBlockId(xCoord, yCoord, zCoord) == this.id) {
 			this.updateTick(world, xCoord, yCoord, zCoord);
 		}
 	}
@@ -22,9 +22,9 @@ public class StaticLiquidBlock extends LiquidBlock {
 	private void updateTick(final World world, final int xCoord, final int yCoord, final int zCoord) {
 		final int blockMetadata = world.getBlockMetadata(xCoord, yCoord, zCoord);
 		world.editingBlocks = true;
-		world.setBlockAndMetadata(xCoord, yCoord, zCoord, this.blockID - 1, blockMetadata);
+		world.setBlockAndMetadata(xCoord, yCoord, zCoord, this.id - 1, blockMetadata);
 		world.markBlocksDirty(xCoord, yCoord, zCoord, xCoord, yCoord, zCoord);
-		world.scheduleBlockUpdate(xCoord, yCoord, zCoord, this.blockID - 1);
+		world.scheduleBlockUpdate(xCoord, yCoord, zCoord, this.id - 1);
 		world.editingBlocks = false;
 	}
 

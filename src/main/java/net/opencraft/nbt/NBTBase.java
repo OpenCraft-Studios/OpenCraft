@@ -13,9 +13,9 @@ public abstract class NBTBase {
 		this.key = null;
 	}
 
-	public abstract void writeTagContents(final DataOutput dataOutput) throws IOException;
+	public abstract void write(final DataOutput dataOutput) throws IOException;
 
-	public abstract void readTagContents(final DataInput dataInput) throws IOException;
+	public abstract void read(final DataInput dataInput) throws IOException;
 
 	public abstract byte getType();
 
@@ -40,7 +40,7 @@ public abstract class NBTBase {
 			}
 			final NBTBase tagOfType = createTagOfType(byte1);
 			tagOfType.key = dataInput.readUTF();
-			tagOfType.readTagContents(dataInput);
+			tagOfType.read(dataInput);
 			return tagOfType;
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -56,7 +56,7 @@ public abstract class NBTBase {
 				return;
 			}
 			dataOutput.writeUTF(hm.getKey());
-			hm.writeTagContents(dataOutput);
+			hm.write(dataOutput);
 		} catch(Exception e) {
 			e.printStackTrace();
 		}

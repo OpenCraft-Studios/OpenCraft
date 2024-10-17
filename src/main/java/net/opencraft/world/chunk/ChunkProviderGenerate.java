@@ -6,7 +6,7 @@ import static org.joml.Math.*;
 import java.util.Random;
 
 import net.opencraft.blocks.Block;
-import net.opencraft.renderer.gui.IProgressUpdate;
+import net.opencraft.renderer.gui.IProgressListener;
 import net.opencraft.util.Mth;
 import net.opencraft.world.IChunkProvider;
 import net.opencraft.world.World;
@@ -85,10 +85,10 @@ public class ChunkProviderGenerate implements IChunkProvider {
 							for ( int n23 = 0; n23 < 4; ++n23 ) {
 								int n24 = 0;
 								if (k * 8 + l < n2) {
-									n24 = Block.waterStill.blockID;
+									n24 = Block.waterStill.id;
 								}
 								if (n21 > 0.0) {
-									n24 = Block.stone.blockID;
+									n24 = Block.stone.id;
 								}
 								arr[n18] = (byte) n24;
 								n18 += n19;
@@ -118,38 +118,38 @@ public class ChunkProviderGenerate implements IChunkProvider {
 				final boolean b2 = this.field_909_n.a(n3 * n4, 109.0134, n2 * n4) + this.rand.nextDouble() * 0.2 > 3.0;
 				final int n5 = (int) (this.field_908_o.a(n2 * n4 * 2.0, n3 * n4 * 2.0) / 3.0 + 3.0 + this.rand.nextDouble() * 0.25);
 				int n6 = -1;
-				int n7 = Block.grass.blockID;
-				int n8 = Block.dirt.blockID;
+				int n7 = Block.grass.id;
+				int n8 = Block.dirt.id;
 				int n9 = (i * 16 + j) * 128 + 128;
 				for ( int k = 127; k >= 0; --k ) {
 					--n9;
 					if (k <= 0 + this.rand.nextInt(6) - 1) {
-						arr[n9] = (byte) Block.bedrock.blockID;
+						arr[n9] = (byte) Block.bedrock.id;
 					} else if (arr[n9] == 0) {
 						n6 = -1;
-					} else if (arr[n9] == Block.stone.blockID) {
+					} else if (arr[n9] == Block.stone.id) {
 						if (n6 == -1) {
 							if (n5 <= 0) {
 								n7 = 0;
-								n8 = (byte) Block.stone.blockID;
+								n8 = (byte) Block.stone.id;
 							} else if (k >= n - 4 && k <= n + 1) {
-								n7 = Block.grass.blockID;
-								n8 = Block.dirt.blockID;
+								n7 = Block.grass.id;
+								n8 = Block.dirt.id;
 								if (b2) {
 									n7 = 0;
 								}
 								if (b2) {
-									n8 = Block.gravel.blockID;
+									n8 = Block.gravel.id;
 								}
 								if (b) {
-									n7 = Block.sand.blockID;
+									n7 = Block.SAND.id;
 								}
 								if (b) {
-									n8 = Block.sand.blockID;
+									n8 = Block.SAND.id;
 								}
 							}
 							if (k < n && n7 == 0) {
-								n7 = Block.waterStill.blockID;
+								n7 = Block.waterStill.id;
 							}
 							n6 = n5;
 							if (k >= n - 1) {
@@ -264,7 +264,7 @@ public class ChunkProviderGenerate implements IChunkProvider {
 									final int j = (i * 16 + n20) * 128 + n21;
 									if (n21 >= 0) {
 										if (n21 < 128) {
-											if (arr[j] == Block.waterMoving.blockID || arr[j] == Block.waterStill.blockID) {
+											if (arr[j] == Block.waterMoving.id || arr[j] == Block.waterStill.id) {
 												n19 = 1;
 											}
 											if (n21 != n15 - 1 && i != n13 && i != n14 - 1 && n20 != n17 && n20 != n18 - 1) {
@@ -286,16 +286,16 @@ public class ChunkProviderGenerate implements IChunkProvider {
 										final double n25 = (k + 0.5 - double5) / n8;
 										if (n25 > -0.7 && n22 * n22 + n25 * n25 + n23 * n23 < 1.0) {
 											final byte b4 = arr[n24];
-											if (b4 == Block.grass.blockID) {
+											if (b4 == Block.grass.id) {
 												b3 = true;
 											}
-											if (b4 == Block.stone.blockID || b4 == Block.dirt.blockID || b4 == Block.grass.blockID) {
+											if (b4 == Block.stone.id || b4 == Block.dirt.id || b4 == Block.grass.id) {
 												if (k < 10) {
-													arr[n24] = (byte) Block.lavaMoving.blockID;
+													arr[n24] = (byte) Block.lavaMoving.id;
 												} else {
 													arr[n24] = 0;
-													if (b3 && arr[n24 - 1] == Block.dirt.blockID) {
-														arr[n24 - 1] = (byte) Block.grass.blockID;
+													if (b3 && arr[n24 - 1] == Block.dirt.id) {
+														arr[n24 - 1] = (byte) Block.grass.id;
 													}
 												}
 											}
@@ -317,12 +317,12 @@ public class ChunkProviderGenerate implements IChunkProvider {
 
 	private void field_902_u(final int integer1, final int integer2, final byte[] arr) {
 		final int n = 8;
-		this.rand.setSeed(this.worldObj.n);
+		this.rand.setSeed(this.worldObj.seed);
 		final long n2 = this.rand.nextLong() / 2L * 2L + 1L;
 		final long n3 = this.rand.nextLong() / 2L * 2L + 1L;
 		for ( int i = integer1 - n; i <= integer1 + n; ++i ) {
 			for ( int j = integer2 - n; j <= integer2 + n; ++j ) {
-				this.rand.setSeed(i * n2 + j * n3 ^ this.worldObj.n);
+				this.rand.setSeed(i * n2 + j * n3 ^ this.worldObj.seed);
 				int nextInt = this.rand.nextInt(this.rand.nextInt(this.rand.nextInt(40) + 1) + 1);
 				if (this.rand.nextInt(15) != 0) {
 					nextInt = 0;
@@ -433,8 +433,8 @@ public class ChunkProviderGenerate implements IChunkProvider {
 	public void populate(final IChunkProvider ch, final int integer2, final int integer3) {
 		final int n = integer2 * 16;
 		final int n2 = integer3 * 16;
-		this.rand.setSeed(this.worldObj.n);
-		this.rand.setSeed(integer2 * (this.rand.nextLong() / 2L * 2L + 1L) + integer3 * (this.rand.nextLong() / 2L * 2L + 1L) ^ this.worldObj.n);
+		this.rand.setSeed(this.worldObj.seed);
+		this.rand.setSeed(integer2 * (this.rand.nextLong() / 2L * 2L + 1L) + integer3 * (this.rand.nextLong() / 2L * 2L + 1L) ^ this.worldObj.seed);
 		double n3 = 0.25;
 		for ( int i = 0; i < 4; ++i ) {
 			final int integer4 = n + this.rand.nextInt(16) + 8;
@@ -446,37 +446,37 @@ public class ChunkProviderGenerate implements IChunkProvider {
 			final int integer4 = n + this.rand.nextInt(16);
 			final int j = this.rand.nextInt(128);
 			final int integer5 = n2 + this.rand.nextInt(16);
-			new WorldGenMinable(Block.dirt.blockID, 32).generate(this.worldObj, this.rand, integer4, j, integer5);
+			new WorldGenMinable(Block.dirt.id, 32).generate(this.worldObj, this.rand, integer4, j, integer5);
 		}
 		for ( int i = 0; i < 10; ++i ) {
 			final int integer4 = n + this.rand.nextInt(16);
 			final int j = this.rand.nextInt(128);
 			final int integer5 = n2 + this.rand.nextInt(16);
-			new WorldGenMinable(Block.gravel.blockID, 32).generate(this.worldObj, this.rand, integer4, j, integer5);
+			new WorldGenMinable(Block.gravel.id, 32).generate(this.worldObj, this.rand, integer4, j, integer5);
 		}
 		for ( int i = 0; i < 20; ++i ) {
 			final int integer4 = n + this.rand.nextInt(16);
 			final int j = this.rand.nextInt(128);
 			final int integer5 = n2 + this.rand.nextInt(16);
-			new WorldGenMinable(Block.oreCoal.blockID, 16).generate(this.worldObj, this.rand, integer4, j, integer5);
+			new WorldGenMinable(Block.oreCoal.id, 16).generate(this.worldObj, this.rand, integer4, j, integer5);
 		}
 		for ( int i = 0; i < 20; ++i ) {
 			final int integer4 = n + this.rand.nextInt(16);
 			final int j = this.rand.nextInt(64);
 			final int integer5 = n2 + this.rand.nextInt(16);
-			new WorldGenMinable(Block.oreIron.blockID, 8).generate(this.worldObj, this.rand, integer4, j, integer5);
+			new WorldGenMinable(Block.oreIron.id, 8).generate(this.worldObj, this.rand, integer4, j, integer5);
 		}
 		if (this.rand.nextInt(1) == 0) {
 			final int i = n + this.rand.nextInt(16);
 			final int integer4 = this.rand.nextInt(32);
 			final int j = n2 + this.rand.nextInt(16);
-			new WorldGenMinable(Block.oreGold.blockID, 8).generate(this.worldObj, this.rand, i, integer4, j);
+			new WorldGenMinable(Block.oreGold.id, 8).generate(this.worldObj, this.rand, i, integer4, j);
 		}
 		if (this.rand.nextInt(4) == 0) {
 			final int i = n + this.rand.nextInt(16);
 			final int integer4 = this.rand.nextInt(16);
 			final int j = n2 + this.rand.nextInt(16);
-			new WorldGenMinable(Block.oreDiamond.blockID, 8).generate(this.worldObj, this.rand, i, integer4, j);
+			new WorldGenMinable(Block.oreDiamond.id, 8).generate(this.worldObj, this.rand, i, integer4, j);
 		}
 		n3 = 0.5;
 		int i = (int) ((this.mobSpawnerNoise.a(n * n3, n2 * n3) / 8.0 + this.rand.nextDouble() * 4.0 + 4.0) / 3.0);
@@ -497,41 +497,41 @@ public class ChunkProviderGenerate implements IChunkProvider {
 			final int integer5 = n + this.rand.nextInt(16) + 8;
 			final int n4 = this.rand.nextInt(128);
 			final int integer6 = n2 + this.rand.nextInt(16) + 8;
-			new WorldGenFlowers(Block.plantYellow.blockID).generate(this.worldObj, this.rand, integer5, n4, integer6);
+			new WorldGenFlowers(Block.plantYellow.id).generate(this.worldObj, this.rand, integer5, n4, integer6);
 		}
 		if (this.rand.nextInt(2) == 0) {
 			final int j = n + this.rand.nextInt(16) + 8;
 			final int integer5 = this.rand.nextInt(128);
 			final int n4 = n2 + this.rand.nextInt(16) + 8;
-			new WorldGenFlowers(Block.plantRed.blockID).generate(this.worldObj, this.rand, j, integer5, n4);
+			new WorldGenFlowers(Block.plantRed.id).generate(this.worldObj, this.rand, j, integer5, n4);
 		}
 		if (this.rand.nextInt(4) == 0) {
 			final int j = n + this.rand.nextInt(16) + 8;
 			final int integer5 = this.rand.nextInt(128);
 			final int n4 = n2 + this.rand.nextInt(16) + 8;
-			new WorldGenFlowers(Block.mushroomBrown.blockID).generate(this.worldObj, this.rand, j, integer5, n4);
+			new WorldGenFlowers(Block.mushroomBrown.id).generate(this.worldObj, this.rand, j, integer5, n4);
 		}
 		if (this.rand.nextInt(8) == 0) {
 			final int j = n + this.rand.nextInt(16) + 8;
 			final int integer5 = this.rand.nextInt(128);
 			final int n4 = n2 + this.rand.nextInt(16) + 8;
-			new WorldGenFlowers(Block.mushroomRed.blockID).generate(this.worldObj, this.rand, j, integer5, n4);
+			new WorldGenFlowers(Block.mushroomRed.id).generate(this.worldObj, this.rand, j, integer5, n4);
 		}
 		for ( int j = 0; j < 50; ++j ) {
 			final int integer5 = n + this.rand.nextInt(16) + 8;
 			final int n4 = this.rand.nextInt(this.rand.nextInt(120) + 8);
 			final int integer6 = n2 + this.rand.nextInt(16) + 8;
-			new WorldGenLiquids(Block.waterMoving.blockID).generate(this.worldObj, this.rand, integer5, n4, integer6);
+			new WorldGenLiquids(Block.waterMoving.id).generate(this.worldObj, this.rand, integer5, n4, integer6);
 		}
 		for ( int j = 0; j < 20; ++j ) {
 			final int integer5 = n + this.rand.nextInt(16) + 8;
 			final int n4 = this.rand.nextInt(this.rand.nextInt(this.rand.nextInt(112) + 8) + 8);
 			final int integer6 = n2 + this.rand.nextInt(16) + 8;
-			new WorldGenLiquids(Block.lavaMoving.blockID).generate(this.worldObj, this.rand, integer5, n4, integer6);
+			new WorldGenLiquids(Block.lavaMoving.id).generate(this.worldObj, this.rand, integer5, n4, integer6);
 		}
 	}
 
-	public boolean saveChunks(final boolean boolean1, final IProgressUpdate jd) {
+	public boolean saveChunks(final boolean boolean1, final IProgressListener jd) {
 		return true;
 	}
 

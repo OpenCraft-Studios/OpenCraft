@@ -2,7 +2,7 @@
 package net.opencraft.item;
 
 import net.opencraft.blocks.Block;
-import net.opencraft.entity.EntityPlayer;
+import net.opencraft.entity.Player;
 import net.opencraft.util.Mth;
 import net.opencraft.world.World;
 
@@ -14,7 +14,7 @@ public class ItemDoor extends Item {
 		this.maxStackSize = 1;
 	}
 
-	public boolean onItemUse(ItemStack hw2, EntityPlayer gi2, World fe2, int xCoord, int yCoord, int zCoord, int n4) {
+	public boolean onItemUse(ItemStack hw2, Player gi2, World fe2, int xCoord, int yCoord, int zCoord, int n4) {
 		if (n4 != 1) {
 			return false;
 		}
@@ -38,8 +38,8 @@ public class ItemDoor extends Item {
 		}
 		int n8 = (fe2.isBlockNormalCube(xCoord - n6, yCoord, zCoord - n7) ? 1 : 0) + (fe2.isBlockNormalCube(xCoord - n6, yCoord + 1, zCoord - n7) ? 1 : 0);
 		int n9 = (fe2.isBlockNormalCube(xCoord + n6, yCoord, zCoord + n7) ? 1 : 0) + (fe2.isBlockNormalCube(xCoord + n6, yCoord + 1, zCoord + n7) ? 1 : 0);
-		boolean bl = fe2.getBlockId(xCoord - n6, yCoord, zCoord - n7) == Block.door.blockID || fe2.getBlockId(xCoord - n6, yCoord + 1, zCoord - n7) == Block.door.blockID;
-		boolean bl2 = fe2.getBlockId(xCoord + n6, yCoord, zCoord + n7) == Block.door.blockID || fe2.getBlockId(xCoord + n6, yCoord + 1, zCoord + n7) == Block.door.blockID;
+		boolean bl = fe2.getBlockId(xCoord - n6, yCoord, zCoord - n7) == Block.door.id || fe2.getBlockId(xCoord - n6, yCoord + 1, zCoord - n7) == Block.door.id;
+		boolean bl2 = fe2.getBlockId(xCoord + n6, yCoord, zCoord + n7) == Block.door.id || fe2.getBlockId(xCoord + n6, yCoord + 1, zCoord + n7) == Block.door.id;
 		boolean bl3 = false;
 		if (bl && !bl2) {
 			bl3 = true;
@@ -50,9 +50,9 @@ public class ItemDoor extends Item {
 			n5 = n5 - 1 & 3;
 			n5 += 4;
 		}
-		fe2.setBlockWithNotify(xCoord, yCoord, zCoord, Block.door.blockID);
+		fe2.setBlockWithNotify(xCoord, yCoord, zCoord, Block.door.id);
 		fe2.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, n5);
-		fe2.setBlockWithNotify(xCoord, yCoord + 1, zCoord, Block.door.blockID);
+		fe2.setBlockWithNotify(xCoord, yCoord + 1, zCoord, Block.door.id);
 		fe2.setBlockMetadataWithNotify(xCoord, yCoord + 1, zCoord, n5 + 8);
 		--hw2.stackSize;
 		return true;

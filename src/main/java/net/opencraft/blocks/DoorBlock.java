@@ -7,7 +7,7 @@ import java.util.Random;
 
 import net.opencraft.blocks.material.Material;
 import net.opencraft.client.input.MovingObjectPosition;
-import net.opencraft.entity.EntityPlayer;
+import net.opencraft.entity.Player;
 import net.opencraft.item.Item;
 import net.opencraft.physics.AABB;
 import net.opencraft.util.Vec3;
@@ -91,28 +91,28 @@ public class DoorBlock extends Block {
 	}
 
 	@Override
-	public void onBlockClicked(final World world, final int xCoord, final int yCoord, final int zCoord, final EntityPlayer entityPlayer) {
+	public void onBlockClicked(final World world, final int xCoord, final int yCoord, final int zCoord, final Player entityPlayer) {
 		this.blockActivated(world, xCoord, yCoord, zCoord, entityPlayer);
 	}
 
 	@Override
-	public boolean blockActivated(final World world, final int xCoord, final int yCoord, final int zCoord, final EntityPlayer entityPlayer) {
+	public boolean blockActivated(final World world, final int xCoord, final int yCoord, final int zCoord, final Player entityPlayer) {
 		final int blockMetadata = world.getBlockMetadata(xCoord, yCoord, zCoord);
 		if ((blockMetadata & 0x8) != 0x0) {
-			if (world.getBlockId(xCoord, yCoord - 1, zCoord) == this.blockID) {
+			if (world.getBlockId(xCoord, yCoord - 1, zCoord) == this.id) {
 				this.blockActivated(world, xCoord, yCoord - 1, zCoord, entityPlayer);
 			}
 			return true;
 		}
-		if (world.getBlockId(xCoord, yCoord + 1, zCoord) == this.blockID) {
+		if (world.getBlockId(xCoord, yCoord + 1, zCoord) == this.id) {
 			world.setBlockMetadataWithNotify(xCoord, yCoord + 1, zCoord, (blockMetadata ^ 0x4) + 8);
 		}
 		world.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, blockMetadata ^ 0x4);
 		world.markBlocksDirty(xCoord, yCoord - 1, zCoord, xCoord, yCoord, zCoord);
 		if (random() < 0.5) {
-			world.playSoundEffect(xCoord + 0.5, yCoord + 0.5, zCoord + 0.5, "random.door_open", 1.0f, world.rand.nextFloat() * 0.1f + 0.9f);
+			world.playSoundEffect(xCoord + 0.5, yCoord + 0.5, zCoord + 0.5, "random.door_open", 1.0f, world.random.nextFloat() * 0.1f + 0.9f);
 		} else {
-			world.playSoundEffect(xCoord + 0.5, yCoord + 0.5, zCoord + 0.5, "random.door_close", 1.0f, world.rand.nextFloat() * 0.1f + 0.9f);
+			world.playSoundEffect(xCoord + 0.5, yCoord + 0.5, zCoord + 0.5, "random.door_close", 1.0f, world.random.nextFloat() * 0.1f + 0.9f);
 		}
 		return true;
 	}
@@ -121,19 +121,19 @@ public class DoorBlock extends Block {
 	public void onNeighborBlockChange(final World world, final int xCoord, final int yCoord, final int zCoord, final int nya4) {
 		final int blockMetadata = world.getBlockMetadata(xCoord, yCoord, zCoord);
 		if ((blockMetadata & 0x8) != 0x0) {
-			if (world.getBlockId(xCoord, yCoord - 1, zCoord) != this.blockID) {
+			if (world.getBlockId(xCoord, yCoord - 1, zCoord) != this.id) {
 				world.setBlockWithNotify(xCoord, yCoord, zCoord, 0);
 			}
 		} else {
 			boolean b = false;
-			if (world.getBlockId(xCoord, yCoord + 1, zCoord) != this.blockID) {
+			if (world.getBlockId(xCoord, yCoord + 1, zCoord) != this.id) {
 				world.setBlockWithNotify(xCoord, yCoord, zCoord, 0);
 				b = true;
 			}
 			if (!world.isBlockNormalCube(xCoord, yCoord - 1, zCoord)) {
 				world.setBlockWithNotify(xCoord, yCoord, zCoord, 0);
 				b = true;
-				if (world.getBlockId(xCoord, yCoord + 1, zCoord) == this.blockID) {
+				if (world.getBlockId(xCoord, yCoord + 1, zCoord) == this.id) {
 					world.setBlockWithNotify(xCoord, yCoord + 1, zCoord, 0);
 				}
 			}

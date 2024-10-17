@@ -13,7 +13,7 @@ public class StoneBlock extends Block {
 
 	@Override
 	public int idDropped(final int blockid, final Random random) {
-		return Block.cobblestone.blockID;
+		return Block.cobblestone.id;
 	}
 
 }

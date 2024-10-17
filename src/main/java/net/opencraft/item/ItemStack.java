@@ -4,7 +4,7 @@ package net.opencraft.item;
 import net.opencraft.blocks.Block;
 import net.opencraft.entity.Entity;
 import net.opencraft.entity.EntityLiving;
-import net.opencraft.entity.EntityPlayer;
+import net.opencraft.entity.Player;
 import net.opencraft.nbt.NBTTagCompound;
 import net.opencraft.world.World;
 
@@ -20,7 +20,7 @@ public final class ItemStack {
 	}
 
 	public ItemStack(final Block gs, final int integer) {
-		this(gs.blockID, integer);
+		this(gs.id, integer);
 	}
 
 	public ItemStack(final Item ge) {
@@ -66,7 +66,7 @@ public final class ItemStack {
 		return this.getItem().getIconFromDamage(this);
 	}
 
-	public boolean useItem(final EntityPlayer gi, final World fe, final int integer3, final int integer4, final int integer5, final int integer6) {
+	public boolean useItem(final Player gi, final World fe, final int integer3, final int integer4, final int integer5, final int integer6) {
 		return this.getItem().onItemUse(this, gi, fe, integer3, integer4, integer5, integer6);
 	}
 
@@ -74,7 +74,7 @@ public final class ItemStack {
 		return this.getItem().getStrVsBlock(this, gs);
 	}
 
-	public ItemStack useItemRightClick(final World fe, final EntityPlayer gi) {
+	public ItemStack useItemRightClick(final World fe, final Player gi) {
 		return this.getItem().onItemRightClick(this, fe, gi);
 	}
 
@@ -126,7 +126,7 @@ public final class ItemStack {
 		return Item.itemsList[this.itemID].canHarvestBlock(gs);
 	}
 
-	public void onItemDestroyedByUse(final EntityPlayer gi) {
+	public void onItemDestroyedByUse(final Player gi) {
 	}
 
 	public void useItemOnEntity(final EntityLiving ka) {

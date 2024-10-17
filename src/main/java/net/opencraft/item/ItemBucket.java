@@ -5,7 +5,7 @@ import static org.joml.Math.*;
 
 import net.opencraft.blocks.material.Material;
 import net.opencraft.client.input.MovingObjectPosition;
-import net.opencraft.entity.EntityPlayer;
+import net.opencraft.entity.Player;
 import net.opencraft.util.Mth;
 import net.opencraft.util.Vec3;
 import net.opencraft.world.World;
@@ -22,7 +22,7 @@ public class ItemBucket extends Item {
 	}
 
 	@Override
-	public ItemStack onItemRightClick(final ItemStack hw, final World fe, final EntityPlayer gi) {
+	public ItemStack onItemRightClick(final ItemStack hw, final World fe, final Player gi) {
 		final float n = 1.0f;
 		final float n2 = gi.prevRotationPitch + (gi.rotationPitch - gi.prevRotationPitch) * n;
 		final float n3 = gi.prevRotationYaw + (gi.rotationYaw - gi.prevRotationYaw) * n;

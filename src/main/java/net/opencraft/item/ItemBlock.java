@@ -2,7 +2,7 @@
 package net.opencraft.item;
 
 import net.opencraft.blocks.Block;
-import net.opencraft.entity.EntityPlayer;
+import net.opencraft.entity.Player;
 import net.opencraft.world.World;
 
 public class ItemBlock extends Item {
@@ -12,11 +12,11 @@ public class ItemBlock extends Item {
 	public ItemBlock(final int itemid) {
 		super(itemid);
 		this.blockID = itemid + 256;
-		this.setIconIndex(Block.blocksList[itemid + 256].getBlockTextureFromSide(2));
+		this.setIconIndex(Block.BLOCKS[itemid + 256].getBlockTextureFromSide(2));
 	}
 
 	@Override
-	public boolean onItemUse(final ItemStack hw, final EntityPlayer gi, final World fe, int xCoord, int yCoord, int zCoord, final int integer7) {
+	public boolean onItemUse(final ItemStack hw, final Player gi, final World fe, int xCoord, int yCoord, int zCoord, final int integer7) {
 		if (integer7 == 0) {
 			--yCoord;
 		}
@@ -39,9 +39,9 @@ public class ItemBlock extends Item {
 			return false;
 		}
 		if (fe.canBlockBePlacedAt(this.blockID, xCoord, yCoord, zCoord, false)) {
-			final Block block = Block.blocksList[this.blockID];
+			final Block block = Block.BLOCKS[this.blockID];
 			if (fe.setBlockWithNotify(xCoord, yCoord, zCoord, this.blockID)) {
-				Block.blocksList[this.blockID].onBlockPlaced(fe, xCoord, yCoord, zCoord, integer7);
+				Block.BLOCKS[this.blockID].onBlockPlaced(fe, xCoord, yCoord, zCoord, integer7);
 				fe.playSoundEffect(xCoord + 0.5f, yCoord + 0.5f, zCoord + 0.5f, block.stepSound.stepSoundDir2(), (block.stepSound.soundVolume() + 1.0f) / 2.0f, block.stepSound.soundPitch() * 0.8f);
 				--hw.stackSize;
 			}

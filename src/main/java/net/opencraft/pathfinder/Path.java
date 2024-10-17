@@ -3,27 +3,27 @@ package net.opencraft.pathfinder;
 
 public class Path {
 
-	private PathPoint[] a;
+	private PathPoint[] points;
 	private int b;
 
 	public Path() {
-		this.a = new PathPoint[1024];
+		this.points = new PathPoint[1024];
 		this.b = 0;
 	}
 
-	public PathPoint addPoint(final PathPoint d) {
-		if (d.index >= 0) {
-			throw new IllegalStateException("OW KNOWS!");
-		}
-		if (this.b == this.a.length) {
+	public PathPoint addPoint(final PathPoint point) {
+		if (point.index > -1)
+			throw new IllegalStateException("Index mustn't be positive");
+		
+		if (this.b == this.points.length) {
 			final PathPoint[] a = new PathPoint[this.b << 1];
-			System.arraycopy(this.a, 0, a, 0, this.b);
-			this.a = a;
+			System.arraycopy(this.points, 0, a, 0, this.b);
+			this.points = a;
 		}
-		this.a[this.b] = d;
-		d.index = this.b;
+		this.points[this.b] = point;
+		point.index = this.b;
 		this.a(this.b++);
-		return d;
+		return point;
 	}
 
 	public void clearPath() {
@@ -31,14 +31,14 @@ public class Path {
 	}
 
 	public PathPoint dequeue() {
-		final PathPoint pathPoint = this.a[0];
-		final PathPoint[] a = this.a;
+		final PathPoint pathPoint = this.points[0];
+		final PathPoint[] a = this.points;
 		final int n = 0;
-		final PathPoint[] a2 = this.a;
+		final PathPoint[] a2 = this.points;
 		final int b = this.b - 1;
 		this.b = b;
 		a[n] = a2[b];
-		this.a[this.b] = null;
+		this.points[this.b] = null;
 		if (this.b > 0) {
 			this.b(0);
 		}
@@ -57,24 +57,24 @@ public class Path {
 	}
 
 	private void a(int integer) {
-		final PathPoint pathPoint = this.a[integer];
+		final PathPoint pathPoint = this.points[integer];
 		final float distanceToTarget = pathPoint.distanceToTarget;
 		while(integer > 0) {
 			final int n = integer - 1 >> 1;
-			final PathPoint pathPoint2 = this.a[n];
+			final PathPoint pathPoint2 = this.points[n];
 			if (distanceToTarget >= pathPoint2.distanceToTarget) {
 				break;
 			}
-			this.a[integer] = pathPoint2;
+			this.points[integer] = pathPoint2;
 			pathPoint2.index = integer;
 			integer = n;
 		}
-		this.a[integer] = pathPoint;
+		this.points[integer] = pathPoint;
 		pathPoint.index = integer;
 	}
 
 	private void b(int integer) {
-		final PathPoint pathPoint = this.a[integer];
+		final PathPoint pathPoint = this.points[integer];
 		final float distanceToTarget = pathPoint.distanceToTarget;
 		while(true) {
 			final int n = 1 + (integer << 1);
@@ -82,7 +82,7 @@ public class Path {
 			if (n >= this.b) {
 				break;
 			}
-			final PathPoint pathPoint2 = this.a[n];
+			final PathPoint pathPoint2 = this.points[n];
 			final float distanceToTarget2 = pathPoint2.distanceToTarget;
 			PathPoint pathPoint3;
 			float distanceToTarget3;
@@ -90,26 +90,26 @@ public class Path {
 				pathPoint3 = null;
 				distanceToTarget3 = Float.POSITIVE_INFINITY;
 			} else {
-				pathPoint3 = this.a[n2];
+				pathPoint3 = this.points[n2];
 				distanceToTarget3 = pathPoint3.distanceToTarget;
 			}
 			if (distanceToTarget2 < distanceToTarget3) {
 				if (distanceToTarget2 >= distanceToTarget) {
 					break;
 				}
-				this.a[integer] = pathPoint2;
+				this.points[integer] = pathPoint2;
 				pathPoint2.index = integer;
 				integer = n;
 			} else {
 				if (distanceToTarget3 >= distanceToTarget) {
 					break;
 				}
-				this.a[integer] = pathPoint3;
+				this.points[integer] = pathPoint3;
 				pathPoint3.index = integer;
 				integer = n2;
 			}
 		}
-		this.a[integer] = pathPoint;
+		this.points[integer] = pathPoint;
 		pathPoint.index = integer;
 	}
 

@@ -2,7 +2,7 @@
 package net.opencraft.world.chunk;
 
 import net.opencraft.blocks.SandBlock;
-import net.opencraft.renderer.gui.IProgressUpdate;
+import net.opencraft.renderer.gui.IProgressListener;
 import net.opencraft.world.IChunkLoader;
 import net.opencraft.world.IChunkProvider;
 import net.opencraft.world.World;
@@ -89,7 +89,7 @@ public class ChunkProviderLoadOrGenerate implements IChunkProvider {
 		try {
 			final Chunk loadChunk = this.chunkLoader.loadChunk(this.worldObj, integer1, integer2);
 			if (loadChunk != null) {
-				loadChunk.lastSaveTime = this.worldObj.getWorldTime;
+				loadChunk.lastSaveTime = this.worldObj.time;
 			}
 			return loadChunk;
 		} catch(Exception ex) {
@@ -113,7 +113,7 @@ public class ChunkProviderLoadOrGenerate implements IChunkProvider {
 		if (this.chunkLoader == null) {
 			return;
 		}
-		jw.lastSaveTime = this.worldObj.getWorldTime;
+		jw.lastSaveTime = this.worldObj.time;
 		this.chunkLoader.saveChunk(this.worldObj, jw);
 	}
 
@@ -129,7 +129,7 @@ public class ChunkProviderLoadOrGenerate implements IChunkProvider {
 	}
 
 	@Override
-	public boolean saveChunks(final boolean boolean1, final IProgressUpdate jd) {
+	public boolean saveChunks(final boolean boolean1, final IProgressListener jd) {
 		int n = 0;
 		int n2 = 0;
 		if (jd != null) {
@@ -152,7 +152,7 @@ public class ChunkProviderLoadOrGenerate implements IChunkProvider {
 						return false;
 					}
 					if (jd != null && ++i % 10 == 0) {
-						jd.setLoadingProgress(i * 100 / n2);
+						jd.setProgress(i * 100 / n2);
 					}
 				}
 			}

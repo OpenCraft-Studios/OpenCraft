@@ -106,21 +106,21 @@ public class EntityArrow extends Entity {
 		} else {
 			++this.ticksInAir;
 		}
-		MovingObjectPosition rayTraceBlocks = this.world.rayTraceBlocks(Vec3.newTemp(this.posX, this.posY, this.posZ), Vec3.newTemp(this.posX + this.motionX, this.posY + this.motionY, this.posZ + this.motionZ));
+		MovingObjectPosition rayTraceBlocks = this.world.raycastBlocks(Vec3.newTemp(this.posX, this.posY, this.posZ), Vec3.newTemp(this.posX + this.motionX, this.posY + this.motionY, this.posZ + this.motionZ));
 		final Vec3 vector = Vec3.newTemp(this.posX, this.posY, this.posZ);
 		Vec3 var2 = Vec3.newTemp(this.posX + this.motionX, this.posY + this.motionY, this.posZ + this.motionZ);
 		if (rayTraceBlocks != null) {
 			var2 = Vec3.newTemp(rayTraceBlocks.hitVec.x, rayTraceBlocks.hitVec.y, rayTraceBlocks.hitVec.z);
 		}
 		Entity eq = null;
-		final List entitiesWithinAABBExcludingEntity = this.world.getEntitiesWithinAABBExcludingEntity(this, this.boundingBox.addCoord(this.motionX, this.motionY, this.motionZ).expand(1.0, 1.0, 1.0));
+		final List entitiesWithinAABBExcludingEntity = this.world.getEntitiesWithinAABBExcludingEntity(this, this.boundingBox.addCoord(this.motionX, this.motionY, this.motionZ).grow(1.0, 1.0, 1.0));
 		double n = 0.0;
 		for ( int i = 0; i < entitiesWithinAABBExcludingEntity.size(); ++i ) {
 			final Entity entity = (Entity) entitiesWithinAABBExcludingEntity.get(i);
 			if (entity.canBeCollidedWith()) {
 				if (entity != this.owner || this.ticksInAir >= 5) {
 					final float n2 = 0.3f;
-					final MovingObjectPosition calculateIntercept = entity.boundingBox.expand(n2, n2, n2).calculateIntercept(vector, var2);
+					final MovingObjectPosition calculateIntercept = entity.boundingBox.grow(n2, n2, n2).calculateIntercept(vector, var2);
 					if (calculateIntercept != null) {
 						final double distanceTo = vector.distance(calculateIntercept.hitVec);
 						if (distanceTo < n || n == 0.0) {
@@ -219,7 +219,7 @@ public class EntityArrow extends Entity {
 	}
 
 	@Override
-	public void onCollideWithPlayer(final EntityPlayer entityPlayer) {
+	public void onCollideWithPlayer(final Player entityPlayer) {
 		if (this.inGround && this.owner == entityPlayer && this.arrowShake <= 0 && entityPlayer.inventory.addItemStackToInventory(new ItemStack(Item.arrow.shiftedIndex, 1))) {
 			this.world.playSound((Entity) this, "random.pop", 0.2f, ((this.rand.nextFloat() - this.rand.nextFloat()) * 0.7f + 1.0f) * 2.0f);
 			entityPlayer.onItemPickup(this);

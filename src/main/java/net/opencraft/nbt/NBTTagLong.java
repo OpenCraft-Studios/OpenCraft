@@ -17,12 +17,12 @@ public class NBTTagLong extends NBTBase {
 	}
 
 	@Override
-	public void writeTagContents(final DataOutput dataOutput) throws IOException {
+	public void write(final DataOutput dataOutput) throws IOException {
 		dataOutput.writeLong(this.longValue);
 	}
 
 	@Override
-	public void readTagContents(final DataInput dataInput) throws IOException {
+	public void read(final DataInput dataInput) throws IOException {
 		this.longValue = dataInput.readLong();
 	}
 

@@ -1,7 +1,7 @@
 
 package net.opencraft.world;
 
-import net.opencraft.renderer.gui.IProgressUpdate;
+import net.opencraft.renderer.gui.IProgressListener;
 import net.opencraft.world.chunk.Chunk;
 
 public interface IChunkProvider {
@@ -12,7 +12,7 @@ public interface IChunkProvider {
 
 	void populate(final IChunkProvider ch, final int integer2, final int integer3);
 
-	boolean saveChunks(final boolean boolean1, final IProgressUpdate jd);
+	boolean saveChunks(final boolean boolean1, final IProgressListener jd);
 
 	boolean unload100OldestChunks();
 

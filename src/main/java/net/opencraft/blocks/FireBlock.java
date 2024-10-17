@@ -17,12 +17,12 @@ public class FireBlock extends Block {
 		super(blockid, blockIndexInTexture, Material.FIRE);
 		this.chanceToEncourageFire = new int[256];
 		this.abilityToCatchFire = new int[256];
-		this.setBurnRate(Block.planks.blockID, 5, 20);
-		this.setBurnRate(Block.wood.blockID, 5, 5);
-		this.setBurnRate(Block.leaves.blockID, 30, 60);
-		this.setBurnRate(Block.bookshelf.blockID, 30, 20);
-		this.setBurnRate(Block.tnt.blockID, 15, 100);
-		this.setBurnRate(Block.woolGray.blockID, 30, 60);
+		this.setBurnRate(Block.planks.id, 5, 20);
+		this.setBurnRate(Block.wood.id, 5, 5);
+		this.setBurnRate(Block.leaves.id, 30, 60);
+		this.setBurnRate(Block.bookshelf.id, 30, 20);
+		this.setBurnRate(Block.tnt.id, 15, 100);
+		this.setBurnRate(Block.woolGray.id, 30, 60);
 		this.setTickOnLoad(true);
 	}
 
@@ -66,7 +66,7 @@ public class FireBlock extends Block {
 		final int blockMetadata = world.getBlockMetadata(xCoord, yCoord, zCoord);
 		if (blockMetadata < 15) {
 			world.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, blockMetadata + 1);
-			world.scheduleBlockUpdate(xCoord, yCoord, zCoord, this.blockID);
+			world.scheduleBlockUpdate(xCoord, yCoord, zCoord, this.id);
 		}
 		if (!this.canNeighborCatchFire(world, xCoord, yCoord, zCoord)) {
 			if (!world.isBlockNormalCube(xCoord, yCoord - 1, zCoord) || blockMetadata > 3) {
@@ -95,7 +95,7 @@ public class FireBlock extends Block {
 							}
 							final int chanceOfNeighborsEncouragingFire = this.getChanceOfNeighborsEncouragingFire(world, i, k, j);
 							if (chanceOfNeighborsEncouragingFire > 0 && random.nextInt(n) <= chanceOfNeighborsEncouragingFire) {
-								world.setBlockWithNotify(i, k, j, this.blockID);
+								world.setBlockWithNotify(i, k, j, this.id);
 							}
 						}
 					}
@@ -106,9 +106,9 @@ public class FireBlock extends Block {
 
 	private void tryToCatchBlockOnFire(final World world, final int xCoord, final int yCoord, final int zCoord, final int nya4, final Random random) {
 		if (random.nextInt(nya4) < this.abilityToCatchFire[world.getBlockId(xCoord, yCoord, zCoord)]) {
-			final boolean b = world.getBlockId(xCoord, yCoord, zCoord) == Block.tnt.blockID;
+			final boolean b = world.getBlockId(xCoord, yCoord, zCoord) == Block.tnt.id;
 			if (random.nextInt(2) == 0) {
-				world.setBlockWithNotify(xCoord, yCoord, zCoord, this.blockID);
+				world.setBlockWithNotify(xCoord, yCoord, zCoord, this.id);
 			} else {
 				world.setBlockWithNotify(xCoord, yCoord, zCoord, 0);
 			}
@@ -171,7 +171,7 @@ public class FireBlock extends Block {
 			world.setBlockWithNotify(xCoord, yCoord, zCoord, 0);
 			return;
 		}
-		world.scheduleBlockUpdate(xCoord, yCoord, zCoord, this.blockID);
+		world.scheduleBlockUpdate(xCoord, yCoord, zCoord, this.id);
 	}
 
 	@Override

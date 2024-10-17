@@ -30,7 +30,7 @@ public class CraftingManager {
 		new RecipesArmor().addRecipes(this);
 
 		this.addRecipe(new ItemStack(Block.woolGray, 1), "###", "###", "###", '#', Item.silk);
-		this.addRecipe(new ItemStack(Block.tnt, 1), "X#X", "#X#", "X#X", 'X', Item.gunpowder, '#', Block.sand);
+		this.addRecipe(new ItemStack(Block.tnt, 1), "X#X", "#X#", "X#X", 'X', Item.gunpowder, '#', Block.SAND);
 		this.addRecipe(new ItemStack(Block.slabSingle, 3), "###", '#', Block.cobblestone);
 		this.addRecipe(new ItemStack(Block.ladder, 1), "# #", "###", "# #", '#', Item.stick);
 		this.addRecipe(new ItemStack(Item.door, 1), "##", "##", "##", '#', Block.planks);
@@ -80,7 +80,7 @@ public class CraftingManager {
 			if (arr[i + 1] instanceof Item) {
 				k = ((Item) arr[i + 1]).shiftedIndex;
 			} else if (arr[i + 1] instanceof Block) {
-				k = ((Block) arr[i + 1]).blockID;
+				k = ((Block) arr[i + 1]).id;
 			}
 			((Map) hashMap).put(c, k);
 			i += 2;

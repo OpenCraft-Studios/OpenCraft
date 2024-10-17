@@ -12,7 +12,7 @@ import java.util.zip.ZipInputStream;
 
 import net.opencraft.client.sound.SoundManager;
 import net.opencraft.jobs.animations.SpinnerBarAnimation;
-import net.opencraft.util.ThreadHelper;
+import net.opencraft.util.helpers.ThreadHelper;
 
 public class DownloadResourcesJob implements Job {
 

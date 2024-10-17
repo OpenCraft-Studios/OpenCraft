@@ -177,13 +177,13 @@ public class RailBlock extends Block {
 		}
 
 		private RailLogic getMinecartTrackLogic(final ChunkPosition ia) {
-			if (this.world.getBlockId(ia.x, ia.y, ia.z) == this.rail.blockID) {
+			if (this.world.getBlockId(ia.x, ia.y, ia.z) == this.rail.id) {
 				return new RailLogic(this.rail, this.world, ia.x, ia.y, ia.z);
 			}
-			if (this.world.getBlockId(ia.x, ia.y + 1, ia.z) == this.rail.blockID) {
+			if (this.world.getBlockId(ia.x, ia.y + 1, ia.z) == this.rail.id) {
 				return new RailLogic(this.rail, this.world, ia.x, ia.y + 1, ia.z);
 			}
-			if (this.world.getBlockId(ia.x, ia.y - 1, ia.z) == this.rail.blockID) {
+			if (this.world.getBlockId(ia.x, ia.y - 1, ia.z) == this.rail.id) {
 				return new RailLogic(this.rail, this.world, ia.x, ia.y - 1, ia.z);
 			}
 			return null;
@@ -249,18 +249,18 @@ public class RailBlock extends Block {
 				metadataValue = 9;
 			}
 			if (metadataValue == 0) {
-				if (this.world.getBlockId(this.trackX, this.trackY + 1, this.trackZ - 1) == this.rail.blockID) {
+				if (this.world.getBlockId(this.trackX, this.trackY + 1, this.trackZ - 1) == this.rail.id) {
 					metadataValue = 4;
 				}
-				if (this.world.getBlockId(this.trackX, this.trackY + 1, this.trackZ + 1) == this.rail.blockID) {
+				if (this.world.getBlockId(this.trackX, this.trackY + 1, this.trackZ + 1) == this.rail.id) {
 					metadataValue = 5;
 				}
 			}
 			if (metadataValue == 1) {
-				if (this.world.getBlockId(this.trackX + 1, this.trackY + 1, this.trackZ) == this.rail.blockID) {
+				if (this.world.getBlockId(this.trackX + 1, this.trackY + 1, this.trackZ) == this.rail.id) {
 					metadataValue = 2;
 				}
-				if (this.world.getBlockId(this.trackX - 1, this.trackY + 1, this.trackZ) == this.rail.blockID) {
+				if (this.world.getBlockId(this.trackX - 1, this.trackY + 1, this.trackZ) == this.rail.id) {
 					metadataValue = 3;
 				}
 			}
@@ -304,18 +304,18 @@ public class RailBlock extends Block {
 				n = 9;
 			}
 			if (n == 0) {
-				if (this.world.getBlockId(this.trackX, this.trackY + 1, this.trackZ - 1) == this.rail.blockID) {
+				if (this.world.getBlockId(this.trackX, this.trackY + 1, this.trackZ - 1) == this.rail.id) {
 					n = 4;
 				}
-				if (this.world.getBlockId(this.trackX, this.trackY + 1, this.trackZ + 1) == this.rail.blockID) {
+				if (this.world.getBlockId(this.trackX, this.trackY + 1, this.trackZ + 1) == this.rail.id) {
 					n = 5;
 				}
 			}
 			if (n == 1) {
-				if (this.world.getBlockId(this.trackX + 1, this.trackY + 1, this.trackZ) == this.rail.blockID) {
+				if (this.world.getBlockId(this.trackX + 1, this.trackY + 1, this.trackZ) == this.rail.id) {
 					n = 2;
 				}
-				if (this.world.getBlockId(this.trackX - 1, this.trackY + 1, this.trackZ) == this.rail.blockID) {
+				if (this.world.getBlockId(this.trackX - 1, this.trackY + 1, this.trackZ) == this.rail.id) {
 					n = 3;
 				}
 			}

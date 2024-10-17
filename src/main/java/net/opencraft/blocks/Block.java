@@ -26,7 +26,7 @@ public class Block {
 	public static final StepSound soundGlassFootstep;
 	public static final StepSound soundClothFootstep;
 	public static final StepSound soundSandFootstep;
-	public static final Block[] blocksList;
+	public static final Block[] BLOCKS;
 	public static final boolean[] tickOnLoad;
 	public static final boolean[] opaqueCubeLookup;
 	public static final int[] lightOpacity;
@@ -43,7 +43,7 @@ public class Block {
 	public static final Block waterStill;
 	public static final Block lavaMoving;
 	public static final Block lavaStill;
-	public static final Block sand;
+	public static final Block SAND;
 	public static final Block gravel;
 	public static final Block oreGold;
 	public static final Block oreIron;
@@ -100,7 +100,7 @@ public class Block {
 	public static final Block rail;
 	public static final Block stairCobblestone;
 	public int blockIndexInTexture;
-	public final int blockID;
+	public final int id;
 	protected float blockHardness;
 	protected float blockResistance;
 	public double minX;
@@ -123,7 +123,7 @@ public class Block {
 		soundGlassFootstep = new StepSoundStone("stone", 1.0f, 1.0f);
 		soundClothFootstep = new StepSound("cloth", 1.0f, 1.0f);
 		soundSandFootstep = new StepSoundSand("sand", 1.0f, 1.0f);
-		blocksList = new Block[256];
+		BLOCKS = new Block[256];
 		tickOnLoad = new boolean[256];
 		opaqueCubeLookup = new boolean[256];
 		lightOpacity = new int[256];
@@ -140,7 +140,7 @@ public class Block {
 		waterStill = new StaticLiquidBlock(9, Material.WATER).setHardness(100.0f).setLightOpacity(3);
 		lavaMoving = new MovingLiquidBlock(10, Material.LAVA).setHardness(0.0f).setLightValue(1.0f).setLightOpacity(255);
 		lavaStill = new StaticLiquidBlock(11, Material.LAVA).setHardness(100.0f).setLightValue(1.0f).setLightOpacity(255);
-		sand = new SandBlock(12, 18).setHardness(0.5f).setStepSound(Block.soundSandFootstep);
+		SAND = new SandBlock(12, 18).setHardness(0.5f).setStepSound(Block.soundSandFootstep);
 		gravel = new GravelBlock(13, 19).setHardness(0.6f).setStepSound(Block.soundGravelFootstep);
 		oreGold = new OreBlock(14, 32).setHardness(3.0f).setResistance(5.0f).setStepSound(Block.soundStoneFootstep);
 		oreIron = new OreBlock(15, 33).setHardness(3.0f).setResistance(5.0f).setStepSound(Block.soundStoneFootstep);
@@ -197,7 +197,7 @@ public class Block {
 		rail = new RailBlock(66, 128).setHardness(1.0f).setStepSound(Block.soundMetalFootstep);
 		stairCobblestone = new StairBlock(67, Block.cobblestone);
 		for ( int i = 0; i < 256; ++i ) {
-			if (Block.blocksList[i] != null) {
+			if (Block.BLOCKS[i] != null) {
 				Item.itemsList[i] = new ItemBlock(i - 256);
 			}
 		}
@@ -206,12 +206,12 @@ public class Block {
 	protected Block(final int blockid, final Material material) {
 		this.stepSound = Block.soundPowderFootstep;
 		this.blockParticleGravity = 1.0f;
-		if (Block.blocksList[blockid] != null) {
-			throw new IllegalArgumentException(new StringBuilder().append("Slot ").append(blockid).append(" is already occupied by ").append(Block.blocksList[blockid]).append(" when adding ").append(this).toString());
+		if (Block.BLOCKS[blockid] != null) {
+			throw new IllegalArgumentException(new StringBuilder().append("Slot ").append(blockid).append(" is already occupied by ").append(Block.BLOCKS[blockid]).append(" when adding ").append(this).toString());
 		}
 		this.blockMaterial = material;
-		Block.blocksList[blockid] = this;
-		this.blockID = blockid;
+		Block.BLOCKS[blockid] = this;
+		this.id = blockid;
 		this.setShape(0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f);
 		Block.opaqueCubeLookup[blockid] = this.isOpaqueCube();
 		Block.lightOpacity[blockid] = (this.isOpaqueCube() ? 255 : 0);
@@ -229,12 +229,12 @@ public class Block {
 	}
 
 	protected Block setLightOpacity(final int opacity) {
-		Block.lightOpacity[this.blockID] = opacity;
+		Block.lightOpacity[this.id] = opacity;
 		return this;
 	}
 
 	protected Block setLightValue(final float maxLightLevel) {
-		Block.lightValue[this.blockID] = (int) (15.0f * maxLightLevel);
+		Block.lightValue[this.id] = (int) (15.0f * maxLightLevel);
 		return this;
 	}
 
@@ -264,7 +264,7 @@ public class Block {
 	}
 
 	protected void setTickOnLoad(final boolean tick) {
-		Block.tickOnLoad[this.blockID] = tick;
+		Block.tickOnLoad[this.id] = tick;
 	}
 
 	public void setShape(final float minXBound, final float minYBound, final float minZBound, final float maxXBound, final float maxYBound, final float maxZBound) {
@@ -350,10 +350,10 @@ public class Block {
 	}
 
 	public int idDropped(final int blockid, final Random random) {
-		return this.blockID;
+		return this.id;
 	}
 
-	public float blockStrength(final EntityPlayer entityPlayer) {
+	public float blockStrength(final Player entityPlayer) {
 		if (this.blockHardness < 0.0f) {
 			return 0.0f;
 		}
@@ -368,14 +368,14 @@ public class Block {
 	}
 
 	public void dropBlockAsItemWithChance(final World world, final int xCoord, final int yCoord, final int zCoord, final int nya4, final float nya5) {
-		for ( int quantityDropped = this.quantityDropped(world.rand), i = 0; i < quantityDropped; ++i ) {
-			if (world.rand.nextFloat() <= nya5) {
-				final int idDropped = this.idDropped(nya4, world.rand);
+		for ( int quantityDropped = this.quantityDropped(world.random), i = 0; i < quantityDropped; ++i ) {
+			if (world.random.nextFloat() <= nya5) {
+				final int idDropped = this.idDropped(nya4, world.random);
 				if (idDropped > 0) {
 					final float n = 0.7f;
-					final EntityItem entity = new EntityItem(world, xCoord + (world.rand.nextFloat() * n + (1.0f - n) * 0.5), yCoord + (world.rand.nextFloat() * n + (1.0f - n) * 0.5), zCoord + (world.rand.nextFloat() * n + (1.0f - n) * 0.5), new ItemStack(idDropped));
+					final EntityItem entity = new EntityItem(world, xCoord + (world.random.nextFloat() * n + (1.0f - n) * 0.5), yCoord + (world.random.nextFloat() * n + (1.0f - n) * 0.5), zCoord + (world.random.nextFloat() * n + (1.0f - n) * 0.5), new ItemStack(idDropped));
 					entity.delayBeforeCanPickup = 10;
-					world.entityJoinedWorld(entity);
+					world.onEntityJoin(entity);
 				}
 			}
 		}
@@ -479,7 +479,7 @@ public class Block {
 		return true;
 	}
 
-	public boolean blockActivated(final World world, final int xCoord, final int yCoord, final int zCoord, final EntityPlayer entityPlayer) {
+	public boolean blockActivated(final World world, final int xCoord, final int yCoord, final int zCoord, final Player entityPlayer) {
 		return false;
 	}
 
@@ -489,7 +489,7 @@ public class Block {
 	public void onBlockPlaced(final World world, final int xCoord, final int yCoord, final int zCoord, final int nya4) {
 	}
 
-	public void onBlockClicked(final World world, final int xCoord, final int yCoord, final int zCoord, final EntityPlayer entityPlayer) {
+	public void onBlockClicked(final World world, final int xCoord, final int yCoord, final int zCoord, final Player entityPlayer) {
 	}
 
 	public void velocityToAddToEntity(final World world, final int xCoord, final int yCoord, final int zCoord, final Entity entity, final Vec3 var1) {

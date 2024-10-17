@@ -1,5 +1,6 @@
 package net.opencraft.client;
 
+import static net.opencraft.OpenCraft.*;
 import static net.opencraft.SharedConstants.*;
 import static org.lwjgl.glfw.GLFW.*;
 
@@ -20,7 +21,7 @@ public class Main {
 
 		glfwSetErrorCallback(GLFWErrorCallback.createPrint(System.err));
 
-		OpenCraft oc = new OpenCraft(854, 480);
+		oc = new OpenCraft(854, 480);
 		oc.run();
 	}
 

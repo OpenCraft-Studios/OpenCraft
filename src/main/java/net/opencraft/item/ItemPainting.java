@@ -2,7 +2,7 @@
 package net.opencraft.item;
 
 import net.opencraft.entity.EntityPainting;
-import net.opencraft.entity.EntityPlayer;
+import net.opencraft.entity.Player;
 import net.opencraft.world.World;
 
 public class ItemPainting extends Item {
@@ -13,7 +13,7 @@ public class ItemPainting extends Item {
 	}
 
 	@Override
-	public boolean onItemUse(final ItemStack hw, final EntityPlayer gi, final World fe, final int xCoord, final int yCoord, final int zCoord, final int integer7) {
+	public boolean onItemUse(final ItemStack hw, final Player gi, final World fe, final int xCoord, final int yCoord, final int zCoord, final int integer7) {
 		if (integer7 == 0) {
 			return false;
 		}
@@ -32,7 +32,7 @@ public class ItemPainting extends Item {
 		}
 		final EntityPainting entity = new EntityPainting(fe, xCoord, yCoord, zCoord, integer8);
 		if (entity.onValidSurface()) {
-			fe.entityJoinedWorld(entity);
+			fe.onEntityJoin(entity);
 			--hw.stackSize;
 		}
 		return true;

@@ -12,7 +12,7 @@ public class ItemSpade extends ItemTool {
 	}
 
 	static {
-		ItemSpade.blocksEffectiveAgainst = new Block[] { Block.grass, Block.dirt, Block.sand, Block.gravel };
+		ItemSpade.blocksEffectiveAgainst = new Block[] { Block.grass, Block.dirt, Block.SAND, Block.gravel };
 	}
 
 }

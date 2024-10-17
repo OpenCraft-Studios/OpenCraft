@@ -25,7 +25,7 @@ public class LeavesBlock extends LeavesBaseBlock {
 		for ( int n = 2, i = xCoord - n; i <= xCoord + n; ++i ) {
 			for ( int j = yCoord - 1; j <= yCoord + 1; ++j ) {
 				for ( int k = zCoord - n; k <= zCoord + n; ++k ) {
-					if (world.getBlockId(i, j, k) == Block.wood.blockID) {
+					if (world.getBlockId(i, j, k) == Block.wood.id) {
 						return;
 					}
 				}
@@ -42,7 +42,7 @@ public class LeavesBlock extends LeavesBaseBlock {
 
 	@Override
 	public int idDropped(final int blockid, final Random random) {
-		return Block.sapling.blockID;
+		return Block.sapling.id;
 	}
 
 	@Override

@@ -20,7 +20,7 @@ public class EntityCreature extends EntityLiving {
 	}
 
 	protected boolean canEntityBeSeen(final Entity entity) {
-		return this.world.rayTraceBlocks(Vec3.newTemp(this.posX, this.posY + this.getEyeHeight(), this.posZ), Vec3.newTemp(entity.posX, entity.posY + entity.getEyeHeight(), entity.posZ)) == null;
+		return this.world.raycastBlocks(Vec3.newTemp(this.posX, this.posY + this.getEyeHeight(), this.posZ), Vec3.newTemp(entity.posX, entity.posY + entity.getEyeHeight(), entity.posZ)) == null;
 	}
 
 	@Override

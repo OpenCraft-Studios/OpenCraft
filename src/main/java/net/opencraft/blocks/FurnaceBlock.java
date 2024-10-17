@@ -4,7 +4,7 @@ package net.opencraft.blocks;
 import java.util.Random;
 
 import net.opencraft.blocks.material.Material;
-import net.opencraft.entity.EntityPlayer;
+import net.opencraft.entity.Player;
 import net.opencraft.tileentity.TileEntity;
 import net.opencraft.tileentity.TileEntityFurnace;
 import net.opencraft.world.IBlockAccess;
@@ -93,10 +93,10 @@ public class FurnaceBlock extends ContainerBlock {
 	@Override
 	public int getBlockTextureFromSide(final int textureIndexSlot) {
 		if (textureIndexSlot == 1) {
-			return Block.stone.blockID;
+			return Block.stone.id;
 		}
 		if (textureIndexSlot == 0) {
-			return Block.stone.blockID;
+			return Block.stone.id;
 		}
 		if (textureIndexSlot == 3) {
 			return this.blockIndexInTexture - 1;
@@ -105,7 +105,7 @@ public class FurnaceBlock extends ContainerBlock {
 	}
 
 	@Override
-	public boolean blockActivated(final World world, final int xCoord, final int yCoord, final int zCoord, final EntityPlayer entityPlayer) {
+	public boolean blockActivated(final World world, final int xCoord, final int yCoord, final int zCoord, final Player entityPlayer) {
 		entityPlayer.displayGUIFurnace((TileEntityFurnace) world.getBlockTileEntity(xCoord, yCoord, zCoord));
 		return true;
 	}
@@ -119,9 +119,9 @@ public class FurnaceBlock extends ContainerBlock {
 		final int blockMetadata = world.getBlockMetadata(xCoord, yCoord, zCoord);
 		final TileEntity blockTileEntity = world.getBlockTileEntity(xCoord, yCoord, zCoord);
 		if (isActive) {
-			world.setBlockWithNotify(xCoord, yCoord, zCoord, Block.stoneOvenActive.blockID);
+			world.setBlockWithNotify(xCoord, yCoord, zCoord, Block.stoneOvenActive.id);
 		} else {
-			world.setBlockWithNotify(xCoord, yCoord, zCoord, Block.stoneOvenIdle.blockID);
+			world.setBlockWithNotify(xCoord, yCoord, zCoord, Block.stoneOvenIdle.id);
 		}
 		world.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, blockMetadata);
 		world.setBlockTileEntity(xCoord, yCoord, zCoord, blockTileEntity);

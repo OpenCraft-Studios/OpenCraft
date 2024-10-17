@@ -32,7 +32,7 @@ public class GuiCreateWorld extends GuiScreen {
 
 	@Override
 	public void initGui() {
-		this.controlList.clear();
+		this.buttonList.clear();
 		final File gameDir = OpenCraft.getGameDir();
 		final String[] worldNames = World.getSaveNames(gameDir);
 		final int worldCount = worldNames.length;
@@ -45,7 +45,7 @@ public class GuiCreateWorld extends GuiScreen {
 			}
 			String stringrererer = (worldNames[i] + " (" + potentiallySavesFolderLocation.getLong("SizeOnDisk") / 1024L * 100L / 1024L / 100.0f + " MB)");
 			int numberFromWorldName = Integer.parseInt(worldNames[i].substring(5));
-			this.controlList.add(new GuiButton(numberFromWorldName, this.width / 2 - 100, this.height / 6 + 24 * i, stringrererer, 200, 20));
+			this.buttonList.add(new GuiButton(numberFromWorldName, this.width / 2 - 100, this.height / 6 + 24 * i, stringrererer, 200, 20));
 		}
 		this.initButtons();
 	}
@@ -55,9 +55,9 @@ public class GuiCreateWorld extends GuiScreen {
 	}
 
 	public void initButtons() {
-		this.controlList.add(new GuiButton(-5, this.width / 2 - 100, this.height / 6 + 120 + 12, "Delete world...", 200, 20));
-		this.controlList.add(new GuiButton(-20, (this.width / 2 - 100) + 120, this.height / 6 + 168, "Create world", 100, 20));
-		this.controlList.add(new GuiButton(-6, (this.width / 2) - 120, this.height / 6 + 168, "Done", 100, 20));
+		this.buttonList.add(new GuiButton(-5, this.width / 2 - 100, this.height / 6 + 120 + 12, "Delete world...", 200, 20));
+		this.buttonList.add(new GuiButton(-20, (this.width / 2 - 100) + 120, this.height / 6 + 168, "Create world", 100, 20));
+		this.buttonList.add(new GuiButton(-6, (this.width / 2) - 120, this.height / 6 + 168, "Done", 100, 20));
 	}
 
 	@Override
@@ -65,7 +65,7 @@ public class GuiCreateWorld extends GuiScreen {
 		if (!iq.enabled) {
 			return;
 		}
-		if (iq.buttonId == -20) {
+		if (iq.id == -20) {
 			final String[] worldNames = World.getSaveNames(OpenCraft.getGameDir());
 			int maximumWorldNumber = 0;
 			for ( String worldName : worldNames ) {
@@ -75,14 +75,14 @@ public class GuiCreateWorld extends GuiScreen {
 				}
 			}
 			this.actionPerformed(maximumWorldNumber + 1);
-		} else if (iq.buttonId == -5) {
+		} else if (iq.id == -5) {
 			oc.displayGuiScreen(new GuiDeleteWorld(this));
-		} else if (iq.buttonId == -6) {
+		} else if (iq.id == -6) {
 			oc.displayGuiScreen(this.parentGuiScreen);
 		}
 
-		if (iq.buttonId >= 0) {
-			this.actionPerformed(iq.buttonId);
+		if (iq.id >= 0) {
+			this.actionPerformed(iq.id);
 		}
 	}
 

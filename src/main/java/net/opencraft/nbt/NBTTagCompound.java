@@ -1,24 +1,20 @@
 
 package net.opencraft.nbt;
 
-import java.io.DataInput;
-import java.io.DataOutput;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import java.io.*;
+import java.util.*;
 
 public class NBTTagCompound extends NBTBase {
 
-	private Map tagMap;
+	private Map<String, NBTBase> tagMap;
 
 	public NBTTagCompound() {
-		this.tagMap = (Map) new HashMap();
+		this.tagMap = new HashMap<>();
 	}
 
 	@Override
-	public void writeTagContents(final DataOutput dataOutput) throws IOException {
-		final Iterator iterator = this.tagMap.values().iterator();
+	public void write(final DataOutput dataOutput) throws IOException {
+		Iterator<NBTBase> iterator = this.tagMap.values().iterator();
 		while(iterator.hasNext()) {
 			NBTBase.writeTag((NBTBase) iterator.next(), dataOutput);
 		}
@@ -26,7 +22,7 @@ public class NBTTagCompound extends NBTBase {
 	}
 
 	@Override
-	public void readTagContents(final DataInput dataInput) throws IOException {
+	public void read(final DataInput dataInput) throws IOException {
 		this.tagMap.clear();
 		NBTBase tag;
 		while((tag = NBTBase.readTag(dataInput)).getType() != 0) {

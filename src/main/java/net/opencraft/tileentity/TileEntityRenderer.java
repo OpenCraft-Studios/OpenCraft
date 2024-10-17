@@ -5,7 +5,7 @@ import java.util.*;
 
 import org.lwjgl.opengl.GL11;
 
-import net.opencraft.entity.EntityPlayer;
+import net.opencraft.entity.Player;
 import net.opencraft.renderer.entity.Renderer;
 import net.opencraft.renderer.font.FontRenderer;
 import net.opencraft.world.World;
@@ -20,7 +20,7 @@ public class TileEntityRenderer {
 	public static double d;
 	public Renderer renderEngine;
 	public World f;
-	public EntityPlayer g;
+	public Player g;
 	public float h;
 	public float i;
 	public double j;
@@ -52,7 +52,7 @@ public class TileEntityRenderer {
 		return this.a(bk.getClass());
 	}
 
-	public void a(final World fe, final Renderer id, final FontRenderer ej, final EntityPlayer gi, final float float5) {
+	public void a(final World fe, final Renderer id, final FontRenderer ej, final Player gi, final float float5) {
 		this.f = fe;
 		this.renderEngine = id;
 		this.g = gi;

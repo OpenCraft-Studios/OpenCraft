@@ -16,7 +16,7 @@ public class GuiDeleteWorld extends GuiCreateWorld {
 	}
 
 	public void initButtons() {
-		this.controlList.add(new GuiButton(-6, this.width / 2 - 100, this.height / 6 + 168, "Cancel", 200, 20));
+		this.buttonList.add(new GuiButton(-6, this.width / 2 - 100, this.height / 6 + 168, "Cancel", 200, 20));
 	}
 
 	public void actionPerformed(int n) {
@@ -29,7 +29,7 @@ public class GuiDeleteWorld extends GuiCreateWorld {
 	public void deleteWorld(boolean bl, int n) {
 		if (bl) {
 			File file = OpenCraft.getGameDir();
-			World.deleteWorldDirectory(file, this.getSaveFileName(n));
+			World.deleteWorldDir(file, this.getSaveFileName(n));
 		}
 		oc.displayGuiScreen(this.parentGuiScreen);
 	}

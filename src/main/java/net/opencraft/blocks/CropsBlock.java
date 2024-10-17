@@ -19,7 +19,7 @@ public class CropsBlock extends FlowerBlock {
 
 	@Override
 	protected boolean canThisPlantGrowOnThisBlockID(final int blockid) {
-		return blockid == Block.tilledField.blockID;
+		return blockid == Block.tilledField.id;
 	}
 
 	@Override
@@ -44,14 +44,14 @@ public class CropsBlock extends FlowerBlock {
 		final int blockId6 = world.getBlockId(xCoord + 1, yCoord, zCoord - 1);
 		final int blockId7 = world.getBlockId(xCoord + 1, yCoord, zCoord + 1);
 		final int blockId8 = world.getBlockId(xCoord - 1, yCoord, zCoord + 1);
-		final boolean b = blockId3 == this.blockID || blockId4 == this.blockID;
-		final boolean b2 = blockId == this.blockID || blockId2 == this.blockID;
-		final boolean b3 = blockId5 == this.blockID || blockId6 == this.blockID || blockId7 == this.blockID || blockId8 == this.blockID;
+		final boolean b = blockId3 == this.id || blockId4 == this.id;
+		final boolean b2 = blockId == this.id || blockId2 == this.id;
+		final boolean b3 = blockId5 == this.id || blockId6 == this.id || blockId7 == this.id || blockId8 == this.id;
 		for ( int i = xCoord - 1; i <= xCoord + 1; ++i ) {
 			for ( int j = zCoord - 1; j <= zCoord + 1; ++j ) {
 				final int blockId9 = world.getBlockId(i, yCoord - 1, j);
 				float n2 = 0.0f;
-				if (blockId9 == Block.tilledField.blockID) {
+				if (blockId9 == Block.tilledField.id) {
 					n2 = 1.0f;
 					if (world.getBlockMetadata(i, yCoord - 1, j) > 0) {
 						n2 = 3.0f;
@@ -86,11 +86,11 @@ public class CropsBlock extends FlowerBlock {
 	public void onBlockDestroyedByPlayer(final World world, final int xCoord, final int yCoord, final int zCoord, final int nya4) {
 		super.onBlockDestroyedByPlayer(world, xCoord, yCoord, zCoord, nya4);
 		for ( int i = 0; i < 3; ++i ) {
-			if (world.rand.nextInt(15) <= nya4) {
+			if (world.random.nextInt(15) <= nya4) {
 				final float n = 0.7f;
-				final EntityItem entity = new EntityItem(world, xCoord + (world.rand.nextFloat() * n + (1.0f - n) * 0.5f), yCoord + (world.rand.nextFloat() * n + (1.0f - n) * 0.5f), zCoord + (world.rand.nextFloat() * n + (1.0f - n) * 0.5f), new ItemStack(Item.seeds));
+				final EntityItem entity = new EntityItem(world, xCoord + (world.random.nextFloat() * n + (1.0f - n) * 0.5f), yCoord + (world.random.nextFloat() * n + (1.0f - n) * 0.5f), zCoord + (world.random.nextFloat() * n + (1.0f - n) * 0.5f), new ItemStack(Item.seeds));
 				entity.delayBeforeCanPickup = 10;
-				world.entityJoinedWorld(entity);
+				world.onEntityJoin(entity);
 			}
 		}
 	}

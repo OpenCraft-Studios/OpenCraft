@@ -80,7 +80,7 @@ public class AABB {
 		return getBoundingBoxFromPool(minX, minY, minZ, maxX, maxY, maxZ);
 	}
 
-	public AABB expand(final double xCoord, final double yCoord, final double zCoord) {
+	public AABB grow(final double xCoord, final double yCoord, final double zCoord) {
 		return getBoundingBoxFromPool(this.minX - xCoord, this.minY - yCoord, this.minZ - zCoord, this.maxX + xCoord, this.maxY + yCoord, this.maxZ + zCoord);
 	}
 

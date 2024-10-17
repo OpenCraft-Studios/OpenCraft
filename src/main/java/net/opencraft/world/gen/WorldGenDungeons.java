@@ -46,9 +46,9 @@ public class WorldGenDungeons extends WorldGenerator {
 							fe.setBlockWithNotify(i, j, k, 0);
 						} else if (fe.getBlockMaterial(i, j, k).isSolid()) {
 							if (j == integer4 - 1 && random.nextInt(4) != 0) {
-								fe.setBlockWithNotify(i, j, k, Block.mossyCobblestone.blockID);
+								fe.setBlockWithNotify(i, j, k, Block.mossyCobblestone.id);
 							} else {
-								fe.setBlockWithNotify(i, j, k, Block.cobblestone.blockID);
+								fe.setBlockWithNotify(i, j, k, Block.cobblestone.id);
 							}
 						}
 					} else {
@@ -76,7 +76,7 @@ public class WorldGenDungeons extends WorldGenerator {
 						++n5;
 					}
 					if (n5 == 1) {
-						fe.setBlockWithNotify(k, integer4, zCoord, Block.chest.blockID);
+						fe.setBlockWithNotify(k, integer4, zCoord, Block.chest.id);
 						final TileEntityChest tileEntityChest = (TileEntityChest) fe.getBlockTileEntity(k, integer4, zCoord);
 						for ( int l = 0; l < 8; ++l ) {
 							final ItemStack pickCheckLootItem = this.pickCheckLootItem(random);
@@ -89,7 +89,7 @@ public class WorldGenDungeons extends WorldGenerator {
 				}
 			}
 		}
-		fe.setBlockWithNotify(integer3, integer4, integer5, Block.spawner.blockID);
+		fe.setBlockWithNotify(integer3, integer4, integer5, Block.spawner.id);
 		((TileEntityMobSpawner) fe.getBlockTileEntity(integer3, integer4, integer5)).getMobID = this.pickMobSpawner(random);
 		return true;
 	}

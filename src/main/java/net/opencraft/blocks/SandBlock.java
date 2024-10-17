@@ -21,12 +21,12 @@ public class SandBlock extends Block {
 
 	@Override
 	public void onBlockAdded(final World world, final int xCoord, final int yCoord, final int zCoord) {
-		world.scheduleBlockUpdate(xCoord, yCoord, zCoord, this.blockID);
+		world.scheduleBlockUpdate(xCoord, yCoord, zCoord, this.id);
 	}
 
 	@Override
 	public void onNeighborBlockChange(final World world, final int xCoord, final int yCoord, final int zCoord, final int nya4) {
-		world.scheduleBlockUpdate(xCoord, yCoord, zCoord, this.blockID);
+		world.scheduleBlockUpdate(xCoord, yCoord, zCoord, this.id);
 	}
 
 	@Override
@@ -36,13 +36,13 @@ public class SandBlock extends Block {
 
 	private void tryToFall(final World world, final int xCoord, final int yCoord, final int zCoord) {
 		if (canFallBelow(world, xCoord, yCoord - 1, zCoord) && yCoord >= 0) {
-			final EntityFallingSand entity = new EntityFallingSand(world, xCoord + 0.5f, yCoord + 0.5f, zCoord + 0.5f, this.blockID);
+			final EntityFallingSand entity = new EntityFallingSand(world, xCoord + 0.5f, yCoord + 0.5f, zCoord + 0.5f, this.id);
 			if (SandBlock.fallInstantly) {
 				while(!entity.isDead) {
 					entity.onUpdate();
 				}
 			} else {
-				world.entityJoinedWorld(entity);
+				world.onEntityJoin(entity);
 			}
 		}
 	}
@@ -57,10 +57,10 @@ public class SandBlock extends Block {
 		if (blockId == 0) {
 			return true;
 		}
-		if (blockId == Block.fire.blockID) {
+		if (blockId == Block.fire.id) {
 			return true;
 		}
-		final Material blockMaterial = Block.blocksList[blockId].blockMaterial;
+		final Material blockMaterial = Block.BLOCKS[blockId].blockMaterial;
 		return blockMaterial == Material.WATER || blockMaterial == Material.LAVA;
 	}
 

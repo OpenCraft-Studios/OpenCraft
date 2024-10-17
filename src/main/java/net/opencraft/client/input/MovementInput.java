@@ -4,7 +4,7 @@ package net.opencraft.client.input;
 import org.joml.Vector2f;
 
 import net.opencraft.client.config.GameSettings;
-import net.opencraft.entity.EntityPlayer;
+import net.opencraft.entity.Player;
 
 import java.util.ArrayList;
 import java.util.HashSet;

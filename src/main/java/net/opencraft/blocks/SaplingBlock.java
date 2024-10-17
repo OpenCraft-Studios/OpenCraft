@@ -23,7 +23,7 @@ public class SaplingBlock extends FlowerBlock {
 			} else {
 				world.setBlock(xCoord, yCoord, zCoord, 0);
 				if (!new WorldGenTrees().generate(world, random, xCoord, yCoord, zCoord)) {
-					world.setBlock(xCoord, yCoord, zCoord, this.blockID);
+					world.setBlock(xCoord, yCoord, zCoord, this.id);
 				}
 			}
 		}

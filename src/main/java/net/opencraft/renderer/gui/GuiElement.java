@@ -35,7 +35,7 @@ public class GuiElement {
 		instance.color(float9, float10, float11, float8);
 		instance.vertex(integer1, integer4, 0.0);
 		instance.vertex(integer3, integer4, 0.0);
-		instance.draw();
+		instance.render();
 		GL11.glDisable(3042);
 		GL11.glEnable(3008);
 		GL11.glEnable(3553);
@@ -57,7 +57,7 @@ public class GuiElement {
 		tessellator.vertexUV(x + width, y + height, this.zLevel, (u + width) * texelSize, (v + height) * texelSize);
 		tessellator.vertexUV(x + width, y + 0, this.zLevel, (u + width) * texelSize, (v + 0) * texelSize);
 		tessellator.vertexUV(x + 0, y + 0, this.zLevel, (u + 0) * texelSize, (v + 0) * texelSize);
-		tessellator.draw();
+		tessellator.render();
 	}
 
 }

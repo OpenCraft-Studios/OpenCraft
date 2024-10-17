@@ -350,7 +350,7 @@ public class EntityLiving extends Entity {
 			this.attackEntityFrom(null, nya2);
 			final int blockId = this.world.getBlockId(Mth.floor_double(this.posX), Mth.floor_double(this.posY - 0.20000000298023224 - this.yOffset), Mth.floor_double(this.posZ));
 			if (blockId > 0) {
-				final StepSound stepSound = Block.blocksList[blockId].stepSound;
+				final StepSound stepSound = Block.BLOCKS[blockId].stepSound;
 				this.world.playSound(this, stepSound.stepSoundDir2(), stepSound.soundVolume() * 0.5f, stepSound.soundPitch() * 0.75f);
 			}
 		}
@@ -416,7 +416,7 @@ public class EntityLiving extends Entity {
 		final int floor_double = Mth.floor_double(this.posX);
 		final int floor_double2 = Mth.floor_double(this.boundingBox.minY);
 		final int floor_double3 = Mth.floor_double(this.posZ);
-		return this.world.getBlockId(floor_double, floor_double2, floor_double3) == Block.ladder.blockID || this.world.getBlockId(floor_double, floor_double2 + 1, floor_double3) == Block.ladder.blockID;
+		return this.world.getBlockId(floor_double, floor_double2, floor_double3) == Block.ladder.id || this.world.getBlockId(floor_double, floor_double2 + 1, floor_double3) == Block.ladder.id;
 	}
 
 	public void writeEntityToNBT(final NBTTagCompound nbtTagCompound) {
@@ -483,7 +483,7 @@ public class EntityLiving extends Entity {
 		this.moveForward *= 0.98f;
 		this.randomYawVelocity *= 0.9f;
 		this.moveEntityWithHeading(this.moveStrafing, this.moveForward);
-		final List entitiesWithinAABBExcludingEntity = this.world.getEntitiesWithinAABBExcludingEntity(this, this.boundingBox.expand(0.20000000298023224, 0.0, 0.20000000298023224));
+		final List entitiesWithinAABBExcludingEntity = this.world.getEntitiesWithinAABBExcludingEntity(this, this.boundingBox.grow(0.20000000298023224, 0.0, 0.20000000298023224));
 		if (entitiesWithinAABBExcludingEntity != null && entitiesWithinAABBExcludingEntity.size() > 0) {
 			for ( int i = 0; i < entitiesWithinAABBExcludingEntity.size(); ++i ) {
 				final Entity entity = (Entity) entitiesWithinAABBExcludingEntity.get(i);

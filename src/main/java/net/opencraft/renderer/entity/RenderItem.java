@@ -43,11 +43,11 @@ public class RenderItem extends Render<EntityItem> {
 		}
 		GL11.glTranslatef((float) xCoord, (float) sqrt_double + n, (float) yCoord);
 		GL11.glEnable(32826);
-		if (item.itemID < 256 && Block.blocksList[item.itemID].getRenderType() == 0) {
+		if (item.itemID < 256 && Block.BLOCKS[item.itemID].getRenderType() == 0) {
 			GL11.glRotatef(n2, 0.0f, 1.0f, 0.0f);
 			this.loadTexture("/assets/terrain.png");
 			float n4 = 0.25f;
-			if (!Block.blocksList[item.itemID].renderAsNormalBlock() && item.itemID != Block.slabSingle.blockID) {
+			if (!Block.BLOCKS[item.itemID].renderAsNormalBlock() && item.itemID != Block.slabSingle.id) {
 				n4 = 0.5f;
 			}
 			GL11.glScalef(n4, n4, n4);
@@ -59,7 +59,7 @@ public class RenderItem extends Render<EntityItem> {
 					final float n7 = (this.random.nextFloat() * 2.0f - 1.0f) * 0.2f / n4;
 					GL11.glTranslatef(n5, n6, n7);
 				}
-				this.renderBlocks.renderBlockOnInventory(Block.blocksList[item.itemID]);
+				this.renderBlocks.renderBlockOnInventory(Block.BLOCKS[item.itemID]);
 				GL11.glPopMatrix();
 			}
 		} else {
@@ -90,7 +90,7 @@ public class RenderItem extends Render<EntityItem> {
 				instance.vertexUV(n9 - n10, 0.0f - n11, 0.0, n6, n8);
 				instance.vertexUV(n9 - n10, 1.0f - n11, 0.0, n6, n7);
 				instance.vertexUV(0.0f - n10, 1.0f - n11, 0.0, n5, n7);
-				instance.draw();
+				instance.render();
 				GL11.glPopMatrix();
 			}
 		}
@@ -102,10 +102,10 @@ public class RenderItem extends Render<EntityItem> {
 		if (hw == null) {
 			return;
 		}
-		if (hw.itemID < 256 && Block.blocksList[hw.itemID].getRenderType() == 0) {
+		if (hw.itemID < 256 && Block.BLOCKS[hw.itemID].getRenderType() == 0) {
 			final int itemID = hw.itemID;
 			id.bindTexture(id.loadTexture("/assets/terrain.png"));
-			final Block gs = Block.blocksList[itemID];
+			final Block gs = Block.BLOCKS[itemID];
 			GL11.glPushMatrix();
 			GL11.glTranslatef((float) (integer4 - 2), (float) (integer5 + 3), 0.0f);
 			GL11.glScalef(10.0f, 10.0f, 10.0f);
@@ -165,7 +165,7 @@ public class RenderItem extends Render<EntityItem> {
 		ag.vertex(integer2 + 0, integer3 + integer5, 0.0);
 		ag.vertex(integer2 + integer4, integer3 + integer5, 0.0);
 		ag.vertex(integer2 + integer4, integer3 + 0, 0.0);
-		ag.draw();
+		ag.render();
 	}
 
 	public void renderTexturedQuad(final int integer1, final int integer2, final int integer3, final int integer4, final int integer5, final int integer6) {
@@ -178,7 +178,7 @@ public class RenderItem extends Render<EntityItem> {
 		instance.vertexUV(integer1 + integer5, integer2 + integer6, n, (integer3 + integer5) * n2, (integer4 + integer6) * n3);
 		instance.vertexUV(integer1 + integer5, integer2 + 0, n, (integer3 + integer5) * n2, (integer4 + 0) * n3);
 		instance.vertexUV(integer1 + 0, integer2 + 0, n, (integer3 + 0) * n2, (integer4 + 0) * n3);
-		instance.draw();
+		instance.render();
 	}
 
 }

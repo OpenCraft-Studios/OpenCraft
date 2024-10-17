@@ -14,18 +14,17 @@ public class NBTTagString extends NBTBase {
 
 	public NBTTagString(final String string) {
 		this.stringValue = string;
-		if (string == null) {
+		if (string == null)
 			throw new IllegalArgumentException("Empty string not allowed");
-		}
 	}
 
 	@Override
-	public void writeTagContents(final DataOutput dataOutput) throws IOException {
+	public void write(final DataOutput dataOutput) throws IOException {
 		dataOutput.writeUTF(this.stringValue);
 	}
 
 	@Override
-	public void readTagContents(final DataInput dataInput) throws IOException {
+	public void read(final DataInput dataInput) throws IOException {
 		this.stringValue = dataInput.readUTF();
 	}
 
@@ -35,7 +34,7 @@ public class NBTTagString extends NBTBase {
 	}
 
 	public String toString() {
-		return "" + this.stringValue;
+		return stringValue;
 	}
 
 }

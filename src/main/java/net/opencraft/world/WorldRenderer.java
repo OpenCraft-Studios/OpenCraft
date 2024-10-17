@@ -141,13 +141,13 @@ public class WorldRenderer {
 								WorldRenderer.tessellator.beginQuads();
 								WorldRenderer.tessellator.setTranslationD(-this.c, -this.d, -this.e);
 							}
-							if (j == 0 && Block.blocksList[blockId] instanceof ContainerBlock) {
+							if (j == 0 && Block.BLOCKS[blockId] instanceof ContainerBlock) {
 								final TileEntity blockTileEntity = iv.getBlockTileEntity(integer2, k, l);
 								if (TileEntityRenderer.instance.a(blockTileEntity)) {
 									this.B.add(blockTileEntity);
 								}
 							}
-							final Block gs = Block.blocksList[blockId];
+							final Block gs = Block.BLOCKS[blockId];
 							final int renderBlockPass = gs.getRenderBlockPass();
 							if (renderBlockPass != j) {
 								b = true;
@@ -159,7 +159,7 @@ public class WorldRenderer {
 				}
 			}
 			if (n5 != 0) {
-				WorldRenderer.tessellator.draw();
+				WorldRenderer.tessellator.render();
 				GL11.glPopMatrix();
 				GL11.glEndList();
 				WorldRenderer.tessellator.setTranslationD(0.0, 0.0, 0.0);

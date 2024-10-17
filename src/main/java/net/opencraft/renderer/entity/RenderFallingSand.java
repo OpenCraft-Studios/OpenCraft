@@ -20,7 +20,7 @@ public class RenderFallingSand extends Render<EntityFallingSand> {
 		GL11.glPushMatrix();
 		GL11.glTranslatef((float) xCoord, (float) sqrt_double, (float) yCoord);
 		this.loadTexture("/assets/terrain.png");
-		final Block gs = Block.blocksList[entityLiving.blockID];
+		final Block gs = Block.BLOCKS[entityLiving.blockID];
 		final World world = entityLiving.getWorld();
 		GL11.glDisable(2896);
 		this.field_197_d.renderBlockFallingSand(gs, world, Mth.floor_double(entityLiving.posX), Mth.floor_double(entityLiving.posY), Mth.floor_double(entityLiving.posZ));

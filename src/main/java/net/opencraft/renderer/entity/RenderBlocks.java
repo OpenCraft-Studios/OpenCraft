@@ -80,7 +80,7 @@ public class RenderBlocks {
 		final int blockMetadata = this.a.getBlockMetadata(integer2, integer3, integer4);
 		final Tessellator instance = Tessellator.instance;
 		float blockBrightness = gs.getBlockBrightness(this.a, integer2, integer3, integer4);
-		if (Block.lightValue[gs.blockID] > 0) {
+		if (Block.lightValue[gs.id] > 0) {
 			blockBrightness = 1.0f;
 		}
 		instance.color(blockBrightness, blockBrightness, blockBrightness);
@@ -784,7 +784,7 @@ public class RenderBlocks {
 		}
 		instance.color(n4 * n5, n4 * n5, n4 * n5);
 		this.f(gs, -0.5, -0.5, -0.5, gs.getBlockTextureFromSide(5));
-		instance.draw();
+		instance.render();
 	}
 
 	public boolean j(final Block gs, final int integer2, final int integer3, final int integer4) {
@@ -814,7 +814,7 @@ public class RenderBlocks {
 		final float blockBrightness = gs.getBlockBrightness(this.a, integer2, integer3, integer4);
 		if (this.d || gs.shouldSideBeRendered(this.a, integer2, integer3 - 1, integer4, 0)) {
 			float n17 = gs.getBlockBrightness(this.a, integer2, integer3 - 1, integer4);
-			if (Block.lightValue[gs.blockID] > 0) {
+			if (Block.lightValue[gs.id] > 0) {
 				n17 = 1.0f;
 			}
 			instance.color(n5 * n17, n9 * n17, n13 * n17);
@@ -826,7 +826,7 @@ public class RenderBlocks {
 			if (gs.maxY != 1.0 && !gs.blockMaterial.isLiquid()) {
 				n17 = blockBrightness;
 			}
-			if (Block.lightValue[gs.blockID] > 0) {
+			if (Block.lightValue[gs.id] > 0) {
 				n17 = 1.0f;
 			}
 			instance.color(n6 * n17, n10 * n17, n14 * n17);
@@ -838,7 +838,7 @@ public class RenderBlocks {
 			if (gs.minZ > 0.0) {
 				n17 = blockBrightness;
 			}
-			if (Block.lightValue[gs.blockID] > 0) {
+			if (Block.lightValue[gs.id] > 0) {
 				n17 = 1.0f;
 			}
 			instance.color(n7 * n17, n11 * n17, n15 * n17);
@@ -850,7 +850,7 @@ public class RenderBlocks {
 			if (gs.maxZ < 1.0) {
 				n17 = blockBrightness;
 			}
-			if (Block.lightValue[gs.blockID] > 0) {
+			if (Block.lightValue[gs.id] > 0) {
 				n17 = 1.0f;
 			}
 			instance.color(n7 * n17, n11 * n17, n15 * n17);
@@ -862,7 +862,7 @@ public class RenderBlocks {
 			if (gs.minX > 0.0) {
 				n17 = blockBrightness;
 			}
-			if (Block.lightValue[gs.blockID] > 0) {
+			if (Block.lightValue[gs.id] > 0) {
 				n17 = 1.0f;
 			}
 			instance.color(n8 * n17, n12 * n17, n16 * n17);
@@ -874,7 +874,7 @@ public class RenderBlocks {
 			if (gs.maxX < 1.0) {
 				n17 = blockBrightness;
 			}
-			if (Block.lightValue[gs.blockID] > 0) {
+			if (Block.lightValue[gs.id] > 0) {
 				n17 = 1.0f;
 			}
 			instance.color(n8 * n17, n12 * n17, n16 * n17);
@@ -892,10 +892,10 @@ public class RenderBlocks {
 		this.j(gs, integer2, integer3, integer4);
 		int n3 = 0;
 		boolean b2 = false;
-		if (this.a.getBlockId(integer2 - 1, integer3, integer4) == gs.blockID || this.a.getBlockId(integer2 + 1, integer3, integer4) == gs.blockID) {
+		if (this.a.getBlockId(integer2 - 1, integer3, integer4) == gs.id || this.a.getBlockId(integer2 + 1, integer3, integer4) == gs.id) {
 			n3 = 1;
 		}
-		if (this.a.getBlockId(integer2, integer3, integer4 - 1) == gs.blockID || this.a.getBlockId(integer2, integer3, integer4 + 1) == gs.blockID) {
+		if (this.a.getBlockId(integer2, integer3, integer4 - 1) == gs.id || this.a.getBlockId(integer2, integer3, integer4 + 1) == gs.id) {
 			b2 = true;
 		}
 		if (n3 == 0 && !b2) {
@@ -968,7 +968,7 @@ public class RenderBlocks {
 		if (blockDoor.minY > 0.0) {
 			n5 = blockBrightness;
 		}
-		if (Block.lightValue[gs.blockID] > 0) {
+		if (Block.lightValue[gs.id] > 0) {
 			n5 = 1.0f;
 		}
 		instance.color(n * n5, n * n5, n * n5);
@@ -978,7 +978,7 @@ public class RenderBlocks {
 		if (blockDoor.maxY < 1.0) {
 			n5 = blockBrightness;
 		}
-		if (Block.lightValue[gs.blockID] > 0) {
+		if (Block.lightValue[gs.id] > 0) {
 			n5 = 1.0f;
 		}
 		instance.color(n2 * n5, n2 * n5, n2 * n5);
@@ -988,7 +988,7 @@ public class RenderBlocks {
 		if (blockDoor.minZ > 0.0) {
 			n5 = blockBrightness;
 		}
-		if (Block.lightValue[gs.blockID] > 0) {
+		if (Block.lightValue[gs.id] > 0) {
 			n5 = 1.0f;
 		}
 		instance.color(n3 * n5, n3 * n5, n3 * n5);
@@ -1004,7 +1004,7 @@ public class RenderBlocks {
 		if (blockDoor.maxZ < 1.0) {
 			n5 = blockBrightness;
 		}
-		if (Block.lightValue[gs.blockID] > 0) {
+		if (Block.lightValue[gs.id] > 0) {
 			n5 = 1.0f;
 		}
 		instance.color(n3 * n5, n3 * n5, n3 * n5);
@@ -1020,7 +1020,7 @@ public class RenderBlocks {
 		if (blockDoor.minX > 0.0) {
 			n5 = blockBrightness;
 		}
-		if (Block.lightValue[gs.blockID] > 0) {
+		if (Block.lightValue[gs.id] > 0) {
 			n5 = 1.0f;
 		}
 		instance.color(n4 * n5, n4 * n5, n4 * n5);
@@ -1036,7 +1036,7 @@ public class RenderBlocks {
 		if (blockDoor.maxX < 1.0) {
 			n5 = blockBrightness;
 		}
-		if (Block.lightValue[gs.blockID] > 0) {
+		if (Block.lightValue[gs.id] > 0) {
 			n5 = 1.0f;
 		}
 		instance.color(n4 * n5, n4 * n5, n4 * n5);
@@ -1260,43 +1260,43 @@ public class RenderBlocks {
 			instance.beginQuads();
 			instance.normal(0.0f, -1.0f, 0.0f);
 			this.a(gs, 0.0, 0.0, 0.0, gs.getBlockTextureFromSide(0));
-			instance.draw();
+			instance.render();
 			instance.beginQuads();
 			instance.normal(0.0f, 1.0f, 0.0f);
 			this.b(gs, 0.0, 0.0, 0.0, gs.getBlockTextureFromSide(1));
-			instance.draw();
+			instance.render();
 			instance.beginQuads();
 			instance.normal(0.0f, 0.0f, -1.0f);
 			this.c(gs, 0.0, 0.0, 0.0, gs.getBlockTextureFromSide(2));
-			instance.draw();
+			instance.render();
 			instance.beginQuads();
 			instance.normal(0.0f, 0.0f, 1.0f);
 			this.d(gs, 0.0, 0.0, 0.0, gs.getBlockTextureFromSide(3));
-			instance.draw();
+			instance.render();
 			instance.beginQuads();
 			instance.normal(-1.0f, 0.0f, 0.0f);
 			this.e(gs, 0.0, 0.0, 0.0, gs.getBlockTextureFromSide(4));
-			instance.draw();
+			instance.render();
 			instance.beginQuads();
 			instance.normal(1.0f, 0.0f, 0.0f);
 			this.f(gs, 0.0, 0.0, 0.0, gs.getBlockTextureFromSide(5));
-			instance.draw();
+			instance.render();
 			GL11.glTranslatef(0.5f, 0.5f, 0.5f);
 		} else if (renderType == 1) {
 			instance.beginQuads();
 			instance.normal(0.0f, -1.0f, 0.0f);
 			this.a(gs, n, -0.5, -0.5, -0.5);
-			instance.draw();
+			instance.render();
 		} else if (renderType == 6) {
 			instance.beginQuads();
 			instance.normal(0.0f, -1.0f, 0.0f);
 			this.b(gs, n, -0.5, -0.5, -0.5);
-			instance.draw();
+			instance.render();
 		} else if (renderType == 2) {
 			instance.beginQuads();
 			instance.normal(0.0f, -1.0f, 0.0f);
 			this.a(gs, -0.5, -0.5, -0.5, 0.0, 0.0);
-			instance.draw();
+			instance.render();
 		} else if (renderType != 3) {
 			if (renderType == 5) {
 			}

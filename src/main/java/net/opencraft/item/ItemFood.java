@@ -1,7 +1,7 @@
 
 package net.opencraft.item;
 
-import net.opencraft.entity.EntityPlayer;
+import net.opencraft.entity.Player;
 import net.opencraft.world.World;
 
 public class ItemFood extends Item {
@@ -15,7 +15,7 @@ public class ItemFood extends Item {
 	}
 
 	@Override
-	public ItemStack onItemRightClick(final ItemStack hw, final World fe, final EntityPlayer gi) {
+	public ItemStack onItemRightClick(final ItemStack hw, final World fe, final Player gi) {
 		if (gi.health <= 20) {
 			--hw.stackSize;
 			gi.heal(this.healAmount);

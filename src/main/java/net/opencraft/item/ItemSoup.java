@@ -1,7 +1,7 @@
 
 package net.opencraft.item;
 
-import net.opencraft.entity.EntityPlayer;
+import net.opencraft.entity.Player;
 import net.opencraft.world.World;
 
 public class ItemSoup extends ItemFood {
@@ -11,7 +11,7 @@ public class ItemSoup extends ItemFood {
 	}
 
 	@Override
-	public ItemStack onItemRightClick(final ItemStack hw, final World fe, final EntityPlayer gi) {
+	public ItemStack onItemRightClick(final ItemStack hw, final World fe, final Player gi) {
 		super.onItemRightClick(hw, fe, gi);
 		return new ItemStack(Item.bowlEmpty);
 	}

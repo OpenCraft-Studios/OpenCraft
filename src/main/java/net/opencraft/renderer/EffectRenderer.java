@@ -72,7 +72,7 @@ public class EffectRenderer {
 				for ( int j = 0; j < this.fxLayers[i].size(); ++j ) {
 					((EntityFX) this.fxLayers[i].get(j)).renderParticle(instance, float2, cos, cos2, sin, float3, float4);
 				}
-				instance.draw();
+				instance.render();
 			}
 		}
 	}
@@ -100,7 +100,7 @@ public class EffectRenderer {
 		if (blockId == 0) {
 			return;
 		}
-		final Block gs = Block.blocksList[blockId];
+		final Block gs = Block.BLOCKS[blockId];
 		for ( int n = 4, i = 0; i < n; ++i ) {
 			for ( int j = 0; j < n; ++j ) {
 				for ( int k = 0; k < n; ++k ) {
@@ -118,7 +118,7 @@ public class EffectRenderer {
 		if (blockId == 0) {
 			return;
 		}
-		final Block gs = Block.blocksList[blockId];
+		final Block gs = Block.BLOCKS[blockId];
 		final float n = 0.1f;
 		double double2 = integer1 + this.rand.nextDouble() * (gs.maxX - gs.minX - n * 2.0f) + n + gs.minX;
 		double double3 = integer2 + this.rand.nextDouble() * (gs.maxY - gs.minY - n * 2.0f) + n + gs.minY;

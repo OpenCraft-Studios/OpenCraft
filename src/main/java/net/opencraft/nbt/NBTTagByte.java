@@ -17,12 +17,12 @@ public class NBTTagByte extends NBTBase {
 	}
 
 	@Override
-	public void writeTagContents(final DataOutput dataOutput) throws IOException {
-		dataOutput.writeByte((int) this.byteValue);
+	public void write(final DataOutput dataOutput) throws IOException {
+		dataOutput.writeByte(byteValue);
 	}
 
 	@Override
-	public void readTagContents(final DataInput dataInput) throws IOException {
+	public void read(final DataInput dataInput) throws IOException {
 		this.byteValue = dataInput.readByte();
 	}
 
@@ -32,7 +32,7 @@ public class NBTTagByte extends NBTBase {
 	}
 
 	public String toString() {
-		return new StringBuilder().append("").append((int) this.byteValue).toString();
+		return "" + byteValue;
 	}
 
 }

@@ -30,7 +30,7 @@ public class Session {
 		registeredBlocksList.add(Block.plantRed);
 		registeredBlocksList.add(Block.mushroomBrown);
 		registeredBlocksList.add(Block.mushroomRed);
-		registeredBlocksList.add(Block.sand);
+		registeredBlocksList.add(Block.SAND);
 		registeredBlocksList.add(Block.gravel);
 		registeredBlocksList.add(Block.sponge);
 		registeredBlocksList.add(Block.woolGray);

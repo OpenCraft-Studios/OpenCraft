@@ -19,7 +19,7 @@ public class LogBlock extends Block {
 
 	@Override
 	public int idDropped(final int blockid, final Random random) {
-		return Block.wood.blockID;
+		return Block.wood.id;
 	}
 
 	@Override

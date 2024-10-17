@@ -72,7 +72,7 @@ public abstract class Render<T extends Entity> {
 			n8 *= 0.9f;
 			GL11.glTranslatef(0.0f, 0.0f, -0.04f);
 		}
-		instance.draw();
+		instance.render();
 		GL11.glPopMatrix();
 		GL11.glEnable(2896);
 	}
@@ -104,12 +104,12 @@ public abstract class Render<T extends Entity> {
 				for ( int k = floor_double5; k <= floor_double6; ++k ) {
 					final int blockId = worldFromRenderManager.getBlockId(i, j - 1, k);
 					if (blockId > 0 && worldFromRenderManager.getBlockLightValue(i, j, k) > 3) {
-						this.renderShadowOnBlock(Block.blocksList[blockId], double2, double3, double4, i, j, k, float5, shadowSize, double6, double7, double8);
+						this.renderShadowOnBlock(Block.BLOCKS[blockId], double2, double3, double4, i, j, k, float5, shadowSize, double6, double7, double8);
 					}
 				}
 			}
 		}
-		instance.draw();
+		instance.render();
 		GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 		GL11.glDisable(3042);
 		GL11.glDepthMask(true);
@@ -184,7 +184,7 @@ public abstract class Render<T extends Entity> {
 		instance.vertex(en.maxX, en.maxY, en.maxZ);
 		instance.vertex(en.maxX, en.minY, en.maxZ);
 		instance.setTranslationD(0.0, 0.0, 0.0);
-		instance.draw();
+		instance.render();
 		GL11.glEnable(3553);
 	}
 
@@ -215,7 +215,7 @@ public abstract class Render<T extends Entity> {
 		instance.vertex(en.maxX, en.maxY, en.minZ);
 		instance.vertex(en.maxX, en.maxY, en.maxZ);
 		instance.vertex(en.maxX, en.minY, en.maxZ);
-		instance.draw();
+		instance.render();
 	}
 
 	public void setRenderManager(final RenderManager fl) {

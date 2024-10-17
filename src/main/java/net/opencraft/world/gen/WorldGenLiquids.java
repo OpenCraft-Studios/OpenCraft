@@ -16,26 +16,26 @@ public class WorldGenLiquids extends WorldGenerator {
 
 	@Override
 	public boolean generate(final World fe, final Random random, final int integer3, final int integer4, final int integer5) {
-		if (fe.getBlockId(integer3, integer4 + 1, integer5) != Block.stone.blockID) {
+		if (fe.getBlockId(integer3, integer4 + 1, integer5) != Block.stone.id) {
 			return false;
 		}
-		if (fe.getBlockId(integer3, integer4 - 1, integer5) != Block.stone.blockID) {
+		if (fe.getBlockId(integer3, integer4 - 1, integer5) != Block.stone.id) {
 			return false;
 		}
-		if (fe.getBlockId(integer3, integer4, integer5) != 0 && fe.getBlockId(integer3, integer4, integer5) != Block.stone.blockID) {
+		if (fe.getBlockId(integer3, integer4, integer5) != 0 && fe.getBlockId(integer3, integer4, integer5) != Block.stone.id) {
 			return false;
 		}
 		int n = 0;
-		if (fe.getBlockId(integer3 - 1, integer4, integer5) == Block.stone.blockID) {
+		if (fe.getBlockId(integer3 - 1, integer4, integer5) == Block.stone.id) {
 			++n;
 		}
-		if (fe.getBlockId(integer3 + 1, integer4, integer5) == Block.stone.blockID) {
+		if (fe.getBlockId(integer3 + 1, integer4, integer5) == Block.stone.id) {
 			++n;
 		}
-		if (fe.getBlockId(integer3, integer4, integer5 - 1) == Block.stone.blockID) {
+		if (fe.getBlockId(integer3, integer4, integer5 - 1) == Block.stone.id) {
 			++n;
 		}
-		if (fe.getBlockId(integer3, integer4, integer5 + 1) == Block.stone.blockID) {
+		if (fe.getBlockId(integer3, integer4, integer5 + 1) == Block.stone.id) {
 			++n;
 		}
 		int n2 = 0;

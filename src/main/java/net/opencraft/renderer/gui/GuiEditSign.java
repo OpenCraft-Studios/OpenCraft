@@ -23,9 +23,9 @@ public class GuiEditSign extends GuiScreen {
 
 	@Override
 	public void initGui() {
-		this.controlList.clear();
+		this.buttonList.clear();
 		// Keyboard.enableRepeatEvents(true);
-		this.controlList.add(new GuiButton(0, this.width / 2 - 100, this.height / 4 + 120, "Done", 200, 20));
+		this.buttonList.add(new GuiButton(0, this.width / 2 - 100, this.height / 4 + 120, "Done", 200, 20));
 	}
 
 	@Override
@@ -43,7 +43,7 @@ public class GuiEditSign extends GuiScreen {
 		if (!iq.enabled) {
 			return;
 		}
-		if (iq.buttonId == 0) {
+		if (iq.id == 0) {
 			this.entitySign.onInventoryChanged();
 			oc.displayGuiScreen(null);
 		}

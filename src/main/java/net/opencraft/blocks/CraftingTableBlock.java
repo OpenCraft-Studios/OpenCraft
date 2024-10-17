@@ -2,7 +2,7 @@
 package net.opencraft.blocks;
 
 import net.opencraft.blocks.material.Material;
-import net.opencraft.entity.EntityPlayer;
+import net.opencraft.entity.Player;
 import net.opencraft.world.World;
 
 public class CraftingTableBlock extends Block {
@@ -27,7 +27,7 @@ public class CraftingTableBlock extends Block {
 	}
 
 	@Override
-	public boolean blockActivated(final World world, final int xCoord, final int yCoord, final int zCoord, final EntityPlayer entityPlayer) {
+	public boolean blockActivated(final World world, final int xCoord, final int yCoord, final int zCoord, final Player entityPlayer) {
 		entityPlayer.displayWorkbenchGUI();
 		return true;
 	}

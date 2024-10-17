@@ -17,9 +17,9 @@ import org.lwjgl.opengl.GLUtil;
 
 import net.opencraft.blocks.Block;
 import net.opencraft.blocks.SandBlock;
-import net.opencraft.client.Main;
 import net.opencraft.client.config.GameSettings;
-import net.opencraft.client.entity.*;
+import net.opencraft.client.entity.PlayerController;
+import net.opencraft.client.entity.PlayerControllerSP;
 import net.opencraft.client.entity.models.ModelBiped;
 import net.opencraft.client.input.*;
 import net.opencraft.client.sound.SoundManager;
@@ -35,7 +35,6 @@ import net.opencraft.renderer.font.FontRenderer;
 import net.opencraft.renderer.gui.*;
 import net.opencraft.renderer.texture.*;
 import net.opencraft.util.Mth;
-import net.opencraft.util.UnexpectedThrowable;
 import net.opencraft.world.World;
 import net.opencraft.world.WorldRenderer;
 
@@ -74,12 +73,12 @@ public class OpenCraft implements Runnable, GLFWFramebufferSizeCallbackI {
 	public GuiIngame ingameGUI;
 	public boolean skipRenderWorld;
 	public ModelBiped field_9242_w;
-	public MovingObjectPosition objectMouseOver;
+	public MovingObjectPosition hitResult;
 	public GameSettings options;
 	public SoundManager sndManager;
 	public File mcDataDir;
-	private TextureWaterFX textureWaterFX;
-	private TextureLavaFX textureLavaFX;
+	private final TextureWaterFX textureWaterFX;
+	private final TextureLavaFX textureLavaFX;
 	public volatile boolean running;
 	long prevFrameTime;
 	public boolean inGameHasFocus;
@@ -102,38 +101,36 @@ public class OpenCraft implements Runnable, GLFWFramebufferSizeCallbackI {
 		OpenCraft.tickTimes = new long[512];
 		OpenCraft.numRecordedFrameTimes = 0;
 		OpenCraft.gameDir = new File("opencraft");
-		if (!OpenCraft.gameDir.exists()) {
+		if (!OpenCraft.gameDir.exists())
 			OpenCraft.gameDir.mkdir();
-		}
 	}
 
 	public OpenCraft(int width, int height) {
-		oc = this;
-		this.playerController = new PlayerControllerSP(oc);
-		this.timer = null;
-		this.sessionData = new Session("Notch", "1488228");
-		this.hideQuitButton = true;
-		this.isGamePaused = false;
-		this.currentScreen = null;
-		this.loadingScreen = new LoadingScreenRenderer(oc);
-		this.entityRenderer = new EntityRenderer();
-		this.ticksRan = 0;
-		this.leftClickCounter = 0;
-		this.objectMouseOverString = null;
-		this.rightClickDelayTimer = 0;
-		this.skipRenderWorld = false;
-		this.field_9242_w = new ModelBiped(0.0f);
-		this.objectMouseOver = null;
-		this.sndManager = new SoundManager();
-		this.textureWaterFX = new TextureWaterFX();
-		this.textureLavaFX = new TextureLavaFX();
-		this.running = true;
-		this.fpsString = "";
-		this.prevFrameTime = -1L;
-		this.inGameHasFocus = false;
-		this.mouseTicksRan = 0;
-		this.isRaining = false;
-		this.systemTime = System.currentTimeMillis();
+		playerController = new PlayerControllerSP();
+		timer = null;
+		sessionData = new Session("Notch", "1488228");
+		hideQuitButton = true;
+		isGamePaused = false;
+		currentScreen = null;
+		loadingScreen = new LoadingScreenRenderer();
+		entityRenderer = new EntityRenderer();
+		ticksRan = 0;
+		leftClickCounter = 0;
+		objectMouseOverString = null;
+		rightClickDelayTimer = 0;
+		skipRenderWorld = false;
+		field_9242_w = new ModelBiped(0.0f);
+		hitResult = null;
+		sndManager = new SoundManager();
+		textureWaterFX = new TextureWaterFX();
+		textureLavaFX = new TextureLavaFX();
+		running = true;
+		fpsString = "";
+		prevFrameTime = -1L;
+		inGameHasFocus = false;
+		mouseTicksRan = 0;
+		isRaining = false;
+		systemTime = System.currentTimeMillis();
 		// why? (new SleepingForeverThread("Timer hack thread")).start();
 		this.width = width;
 		this.height = height;
@@ -152,10 +149,16 @@ public class OpenCraft implements Runnable, GLFWFramebufferSizeCallbackI {
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
 		glfwWindowHint(GLFW_DEPTH_BITS, 24); // Request 24 bits rendering
 
-		this.window = glfwCreateWindow(width, height, TITLE, NULL, NULL);
+		window = glfwCreateWindow(width, height, TITLE, NULL, NULL);
 		if (window == NULL)
 			throw new IllegalStateException("Failed to create the window!");
 
+		GLFWVidMode videoMode = glfwGetVideoMode(glfwGetPrimaryMonitor());
+		int winX = (videoMode.width() - width) / 2;
+		int winY = (videoMode.height() - height) / 2;
+		
+		glfwSetWindowPos(window, winX, winY);
+		
 		glfwMakeContextCurrent(window);
 		Objects.requireNonNull(GL.createCapabilities(), "Failed to create OpenGL capabilities");
 		glfwShowWindow(window);
@@ -232,12 +235,14 @@ public class OpenCraft implements Runnable, GLFWFramebufferSizeCallbackI {
 		t.vertexUV(width, height, 0.0, width / n, height / n + 0.0f);
 		t.vertexUV(width, 0.0, 0.0, width / n, 0.0);
 		t.vertexUV(0.0, 0.0, 0.0, 0.0, 0.0);
-		t.draw();
+		t.render();
+
 		glEnable(3008);
 		glAlphaFunc(516, 0.1f);
 		// magic numbers for x and y coordinates because I have no idea how to calculate
 		// it
-		font.drawShadow("Loading...", 32, 32, 0xFFFFFF);
+		String strLoad = "Starting opencraft, this may take a while...";
+		font.drawShadow(strLoad, (scaledWidth - font.width(strLoad)) / 2, scaledHeight / 2 - 30, 0xFFFFFF);
 		glfwSwapBuffers(window);
 	}
 
@@ -248,21 +253,19 @@ public class OpenCraft implements Runnable, GLFWFramebufferSizeCallbackI {
 		if (currentScreen != null)
 			currentScreen.onGuiClosed();
 
-		if (screen == null) {
+		if (screen == null)
 			if (world == null)
 				screen = new GuiMainMenu();
 			else if (player.health <= 0)
 				screen = new GuiGameOver();
-		}
 
 		if ((currentScreen = screen) != null) {
 			setIngameNotInFocus();
 			final ScaledResolution scaledResolution = new ScaledResolution(width, height);
 			screen.setWorldAndResolution(oc, scaledResolution.getScaledWidth(), scaledResolution.getScaledHeight());
 			skipRenderWorld = false;
-		} else {
+		} else
 			setIngameFocus();
-		}
 	}
 
 	private void checkGLError() {
@@ -279,7 +282,7 @@ public class OpenCraft implements Runnable, GLFWFramebufferSizeCallbackI {
 			changeWorld1(null);
 			GLAllocation.deleteTexturesAndDisplayLists();
 			sndManager.shutdown();
-		} catch(Exception ignored) {
+		} catch (Exception ignored) {
 		} finally {
 			glfwDestroyWindow(window);
 			glfwTerminate();
@@ -291,19 +294,20 @@ public class OpenCraft implements Runnable, GLFWFramebufferSizeCallbackI {
 
 	@Override
 	public void run() {
-		System.out.println("Running on thread " + Thread.currentThread().threadId() + " / " + Thread.currentThread().getName());
-		this.running = true;
+		System.out.println(
+				"Running on thread " + Thread.currentThread().threadId() + " / " + Thread.currentThread().getName());
+		running = true;
 
 		try {
 			init();
-		} catch(Exception exception) {
+		} catch (Exception exception) {
 			exception.printStackTrace();
 			destroy();
 		}
 
 		try {
 			long begin = System.currentTimeMillis();
-			while(running) {
+			while (running) {
 				AABB.clearBoundingBoxPool();
 				if (glfwWindowShouldClose(window))
 					stop();
@@ -315,7 +319,7 @@ public class OpenCraft implements Runnable, GLFWFramebufferSizeCallbackI {
 				} else
 					timer.updateTimer();
 
-				for ( int j = 0; j < Math.min(10, this.timer.elapsedTicks); ++j ) {
+				for (int j = 0; j < Math.min(10, timer.elapsedTicks); ++j) {
 					++ticksRan;
 					this.tick();
 				}
@@ -326,7 +330,7 @@ public class OpenCraft implements Runnable, GLFWFramebufferSizeCallbackI {
 				sndManager.setListener(player, timer.renderPartialTicks);
 				glEnable(GL_TEXTURE_2D);
 				if (world != null)
-					while(world.updatingLighting())
+					while (world.updatingLighting())
 						;
 
 				if (!skipRenderWorld) {
@@ -348,10 +352,10 @@ public class OpenCraft implements Runnable, GLFWFramebufferSizeCallbackI {
 
 				checkGLError();
 				++fps;
-				isGamePaused = (!isMultiplayerWorld() && currentScreen != null && currentScreen.doesGuiPauseGame());
+				isGamePaused = !isMultiplayerWorld() && currentScreen != null && currentScreen.doesGuiPauseGame();
 
 				long now;
-				while((now = System.currentTimeMillis()) >= begin + 1000L) {
+				while ((now = System.currentTimeMillis()) >= begin + 1000L) {
 					fpsString = fps + " FPS, " + WorldRenderer.chunksUpdated + " chunk updates";
 
 					// Reset variables
@@ -360,7 +364,7 @@ public class OpenCraft implements Runnable, GLFWFramebufferSizeCallbackI {
 					fps = 0;
 				}
 			}
-		} catch(Exception ex) {
+		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
 
@@ -368,11 +372,12 @@ public class OpenCraft implements Runnable, GLFWFramebufferSizeCallbackI {
 	}
 
 	private void displayDebugInfo() {
-		if (prevFrameTime == -1L) {
+		if (prevFrameTime == -1L)
 			prevFrameTime = System.nanoTime();
-		}
 		final long nanoTime = System.nanoTime();
-		OpenCraft.tickTimes[OpenCraft.numRecordedFrameTimes++ & OpenCraft.tickTimes.length - 1] = nanoTime - prevFrameTime;
+
+		OpenCraft.tickTimes[OpenCraft.numRecordedFrameTimes++ & OpenCraft.tickTimes.length - 1] = nanoTime
+				- prevFrameTime;
 		prevFrameTime = nanoTime;
 		glClear(256);
 		glMatrixMode(5889);
@@ -390,11 +395,10 @@ public class OpenCraft implements Runnable, GLFWFramebufferSizeCallbackI {
 		instance.vertex(0.0, height, 0.0);
 		instance.vertex(OpenCraft.tickTimes.length, height, 0.0);
 		instance.vertex(OpenCraft.tickTimes.length, height - 100, 0.0);
-		instance.draw();
+		instance.render();
 		long n = 0L;
-		for ( int i = 0; i < OpenCraft.tickTimes.length; ++i ) {
+		for (int i = 0; i < OpenCraft.tickTimes.length; ++i)
 			n += OpenCraft.tickTimes[i];
-		}
 		int i = (int) (n / 200000L / OpenCraft.tickTimes.length);
 		instance.begin(7);
 		instance.color(541065216);
@@ -402,10 +406,11 @@ public class OpenCraft implements Runnable, GLFWFramebufferSizeCallbackI {
 		instance.vertex(0.0, height, 0.0);
 		instance.vertex(OpenCraft.tickTimes.length, height, 0.0);
 		instance.vertex(OpenCraft.tickTimes.length, height - i, 0.0);
-		instance.draw();
+		instance.render();
 		instance.begin(1);
-		for ( int j = 0; j < OpenCraft.tickTimes.length; ++j ) {
-			final int n2 = (j - OpenCraft.numRecordedFrameTimes & OpenCraft.tickTimes.length - 1) * 255 / OpenCraft.tickTimes.length;
+		for (int j = 0; j < OpenCraft.tickTimes.length; ++j) {
+			final int n2 = (j - OpenCraft.numRecordedFrameTimes & OpenCraft.tickTimes.length - 1) * 255
+					/ OpenCraft.tickTimes.length;
 			int n3 = n2 * n2 / 255;
 			n3 = n3 * n3 / 255;
 			int n4 = n3 * n3 / 255;
@@ -414,7 +419,7 @@ public class OpenCraft implements Runnable, GLFWFramebufferSizeCallbackI {
 			instance.vertex(j + 0.5f, height - OpenCraft.tickTimes[j] / 200000L + 0.5f, 0.0);
 			instance.vertex(j + 0.5f, height + 0.5f, 0.0);
 		}
-		instance.draw();
+		instance.render();
 		glEnable(3553);
 	}
 
@@ -423,9 +428,8 @@ public class OpenCraft implements Runnable, GLFWFramebufferSizeCallbackI {
 	}
 
 	public void setIngameFocus() {
-		if (inGameHasFocus) {
+		if (inGameHasFocus)
 			return;
-		}
 		inGameHasFocus = true;
 		glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
@@ -434,9 +438,8 @@ public class OpenCraft implements Runnable, GLFWFramebufferSizeCallbackI {
 	}
 
 	public void setIngameNotInFocus() {
-		if (!inGameHasFocus) {
+		if (!inGameHasFocus)
 			return;
-		}
 		glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 		inGameHasFocus = false;
 	}
@@ -449,70 +452,54 @@ public class OpenCraft implements Runnable, GLFWFramebufferSizeCallbackI {
 	}
 
 	private void func_6254_a(final int integer, final boolean boolean2) {
-		if (playerController.field_1064_b) {
+		if (playerController.field_1064_b || integer == 0 && leftClickCounter > 0)
 			return;
-		}
-		if (integer == 0 && leftClickCounter > 0) {
-			return;
-		}
-		if (boolean2 && objectMouseOver != null && objectMouseOver.typeOfHit == 0 && integer == 0) {
-			final int blockX = objectMouseOver.blockX;
-			final int blockY = objectMouseOver.blockY;
-			final int blockZ = objectMouseOver.blockZ;
-			playerController.sendBlockRemoving(blockX, blockY, blockZ, objectMouseOver.sideHit);
-			effectRenderer.addBlockHitEffects(blockX, blockY, blockZ, objectMouseOver.sideHit);
-		} else {
+		if (boolean2 && hitResult != null && hitResult.typeOfHit == 0 && integer == 0) {
+			final int blockX = hitResult.blockX;
+			final int blockY = hitResult.blockY;
+			final int blockZ = hitResult.blockZ;
+			playerController.sendBlockRemoving(blockX, blockY, blockZ, hitResult.sideHit);
+			effectRenderer.addBlockHitEffects(blockX, blockY, blockZ, hitResult.sideHit);
+		} else
 			playerController.resetBlockRemoving();
-		}
 	}
 
 	private void clickMouse(final int integer) {
-		if (integer == 0 && leftClickCounter > 0) {
+		if (integer == 0 && leftClickCounter > 0)
 			return;
-		}
-		if (integer == 0) {
+		if (integer == 0)
 			entityRenderer.itemRenderer.resetEquippedProgress();
-		}
-		if (objectMouseOver == null) {
-			if (integer == 0 && !(playerController instanceof PlayerControllerTest)) {
+		if (hitResult == null) {
+			if (integer == 0)
 				leftClickCounter = 10;
-			}
-		} else if (objectMouseOver.typeOfHit == 1) {
+		} else if (hitResult.typeOfHit == 1) {
+			if (integer == 0)
+				player.a(hitResult.entityHit);
+			if (integer == 1)
+				player.c(hitResult.entityHit);
+		} else if (hitResult.typeOfHit == 0) {
+			final int blockX = hitResult.blockX;
+			final int n = hitResult.blockY;
+			final int blockZ = hitResult.blockZ;
+			final int sideHit = hitResult.sideHit;
+			final Block block = Block.BLOCKS[world.getBlockId(blockX, n, blockZ)];
 			if (integer == 0) {
-				player.a(objectMouseOver.entityHit);
-			}
-			if (integer == 1) {
-				player.c(objectMouseOver.entityHit);
-			}
-		} else if (objectMouseOver.typeOfHit == 0) {
-			final int blockX = objectMouseOver.blockX;
-			final int n = objectMouseOver.blockY;
-			final int blockZ = objectMouseOver.blockZ;
-			final int sideHit = objectMouseOver.sideHit;
-			final Block block = Block.blocksList[world.getBlockId(blockX, n, blockZ)];
-			if (integer == 0) {
-				world.onBlockHit(blockX, n, blockZ, objectMouseOver.sideHit);
-				if (block != Block.bedrock || player.unusedByte >= 100) {
+				world.onBlockHit(blockX, n, blockZ, hitResult.sideHit);
+				if (block != Block.bedrock || player.unusedByte >= 100)
 					playerController.clickBlock(blockX, n, blockZ);
-				}
 			} else {
 				final ItemStack currentItem = player.inventory.getCurrentItem();
 				final int blockId = world.getBlockId(blockX, n, blockZ);
-				if (blockId > 0 && Block.blocksList[blockId].blockActivated(world, blockX, n, blockZ, player)) {
+				if (blockId > 0 && Block.BLOCKS[blockId].blockActivated(world, blockX, n, blockZ, player)
+						|| currentItem == null)
 					return;
-				}
-				if (currentItem == null) {
-					return;
-				}
 				final int stackSize = currentItem.stackSize;
-				if (currentItem.useItem(player, world, blockX, n, blockZ, sideHit)) {
+				if (currentItem.useItem(player, world, blockX, n, blockZ, sideHit))
 					entityRenderer.itemRenderer.resetEquippedProgress();
-				}
-				if (currentItem.stackSize == 0) {
+				if (currentItem.stackSize == 0)
 					player.inventory.mainInventory[player.inventory.currentItem] = null;
-				} else if (currentItem.stackSize != stackSize) {
+				else if (currentItem.stackSize != stackSize)
 					entityRenderer.itemRenderer.b();
-				}
 			}
 		}
 		if (integer == 1) {
@@ -520,77 +507,67 @@ public class OpenCraft implements Runnable, GLFWFramebufferSizeCallbackI {
 			if (currentItem2 != null) {
 				final int n = currentItem2.stackSize;
 				final ItemStack useItemRightClick = currentItem2.useItemRightClick(world, player);
-				if (useItemRightClick != currentItem2 || (useItemRightClick != null && useItemRightClick.stackSize != n)) {
+				if (useItemRightClick != currentItem2
+						|| useItemRightClick != null && useItemRightClick.stackSize != n) {
 					player.inventory.mainInventory[player.inventory.currentItem] = useItemRightClick;
 					entityRenderer.itemRenderer.d();
-					if (useItemRightClick.stackSize == 0) {
+					if (useItemRightClick.stackSize == 0)
 						player.inventory.mainInventory[player.inventory.currentItem] = null;
-					}
 				}
 			}
 		}
 	}
 
 	private void clickMiddleMouseButton() {
-		if (objectMouseOver != null) {
-			int integer = world.getBlockId(objectMouseOver.blockX, objectMouseOver.blockY, objectMouseOver.blockZ);
-			if (integer == Block.grass.blockID) {
-				integer = Block.dirt.blockID;
-			}
-			if (integer == Block.slabDouble.blockID) {
-				integer = Block.slabSingle.blockID;
-			}
-			if (integer == Block.bedrock.blockID) {
-				integer = Block.stone.blockID;
-			}
-			player.inventory.setCurrentItem(integer, playerController instanceof PlayerControllerTest);
-		}
+		if (hitResult == null)
+			return;
+
+		int blockId = world.getBlockId(hitResult.blockX, hitResult.blockY, hitResult.blockZ);
+		if (blockId == Block.grass.id)
+			blockId = Block.dirt.id;
+		else if (blockId == Block.slabDouble.id)
+			blockId = Block.slabSingle.id;
+		else if (blockId == Block.bedrock.id)
+			blockId = Block.stone.id;
+		player.inventory.setCurrentItem(blockId);
 	}
 
 	public void tick() {
 		ingameGUI.updateTick();
-		if (!isGamePaused && world != null) {
+		if (!isGamePaused && world != null)
 			playerController.updateController();
-		}
 		glBindTexture(3553, renderer.loadTexture("/assets/terrain.png"));
-		if (!isGamePaused) {
+		if (!isGamePaused)
 			renderer.updateDynamicTextures();
-		}
-		if (currentScreen == null && player != null && player.health <= 0) {
+		if (currentScreen == null && player != null && player.health <= 0)
 			displayGuiScreen(null);
-		}
 
-		if (leftClickCounter > 0) {
+		if (leftClickCounter > 0)
 			--leftClickCounter;
-		}
 
 		if (currentScreen == null || currentScreen.allowUserInput) {
-			for ( MouseHandler.ButtonEvent event : mouse.buttons.events ) {
+			for (MouseHandler.ButtonEvent event : mouse.buttons.events) {
 				if (System.currentTimeMillis() - systemTime > 200L)
 					continue;
 
 				if (currentScreen == null) {
-					if (!inGameHasFocus && event.isPressed()) {
+					if (!inGameHasFocus && event.isPressed())
 						setIngameFocus();
-					} else {
-						if (event.isPressed()) {
-							clickMouse(event.buttonNumber());
-							mouseTicksRan = ticksRan;
-						}
+					else if (event.isPressed()) {
+						clickMouse(event.buttonNumber());
+						mouseTicksRan = ticksRan;
 					}
 				} else {
-					if (currentScreen == null) {
+					if (currentScreen == null)
 						continue;
-					}
 					currentScreen.handleMouseEvent(event);
 				}
 			}
 
-			if (currentScreen == null) {
-				for ( Integer key : keyboard.pressedKeys ) {
-					if (key == GLFW_KEY_ESCAPE) {
+			if (currentScreen == null)
+				for (Integer key : keyboard.pressedKeys) {
+					if (key == GLFW_KEY_ESCAPE)
 						displayInGameMenu();
-					}
 
 					if (key == GLFW_KEY_F5) {
 						options.thirdPersonView = !options.thirdPersonView;
@@ -601,13 +578,12 @@ public class OpenCraft implements Runnable, GLFWFramebufferSizeCallbackI {
 						displayGuiScreen(new GuiInventory(player.inventory));
 
 					if (key == options.keyBindings.get(GameSettings.PlayerInput.DROP))
-						player.dropPlayerItemWithRandomChoice(player.inventory.decrStackSize(player.inventory.currentItem, 1), false);
+						player.dropPlayerItemWithRandomChoice(
+								player.inventory.decrStackSize(player.inventory.currentItem, 1), false);
 
-					if (key >= GLFW_KEY_1 && key <= GLFW_KEY_9) {
+					if (key >= GLFW_KEY_1 && key <= GLFW_KEY_9)
 						player.inventory.currentItem = key - GLFW_KEY_1;
-					}
 				}
-			}
 
 			if (currentScreen == null) {
 				if (mouse.isButtonPressed(1) && ticksRan - mouseTicksRan >= timer.tps / 4.0f && inGameHasFocus) {
@@ -621,9 +597,8 @@ public class OpenCraft implements Runnable, GLFWFramebufferSizeCallbackI {
 			}
 			func_6254_a(0, currentScreen == null && mouse.isButtonPressed(1) && inGameHasFocus);
 		}
-		if (currentScreen != null) {
+		if (currentScreen != null)
 			mouseTicksRan = ticksRan + 10000;
-		}
 		if (currentScreen != null) {
 			currentScreen.handleInputEvents();
 			if (currentScreen != null)
@@ -639,7 +614,8 @@ public class OpenCraft implements Runnable, GLFWFramebufferSizeCallbackI {
 				if (!isMultiplayerWorld())
 					world.tick();
 
-				world.randomDisplayUpdates(Mth.floor_double(player.posX), Mth.floor_double(player.posY), Mth.floor_double(player.posZ));
+				world.randomDisplayUpdates(Mth.floor_double(player.posX), Mth.floor_double(player.posY),
+						Mth.floor_double(player.posZ));
 
 				effectRenderer.updateEffects();
 			}
@@ -655,11 +631,10 @@ public class OpenCraft implements Runnable, GLFWFramebufferSizeCallbackI {
 		changeWorld1(null);
 		System.gc();
 		final World world = new World(new File(getGameDir(), "saves"), string);
-		if (world.isNewWorld) {
+		if (world.newWorld)
 			changeWorld2(world, "Generating level");
-		} else {
+		else
 			changeWorld2(world, "Loading level");
-		}
 	}
 
 	public void changeWorld1(final World fe) {
@@ -667,9 +642,8 @@ public class OpenCraft implements Runnable, GLFWFramebufferSizeCallbackI {
 	}
 
 	public void changeWorld2(final World fe, final String string) {
-		if (world != null) {
+		if (world != null)
 			world.saveWorldIndirectly(loadingScreen);
-		}
 		if ((world = fe) != null) {
 			playerController.func_717_a(fe);
 			fe.h = font;
@@ -680,7 +654,7 @@ public class OpenCraft implements Runnable, GLFWFramebufferSizeCallbackI {
 				player.preparePlayerToSpawn();
 				if (fe != null) {
 					fe.player = player;
-					fe.entityJoinedWorld(player);
+					fe.onEntityJoin(player);
 				}
 			}
 			func_6255_d(string);
@@ -689,53 +663,49 @@ public class OpenCraft implements Runnable, GLFWFramebufferSizeCallbackI {
 				playerController.flipPlayer(player);
 			}
 			player.movementInput = new MovementInput(options, keyboard);
-			if (renderGlobal != null) {
+			if (renderGlobal != null)
 				renderGlobal.changeWorld(fe);
-			}
-			if (effectRenderer != null) {
+			if (effectRenderer != null)
 				effectRenderer.clearEffects(fe);
-			}
 			playerController.func_6473_b(player);
 			fe.player = player;
 			fe.spawnPlayerWithLoadedChunks();
-			if (fe.isNewWorld) {
+			if (fe.newWorld)
 				fe.saveWorldIndirectly(loadingScreen);
-			}
 		}
 		System.gc();
 		systemTime = 0L;
-		this.sndManager.currentMusicTheme = "ingame";
-		this.sndManager.ticksBeforeMusic = 0;
-		this.sndManager.stopSound("BgMusic");
+		sndManager.currentMusicTheme = "ingame";
+		sndManager.ticksBeforeMusic = 0;
+		sndManager.stopSound("BgMusic");
 	}
 
 	private void func_6255_d(final String string) {
 		loadingScreen.printText(string);
-		loadingScreen.displayLoadingString("Building terrain");
+		loadingScreen.setLoadingMessage("Building terrain");
 		final int n = 128;
 		int n2 = 0;
 		int n3 = n * 2 / 16 + 1;
 		n3 *= n3;
-		for ( int i = -n; i <= n; i += 16 ) {
+		for (int i = -n; i <= n; i += 16) {
 			int x = world.x;
 			int z = world.z;
 			if (world.player != null) {
 				x = (int) world.player.posX;
 				z = (int) world.player.posZ;
 			}
-			for ( int j = -n; j <= n; j += 16 ) {
-				loadingScreen.setLoadingProgress(n2++ * 100 / n3);
+			for (int j = -n; j <= n; j += 16) {
+				loadingScreen.setProgress(n2++ * 100 / n3);
 				world.getBlockId(x + i, 64, z + j);
-				while(world.updatingLighting()) {
+				while (world.updatingLighting()) {
 				}
 			}
 		}
-		loadingScreen.displayLoadingString("Simulating world for a bit");
+		loadingScreen.setLoadingMessage("Simulating world for a bit");
 		n3 = 2000;
 		SandBlock.fallInstantly = true;
-		for ( int i = 0; i < n3; ++i ) {
+		for (int i = 0; i < n3; ++i)
 			world.TickUpdates(true);
-		}
 		world.func_656_j();
 		SandBlock.fallInstantly = false;
 	}
@@ -753,9 +723,8 @@ public class OpenCraft implements Runnable, GLFWFramebufferSizeCallbackI {
 	}
 
 	public void respawn() {
-		if (player != null && world != null) {
+		if (player != null && world != null)
 			world.setEntityDead(player);
-		}
 		world.a();
 		(player = new EntityPlayerSP(oc, world, sessionData)).preparePlayerToSpawn();
 		playerController.flipPlayer(player);
@@ -775,7 +744,7 @@ public class OpenCraft implements Runnable, GLFWFramebufferSizeCallbackI {
 	}
 
 	public float getTickDelta() {
-		return this.timer.tickDelta;
+		return timer.tickDelta;
 	}
 
 	@Override

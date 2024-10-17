@@ -112,7 +112,7 @@ public class EntityPainting extends Entity {
 		if (this.tickCounter1++ == 100 && !this.onValidSurface()) {
 			this.tickCounter1 = 0;
 			this.setEntityDead();
-			this.world.entityJoinedWorld(new EntityItem(this.world, this.posX, this.posY, this.posZ, new ItemStack(Item.painting)));
+			this.world.onEntityJoin(new EntityItem(this.world, this.posX, this.posY, this.posZ, new ItemStack(Item.painting)));
 		}
 	}
 
@@ -168,7 +168,7 @@ public class EntityPainting extends Entity {
 	@Override
 	public boolean attackEntityFrom(final Entity entity, final int nya1) {
 		this.setEntityDead();
-		this.world.entityJoinedWorld(new EntityItem(this.world, this.posX, this.posY, this.posZ, new ItemStack(Item.painting)));
+		this.world.onEntityJoin(new EntityItem(this.world, this.posX, this.posY, this.posZ, new ItemStack(Item.painting)));
 		return true;
 	}
 

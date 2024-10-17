@@ -173,7 +173,7 @@ public class EntityItem extends Entity {
 	}
 
 	@Override
-	public void onCollideWithPlayer(final EntityPlayer entityPlayer) {
+	public void onCollideWithPlayer(final Player entityPlayer) {
 		if (this.delayBeforeCanPickup == 0 && entityPlayer.inventory.addItemStackToInventory(this.item)) {
 			this.world.playSound((Entity) this, "random.pop", 0.2f, ((this.rand.nextFloat() - this.rand.nextFloat()) * 0.7f + 1.0f) * 2.0f);
 			entityPlayer.onItemPickup(this);

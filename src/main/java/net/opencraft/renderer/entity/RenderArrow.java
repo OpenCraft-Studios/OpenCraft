@@ -42,14 +42,14 @@ public class RenderArrow extends Render<EntityArrow> {
 		t.vertexUV(-7.0, -2.0, 2.0, f8, f9);
 		t.vertexUV(-7.0, 2.0, 2.0, f8, f10);
 		t.vertexUV(-7.0, 2.0, -2.0, f7, f10);
-		t.draw();
+		t.render();
 		GL11.glNormal3f((float) (-f11), (float) 0.0f, (float) 0.0f);
 		t.beginQuads();
 		t.vertexUV(-7.0, 2.0, -2.0, f7, f9);
 		t.vertexUV(-7.0, 2.0, 2.0, f8, f9);
 		t.vertexUV(-7.0, -2.0, 2.0, f8, f10);
 		t.vertexUV(-7.0, -2.0, -2.0, f7, f10);
-		t.draw();
+		t.render();
 		for ( int i = 0; i < 4; ++i ) {
 			GL11.glRotatef((float) 90.0f, (float) 1.0f, (float) 0.0f, (float) 0.0f);
 			GL11.glNormal3f((float) 0.0f, (float) 0.0f, (float) f11);
@@ -58,7 +58,7 @@ public class RenderArrow extends Render<EntityArrow> {
 			t.vertexUV(8.0, -2.0, 0.0, f4, f5);
 			t.vertexUV(8.0, 2.0, 0.0, f4, f6);
 			t.vertexUV(-8.0, 2.0, 0.0, f3, f6);
-			t.draw();
+			t.render();
 		}
 		GL11.glDisable((int) 32826);
 		GL11.glPopMatrix();

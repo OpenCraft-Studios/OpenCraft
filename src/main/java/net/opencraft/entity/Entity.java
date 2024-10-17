@@ -340,11 +340,11 @@ public abstract class Entity {
 			final int k = this.world.getBlockId(floor_double, floor_double2, floor_double3);
 			if (this.distanceWalkedModified > this.nextStepDistance && k > 0) {
 				++this.nextStepDistance;
-				final StepSound stepSound = Block.blocksList[k].stepSound;
-				if (!Block.blocksList[k].blockMaterial.isLiquid()) {
+				final StepSound stepSound = Block.BLOCKS[k].stepSound;
+				if (!Block.BLOCKS[k].blockMaterial.isLiquid()) {
 					this.world.playSound(this, stepSound.stepSoundDir2(), stepSound.soundVolume() * 0.15f, stepSound.soundPitch());
 				}
-				Block.blocksList[k].onEntityWalking(this.world, floor_double, floor_double2, floor_double3, this);
+				Block.BLOCKS[k].onEntityWalking(this.world, floor_double, floor_double2, floor_double3, this);
 			}
 		}
 		this.ySize *= 0.4f;
@@ -378,7 +378,7 @@ public abstract class Entity {
 	}
 
 	public boolean handleWaterMovement() {
-		return this.world.handleMaterialAcceleration(this.boundingBox.expand(0.0, -0.4000000059604645, 0.0), Material.WATER, this);
+		return this.world.handleMaterialAcceleration(this.boundingBox.grow(0.0, -0.4000000059604645, 0.0), Material.WATER, this);
 	}
 
 	public boolean isInsideOfMaterial(final Material material) {
@@ -387,7 +387,7 @@ public abstract class Entity {
 		final int floor_float = (int) double1;
 		final int floor_double2 = Mth.floor_double(this.posZ);
 		final int blockId = this.world.getBlockId(floor_double, floor_float, floor_double2);
-		return blockId != 0 && Block.blocksList[blockId].blockMaterial == material && double1 < floor_float + 1 - (LiquidBlock.getPercentAir(this.world.getBlockMetadata(floor_double, floor_float, floor_double2)) - 0.11111111f);
+		return blockId != 0 && Block.BLOCKS[blockId].blockMaterial == material && double1 < floor_float + 1 - (LiquidBlock.getPercentAir(this.world.getBlockMetadata(floor_double, floor_float, floor_double2)) - 0.11111111f);
 	}
 
 	protected float getEyeHeight() {
@@ -395,7 +395,7 @@ public abstract class Entity {
 	}
 
 	public boolean handleLavaMovement() {
-		return this.world.isMaterialInBB(this.boundingBox.expand(0.0, -0.4000000059604645, 0.0), Material.LAVA);
+		return this.world.isMaterialInBB(this.boundingBox.grow(0.0, -0.4000000059604645, 0.0), Material.LAVA);
 	}
 
 	public void moveFlying(float xCoord, float yCoord, final float zCoord) {
@@ -462,7 +462,7 @@ public abstract class Entity {
 		return n * n + n2 * n2 + n3 * n3;
 	}
 
-	public void onCollideWithPlayer(final EntityPlayer entityPlayer) {
+	public void onCollideWithPlayer(final Player entityPlayer) {
 	}
 
 	public void applyEntityCollision(final Entity entity) {
@@ -552,25 +552,25 @@ public abstract class Entity {
 		final NBTTagList tagList2 = nbt.getTagList("Motion");
 		final NBTTagList tagList3 = nbt.getTagList("Rotation");
 		this.setPosition(0.0, 0.0, 0.0);
-		this.motionX = ((NBTTagDouble) tagList2.tagAt(0)).doubleValue;
-		this.motionY = ((NBTTagDouble) tagList2.tagAt(1)).doubleValue;
-		this.motionZ = ((NBTTagDouble) tagList2.tagAt(2)).doubleValue;
-		final double doubleValue = ((NBTTagDouble) tagList.tagAt(0)).doubleValue;
+		this.motionX = ((NBTTagDouble) tagList2.getTag(0)).doubleValue;
+		this.motionY = ((NBTTagDouble) tagList2.getTag(1)).doubleValue;
+		this.motionZ = ((NBTTagDouble) tagList2.getTag(2)).doubleValue;
+		final double doubleValue = ((NBTTagDouble) tagList.getTag(0)).doubleValue;
 		this.posX = doubleValue;
 		this.lastTickPosX = doubleValue;
 		this.prevPosX = doubleValue;
-		final double doubleValue2 = ((NBTTagDouble) tagList.tagAt(1)).doubleValue;
+		final double doubleValue2 = ((NBTTagDouble) tagList.getTag(1)).doubleValue;
 		this.posY = doubleValue2;
 		this.lastTickPosY = doubleValue2;
 		this.prevPosY = doubleValue2;
-		final double doubleValue3 = ((NBTTagDouble) tagList.tagAt(2)).doubleValue;
+		final double doubleValue3 = ((NBTTagDouble) tagList.getTag(2)).doubleValue;
 		this.posZ = doubleValue3;
 		this.lastTickPosZ = doubleValue3;
 		this.prevPosZ = doubleValue3;
-		final float floatValue = ((NBTTagFloat) tagList3.tagAt(0)).floatValue;
+		final float floatValue = ((NBTTagFloat) tagList3.getTag(0)).floatValue;
 		this.rotationYaw = floatValue;
 		this.prevRotationYaw = floatValue;
-		final float floatValue2 = ((NBTTagFloat) tagList3.tagAt(1)).floatValue;
+		final float floatValue2 = ((NBTTagFloat) tagList3.getTag(1)).floatValue;
 		this.rotationPitch = floatValue2;
 		this.prevRotationPitch = floatValue2;
 		this.fallDistance = nbt.getFloat("FallDistance");
@@ -612,7 +612,7 @@ public abstract class Entity {
 	public EntityItem entityDropItem(final int integer1, final int integer2, final float float3) {
 		final EntityItem entity = new EntityItem(this.world, this.posX, this.posY + float3, this.posZ, new ItemStack(integer1, integer2));
 		entity.delayBeforeCanPickup = 10;
-		this.world.entityJoinedWorld(entity);
+		this.world.onEntityJoin(entity);
 		return entity;
 	}
 
@@ -624,7 +624,7 @@ public abstract class Entity {
 		return this.world.isBlockNormalCube(Mth.floor_double(this.posX), Mth.floor_double(this.posY + this.getEyeHeight()), Mth.floor_double(this.posZ));
 	}
 
-	public boolean interact(final EntityPlayer entityPlayer) {
+	public boolean interact(final Player entityPlayer) {
 		return false;
 	}
 
@@ -697,6 +697,10 @@ public abstract class Entity {
 		}
 		this.ridingEntity = entity;
 		entity.riddenByEntity = this;
+	}
+
+	public void joinWorld(World world) {
+		world.onEntityJoin(this);
 	}
 
 }

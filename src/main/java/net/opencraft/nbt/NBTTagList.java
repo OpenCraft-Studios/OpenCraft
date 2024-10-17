@@ -9,36 +9,28 @@ import java.util.List;
 
 public class NBTTagList extends NBTBase {
 
-	private List tagList;
+	private final List<NBTBase> tagList = new ArrayList<>();
 	private byte tagType;
 
-	public NBTTagList() {
-		this.tagList = (List) new ArrayList();
+	@Override
+	public void write(DataOutput dos) throws IOException {
+		tagType = tagList.isEmpty() ? 1 : tagList.get(0).getType();
+
+		dos.writeByte(tagType);
+		dos.writeInt(tagCount());
+		for (NBTBase nbt : tagList)
+			nbt.write(dos);
 	}
 
 	@Override
-	public void writeTagContents(final DataOutput dataOutput) throws IOException {
-		if (this.tagList.size() > 0) {
-			this.tagType = ((NBTBase) this.tagList.get(0)).getType();
-		} else {
-			this.tagType = 1;
-		}
-		dataOutput.writeByte((int) this.tagType);
-		dataOutput.writeInt(this.tagList.size());
-		for ( int i = 0; i < this.tagList.size(); ++i ) {
-			((NBTBase) this.tagList.get(i)).writeTagContents(dataOutput);
-		}
-	}
-
-	@Override
-	public void readTagContents(final DataInput dataInput) throws IOException {
-		this.tagType = dataInput.readByte();
-		final int int1 = dataInput.readInt();
-		this.tagList = (List) new ArrayList();
-		for ( int i = 0; i < int1; ++i ) {
-			final NBTBase tagOfType = NBTBase.createTagOfType(this.tagType);
-			tagOfType.readTagContents(dataInput);
-			this.tagList.add(tagOfType);
+	public void read(final DataInput dataInput) throws IOException {
+		tagType = dataInput.readByte();
+		int listLen = dataInput.readInt();
+		tagList.clear();
+		for (int i = 0; i < listLen; ++i) {
+			NBTBase nbt = NBTBase.createTagOfType(this.tagType);
+			nbt.read(dataInput);
+			tagList.add(nbt);
 		}
 	}
 
@@ -48,16 +40,16 @@ public class NBTTagList extends NBTBase {
 	}
 
 	public String toString() {
-		return new StringBuilder().append("").append(this.tagList.size()).append(" entries of type ").append(NBTBase.getTagName(this.tagType)).toString();
+		return "%d entries of type %s".formatted(tagCount(), NBTBase.getTagName(this.tagType));
 	}
 
-	public void setTag(final NBTBase hm) {
-		this.tagType = hm.getType();
-		this.tagList.add(hm);
+	public void setTag(NBTBase nbt) {
+		this.tagType = nbt.getType();
+		this.tagList.add(nbt);
 	}
 
-	public NBTBase tagAt(final int integer) {
-		return (NBTBase) this.tagList.get(integer);
+	public NBTBase getTag(int index) {
+		return tagList.get(index);
 	}
 
 	public int tagCount() {

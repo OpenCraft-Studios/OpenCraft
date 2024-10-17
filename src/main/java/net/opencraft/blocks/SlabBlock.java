@@ -44,15 +44,15 @@ public class SlabBlock extends Block {
 		if (this != Block.slabSingle) {
 			super.onBlockAdded(world, xCoord, yCoord, zCoord);
 		}
-		if (world.getBlockId(xCoord, yCoord - 1, zCoord) == SlabBlock.slabSingle.blockID) {
+		if (world.getBlockId(xCoord, yCoord - 1, zCoord) == SlabBlock.slabSingle.id) {
 			world.setBlockWithNotify(xCoord, yCoord, zCoord, 0);
-			world.setBlockWithNotify(xCoord, yCoord - 1, zCoord, Block.slabDouble.blockID);
+			world.setBlockWithNotify(xCoord, yCoord - 1, zCoord, Block.slabDouble.id);
 		}
 	}
 
 	@Override
 	public int idDropped(final int blockid, final Random random) {
-		return Block.slabSingle.blockID;
+		return Block.slabSingle.id;
 	}
 
 	@Override
@@ -65,7 +65,7 @@ public class SlabBlock extends Block {
 		if (this != Block.slabSingle) {
 			super.shouldSideBeRendered(blockAccess, xCoord, yCoord, zCoord, nya4);
 		}
-		return nya4 == 1 || (super.shouldSideBeRendered(blockAccess, xCoord, yCoord, zCoord, nya4) && (nya4 == 0 || blockAccess.getBlockId(xCoord, yCoord, zCoord) != this.blockID));
+		return nya4 == 1 || (super.shouldSideBeRendered(blockAccess, xCoord, yCoord, zCoord, nya4) && (nya4 == 0 || blockAccess.getBlockId(xCoord, yCoord, zCoord) != this.id));
 	}
 
 }

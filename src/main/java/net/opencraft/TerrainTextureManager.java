@@ -61,10 +61,10 @@ public class TerrainTextureManager {
 			ex.printStackTrace();
 		}
 		for ( int l = 0; l < 256; ++l ) {
-			if (Block.blocksList[l] != null) {
-				this.field_1182_g[l * 3 + 0] = Block.blocksList[l].getBlockTextureFromSide(1);
-				this.field_1182_g[l * 3 + 1] = Block.blocksList[l].getBlockTextureFromSide(2);
-				this.field_1182_g[l * 3 + 2] = Block.blocksList[l].getBlockTextureFromSide(3);
+			if (Block.BLOCKS[l] != null) {
+				this.field_1182_g[l * 3 + 0] = Block.BLOCKS[l].getBlockTextureFromSide(1);
+				this.field_1182_g[l * 3 + 1] = Block.BLOCKS[l].getBlockTextureFromSide(2);
+				this.field_1182_g[l * 3 + 2] = Block.BLOCKS[l].getBlockTextureFromSide(3);
 			}
 		}
 	}
@@ -98,12 +98,12 @@ public class TerrainTextureManager {
 				for ( int k = 0; k < 128; ++k ) {
 					final int n8 = n6 - n5 - k + 160 - 16;
 					if (n8 < this.field_1183_f[n7] || n8 < this.field_1183_f[n7 + 1]) {
-						final Block block = Block.blocksList[worldObj.getBlockId(j, k, i)];
+						final Block block = Block.BLOCKS[worldObj.getBlockId(j, k, i)];
 						if (block == null) {
 							b = false;
 						} else if (block.blockMaterial == Material.WATER) {
 							final int blockId = worldObj.getBlockId(j, k + 1, i);
-							if (blockId == 0 || Block.blocksList[blockId].blockMaterial != Material.WATER) {
+							if (blockId == 0 || Block.BLOCKS[blockId].blockMaterial != Material.WATER) {
 								final float n9 = worldObj.getLightBrightness(j, k + 1, i) * (k / 127.0f * 0.6f + 0.4f);
 								if (n8 >= 0) {
 									if (n8 < 160) {
@@ -132,7 +132,7 @@ public class TerrainTextureManager {
 							final float n11 = k / 127.0f * 0.6f + 0.4f;
 							if (n8 >= 0 && n8 < 160) {
 								final int n12 = n7 + n8 * 32;
-								final int n13 = this.field_1182_g[block.blockID * 3 + 0];
+								final int n13 = this.field_1182_g[block.id * 3 + 0];
 								final float n14 = (worldObj.getLightBrightness(j, k + 1, i) * 0.8f + 0.2f) * n11;
 								final int n15 = n13;
 								if (n7 >= 0) {
@@ -152,9 +152,9 @@ public class TerrainTextureManager {
 							}
 							if (n8 >= -1 && n8 < 159) {
 								final int n12 = n7 + (n8 + 1) * 32;
-								final int n13 = this.field_1182_g[block.blockID * 3 + 1];
+								final int n13 = this.field_1182_g[block.id * 3 + 1];
 								final float n14 = worldObj.getLightBrightness(j - 1, k, i) * 0.8f + 0.2f;
-								final int n15 = this.field_1182_g[block.blockID * 3 + 2];
+								final int n15 = this.field_1182_g[block.id * 3 + 2];
 								final float n16 = worldObj.getLightBrightness(j, k, i + 1) * 0.8f + 0.2f;
 								if (n7 >= 0) {
 									final float n17 = n14 * n11 * 0.6f;

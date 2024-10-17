@@ -6,7 +6,7 @@ import java.util.Random;
 import net.opencraft.blocks.Block;
 import net.opencraft.entity.Entity;
 import net.opencraft.entity.EntityLiving;
-import net.opencraft.entity.EntityPlayer;
+import net.opencraft.entity.Player;
 import net.opencraft.world.World;
 
 public class Item {
@@ -111,7 +111,7 @@ public class Item {
 		return this.iconIndex;
 	}
 
-	public boolean onItemUse(final ItemStack hw, final EntityPlayer gi, final World fe, final int xCoord, final int yCoord, final int zCoord, final int integer7) {
+	public boolean onItemUse(final ItemStack hw, final Player gi, final World fe, final int xCoord, final int yCoord, final int zCoord, final int integer7) {
 		return false;
 	}
 
@@ -119,7 +119,7 @@ public class Item {
 		return 1.0f;
 	}
 
-	public ItemStack onItemRightClick(final ItemStack hw, final World fe, final EntityPlayer gi) {
+	public ItemStack onItemRightClick(final ItemStack hw, final World fe, final Player gi) {
 		return hw;
 	}
 
@@ -190,7 +190,7 @@ public class Item {
 		Item.hoeSteel = new ItemHoe(36, 2).setIconIndex(130);
 		Item.hoeDiamond = new ItemHoe(37, 3).setIconIndex(131);
 		Item.hoeGold = new ItemHoe(38, 4).setIconIndex(132);
-		Item.seeds = new ItemSeeds(39, Block.crops.blockID).setIconIndex(9);
+		Item.seeds = new ItemSeeds(39, Block.crops.id).setIconIndex(9);
 		Item.wheat = new Item(40).setIconIndex(25);
 		Item.bread = new ItemFood(41, 5).setIconIndex(41);
 		Item.helmetLeather = new ItemArmor(42, 0, 0, 0).setIconIndex(0);
@@ -221,8 +221,8 @@ public class Item {
 		Item.sign = new ItemSign(67).setIconIndex(42);
 		Item.door = new ItemDoor(68).setIconIndex(43);
 		Item.bucketEmpty = new ItemBucket(69, 0).setIconIndex(74);
-		Item.bucketWater = new ItemBucket(70, Block.waterMoving.blockID).setIconIndex(75);
-		Item.bucketLava = new ItemBucket(71, Block.lavaMoving.blockID).setIconIndex(76);
+		Item.bucketWater = new ItemBucket(70, Block.waterMoving.id).setIconIndex(75);
+		Item.bucketLava = new ItemBucket(71, Block.lavaMoving.id).setIconIndex(76);
 		Item.minecart = new ItemMinecart(72).setIconIndex(135);
 		Item.saddle = new ItemSaddle(73).setIconIndex(104);
 	}

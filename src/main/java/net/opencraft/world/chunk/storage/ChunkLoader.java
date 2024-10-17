@@ -6,7 +6,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
-import net.opencraft.CompressedStreamTools;
+import net.opencraft.GZTools;
 import net.opencraft.entity.Entity;
 import net.opencraft.entity.EntityList;
 import net.opencraft.nbt.NBTBase;
@@ -57,7 +57,7 @@ public class ChunkLoader implements IChunkLoader {
 		final File chunkFileForXZ = this.chunkFileForXZ(integer2, integer3);
 		if (chunkFileForXZ != null && chunkFileForXZ.exists()) {
 			try {
-				return loadChunkIntoWorldFromCompound(fe, CompressedStreamTools.loadGzippedCompoundFromOutputStream((InputStream) new FileInputStream(chunkFileForXZ)).getCompoundTag("Level"));
+				return loadChunkIntoWorldFromCompound(fe, GZTools.loadGZTagOS((InputStream) new FileInputStream(chunkFileForXZ)).getCompoundTag("Level"));
 			} catch(Exception ex) {
 				ex.printStackTrace();
 			}
@@ -68,7 +68,7 @@ public class ChunkLoader implements IChunkLoader {
 	public void saveChunk(final World fe, final Chunk jw) {
 		final File chunkFileForXZ = this.chunkFileForXZ(jw.xPosition, jw.zPosition);
 		if (chunkFileForXZ.exists()) {
-			fe.setSizeOnDisk -= chunkFileForXZ.length();
+			fe.diskSize -= chunkFileForXZ.length();
 		}
 		try {
 			final File file = new File(this.saveDir, "tmp_chunk.dat");
@@ -77,13 +77,13 @@ public class ChunkLoader implements IChunkLoader {
 			final NBTTagCompound nbtTagCompound = new NBTTagCompound();
 			ae.setTag("Level", (NBTBase) nbtTagCompound);
 			this.storeChunkInCompound(jw, fe, nbtTagCompound);
-			CompressedStreamTools.writeGzippedCompoundToOutputStream(ae, (OutputStream) outputStream);
+			GZTools.writeGZTagOS(ae, (OutputStream) outputStream);
 			outputStream.close();
 			if (chunkFileForXZ.exists()) {
 				chunkFileForXZ.delete();
 			}
 			file.renameTo(chunkFileForXZ);
-			fe.setSizeOnDisk += chunkFileForXZ.length();
+			fe.diskSize += chunkFileForXZ.length();
 		} catch(Exception ex) {
 			ex.printStackTrace();
 		}
@@ -92,7 +92,7 @@ public class ChunkLoader implements IChunkLoader {
 	public void storeChunkInCompound(final Chunk jw, final World fe, final NBTTagCompound ae) {
 		ae.setInteger("xPos", jw.xPosition);
 		ae.setInteger("zPos", jw.zPosition);
-		ae.setLong("LastUpdate", fe.getWorldTime);
+		ae.setLong("LastUpdate", fe.time);
 		ae.setByteArray("Blocks", jw.blocks);
 		ae.setByteArray("Data", jw.data.data);
 		ae.setByteArray("SkyLight", jw.skylightMap.data);
@@ -143,7 +143,7 @@ public class ChunkLoader implements IChunkLoader {
 		final NBTTagList tagList = ae.getTagList("Entities");
 		if (tagList != null) {
 			for ( int i = 0; i < tagList.tagCount(); ++i ) {
-				final Entity entityFromNBT = EntityList.createEntityFromNBT((NBTTagCompound) tagList.tagAt(i), fe);
+				final Entity entityFromNBT = EntityList.createEntityFromNBT((NBTTagCompound) tagList.getTag(i), fe);
 				chunk.hasEntities = true;
 				if (entityFromNBT != null) {
 					chunk.addEntity(entityFromNBT);
@@ -153,7 +153,7 @@ public class ChunkLoader implements IChunkLoader {
 		final NBTTagList tagList2 = ae.getTagList("TileEntities");
 		if (tagList2 != null) {
 			for ( int j = 0; j < tagList2.tagCount(); ++j ) {
-				final TileEntity andLoadEntity = TileEntity.createAndLoadEntity((NBTTagCompound) tagList2.tagAt(j));
+				final TileEntity andLoadEntity = TileEntity.createAndLoadEntity((NBTTagCompound) tagList2.getTag(j));
 				if (andLoadEntity != null) {
 					chunk.addTileEntity(andLoadEntity);
 				}

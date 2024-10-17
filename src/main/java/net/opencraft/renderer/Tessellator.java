@@ -50,7 +50,7 @@ public class Tessellator {
 		}
 	}
 
-	public void draw() {
+	public void render() {
 		if (!this.drawing)
 			throw new IllegalStateException("Not tesselating!");
 
@@ -231,7 +231,7 @@ public class Tessellator {
 		this.o += 8;
 		++this.h;
 		if (this.h % 4 == 0 && this.o >= this.B - 32) {
-			this.draw();
+			this.render();
 			this.drawing = true;
 		}
 	}

@@ -91,7 +91,7 @@ public class RenderPainting extends Render<EntityPainting> {
 				instance.vertexUV(n6, n8, n3, n22, n24);
 				instance.vertexUV(n6, n8, n4, n21, n24);
 				instance.vertexUV(n6, n7, n4, n21, n23);
-				instance.draw();
+				instance.render();
 			}
 		}
 	}

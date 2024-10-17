@@ -40,7 +40,7 @@ public class WorldGenMinable extends WorldGenerator {
 						final double n14 = (j + 0.5 - n8) / (n12 / 2.0);
 						final double n15 = (k + 0.5 - n9) / (n13 / 2.0);
 						final double n16 = (l + 0.5 - n10) / (n12 / 2.0);
-						if (n14 * n14 + n15 * n15 + n16 * n16 < 1.0 && fe.getBlockId(j, k, l) == Block.stone.blockID) {
+						if (n14 * n14 + n15 * n15 + n16 * n16 < 1.0 && fe.getBlockId(j, k, l) == Block.stone.id) {
 							fe.setBlock(j, k, l, this.minableBlockId);
 						}
 					}

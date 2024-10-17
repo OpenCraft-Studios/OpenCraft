@@ -17,14 +17,14 @@ public class GuiYesNo extends GuiScreen {
 
 	@Override
 	public void initGui() {
-		this.controlList.clear();
-		this.controlList.add(new GuiSmallButton(0, this.width / 2 - 155 + 0, this.height / 6 + 96, "Yes"));
-		this.controlList.add(new GuiSmallButton(1, this.width / 2 - 155 + 160, this.height / 6 + 96, "No"));
+		this.buttonList.clear();
+		this.buttonList.add(new GuiSmallButton(0, this.width / 2 - 155 + 0, this.height / 6 + 96, "Yes"));
+		this.buttonList.add(new GuiSmallButton(1, this.width / 2 - 155 + 160, this.height / 6 + 96, "No"));
 	}
 
 	@Override
 	protected void actionPerformed(final GuiButton iq) {
-		this.parentScreen.deleteWorld(iq.buttonId == 0, this.worldNumber);
+		this.parentScreen.deleteWorld(iq.id == 0, this.worldNumber);
 	}
 
 	@Override

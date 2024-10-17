@@ -77,7 +77,7 @@ public final class FontRenderer {
 			ag2.vertexUV(0.0f + f, 0.0f + f, 0.0, ((float) n6 + f) / 128.0f, ((float) n5 + f) / 128.0f);
 			ag2.vertexUV(0.0f + f, 0.0, 0.0, ((float) n6 + f) / 128.0f, (float) n5 / 128.0f);
 			ag2.vertexUV(0.0, 0.0, 0.0, (float) n6 / 128.0f, (float) n5 / 128.0f);
-			ag2.draw();
+			ag2.render();
 			glTranslatef((float) this.charWidth[n7], (float) 0.0f, (float) 0.0f);
 			glEndList();
 		}

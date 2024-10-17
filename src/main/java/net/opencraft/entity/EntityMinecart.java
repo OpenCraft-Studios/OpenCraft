@@ -107,7 +107,7 @@ public class EntityMinecart extends Entity implements IInventory {
 					entity.motionX = (float) this.rand.nextGaussian() * n4;
 					entity.motionY = (float) this.rand.nextGaussian() * n4 + 0.2f;
 					entity.motionZ = (float) this.rand.nextGaussian() * n4;
-					this.world.entityJoinedWorld(entity);
+					this.world.onEntityJoin(entity);
 				}
 			}
 		}
@@ -129,12 +129,12 @@ public class EntityMinecart extends Entity implements IInventory {
 		final int floor_double = Mth.floor_double(this.posX);
 		int floor_double2 = Mth.floor_double(this.posY);
 		final int floor_double3 = Mth.floor_double(this.posZ);
-		if (this.world.getBlockId(floor_double, floor_double2 - 1, floor_double3) == Block.rail.blockID) {
+		if (this.world.getBlockId(floor_double, floor_double2 - 1, floor_double3) == Block.rail.id) {
 			--floor_double2;
 		}
 		final double n = 0.4;
 		final double n2 = 0.0078125;
-		if (this.world.getBlockId(floor_double, floor_double2, floor_double3) == Block.rail.blockID) {
+		if (this.world.getBlockId(floor_double, floor_double2, floor_double3) == Block.rail.id) {
 			final Vec3 pos = this.getPos(this.posX, this.posY, this.posZ);
 			final int blockMetadata = this.world.getBlockMetadata(floor_double, floor_double2, floor_double3);
 			this.posY = floor_double2;
@@ -280,7 +280,7 @@ public class EntityMinecart extends Entity implements IInventory {
 			this.isInReverse = !this.isInReverse;
 		}
 		this.setRotation(this.rotationYaw, this.rotationPitch);
-		final List entitiesWithinAABBExcludingEntity = this.world.getEntitiesWithinAABBExcludingEntity(this, this.boundingBox.expand(0.20000000298023224, 0.0, 0.20000000298023224));
+		final List entitiesWithinAABBExcludingEntity = this.world.getEntitiesWithinAABBExcludingEntity(this, this.boundingBox.grow(0.20000000298023224, 0.0, 0.20000000298023224));
 		if (entitiesWithinAABBExcludingEntity != null && entitiesWithinAABBExcludingEntity.size() > 0) {
 			for ( int i = 0; i < entitiesWithinAABBExcludingEntity.size(); ++i ) {
 				final Entity entity = (Entity) entitiesWithinAABBExcludingEntity.get(i);
@@ -298,10 +298,10 @@ public class EntityMinecart extends Entity implements IInventory {
 		final int floor_double = Mth.floor_double(double1);
 		int floor_double2 = Mth.floor_double(double2);
 		final int floor_double3 = Mth.floor_double(double3);
-		if (this.world.getBlockId(floor_double, floor_double2 - 1, floor_double3) == Block.rail.blockID) {
+		if (this.world.getBlockId(floor_double, floor_double2 - 1, floor_double3) == Block.rail.id) {
 			--floor_double2;
 		}
-		if (this.world.getBlockId(floor_double, floor_double2, floor_double3) == Block.rail.blockID) {
+		if (this.world.getBlockId(floor_double, floor_double2, floor_double3) == Block.rail.id) {
 			final int blockMetadata = this.world.getBlockMetadata(floor_double, floor_double2, floor_double3);
 			double2 = floor_double2;
 			if (blockMetadata >= 2 && blockMetadata <= 5) {
@@ -329,10 +329,10 @@ public class EntityMinecart extends Entity implements IInventory {
 		final int floor_double = Mth.floor_double(double1);
 		int floor_double2 = Mth.floor_double(double2);
 		final int floor_double3 = Mth.floor_double(double3);
-		if (this.world.getBlockId(floor_double, floor_double2 - 1, floor_double3) == Block.rail.blockID) {
+		if (this.world.getBlockId(floor_double, floor_double2 - 1, floor_double3) == Block.rail.id) {
 			--floor_double2;
 		}
-		if (this.world.getBlockId(floor_double, floor_double2, floor_double3) == Block.rail.blockID) {
+		if (this.world.getBlockId(floor_double, floor_double2, floor_double3) == Block.rail.id) {
 			final int blockMetadata = this.world.getBlockMetadata(floor_double, floor_double2, floor_double3);
 			double2 = floor_double2;
 			if (blockMetadata >= 2 && blockMetadata <= 5) {
@@ -391,7 +391,7 @@ public class EntityMinecart extends Entity implements IInventory {
 		final NBTTagList tagList = nbtTagCompound.getTagList("Items");
 		this.cargoItems = new ItemStack[this.getSizeInventory()];
 		for ( int i = 0; i < tagList.tagCount(); ++i ) {
-			final NBTTagCompound ae = (NBTTagCompound) tagList.tagAt(i);
+			final NBTTagCompound ae = (NBTTagCompound) tagList.getTag(i);
 			final int n = ae.getByte("Slot") & 0xFF;
 			if (n >= 0 && n < this.cargoItems.length) {
 				this.cargoItems[n] = new ItemStack(ae);
@@ -484,7 +484,7 @@ public class EntityMinecart extends Entity implements IInventory {
 	}
 
 	@Override
-	public boolean interact(final EntityPlayer entityPlayer) {
+	public boolean interact(final Player entityPlayer) {
 		entityPlayer.mountEntity(this);
 		return true;
 	}

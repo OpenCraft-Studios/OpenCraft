@@ -29,7 +29,7 @@ public class WorldGenTrees extends WorldGenerator {
 				for ( int zCoord = integer5 - j; zCoord <= integer5 + j && n2 != 0; ++zCoord ) {
 					if (i >= 0 && i < 128) {
 						final int k = fe.getBlockId(blockId, i, zCoord);
-						if (k != 0 && k != Block.leaves.blockID) {
+						if (k != 0 && k != Block.leaves.id) {
 							n2 = 0;
 						}
 					} else {
@@ -42,10 +42,10 @@ public class WorldGenTrees extends WorldGenerator {
 			return false;
 		}
 		int i = fe.getBlockId(integer3, integer4 - 1, integer5);
-		if ((i != Block.grass.blockID && i != Block.dirt.blockID) || integer4 >= 128 - n - 1) {
+		if ((i != Block.grass.id && i != Block.dirt.id) || integer4 >= 128 - n - 1) {
 			return false;
 		}
-		fe.setBlock(integer3, integer4 - 1, integer5, Block.dirt.blockID);
+		fe.setBlock(integer3, integer4 - 1, integer5, Block.dirt.id);
 		for ( int j = integer4 - 3 + n; j <= integer4 + n; ++j ) {
 			final int blockId = j - (integer4 + n);
 			for ( int zCoord = 1 - blockId / 2, k = integer3 - zCoord; k <= integer3 + zCoord; ++k ) {
@@ -61,15 +61,15 @@ public class WorldGenTrees extends WorldGenerator {
 						}
 					}
 					if (!Block.opaqueCubeLookup[fe.getBlockId(k, j, l)]) {
-						fe.setBlock(k, j, l, Block.leaves.blockID);
+						fe.setBlock(k, j, l, Block.leaves.id);
 					}
 				}
 			}
 		}
 		for ( int j = 0; j < n; ++j ) {
 			final int blockId = fe.getBlockId(integer3, integer4 + j, integer5);
-			if (blockId == 0 || blockId == Block.leaves.blockID) {
-				fe.setBlock(integer3, integer4 + j, integer5, Block.wood.blockID);
+			if (blockId == 0 || blockId == Block.leaves.id) {
+				fe.setBlock(integer3, integer4 + j, integer5, Block.wood.id);
 			}
 		}
 		return true;

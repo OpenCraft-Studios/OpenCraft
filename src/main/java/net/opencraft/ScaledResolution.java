@@ -1,27 +1,41 @@
-
 package net.opencraft;
 
-public class ScaledResolution {
+import java.awt.Dimension;
 
-	private int scaledWidth;
-	private int scaledHeight;
+public class ScaledResolution extends Dimension {
 
-	public ScaledResolution(final int integer1, final int integer2) {
-		this.scaledWidth = integer1;
-		this.scaledHeight = integer2;
-		int n;
-		for ( n = 1; this.scaledWidth / (n + 1) >= 320 && this.scaledHeight / (n + 1) >= 240; ++n ) {
-		}
-		this.scaledWidth /= n;
-		this.scaledHeight /= n;
+	private static final long serialVersionUID = 1L;
+
+	public ScaledResolution(int width, int height) {
+		super(width, height);
+		ScaledResolution.scale(this);
 	}
 
 	public int getScaledWidth() {
-		return this.scaledWidth;
+		return width;
 	}
 
 	public int getScaledHeight() {
-		return this.scaledHeight;
+		return height;
 	}
 
+	public static void scale(Dimension d) {
+		int r = findRatio(d);
+
+		d.width /= r;
+		d.height /= r;
+	}
+	
+	public static int findRatio(Dimension d) {
+		int r = 1;
+		while (match(d.width, r, 320) && match(d.height, r, 240))
+			++r;
+		
+		return r;
+	}
+
+	public static boolean match(int num, int aspectRatio, int max) {
+		return num / (aspectRatio + 1) >= max;
+	}
+	
 }

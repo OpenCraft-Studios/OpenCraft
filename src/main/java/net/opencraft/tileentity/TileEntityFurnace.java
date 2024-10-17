@@ -66,7 +66,7 @@ public class TileEntityFurnace extends TileEntity implements IInventory {
 		final NBTTagList tagList = ae.getTagList("Items");
 		this.furnaceItemStacks = new ItemStack[this.getSizeInventory()];
 		for ( int i = 0; i < tagList.tagCount(); ++i ) {
-			final NBTTagCompound ae2 = (NBTTagCompound) tagList.tagAt(i);
+			final NBTTagCompound ae2 = (NBTTagCompound) tagList.getTag(i);
 			final byte byte1 = ae2.getByte("Slot");
 			if (byte1 >= 0 && byte1 < this.furnaceItemStacks.length) {
 				this.furnaceItemStacks[byte1] = new ItemStack(ae2);
@@ -182,23 +182,23 @@ public class TileEntityFurnace extends TileEntity implements IInventory {
 	}
 
 	private int getSmeltingResult(final int result) {
-		if (result == Block.oreIron.blockID) {
+		if (result == Block.oreIron.id) {
 			return Item.ingotIron.shiftedIndex;
 		}
-		if (result == Block.oreGold.blockID) {
+		if (result == Block.oreGold.id) {
 			return Item.ingotGold.shiftedIndex;
 		}
-		if (result == Block.oreDiamond.blockID) {
+		if (result == Block.oreDiamond.id) {
 			return Item.diamond.shiftedIndex;
 		}
-		if (result == Block.sand.blockID) {
-			return Block.glass.blockID;
+		if (result == Block.SAND.id) {
+			return Block.glass.id;
 		}
 		if (result == Item.porkRaw.shiftedIndex) {
 			return Item.porkCooked.shiftedIndex;
 		}
-		if (result == Block.cobblestone.blockID) {
-			return Block.stone.blockID;
+		if (result == Block.cobblestone.id) {
+			return Block.stone.id;
 		}
 		return -1;
 	}
@@ -208,7 +208,7 @@ public class TileEntityFurnace extends TileEntity implements IInventory {
 			return 0;
 		}
 		final int shiftedIndex = hw.getItem().shiftedIndex;
-		if (shiftedIndex < 256 && Block.blocksList[shiftedIndex].blockMaterial == Material.WOOD) {
+		if (shiftedIndex < 256 && Block.BLOCKS[shiftedIndex].blockMaterial == Material.WOOD) {
 			return 300;
 		}
 		if (shiftedIndex == Item.stick.shiftedIndex) {

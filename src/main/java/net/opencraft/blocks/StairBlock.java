@@ -4,7 +4,7 @@ package net.opencraft.blocks;
 import java.util.*;
 
 import net.opencraft.entity.Entity;
-import net.opencraft.entity.EntityPlayer;
+import net.opencraft.entity.Player;
 import net.opencraft.physics.AABB;
 import net.opencraft.util.Vec3;
 import net.opencraft.world.IBlockAccess;
@@ -72,7 +72,7 @@ public class StairBlock extends Block {
 	@Override
 	public void onNeighborBlockChange(final World world, final int xCoord, final int yCoord, final int zCoord, final int nya4) {
 		if (world.getBlockMaterial(xCoord, yCoord + 1, zCoord).isSolid()) {
-			world.setBlockWithNotify(xCoord, yCoord, zCoord, this.modelBlock.blockID);
+			world.setBlockWithNotify(xCoord, yCoord, zCoord, this.modelBlock.id);
 		} else {
 			this.g(world, xCoord, yCoord, zCoord);
 			this.g(world, xCoord + 1, yCoord - 1, zCoord);
@@ -143,7 +143,7 @@ public class StairBlock extends Block {
 
 	private boolean i(final World world, final int xCoord, final int yCoord, final int zCoord) {
 		final int blockId = world.getBlockId(xCoord, yCoord, zCoord);
-		return blockId != 0 && Block.blocksList[blockId].getRenderType() == 10;
+		return blockId != 0 && Block.BLOCKS[blockId].getRenderType() == 10;
 	}
 
 	@Override
@@ -152,7 +152,7 @@ public class StairBlock extends Block {
 	}
 
 	@Override
-	public void onBlockClicked(final World world, final int xCoord, final int yCoord, final int zCoord, final EntityPlayer entityPlayer) {
+	public void onBlockClicked(final World world, final int xCoord, final int yCoord, final int zCoord, final Player entityPlayer) {
 		this.modelBlock.onBlockClicked(world, xCoord, yCoord, zCoord, entityPlayer);
 	}
 
@@ -263,7 +263,7 @@ public class StairBlock extends Block {
 	}
 
 	@Override
-	public boolean blockActivated(final World world, final int xCoord, final int yCoord, final int zCoord, final EntityPlayer entityPlayer) {
+	public boolean blockActivated(final World world, final int xCoord, final int yCoord, final int zCoord, final Player entityPlayer) {
 		return this.modelBlock.blockActivated(world, xCoord, yCoord, zCoord, entityPlayer);
 	}
 

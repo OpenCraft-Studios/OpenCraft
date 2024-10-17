@@ -121,7 +121,7 @@ public class RenderGlobal implements IWorldAccess {
 					t.vertex(i + n2, n4, j + n2);
 					t.vertex(i + 0, n4, j + n2);
 				}
-				t.draw();
+				t.render();
 			}
 		}
 		GL11.glEndList();
@@ -136,7 +136,7 @@ public class RenderGlobal implements IWorldAccess {
 				t.vertex(i + n2, n4, j + n2);
 			}
 		}
-		t.draw();
+		t.render();
 		GL11.glEndList();
 	}
 
@@ -180,7 +180,7 @@ public class RenderGlobal implements IWorldAccess {
 				}
 			}
 		}
-		instance.draw();
+		instance.render();
 	}
 
 	public void changeWorld(final World fe) {
@@ -352,7 +352,7 @@ public class RenderGlobal implements IWorldAccess {
 		}
 	}
 
-	public int sortAndRender(final EntityPlayer gi, final int integer, final double double3) {
+	public int sortAndRender(final Player gi, final int integer, final double double3) {
 		if (this.t.options.renderDistance != this.H) {
 			this.fancyGraphics();
 		}
@@ -560,7 +560,7 @@ public class RenderGlobal implements IWorldAccess {
 		instance.vertexUV(n8, 100.0, -n8, 1.0, 0.0);
 		instance.vertexUV(n8, 100.0, n8, 1.0, 1.0);
 		instance.vertexUV(-n8, 100.0, n8, 0.0, 1.0);
-		instance.draw();
+		instance.render();
 		n8 = 20.0f;
 		GL11.glBindTexture(3553, this.l.loadTexture("/assets/terrain/moon.png"));
 		instance.beginQuads();
@@ -568,7 +568,7 @@ public class RenderGlobal implements IWorldAccess {
 		instance.vertexUV(n8, -100.0, n8, 0.0, 1.0);
 		instance.vertexUV(n8, -100.0, -n8, 0.0, 0.0);
 		instance.vertexUV(-n8, -100.0, -n8, 1.0, 0.0);
-		instance.draw();
+		instance.render();
 		GL11.glDisable(3553);
 		final float starBrightness = this.k.getStarBrightness(float1);
 		if (starBrightness > 0.0f) {
@@ -632,7 +632,7 @@ public class RenderGlobal implements IWorldAccess {
 				instance.vertexUV(i + 0, n9, j + 0, (i + 0) * n4 + n10, (j + 0) * n4 + n11);
 			}
 		}
-		instance.draw();
+		instance.render();
 		GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 		GL11.glDisable(3042);
 		GL11.glEnable(2884);
@@ -744,7 +744,7 @@ public class RenderGlobal implements IWorldAccess {
 							instance.vertexUV(n17 + 0.0f, n6 + 0.0f, n18 + l + 1.0f - n14, (n15 + 0.0f) * n9 + n7, (n16 + l + 0.5f) * n9 + n8);
 						}
 					}
-					instance.draw();
+					instance.render();
 				}
 			}
 		}
@@ -753,7 +753,7 @@ public class RenderGlobal implements IWorldAccess {
 		GL11.glEnable(2884);
 	}
 
-	public boolean updateRenderers(final EntityPlayer gi, final boolean boolean2) {
+	public boolean updateRenderers(final Player gi, final boolean boolean2) {
 		Collections.sort(this.m, new RenderSorter(gi));
 		final int n = this.m.size() - 1;
 		for ( int size = this.m.size(), i = 0; i < size; ++i ) {
@@ -778,7 +778,7 @@ public class RenderGlobal implements IWorldAccess {
 		return this.m.size() == 0;
 	}
 
-	public void drawBlockBreaking(final EntityPlayer gi, final MovingObjectPosition hb, final int integer, final ItemStack hw, final float float5) {
+	public void drawBlockBreaking(final Player gi, final MovingObjectPosition hb, final int integer, final ItemStack hw, final float float5) {
 		final Tessellator instance = Tessellator.instance;
 		GL11.glEnable(3042);
 		GL11.glEnable(3008);
@@ -791,7 +791,7 @@ public class RenderGlobal implements IWorldAccess {
 				GL11.glColor4f(1.0f, 1.0f, 1.0f, 0.5f);
 				GL11.glPushMatrix();
 				final int n = this.k.getBlockId(hb.blockX, hb.blockY, hb.blockZ);
-				Block stone = (n > 0) ? Block.blocksList[n] : null;
+				Block stone = (n > 0) ? Block.BLOCKS[n] : null;
 				GL11.glDisable(3008);
 				GL11.glPolygonOffset(-3.0f, -3.0f);
 				GL11.glEnable(32823);
@@ -802,7 +802,7 @@ public class RenderGlobal implements IWorldAccess {
 					stone = Block.stone;
 				}
 				this.u.a(stone, hb.blockX, hb.blockY, hb.blockZ, 240 + (int) (this.damagePartialTime * 10.0f));
-				instance.draw();
+				instance.render();
 				instance.setTranslationD(0.0, 0.0, 0.0);
 				GL11.glPolygonOffset(0.0f, 0.0f);
 				GL11.glDisable(32823);
@@ -827,7 +827,7 @@ public class RenderGlobal implements IWorldAccess {
 		GL11.glDisable(3008);
 	}
 
-	public void drawSelectionBox(final EntityPlayer gi, final MovingObjectPosition hb, final int integer, final ItemStack hw, final float float5) {
+	public void drawSelectionBox(final Player gi, final MovingObjectPosition hb, final int integer, final ItemStack hw, final float float5) {
 		if (integer == 0 && hb.typeOfHit == 0) {
 			GL11.glEnable(3042);
 			GL11.glBlendFunc(770, 771);
@@ -838,7 +838,7 @@ public class RenderGlobal implements IWorldAccess {
 			final float n = 0.002f;
 			final int blockId = this.k.getBlockId(hb.blockX, hb.blockY, hb.blockZ);
 			if (blockId > 0) {
-				this.a(Block.blocksList[blockId].getSelectedBoundingBoxFromPool(this.k, hb.blockX, hb.blockY, hb.blockZ).expand(n, n, n).getOffsetBoundingBox(-(gi.lastTickPosX + (gi.posX - gi.lastTickPosX) * float5), -(gi.lastTickPosY + (gi.posY - gi.lastTickPosY) * float5), -(gi.lastTickPosZ + (gi.posZ - gi.lastTickPosZ) * float5)));
+				this.a(Block.BLOCKS[blockId].getSelectedBoundingBoxFromPool(this.k, hb.blockX, hb.blockY, hb.blockZ).grow(n, n, n).getOffsetBoundingBox(-(gi.lastTickPosX + (gi.posX - gi.lastTickPosX) * float5), -(gi.lastTickPosY + (gi.posY - gi.lastTickPosY) * float5), -(gi.lastTickPosZ + (gi.posZ - gi.lastTickPosZ) * float5)));
 			}
 			GL11.glDepthMask(true);
 			GL11.glEnable(3553);
@@ -854,14 +854,14 @@ public class RenderGlobal implements IWorldAccess {
 		instance.vertex(en.maxX, en.minY, en.maxZ);
 		instance.vertex(en.minX, en.minY, en.maxZ);
 		instance.vertex(en.minX, en.minY, en.minZ);
-		instance.draw();
+		instance.render();
 		instance.begin(3);
 		instance.vertex(en.minX, en.maxY, en.minZ);
 		instance.vertex(en.maxX, en.maxY, en.minZ);
 		instance.vertex(en.maxX, en.maxY, en.maxZ);
 		instance.vertex(en.minX, en.maxY, en.maxZ);
 		instance.vertex(en.minX, en.maxY, en.minZ);
-		instance.draw();
+		instance.render();
 		instance.begin(1);
 		instance.vertex(en.minX, en.minY, en.minZ);
 		instance.vertex(en.minX, en.maxY, en.minZ);
@@ -871,7 +871,7 @@ public class RenderGlobal implements IWorldAccess {
 		instance.vertex(en.maxX, en.maxY, en.maxZ);
 		instance.vertex(en.minX, en.minY, en.maxZ);
 		instance.vertex(en.minX, en.maxY, en.maxZ);
-		instance.draw();
+		instance.render();
 	}
 
 	public void a(final int integer1, final int integer2, final int integer3, final int integer4, final int integer5, final int integer6) {

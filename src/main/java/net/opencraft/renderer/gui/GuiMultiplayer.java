@@ -17,7 +17,7 @@ public class GuiMultiplayer extends GuiScreen {
 
 	@Override
 	public void initGui() {
-		this.controlList.clear();
+		this.buttonList.clear();
 		this.initButtons();
 	}
 
@@ -26,7 +26,7 @@ public class GuiMultiplayer extends GuiScreen {
 	}
 
 	public void initButtons() {
-		this.controlList.add(new GuiButton(-6, (this.width / 2) - 50, this.height / 6 + 168, "Done", 100, 20));
+		this.buttonList.add(new GuiButton(-6, (this.width / 2) - 50, this.height / 6 + 168, "Done", 100, 20));
 	}
 
 	@Override
@@ -34,7 +34,7 @@ public class GuiMultiplayer extends GuiScreen {
 		if (!iq.enabled) {
 			return;
 		}
-		if (iq.buttonId == -6) {
+		if (iq.id == -6) {
 			oc.displayGuiScreen(this.parentGuiScreen);
 		}
 	}

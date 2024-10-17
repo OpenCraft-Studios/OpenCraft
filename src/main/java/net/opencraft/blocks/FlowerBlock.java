@@ -23,7 +23,7 @@ public class FlowerBlock extends Block {
 	}
 
 	protected boolean canThisPlantGrowOnThisBlockID(final int blockid) {
-		return blockid == Block.grass.blockID || blockid == Block.dirt.blockID || blockid == Block.tilledField.blockID;
+		return blockid == Block.grass.id || blockid == Block.dirt.id || blockid == Block.tilledField.id;
 	}
 
 	@Override

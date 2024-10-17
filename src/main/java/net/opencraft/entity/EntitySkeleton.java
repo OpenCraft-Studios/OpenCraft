@@ -38,7 +38,7 @@ public class EntitySkeleton extends EntityMonster {
 				final double n = entity.posY - 0.20000000298023224 - entity2.posY;
 				final float n2 = Mth.sqrt_double(xCoord2 * xCoord2 + zCoord * zCoord) * 0.2f;
 				world.playSound(this, "random.bow", 1.0f, 1.0f / (this.rand.nextFloat() * 0.4f + 0.8f));
-				this.world.entityJoinedWorld(entity2);
+				this.world.onEntityJoin(entity2);
 				entity2.shoot(xCoord2, n + n2, zCoord, 0.6f, 12.0f);
 				this.attackTime = 30;
 			}

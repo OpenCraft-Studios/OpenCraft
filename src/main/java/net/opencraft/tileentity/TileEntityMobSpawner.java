@@ -30,9 +30,9 @@ public class TileEntityMobSpawner extends TileEntity {
 		if (!this.anyPlayerInRange()) {
 			return;
 		}
-		double n = this.xCoord + this.worldObj.rand.nextFloat();
-		double n2 = this.yCoord + this.worldObj.rand.nextFloat();
-		double n3 = this.zCoord + this.worldObj.rand.nextFloat();
+		double n = this.xCoord + this.worldObj.random.nextFloat();
+		double n2 = this.yCoord + this.worldObj.random.nextFloat();
+		double n3 = this.zCoord + this.worldObj.random.nextFloat();
 		this.worldObj.spawnParticle("smoke", n, n2, n3, 0.0, 0.0, 0.0);
 		this.worldObj.spawnParticle("flame", n, n2, n3, 0.0, 0.0, 0.0);
 		this.yaw += 1000.0f / (this.delay + 200.0f);
@@ -52,21 +52,21 @@ public class TileEntityMobSpawner extends TileEntity {
 			if (entity == null) {
 				return;
 			}
-			if (this.worldObj.getEntitiesWithinAABB(entity.getClass(), AABB.getBoundingBoxFromPool(this.xCoord, this.yCoord, this.zCoord, this.xCoord + 1, this.yCoord + 1, this.zCoord + 1).expand(8.0, 4.0, 8.0)).size() >= 6) {
+			if (this.worldObj.getEntitiesWithinAABB(entity.getClass(), AABB.getBoundingBoxFromPool(this.xCoord, this.yCoord, this.zCoord, this.xCoord + 1, this.yCoord + 1, this.zCoord + 1).grow(8.0, 4.0, 8.0)).size() >= 6) {
 				this.updateDelay();
 				return;
 			}
 			if (entity != null) {
-				final double n5 = this.xCoord + (this.worldObj.rand.nextDouble() - this.worldObj.rand.nextDouble()) * 4.0;
-				final double n6 = this.yCoord + this.worldObj.rand.nextInt(3) - 1;
-				final double n7 = this.zCoord + (this.worldObj.rand.nextDouble() - this.worldObj.rand.nextDouble()) * 4.0;
-				entity.setPositionAndRotation(n5, n6, n7, this.worldObj.rand.nextFloat() * 360.0f, 0.0f);
+				final double n5 = this.xCoord + (this.worldObj.random.nextDouble() - this.worldObj.random.nextDouble()) * 4.0;
+				final double n6 = this.yCoord + this.worldObj.random.nextInt(3) - 1;
+				final double n7 = this.zCoord + (this.worldObj.random.nextDouble() - this.worldObj.random.nextDouble()) * 4.0;
+				entity.setPositionAndRotation(n5, n6, n7, this.worldObj.random.nextFloat() * 360.0f, 0.0f);
 				if (entity.getCanSpawnHere(n5, n6, n7)) {
-					this.worldObj.entityJoinedWorld(entity);
+					this.worldObj.onEntityJoin(entity);
 					for ( int j = 0; j < 20; ++j ) {
-						n = this.xCoord + 0.5 + (this.worldObj.rand.nextFloat() - 0.5) * 2.0;
-						n2 = this.yCoord + 0.5 + (this.worldObj.rand.nextFloat() - 0.5) * 2.0;
-						n3 = this.zCoord + 0.5 + (this.worldObj.rand.nextFloat() - 0.5) * 2.0;
+						n = this.xCoord + 0.5 + (this.worldObj.random.nextFloat() - 0.5) * 2.0;
+						n2 = this.yCoord + 0.5 + (this.worldObj.random.nextFloat() - 0.5) * 2.0;
+						n3 = this.zCoord + 0.5 + (this.worldObj.random.nextFloat() - 0.5) * 2.0;
 						this.worldObj.spawnParticle("smoke", n, n2, n3, 0.0, 0.0, 0.0);
 						this.worldObj.spawnParticle("flame", n, n2, n3, 0.0, 0.0, 0.0);
 					}
@@ -79,7 +79,7 @@ public class TileEntityMobSpawner extends TileEntity {
 	}
 
 	private void updateDelay() {
-		this.delay = 200 + this.worldObj.rand.nextInt(600);
+		this.delay = 200 + this.worldObj.random.nextInt(600);
 	}
 
 	@Override

@@ -2,7 +2,7 @@
 package net.opencraft.item;
 
 import net.opencraft.blocks.Block;
-import net.opencraft.entity.EntityPlayer;
+import net.opencraft.entity.Player;
 import net.opencraft.world.World;
 
 public class ItemFlintAndSteel extends Item {
@@ -14,7 +14,7 @@ public class ItemFlintAndSteel extends Item {
 	}
 
 	@Override
-	public boolean onItemUse(final ItemStack hw, final EntityPlayer gi, final World fe, int xCoord, int yCoord, int zCoord, final int integer7) {
+	public boolean onItemUse(final ItemStack hw, final Player gi, final World fe, int xCoord, int yCoord, int zCoord, final int integer7) {
 		if (integer7 == 0) {
 			--yCoord;
 		}
@@ -35,7 +35,7 @@ public class ItemFlintAndSteel extends Item {
 		}
 		if (fe.getBlockId(xCoord, yCoord, zCoord) == 0) {
 			fe.playSoundEffect(xCoord + 0.5, yCoord + 0.5, zCoord + 0.5, "fire.ignite", 1.0f, ItemFlintAndSteel.itemRand.nextFloat() * 0.4f + 0.8f);
-			fe.setBlockWithNotify(xCoord, yCoord, zCoord, Block.fire.blockID);
+			fe.setBlockWithNotify(xCoord, yCoord, zCoord, Block.fire.id);
 		}
 		hw.damageItem(1);
 		return true;

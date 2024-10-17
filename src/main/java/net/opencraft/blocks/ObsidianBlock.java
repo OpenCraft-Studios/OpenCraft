@@ -16,7 +16,7 @@ public class ObsidianBlock extends StoneBlock {
 
 	@Override
 	public int idDropped(final int blockid, final Random random) {
-		return Block.obsidian.blockID;
+		return Block.obsidian.id;
 	}
 
 }

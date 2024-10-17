@@ -217,7 +217,7 @@ public abstract class LiquidBlock extends Block {
 	}
 
 	private void checkForHarden(final World world, final int xCoord, final int yCoord, final int zCoord) {
-		if (world.getBlockId(xCoord, yCoord, zCoord) != this.blockID) {
+		if (world.getBlockId(xCoord, yCoord, zCoord) != this.id) {
 			return;
 		}
 		if (this.blockMaterial == Material.LAVA) {
@@ -240,9 +240,9 @@ public abstract class LiquidBlock extends Block {
 			if (n != 0) {
 				final int blockMetadata = world.getBlockMetadata(xCoord, yCoord, zCoord);
 				if (blockMetadata == 0) {
-					world.setBlockWithNotify(xCoord, yCoord, zCoord, Block.obsidian.blockID);
+					world.setBlockWithNotify(xCoord, yCoord, zCoord, Block.obsidian.id);
 				} else if (blockMetadata <= 4) {
-					world.setBlockWithNotify(xCoord, yCoord, zCoord, Block.cobblestone.blockID);
+					world.setBlockWithNotify(xCoord, yCoord, zCoord, Block.cobblestone.id);
 				}
 				this.triggerLavaMixEffects(world, xCoord, yCoord, zCoord);
 			}
@@ -250,7 +250,7 @@ public abstract class LiquidBlock extends Block {
 	}
 
 	protected void triggerLavaMixEffects(final World world, final int xCoord, final int yCoord, final int zCoord) {
-		world.playSoundEffect((xCoord + 0.5f), (yCoord + 0.5f), (zCoord + 0.5f), "random.fizz", 0.5f, 2.6f + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.8f);
+		world.playSoundEffect((xCoord + 0.5f), (yCoord + 0.5f), (zCoord + 0.5f), "random.fizz", 0.5f, 2.6f + (world.random.nextFloat() - world.random.nextFloat()) * 0.8f);
 		for ( int i = 0; i < 8; ++i ) {
 			world.spawnParticle("largesmoke", xCoord + random(), yCoord + 1.2, zCoord + random(), 0.0, 0.0, 0.0);
 		}

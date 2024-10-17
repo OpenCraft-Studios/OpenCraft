@@ -5,7 +5,7 @@ import java.util.Random;
 
 import net.opencraft.blocks.material.Material;
 import net.opencraft.entity.EntityItem;
-import net.opencraft.entity.EntityPlayer;
+import net.opencraft.entity.Player;
 import net.opencraft.inventory.IInventory;
 import net.opencraft.inventory.InventoryLargeChest;
 import net.opencraft.item.ItemStack;
@@ -36,16 +36,16 @@ public class ChestBlock extends ContainerBlock {
 		final int blockId2 = blockAccess.getBlockId(xCoord, yCoord, zCoord + 1);
 		final int blockId3 = blockAccess.getBlockId(xCoord - 1, yCoord, zCoord);
 		final int blockId4 = blockAccess.getBlockId(xCoord + 1, yCoord, zCoord);
-		if (blockId == this.blockID || blockId2 == this.blockID) {
+		if (blockId == this.id || blockId2 == this.id) {
 			if (metadataValue == 2 || metadataValue == 3) {
 				return this.blockIndexInTexture;
 			}
 			int n = 0;
-			if (blockId == this.blockID) {
+			if (blockId == this.id) {
 				n = -1;
 			}
-			final int n2 = blockAccess.getBlockId(xCoord - 1, yCoord, (blockId == this.blockID) ? (zCoord - 1) : (zCoord + 1));
-			final int n3 = blockAccess.getBlockId(xCoord + 1, yCoord, (blockId == this.blockID) ? (zCoord - 1) : (zCoord + 1));
+			final int n2 = blockAccess.getBlockId(xCoord - 1, yCoord, (blockId == this.id) ? (zCoord - 1) : (zCoord + 1));
+			final int n3 = blockAccess.getBlockId(xCoord + 1, yCoord, (blockId == this.id) ? (zCoord - 1) : (zCoord + 1));
 			if (metadataValue == 4) {
 				n = -1 - n;
 			}
@@ -58,7 +58,7 @@ public class ChestBlock extends ContainerBlock {
 			}
 			return ((metadataValue == n4) ? (this.blockIndexInTexture + 16) : (this.blockIndexInTexture + 32)) + n;
 		} else {
-			if (blockId3 != this.blockID && blockId4 != this.blockID) {
+			if (blockId3 != this.id && blockId4 != this.id) {
 				int n = 3;
 				if (Block.opaqueCubeLookup[blockId] && !Block.opaqueCubeLookup[blockId2]) {
 					n = 3;
@@ -78,11 +78,11 @@ public class ChestBlock extends ContainerBlock {
 				return this.blockIndexInTexture;
 			}
 			int n = 0;
-			if (blockId3 == this.blockID) {
+			if (blockId3 == this.id) {
 				n = -1;
 			}
-			final int n2 = blockAccess.getBlockId((blockId3 == this.blockID) ? (xCoord - 1) : (xCoord + 1), yCoord, zCoord - 1);
-			final int n3 = blockAccess.getBlockId((blockId3 == this.blockID) ? (xCoord - 1) : (xCoord + 1), yCoord, zCoord + 1);
+			final int n2 = blockAccess.getBlockId((blockId3 == this.id) ? (xCoord - 1) : (xCoord + 1), yCoord, zCoord - 1);
+			final int n3 = blockAccess.getBlockId((blockId3 == this.id) ? (xCoord - 1) : (xCoord + 1), yCoord, zCoord + 1);
 			if (metadataValue == 3) {
 				n = -1 - n;
 			}
@@ -114,23 +114,23 @@ public class ChestBlock extends ContainerBlock {
 	@Override
 	public boolean canPlaceBlockAt(final World world, final int xCoord, final int yCoord, final int zCoord) {
 		int n = 0;
-		if (world.getBlockId(xCoord - 1, yCoord, zCoord) == this.blockID) {
+		if (world.getBlockId(xCoord - 1, yCoord, zCoord) == this.id) {
 			++n;
 		}
-		if (world.getBlockId(xCoord + 1, yCoord, zCoord) == this.blockID) {
+		if (world.getBlockId(xCoord + 1, yCoord, zCoord) == this.id) {
 			++n;
 		}
-		if (world.getBlockId(xCoord, yCoord, zCoord - 1) == this.blockID) {
+		if (world.getBlockId(xCoord, yCoord, zCoord - 1) == this.id) {
 			++n;
 		}
-		if (world.getBlockId(xCoord, yCoord, zCoord + 1) == this.blockID) {
+		if (world.getBlockId(xCoord, yCoord, zCoord + 1) == this.id) {
 			++n;
 		}
 		return n <= 1 && !this.isThereANeighborChest(world, xCoord - 1, yCoord, zCoord) && !this.isThereANeighborChest(world, xCoord + 1, yCoord, zCoord) && !this.isThereANeighborChest(world, xCoord, yCoord, zCoord - 1) && !this.isThereANeighborChest(world, xCoord, yCoord, zCoord + 1);
 	}
 
 	private boolean isThereANeighborChest(final World world, final int xCoord, final int yCoord, final int zCoord) {
-		return world.getBlockId(xCoord, yCoord, zCoord) == this.blockID && (world.getBlockId(xCoord - 1, yCoord, zCoord) == this.blockID || world.getBlockId(xCoord + 1, yCoord, zCoord) == this.blockID || world.getBlockId(xCoord, yCoord, zCoord - 1) == this.blockID || world.getBlockId(xCoord, yCoord, zCoord + 1) == this.blockID);
+		return world.getBlockId(xCoord, yCoord, zCoord) == this.id && (world.getBlockId(xCoord - 1, yCoord, zCoord) == this.id || world.getBlockId(xCoord + 1, yCoord, zCoord) == this.id || world.getBlockId(xCoord, yCoord, zCoord - 1) == this.id || world.getBlockId(xCoord, yCoord, zCoord + 1) == this.id);
 	}
 
 	@Override
@@ -154,7 +154,7 @@ public class ChestBlock extends ContainerBlock {
 					entity.motionX = (float) this.random.nextGaussian() * n4;
 					entity.motionY = (float) this.random.nextGaussian() * n4 + 0.2f;
 					entity.motionZ = (float) this.random.nextGaussian() * n4;
-					world.entityJoinedWorld(entity);
+					world.onEntityJoin(entity);
 				}
 			}
 		}
@@ -162,33 +162,33 @@ public class ChestBlock extends ContainerBlock {
 	}
 
 	@Override
-	public boolean blockActivated(final World world, final int xCoord, final int yCoord, final int zCoord, final EntityPlayer entityPlayer) {
+	public boolean blockActivated(final World world, final int xCoord, final int yCoord, final int zCoord, final Player entityPlayer) {
 		IInventory kd = (IInventory) world.getBlockTileEntity(xCoord, yCoord, zCoord);
 		if (world.isBlockNormalCube(xCoord, yCoord + 1, zCoord)) {
 			return true;
 		}
-		if (world.getBlockId(xCoord - 1, yCoord, zCoord) == this.blockID && world.isBlockNormalCube(xCoord - 1, yCoord + 1, zCoord)) {
+		if (world.getBlockId(xCoord - 1, yCoord, zCoord) == this.id && world.isBlockNormalCube(xCoord - 1, yCoord + 1, zCoord)) {
 			return true;
 		}
-		if (world.getBlockId(xCoord + 1, yCoord, zCoord) == this.blockID && world.isBlockNormalCube(xCoord + 1, yCoord + 1, zCoord)) {
+		if (world.getBlockId(xCoord + 1, yCoord, zCoord) == this.id && world.isBlockNormalCube(xCoord + 1, yCoord + 1, zCoord)) {
 			return true;
 		}
-		if (world.getBlockId(xCoord, yCoord, zCoord - 1) == this.blockID && world.isBlockNormalCube(xCoord, yCoord + 1, zCoord - 1)) {
+		if (world.getBlockId(xCoord, yCoord, zCoord - 1) == this.id && world.isBlockNormalCube(xCoord, yCoord + 1, zCoord - 1)) {
 			return true;
 		}
-		if (world.getBlockId(xCoord, yCoord, zCoord + 1) == this.blockID && world.isBlockNormalCube(xCoord, yCoord + 1, zCoord + 1)) {
+		if (world.getBlockId(xCoord, yCoord, zCoord + 1) == this.id && world.isBlockNormalCube(xCoord, yCoord + 1, zCoord + 1)) {
 			return true;
 		}
-		if (world.getBlockId(xCoord - 1, yCoord, zCoord) == this.blockID) {
+		if (world.getBlockId(xCoord - 1, yCoord, zCoord) == this.id) {
 			kd = new InventoryLargeChest("Large chest", (IInventory) world.getBlockTileEntity(xCoord - 1, yCoord, zCoord), kd);
 		}
-		if (world.getBlockId(xCoord + 1, yCoord, zCoord) == this.blockID) {
+		if (world.getBlockId(xCoord + 1, yCoord, zCoord) == this.id) {
 			kd = new InventoryLargeChest("Large chest", kd, (IInventory) world.getBlockTileEntity(xCoord + 1, yCoord, zCoord));
 		}
-		if (world.getBlockId(xCoord, yCoord, zCoord - 1) == this.blockID) {
+		if (world.getBlockId(xCoord, yCoord, zCoord - 1) == this.id) {
 			kd = new InventoryLargeChest("Large chest", (IInventory) world.getBlockTileEntity(xCoord, yCoord, zCoord - 1), kd);
 		}
-		if (world.getBlockId(xCoord, yCoord, zCoord + 1) == this.blockID) {
+		if (world.getBlockId(xCoord, yCoord, zCoord + 1) == this.id) {
 			kd = new InventoryLargeChest("Large chest", kd, (IInventory) world.getBlockTileEntity(xCoord, yCoord, zCoord + 1));
 		}
 		entityPlayer.displayGUIChest(kd);

@@ -17,12 +17,12 @@ public class NBTTagFloat extends NBTBase {
 	}
 
 	@Override
-	public void writeTagContents(final DataOutput dataOutput) throws IOException {
+	public void write(final DataOutput dataOutput) throws IOException {
 		dataOutput.writeFloat(this.floatValue);
 	}
 
 	@Override
-	public void readTagContents(final DataInput dataInput) throws IOException {
+	public void read(final DataInput dataInput) throws IOException {
 		this.floatValue = dataInput.readFloat();
 	}
 

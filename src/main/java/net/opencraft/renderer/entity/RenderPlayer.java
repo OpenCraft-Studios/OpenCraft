@@ -6,7 +6,7 @@ import static org.joml.Math.*;
 import org.lwjgl.opengl.GL11;
 
 import net.opencraft.client.entity.models.ModelBiped;
-import net.opencraft.entity.EntityPlayer;
+import net.opencraft.entity.Player;
 import net.opencraft.item.ItemStack;
 import net.opencraft.item.Item;
 import net.opencraft.item.ItemArmor;
@@ -25,7 +25,7 @@ public class RenderPlayer extends RenderLiving {
 		this.modelArmor = new ModelBiped(0.5f);
 	}
 
-	protected boolean shouldRenderPass(final EntityPlayer eVar, final int i) {
+	protected boolean shouldRenderPass(final Player eVar, final int i) {
 		final ItemStack armorItemInSlot = eVar.inventory.armorItemInSlot(3 - i);
 		if (armorItemInSlot != null) {
 			final Item item = armorItemInSlot.getItem();
@@ -46,7 +46,7 @@ public class RenderPlayer extends RenderLiving {
 		return false;
 	}
 
-	public void doRender(EntityPlayer entityLiving, double xCoord, double sqrt_double, double yCoord, float nya1, float nya2) {
+	public void doRender(Player entityLiving, double xCoord, double sqrt_double, double yCoord, float nya1, float nya2) {
 		//super.doRender(entityLiving, xCoord, sqrt_double - entityLiving.yOffset, yCoord, nya1, nya2);
 		sqrt_double -= entityLiving.yOffset;
 		GL11.glPushMatrix();

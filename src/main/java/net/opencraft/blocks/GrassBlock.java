@@ -31,13 +31,13 @@ public class GrassBlock extends Block {
 			if (random.nextInt(4) != 0) {
 				return;
 			}
-			world.setBlockWithNotify(xCoord, yCoord, zCoord, Block.dirt.blockID);
+			world.setBlockWithNotify(xCoord, yCoord, zCoord, Block.dirt.id);
 		} else if (world.getBlockLightValue(xCoord, yCoord + 1, zCoord) >= 9) {
 			final int n = xCoord + random.nextInt(3) - 1;
 			final int n2 = yCoord + random.nextInt(5) - 3;
 			final int n3 = zCoord + random.nextInt(3) - 1;
-			if (world.getBlockId(n, n2, n3) == Block.dirt.blockID && world.getBlockLightValue(n, n2 + 1, n3) >= 4 && !world.getBlockMaterial(n, n2 + 1, n3).isBlockGrass()) {
-				world.setBlockWithNotify(n, n2, n3, Block.grass.blockID);
+			if (world.getBlockId(n, n2, n3) == Block.dirt.id && world.getBlockLightValue(n, n2 + 1, n3) >= 4 && !world.getBlockMaterial(n, n2 + 1, n3).isBlockGrass()) {
+				world.setBlockWithNotify(n, n2, n3, Block.grass.id);
 			}
 		}
 	}

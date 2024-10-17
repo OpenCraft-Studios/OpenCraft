@@ -17,22 +17,22 @@ public class GuiIngameMenu extends GuiScreen {
 	@Override
 	public void initGui() {
 		this.updateCounter2 = 0;
-		this.controlList.clear();
-		this.controlList.add(new GuiButton(1, this.width / 2 - 100, this.height / 4 + 48, "Save and quit to title..", 200, 20));
-		this.controlList.add(new GuiButton(4, this.width / 2 - 100, this.height / 4 + 24, "Back to game", 200, 20));
-		this.controlList.add(new GuiButton(0, this.width / 2 - 100, this.height / 4 + 96, "Options...", 200, 20));
+		this.buttonList.clear();
+		this.buttonList.add(new GuiButton(1, this.width / 2 - 100, this.height / 4 + 48, "Save and quit to title..", 200, 20));
+		this.buttonList.add(new GuiButton(4, this.width / 2 - 100, this.height / 4 + 24, "Back to game", 200, 20));
+		this.buttonList.add(new GuiButton(0, this.width / 2 - 100, this.height / 4 + 96, "Options...", 200, 20));
 	}
 
 	@Override
 	protected void actionPerformed(final GuiButton iq) {
-		if (iq.buttonId == 0) {
+		if (iq.id == 0) {
 			oc.displayGuiScreen(new GuiOptions(this, oc.options));
 		}
-		if (iq.buttonId == 1) {
+		if (iq.id == 1) {
 			oc.changeWorld1(null);
 			oc.displayGuiScreen(new GuiMainMenu());
 		}
-		if (iq.buttonId == 4) {
+		if (iq.id == 4) {
 			oc.displayGuiScreen(null);
 			oc.setIngameFocus();
 		}

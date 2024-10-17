@@ -4,7 +4,7 @@ package net.opencraft;
 import net.opencraft.blocks.material.Material;
 import net.opencraft.entity.Entity;
 import net.opencraft.entity.EntityLiving;
-import net.opencraft.renderer.gui.IProgressUpdate;
+import net.opencraft.renderer.gui.IProgressListener;
 import net.opencraft.util.Mth;
 import net.opencraft.world.World;
 import net.opencraft.world.chunk.ChunkPosition;
@@ -30,14 +30,14 @@ public class ck {
 	}
 
 	protected ChunkPosition a(final World fe, final int integer2, final int integer3) {
-		return new ChunkPosition(integer2 + fe.rand.nextInt(256) - 128, fe.rand.nextInt(128), integer3 + fe.rand.nextInt(256) - 128);
+		return new ChunkPosition(integer2 + fe.random.nextInt(256) - 128, fe.random.nextInt(128), integer3 + fe.random.nextInt(256) - 128);
 	}
 
-	private int a(final World fe, final int integer, final Entity eq, final IProgressUpdate jd) {
+	private int a(final World fe, final int integer, final Entity eq, final IProgressListener jd) {
 		int n = 0;
 		final int floor_double = Mth.floor_double(eq.posX);
 		final int floor_double2 = Mth.floor_double(eq.posZ);
-		final int nextInt = fe.rand.nextInt(this.c.length);
+		final int nextInt = fe.random.nextInt(this.c.length);
 		final ChunkPosition a = this.a(fe, floor_double, floor_double2);
 		final int x = a.x;
 		final int y = a.y;
@@ -54,9 +54,9 @@ public class ck {
 			int n4 = z;
 			final int n5 = 6;
 			for ( int j = 0; j < 3; ++j ) {
-				n2 += fe.rand.nextInt(n5) - fe.rand.nextInt(n5);
-				n3 += fe.rand.nextInt(1) - fe.rand.nextInt(1);
-				n4 += fe.rand.nextInt(n5) - fe.rand.nextInt(n5);
+				n2 += fe.random.nextInt(n5) - fe.random.nextInt(n5);
+				n3 += fe.random.nextInt(1) - fe.random.nextInt(1);
+				n4 += fe.random.nextInt(n5) - fe.random.nextInt(n5);
 				if (fe.isBlockNormalCube(n2, n3 - 1, n4) && !fe.isBlockNormalCube(n2, n3, n4) && !fe.getBlockMaterial(n2, n3, n4).isLiquid() && !fe.isBlockNormalCube(n2, n3 + 1, n4)) {
 					final float n6 = n2 + 0.5f;
 					final float n7 = n3 + 1.0f;
@@ -83,10 +83,10 @@ public class ck {
 						ex.printStackTrace();
 						return n;
 					}
-					entity.setPositionAndRotation(n6, n7, n8, fe.rand.nextFloat() * 360.0f, 0.0f);
+					entity.setPositionAndRotation(n6, n7, n8, fe.random.nextFloat() * 360.0f, 0.0f);
 					if (entity.getCanSpawnHere(n6, n7, n8)) {
 						++n;
-						fe.entityJoinedWorld(entity);
+						fe.onEntityJoin(entity);
 					}
 				}
 			}

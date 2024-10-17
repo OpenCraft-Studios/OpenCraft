@@ -21,7 +21,7 @@ public class BreakableBlock extends Block {
 	@Override
 	public boolean shouldSideBeRendered(final IBlockAccess blockAccess, final int xCoord, final int yCoord, final int zCoord, final int nya4) {
 		final int blockId = blockAccess.getBlockId(xCoord, yCoord, zCoord);
-		return (this.localFlag || blockId != this.blockID) && super.shouldSideBeRendered(blockAccess, xCoord, yCoord, zCoord, nya4);
+		return (this.localFlag || blockId != this.id) && super.shouldSideBeRendered(blockAccess, xCoord, yCoord, zCoord, nya4);
 	}
 
 }

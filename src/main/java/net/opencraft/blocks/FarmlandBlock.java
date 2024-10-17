@@ -54,7 +54,7 @@ public class FarmlandBlock extends Block {
 				if (blockMetadata > 0) {
 					world.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, blockMetadata - 1);
 				} else if (!this.isCropsNearby(world, xCoord, yCoord, zCoord)) {
-					world.setBlockWithNotify(xCoord, yCoord, zCoord, Block.dirt.blockID);
+					world.setBlockWithNotify(xCoord, yCoord, zCoord, Block.dirt.id);
 				}
 			}
 		}
@@ -62,15 +62,15 @@ public class FarmlandBlock extends Block {
 
 	@Override
 	public void onEntityWalking(final World world, final int xCoord, final int yCoord, final int zCoord, final Entity entity) {
-		if (world.rand.nextInt(4) == 0) {
-			world.setBlockWithNotify(xCoord, yCoord, zCoord, Block.dirt.blockID);
+		if (world.random.nextInt(4) == 0) {
+			world.setBlockWithNotify(xCoord, yCoord, zCoord, Block.dirt.id);
 		}
 	}
 
 	private boolean isCropsNearby(final World world, final int xCoord, final int yCoord, final int zCoord) {
 		for ( int n = 0, i = xCoord - n; i <= xCoord + n; ++i ) {
 			for ( int j = zCoord - n; j <= zCoord + n; ++j ) {
-				if (world.getBlockId(i, yCoord + 1, j) == Block.crops.blockID) {
+				if (world.getBlockId(i, yCoord + 1, j) == Block.crops.id) {
 					return true;
 				}
 			}
@@ -95,7 +95,7 @@ public class FarmlandBlock extends Block {
 	public void onNeighborBlockChange(final World world, final int xCoord, final int yCoord, final int zCoord, final int nya4) {
 		super.onNeighborBlockChange(world, xCoord, yCoord, zCoord, nya4);
 		if (world.getBlockMaterial(xCoord, yCoord + 1, zCoord).isSolid()) {
-			world.setBlockWithNotify(xCoord, yCoord, zCoord, Block.dirt.blockID);
+			world.setBlockWithNotify(xCoord, yCoord, zCoord, Block.dirt.id);
 		}
 	}
 
