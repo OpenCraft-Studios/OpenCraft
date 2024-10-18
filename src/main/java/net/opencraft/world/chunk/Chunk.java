@@ -405,7 +405,7 @@ public class Chunk {
 			final List list2 = this.entities[i];
 			for (int j = 0; j < list2.size(); ++j) {
 				final Entity entity2 = (Entity) list2.get(j);
-				if (entity2 != entity && entity2.bb.intersectsWith(aabb)) {
+				if (entity2 != entity && entity2.bb.intersects(aabb)) {
 					list.add(entity2);
 				}
 			}
@@ -426,7 +426,7 @@ public class Chunk {
 			for (int j = 0; j < list2.size(); ++j) {
 				Entity entity = list2.get(j);
 				if (clazz.isAssignableFrom(entity.getClass())
-						&& entity.bb.intersectsWith(bb))
+						&& entity.bb.intersects(bb))
 					list.add(entity);
 			}
 		}

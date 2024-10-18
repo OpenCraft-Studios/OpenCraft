@@ -77,7 +77,7 @@ public abstract class Entity {
 
 	public Entity(final World world) {
 		this.preventEntitySpawning = false;
-		this.bb = AABB.getBoundingBox(0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
+		this.bb = AABB.getAABB(0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
 		this.onGround = false;
 		this.isCollidedHorizontally = false;
 		this.beenAttacked = false;
@@ -147,7 +147,7 @@ public abstract class Entity {
 		this.z = zCoord;
 		final float n = this.width / 2.0f;
 		final float n2 = this.height / 2.0f;
-		this.bb.setBounds(xCoord - n, yCoord - n2, zCoord - n, xCoord + n, yCoord + n2, zCoord + n);
+		this.bb.set(xCoord - n, yCoord - n2, zCoord - n, xCoord + n, yCoord + n2, zCoord + n);
 	}
 
 	public void setAngles(final float nya1, final float nya2) {
@@ -232,7 +232,7 @@ public abstract class Entity {
 
 	public void moveEntity(double xCoord, double yCoord, double zCoord) {
 		if (this.noClip) {
-			this.bb.offset(xCoord, yCoord, zCoord);
+			this.bb.translate(xCoord, yCoord, zCoord);
 			this.x = (this.bb.minX + this.bb.maxX) / 2.0;
 			this.y = this.bb.minY + this.yOffset - this.ySize;
 			this.z = (this.bb.minZ + this.bb.maxZ) / 2.0;
@@ -248,7 +248,7 @@ public abstract class Entity {
 		for ( int i = 0; i < collidingBoundingBoxes.size(); ++i ) {
 			yCoord = ((AABB) collidingBoundingBoxes.get(i)).calculateYOffset(this.bb, yCoord);
 		}
-		this.bb.offset(0.0, yCoord, 0.0);
+		this.bb.translate(0.0, yCoord, 0.0);
 		if (!this.field_9293_aM && n2 != yCoord) {
 			yCoord = (xCoord = (zCoord = 0.0));
 		}
@@ -256,14 +256,14 @@ public abstract class Entity {
 		for ( int j = 0; j < collidingBoundingBoxes.size(); ++j ) {
 			xCoord = ((AABB) collidingBoundingBoxes.get(j)).calculateXOffset(this.bb, xCoord);
 		}
-		this.bb.offset(xCoord, 0.0, 0.0);
+		this.bb.translate(xCoord, 0.0, 0.0);
 		if (!this.field_9293_aM && n != xCoord) {
 			yCoord = (xCoord = (zCoord = 0.0));
 		}
 		for ( int j = 0; j < collidingBoundingBoxes.size(); ++j ) {
 			zCoord = ((AABB) collidingBoundingBoxes.get(j)).calculateZOffset(this.bb, zCoord);
 		}
-		this.bb.offset(0.0, 0.0, zCoord);
+		this.bb.translate(0.0, 0.0, zCoord);
 		if (!this.field_9293_aM && n3 != zCoord) {
 			yCoord = (xCoord = (zCoord = 0.0));
 		}
@@ -275,26 +275,26 @@ public abstract class Entity {
 			yCoord = this.stepHeight;
 			zCoord = n3;
 			final AABB copy2 = this.bb.copy();
-			this.bb.setBB(copy);
+			this.bb.set(copy);
 			final List collidingBoundingBoxes2 = this.world.getCollidingBoundingBoxes(this, this.bb.addCoord(xCoord, yCoord, zCoord));
 			for ( int k = 0; k < collidingBoundingBoxes2.size(); ++k ) {
 				yCoord = ((AABB) collidingBoundingBoxes2.get(k)).calculateYOffset(this.bb, yCoord);
 			}
-			this.bb.offset(0.0, yCoord, 0.0);
+			this.bb.translate(0.0, yCoord, 0.0);
 			if (!this.field_9293_aM && n2 != yCoord) {
 				yCoord = (xCoord = (zCoord = 0.0));
 			}
 			for ( int k = 0; k < collidingBoundingBoxes2.size(); ++k ) {
 				xCoord = ((AABB) collidingBoundingBoxes2.get(k)).calculateXOffset(this.bb, xCoord);
 			}
-			this.bb.offset(xCoord, 0.0, 0.0);
+			this.bb.translate(xCoord, 0.0, 0.0);
 			if (!this.field_9293_aM && n != xCoord) {
 				yCoord = (xCoord = (zCoord = 0.0));
 			}
 			for ( int k = 0; k < collidingBoundingBoxes2.size(); ++k ) {
 				zCoord = ((AABB) collidingBoundingBoxes2.get(k)).calculateZOffset(this.bb, zCoord);
 			}
-			this.bb.offset(0.0, 0.0, zCoord);
+			this.bb.translate(0.0, 0.0, zCoord);
 			if (!this.field_9293_aM && n3 != zCoord) {
 				yCoord = (xCoord = (zCoord = 0.0));
 			}
@@ -302,7 +302,7 @@ public abstract class Entity {
 				xCoord = n4;
 				yCoord = n5;
 				zCoord = n6;
-				this.bb.setBB(copy2);
+				this.bb.set(copy2);
 			} else {
 				this.ySize += 0.5;
 			}

@@ -52,7 +52,7 @@ public class TileEntityMobSpawner extends TileEntity {
 			if (entity == null) {
 				return;
 			}
-			if (this.worldObj.getEntitiesWithinAABB(entity.getClass(), AABB.getBoundingBoxFromPool(this.xCoord, this.yCoord, this.zCoord, this.xCoord + 1, this.yCoord + 1, this.zCoord + 1).grow(8.0, 4.0, 8.0)).size() >= 6) {
+			if (this.worldObj.getEntitiesWithinAABB(entity.getClass(), AABB.getAABBFromPool(this.xCoord, this.yCoord, this.zCoord, this.xCoord + 1, this.yCoord + 1, this.zCoord + 1).grow(8.0, 4.0, 8.0)).size() >= 6) {
 				this.updateDelay();
 				return;
 			}

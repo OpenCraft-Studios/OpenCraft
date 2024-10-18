@@ -20,7 +20,7 @@ public class FarmlandBlock extends Block {
 
 	@Override
 	public AABB getCollisionBoundingBoxFromPool(final World world, final int xCoord, final int yCoord, final int zCoord) {
-		return AABB.getBoundingBoxFromPool(xCoord + 0, yCoord + 0, zCoord + 0, xCoord + 1, yCoord + 1, zCoord + 1);
+		return AABB.getAABBFromPool(xCoord + 0, yCoord + 0, zCoord + 0, xCoord + 1, yCoord + 1, zCoord + 1);
 	}
 
 	@Override

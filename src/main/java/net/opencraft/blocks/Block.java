@@ -297,18 +297,18 @@ public class Block {
 	}
 
 	public AABB getSelectedBoundingBoxFromPool(final World world, final int xCoord, final int yCoord, final int zCoord) {
-		return AABB.getBoundingBoxFromPool(xCoord + this.minX, yCoord + this.minY, zCoord + this.minZ, xCoord + this.maxX, yCoord + this.maxY, zCoord + this.maxZ);
+		return AABB.getAABBFromPool(xCoord + this.minX, yCoord + this.minY, zCoord + this.minZ, xCoord + this.maxX, yCoord + this.maxY, zCoord + this.maxZ);
 	}
 
 	public void getCollidingBoundingBoxes(World world, int xCoord, int yCoord, int zCoord, AABB aabb, List<AABB> list) {
 		AABB aabb1 = this.getCollisionBoundingBoxFromPool(world, xCoord, yCoord, zCoord);
-		if (aabb1 != null && aabb.intersectsWith(aabb1)) {
+		if (aabb1 != null && aabb.intersects(aabb1)) {
 			list.add(aabb1);
 		}
 	}
 
 	public AABB getCollisionBoundingBoxFromPool(final World world, final int xCoord, final int yCoord, final int zCoord) {
-		return AABB.getBoundingBoxFromPool(xCoord + this.minX, yCoord + this.minY, zCoord + this.minZ, xCoord + this.maxX, yCoord + this.maxY, zCoord + this.maxZ);
+		return AABB.getAABBFromPool(xCoord + this.minX, yCoord + this.minY, zCoord + this.minZ, xCoord + this.maxX, yCoord + this.maxY, zCoord + this.maxZ);
 	}
 
 	public boolean isOpaqueCube() {

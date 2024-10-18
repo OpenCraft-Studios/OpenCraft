@@ -61,7 +61,7 @@ public class Explosion {
 		int j = Mth.floor_double(double3 + float6 + 1.0);
 		int k = Mth.floor_double(double4 - float6 - 1.0);
 		final List entitiesWithinAABBExcludingEntity = world.getEntitiesWithinAABBExcludingEntity(eq,
-				AABB.getBoundingBoxFromPool(i, k, Mth.floor_double(double5 - float6 - 1.0), j,
+				AABB.getAABBFromPool(i, k, Mth.floor_double(double5 - float6 - 1.0), j,
 						Mth.floor_double(double4 + float6 + 1.0), Mth.floor_double(double5 + float6 + 1.0)));
 		final Vec3 vector = Vec3.newTemp(double3, double4, double5);
 		for (int l = 0; l < entitiesWithinAABBExcludingEntity.size(); ++l) {

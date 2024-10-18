@@ -1,12 +1,10 @@
-
 package net.opencraft.client.entity.models;
+
+import static org.joml.Math.*;
+import static org.lwjgl.opengl.GL11.*;
 
 import net.opencraft.PositionTextureVertex;
 import net.opencraft.renderer.*;
-
-import static org.joml.Math.*;
-
-import org.lwjgl.opengl.GL11;
 
 public class ModelRenderer {
 
@@ -36,7 +34,8 @@ public class ModelRenderer {
 		this.textureOffsetY = integer2;
 	}
 
-	public void addBox(float float1, float float2, float float3, final int integer4, final int integer5, final int integer6, final float float7) {
+	public void addBox(float float1, float float2, float float3, final int integer4, final int integer5,
+			final int integer6, final float float7) {
 		this.corners = new PositionTextureVertex[8];
 		this.faces = new TexturedQuad[6];
 		float n = float1 + integer4;
@@ -53,7 +52,8 @@ public class ModelRenderer {
 			n = float1;
 			float1 = n4;
 		}
-		final PositionTextureVertex positionTextureVertex = new PositionTextureVertex(float1, float2, float3, 0.0f, 0.0f);
+		final PositionTextureVertex positionTextureVertex = new PositionTextureVertex(float1, float2, float3, 0.0f,
+				0.0f);
 		final PositionTextureVertex positionTextureVertex2 = new PositionTextureVertex(n, float2, float3, 0.0f, 8.0f);
 		final PositionTextureVertex positionTextureVertex3 = new PositionTextureVertex(n, n2, float3, 8.0f, 8.0f);
 		final PositionTextureVertex positionTextureVertex4 = new PositionTextureVertex(float1, n2, float3, 8.0f, 0.0f);
@@ -69,14 +69,39 @@ public class ModelRenderer {
 		this.corners[5] = positionTextureVertex6;
 		this.corners[6] = positionTextureVertex7;
 		this.corners[7] = positionTextureVertex8;
-		this.faces[0] = new TexturedQuad(new PositionTextureVertex[] { positionTextureVertex6, positionTextureVertex2, positionTextureVertex3, positionTextureVertex7 }, this.textureOffsetX + integer6 + integer4, this.textureOffsetY + integer6, this.textureOffsetX + integer6 + integer4 + integer6, this.textureOffsetY + integer6 + integer5);
-		this.faces[1] = new TexturedQuad(new PositionTextureVertex[] { positionTextureVertex, positionTextureVertex5, positionTextureVertex8, positionTextureVertex4 }, this.textureOffsetX + 0, this.textureOffsetY + integer6, this.textureOffsetX + integer6, this.textureOffsetY + integer6 + integer5);
-		this.faces[2] = new TexturedQuad(new PositionTextureVertex[] { positionTextureVertex6, positionTextureVertex5, positionTextureVertex, positionTextureVertex2 }, this.textureOffsetX + integer6, this.textureOffsetY + 0, this.textureOffsetX + integer6 + integer4, this.textureOffsetY + integer6);
-		this.faces[3] = new TexturedQuad(new PositionTextureVertex[] { positionTextureVertex3, positionTextureVertex4, positionTextureVertex8, positionTextureVertex7 }, this.textureOffsetX + integer6 + integer4, this.textureOffsetY + 0, this.textureOffsetX + integer6 + integer4 + integer4, this.textureOffsetY + integer6);
-		this.faces[4] = new TexturedQuad(new PositionTextureVertex[] { positionTextureVertex2, positionTextureVertex, positionTextureVertex4, positionTextureVertex3 }, this.textureOffsetX + integer6, this.textureOffsetY + integer6, this.textureOffsetX + integer6 + integer4, this.textureOffsetY + integer6 + integer5);
-		this.faces[5] = new TexturedQuad(new PositionTextureVertex[] { positionTextureVertex5, positionTextureVertex6, positionTextureVertex7, positionTextureVertex8 }, this.textureOffsetX + integer6 + integer4 + integer6, this.textureOffsetY + integer6, this.textureOffsetX + integer6 + integer4 + integer6 + integer4, this.textureOffsetY + integer6 + integer5);
+		this.faces[0] = new TexturedQuad(
+				new PositionTextureVertex[] { positionTextureVertex6, positionTextureVertex2, positionTextureVertex3,
+						positionTextureVertex7 },
+				this.textureOffsetX + integer6 + integer4, this.textureOffsetY + integer6,
+				this.textureOffsetX + integer6 + integer4 + integer6, this.textureOffsetY + integer6 + integer5);
+		this.faces[1] = new TexturedQuad(
+				new PositionTextureVertex[] { positionTextureVertex, positionTextureVertex5, positionTextureVertex8,
+						positionTextureVertex4 },
+				this.textureOffsetX + 0, this.textureOffsetY + integer6, this.textureOffsetX + integer6,
+				this.textureOffsetY + integer6 + integer5);
+		this.faces[2] = new TexturedQuad(
+				new PositionTextureVertex[] { positionTextureVertex6, positionTextureVertex5, positionTextureVertex,
+						positionTextureVertex2 },
+				this.textureOffsetX + integer6, this.textureOffsetY + 0, this.textureOffsetX + integer6 + integer4,
+				this.textureOffsetY + integer6);
+		this.faces[3] = new TexturedQuad(
+				new PositionTextureVertex[] { positionTextureVertex3, positionTextureVertex4, positionTextureVertex8,
+						positionTextureVertex7 },
+				this.textureOffsetX + integer6 + integer4, this.textureOffsetY + 0,
+				this.textureOffsetX + integer6 + integer4 + integer4, this.textureOffsetY + integer6);
+		this.faces[4] = new TexturedQuad(
+				new PositionTextureVertex[] { positionTextureVertex2, positionTextureVertex, positionTextureVertex4,
+						positionTextureVertex3 },
+				this.textureOffsetX + integer6, this.textureOffsetY + integer6,
+				this.textureOffsetX + integer6 + integer4, this.textureOffsetY + integer6 + integer5);
+		this.faces[5] = new TexturedQuad(
+				new PositionTextureVertex[] { positionTextureVertex5, positionTextureVertex6, positionTextureVertex7,
+						positionTextureVertex8 },
+				this.textureOffsetX + integer6 + integer4 + integer6, this.textureOffsetY + integer6,
+				this.textureOffsetX + integer6 + integer4 + integer6 + integer4,
+				this.textureOffsetY + integer6 + integer5);
 		if (this.mirror) {
-			for ( int i = 0; i < this.faces.length; ++i ) {
+			for (int i = 0; i < this.faces.length; ++i) {
 				this.faces[i].flipFace();
 			}
 		}
@@ -99,35 +124,35 @@ public class ModelRenderer {
 			this.compileDisplayList(float1);
 		}
 		if (this.rotateAngleX != 0.0f || this.rotateAngleY != 0.0f || this.rotateAngleZ != 0.0f) {
-			GL11.glPushMatrix();
-			GL11.glTranslatef(this.rotationPointX * float1, this.rotationPointY * float1, this.rotationPointZ * float1);
+			glPushMatrix();
+			glTranslatef(this.rotationPointX * float1, this.rotationPointY * float1, this.rotationPointZ * float1);
 			if (this.rotateAngleZ != 0.0f) {
-				GL11.glRotatef(toDegrees(rotateAngleZ), 0.0f, 0.0f, 1.0f);
+				glRotatef(toDegrees(rotateAngleZ), 0.0f, 0.0f, 1.0f);
 			}
 			if (this.rotateAngleY != 0.0f) {
-				GL11.glRotatef(toDegrees(rotateAngleY), 0.0f, 1.0f, 0.0f);
+				glRotatef(toDegrees(rotateAngleY), 0.0f, 1.0f, 0.0f);
 			}
 			if (this.rotateAngleX != 0.0f) {
-				GL11.glRotatef(toDegrees(rotateAngleX), 1.0f, 0.0f, 0.0f);
+				glRotatef(toDegrees(rotateAngleX), 1.0f, 0.0f, 0.0f);
 			}
-			GL11.glCallList(this.displayList);
-			GL11.glPopMatrix();
+			glCallList(this.displayList);
+			glPopMatrix();
 		} else if (this.rotationPointX != 0.0f || this.rotationPointY != 0.0f || this.rotationPointZ != 0.0f) {
-			GL11.glTranslatef(this.rotationPointX * float1, this.rotationPointY * float1, this.rotationPointZ * float1);
-			GL11.glCallList(this.displayList);
-			GL11.glTranslatef(-this.rotationPointX * float1, -this.rotationPointY * float1, -this.rotationPointZ * float1);
+			glTranslatef(this.rotationPointX * float1, this.rotationPointY * float1, this.rotationPointZ * float1);
+			glCallList(this.displayList);
+			glTranslatef(-this.rotationPointX * float1, -this.rotationPointY * float1, -this.rotationPointZ * float1);
 		} else {
-			GL11.glCallList(this.displayList);
+			glCallList(this.displayList);
 		}
 	}
 
 	private void compileDisplayList(final float float1) {
-		GL11.glNewList(this.displayList = GLAllocation.generateDisplayLists(1), 4864);
+		glNewList(this.displayList = GLAllocation.generateDisplayLists(1), 4864);
 		final Tessellator t = Tessellator.instance;
-		for ( int i = 0; i < this.faces.length; ++i ) {
+		for (int i = 0; i < this.faces.length; ++i) {
 			this.faces[i].draw(t, float1);
 		}
-		GL11.glEndList();
+		glEndList();
 		this.compiled = true;
 	}
 

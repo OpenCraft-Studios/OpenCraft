@@ -88,9 +88,9 @@ public class WorldRenderer {
 		this.j = integer2 - this.m;
 		this.k = integer3 - this.n;
 		final float n = 2.0f;
-		this.v = AABB.getBoundingBox(integer1 - n, integer2 - n, integer3 - n, integer1 + this.f + n, integer2 + this.g + n, integer3 + this.h + n);
+		this.v = AABB.getAABB(integer1 - n, integer2 - n, integer3 - n, integer1 + this.f + n, integer2 + this.g + n, integer3 + this.h + n);
 		GL11.glNewList(this.C + 2, 4864);
-		Render.renderAABB(AABB.getBoundingBoxFromPool(this.l - n, this.m - n, this.n - n, this.l + this.f + n, this.m + this.g + n, this.n + this.h + n));
+		Render.renderAABB(AABB.getAABBFromPool(this.l - n, this.m - n, this.n - n, this.l + this.f + n, this.m + this.g + n, this.n + this.h + n));
 		GL11.glEndList();
 		this.f();
 	}

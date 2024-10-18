@@ -1,274 +1,255 @@
-
 package net.opencraft.physics;
 
-import java.util.ArrayList;
-import java.util.List;
+import static java.lang.Math.*;
+
+import java.util.function.Predicate;
 
 import net.opencraft.client.input.MovingObjectPosition;
 import net.opencraft.util.Vec3;
 
-public class AABB {
+public final class AABB {
 
-	private static List boundingBoxes;
-	private static int numBoundingBoxesInUse;
-	public double minX;
-	public double minY;
-	public double minZ;
-	public double maxX;
-	public double maxY;
-	public double maxZ;
+	private static final AABBPool pool = AABBPool.createDynamic();
 
-	public static AABB getBoundingBox(final double aabbMinX, final double aabbMinY, final double aabbMinZ, final double aabbMaxX, final double aabbMaxY, final double aabbMaxZ) {
-		return new AABB(aabbMinX, aabbMinY, aabbMinZ, aabbMaxX, aabbMaxY, aabbMaxZ);
+	public double minX, minY, minZ;
+	public double maxX, maxY, maxZ;
+
+	public static AABB getEmptyBoundingBox() {
+		return getAABB(0, 0, 0, 0, 0, 0);
 	}
 
-	public static void clearBoundingBoxPool() {
-		AABB.numBoundingBoxesInUse = 0;
+	public static AABB getAABB(double minX, double minY, double minZ, double maxX, double maxY, double maxZ) {
+		return new AABB(minX, minY, minZ, maxX, maxY, maxZ);
 	}
 
-	public static AABB getBoundingBoxFromPool(final double aabbMinX, final double aabbMinY, final double aabbMinZ, final double aabbMaxX, final double aabbMaxY, final double aabbMaxZ) {
-		if (AABB.numBoundingBoxesInUse >= AABB.boundingBoxes.size()) {
-			AABB.boundingBoxes.add(getBoundingBox(0.0, 0.0, 0.0, 0.0, 0.0, 0.0));
-		}
-		return ((AABB) AABB.boundingBoxes.get(AABB.numBoundingBoxesInUse++)).setBounds(aabbMinX, aabbMinY, aabbMinZ, aabbMaxX, aabbMaxY, aabbMaxZ);
+	public static void clearAABBPool() {
+		pool.aabbsInUse = 0;
 	}
 
-	private AABB(final double aabbMinX, final double aabbMinY, final double aabbMinZ, final double aabbMaxX, final double aabbMaxY, final double aabbMaxZ) {
-		this.minX = aabbMinX;
-		this.minY = aabbMinY;
-		this.minZ = aabbMinZ;
-		this.maxX = aabbMaxX;
-		this.maxY = aabbMaxY;
-		this.maxZ = aabbMaxZ;
+	public static AABB getAABBFromPool(double minX, double minY, double minZ, double maxX, double maxY, double maxZ) {
+		if (pool.aabbsInUse >= pool.size())
+			pool.add(getAABB(0.0, 0.0, 0.0, 0.0, 0.0, 0.0));
+
+		return pool.get(pool.aabbsInUse++).set(minX, minY, minZ, maxX, maxY, maxZ);
 	}
 
-	public AABB setBounds(final double aabbMinX, final double aabbMinY, final double aabbMinZ, final double aabbMaxX, final double aabbMaxY, final double aabbMaxZ) {
-		this.minX = aabbMinX;
-		this.minY = aabbMinY;
-		this.minZ = aabbMinZ;
-		this.maxX = aabbMaxX;
-		this.maxY = aabbMaxY;
-		this.maxZ = aabbMaxZ;
+	private AABB(double minX, double minY, double minZ, double maxX, double maxY, double maxZ) {
+		set(minX, minY, minZ, maxX, maxY, maxZ);
+	}
+
+	public AABB set(double minX, double minY, double minZ, double maxX, double maxY, double maxZ) {
+		this.minX = minX;
+		this.minY = minY;
+		this.minZ = minZ;
+		this.maxX = maxX;
+		this.maxY = maxY;
+		this.maxZ = maxZ;
 		return this;
 	}
 
-	public AABB addCoord(final double xCoord, final double yCoord, final double zCoord) {
+	public AABB set(AABB bb) {
+		return set(bb.minX, bb.minY, bb.minZ, bb.maxX, bb.maxY, bb.maxZ);
+	}
+
+	public AABB addCoord(double x, double y, double z) {
 		double minX = this.minX;
 		double minY = this.minY;
 		double minZ = this.minZ;
 		double maxX = this.maxX;
 		double maxY = this.maxY;
 		double maxZ = this.maxZ;
-		if (xCoord < 0.0) {
-			minX += xCoord;
-		}
-		if (xCoord > 0.0) {
-			maxX += xCoord;
-		}
-		if (yCoord < 0.0) {
-			minY += yCoord;
-		}
-		if (yCoord > 0.0) {
-			maxY += yCoord;
-		}
-		if (zCoord < 0.0) {
-			minZ += zCoord;
-		}
-		if (zCoord > 0.0) {
-			maxZ += zCoord;
-		}
-		return getBoundingBoxFromPool(minX, minY, minZ, maxX, maxY, maxZ);
+		if (x < 0.0)
+			minX += x;
+		else
+			maxX += x;
+
+		if (y < 0.0)
+			minY += y;
+		else
+			maxY += y;
+
+		if (z < 0.0)
+			minZ += z;
+		else
+			maxZ += z;
+
+		return getAABBFromPool(minX, minY, minZ, maxX, maxY, maxZ);
 	}
 
-	public AABB grow(final double xCoord, final double yCoord, final double zCoord) {
-		return getBoundingBoxFromPool(this.minX - xCoord, this.minY - yCoord, this.minZ - zCoord, this.maxX + xCoord, this.maxY + yCoord, this.maxZ + zCoord);
+	public AABB grow(double x, double y, double z) {
+		return getAABBFromPool(minX - x, minY - y, minZ - z, maxX + x,
+				maxY + y, maxZ + z);
 	}
 
-	public AABB getOffsetBoundingBox(final double xCoord, final double yCoord, final double zCoord) {
-		return getBoundingBoxFromPool(this.minX + xCoord, this.minY + yCoord, this.minZ + zCoord, this.maxX + xCoord, this.maxY + yCoord, this.maxZ + zCoord);
+	public AABB getOffsetBoundingBox(double x, double y, double z) {
+		return getAABBFromPool(minX + x, minY + y, minZ + z, maxX + x,
+				maxY + y, maxZ + z);
 	}
 
-	public double calculateXOffset(final AABB aabb, double offsetX) {
-		if (aabb.maxY <= this.minY || aabb.minY >= this.maxY) {
+	public double calculateXOffset(AABB bb, double offsetX) {
+		boolean isOutsideYRange = bb.maxY <= minY || bb.minY >= maxY;
+		boolean isOutsideZRange = bb.maxZ <= minZ || bb.minZ >= maxZ;
+
+		if (isOutsideYRange || isOutsideZRange)
 			return offsetX;
-		}
-		if (aabb.maxZ <= this.minZ || aabb.minZ >= this.maxZ) {
-			return offsetX;
-		}
-		if (offsetX > 0.0 && aabb.maxX <= this.minX) {
-			final double n = this.minX - aabb.maxX;
-			if (n < offsetX) {
-				offsetX = n;
-			}
-		}
-		if (offsetX < 0.0 && aabb.minX >= this.maxX) {
-			final double n = this.maxX - aabb.minX;
-			if (n > offsetX) {
-				offsetX = n;
-			}
-		}
+
+		if (offsetX > 0 && bb.maxX <= minX)
+			offsetX = min(offsetX, minX - bb.maxX);
+		if (offsetX < 0 && bb.minX >= maxX)
+			offsetX = max(offsetX, maxX - bb.minX);
+
 		return offsetX;
 	}
 
-	public double calculateYOffset(final AABB aabb, double offsetY) {
-		if (aabb.maxX <= this.minX || aabb.minX >= this.maxX) {
+	public double calculateYOffset(AABB bb, double offsetY) {
+		boolean isOutsideXRange = bb.maxX <= minX || bb.minX >= maxX;
+		boolean isOutsideZRange = bb.maxZ <= minZ || bb.minZ >= maxZ;
+
+		if (isOutsideXRange || isOutsideZRange)
 			return offsetY;
-		}
-		if (aabb.maxZ <= this.minZ || aabb.minZ >= this.maxZ) {
-			return offsetY;
-		}
-		if (offsetY > 0.0 && aabb.maxY <= this.minY) {
-			final double n = this.minY - aabb.maxY;
-			if (n < offsetY) {
-				offsetY = n;
-			}
-		}
-		if (offsetY < 0.0 && aabb.minY >= this.maxY) {
-			final double n = this.maxY - aabb.minY;
-			if (n > offsetY) {
-				offsetY = n;
-			}
-		}
+
+		if (offsetY > 0 && bb.maxY <= minY)
+			offsetY = min(offsetY, minY - bb.maxY);
+		if (offsetY < 0 && bb.minY >= maxY)
+			offsetY = max(offsetY, maxY - bb.minY);
+
 		return offsetY;
 	}
 
-	public double calculateZOffset(final AABB aabb, double offsetZ) {
-		if (aabb.maxX <= this.minX || aabb.minX >= this.maxX) {
+	public double calculateZOffset(AABB bb, double offsetZ) {
+		boolean isOutsideXRange = bb.maxX <= minX || bb.minX >= maxX;
+		boolean isOutsideYRange = bb.maxY <= minY || bb.minY >= maxY;
+
+		if (isOutsideXRange || isOutsideYRange)
 			return offsetZ;
-		}
-		if (aabb.maxY <= this.minY || aabb.minY >= this.maxY) {
-			return offsetZ;
-		}
-		if (offsetZ > 0.0 && aabb.maxZ <= this.minZ) {
-			final double n = this.minZ - aabb.maxZ;
-			if (n < offsetZ) {
-				offsetZ = n;
-			}
-		}
-		if (offsetZ < 0.0 && aabb.minZ >= this.maxZ) {
-			final double n = this.maxZ - aabb.minZ;
-			if (n > offsetZ) {
-				offsetZ = n;
-			}
-		}
+
+		if (offsetZ > 0 && bb.maxZ <= minZ)
+			offsetZ = min(offsetZ, minZ - bb.maxZ);
+		if (offsetZ < 0 && bb.minZ >= maxZ)
+			offsetZ = max(offsetZ, maxZ - bb.minZ);
+
 		return offsetZ;
 	}
 
-	public boolean intersectsWith(final AABB aabb) {
-		return aabb.maxX > this.minX && aabb.minX < this.maxX && aabb.maxY > this.minY && aabb.minY < this.maxY && aabb.maxZ > this.minZ && aabb.minZ < this.maxZ;
+	public boolean intersects(AABB bb) {
+		boolean intersectX = bb.maxX > minX && bb.minX < maxX;
+		boolean intersectY = bb.maxY > minY && bb.minY < maxY;
+		boolean intersectZ = bb.maxZ > minZ && bb.minZ < maxZ;
+
+		return intersectX && intersectY && intersectZ;
 	}
 
-	public AABB offset(final double xCoord, final double yCoord, final double zCoord) {
-		this.minX += xCoord;
-		this.minY += yCoord;
-		this.minZ += zCoord;
-		this.maxX += xCoord;
-		this.maxY += yCoord;
-		this.maxZ += zCoord;
+	public AABB translate(double x, double y, double z) {
+		minX += x;
+		minY += y;
+		minZ += z;
+		maxX += x;
+		maxY += y;
+		maxZ += z;
 		return this;
 	}
 
 	public double getAverageEdgeLength() {
-		return (this.maxX - this.minX + (this.maxY - this.minY) + (this.maxZ - this.minZ)) / 3.0;
+		return (maxX - minX + (maxY - minY) + (maxZ - minZ)) / 3.0;
 	}
 
 	public AABB copy() {
-		return getBoundingBoxFromPool(this.minX, this.minY, this.minZ, this.maxX, this.maxY, this.maxZ);
+		return getAABBFromPool(minX, minY, minZ, maxX, maxY, maxZ);
 	}
 
-	public MovingObjectPosition calculateIntercept(final Vec3 var1, final Vec3 var2) {
-		Vec3 intermediateWithXValue = var1.getIntermediateWithXValue(var2, this.minX);
-		Vec3 intermediateWithXValue2 = var1.getIntermediateWithXValue(var2, this.maxX);
-		Vec3 intermediateWithYValue = var1.getIntermediateWithYValue(var2, this.minY);
-		Vec3 intermediateWithYValue2 = var1.getIntermediateWithYValue(var2, this.maxY);
-		Vec3 intermediateWithZValue = var1.getIntermediateWithZValue(var2, this.minZ);
-		Vec3 intermediateWithZValue2 = var1.getIntermediateWithZValue(var2, this.maxZ);
-		if (!this.isVecInYZ(intermediateWithXValue)) {
-			intermediateWithXValue = null;
-		}
-		if (!this.isVecInYZ(intermediateWithXValue2)) {
-			intermediateWithXValue2 = null;
-		}
-		if (!this.isVecInXZ(intermediateWithYValue)) {
-			intermediateWithYValue = null;
-		}
-		if (!this.isVecInXZ(intermediateWithYValue2)) {
-			intermediateWithYValue2 = null;
-		}
-		if (!this.isVecInXY(intermediateWithZValue)) {
-			intermediateWithZValue = null;
-		}
-		if (!this.isVecInXY(intermediateWithZValue2)) {
-			intermediateWithZValue2 = null;
-		}
-		Vec3 bo = null;
-		if (intermediateWithXValue != null && (bo == null || var1.distanceSquared(intermediateWithXValue) < var1.distanceSquared(bo))) {
-			bo = intermediateWithXValue;
-		}
-		if (intermediateWithXValue2 != null && (bo == null || var1.distanceSquared(intermediateWithXValue2) < var1.distanceSquared(bo))) {
-			bo = intermediateWithXValue2;
-		}
-		if (intermediateWithYValue != null && (bo == null || var1.distanceSquared(intermediateWithYValue) < var1.distanceSquared(bo))) {
-			bo = intermediateWithYValue;
-		}
-		if (intermediateWithYValue2 != null && (bo == null || var1.distanceSquared(intermediateWithYValue2) < var1.distanceSquared(bo))) {
-			bo = intermediateWithYValue2;
-		}
-		if (intermediateWithZValue != null && (bo == null || var1.distanceSquared(intermediateWithZValue) < var1.distanceSquared(bo))) {
-			bo = intermediateWithZValue;
-		}
-		if (intermediateWithZValue2 != null && (bo == null || var1.distanceSquared(intermediateWithZValue2) < var1.distanceSquared(bo))) {
-			bo = intermediateWithZValue2;
-		}
-		if (bo == null) {
+	public MovingObjectPosition calculateIntercept(Vec3 start, Vec3 end) {
+		// Calculate intersections with the min and max planes of each axis
+		Vec3 xMinIntersection = getIntersectionWithPlaneX(start, end, minX);
+		Vec3 xMaxIntersection = getIntersectionWithPlaneX(start, end, maxX);
+		Vec3 yMinIntersection = getIntersectionWithPlaneY(start, end, minY);
+		Vec3 yMaxIntersection = getIntersectionWithPlaneY(start, end, maxY);
+		Vec3 zMinIntersection = getIntersectionWithPlaneZ(start, end, minZ);
+		Vec3 zMaxIntersection = getIntersectionWithPlaneZ(start, end, maxZ);
+
+		// Filter out the invalid intersections for each axis
+		xMinIntersection = filterInvalidIntersection(xMinIntersection, this::isVecInYZ);
+		xMaxIntersection = filterInvalidIntersection(xMaxIntersection, this::isVecInYZ);
+		yMinIntersection = filterInvalidIntersection(yMinIntersection, this::isVecInXZ);
+		yMaxIntersection = filterInvalidIntersection(yMaxIntersection, this::isVecInXZ);
+		zMinIntersection = filterInvalidIntersection(zMinIntersection, this::isVecInXY);
+		zMaxIntersection = filterInvalidIntersection(zMaxIntersection, this::isVecInXY);
+
+		// Find the closest valid intersection point to the start vector
+		Vec3 closestIntersection = getClosestIntersection(start, xMinIntersection, xMaxIntersection, yMinIntersection,
+				yMaxIntersection, zMinIntersection, zMaxIntersection);
+
+		// If no valid intersection is found, return null
+		if (closestIntersection == null)
 			return null;
+
+		// Determine the face index based on the closest intersection point
+		int faceIndex = getFaceIndex(closestIntersection, xMinIntersection, xMaxIntersection, yMinIntersection,
+				yMaxIntersection, zMinIntersection, zMaxIntersection);
+
+		// Return the resulting MovingObjectPosition with the calculated intersection
+		// point
+		return new MovingObjectPosition(0, 0, 0, faceIndex, closestIntersection);
+	}
+
+	// Method to calculate intersection with a plane on the X axis
+	private Vec3 getIntersectionWithPlaneX(Vec3 start, Vec3 end, double xValue) {
+		return start.getIntermediateWithXValue(end, xValue);
+	}
+
+	// Method to calculate intersection with a plane on the Y axis
+	private Vec3 getIntersectionWithPlaneY(Vec3 start, Vec3 end, double yValue) {
+		return start.getIntermediateWithYValue(end, yValue);
+	}
+
+	// Method to calculate intersection with a plane on the Z axis
+	private Vec3 getIntersectionWithPlaneZ(Vec3 start, Vec3 end, double zValue) {
+		return start.getIntermediateWithZValue(end, zValue);
+	}
+
+	// Filter out intersections that do not fall within the specified bounds
+	private Vec3 filterInvalidIntersection(Vec3 intersection, Predicate<Vec3> isValid) {
+		return (intersection != null && isValid.test(intersection)) ? intersection : null;
+	}
+
+	// Method to find the closest valid intersection point
+	private Vec3 getClosestIntersection(Vec3 start, Vec3... intersections) {
+		Vec3 closest = null;
+		for (Vec3 intersection : intersections) {
+			if (intersection != null
+					&& (closest == null || start.distanceSquared(intersection) < start.distanceSquared(closest))) {
+				closest = intersection;
+			}
 		}
-		int integer4 = -1;
-		if (bo == intermediateWithXValue) {
-			integer4 = 4;
-		}
-		if (bo == intermediateWithXValue2) {
-			integer4 = 5;
-		}
-		if (bo == intermediateWithYValue) {
-			integer4 = 0;
-		}
-		if (bo == intermediateWithYValue2) {
-			integer4 = 1;
-		}
-		if (bo == intermediateWithZValue) {
-			integer4 = 2;
-		}
-		if (bo == intermediateWithZValue2) {
-			integer4 = 3;
-		}
-		return new MovingObjectPosition(0, 0, 0, integer4, bo);
+		return closest;
+	}
+
+	// Determine the face index based on the closest intersection point
+	private int getFaceIndex(Vec3 closest, Vec3 xMin, Vec3 xMax, Vec3 yMin, Vec3 yMax, Vec3 zMin, Vec3 zMax) {
+		if (closest == xMin)
+			return 4;
+		if (closest == xMax)
+			return 5;
+		if (closest == yMin)
+			return 0;
+		if (closest == yMax)
+			return 1;
+		if (closest == zMin)
+			return 2;
+		if (closest == zMax)
+			return 3;
+		return -1; // Default case if no intersection matches (shouldn't happen)
 	}
 
 	private boolean isVecInYZ(final Vec3 var1) {
-		return var1 != null && var1.y >= this.minY && var1.y <= this.maxY && var1.z >= this.minZ && var1.z <= this.maxZ;
+		return var1 != null && var1.y >= minY && var1.y <= maxY && var1.z >= minZ && var1.z <= maxZ;
 	}
 
 	private boolean isVecInXZ(final Vec3 var1) {
-		return var1 != null && var1.x >= this.minX && var1.x <= this.maxX && var1.z >= this.minZ && var1.z <= this.maxZ;
+		return var1 != null && var1.x >= minX && var1.x <= maxX && var1.z >= minZ && var1.z <= maxZ;
 	}
 
 	private boolean isVecInXY(final Vec3 var1) {
-		return var1 != null && var1.x >= this.minX && var1.x <= this.maxX && var1.y >= this.minY && var1.y <= this.maxY;
-	}
-
-	public void setBB(final AABB aabb) {
-		this.minX = aabb.minX;
-		this.minY = aabb.minY;
-		this.minZ = aabb.minZ;
-		this.maxX = aabb.maxX;
-		this.maxY = aabb.maxY;
-		this.maxZ = aabb.maxZ;
-	}
-
-	static {
-		AABB.boundingBoxes = new ArrayList<AABB>();
-		AABB.numBoundingBoxesInUse = 0;
+		return var1 != null && var1.x >= minX && var1.x <= maxX && var1.y >= minY && var1.y <= maxY;
 	}
 
 }

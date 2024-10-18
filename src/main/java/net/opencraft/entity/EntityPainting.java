@@ -94,7 +94,7 @@ public class EntityPainting extends Entity {
 		n6 += this.getArtSize(this.art.sizeY);
 		this.setPosition(n5, n6, n7);
 		final float n9 = -0.00625f;
-		this.bb.setBounds(n5 - n2 - n9, n6 - n3 - n9, n7 - n4 - n9, n5 + n2 + n9, n6 + n3 + n9, n7 + n4 + n9);
+		this.bb.set(n5 - n2 - n9, n6 - n3 - n9, n7 - n4 - n9, n5 + n2 + n9, n6 + n3 + n9, n7 + n4 + n9);
 	}
 
 	private float getArtSize(final int integer) {

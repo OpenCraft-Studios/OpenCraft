@@ -308,7 +308,7 @@ public class OpenCraft implements Runnable, GLFWFramebufferSizeCallbackI {
         try {
             long begin = System.currentTimeMillis();
             while (running) {
-                AABB.clearBoundingBoxPool();
+                AABB.clearAABBPool();
                 if (glfwWindowShouldClose(window))
                     stop();
 
