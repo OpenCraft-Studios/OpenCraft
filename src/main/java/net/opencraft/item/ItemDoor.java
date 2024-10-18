@@ -21,7 +21,7 @@ public class ItemDoor extends Item {
 		if (!Block.door.canPlaceBlockAt(fe2, xCoord, ++yCoord, zCoord)) {
 			return false;
 		}
-		int n5 = Mth.floor_double((double) ((gi2.rotationYaw + 180.0f) * 4.0f / 360.0f) - 0.5) & 3;
+		int n5 = Mth.floor_double((double) ((gi2.yRot + 180.0f) * 4.0f / 360.0f) - 0.5) & 3;
 		int n6 = 0;
 		int n7 = 0;
 		if (n5 == 0) {

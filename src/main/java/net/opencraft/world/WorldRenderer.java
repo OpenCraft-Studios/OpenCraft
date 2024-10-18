@@ -184,9 +184,9 @@ public class WorldRenderer {
 	}
 
 	public float chunkIndex(final Entity eq) {
-		final float n = (float) (eq.posX - this.q);
-		final float n2 = (float) (eq.posY - this.r);
-		final float n3 = (float) (eq.posZ - this.s);
+		final float n = (float) (eq.x - this.q);
+		final float n2 = (float) (eq.y - this.r);
+		final float n3 = (float) (eq.z - this.s);
 		return n * n + n2 * n2 + n3 * n3;
 	}
 

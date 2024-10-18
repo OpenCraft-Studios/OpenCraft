@@ -10,9 +10,9 @@ public class EntitySplashFX extends EntityRainFX {
 		this.particleGravity = 0.04f;
 		++this.particleTextureIndex;
 		if (double6 == 0.0 && (double5 != 0.0 || double7 != 0.0)) {
-			this.motionX = double5;
-			this.motionY = double6 + 0.1;
-			this.motionZ = double7;
+			this.xd = double5;
+			this.yd = double6 + 0.1;
+			this.zd = double7;
 		}
 	}
 

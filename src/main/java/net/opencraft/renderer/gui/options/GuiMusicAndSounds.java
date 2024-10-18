@@ -46,7 +46,7 @@ public class GuiMusicAndSounds extends GuiScreen {
 	@Override
 	public void drawScreen(final int integer1, final int integer2, final float float3) {
 		this.drawDefaultBackground();
-		this.drawCenteredString(this.fontRenderer, this.screenTitle, this.width / 2, 20, 16777215);
+		this.drawCenteredString(this.fontRenderer, this.screenTitle, this.width / 2, 20, 0xFFFFFF);
 		super.drawScreen(integer1, integer2, float3);
 	}
 

@@ -22,14 +22,14 @@ public class EntityTNTPrimed extends Entity {
 		this(fe);
 		this.setPosition(xCoord, yCoord, zCoord);
 		final float n = (float) (random() * PI_TIMES_2);
-		this.motionX = -sin(toRadians(n)) * 0.02f;
-		this.motionY = 0.20000000298023224;
-		this.motionZ = -cos(toRadians(n)) * 0.02f;
+		this.xd = -sin(toRadians(n)) * 0.02f;
+		this.yd = 0.20000000298023224;
+		this.zd = -cos(toRadians(n)) * 0.02f;
 		this.canTriggerWalking = false;
 		this.fuse = 80;
-		this.prevPosX = xCoord;
-		this.prevPosY = yCoord;
-		this.prevPosZ = zCoord;
+		this.xo = xCoord;
+		this.yo = yCoord;
+		this.zo = zCoord;
 	}
 
 	@Override
@@ -39,29 +39,29 @@ public class EntityTNTPrimed extends Entity {
 
 	@Override
 	public void onUpdate() {
-		this.prevPosX = this.posX;
-		this.prevPosY = this.posY;
-		this.prevPosZ = this.posZ;
-		this.motionY -= 0.03999999910593033;
-		this.moveEntity(this.motionX, this.motionY, this.motionZ);
-		this.motionX *= 0.9800000190734863;
-		this.motionY *= 0.9800000190734863;
-		this.motionZ *= 0.9800000190734863;
+		this.xo = this.x;
+		this.yo = this.y;
+		this.zo = this.z;
+		this.yd -= 0.03999999910593033;
+		this.moveEntity(this.xd, this.yd, this.zd);
+		this.xd *= 0.9800000190734863;
+		this.yd *= 0.9800000190734863;
+		this.zd *= 0.9800000190734863;
 		if (this.onGround) {
-			this.motionX *= 0.699999988079071;
-			this.motionZ *= 0.699999988079071;
-			this.motionY *= -0.5;
+			this.xd *= 0.699999988079071;
+			this.zd *= 0.699999988079071;
+			this.yd *= -0.5;
 		}
 		if (this.fuse-- <= 0) {
 			this.setEntityDead();
 			this.createExplosion();
 		} else {
-			this.world.spawnParticle("smoke", this.posX, this.posY + 0.5, this.posZ, 0.0, 0.0, 0.0);
+			this.world.spawnParticle("smoke", this.x, this.y + 0.5, this.z, 0.0, 0.0, 0.0);
 		}
 	}
 
 	private void createExplosion() {
-		this.world.createExplosion((Entity) null, this.posX, this.posY, this.posZ, 4.0f);
+		this.world.createExplosion((Entity) null, this.x, this.y, this.z, 4.0f);
 	}
 
 	@Override

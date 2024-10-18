@@ -28,10 +28,10 @@ public class EntityItem extends Entity {
 		this.yOffset = this.height / 2.0f;
 		this.setPosition(xCoord, yCoord, zCoord);
 		this.item = itemStack;
-		this.rotationYaw = (float) (random() * 360.0);
-		this.motionX = (float) (random() * 0.20000000298023224 - 0.10000000149011612);
-		this.motionY = 0.20000000298023224;
-		this.motionZ = (float) (random() * 0.20000000298023224 - 0.10000000149011612);
+		this.yRot = (float) (random() * 360.0);
+		this.xd = (float) (random() * 0.20000000298023224 - 0.10000000149011612);
+		this.yd = 0.20000000298023224;
+		this.zd = (float) (random() * 0.20000000298023224 - 0.10000000149011612);
 		this.canTriggerWalking = false;
 	}
 
@@ -50,26 +50,26 @@ public class EntityItem extends Entity {
 		if (this.delayBeforeCanPickup > 0) {
 			--this.delayBeforeCanPickup;
 		}
-		this.prevPosX = this.posX;
-		this.prevPosY = this.posY;
-		this.prevPosZ = this.posZ;
-		this.motionY -= 0.03999999910593033;
-		if (this.world.getBlockMaterial(Mth.floor_double(this.posX), Mth.floor_double(this.posY), Mth.floor_double(this.posZ)) == Material.LAVA) {
-			this.motionY = 0.20000000298023224;
-			this.motionX = (this.rand.nextFloat() - this.rand.nextFloat()) * 0.2f;
-			this.motionZ = (this.rand.nextFloat() - this.rand.nextFloat()) * 0.2f;
+		this.xo = this.x;
+		this.yo = this.y;
+		this.zo = this.z;
+		this.yd -= 0.03999999910593033;
+		if (this.world.getBlockMaterial(Mth.floor_double(this.x), Mth.floor_double(this.y), Mth.floor_double(this.z)) == Material.LAVA) {
+			this.yd = 0.20000000298023224;
+			this.xd = (this.rand.nextFloat() - this.rand.nextFloat()) * 0.2f;
+			this.zd = (this.rand.nextFloat() - this.rand.nextFloat()) * 0.2f;
 			this.world.playSound((Entity) this, "random.fizz", 0.4f, 2.0f + this.rand.nextFloat() * 0.4f);
 		}
-		this.pushOutOfBlocks(this.posX, this.posY, this.posZ);
+		this.pushOutOfBlocks(this.x, this.y, this.z);
 		this.handleWaterMovement();
-		this.moveEntity(this.motionX, this.motionY, this.motionZ);
-		this.motionX *= 0.9800000190734863;
-		this.motionY *= 0.9800000190734863;
-		this.motionZ *= 0.9800000190734863;
+		this.moveEntity(this.xd, this.yd, this.zd);
+		this.xd *= 0.9800000190734863;
+		this.yd *= 0.9800000190734863;
+		this.zd *= 0.9800000190734863;
 		if (this.onGround) {
-			this.motionX *= 0.699999988079071;
-			this.motionZ *= 0.699999988079071;
-			this.motionY *= -0.5;
+			this.xd *= 0.699999988079071;
+			this.zd *= 0.699999988079071;
+			this.yd *= -0.5;
 		}
 		++this.field_803_e;
 		++this.age;
@@ -80,7 +80,7 @@ public class EntityItem extends Entity {
 
 	@Override
 	public boolean handleWaterMovement() {
-		return this.world.handleMaterialAcceleration(this.boundingBox, Material.WATER, this);
+		return this.world.handleMaterialAcceleration(this.bb, Material.WATER, this);
 	}
 
 	private boolean pushOutOfBlocks(final double double1, final double double2, final double double3) {
@@ -125,22 +125,22 @@ public class EntityItem extends Entity {
 			}
 			final float n6 = this.rand.nextFloat() * 0.2f + 0.1f;
 			if (n4 == 0) {
-				this.motionX = -n6;
+				this.xd = -n6;
 			}
 			if (n4 == 1) {
-				this.motionX = n6;
+				this.xd = n6;
 			}
 			if (n4 == 2) {
-				this.motionY = -n6;
+				this.yd = -n6;
 			}
 			if (n4 == 3) {
-				this.motionY = n6;
+				this.yd = n6;
 			}
 			if (n4 == 4) {
-				this.motionZ = -n6;
+				this.zd = -n6;
 			}
 			if (n4 == 5) {
-				this.motionZ = n6;
+				this.zd = n6;
 			}
 		}
 		return false;

@@ -30,8 +30,8 @@ public class GuiYesNo extends GuiScreen {
 	@Override
 	public void drawScreen(final int integer1, final int integer2, final float float3) {
 		this.drawDefaultBackground();
-		this.drawCenteredString(this.fontRenderer, this.message1, this.width / 2, 70, 16777215);
-		this.drawCenteredString(this.fontRenderer, this.message2, this.width / 2, 90, 16777215);
+		this.drawCenteredString(this.fontRenderer, this.message1, this.width / 2, 70, 0xFFFFFF);
+		this.drawCenteredString(this.fontRenderer, this.message2, this.width / 2, 90, 0xFFFFFF);
 		super.drawScreen(integer1, integer2, float3);
 	}
 

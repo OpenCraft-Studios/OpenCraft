@@ -16,9 +16,9 @@ public class EntitySmokeFX extends EntityFX {
 
 	public EntitySmokeFX(final World fe, final double double2, final double double3, final double double4, final float float5) {
 		super(fe, double2, double3, double4, 0.0, 0.0, 0.0);
-		this.motionX *= 0.10000000149011612;
-		this.motionY *= 0.10000000149011612;
-		this.motionZ *= 0.10000000149011612;
+		this.xd *= 0.10000000149011612;
+		this.yd *= 0.10000000149011612;
+		this.zd *= 0.10000000149011612;
 		final float particleRed = (float) (random() * 0.30000001192092896);
 		this.particleBlue = particleRed;
 		this.particleGreen = particleRed;
@@ -46,25 +46,25 @@ public class EntitySmokeFX extends EntityFX {
 
 	@Override
 	public void onUpdate() {
-		this.prevPosX = this.posX;
-		this.prevPosY = this.posY;
-		this.prevPosZ = this.posZ;
+		this.xo = this.x;
+		this.yo = this.y;
+		this.zo = this.z;
 		if (this.particleAge++ >= this.particleMaxAge) {
 			this.setEntityDead();
 		}
 		this.particleTextureIndex = 7 - this.particleAge * 8 / this.particleMaxAge;
-		this.motionY += 0.004;
-		this.moveEntity(this.motionX, this.motionY, this.motionZ);
-		if (this.posY == this.prevPosY) {
-			this.motionX *= 1.1;
-			this.motionZ *= 1.1;
+		this.yd += 0.004;
+		this.moveEntity(this.xd, this.yd, this.zd);
+		if (this.y == this.yo) {
+			this.xd *= 1.1;
+			this.zd *= 1.1;
 		}
-		this.motionX *= 0.9599999785423279;
-		this.motionY *= 0.9599999785423279;
-		this.motionZ *= 0.9599999785423279;
+		this.xd *= 0.9599999785423279;
+		this.yd *= 0.9599999785423279;
+		this.zd *= 0.9599999785423279;
 		if (this.onGround) {
-			this.motionX *= 0.699999988079071;
-			this.motionZ *= 0.699999988079071;
+			this.xd *= 0.699999988079071;
+			this.zd *= 0.699999988079071;
 		}
 	}
 

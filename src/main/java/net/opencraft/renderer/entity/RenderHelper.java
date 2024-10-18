@@ -1,10 +1,10 @@
-
 package net.opencraft.renderer.entity;
+
+import static org.lwjgl.opengl.GL11.*;
 
 import java.nio.FloatBuffer;
 
 import org.lwjgl.BufferUtils;
-import org.lwjgl.opengl.GL11;
 
 import net.opencraft.util.Vec3;
 
@@ -13,33 +13,33 @@ public class RenderHelper {
 	private static FloatBuffer a;
 
 	public static void disableStandardItemLighting() {
-		GL11.glDisable(2896);
-		GL11.glDisable(16384);
-		GL11.glDisable(16385);
-		GL11.glDisable(2903);
+		glDisable(2896);
+		glDisable(16384);
+		glDisable(16385);
+		glDisable(2903);
 	}
 
 	public static void enableStandardItemLighting() {
-		GL11.glEnable(2896);
-		GL11.glEnable(16384);
-		GL11.glEnable(16385);
-		GL11.glEnable(2903);
-		GL11.glColorMaterial(1032, 5634);
+		glEnable(GL_LIGHTING);
+		glEnable(16384);
+		glEnable(16385);
+		glEnable(2903);
+		glColorMaterial(1032, 5634);
 		final float n = 0.4f;
 		final float n2 = 0.6f;
 		final float n3 = 0.0f;
 		final Vec3 normalize = Vec3.newTemp(0.699999988079071, 1.0, -0.20000000298023224).normalize();
-		GL11.glLightfv(16384, 4611, floatBuffer(normalize.x, normalize.y, normalize.z, 0.0));
-		GL11.glLightfv(16384, 4609, floatBuffer(n2, n2, n2, 1.0f));
-		GL11.glLightfv(16384, 4608, floatBuffer(0.0f, 0.0f, 0.0f, 1.0f));
-		GL11.glLightfv(16384, 4610, floatBuffer(n3, n3, n3, 1.0f));
+		glLightfv(16384, 4611, floatBuffer(normalize.x, normalize.y, normalize.z, 0.0));
+		glLightfv(16384, 4609, floatBuffer(n2, n2, n2, 1.0f));
+		glLightfv(16384, 4608, floatBuffer(0.0f, 0.0f, 0.0f, 1.0f));
+		glLightfv(16384, 4610, floatBuffer(n3, n3, n3, 1.0f));
 		final Vec3 normalize2 = Vec3.newTemp(-0.699999988079071, 1.0, 0.20000000298023224).normalize();
-		GL11.glLightfv(16385, 4611, floatBuffer(normalize2.x, normalize2.y, normalize2.z, 0.0));
-		GL11.glLightfv(16385, 4609, floatBuffer(n2, n2, n2, 1.0f));
-		GL11.glLightfv(16385, 4608, floatBuffer(0.0f, 0.0f, 0.0f, 1.0f));
-		GL11.glLightfv(16385, 4610, floatBuffer(n3, n3, n3, 1.0f));
-		GL11.glShadeModel(7424);
-		GL11.glLightModelfv(2899, floatBuffer(n, n, n, 1.0f));
+		glLightfv(16385, 4611, floatBuffer(normalize2.x, normalize2.y, normalize2.z, 0.0));
+		glLightfv(16385, 4609, floatBuffer(n2, n2, n2, 1.0f));
+		glLightfv(16385, 4608, floatBuffer(0.0f, 0.0f, 0.0f, 1.0f));
+		glLightfv(16385, 4610, floatBuffer(n3, n3, n3, 1.0f));
+		glShadeModel(7424);
+		glLightModelfv(2899, floatBuffer(n, n, n, 1.0f));
 	}
 
 	private static FloatBuffer floatBuffer(final double double1, final double double2, final double double3, final double double4) {

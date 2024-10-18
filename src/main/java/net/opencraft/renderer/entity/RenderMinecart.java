@@ -23,12 +23,12 @@ public class RenderMinecart extends Render<EntityMinecart> {
 
 	public void doRender(final EntityMinecart entityLiving, double xCoord, double sqrt_double, double yCoord, float nya1, final float nya2) {
 		GL11.glPushMatrix();
-		final double double1 = entityLiving.lastTickPosX + (entityLiving.posX - entityLiving.lastTickPosX) * nya2;
-		final double double2 = entityLiving.lastTickPosY + (entityLiving.posY - entityLiving.lastTickPosY) * nya2;
-		final double double3 = entityLiving.lastTickPosZ + (entityLiving.posZ - entityLiving.lastTickPosZ) * nya2;
+		final double double1 = entityLiving.lastTickPosX + (entityLiving.x - entityLiving.lastTickPosX) * nya2;
+		final double double2 = entityLiving.lastTickPosY + (entityLiving.y - entityLiving.lastTickPosY) * nya2;
+		final double double3 = entityLiving.lastTickPosZ + (entityLiving.z - entityLiving.lastTickPosZ) * nya2;
 		final double double4 = 0.30000001192092896;
 		final Vec3 pos = entityLiving.getPos(double1, double2, double3);
-		float n = entityLiving.prevRotationPitch + (entityLiving.rotationPitch - entityLiving.prevRotationPitch) * nya2;
+		float n = entityLiving.prevRotationPitch + (entityLiving.xRot - entityLiving.prevRotationPitch) * nya2;
 		if (pos != null) {
 			Vec3 posOffset = entityLiving.getPosOffset(double1, double2, double3, double4);
 			Vec3 posOffset2 = entityLiving.getPosOffset(double1, double2, double3, -double4);

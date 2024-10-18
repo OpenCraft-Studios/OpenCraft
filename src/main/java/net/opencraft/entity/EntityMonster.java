@@ -54,7 +54,7 @@ public class EntityMonster extends EntityCreature {
 
 	@Override
 	protected void attackEntity(final Entity entity, final float xCoord) {
-		if (xCoord < 2.5 && entity.boundingBox.maxY > this.boundingBox.minY && entity.boundingBox.minY < this.boundingBox.maxY) {
+		if (xCoord < 2.5 && entity.bb.maxY > this.bb.minY && entity.bb.minY < this.bb.maxY) {
 			this.attackTime = 20;
 			entity.attackEntityFrom(this, this.attackStrength);
 		}

@@ -85,18 +85,18 @@ public class RenderManager {
 		this.options = ja2;
 		this.livingPlayer = gi2;
 		this.fontRenderer = ej2;
-		this.playerViewY = gi2.prevRotationYaw + (gi2.rotationYaw - gi2.prevRotationYaw) * f2;
-		this.playerViewX = gi2.prevRotationPitch + (gi2.rotationPitch - gi2.prevRotationPitch) * f2;
-		this.field_1222_l = gi2.lastTickPosX + (gi2.posX - gi2.lastTickPosX) * (double) f2;
-		this.field_1221_m = gi2.lastTickPosY + (gi2.posY - gi2.lastTickPosY) * (double) f2;
-		this.field_1220_n = gi2.lastTickPosZ + (gi2.posZ - gi2.lastTickPosZ) * (double) f2;
+		this.playerViewY = gi2.prevRotationYaw + (gi2.yRot - gi2.prevRotationYaw) * f2;
+		this.playerViewX = gi2.prevRotationPitch + (gi2.xRot - gi2.prevRotationPitch) * f2;
+		this.field_1222_l = gi2.lastTickPosX + (gi2.x - gi2.lastTickPosX) * (double) f2;
+		this.field_1221_m = gi2.lastTickPosY + (gi2.y - gi2.lastTickPosY) * (double) f2;
+		this.field_1220_n = gi2.lastTickPosZ + (gi2.z - gi2.lastTickPosZ) * (double) f2;
 	}
 
 	public void renderEntity(Entity eq2, float f2) {
-		double d = eq2.lastTickPosX + (eq2.posX - eq2.lastTickPosX) * (double) f2;
-		double d2 = eq2.lastTickPosY + (eq2.posY - eq2.lastTickPosY) * (double) f2;
-		double d3 = eq2.lastTickPosZ + (eq2.posZ - eq2.lastTickPosZ) * (double) f2;
-		float f3 = eq2.prevRotationYaw + (eq2.rotationYaw - eq2.prevRotationYaw) * f2;
+		double d = eq2.lastTickPosX + (eq2.x - eq2.lastTickPosX) * (double) f2;
+		double d2 = eq2.lastTickPosY + (eq2.y - eq2.lastTickPosY) * (double) f2;
+		double d3 = eq2.lastTickPosZ + (eq2.z - eq2.lastTickPosZ) * (double) f2;
+		float f3 = eq2.prevRotationYaw + (eq2.yRot - eq2.prevRotationYaw) * f2;
 		float f4 = eq2.getEntityBrightness(f2);
 		GL11.glColor3f((float) f4, (float) f4, (float) f4);
 		this.renderEntityWithPosYaw(eq2, d - renderPosX, d2 - renderPosY, d3 - RenderManager.renderPosZ, f3, f2);

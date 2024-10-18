@@ -151,9 +151,9 @@ public class ChestBlock extends ContainerBlock {
 					itemStack.stackSize -= stackSize;
 					final EntityItem entity = new EntityItem(world, xCoord + n, yCoord + n2, zCoord + n3, new ItemStack(stackInSlot.itemID, stackSize, stackInSlot.itemDamage));
 					final float n4 = 0.05f;
-					entity.motionX = (float) this.random.nextGaussian() * n4;
-					entity.motionY = (float) this.random.nextGaussian() * n4 + 0.2f;
-					entity.motionZ = (float) this.random.nextGaussian() * n4;
+					entity.xd = (float) this.random.nextGaussian() * n4;
+					entity.yd = (float) this.random.nextGaussian() * n4 + 0.2f;
+					entity.zd = (float) this.random.nextGaussian() * n4;
 					world.onEntityJoin(entity);
 				}
 			}

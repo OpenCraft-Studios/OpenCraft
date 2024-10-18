@@ -53,7 +53,7 @@ public class EntityCreeper extends EntityMonster {
 			this.creeperState = 1;
 			++this.timeSinceIgnited;
 			if (this.timeSinceIgnited == this.fuseTime) {
-				this.world.createExplosion(this, this.posX, this.posY, this.posZ, 3.0f);
+				this.world.createExplosion(this, this.x, this.y, this.z, 3.0f);
 				this.setEntityDead();
 			}
 			this.hasAttacked = true;

@@ -23,11 +23,11 @@ public class EntitySheep extends EntityAnimal {
 			for ( int n = 1 + this.rand.nextInt(3), i = 0; i < n; ++i ) {
 				final EntityItem entityDropItem;
 				final EntityItem entityItem = entityDropItem = this.entityDropItem(Block.woolGray.id, 1, 1.0f);
-				entityDropItem.motionY += this.rand.nextFloat() * 0.05f;
+				entityDropItem.yd += this.rand.nextFloat() * 0.05f;
 				final EntityItem entityItem2 = entityItem;
-				entityItem2.motionX += (this.rand.nextFloat() - this.rand.nextFloat()) * 0.1f;
+				entityItem2.xd += (this.rand.nextFloat() - this.rand.nextFloat()) * 0.1f;
 				final EntityItem entityItem3 = entityItem;
-				entityItem3.motionZ += (this.rand.nextFloat() - this.rand.nextFloat()) * 0.1f;
+				entityItem3.zd += (this.rand.nextFloat() - this.rand.nextFloat()) * 0.1f;
 			}
 		}
 		return super.attackEntityFrom(entity, nya1);

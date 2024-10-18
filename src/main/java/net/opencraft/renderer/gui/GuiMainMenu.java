@@ -75,8 +75,8 @@ public class GuiMainMenu extends GuiScreen {
 	public void drawScreen(final int mouseX, final int mouseY, final float partialTicks) {
 		panorama.render(partialTicks);
 		// this.drawDefaultBackground();
-		final Tessellator instance = Tessellator.instance;
-		drawLogo(instance);
+		final Tessellator t = Tessellator.instance;
+		drawLogo(t);
 		glPushMatrix();
 		glTranslatef(width / 2 + 90, 70.0f, 0.0f);
 		glRotatef(-20.0f, 0.0f, 0.0f, 1.0f);
@@ -92,10 +92,10 @@ public class GuiMainMenu extends GuiScreen {
 		final String string = new StringBuilder().append("Free memory: ")
 				.append((maxMemory - Runtime.getRuntime().freeMemory()) * 100L / maxMemory).append("% of ")
 				.append(maxMemory / 1024L / 1024L).append("MB").toString();
-		this.drawString(fontRenderer, string, width - fontRenderer.width(string) - 2, 2, 16777215);
+		this.drawString(fontRenderer, string, width - fontRenderer.width(string) - 2, 2, 0xFFFFFF);
 		final String string2 = new StringBuilder().append("Allocated memory: ").append(totalMemory * 100L / maxMemory)
 				.append("% (").append(totalMemory / 1024L / 1024L).append("MB)").toString();
-		this.drawString(fontRenderer, string2, width - fontRenderer.width(string2) - 2, 12, 16777215);
+		this.drawString(fontRenderer, string2, width - fontRenderer.width(string2) - 2, 12, 0xFFFFFF);
 		super.drawScreen(mouseX, mouseY, partialTicks);
 
 		oc.sndManager.currentMusicTheme = "menu";

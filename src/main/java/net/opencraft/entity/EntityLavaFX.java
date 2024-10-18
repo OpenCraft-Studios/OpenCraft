@@ -12,10 +12,10 @@ public class EntityLavaFX extends EntityFX {
 
 	public EntityLavaFX(final World fe, final double double2, final double double3, final double double4) {
 		super(fe, double2, double3, double4, 0.0, 0.0, 0.0);
-		this.motionX *= 0.800000011920929;
-		this.motionY *= 0.800000011920929;
-		this.motionZ *= 0.800000011920929;
-		this.motionY = this.rand.nextFloat() * 0.4f + 0.05f;
+		this.xd *= 0.800000011920929;
+		this.yd *= 0.800000011920929;
+		this.zd *= 0.800000011920929;
+		this.yd = this.rand.nextFloat() * 0.4f + 0.05f;
 		final float particleRed = 1.0f;
 		this.particleBlue = particleRed;
 		this.particleGreen = particleRed;
@@ -41,23 +41,23 @@ public class EntityLavaFX extends EntityFX {
 
 	@Override
 	public void onUpdate() {
-		this.prevPosX = this.posX;
-		this.prevPosY = this.posY;
-		this.prevPosZ = this.posZ;
+		this.xo = this.x;
+		this.yo = this.y;
+		this.zo = this.z;
 		if (this.particleAge++ >= this.particleMaxAge) {
 			this.setEntityDead();
 		}
 		if (this.rand.nextFloat() > this.particleAge / (float) this.particleMaxAge) {
-			this.world.spawnParticle("smoke", this.posX, this.posY, this.posZ, this.motionX, this.motionY, this.motionZ);
+			this.world.spawnParticle("smoke", this.x, this.y, this.z, this.xd, this.yd, this.zd);
 		}
-		this.motionY -= 0.03;
-		this.moveEntity(this.motionX, this.motionY, this.motionZ);
-		this.motionX *= 0.9990000128746033;
-		this.motionY *= 0.9990000128746033;
-		this.motionZ *= 0.9990000128746033;
+		this.yd -= 0.03;
+		this.moveEntity(this.xd, this.yd, this.zd);
+		this.xd *= 0.9990000128746033;
+		this.yd *= 0.9990000128746033;
+		this.zd *= 0.9990000128746033;
 		if (this.onGround) {
-			this.motionX *= 0.699999988079071;
-			this.motionZ *= 0.699999988079071;
+			this.xd *= 0.699999988079071;
+			this.zd *= 0.699999988079071;
 		}
 	}
 

@@ -73,7 +73,7 @@ public class World implements IBlockAccess {
 		this.time = 0L;
 		this.v = 8961023L;
 		this.w = 12638463L;
-		this.field_1019_F = 16777215L;
+		this.field_1019_F = 0xFFFFFFL;
 		this.skylightSubtracted = 0;
 		this.randInt = new Random().nextInt();
 		this.zz = 1013904223;
@@ -690,8 +690,8 @@ public class World implements IBlockAccess {
 				n *= volume;
 			}
 			if (this.player.getDistanceSqToEntity(entity) < n * n) {
-				((IWorldAccess) this.worldAccesses.get(i)).playSound(soundName, entity.posX,
-						entity.posY - entity.yOffset, entity.posZ, volume, pitch);
+				((IWorldAccess) this.worldAccesses.get(i)).playSound(soundName, entity.x,
+						entity.y - entity.yOffset, entity.z, volume, pitch);
 			}
 		}
 	}
@@ -704,9 +704,9 @@ public class World implements IBlockAccess {
 				if (volume > 1.0f) {
 					n *= volume;
 				}
-				final double n2 = xCoord - this.player.posX;
-				final double n3 = yCoord - this.player.posY;
-				final double n4 = zCoord - this.player.posZ;
+				final double n2 = xCoord - this.player.x;
+				final double n3 = yCoord - this.player.y;
+				final double n4 = zCoord - this.player.z;
 				if (n2 * n2 + n3 * n3 + n4 * n4 < n * n) {
 					((IWorldAccess) this.worldAccesses.get(i)).playSound(soundName, xCoord, yCoord, zCoord, volume,
 							pitch);
@@ -730,8 +730,8 @@ public class World implements IBlockAccess {
 	}
 
 	public void onEntityJoin(final Entity entity) {
-		final int floor_double = Mth.floor_double(entity.posX / 16.0);
-		final int floor_double2 = Mth.floor_double(entity.posZ / 16.0);
+		final int floor_double = Mth.floor_double(entity.x / 16.0);
+		final int floor_double2 = Mth.floor_double(entity.z / 16.0);
 		if (this.chunkExists(floor_double, floor_double2)) {
 			this.getChunkFromChunkCoords(floor_double, floor_double2).addEntity(entity);
 			this.loadedEntityList.add(entity);
@@ -903,18 +903,18 @@ public class World implements IBlockAccess {
 		for (int i = 0; i < this.loadedEntityList.size(); ++i) {
 			final Entity entity = (Entity) this.loadedEntityList.get(i);
 			if (entity.ridingEntity != null) {
-				if (!entity.ridingEntity.isDead && entity.ridingEntity.riddenByEntity == entity) {
+				if (!entity.ridingEntity.isDead && entity.ridingEntity.passenger == entity) {
 					continue;
 				}
-				entity.ridingEntity.riddenByEntity = null;
+				entity.ridingEntity.passenger = null;
 				entity.ridingEntity = null;
 			}
 			if (!entity.isDead) {
 				this.updateEntity(entity);
 			}
 			if (entity.isDead) {
-				final int j = Mth.floor_double(entity.posX / 16.0);
-				final int floor_double = Mth.floor_double(entity.posZ / 16.0);
+				final int j = Mth.floor_double(entity.x / 16.0);
+				final int floor_double = Mth.floor_double(entity.z / 16.0);
 				if (this.chunkExists(j, floor_double)) {
 					this.getChunkFromChunkCoords(j, floor_double).removeEntity(entity);
 				}
@@ -930,29 +930,29 @@ public class World implements IBlockAccess {
 	}
 
 	private void updateEntity(final Entity entity) {
-		final int floor_double = Mth.floor_double(entity.posX);
-		Mth.floor_double(entity.posY);
-		final int floor_double2 = Mth.floor_double(entity.posZ);
+		final int floor_double = Mth.floor_double(entity.x);
+		Mth.floor_double(entity.y);
+		final int floor_double2 = Mth.floor_double(entity.z);
 		final int n = 16;
 		if (!this.checkChunksExist(floor_double - n, 0, floor_double2 - n, floor_double + n, 128, floor_double2 + n)) {
 			return;
 		}
-		entity.lastTickPosX = entity.posX;
-		entity.lastTickPosY = entity.posY;
-		entity.lastTickPosZ = entity.posZ;
-		entity.prevRotationYaw = entity.rotationYaw;
-		entity.prevRotationPitch = entity.rotationPitch;
-		final int floor_double3 = Mth.floor_double(entity.posX / 16.0);
-		final int floor_double4 = Mth.floor_double(entity.posY / 16.0);
-		final int floor_double5 = Mth.floor_double(entity.posZ / 16.0);
+		entity.lastTickPosX = entity.x;
+		entity.lastTickPosY = entity.y;
+		entity.lastTickPosZ = entity.z;
+		entity.prevRotationYaw = entity.yRot;
+		entity.prevRotationPitch = entity.xRot;
+		final int floor_double3 = Mth.floor_double(entity.x / 16.0);
+		final int floor_double4 = Mth.floor_double(entity.y / 16.0);
+		final int floor_double5 = Mth.floor_double(entity.z / 16.0);
 		if (entity.ridingEntity != null) {
 			entity.updateRidden();
 		} else {
 			entity.onUpdate();
 		}
-		final int floor_double6 = Mth.floor_double(entity.posX / 16.0);
-		final int floor_double7 = Mth.floor_double(entity.posY / 16.0);
-		final int floor_double8 = Mth.floor_double(entity.posZ / 16.0);
+		final int floor_double6 = Mth.floor_double(entity.x / 16.0);
+		final int floor_double7 = Mth.floor_double(entity.y / 16.0);
+		final int floor_double8 = Mth.floor_double(entity.z / 16.0);
 		if (floor_double3 != floor_double6 || floor_double4 != floor_double7 || floor_double5 != floor_double8) {
 			if (this.chunkExists(floor_double3, floor_double5)) {
 				this.getChunkFromChunkCoords(floor_double3, floor_double5).removeEntityAtIndex(entity, floor_double4);
@@ -963,28 +963,28 @@ public class World implements IBlockAccess {
 				entity.setEntityDead();
 			}
 		}
-		if (entity.riddenByEntity != null) {
-			if (entity.riddenByEntity.isDead || entity.riddenByEntity.ridingEntity != entity) {
-				entity.riddenByEntity.ridingEntity = null;
-				entity.riddenByEntity = null;
+		if (entity.passenger != null) {
+			if (entity.passenger.isDead || entity.passenger.ridingEntity != entity) {
+				entity.passenger.ridingEntity = null;
+				entity.passenger = null;
 			} else {
-				this.updateEntity(entity.riddenByEntity);
+				this.updateEntity(entity.passenger);
 			}
 		}
-		if (Double.isNaN(entity.posX) || Double.isInfinite(entity.posX)) {
-			entity.posX = entity.lastTickPosX;
+		if (Double.isNaN(entity.x) || Double.isInfinite(entity.x)) {
+			entity.x = entity.lastTickPosX;
 		}
-		if (Double.isNaN(entity.posY) || Double.isInfinite(entity.posY)) {
-			entity.posY = entity.lastTickPosY;
+		if (Double.isNaN(entity.y) || Double.isInfinite(entity.y)) {
+			entity.y = entity.lastTickPosY;
 		}
-		if (Double.isNaN(entity.posZ) || Double.isInfinite(entity.posZ)) {
-			entity.posZ = entity.lastTickPosZ;
+		if (Double.isNaN(entity.z) || Double.isInfinite(entity.z)) {
+			entity.z = entity.lastTickPosZ;
 		}
-		if (Double.isNaN(entity.rotationPitch) || Double.isInfinite(entity.rotationPitch)) {
-			entity.rotationPitch = entity.prevRotationPitch;
+		if (Double.isNaN(entity.xRot) || Double.isInfinite(entity.xRot)) {
+			entity.xRot = entity.prevRotationPitch;
 		}
-		if (Double.isNaN(entity.rotationYaw) || Double.isInfinite(entity.rotationYaw)) {
-			entity.rotationYaw = entity.prevRotationYaw;
+		if (Double.isNaN(entity.yRot) || Double.isInfinite(entity.yRot)) {
+			entity.yRot = entity.prevRotationYaw;
 		}
 	}
 
@@ -1072,9 +1072,9 @@ public class World implements IBlockAccess {
 		if (vector.length() > 0.0) {
 			final Vec3 normalize = vector.normalize();
 			final double n = 0.004;
-			entity.motionX += normalize.x * n;
-			entity.motionY += normalize.y * n;
-			entity.motionZ += normalize.z * n;
+			entity.xd += normalize.x * n;
+			entity.yd += normalize.y * n;
+			entity.zd += normalize.z * n;
 		}
 		return b;
 	}
@@ -1256,9 +1256,9 @@ public class World implements IBlockAccess {
 		if (this.time % 20L == 0L) {
 			this.save(false, null);
 		}
-		this.TickUpdates(false);
-		int i = Mth.floor_double(this.player.posX);
-		final int floor_double = Mth.floor_double(this.player.posZ);
+		this.tickUpdates(false);
+		int i = Mth.floor_double(this.player.x);
+		final int floor_double = Mth.floor_double(this.player.z);
 		final int n = 64;
 		final ChunkCache chunkCache = new ChunkCache(this, i - n, 0, floor_double - n, i + n, 128, floor_double + n);
 		for (int j = 0; j < 8000; ++j) {
@@ -1274,7 +1274,7 @@ public class World implements IBlockAccess {
 		}
 	}
 
-	public boolean TickUpdates(final boolean boolean1) {
+	public boolean tickUpdates(final boolean boolean1) {
 		int size = this.scheduledTickTreeSet.size();
 		if (size != this.scheduledTickSet.size()) {
 			throw new IllegalStateException("TickNextTick list out of synch");
@@ -1402,18 +1402,18 @@ public class World implements IBlockAccess {
 	}
 
 	public PathEntity getPathToEntity(final Entity entity, final Entity entity2, final float float3) {
-		final int floor_double = Mth.floor_double(entity.posX);
-		final int floor_double2 = Mth.floor_double(entity.posY);
-		final int floor_double3 = Mth.floor_double(entity.posZ);
+		final int floor_double = Mth.floor_double(entity.x);
+		final int floor_double2 = Mth.floor_double(entity.y);
+		final int floor_double3 = Mth.floor_double(entity.z);
 		final int n = (int) (float3 + 32.0f);
 		return new Pathfinder(new ChunkCache(this, floor_double - n, floor_double2 - n, floor_double3 - n,
 				floor_double + n, floor_double2 + n, floor_double3 + n)).createEntityPathTo(entity, entity2, float3);
 	}
 
 	public PathEntity getEntityPathToXYZ(Entity entity, int x, int y, int z, float float5) {
-		final int floor_double = Mth.floor_double(entity.posX);
-		final int floor_double2 = Mth.floor_double(entity.posY);
-		final int floor_double3 = Mth.floor_double(entity.posZ);
+		final int floor_double = Mth.floor_double(entity.x);
+		final int floor_double2 = Mth.floor_double(entity.y);
+		final int floor_double3 = Mth.floor_double(entity.z);
 		final int n = (int) (float5 + 32.0f);
 		return new Pathfinder(new ChunkCache(this, floor_double - n, floor_double2 - n, floor_double3 - n,
 				floor_double + n, floor_double2 + n, floor_double3 + n))

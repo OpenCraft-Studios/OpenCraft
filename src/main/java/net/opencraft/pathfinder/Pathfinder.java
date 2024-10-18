@@ -26,7 +26,7 @@ public class Pathfinder {
 	}
 
 	public PathEntity createEntityPathTo(final Entity eq1, final Entity eq2, final float float3) {
-		return this.createEntityPathTo(eq1, eq2.posX, eq2.boundingBox.minY, eq2.posZ, float3);
+		return this.createEntityPathTo(eq1, eq2.x, eq2.bb.minY, eq2.z, float3);
 	}
 
 	public PathEntity createEntityPathTo(final Entity eq, final int integer2, final int integer3, final int integer4, final float float5) {
@@ -36,7 +36,7 @@ public class Pathfinder {
 	private PathEntity createEntityPathTo(final Entity eq, final double double2, final double double3, final double double4, final float float5) {
 		this.path.clearPath();
 		this.pointMap.clear();
-		return this.addToPath(eq, this.openPoint(Mth.floor_double(eq.boundingBox.minX), Mth.floor_double(eq.boundingBox.minY), Mth.floor_double(eq.boundingBox.minZ)), this.openPoint(Mth.floor_double(double2 - eq.width / 2.0f), Mth.floor_double(double3), Mth.floor_double(double4 - eq.width / 2.0f)), new PathPoint((int) floor(eq.width + 1.0f), (int) floor(eq.height + 1.0f), (int) floor(eq.width + 1.0f)), float5);
+		return this.addToPath(eq, this.openPoint(Mth.floor_double(eq.bb.minX), Mth.floor_double(eq.bb.minY), Mth.floor_double(eq.bb.minZ)), this.openPoint(Mth.floor_double(double2 - eq.width / 2.0f), Mth.floor_double(double3), Mth.floor_double(double4 - eq.width / 2.0f)), new PathPoint((int) floor(eq.width + 1.0f), (int) floor(eq.height + 1.0f), (int) floor(eq.width + 1.0f)), float5);
 	}
 
 	private PathEntity addToPath(final Entity eq, final PathPoint d2, final PathPoint d3, final PathPoint d4, final float float5) {

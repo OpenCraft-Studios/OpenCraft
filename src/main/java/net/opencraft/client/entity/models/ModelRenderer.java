@@ -123,9 +123,9 @@ public class ModelRenderer {
 
 	private void compileDisplayList(final float float1) {
 		GL11.glNewList(this.displayList = GLAllocation.generateDisplayLists(1), 4864);
-		final Tessellator instance = Tessellator.instance;
+		final Tessellator t = Tessellator.instance;
 		for ( int i = 0; i < this.faces.length; ++i ) {
-			this.faces[i].draw(instance, float1);
+			this.faces[i].draw(t, float1);
 		}
 		GL11.glEndList();
 		this.compiled = true;

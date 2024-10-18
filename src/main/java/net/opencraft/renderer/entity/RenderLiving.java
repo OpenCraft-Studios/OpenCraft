@@ -24,14 +24,23 @@ public class RenderLiving extends Render<EntityLiving> {
 		this.renderPassModel = renderPassModel;
 	}
 
-	public void doRender(final EntityLiving entityLiving, final double xCoord, final double sqrt_double, final double yCoord, final float nya1, final float nya2) {
+	public void doRender(EntityLiving entityLiving, double xCoord, double sqrt_double, double yCoord, float nya1,
+			float nya2) {
+		doRender(entityLiving, xCoord, sqrt_double, yCoord, nya1, nya2, false);
+	}
+
+	public void doRender(EntityLiving entityLiving, double xCoord, double sqrt_double, double yCoord, float nya1,
+			float nya2, boolean isPlayer) {
 		GL11.glPushMatrix();
 		GL11.glDisable(2884);
 		try {
-			final float n = entityLiving.prevRenderYawOffset + (entityLiving.renderYawOffset - entityLiving.prevRenderYawOffset) * nya2;
-			final float n2 = entityLiving.prevRotationYaw + (entityLiving.rotationYaw - entityLiving.prevRotationYaw) * nya2;
-			final float n3 = entityLiving.prevRotationPitch + (entityLiving.rotationPitch - entityLiving.prevRotationPitch) * nya2;
-			GL11.glTranslatef((float) xCoord, (float) sqrt_double, (float) yCoord);
+			final float n = entityLiving.prevRenderYawOffset
+					+ (entityLiving.renderYawOffset - entityLiving.prevRenderYawOffset) * nya2;
+			final float n2 = entityLiving.prevRotationYaw
+					+ (entityLiving.yRot - entityLiving.prevRotationYaw) * nya2;
+			final float n3 = entityLiving.prevRotationPitch
+					+ (entityLiving.xRot - entityLiving.prevRotationPitch) * nya2;
+			GL11.glTranslatef((float) xCoord, isPlayer ? 0 : (float) sqrt_double, (float) yCoord);
 			final float n4 = entityLiving.ticksExisted + nya2;
 			GL11.glRotatef(180.0f - n, 0.0f, 1.0f, 0.0f);
 			if (entityLiving.deathTime > 0) {
@@ -46,7 +55,7 @@ public class RenderLiving extends Render<EntityLiving> {
 			GL11.glEnable(32826);
 			GL11.glScalef(-1.0f, -1.0f, 1.0f);
 			this.preRenderCallback(entityLiving, nya2);
-			GL11.glTranslatef(0.0f, -24.0f * sqrt_float - 0.0078125f, 0.0f);
+			GL11.glTranslatef(0.0f, isPlayer ? 0 : (-24.0f * sqrt_float - 0.0078125f), 0.0f);
 			float n5 = entityLiving.newPosZ + (entityLiving.newRotationYaw - entityLiving.newPosZ) * nya2;
 			final float n6 = entityLiving.newRotationPitch - entityLiving.newRotationYaw * (1.0f - nya2);
 			if (n5 > 1.0f) {
@@ -55,7 +64,7 @@ public class RenderLiving extends Render<EntityLiving> {
 			this.loadDownloadableImageTexture(entityLiving.skinUrl, entityLiving.addToPlayerScore());
 			GL11.glEnable(3008);
 			this.mainModel.render(n6, n5, n4, n2 - n, n3, sqrt_float);
-			for ( int i = 0; i < 4; ++i ) {
+			for (int i = 0; i < 4; ++i) {
 				if (this.shouldRenderPass(entityLiving, i)) {
 					this.renderPassModel.render(n6, n5, n4, n2 - n, n3, sqrt_float);
 					GL11.glDisable(3042);
@@ -73,7 +82,7 @@ public class RenderLiving extends Render<EntityLiving> {
 				if (entityLiving.hurtTime > 0 || entityLiving.deathTime > 0) {
 					GL11.glColor4f(entityBrightness, 0.0f, 0.0f, 0.4f);
 					this.mainModel.render(n6, n5, n4, n2 - n, n3, sqrt_float);
-					for ( int j = 0; j < 4; ++j ) {
+					for (int j = 0; j < 4; ++j) {
 						if (this.shouldRenderPass(entityLiving, j)) {
 							GL11.glColor4f(entityBrightness, 0.0f, 0.0f, 0.4f);
 							this.renderPassModel.render(n6, n5, n4, n2 - n, n3, sqrt_float);
@@ -87,7 +96,7 @@ public class RenderLiving extends Render<EntityLiving> {
 					final float n10 = (colorMultiplier >> 24 & 0xFF) / 255.0f;
 					GL11.glColor4f(n7, n8, n9, n10);
 					this.mainModel.render(n6, n5, n4, n2 - n, n3, sqrt_float);
-					for ( int k = 0; k < 4; ++k ) {
+					for (int k = 0; k < 4; ++k) {
 						if (this.shouldRenderPass(entityLiving, k)) {
 							GL11.glColor4f(n7, n8, n9, n10);
 							this.renderPassModel.render(n6, n5, n4, n2 - n, n3, sqrt_float);
@@ -100,7 +109,7 @@ public class RenderLiving extends Render<EntityLiving> {
 				GL11.glEnable(3553);
 			}
 			GL11.glDisable(32826);
-		} catch(Exception ex) {
+		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
 		GL11.glEnable(2884);

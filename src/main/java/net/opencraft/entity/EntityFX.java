@@ -34,14 +34,14 @@ public class EntityFX extends Entity {
 		this.particleBlue = particleRed;
 		this.particleGreen = particleRed;
 		this.particleRed = particleRed;
-		this.motionX = double5 + (float) (random() * 2.0 - 1.0) * 0.4f;
-		this.motionY = double6 + (float) (random() * 2.0 - 1.0) * 0.4f;
-		this.motionZ = double7 + (float) (random() * 2.0 - 1.0) * 0.4f;
+		this.xd = double5 + (float) (random() * 2.0 - 1.0) * 0.4f;
+		this.yd = double6 + (float) (random() * 2.0 - 1.0) * 0.4f;
+		this.zd = double7 + (float) (random() * 2.0 - 1.0) * 0.4f;
 		final float n = (float) (random() + random() + 1.0) * 0.15f;
-		final float sqrt_double = Mth.sqrt_double(this.motionX * this.motionX + this.motionY * this.motionY + this.motionZ * this.motionZ);
-		this.motionX = this.motionX / sqrt_double * n * 0.4000000059604645;
-		this.motionY = this.motionY / sqrt_double * n * 0.4000000059604645 + 0.10000000149011612;
-		this.motionZ = this.motionZ / sqrt_double * n * 0.4000000059604645;
+		final float sqrt_double = Mth.sqrt_double(this.xd * this.xd + this.yd * this.yd + this.zd * this.zd);
+		this.xd = this.xd / sqrt_double * n * 0.4000000059604645;
+		this.yd = this.yd / sqrt_double * n * 0.4000000059604645 + 0.10000000149011612;
+		this.zd = this.zd / sqrt_double * n * 0.4000000059604645;
 		this.particleTextureJitterX = this.rand.nextFloat() * 3.0f;
 		this.particleTextureJitterY = this.rand.nextFloat() * 3.0f;
 		this.particleScale = (this.rand.nextFloat() * 0.5f + 0.5f) * 2.0f;
@@ -51,9 +51,9 @@ public class EntityFX extends Entity {
 	}
 
 	public EntityFX multiplyVelocity(final float float1) {
-		this.motionX *= float1;
-		this.motionY = (this.motionY - 0.10000000149011612) * float1 + 0.10000000149011612;
-		this.motionZ *= float1;
+		this.xd *= float1;
+		this.yd = (this.yd - 0.10000000149011612) * float1 + 0.10000000149011612;
+		this.zd *= float1;
 		return this;
 	}
 
@@ -65,20 +65,20 @@ public class EntityFX extends Entity {
 
 	@Override
 	public void onUpdate() {
-		this.prevPosX = this.posX;
-		this.prevPosY = this.posY;
-		this.prevPosZ = this.posZ;
+		this.xo = this.x;
+		this.yo = this.y;
+		this.zo = this.z;
 		if (this.particleAge++ >= this.particleMaxAge) {
 			this.setEntityDead();
 		}
-		this.motionY -= 0.04 * this.particleGravity;
-		this.moveEntity(this.motionX, this.motionY, this.motionZ);
-		this.motionX *= 0.9800000190734863;
-		this.motionY *= 0.9800000190734863;
-		this.motionZ *= 0.9800000190734863;
+		this.yd -= 0.04 * this.particleGravity;
+		this.moveEntity(this.xd, this.yd, this.zd);
+		this.xd *= 0.9800000190734863;
+		this.yd *= 0.9800000190734863;
+		this.zd *= 0.9800000190734863;
 		if (this.onGround) {
-			this.motionX *= 0.699999988079071;
-			this.motionZ *= 0.699999988079071;
+			this.xd *= 0.699999988079071;
+			this.zd *= 0.699999988079071;
 		}
 	}
 
@@ -88,9 +88,9 @@ public class EntityFX extends Entity {
 		final float n3 = this.particleTextureIndex / 16 / 16.0f;
 		final float n4 = n3 + 0.0624375f;
 		final float n5 = 0.1f * this.particleScale;
-		final float n6 = (float) (this.prevPosX + (this.posX - this.prevPosX) * float2 - EntityFX.interpPosX);
-		final float n7 = (float) (this.prevPosY + (this.posY - this.prevPosY) * float2 - EntityFX.interpPosY);
-		final float n8 = (float) (this.prevPosZ + (this.posZ - this.prevPosZ) * float2 - EntityFX.interpPosZ);
+		final float n6 = (float) (this.xo + (this.x - this.xo) * float2 - EntityFX.interpPosX);
+		final float n7 = (float) (this.yo + (this.y - this.yo) * float2 - EntityFX.interpPosY);
+		final float n8 = (float) (this.zo + (this.z - this.zo) * float2 - EntityFX.interpPosZ);
 		final float entityBrightness = this.getEntityBrightness(float2);
 		ag.color(this.particleRed * entityBrightness, this.particleGreen * entityBrightness, this.particleBlue * entityBrightness);
 		ag.vertexUV(n6 - float3 * n5 - float6 * n5, n7 - float4 * n5, n8 - float5 * n5 - float7 * n5, n, n4);

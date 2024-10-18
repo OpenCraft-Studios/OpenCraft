@@ -14,8 +14,8 @@ public class RenderArrow extends Render<EntityArrow> {
 		this.loadTexture("/assets/item/arrows.png");
 		GL11.glPushMatrix();
 		GL11.glTranslatef((float) ((float) xCoord), (float) ((float) sqrt_double), (float) ((float) yCoord));
-		GL11.glRotatef((float) (entityLiving.prevRotationYaw + (entityLiving.rotationYaw - entityLiving.prevRotationYaw) * nya2 - 90.0f), (float) 0.0f, (float) 1.0f, (float) 0.0f);
-		GL11.glRotatef((float) (entityLiving.prevRotationPitch + (entityLiving.rotationPitch - entityLiving.prevRotationPitch) * nya2), (float) 0.0f, (float) 0.0f, (float) 1.0f);
+		GL11.glRotatef((float) (entityLiving.prevRotationYaw + (entityLiving.yRot - entityLiving.prevRotationYaw) * nya2 - 90.0f), (float) 0.0f, (float) 1.0f, (float) 0.0f);
+		GL11.glRotatef((float) (entityLiving.prevRotationPitch + (entityLiving.xRot - entityLiving.prevRotationPitch) * nya2), (float) 0.0f, (float) 0.0f, (float) 1.0f);
 		Tessellator t = Tessellator.instance;
 		int n = 0;
 		float f3 = 0F;

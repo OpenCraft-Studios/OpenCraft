@@ -78,12 +78,12 @@ public class RenderBlocks {
 
 	public boolean b(final Block gs, final int integer2, final int integer3, final int integer4) {
 		final int blockMetadata = this.a.getBlockMetadata(integer2, integer3, integer4);
-		final Tessellator instance = Tessellator.instance;
+		final Tessellator t = Tessellator.instance;
 		float blockBrightness = gs.getBlockBrightness(this.a, integer2, integer3, integer4);
 		if (Block.lightValue[gs.id] > 0) {
 			blockBrightness = 1.0f;
 		}
-		instance.color(blockBrightness, blockBrightness, blockBrightness);
+		t.color(blockBrightness, blockBrightness, blockBrightness);
 		final double n = 0.4000000059604645;
 		final double n2 = 0.5 - n;
 		final double n3 = 0.20000000298023224;
@@ -102,13 +102,13 @@ public class RenderBlocks {
 	}
 
 	public boolean c(final Block gs, final int integer2, int integer3, final int integer4) {
-		final Tessellator instance = Tessellator.instance;
+		final Tessellator t = Tessellator.instance;
 		int n = gs.getBlockTextureFromSide(0);
 		if (this.b >= 0) {
 			n = this.b;
 		}
 		final float blockBrightness = gs.getBlockBrightness(this.a, integer2, integer3, integer4);
-		instance.color(blockBrightness, blockBrightness, blockBrightness);
+		t.color(blockBrightness, blockBrightness, blockBrightness);
 		final int n2 = (n & 0xF) << 4;
 		final int n3 = n & 0xF0;
 		double n4 = n2 / 256.0f;
@@ -125,26 +125,26 @@ public class RenderBlocks {
 			double n14 = integer2 + 0.5 + 0.3;
 			double n15 = integer4 + 0.5 - 0.3;
 			double n16 = integer4 + 0.5 + 0.3;
-			instance.vertexUV(n13, integer3 + n8, integer4 + 1, n5, n6);
-			instance.vertexUV(n9, integer3 + 0, integer4 + 1, n5, n7);
-			instance.vertexUV(n9, integer3 + 0, integer4 + 0, n4, n7);
-			instance.vertexUV(n13, integer3 + n8, integer4 + 0, n4, n6);
-			instance.vertexUV(n14, integer3 + n8, integer4 + 0, n5, n6);
-			instance.vertexUV(n10, integer3 + 0, integer4 + 0, n5, n7);
-			instance.vertexUV(n10, integer3 + 0, integer4 + 1, n4, n7);
-			instance.vertexUV(n14, integer3 + n8, integer4 + 1, n4, n6);
+			t.vertexUV(n13, integer3 + n8, integer4 + 1, n5, n6);
+			t.vertexUV(n9, integer3 + 0, integer4 + 1, n5, n7);
+			t.vertexUV(n9, integer3 + 0, integer4 + 0, n4, n7);
+			t.vertexUV(n13, integer3 + n8, integer4 + 0, n4, n6);
+			t.vertexUV(n14, integer3 + n8, integer4 + 0, n5, n6);
+			t.vertexUV(n10, integer3 + 0, integer4 + 0, n5, n7);
+			t.vertexUV(n10, integer3 + 0, integer4 + 1, n4, n7);
+			t.vertexUV(n14, integer3 + n8, integer4 + 1, n4, n6);
 			n4 = n2 / 256.0f;
 			n5 = (n2 + 15.99f) / 256.0f;
 			n6 = (n3 + 16) / 256.0f;
 			n7 = (n3 + 15.99f + 16.0f) / 256.0f;
-			instance.vertexUV(integer2 + 1, integer3 + n8, n16, n5, n6);
-			instance.vertexUV(integer2 + 1, integer3 + 0, n12, n5, n7);
-			instance.vertexUV(integer2 + 0, integer3 + 0, n12, n4, n7);
-			instance.vertexUV(integer2 + 0, integer3 + n8, n16, n4, n6);
-			instance.vertexUV(integer2 + 0, integer3 + n8, n15, n5, n6);
-			instance.vertexUV(integer2 + 0, integer3 + 0, n11, n5, n7);
-			instance.vertexUV(integer2 + 1, integer3 + 0, n11, n4, n7);
-			instance.vertexUV(integer2 + 1, integer3 + n8, n15, n4, n6);
+			t.vertexUV(integer2 + 1, integer3 + n8, n16, n5, n6);
+			t.vertexUV(integer2 + 1, integer3 + 0, n12, n5, n7);
+			t.vertexUV(integer2 + 0, integer3 + 0, n12, n4, n7);
+			t.vertexUV(integer2 + 0, integer3 + n8, n16, n4, n6);
+			t.vertexUV(integer2 + 0, integer3 + n8, n15, n5, n6);
+			t.vertexUV(integer2 + 0, integer3 + 0, n11, n5, n7);
+			t.vertexUV(integer2 + 1, integer3 + 0, n11, n4, n7);
+			t.vertexUV(integer2 + 1, integer3 + n8, n15, n4, n6);
 			n9 = integer2 + 0.5 - 0.5;
 			n10 = integer2 + 0.5 + 0.5;
 			n11 = integer4 + 0.5 - 0.5;
@@ -153,26 +153,26 @@ public class RenderBlocks {
 			n14 = integer2 + 0.5 + 0.4;
 			n15 = integer4 + 0.5 - 0.4;
 			n16 = integer4 + 0.5 + 0.4;
-			instance.vertexUV(n13, integer3 + n8, integer4 + 0, n4, n6);
-			instance.vertexUV(n9, integer3 + 0, integer4 + 0, n4, n7);
-			instance.vertexUV(n9, integer3 + 0, integer4 + 1, n5, n7);
-			instance.vertexUV(n13, integer3 + n8, integer4 + 1, n5, n6);
-			instance.vertexUV(n14, integer3 + n8, integer4 + 1, n4, n6);
-			instance.vertexUV(n10, integer3 + 0, integer4 + 1, n4, n7);
-			instance.vertexUV(n10, integer3 + 0, integer4 + 0, n5, n7);
-			instance.vertexUV(n14, integer3 + n8, integer4 + 0, n5, n6);
+			t.vertexUV(n13, integer3 + n8, integer4 + 0, n4, n6);
+			t.vertexUV(n9, integer3 + 0, integer4 + 0, n4, n7);
+			t.vertexUV(n9, integer3 + 0, integer4 + 1, n5, n7);
+			t.vertexUV(n13, integer3 + n8, integer4 + 1, n5, n6);
+			t.vertexUV(n14, integer3 + n8, integer4 + 1, n4, n6);
+			t.vertexUV(n10, integer3 + 0, integer4 + 1, n4, n7);
+			t.vertexUV(n10, integer3 + 0, integer4 + 0, n5, n7);
+			t.vertexUV(n14, integer3 + n8, integer4 + 0, n5, n6);
 			n4 = n2 / 256.0f;
 			n5 = (n2 + 15.99f) / 256.0f;
 			n6 = n3 / 256.0f;
 			n7 = (n3 + 15.99f) / 256.0f;
-			instance.vertexUV(integer2 + 0, integer3 + n8, n16, n4, n6);
-			instance.vertexUV(integer2 + 0, integer3 + 0, n12, n4, n7);
-			instance.vertexUV(integer2 + 1, integer3 + 0, n12, n5, n7);
-			instance.vertexUV(integer2 + 1, integer3 + n8, n16, n5, n6);
-			instance.vertexUV(integer2 + 1, integer3 + n8, n15, n4, n6);
-			instance.vertexUV(integer2 + 1, integer3 + 0, n11, n4, n7);
-			instance.vertexUV(integer2 + 0, integer3 + 0, n11, n5, n7);
-			instance.vertexUV(integer2 + 0, integer3 + n8, n15, n5, n6);
+			t.vertexUV(integer2 + 0, integer3 + n8, n16, n4, n6);
+			t.vertexUV(integer2 + 0, integer3 + 0, n12, n4, n7);
+			t.vertexUV(integer2 + 1, integer3 + 0, n12, n5, n7);
+			t.vertexUV(integer2 + 1, integer3 + n8, n16, n5, n6);
+			t.vertexUV(integer2 + 1, integer3 + n8, n15, n4, n6);
+			t.vertexUV(integer2 + 1, integer3 + 0, n11, n4, n7);
+			t.vertexUV(integer2 + 0, integer3 + 0, n11, n5, n7);
+			t.vertexUV(integer2 + 0, integer3 + n8, n15, n5, n6);
 		} else {
 			final float n17 = 0.2f;
 			final float n18 = 0.0625f;
@@ -188,44 +188,44 @@ public class RenderBlocks {
 				n4 = n10;
 			}
 			if (Block.fire.canBlockCatchFire(this.a, integer2 - 1, integer3, integer4)) {
-				instance.vertexUV(integer2 + n17, integer3 + n8 + n18, integer4 + 1, n5, n6);
-				instance.vertexUV(integer2 + 0, integer3 + 0 + n18, integer4 + 1, n5, n7);
-				instance.vertexUV(integer2 + 0, integer3 + 0 + n18, integer4 + 0, n4, n7);
-				instance.vertexUV(integer2 + n17, integer3 + n8 + n18, integer4 + 0, n4, n6);
-				instance.vertexUV(integer2 + n17, integer3 + n8 + n18, integer4 + 0, n4, n6);
-				instance.vertexUV(integer2 + 0, integer3 + 0 + n18, integer4 + 0, n4, n7);
-				instance.vertexUV(integer2 + 0, integer3 + 0 + n18, integer4 + 1, n5, n7);
-				instance.vertexUV(integer2 + n17, integer3 + n8 + n18, integer4 + 1, n5, n6);
+				t.vertexUV(integer2 + n17, integer3 + n8 + n18, integer4 + 1, n5, n6);
+				t.vertexUV(integer2 + 0, integer3 + 0 + n18, integer4 + 1, n5, n7);
+				t.vertexUV(integer2 + 0, integer3 + 0 + n18, integer4 + 0, n4, n7);
+				t.vertexUV(integer2 + n17, integer3 + n8 + n18, integer4 + 0, n4, n6);
+				t.vertexUV(integer2 + n17, integer3 + n8 + n18, integer4 + 0, n4, n6);
+				t.vertexUV(integer2 + 0, integer3 + 0 + n18, integer4 + 0, n4, n7);
+				t.vertexUV(integer2 + 0, integer3 + 0 + n18, integer4 + 1, n5, n7);
+				t.vertexUV(integer2 + n17, integer3 + n8 + n18, integer4 + 1, n5, n6);
 			}
 			if (Block.fire.canBlockCatchFire(this.a, integer2 + 1, integer3, integer4)) {
-				instance.vertexUV(integer2 + 1 - n17, integer3 + n8 + n18, integer4 + 0, n4, n6);
-				instance.vertexUV(integer2 + 1 - 0, integer3 + 0 + n18, integer4 + 0, n4, n7);
-				instance.vertexUV(integer2 + 1 - 0, integer3 + 0 + n18, integer4 + 1, n5, n7);
-				instance.vertexUV(integer2 + 1 - n17, integer3 + n8 + n18, integer4 + 1, n5, n6);
-				instance.vertexUV(integer2 + 1 - n17, integer3 + n8 + n18, integer4 + 1, n5, n6);
-				instance.vertexUV(integer2 + 1 - 0, integer3 + 0 + n18, integer4 + 1, n5, n7);
-				instance.vertexUV(integer2 + 1 - 0, integer3 + 0 + n18, integer4 + 0, n4, n7);
-				instance.vertexUV(integer2 + 1 - n17, integer3 + n8 + n18, integer4 + 0, n4, n6);
+				t.vertexUV(integer2 + 1 - n17, integer3 + n8 + n18, integer4 + 0, n4, n6);
+				t.vertexUV(integer2 + 1 - 0, integer3 + 0 + n18, integer4 + 0, n4, n7);
+				t.vertexUV(integer2 + 1 - 0, integer3 + 0 + n18, integer4 + 1, n5, n7);
+				t.vertexUV(integer2 + 1 - n17, integer3 + n8 + n18, integer4 + 1, n5, n6);
+				t.vertexUV(integer2 + 1 - n17, integer3 + n8 + n18, integer4 + 1, n5, n6);
+				t.vertexUV(integer2 + 1 - 0, integer3 + 0 + n18, integer4 + 1, n5, n7);
+				t.vertexUV(integer2 + 1 - 0, integer3 + 0 + n18, integer4 + 0, n4, n7);
+				t.vertexUV(integer2 + 1 - n17, integer3 + n8 + n18, integer4 + 0, n4, n6);
 			}
 			if (Block.fire.canBlockCatchFire(this.a, integer2, integer3, integer4 - 1)) {
-				instance.vertexUV(integer2 + 0, integer3 + n8 + n18, integer4 + n17, n5, n6);
-				instance.vertexUV(integer2 + 0, integer3 + 0 + n18, integer4 + 0, n5, n7);
-				instance.vertexUV(integer2 + 1, integer3 + 0 + n18, integer4 + 0, n4, n7);
-				instance.vertexUV(integer2 + 1, integer3 + n8 + n18, integer4 + n17, n4, n6);
-				instance.vertexUV(integer2 + 1, integer3 + n8 + n18, integer4 + n17, n4, n6);
-				instance.vertexUV(integer2 + 1, integer3 + 0 + n18, integer4 + 0, n4, n7);
-				instance.vertexUV(integer2 + 0, integer3 + 0 + n18, integer4 + 0, n5, n7);
-				instance.vertexUV(integer2 + 0, integer3 + n8 + n18, integer4 + n17, n5, n6);
+				t.vertexUV(integer2 + 0, integer3 + n8 + n18, integer4 + n17, n5, n6);
+				t.vertexUV(integer2 + 0, integer3 + 0 + n18, integer4 + 0, n5, n7);
+				t.vertexUV(integer2 + 1, integer3 + 0 + n18, integer4 + 0, n4, n7);
+				t.vertexUV(integer2 + 1, integer3 + n8 + n18, integer4 + n17, n4, n6);
+				t.vertexUV(integer2 + 1, integer3 + n8 + n18, integer4 + n17, n4, n6);
+				t.vertexUV(integer2 + 1, integer3 + 0 + n18, integer4 + 0, n4, n7);
+				t.vertexUV(integer2 + 0, integer3 + 0 + n18, integer4 + 0, n5, n7);
+				t.vertexUV(integer2 + 0, integer3 + n8 + n18, integer4 + n17, n5, n6);
 			}
 			if (Block.fire.canBlockCatchFire(this.a, integer2, integer3, integer4 + 1)) {
-				instance.vertexUV(integer2 + 1, integer3 + n8 + n18, integer4 + 1 - n17, n4, n6);
-				instance.vertexUV(integer2 + 1, integer3 + 0 + n18, integer4 + 1 - 0, n4, n7);
-				instance.vertexUV(integer2 + 0, integer3 + 0 + n18, integer4 + 1 - 0, n5, n7);
-				instance.vertexUV(integer2 + 0, integer3 + n8 + n18, integer4 + 1 - n17, n5, n6);
-				instance.vertexUV(integer2 + 0, integer3 + n8 + n18, integer4 + 1 - n17, n5, n6);
-				instance.vertexUV(integer2 + 0, integer3 + 0 + n18, integer4 + 1 - 0, n5, n7);
-				instance.vertexUV(integer2 + 1, integer3 + 0 + n18, integer4 + 1 - 0, n4, n7);
-				instance.vertexUV(integer2 + 1, integer3 + n8 + n18, integer4 + 1 - n17, n4, n6);
+				t.vertexUV(integer2 + 1, integer3 + n8 + n18, integer4 + 1 - n17, n4, n6);
+				t.vertexUV(integer2 + 1, integer3 + 0 + n18, integer4 + 1 - 0, n4, n7);
+				t.vertexUV(integer2 + 0, integer3 + 0 + n18, integer4 + 1 - 0, n5, n7);
+				t.vertexUV(integer2 + 0, integer3 + n8 + n18, integer4 + 1 - n17, n5, n6);
+				t.vertexUV(integer2 + 0, integer3 + n8 + n18, integer4 + 1 - n17, n5, n6);
+				t.vertexUV(integer2 + 0, integer3 + 0 + n18, integer4 + 1 - 0, n5, n7);
+				t.vertexUV(integer2 + 1, integer3 + 0 + n18, integer4 + 1 - 0, n4, n7);
+				t.vertexUV(integer2 + 1, integer3 + n8 + n18, integer4 + 1 - n17, n4, n6);
 			}
 			if (Block.fire.canBlockCatchFire(this.a, integer2, integer3 + 1, integer4)) {
 				final double n10 = integer2 + 0.5 + 0.5;
@@ -243,31 +243,31 @@ public class RenderBlocks {
 				++integer3;
 				n8 = -0.2f;
 				if ((integer2 + integer3 + integer4 & 0x1) == 0x0) {
-					instance.vertexUV(n14, integer3 + n8, integer4 + 0, n5, n6);
-					instance.vertexUV(n10, integer3 + 0, integer4 + 0, n5, n7);
-					instance.vertexUV(n10, integer3 + 0, integer4 + 1, n4, n7);
-					instance.vertexUV(n14, integer3 + n8, integer4 + 1, n4, n6);
+					t.vertexUV(n14, integer3 + n8, integer4 + 0, n5, n6);
+					t.vertexUV(n10, integer3 + 0, integer4 + 0, n5, n7);
+					t.vertexUV(n10, integer3 + 0, integer4 + 1, n4, n7);
+					t.vertexUV(n14, integer3 + n8, integer4 + 1, n4, n6);
 					n4 = n2 / 256.0f;
 					n5 = (n2 + 15.99f) / 256.0f;
 					n6 = (n3 + 16) / 256.0f;
 					n7 = (n3 + 15.99f + 16.0f) / 256.0f;
-					instance.vertexUV(n15, integer3 + n8, integer4 + 1, n5, n6);
-					instance.vertexUV(n11, integer3 + 0, integer4 + 1, n5, n7);
-					instance.vertexUV(n11, integer3 + 0, integer4 + 0, n4, n7);
-					instance.vertexUV(n15, integer3 + n8, integer4 + 0, n4, n6);
+					t.vertexUV(n15, integer3 + n8, integer4 + 1, n5, n6);
+					t.vertexUV(n11, integer3 + 0, integer4 + 1, n5, n7);
+					t.vertexUV(n11, integer3 + 0, integer4 + 0, n4, n7);
+					t.vertexUV(n15, integer3 + n8, integer4 + 0, n4, n6);
 				} else {
-					instance.vertexUV(integer2 + 0, integer3 + n8, n19, n5, n6);
-					instance.vertexUV(integer2 + 0, integer3 + 0, n13, n5, n7);
-					instance.vertexUV(integer2 + 1, integer3 + 0, n13, n4, n7);
-					instance.vertexUV(integer2 + 1, integer3 + n8, n19, n4, n6);
+					t.vertexUV(integer2 + 0, integer3 + n8, n19, n5, n6);
+					t.vertexUV(integer2 + 0, integer3 + 0, n13, n5, n7);
+					t.vertexUV(integer2 + 1, integer3 + 0, n13, n4, n7);
+					t.vertexUV(integer2 + 1, integer3 + n8, n19, n4, n6);
 					n4 = n2 / 256.0f;
 					n5 = (n2 + 15.99f) / 256.0f;
 					n6 = (n3 + 16) / 256.0f;
 					n7 = (n3 + 15.99f + 16.0f) / 256.0f;
-					instance.vertexUV(integer2 + 1, integer3 + n8, n16, n5, n6);
-					instance.vertexUV(integer2 + 1, integer3 + 0, n12, n5, n7);
-					instance.vertexUV(integer2 + 0, integer3 + 0, n12, n4, n7);
-					instance.vertexUV(integer2 + 0, integer3 + n8, n16, n4, n6);
+					t.vertexUV(integer2 + 1, integer3 + n8, n16, n5, n6);
+					t.vertexUV(integer2 + 1, integer3 + 0, n12, n5, n7);
+					t.vertexUV(integer2 + 0, integer3 + 0, n12, n4, n7);
+					t.vertexUV(integer2 + 0, integer3 + n8, n16, n4, n6);
 				}
 			}
 		}
@@ -275,13 +275,13 @@ public class RenderBlocks {
 	}
 
 	public boolean d(final Block gs, final int integer2, final int integer3, final int integer4) {
-		final Tessellator instance = Tessellator.instance;
+		final Tessellator t = Tessellator.instance;
 		int n = gs.getBlockTextureFromSide(0);
 		if (this.b >= 0) {
 			n = this.b;
 		}
 		final float blockBrightness = gs.getBlockBrightness(this.a, integer2, integer3, integer4);
-		instance.color(blockBrightness, blockBrightness, blockBrightness);
+		t.color(blockBrightness, blockBrightness, blockBrightness);
 		int n2 = ((n & 0xF) << 4) + 16;
 		int n3 = (n & 0xF) << 4;
 		final int n4 = n & 0xF0;
@@ -300,41 +300,41 @@ public class RenderBlocks {
 		final float n13 = 0.125f;
 		final float n14 = 0.05f;
 		if (this.a.isBlockNormalCube(integer2 - 1, integer3, integer4)) {
-			instance.vertexUV(integer2 + n14, integer3 + 1 + n13, integer4 + 1 + n13, n5, n7);
-			instance.vertexUV(integer2 + n14, integer3 + 0 - n13, integer4 + 1 + n13, n5, n8);
-			instance.vertexUV(integer2 + n14, integer3 + 0 - n13, integer4 + 0 - n13, n6, n8);
-			instance.vertexUV(integer2 + n14, integer3 + 1 + n13, integer4 + 0 - n13, n6, n7);
+			t.vertexUV(integer2 + n14, integer3 + 1 + n13, integer4 + 1 + n13, n5, n7);
+			t.vertexUV(integer2 + n14, integer3 + 0 - n13, integer4 + 1 + n13, n5, n8);
+			t.vertexUV(integer2 + n14, integer3 + 0 - n13, integer4 + 0 - n13, n6, n8);
+			t.vertexUV(integer2 + n14, integer3 + 1 + n13, integer4 + 0 - n13, n6, n7);
 		}
 		if (this.a.isBlockNormalCube(integer2 + 1, integer3, integer4)) {
-			instance.vertexUV(integer2 + 1 - n14, integer3 + 0 - n13, integer4 + 1 + n13, n6, n8);
-			instance.vertexUV(integer2 + 1 - n14, integer3 + 1 + n13, integer4 + 1 + n13, n6, n7);
-			instance.vertexUV(integer2 + 1 - n14, integer3 + 1 + n13, integer4 + 0 - n13, n5, n7);
-			instance.vertexUV(integer2 + 1 - n14, integer3 + 0 - n13, integer4 + 0 - n13, n5, n8);
+			t.vertexUV(integer2 + 1 - n14, integer3 + 0 - n13, integer4 + 1 + n13, n6, n8);
+			t.vertexUV(integer2 + 1 - n14, integer3 + 1 + n13, integer4 + 1 + n13, n6, n7);
+			t.vertexUV(integer2 + 1 - n14, integer3 + 1 + n13, integer4 + 0 - n13, n5, n7);
+			t.vertexUV(integer2 + 1 - n14, integer3 + 0 - n13, integer4 + 0 - n13, n5, n8);
 		}
 		if (this.a.isBlockNormalCube(integer2, integer3, integer4 - 1)) {
-			instance.vertexUV(integer2 + 1 + n13, integer3 + 0 - n13, integer4 + n14, n10, n12);
-			instance.vertexUV(integer2 + 1 + n13, integer3 + 1 + n13, integer4 + n14, n10, n11);
-			instance.vertexUV(integer2 + 0 - n13, integer3 + 1 + n13, integer4 + n14, n9, n11);
-			instance.vertexUV(integer2 + 0 - n13, integer3 + 0 - n13, integer4 + n14, n9, n12);
+			t.vertexUV(integer2 + 1 + n13, integer3 + 0 - n13, integer4 + n14, n10, n12);
+			t.vertexUV(integer2 + 1 + n13, integer3 + 1 + n13, integer4 + n14, n10, n11);
+			t.vertexUV(integer2 + 0 - n13, integer3 + 1 + n13, integer4 + n14, n9, n11);
+			t.vertexUV(integer2 + 0 - n13, integer3 + 0 - n13, integer4 + n14, n9, n12);
 		}
 		if (this.a.isBlockNormalCube(integer2, integer3, integer4 + 1)) {
-			instance.vertexUV(integer2 + 1 + n13, integer3 + 1 + n13, integer4 + 1 - n14, n9, n11);
-			instance.vertexUV(integer2 + 1 + n13, integer3 + 0 - n13, integer4 + 1 - n14, n9, n12);
-			instance.vertexUV(integer2 + 0 - n13, integer3 + 0 - n13, integer4 + 1 - n14, n10, n12);
-			instance.vertexUV(integer2 + 0 - n13, integer3 + 1 + n13, integer4 + 1 - n14, n10, n11);
+			t.vertexUV(integer2 + 1 + n13, integer3 + 1 + n13, integer4 + 1 - n14, n9, n11);
+			t.vertexUV(integer2 + 1 + n13, integer3 + 0 - n13, integer4 + 1 - n14, n9, n12);
+			t.vertexUV(integer2 + 0 - n13, integer3 + 0 - n13, integer4 + 1 - n14, n10, n12);
+			t.vertexUV(integer2 + 0 - n13, integer3 + 1 + n13, integer4 + 1 - n14, n10, n11);
 		}
 		return true;
 	}
 
 	public boolean e(final Block gs, final int integer2, final int integer3, final int integer4) {
-		final Tessellator instance = Tessellator.instance;
+		final Tessellator t = Tessellator.instance;
 		final int blockMetadata = this.a.getBlockMetadata(integer2, integer3, integer4);
 		int n = gs.getBlockTextureFromSideAndMetadata(0, blockMetadata);
 		if (this.b >= 0) {
 			n = this.b;
 		}
 		final float blockBrightness = gs.getBlockBrightness(this.a, integer2, integer3, integer4);
-		instance.color(blockBrightness, blockBrightness, blockBrightness);
+		t.color(blockBrightness, blockBrightness, blockBrightness);
 		final int n2 = (n & 0xF) << 4;
 		final int n3 = n & 0xF0;
 		final double n4 = n2 / 256.0f;
@@ -377,25 +377,25 @@ public class RenderBlocks {
 			++n18;
 			++n19;
 		}
-		instance.vertexUV(n9, n17, n13, n5, n6);
-		instance.vertexUV(n10, n18, n14, n5, n7);
-		instance.vertexUV(n11, n19, n15, n4, n7);
-		instance.vertexUV(n12, n20, n16, n4, n6);
-		instance.vertexUV(n12, n20, n16, n4, n6);
-		instance.vertexUV(n11, n19, n15, n4, n7);
-		instance.vertexUV(n10, n18, n14, n5, n7);
-		instance.vertexUV(n9, n17, n13, n5, n6);
+		t.vertexUV(n9, n17, n13, n5, n6);
+		t.vertexUV(n10, n18, n14, n5, n7);
+		t.vertexUV(n11, n19, n15, n4, n7);
+		t.vertexUV(n12, n20, n16, n4, n6);
+		t.vertexUV(n12, n20, n16, n4, n6);
+		t.vertexUV(n11, n19, n15, n4, n7);
+		t.vertexUV(n10, n18, n14, n5, n7);
+		t.vertexUV(n9, n17, n13, n5, n6);
 		return true;
 	}
 
 	public boolean f(final Block gs, final int integer2, final int integer3, final int integer4) {
-		final Tessellator instance = Tessellator.instance;
+		final Tessellator t = Tessellator.instance;
 		int n = gs.getBlockTextureFromSide(0);
 		if (this.b >= 0) {
 			n = this.b;
 		}
 		final float blockBrightness = gs.getBlockBrightness(this.a, integer2, integer3, integer4);
-		instance.color(blockBrightness, blockBrightness, blockBrightness);
+		t.color(blockBrightness, blockBrightness, blockBrightness);
 		final int n2 = (n & 0xF) << 4;
 		final int n3 = n & 0xF0;
 		final double n4 = n2 / 256.0f;
@@ -406,50 +406,50 @@ public class RenderBlocks {
 		final float n8 = 0.0f;
 		final float n9 = 0.05f;
 		if (blockMetadata == 5) {
-			instance.vertexUV(integer2 + n9, integer3 + 1 + n8, integer4 + 1 + n8, n4, n6);
-			instance.vertexUV(integer2 + n9, integer3 + 0 - n8, integer4 + 1 + n8, n4, n7);
-			instance.vertexUV(integer2 + n9, integer3 + 0 - n8, integer4 + 0 - n8, n5, n7);
-			instance.vertexUV(integer2 + n9, integer3 + 1 + n8, integer4 + 0 - n8, n5, n6);
+			t.vertexUV(integer2 + n9, integer3 + 1 + n8, integer4 + 1 + n8, n4, n6);
+			t.vertexUV(integer2 + n9, integer3 + 0 - n8, integer4 + 1 + n8, n4, n7);
+			t.vertexUV(integer2 + n9, integer3 + 0 - n8, integer4 + 0 - n8, n5, n7);
+			t.vertexUV(integer2 + n9, integer3 + 1 + n8, integer4 + 0 - n8, n5, n6);
 		}
 		if (blockMetadata == 4) {
-			instance.vertexUV(integer2 + 1 - n9, integer3 + 0 - n8, integer4 + 1 + n8, n5, n7);
-			instance.vertexUV(integer2 + 1 - n9, integer3 + 1 + n8, integer4 + 1 + n8, n5, n6);
-			instance.vertexUV(integer2 + 1 - n9, integer3 + 1 + n8, integer4 + 0 - n8, n4, n6);
-			instance.vertexUV(integer2 + 1 - n9, integer3 + 0 - n8, integer4 + 0 - n8, n4, n7);
+			t.vertexUV(integer2 + 1 - n9, integer3 + 0 - n8, integer4 + 1 + n8, n5, n7);
+			t.vertexUV(integer2 + 1 - n9, integer3 + 1 + n8, integer4 + 1 + n8, n5, n6);
+			t.vertexUV(integer2 + 1 - n9, integer3 + 1 + n8, integer4 + 0 - n8, n4, n6);
+			t.vertexUV(integer2 + 1 - n9, integer3 + 0 - n8, integer4 + 0 - n8, n4, n7);
 		}
 		if (blockMetadata == 3) {
-			instance.vertexUV(integer2 + 1 + n8, integer3 + 0 - n8, integer4 + n9, n5, n7);
-			instance.vertexUV(integer2 + 1 + n8, integer3 + 1 + n8, integer4 + n9, n5, n6);
-			instance.vertexUV(integer2 + 0 - n8, integer3 + 1 + n8, integer4 + n9, n4, n6);
-			instance.vertexUV(integer2 + 0 - n8, integer3 + 0 - n8, integer4 + n9, n4, n7);
+			t.vertexUV(integer2 + 1 + n8, integer3 + 0 - n8, integer4 + n9, n5, n7);
+			t.vertexUV(integer2 + 1 + n8, integer3 + 1 + n8, integer4 + n9, n5, n6);
+			t.vertexUV(integer2 + 0 - n8, integer3 + 1 + n8, integer4 + n9, n4, n6);
+			t.vertexUV(integer2 + 0 - n8, integer3 + 0 - n8, integer4 + n9, n4, n7);
 		}
 		if (blockMetadata == 2) {
-			instance.vertexUV(integer2 + 1 + n8, integer3 + 1 + n8, integer4 + 1 - n9, n4, n6);
-			instance.vertexUV(integer2 + 1 + n8, integer3 + 0 - n8, integer4 + 1 - n9, n4, n7);
-			instance.vertexUV(integer2 + 0 - n8, integer3 + 0 - n8, integer4 + 1 - n9, n5, n7);
-			instance.vertexUV(integer2 + 0 - n8, integer3 + 1 + n8, integer4 + 1 - n9, n5, n6);
+			t.vertexUV(integer2 + 1 + n8, integer3 + 1 + n8, integer4 + 1 - n9, n4, n6);
+			t.vertexUV(integer2 + 1 + n8, integer3 + 0 - n8, integer4 + 1 - n9, n4, n7);
+			t.vertexUV(integer2 + 0 - n8, integer3 + 0 - n8, integer4 + 1 - n9, n5, n7);
+			t.vertexUV(integer2 + 0 - n8, integer3 + 1 + n8, integer4 + 1 - n9, n5, n6);
 		}
 		return true;
 	}
 
 	public boolean g(final Block gs, final int integer2, final int integer3, final int integer4) {
-		final Tessellator instance = Tessellator.instance;
+		final Tessellator t = Tessellator.instance;
 		final float blockBrightness = gs.getBlockBrightness(this.a, integer2, integer3, integer4);
-		instance.color(blockBrightness, blockBrightness, blockBrightness);
+		t.color(blockBrightness, blockBrightness, blockBrightness);
 		this.a(gs, this.a.getBlockMetadata(integer2, integer3, integer4), integer2, integer3, (double) integer4);
 		return true;
 	}
 
 	public boolean h(final Block gs, final int integer2, final int integer3, final int integer4) {
-		final Tessellator instance = Tessellator.instance;
+		final Tessellator t = Tessellator.instance;
 		final float blockBrightness = gs.getBlockBrightness(this.a, integer2, integer3, integer4);
-		instance.color(blockBrightness, blockBrightness, blockBrightness);
+		t.color(blockBrightness, blockBrightness, blockBrightness);
 		this.b(gs, this.a.getBlockMetadata(integer2, integer3, integer4), integer2, integer3 - 0.0625f, (double) integer4);
 		return true;
 	}
 
 	public void a(final Block gs, double double2, final double double3, double double4, final double double5, final double double6) {
-		final Tessellator instance = Tessellator.instance;
+		final Tessellator t = Tessellator.instance;
 		int n = gs.getBlockTextureFromSide(0);
 		if (this.b >= 0) {
 			n = this.b;
@@ -472,30 +472,30 @@ public class RenderBlocks {
 		final double n15 = double4 + 0.5;
 		final double n16 = 0.0625;
 		final double n17 = 0.625;
-		instance.vertexUV(double2 + double5 * (1.0 - n17) - n16, double3 + n17, double4 + double6 * (1.0 - n17) - n16, n8, n9);
-		instance.vertexUV(double2 + double5 * (1.0 - n17) - n16, double3 + n17, double4 + double6 * (1.0 - n17) + n16, n8, n11);
-		instance.vertexUV(double2 + double5 * (1.0 - n17) + n16, double3 + n17, double4 + double6 * (1.0 - n17) + n16, n10, n11);
-		instance.vertexUV(double2 + double5 * (1.0 - n17) + n16, double3 + n17, double4 + double6 * (1.0 - n17) - n16, n10, n9);
-		instance.vertexUV(double2 - n16, double3 + 1.0, n14, n4, n6);
-		instance.vertexUV(double2 - n16 + double5, double3 + 0.0, n14 + double6, n4, n7);
-		instance.vertexUV(double2 - n16 + double5, double3 + 0.0, n15 + double6, n5, n7);
-		instance.vertexUV(double2 - n16, double3 + 1.0, n15, n5, n6);
-		instance.vertexUV(double2 + n16, double3 + 1.0, n15, n4, n6);
-		instance.vertexUV(double2 + double5 + n16, double3 + 0.0, n15 + double6, n4, n7);
-		instance.vertexUV(double2 + double5 + n16, double3 + 0.0, n14 + double6, n5, n7);
-		instance.vertexUV(double2 + n16, double3 + 1.0, n14, n5, n6);
-		instance.vertexUV(n12, double3 + 1.0, double4 + n16, n4, n6);
-		instance.vertexUV(n12 + double5, double3 + 0.0, double4 + n16 + double6, n4, n7);
-		instance.vertexUV(n13 + double5, double3 + 0.0, double4 + n16 + double6, n5, n7);
-		instance.vertexUV(n13, double3 + 1.0, double4 + n16, n5, n6);
-		instance.vertexUV(n13, double3 + 1.0, double4 - n16, n4, n6);
-		instance.vertexUV(n13 + double5, double3 + 0.0, double4 - n16 + double6, n4, n7);
-		instance.vertexUV(n12 + double5, double3 + 0.0, double4 - n16 + double6, n5, n7);
-		instance.vertexUV(n12, double3 + 1.0, double4 - n16, n5, n6);
+		t.vertexUV(double2 + double5 * (1.0 - n17) - n16, double3 + n17, double4 + double6 * (1.0 - n17) - n16, n8, n9);
+		t.vertexUV(double2 + double5 * (1.0 - n17) - n16, double3 + n17, double4 + double6 * (1.0 - n17) + n16, n8, n11);
+		t.vertexUV(double2 + double5 * (1.0 - n17) + n16, double3 + n17, double4 + double6 * (1.0 - n17) + n16, n10, n11);
+		t.vertexUV(double2 + double5 * (1.0 - n17) + n16, double3 + n17, double4 + double6 * (1.0 - n17) - n16, n10, n9);
+		t.vertexUV(double2 - n16, double3 + 1.0, n14, n4, n6);
+		t.vertexUV(double2 - n16 + double5, double3 + 0.0, n14 + double6, n4, n7);
+		t.vertexUV(double2 - n16 + double5, double3 + 0.0, n15 + double6, n5, n7);
+		t.vertexUV(double2 - n16, double3 + 1.0, n15, n5, n6);
+		t.vertexUV(double2 + n16, double3 + 1.0, n15, n4, n6);
+		t.vertexUV(double2 + double5 + n16, double3 + 0.0, n15 + double6, n4, n7);
+		t.vertexUV(double2 + double5 + n16, double3 + 0.0, n14 + double6, n5, n7);
+		t.vertexUV(double2 + n16, double3 + 1.0, n14, n5, n6);
+		t.vertexUV(n12, double3 + 1.0, double4 + n16, n4, n6);
+		t.vertexUV(n12 + double5, double3 + 0.0, double4 + n16 + double6, n4, n7);
+		t.vertexUV(n13 + double5, double3 + 0.0, double4 + n16 + double6, n5, n7);
+		t.vertexUV(n13, double3 + 1.0, double4 + n16, n5, n6);
+		t.vertexUV(n13, double3 + 1.0, double4 - n16, n4, n6);
+		t.vertexUV(n13 + double5, double3 + 0.0, double4 - n16 + double6, n4, n7);
+		t.vertexUV(n12 + double5, double3 + 0.0, double4 - n16 + double6, n5, n7);
+		t.vertexUV(n12, double3 + 1.0, double4 - n16, n5, n6);
 	}
 
 	public void a(final Block gs, final int integer, final double double3, final double double4, final double double5) {
-		final Tessellator instance = Tessellator.instance;
+		final Tessellator t = Tessellator.instance;
 		int n = gs.getBlockTextureFromSideAndMetadata(0, integer);
 		if (this.b >= 0) {
 			n = this.b;
@@ -510,26 +510,30 @@ public class RenderBlocks {
 		final double n9 = double3 + 0.5 + 0.44999998807907104;
 		final double n10 = double5 + 0.5 - 0.44999998807907104;
 		final double n11 = double5 + 0.5 + 0.44999998807907104;
-		instance.vertexUV(n8, double4 + 1.0, n10, n4, n6);
-		instance.vertexUV(n8, double4 + 0.0, n10, n4, n7);
-		instance.vertexUV(n9, double4 + 0.0, n11, n5, n7);
-		instance.vertexUV(n9, double4 + 1.0, n11, n5, n6);
-		instance.vertexUV(n9, double4 + 1.0, n11, n4, n6);
-		instance.vertexUV(n9, double4 + 0.0, n11, n4, n7);
-		instance.vertexUV(n8, double4 + 0.0, n10, n5, n7);
-		instance.vertexUV(n8, double4 + 1.0, n10, n5, n6);
-		instance.vertexUV(n8, double4 + 1.0, n11, n4, n6);
-		instance.vertexUV(n8, double4 + 0.0, n11, n4, n7);
-		instance.vertexUV(n9, double4 + 0.0, n10, n5, n7);
-		instance.vertexUV(n9, double4 + 1.0, n10, n5, n6);
-		instance.vertexUV(n9, double4 + 1.0, n10, n4, n6);
-		instance.vertexUV(n9, double4 + 0.0, n10, n4, n7);
-		instance.vertexUV(n8, double4 + 0.0, n11, n5, n7);
-		instance.vertexUV(n8, double4 + 1.0, n11, n5, n6);
+		
+		t.vertexUV(n8, double4 + 1.0, n10, n4, n6);
+		t.vertexUV(n8, double4 + 0.0, n10, n4, n7);
+		t.vertexUV(n9, double4 + 0.0, n11, n5, n7);
+		t.vertexUV(n9, double4 + 1.0, n11, n5, n6);
+		
+		t.vertexUV(n9, double4 + 1.0, n11, n4, n6);
+		t.vertexUV(n9, double4 + 0.0, n11, n4, n7);
+		t.vertexUV(n8, double4 + 0.0, n10, n5, n7);
+		t.vertexUV(n8, double4 + 1.0, n10, n5, n6);
+		
+		t.vertexUV(n8, double4 + 1.0, n11, n4, n6);
+		t.vertexUV(n8, double4 + 0.0, n11, n4, n7);
+		t.vertexUV(n9, double4 + 0.0, n10, n5, n7);
+		t.vertexUV(n9, double4 + 1.0, n10, n5, n6);
+		
+		t.vertexUV(n9, double4 + 1.0, n10, n4, n6);
+		t.vertexUV(n9, double4 + 0.0, n10, n4, n7);
+		t.vertexUV(n8, double4 + 0.0, n11, n5, n7);
+		t.vertexUV(n8, double4 + 1.0, n11, n5, n6);
 	}
 
 	public void b(final Block gs, final int integer, final double double3, final double double4, final double double5) {
-		final Tessellator instance = Tessellator.instance;
+		final Tessellator t = Tessellator.instance;
 		int n = gs.getBlockTextureFromSideAndMetadata(0, integer);
 		if (this.b >= 0) {
 			n = this.b;
@@ -544,46 +548,55 @@ public class RenderBlocks {
 		double n9 = double3 + 0.5 + 0.25;
 		double n10 = double5 + 0.5 - 0.5;
 		double n11 = double5 + 0.5 + 0.5;
-		instance.vertexUV(n8, double4 + 1.0, n10, n4, n6);
-		instance.vertexUV(n8, double4 + 0.0, n10, n4, n7);
-		instance.vertexUV(n8, double4 + 0.0, n11, n5, n7);
-		instance.vertexUV(n8, double4 + 1.0, n11, n5, n6);
-		instance.vertexUV(n8, double4 + 1.0, n11, n4, n6);
-		instance.vertexUV(n8, double4 + 0.0, n11, n4, n7);
-		instance.vertexUV(n8, double4 + 0.0, n10, n5, n7);
-		instance.vertexUV(n8, double4 + 1.0, n10, n5, n6);
-		instance.vertexUV(n9, double4 + 1.0, n11, n4, n6);
-		instance.vertexUV(n9, double4 + 0.0, n11, n4, n7);
-		instance.vertexUV(n9, double4 + 0.0, n10, n5, n7);
-		instance.vertexUV(n9, double4 + 1.0, n10, n5, n6);
-		instance.vertexUV(n9, double4 + 1.0, n10, n4, n6);
-		instance.vertexUV(n9, double4 + 0.0, n10, n4, n7);
-		instance.vertexUV(n9, double4 + 0.0, n11, n5, n7);
-		instance.vertexUV(n9, double4 + 1.0, n11, n5, n6);
+		
+		t.vertexUV(n8, double4 + 1.0, n10, n4, n6);
+		t.vertexUV(n8, double4 + 0.0, n10, n4, n7);
+		t.vertexUV(n8, double4 + 0.0, n11, n5, n7);
+		t.vertexUV(n8, double4 + 1.0, n11, n5, n6);
+		
+		t.vertexUV(n8, double4 + 1.0, n11, n4, n6);
+		t.vertexUV(n8, double4 + 0.0, n11, n4, n7);
+		t.vertexUV(n8, double4 + 0.0, n10, n5, n7);
+		t.vertexUV(n8, double4 + 1.0, n10, n5, n6);
+		
+		t.vertexUV(n9, double4 + 1.0, n11, n4, n6);
+		t.vertexUV(n9, double4 + 0.0, n11, n4, n7);
+		t.vertexUV(n9, double4 + 0.0, n10, n5, n7);
+		t.vertexUV(n9, double4 + 1.0, n10, n5, n6);
+		
+		t.vertexUV(n9, double4 + 1.0, n10, n4, n6);
+		t.vertexUV(n9, double4 + 0.0, n10, n4, n7);
+		t.vertexUV(n9, double4 + 0.0, n11, n5, n7);
+		t.vertexUV(n9, double4 + 1.0, n11, n5, n6);
+		
 		n8 = double3 + 0.5 - 0.5;
 		n9 = double3 + 0.5 + 0.5;
 		n10 = double5 + 0.5 - 0.25;
 		n11 = double5 + 0.5 + 0.25;
-		instance.vertexUV(n8, double4 + 1.0, n10, n4, n6);
-		instance.vertexUV(n8, double4 + 0.0, n10, n4, n7);
-		instance.vertexUV(n9, double4 + 0.0, n10, n5, n7);
-		instance.vertexUV(n9, double4 + 1.0, n10, n5, n6);
-		instance.vertexUV(n9, double4 + 1.0, n10, n4, n6);
-		instance.vertexUV(n9, double4 + 0.0, n10, n4, n7);
-		instance.vertexUV(n8, double4 + 0.0, n10, n5, n7);
-		instance.vertexUV(n8, double4 + 1.0, n10, n5, n6);
-		instance.vertexUV(n9, double4 + 1.0, n11, n4, n6);
-		instance.vertexUV(n9, double4 + 0.0, n11, n4, n7);
-		instance.vertexUV(n8, double4 + 0.0, n11, n5, n7);
-		instance.vertexUV(n8, double4 + 1.0, n11, n5, n6);
-		instance.vertexUV(n8, double4 + 1.0, n11, n4, n6);
-		instance.vertexUV(n8, double4 + 0.0, n11, n4, n7);
-		instance.vertexUV(n9, double4 + 0.0, n11, n5, n7);
-		instance.vertexUV(n9, double4 + 1.0, n11, n5, n6);
+		
+		t.vertexUV(n8, double4 + 1.0, n10, n4, n6);
+		t.vertexUV(n8, double4 + 0.0, n10, n4, n7);
+		t.vertexUV(n9, double4 + 0.0, n10, n5, n7);
+		t.vertexUV(n9, double4 + 1.0, n10, n5, n6);
+		
+		t.vertexUV(n9, double4 + 1.0, n10, n4, n6);
+		t.vertexUV(n9, double4 + 0.0, n10, n4, n7);
+		t.vertexUV(n8, double4 + 0.0, n10, n5, n7);
+		t.vertexUV(n8, double4 + 1.0, n10, n5, n6);
+		
+		t.vertexUV(n9, double4 + 1.0, n11, n4, n6);
+		t.vertexUV(n9, double4 + 0.0, n11, n4, n7);
+		t.vertexUV(n8, double4 + 0.0, n11, n5, n7);
+		t.vertexUV(n8, double4 + 1.0, n11, n5, n6);
+		
+		t.vertexUV(n8, double4 + 1.0, n11, n4, n6);
+		t.vertexUV(n8, double4 + 0.0, n11, n4, n7);
+		t.vertexUV(n9, double4 + 0.0, n11, n5, n7);
+		t.vertexUV(n9, double4 + 1.0, n11, n5, n6);
 	}
 
 	public boolean i(final Block gs, final int integer2, final int integer3, final int integer4) {
-		final Tessellator instance = Tessellator.instance;
+		final Tessellator t = Tessellator.instance;
 		final boolean shouldSideBeRendered = gs.shouldSideBeRendered(this.a, integer2, integer3 + 1, integer4, 1);
 		final boolean shouldSideBeRendered2 = gs.shouldSideBeRendered(this.a, integer2, integer3 - 1, integer4, 0);
 		final boolean[] array = { gs.shouldSideBeRendered(this.a, integer2, integer3, integer4 - 1, 2), gs.shouldSideBeRendered(this.a, integer2, integer3, integer4 + 1, 3), gs.shouldSideBeRendered(this.a, integer2 - 1, integer3, integer4, 4), gs.shouldSideBeRendered(this.a, integer2 + 1, integer3, integer4, 5) };
@@ -623,15 +636,15 @@ public class RenderBlocks {
 			final float n8 = sin(n5) * 8.0f / 256.0f;
 			final float n9 = cos(n5) * 8.0f / 256.0f;
 			final float blockBrightness = gs.getBlockBrightness(this.a, integer2, integer3, integer4);
-			instance.color(n2 * blockBrightness, n2 * blockBrightness, n2 * blockBrightness);
-			instance.vertexUV(integer2 + 0, integer3 + a, integer4 + 0, n6 - n9 - n8, n7 - n9 + n8);
-			instance.vertexUV(integer2 + 0, integer3 + a2, integer4 + 1, n6 - n9 + n8, n7 + n9 + n8);
-			instance.vertexUV(integer2 + 1, integer3 + a3, integer4 + 1, n6 + n9 + n8, n7 + n9 - n8);
-			instance.vertexUV(integer2 + 1, integer3 + a4, integer4 + 0, n6 + n9 - n8, n7 - n9 - n8);
+			t.color(n2 * blockBrightness, n2 * blockBrightness, n2 * blockBrightness);
+			t.vertexUV(integer2 + 0, integer3 + a, integer4 + 0, n6 - n9 - n8, n7 - n9 + n8);
+			t.vertexUV(integer2 + 0, integer3 + a2, integer4 + 1, n6 - n9 + n8, n7 + n9 + n8);
+			t.vertexUV(integer2 + 1, integer3 + a3, integer4 + 1, n6 + n9 + n8, n7 + n9 - n8);
+			t.vertexUV(integer2 + 1, integer3 + a4, integer4 + 0, n6 + n9 - n8, n7 - n9 - n8);
 		}
 		if (this.d || shouldSideBeRendered2) {
 			final float blockBrightness2 = gs.getBlockBrightness(this.a, integer2, integer3 - 1, integer4);
-			instance.color(n * blockBrightness2, n * blockBrightness2, n * blockBrightness2);
+			t.color(n * blockBrightness2, n * blockBrightness2, n * blockBrightness2);
 			this.a(gs, (double) integer2, integer3, integer4, gs.getBlockTextureFromSide(0));
 			b = true;
 		}
@@ -702,11 +715,11 @@ public class RenderBlocks {
 				} else {
 					blockBrightness3 *= n4;
 				}
-				instance.color(n2 * blockBrightness3, n2 * blockBrightness3, n2 * blockBrightness3);
-				instance.vertexUV(n9, integer3 + n12, blockBrightness, n15, double5);
-				instance.vertexUV(n13, integer3 + n8, n14, n16, double6);
-				instance.vertexUV(n13, integer3 + 0, n14, n16, n17);
-				instance.vertexUV(n9, integer3 + 0, blockBrightness, n15, n17);
+				t.color(n2 * blockBrightness3, n2 * blockBrightness3, n2 * blockBrightness3);
+				t.vertexUV(n9, integer3 + n12, blockBrightness, n15, double5);
+				t.vertexUV(n13, integer3 + n8, n14, n16, double6);
+				t.vertexUV(n13, integer3 + 0, n14, n16, n17);
+				t.vertexUV(n9, integer3 + 0, blockBrightness, n15, n17);
 			}
 		}
 		gs.minY = minY;
@@ -745,46 +758,46 @@ public class RenderBlocks {
 		final float n2 = 1.0f;
 		final float n3 = 0.8f;
 		final float n4 = 0.6f;
-		final Tessellator instance = Tessellator.instance;
-		instance.beginQuads();
+		final Tessellator t = Tessellator.instance;
+		t.beginQuads();
 		final float blockBrightness = gs.getBlockBrightness(fe, integer3, integer4, integer5);
 		float n5 = gs.getBlockBrightness(fe, integer3, integer4 - 1, integer5);
 		if (n5 < blockBrightness) {
 			n5 = blockBrightness;
 		}
-		instance.color(n * n5, n * n5, n * n5);
+		t.color(n * n5, n * n5, n * n5);
 		this.a(gs, -0.5, -0.5, -0.5, gs.getBlockTextureFromSide(0));
 		n5 = gs.getBlockBrightness(fe, integer3, integer4 + 1, integer5);
 		if (n5 < blockBrightness) {
 			n5 = blockBrightness;
 		}
-		instance.color(n2 * n5, n2 * n5, n2 * n5);
+		t.color(n2 * n5, n2 * n5, n2 * n5);
 		this.b(gs, -0.5, -0.5, -0.5, gs.getBlockTextureFromSide(1));
 		n5 = gs.getBlockBrightness(fe, integer3, integer4, integer5 - 1);
 		if (n5 < blockBrightness) {
 			n5 = blockBrightness;
 		}
-		instance.color(n3 * n5, n3 * n5, n3 * n5);
+		t.color(n3 * n5, n3 * n5, n3 * n5);
 		this.c(gs, -0.5, -0.5, -0.5, gs.getBlockTextureFromSide(2));
 		n5 = gs.getBlockBrightness(fe, integer3, integer4, integer5 + 1);
 		if (n5 < blockBrightness) {
 			n5 = blockBrightness;
 		}
-		instance.color(n3 * n5, n3 * n5, n3 * n5);
+		t.color(n3 * n5, n3 * n5, n3 * n5);
 		this.d(gs, -0.5, -0.5, -0.5, gs.getBlockTextureFromSide(3));
 		n5 = gs.getBlockBrightness(fe, integer3 - 1, integer4, integer5);
 		if (n5 < blockBrightness) {
 			n5 = blockBrightness;
 		}
-		instance.color(n4 * n5, n4 * n5, n4 * n5);
+		t.color(n4 * n5, n4 * n5, n4 * n5);
 		this.e(gs, -0.5, -0.5, -0.5, gs.getBlockTextureFromSide(4));
 		n5 = gs.getBlockBrightness(fe, integer3 + 1, integer4, integer5);
 		if (n5 < blockBrightness) {
 			n5 = blockBrightness;
 		}
-		instance.color(n4 * n5, n4 * n5, n4 * n5);
+		t.color(n4 * n5, n4 * n5, n4 * n5);
 		this.f(gs, -0.5, -0.5, -0.5, gs.getBlockTextureFromSide(5));
-		instance.render();
+		t.render();
 	}
 
 	public boolean j(final Block gs, final int integer2, final int integer3, final int integer4) {
@@ -793,7 +806,7 @@ public class RenderBlocks {
 	}
 
 	public boolean a(final Block gs, final int integer2, final int integer3, final int integer4, final float float5, final float float6, final float float7) {
-		final Tessellator instance = Tessellator.instance;
+		final Tessellator t = Tessellator.instance;
 		boolean b = false;
 		final float n = 0.5f;
 		final float n2 = 1.0f;
@@ -817,7 +830,7 @@ public class RenderBlocks {
 			if (Block.lightValue[gs.id] > 0) {
 				n17 = 1.0f;
 			}
-			instance.color(n5 * n17, n9 * n17, n13 * n17);
+			t.color(n5 * n17, n9 * n17, n13 * n17);
 			this.a(gs, (double) integer2, integer3, integer4, gs.getBlockTextureGeneric(this.a, integer2, integer3, integer4, 0));
 			b = true;
 		}
@@ -829,7 +842,7 @@ public class RenderBlocks {
 			if (Block.lightValue[gs.id] > 0) {
 				n17 = 1.0f;
 			}
-			instance.color(n6 * n17, n10 * n17, n14 * n17);
+			t.color(n6 * n17, n10 * n17, n14 * n17);
 			this.b(gs, (double) integer2, integer3, integer4, gs.getBlockTextureGeneric(this.a, integer2, integer3, integer4, 1));
 			b = true;
 		}
@@ -841,7 +854,7 @@ public class RenderBlocks {
 			if (Block.lightValue[gs.id] > 0) {
 				n17 = 1.0f;
 			}
-			instance.color(n7 * n17, n11 * n17, n15 * n17);
+			t.color(n7 * n17, n11 * n17, n15 * n17);
 			this.c(gs, integer2, integer3, integer4, gs.getBlockTextureGeneric(this.a, integer2, integer3, integer4, 2));
 			b = true;
 		}
@@ -853,7 +866,7 @@ public class RenderBlocks {
 			if (Block.lightValue[gs.id] > 0) {
 				n17 = 1.0f;
 			}
-			instance.color(n7 * n17, n11 * n17, n15 * n17);
+			t.color(n7 * n17, n11 * n17, n15 * n17);
 			this.d(gs, integer2, integer3, integer4, gs.getBlockTextureGeneric(this.a, integer2, integer3, integer4, 3));
 			b = true;
 		}
@@ -865,7 +878,7 @@ public class RenderBlocks {
 			if (Block.lightValue[gs.id] > 0) {
 				n17 = 1.0f;
 			}
-			instance.color(n8 * n17, n12 * n17, n16 * n17);
+			t.color(n8 * n17, n12 * n17, n16 * n17);
 			this.e(gs, integer2, integer3, integer4, gs.getBlockTextureGeneric(this.a, integer2, integer3, integer4, 4));
 			b = true;
 		}
@@ -877,7 +890,7 @@ public class RenderBlocks {
 			if (Block.lightValue[gs.id] > 0) {
 				n17 = 1.0f;
 			}
-			instance.color(n8 * n17, n12 * n17, n16 * n17);
+			t.color(n8 * n17, n12 * n17, n16 * n17);
 			this.f(gs, integer2, integer3, integer4, gs.getBlockTextureGeneric(this.a, integer2, integer3, integer4, 5));
 			b = true;
 		}
@@ -956,7 +969,7 @@ public class RenderBlocks {
 	}
 
 	public boolean m(final Block gs, final int integer2, final int integer3, final int integer4) {
-		final Tessellator instance = Tessellator.instance;
+		final Tessellator t = Tessellator.instance;
 		final DoorBlock blockDoor = (DoorBlock) gs;
 		boolean b = false;
 		final float n = 0.5f;
@@ -971,7 +984,7 @@ public class RenderBlocks {
 		if (Block.lightValue[gs.id] > 0) {
 			n5 = 1.0f;
 		}
-		instance.color(n * n5, n * n5, n * n5);
+		t.color(n * n5, n * n5, n * n5);
 		this.a(gs, (double) integer2, integer3, integer4, gs.getBlockTextureGeneric(this.a, integer2, integer3, integer4, 0));
 		b = true;
 		n5 = gs.getBlockBrightness(this.a, integer2, integer3 + 1, integer4);
@@ -981,7 +994,7 @@ public class RenderBlocks {
 		if (Block.lightValue[gs.id] > 0) {
 			n5 = 1.0f;
 		}
-		instance.color(n2 * n5, n2 * n5, n2 * n5);
+		t.color(n2 * n5, n2 * n5, n2 * n5);
 		this.b(gs, (double) integer2, integer3, integer4, gs.getBlockTextureGeneric(this.a, integer2, integer3, integer4, 1));
 		b = true;
 		n5 = gs.getBlockBrightness(this.a, integer2, integer3, integer4 - 1);
@@ -991,7 +1004,7 @@ public class RenderBlocks {
 		if (Block.lightValue[gs.id] > 0) {
 			n5 = 1.0f;
 		}
-		instance.color(n3 * n5, n3 * n5, n3 * n5);
+		t.color(n3 * n5, n3 * n5, n3 * n5);
 		int n6 = gs.getBlockTextureGeneric(this.a, integer2, integer3, integer4, 2);
 		if (n6 < 0) {
 			this.c = true;
@@ -1007,7 +1020,7 @@ public class RenderBlocks {
 		if (Block.lightValue[gs.id] > 0) {
 			n5 = 1.0f;
 		}
-		instance.color(n3 * n5, n3 * n5, n3 * n5);
+		t.color(n3 * n5, n3 * n5, n3 * n5);
 		n6 = gs.getBlockTextureGeneric(this.a, integer2, integer3, integer4, 3);
 		if (n6 < 0) {
 			this.c = true;
@@ -1023,7 +1036,7 @@ public class RenderBlocks {
 		if (Block.lightValue[gs.id] > 0) {
 			n5 = 1.0f;
 		}
-		instance.color(n4 * n5, n4 * n5, n4 * n5);
+		t.color(n4 * n5, n4 * n5, n4 * n5);
 		n6 = gs.getBlockTextureGeneric(this.a, integer2, integer3, integer4, 4);
 		if (n6 < 0) {
 			this.c = true;
@@ -1039,7 +1052,7 @@ public class RenderBlocks {
 		if (Block.lightValue[gs.id] > 0) {
 			n5 = 1.0f;
 		}
-		instance.color(n4 * n5, n4 * n5, n4 * n5);
+		t.color(n4 * n5, n4 * n5, n4 * n5);
 		n6 = gs.getBlockTextureGeneric(this.a, integer2, integer3, integer4, 5);
 		if (n6 < 0) {
 			this.c = true;
@@ -1052,7 +1065,7 @@ public class RenderBlocks {
 	}
 
 	public void a(final Block gs, final double double2, final double double3, final double double4, int integer) {
-		final Tessellator instance = Tessellator.instance;
+		final Tessellator t = Tessellator.instance;
 		if (this.b >= 0) {
 			integer = this.b;
 		}
@@ -1075,14 +1088,14 @@ public class RenderBlocks {
 		final double n9 = double3 + gs.minY;
 		final double n10 = double4 + gs.minZ;
 		final double n11 = double4 + gs.maxZ;
-		instance.vertexUV(n7, n9, n11, n3, n6);
-		instance.vertexUV(n7, n9, n10, n3, n5);
-		instance.vertexUV(n8, n9, n10, n4, n5);
-		instance.vertexUV(n8, n9, n11, n4, n6);
+		t.vertexUV(n7, n9, n11, n3, n6);
+		t.vertexUV(n7, n9, n10, n3, n5);
+		t.vertexUV(n8, n9, n10, n4, n5);
+		t.vertexUV(n8, n9, n11, n4, n6);
 	}
 
 	public void b(final Block gs, final double double2, final double double3, final double double4, int integer) {
-		final Tessellator instance = Tessellator.instance;
+		final Tessellator t = Tessellator.instance;
 		if (this.b >= 0) {
 			integer = this.b;
 		}
@@ -1105,14 +1118,14 @@ public class RenderBlocks {
 		final double n9 = double3 + gs.maxY;
 		final double n10 = double4 + gs.minZ;
 		final double n11 = double4 + gs.maxZ;
-		instance.vertexUV(n8, n9, n11, n4, n6);
-		instance.vertexUV(n8, n9, n10, n4, n5);
-		instance.vertexUV(n7, n9, n10, n3, n5);
-		instance.vertexUV(n7, n9, n11, n3, n6);
+		t.vertexUV(n8, n9, n11, n4, n6);
+		t.vertexUV(n8, n9, n10, n4, n5);
+		t.vertexUV(n7, n9, n10, n3, n5);
+		t.vertexUV(n7, n9, n11, n3, n6);
 	}
 
 	public void c(final Block gs, final double double2, final double double3, final double double4, int integer) {
-		final Tessellator instance = Tessellator.instance;
+		final Tessellator t = Tessellator.instance;
 		if (this.b >= 0) {
 			integer = this.b;
 		}
@@ -1140,14 +1153,14 @@ public class RenderBlocks {
 		final double n9 = double3 + gs.minY;
 		final double n10 = double3 + gs.maxY;
 		final double n11 = double4 + gs.minZ;
-		instance.vertexUV(n7, n10, n11, n4, n5);
-		instance.vertexUV(n8, n10, n11, n3, n5);
-		instance.vertexUV(n8, n9, n11, n3, n6);
-		instance.vertexUV(n7, n9, n11, n4, n6);
+		t.vertexUV(n7, n10, n11, n4, n5);
+		t.vertexUV(n8, n10, n11, n3, n5);
+		t.vertexUV(n8, n9, n11, n3, n6);
+		t.vertexUV(n7, n9, n11, n4, n6);
 	}
 
 	public void d(final Block gs, final double double2, final double double3, final double double4, int integer) {
-		final Tessellator instance = Tessellator.instance;
+		final Tessellator t = Tessellator.instance;
 		if (this.b >= 0) {
 			integer = this.b;
 		}
@@ -1175,14 +1188,14 @@ public class RenderBlocks {
 		final double n9 = double3 + gs.minY;
 		final double n10 = double3 + gs.maxY;
 		final double n11 = double4 + gs.maxZ;
-		instance.vertexUV(n7, n10, n11, n3, n5);
-		instance.vertexUV(n7, n9, n11, n3, n6);
-		instance.vertexUV(n8, n9, n11, n4, n6);
-		instance.vertexUV(n8, n10, n11, n4, n5);
+		t.vertexUV(n7, n10, n11, n3, n5);
+		t.vertexUV(n7, n9, n11, n3, n6);
+		t.vertexUV(n8, n9, n11, n4, n6);
+		t.vertexUV(n8, n10, n11, n4, n5);
 	}
 
 	public void e(final Block gs, final double double2, final double double3, final double double4, int integer) {
-		final Tessellator instance = Tessellator.instance;
+		final Tessellator t = Tessellator.instance;
 		if (this.b >= 0) {
 			integer = this.b;
 		}
@@ -1210,14 +1223,14 @@ public class RenderBlocks {
 		final double n9 = double3 + gs.maxY;
 		final double n10 = double4 + gs.minZ;
 		final double n11 = double4 + gs.maxZ;
-		instance.vertexUV(n7, n9, n11, n4, n5);
-		instance.vertexUV(n7, n9, n10, n3, n5);
-		instance.vertexUV(n7, n8, n10, n3, n6);
-		instance.vertexUV(n7, n8, n11, n4, n6);
+		t.vertexUV(n7, n9, n11, n4, n5);
+		t.vertexUV(n7, n9, n10, n3, n5);
+		t.vertexUV(n7, n8, n10, n3, n6);
+		t.vertexUV(n7, n8, n11, n4, n6);
 	}
 
 	public void f(final Block gs, final double double2, final double double3, final double double4, int integer) {
-		final Tessellator instance = Tessellator.instance;
+		final Tessellator t = Tessellator.instance;
 		if (this.b >= 0) {
 			integer = this.b;
 		}
@@ -1245,58 +1258,58 @@ public class RenderBlocks {
 		final double n9 = double3 + gs.maxY;
 		final double n10 = double4 + gs.minZ;
 		final double n11 = double4 + gs.maxZ;
-		instance.vertexUV(n7, n8, n11, n3, n6);
-		instance.vertexUV(n7, n8, n10, n4, n6);
-		instance.vertexUV(n7, n9, n10, n4, n5);
-		instance.vertexUV(n7, n9, n11, n3, n5);
+		t.vertexUV(n7, n8, n11, n3, n6);
+		t.vertexUV(n7, n8, n10, n4, n6);
+		t.vertexUV(n7, n9, n10, n4, n5);
+		t.vertexUV(n7, n9, n11, n3, n5);
 	}
 
 	public void renderBlockOnInventory(final Block gs) {
 		final int n = -1;
-		final Tessellator instance = Tessellator.instance;
+		final Tessellator t = Tessellator.instance;
 		final int renderType = gs.getRenderType();
 		if (renderType == 0) {
 			GL11.glTranslatef(-0.5f, -0.5f, -0.5f);
-			instance.beginQuads();
-			instance.normal(0.0f, -1.0f, 0.0f);
+			t.beginQuads();
+			t.normal(0.0f, -1.0f, 0.0f);
 			this.a(gs, 0.0, 0.0, 0.0, gs.getBlockTextureFromSide(0));
-			instance.render();
-			instance.beginQuads();
-			instance.normal(0.0f, 1.0f, 0.0f);
+			t.render();
+			t.beginQuads();
+			t.normal(0.0f, 1.0f, 0.0f);
 			this.b(gs, 0.0, 0.0, 0.0, gs.getBlockTextureFromSide(1));
-			instance.render();
-			instance.beginQuads();
-			instance.normal(0.0f, 0.0f, -1.0f);
+			t.render();
+			t.beginQuads();
+			t.normal(0.0f, 0.0f, -1.0f);
 			this.c(gs, 0.0, 0.0, 0.0, gs.getBlockTextureFromSide(2));
-			instance.render();
-			instance.beginQuads();
-			instance.normal(0.0f, 0.0f, 1.0f);
+			t.render();
+			t.beginQuads();
+			t.normal(0.0f, 0.0f, 1.0f);
 			this.d(gs, 0.0, 0.0, 0.0, gs.getBlockTextureFromSide(3));
-			instance.render();
-			instance.beginQuads();
-			instance.normal(-1.0f, 0.0f, 0.0f);
+			t.render();
+			t.beginQuads();
+			t.normal(-1.0f, 0.0f, 0.0f);
 			this.e(gs, 0.0, 0.0, 0.0, gs.getBlockTextureFromSide(4));
-			instance.render();
-			instance.beginQuads();
-			instance.normal(1.0f, 0.0f, 0.0f);
+			t.render();
+			t.beginQuads();
+			t.normal(1.0f, 0.0f, 0.0f);
 			this.f(gs, 0.0, 0.0, 0.0, gs.getBlockTextureFromSide(5));
-			instance.render();
+			t.render();
 			GL11.glTranslatef(0.5f, 0.5f, 0.5f);
 		} else if (renderType == 1) {
-			instance.beginQuads();
-			instance.normal(0.0f, -1.0f, 0.0f);
+			t.beginQuads();
+			t.normal(0.0f, -1.0f, 0.0f);
 			this.a(gs, n, -0.5, -0.5, -0.5);
-			instance.render();
+			t.render();
 		} else if (renderType == 6) {
-			instance.beginQuads();
-			instance.normal(0.0f, -1.0f, 0.0f);
+			t.beginQuads();
+			t.normal(0.0f, -1.0f, 0.0f);
 			this.b(gs, n, -0.5, -0.5, -0.5);
-			instance.render();
+			t.render();
 		} else if (renderType == 2) {
-			instance.beginQuads();
-			instance.normal(0.0f, -1.0f, 0.0f);
+			t.beginQuads();
+			t.normal(0.0f, -1.0f, 0.0f);
 			this.a(gs, -0.5, -0.5, -0.5, 0.0, 0.0);
-			instance.render();
+			t.render();
 		} else if (renderType != 3) {
 			if (renderType == 5) {
 			}

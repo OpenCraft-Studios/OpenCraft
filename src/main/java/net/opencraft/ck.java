@@ -35,8 +35,8 @@ public class ck {
 
 	private int a(final World fe, final int integer, final Entity eq, final IProgressListener jd) {
 		int n = 0;
-		final int floor_double = Mth.floor_double(eq.posX);
-		final int floor_double2 = Mth.floor_double(eq.posZ);
+		final int floor_double = Mth.floor_double(eq.x);
+		final int floor_double2 = Mth.floor_double(eq.z);
 		final int nextInt = fe.random.nextInt(this.c.length);
 		final ChunkPosition a = this.a(fe, floor_double, floor_double2);
 		final int x = a.x;
@@ -62,9 +62,9 @@ public class ck {
 					final float n7 = n3 + 1.0f;
 					final float n8 = n4 + 0.5f;
 					if (eq != null) {
-						final double n9 = n6 - eq.posX;
-						final double n10 = n7 - eq.posY;
-						final double n11 = n8 - eq.posZ;
+						final double n9 = n6 - eq.x;
+						final double n10 = n7 - eq.y;
+						final double n11 = n8 - eq.z;
 						if (n9 * n9 + n10 * n10 + n11 * n11 < 1024.0) {
 							continue;
 						}

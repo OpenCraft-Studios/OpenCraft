@@ -71,7 +71,7 @@ public class GuiEditSign extends GuiScreen {
 	@Override
 	public void drawScreen(final int integer1, final int integer2, final float float3) {
 		this.drawDefaultBackground();
-		this.drawCenteredString(this.fontRenderer, this.screenTitle, this.width / 2, 40, 16777215);
+		this.drawCenteredString(this.fontRenderer, this.screenTitle, this.width / 2, 40, 0xFFFFFF);
 		GL11.glPushMatrix();
 		GL11.glTranslatef((float) (this.width / 2), (float) (this.height / 2), 50.0f);
 		final float n = 60.0f;

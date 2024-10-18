@@ -73,7 +73,7 @@ public class GuiInventory extends GuiContainer {
 
 	@Override
 	protected void drawGuiContainerForegroundLayer() {
-		this.fontRenderer.draw("Crafting", 86, 16, 4210752);
+		this.fontRenderer.draw("Crafting", 86, 16, 0x404040);
 	}
 
 	@Override
@@ -99,8 +99,8 @@ public class GuiInventory extends GuiContainer {
 		GL11.glScalef(-n, n, n);
 		GL11.glRotatef(180.0f, 0.0f, 0.0f, 1.0f);
 		final float renderYawOffset = oc.player.renderYawOffset;
-		final float rotationYaw = oc.player.rotationYaw;
-		final float rotationPitch = oc.player.rotationPitch;
+		final float rotationYaw = oc.player.yRot;
+		final float rotationPitch = oc.player.xRot;
 		final float n2 = integer1 + 51 - this.xSize_lo;
 		final float n3 = integer2 + 75 - 50 - this.ySize_lo;
 		GL11.glRotatef(135.0f, 0.0f, 1.0f, 0.0f);
@@ -108,13 +108,13 @@ public class GuiInventory extends GuiContainer {
 		GL11.glRotatef(-135.0f, 0.0f, 1.0f, 0.0f);
 		GL11.glRotatef(-(float) Math.atan((double) (n3 / 40.0f)) * 20.0f, 1.0f, 0.0f, 0.0f);
 		oc.player.renderYawOffset = (float) Math.atan((double) (n2 / 40.0f)) * 20.0f;
-		oc.player.rotationYaw = (float) Math.atan((double) (n2 / 40.0f)) * 40.0f;
-		oc.player.rotationPitch = -(float) Math.atan((double) (n3 / 40.0f)) * 20.0f;
+		oc.player.yRot = (float) Math.atan((double) (n2 / 40.0f)) * 40.0f;
+		oc.player.xRot = -(float) Math.atan((double) (n3 / 40.0f)) * 20.0f;
 		GL11.glTranslatef(0.0f, 0.0f, 0.0f);
 		RenderManager.instance.renderEntityWithPosYaw(oc.player, 0.0, 0.0, 0.0, 0.0f, 1.0f);
 		oc.player.renderYawOffset = renderYawOffset;
-		oc.player.rotationYaw = rotationYaw;
-		oc.player.rotationPitch = rotationPitch;
+		oc.player.yRot = rotationYaw;
+		oc.player.xRot = rotationPitch;
 		GL11.glPopMatrix();
 		RenderHelper.disableStandardItemLighting();
 		GL11.glDisable(32826);

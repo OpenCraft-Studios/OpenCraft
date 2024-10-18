@@ -53,7 +53,7 @@ public class GuiIngameMenu extends GuiScreen {
 			final int n2 = (int) (255.0f * n);
 			this.drawString(this.fontRenderer, "Saving level..", 8, this.height - 16, n2 << 16 | n2 << 8 | n2);
 		}
-		this.drawCenteredString(this.fontRenderer, "Game menu", this.width / 2, 40, 16777215);
+		this.drawCenteredString(this.fontRenderer, "Game menu", this.width / 2, 40, 0xFFFFFF);
 		super.drawScreen(integer1, integer2, float3);
 	}
 

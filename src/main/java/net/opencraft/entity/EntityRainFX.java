@@ -13,9 +13,9 @@ public class EntityRainFX extends EntityFX {
 
 	public EntityRainFX(final World fe, final double double2, final double double3, final double double4) {
 		super(fe, double2, double3, double4, 0.0, 0.0, 0.0);
-		this.motionX *= 0.30000001192092896;
-		this.motionY = (float) random() * 0.2f + 0.1f;
-		this.motionZ *= 0.30000001192092896;
+		this.xd *= 0.30000001192092896;
+		this.yd = (float) random() * 0.2f + 0.1f;
+		this.zd *= 0.30000001192092896;
 		this.particleRed = 1.0f;
 		this.particleGreen = 1.0f;
 		this.particleBlue = 1.0f;
@@ -32,14 +32,14 @@ public class EntityRainFX extends EntityFX {
 
 	@Override
 	public void onUpdate() {
-		this.prevPosX = this.posX;
-		this.prevPosY = this.posY;
-		this.prevPosZ = this.posZ;
-		this.motionY -= this.particleGravity;
-		this.moveEntity(this.motionX, this.motionY, this.motionZ);
-		this.motionX *= 0.9800000190734863;
-		this.motionY *= 0.9800000190734863;
-		this.motionZ *= 0.9800000190734863;
+		this.xo = this.x;
+		this.yo = this.y;
+		this.zo = this.z;
+		this.yd -= this.particleGravity;
+		this.moveEntity(this.xd, this.yd, this.zd);
+		this.xd *= 0.9800000190734863;
+		this.yd *= 0.9800000190734863;
+		this.zd *= 0.9800000190734863;
 		if (this.particleMaxAge-- <= 0) {
 			this.setEntityDead();
 		}
@@ -47,11 +47,11 @@ public class EntityRainFX extends EntityFX {
 			if (random() < 0.5) {
 				this.setEntityDead();
 			}
-			this.motionX *= 0.699999988079071;
-			this.motionZ *= 0.699999988079071;
+			this.xd *= 0.699999988079071;
+			this.zd *= 0.699999988079071;
 		}
-		final Material blockMaterial = this.world.getBlockMaterial(Mth.floor_double(this.posX), Mth.floor_double(this.posY), Mth.floor_double(this.posZ));
-		if ((blockMaterial.isLiquid() || blockMaterial.isSolid()) && this.posY < Mth.floor_double(this.posY) + 1 - LiquidBlock.getPercentAir(this.world.getBlockMetadata(Mth.floor_double(this.posX), Mth.floor_double(this.posY), Mth.floor_double(this.posZ)))) {
+		final Material blockMaterial = this.world.getBlockMaterial(Mth.floor_double(this.x), Mth.floor_double(this.y), Mth.floor_double(this.z));
+		if ((blockMaterial.isLiquid() || blockMaterial.isSolid()) && this.y < Mth.floor_double(this.y) + 1 - LiquidBlock.getPercentAir(this.world.getBlockMetadata(Mth.floor_double(this.x), Mth.floor_double(this.y), Mth.floor_double(this.z)))) {
 			this.setEntityDead();
 		}
 	}

@@ -26,7 +26,7 @@ public class MovingObjectPosition {
 	public MovingObjectPosition(final Entity eq) {
 		this.typeOfHit = 1;
 		this.entityHit = eq;
-		this.hitVec = Vec3.newTemp(eq.posX, eq.posY, eq.posZ);
+		this.hitVec = Vec3.newTemp(eq.x, eq.y, eq.z);
 	}
 
 }

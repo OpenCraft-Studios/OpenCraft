@@ -23,13 +23,13 @@ public class EntityFallingSand extends Entity {
 		this.setSize(0.98f, 0.98f);
 		this.yOffset = this.height / 2.0f;
 		this.setPosition(xCoord, yCoord, zCoord);
-		this.motionX = 0.0;
-		this.motionY = 0.0;
-		this.motionZ = 0.0;
+		this.xd = 0.0;
+		this.yd = 0.0;
+		this.zd = 0.0;
 		this.canTriggerWalking = false;
-		this.prevPosX = xCoord;
-		this.prevPosY = yCoord;
-		this.prevPosZ = zCoord;
+		this.xo = xCoord;
+		this.yo = yCoord;
+		this.zo = zCoord;
 	}
 
 	@Override
@@ -43,25 +43,25 @@ public class EntityFallingSand extends Entity {
 			this.setEntityDead();
 			return;
 		}
-		this.prevPosX = this.posX;
-		this.prevPosY = this.posY;
-		this.prevPosZ = this.posZ;
+		this.xo = this.x;
+		this.yo = this.y;
+		this.zo = this.z;
 		++this.fallTime;
-		this.motionY -= 0.03999999910593033;
-		this.moveEntity(this.motionX, this.motionY, this.motionZ);
-		this.motionX *= 0.9800000190734863;
-		this.motionY *= 0.9800000190734863;
-		this.motionZ *= 0.9800000190734863;
-		final int floor_double = Mth.floor_double(this.posX);
-		final int floor_double2 = Mth.floor_double(this.posY);
-		final int floor_double3 = Mth.floor_double(this.posZ);
+		this.yd -= 0.03999999910593033;
+		this.moveEntity(this.xd, this.yd, this.zd);
+		this.xd *= 0.9800000190734863;
+		this.yd *= 0.9800000190734863;
+		this.zd *= 0.9800000190734863;
+		final int floor_double = Mth.floor_double(this.x);
+		final int floor_double2 = Mth.floor_double(this.y);
+		final int floor_double3 = Mth.floor_double(this.z);
 		if (this.world.getBlockId(floor_double, floor_double2, floor_double3) == this.blockID) {
 			this.world.setBlockWithNotify(floor_double, floor_double2, floor_double3, 0);
 		}
 		if (this.onGround) {
-			this.motionX *= 0.699999988079071;
-			this.motionZ *= 0.699999988079071;
-			this.motionY *= -0.5;
+			this.xd *= 0.699999988079071;
+			this.zd *= 0.699999988079071;
+			this.yd *= -0.5;
 			this.setEntityDead();
 			if (!this.world.canBlockBePlacedAt(this.blockID, floor_double, floor_double2, floor_double3, true) || !this.world.setBlockWithNotify(floor_double, floor_double2, floor_double3, this.blockID)) {
 				this.dropItemWithOffset(this.blockID, 1);

@@ -89,7 +89,7 @@ public class LoadingScreenRenderer implements IProgressListener {
 		glBindTexture(3553, oc.renderer.loadTexture("/assets/dirt.png"));
 		final float n = 32.0f;
 		t.beginQuads();
-		t.color(4210752);
+		t.color(0x404040);
 		t.vertexUV(0.0, scaledHeight, 0.0, 0.0, scaledHeight / n);
 		t.vertexUV(scaledWidth, scaledHeight, 0.0, scaledWidth / n, scaledHeight / n);
 		t.vertexUV(scaledWidth, 0.0, 0.0, scaledWidth / n, 0.0);
@@ -116,9 +116,9 @@ public class LoadingScreenRenderer implements IProgressListener {
 			glEnable(3553);
 		}
 		oc.font.drawShadow(this.currentlyDisplayedText, (scaledWidth - oc.font.width(this.currentlyDisplayedText)) / 2,
-				scaledHeight / 2 - 4 - 16, 16777215);
+				scaledHeight / 2 - 4 - 16, 0xFFFFFF);
 		oc.font.drawShadow(this.field_1004_a, (scaledWidth - oc.font.width(this.field_1004_a)) / 2,
-				scaledHeight / 2 - 4 + 8, 16777215);
+				scaledHeight / 2 - 4 + 8, 0xFFFFFF);
 		glfwSwapBuffers(oc.window);
 		try {
 			Thread.yield();

@@ -24,23 +24,23 @@ import net.opencraft.world.World;
 public abstract class Entity {
 
 	public boolean preventEntitySpawning;
-	public Entity riddenByEntity;
+	public Entity passenger;
 	public Entity ridingEntity;
 	protected World world;
-	public double prevPosX;
-	public double prevPosY;
-	public double prevPosZ;
-	public double posX;
-	public double posY;
-	public double posZ;
-	public double motionX;
-	public double motionY;
-	public double motionZ;
-	public float rotationYaw;
-	public float rotationPitch;
+	public double xo;
+	public double yo;
+	public double zo;
+	public double x;
+	public double y;
+	public double z;
+	public double xd;
+	public double yd;
+	public double zd;
+	public float yRot;
+	public float xRot;
 	public float prevRotationYaw;
 	public float prevRotationPitch;
-	public final AABB boundingBox;
+	public final AABB bb;
 	public boolean onGround;
 	public boolean isCollidedHorizontally;
 	public boolean beenAttacked;
@@ -77,7 +77,7 @@ public abstract class Entity {
 
 	public Entity(final World world) {
 		this.preventEntitySpawning = false;
-		this.boundingBox = AABB.getBoundingBox(0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
+		this.bb = AABB.getBoundingBox(0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
 		this.onGround = false;
 		this.isCollidedHorizontally = false;
 		this.beenAttacked = false;
@@ -113,18 +113,18 @@ public abstract class Entity {
 		if (this.world == null) {
 			return;
 		}
-		while(this.posY > 0.0) {
-			this.setPosition(this.posX, this.posY, this.posZ);
-			if (this.world.getCollidingBoundingBoxes(this, this.boundingBox).size() == 0) {
+		while(this.y > 0.0) {
+			this.setPosition(this.x, this.y, this.z);
+			if (this.world.getCollidingBoundingBoxes(this, this.bb).size() == 0) {
 				break;
 			}
-			++this.posY;
+			++this.y;
 		}
 		final double motionX = 0.0;
-		this.motionZ = motionX;
-		this.motionY = motionX;
-		this.motionX = motionX;
-		this.rotationPitch = 0.0f;
+		this.zd = motionX;
+		this.yd = motionX;
+		this.xd = motionX;
+		this.xRot = 0.0f;
 	}
 
 	public void setEntityDead() {
@@ -137,32 +137,32 @@ public abstract class Entity {
 	}
 
 	protected void setRotation(final float nya1, final float nya2) {
-		this.rotationYaw = nya1;
-		this.rotationPitch = nya2;
+		this.yRot = nya1;
+		this.xRot = nya2;
 	}
 
 	public void setPosition(final double xCoord, final double yCoord, final double zCoord) {
-		this.posX = xCoord;
-		this.posY = yCoord;
-		this.posZ = zCoord;
+		this.x = xCoord;
+		this.y = yCoord;
+		this.z = zCoord;
 		final float n = this.width / 2.0f;
 		final float n2 = this.height / 2.0f;
-		this.boundingBox.setBounds(xCoord - n, yCoord - n2, zCoord - n, xCoord + n, yCoord + n2, zCoord + n);
+		this.bb.setBounds(xCoord - n, yCoord - n2, zCoord - n, xCoord + n, yCoord + n2, zCoord + n);
 	}
 
 	public void setAngles(final float nya1, final float nya2) {
-		final float rotationPitch = this.rotationPitch;
-		final float rotationYaw = this.rotationYaw;
-		this.rotationYaw += (float) (nya1 * 0.15);
-		this.rotationPitch -= (float) (nya2 * 0.15);
-		if (this.rotationPitch < -90.0f) {
-			this.rotationPitch = -90.0f;
+		final float rotationPitch = this.xRot;
+		final float rotationYaw = this.yRot;
+		this.yRot += (float) (nya1 * 0.15);
+		this.xRot -= (float) (nya2 * 0.15);
+		if (this.xRot < -90.0f) {
+			this.xRot = -90.0f;
 		}
-		if (this.rotationPitch > 90.0f) {
-			this.rotationPitch = 90.0f;
+		if (this.xRot > 90.0f) {
+			this.xRot = 90.0f;
 		}
-		this.prevRotationPitch += this.rotationPitch - rotationPitch;
-		this.prevRotationYaw += this.rotationYaw - rotationYaw;
+		this.prevRotationPitch += this.xRot - rotationPitch;
+		this.prevRotationYaw += this.yRot - rotationYaw;
 	}
 
 	public void onUpdate() {
@@ -175,28 +175,28 @@ public abstract class Entity {
 		}
 		++this.ticksExisted;
 		this.prevDistanceWalkedModified = this.distanceWalkedModified;
-		this.prevPosX = this.posX;
-		this.prevPosY = this.posY;
-		this.prevPosZ = this.posZ;
-		this.prevRotationPitch = this.rotationPitch;
-		this.prevRotationYaw = this.rotationYaw;
+		this.xo = this.x;
+		this.yo = this.y;
+		this.zo = this.z;
+		this.prevRotationPitch = this.xRot;
+		this.prevRotationYaw = this.yRot;
 		if (this.handleWaterMovement()) {
 			if (!this.inWater && !this.isFirstUpdate) {
-				float volume = (float) (sqrt(this.motionX * this.motionX * 0.20000000298023224 + this.motionY * this.motionY + this.motionZ * this.motionZ * 0.20000000298023224) * 0.2f);
+				float volume = (float) (sqrt(this.xd * this.xd * 0.20000000298023224 + this.yd * this.yd + this.zd * this.zd * 0.20000000298023224) * 0.2f);
 				if (volume > 1.0f) {
 					volume = 1.0f;
 				}
 				this.world.playSound(this, "random.splash", volume, 1.0f + (this.rand.nextFloat() - this.rand.nextFloat()) * 0.4f);
-				final float n = (float) Mth.floor_double(this.boundingBox.minY);
+				final float n = (float) Mth.floor_double(this.bb.minY);
 				for ( int n2 = 0; n2 < 1.0f + this.width * 20.0f; ++n2 ) {
 					final float n3 = (this.rand.nextFloat() * 2.0f - 1.0f) * this.width;
 					final float n4 = (this.rand.nextFloat() * 2.0f - 1.0f) * this.width;
-					this.world.spawnParticle("bubble", this.posX + n3, (double) (n + 1.0f), this.posZ + n4, this.motionX, this.motionY - this.rand.nextFloat() * 0.2f, this.motionZ);
+					this.world.spawnParticle("bubble", this.x + n3, (double) (n + 1.0f), this.z + n4, this.xd, this.yd - this.rand.nextFloat() * 0.2f, this.zd);
 				}
 				for ( int n2 = 0; n2 < 1.0f + this.width * 20.0f; ++n2 ) {
 					final float n3 = (this.rand.nextFloat() * 2.0f - 1.0f) * this.width;
 					final float n4 = (this.rand.nextFloat() * 2.0f - 1.0f) * this.width;
-					this.world.spawnParticle("splash", this.posX + n3, (double) (n + 1.0f), this.posZ + n4, this.motionX, this.motionY, this.motionZ);
+					this.world.spawnParticle("splash", this.x + n3, (double) (n + 1.0f), this.z + n4, this.xd, this.yd, this.zd);
 				}
 			}
 			this.fallDistance = 0.0f;
@@ -215,7 +215,7 @@ public abstract class Entity {
 			this.attackEntityFrom(null, 10);
 			this.fire = 600;
 		}
-		if (this.posY < -64.0) {
+		if (this.y < -64.0) {
 			this.kill();
 		}
 		this.isFirstUpdate = false;
@@ -226,44 +226,44 @@ public abstract class Entity {
 	}
 
 	public boolean isOffsetPositionInLiquid(final double xCoord, final double yCoord, final double zCoord) {
-		final AABB offsetBoundingBox = this.boundingBox.getOffsetBoundingBox(xCoord, yCoord, zCoord);
+		final AABB offsetBoundingBox = this.bb.getOffsetBoundingBox(xCoord, yCoord, zCoord);
 		return this.world.getCollidingBoundingBoxes(this, offsetBoundingBox).size() <= 0 && !this.world.getIsAnyLiquid(offsetBoundingBox);
 	}
 
 	public void moveEntity(double xCoord, double yCoord, double zCoord) {
 		if (this.noClip) {
-			this.boundingBox.offset(xCoord, yCoord, zCoord);
-			this.posX = (this.boundingBox.minX + this.boundingBox.maxX) / 2.0;
-			this.posY = this.boundingBox.minY + this.yOffset - this.ySize;
-			this.posZ = (this.boundingBox.minZ + this.boundingBox.maxZ) / 2.0;
+			this.bb.offset(xCoord, yCoord, zCoord);
+			this.x = (this.bb.minX + this.bb.maxX) / 2.0;
+			this.y = this.bb.minY + this.yOffset - this.ySize;
+			this.z = (this.bb.minZ + this.bb.maxZ) / 2.0;
 			return;
 		}
-		final double posX = this.posX;
-		final double posZ = this.posZ;
+		final double posX = this.x;
+		final double posZ = this.z;
 		final double n = xCoord;
 		final double n2 = yCoord;
 		final double n3 = zCoord;
-		final AABB copy = this.boundingBox.copy();
-		final List collidingBoundingBoxes = this.world.getCollidingBoundingBoxes(this, this.boundingBox.addCoord(xCoord, yCoord, zCoord));
+		final AABB copy = this.bb.copy();
+		final List collidingBoundingBoxes = this.world.getCollidingBoundingBoxes(this, this.bb.addCoord(xCoord, yCoord, zCoord));
 		for ( int i = 0; i < collidingBoundingBoxes.size(); ++i ) {
-			yCoord = ((AABB) collidingBoundingBoxes.get(i)).calculateYOffset(this.boundingBox, yCoord);
+			yCoord = ((AABB) collidingBoundingBoxes.get(i)).calculateYOffset(this.bb, yCoord);
 		}
-		this.boundingBox.offset(0.0, yCoord, 0.0);
+		this.bb.offset(0.0, yCoord, 0.0);
 		if (!this.field_9293_aM && n2 != yCoord) {
 			yCoord = (xCoord = (zCoord = 0.0));
 		}
 		final boolean b = this.onGround || (n2 != yCoord && n2 < 0.0);
 		for ( int j = 0; j < collidingBoundingBoxes.size(); ++j ) {
-			xCoord = ((AABB) collidingBoundingBoxes.get(j)).calculateXOffset(this.boundingBox, xCoord);
+			xCoord = ((AABB) collidingBoundingBoxes.get(j)).calculateXOffset(this.bb, xCoord);
 		}
-		this.boundingBox.offset(xCoord, 0.0, 0.0);
+		this.bb.offset(xCoord, 0.0, 0.0);
 		if (!this.field_9293_aM && n != xCoord) {
 			yCoord = (xCoord = (zCoord = 0.0));
 		}
 		for ( int j = 0; j < collidingBoundingBoxes.size(); ++j ) {
-			zCoord = ((AABB) collidingBoundingBoxes.get(j)).calculateZOffset(this.boundingBox, zCoord);
+			zCoord = ((AABB) collidingBoundingBoxes.get(j)).calculateZOffset(this.bb, zCoord);
 		}
-		this.boundingBox.offset(0.0, 0.0, zCoord);
+		this.bb.offset(0.0, 0.0, zCoord);
 		if (!this.field_9293_aM && n3 != zCoord) {
 			yCoord = (xCoord = (zCoord = 0.0));
 		}
@@ -274,27 +274,27 @@ public abstract class Entity {
 			xCoord = n;
 			yCoord = this.stepHeight;
 			zCoord = n3;
-			final AABB copy2 = this.boundingBox.copy();
-			this.boundingBox.setBB(copy);
-			final List collidingBoundingBoxes2 = this.world.getCollidingBoundingBoxes(this, this.boundingBox.addCoord(xCoord, yCoord, zCoord));
+			final AABB copy2 = this.bb.copy();
+			this.bb.setBB(copy);
+			final List collidingBoundingBoxes2 = this.world.getCollidingBoundingBoxes(this, this.bb.addCoord(xCoord, yCoord, zCoord));
 			for ( int k = 0; k < collidingBoundingBoxes2.size(); ++k ) {
-				yCoord = ((AABB) collidingBoundingBoxes2.get(k)).calculateYOffset(this.boundingBox, yCoord);
+				yCoord = ((AABB) collidingBoundingBoxes2.get(k)).calculateYOffset(this.bb, yCoord);
 			}
-			this.boundingBox.offset(0.0, yCoord, 0.0);
+			this.bb.offset(0.0, yCoord, 0.0);
 			if (!this.field_9293_aM && n2 != yCoord) {
 				yCoord = (xCoord = (zCoord = 0.0));
 			}
 			for ( int k = 0; k < collidingBoundingBoxes2.size(); ++k ) {
-				xCoord = ((AABB) collidingBoundingBoxes2.get(k)).calculateXOffset(this.boundingBox, xCoord);
+				xCoord = ((AABB) collidingBoundingBoxes2.get(k)).calculateXOffset(this.bb, xCoord);
 			}
-			this.boundingBox.offset(xCoord, 0.0, 0.0);
+			this.bb.offset(xCoord, 0.0, 0.0);
 			if (!this.field_9293_aM && n != xCoord) {
 				yCoord = (xCoord = (zCoord = 0.0));
 			}
 			for ( int k = 0; k < collidingBoundingBoxes2.size(); ++k ) {
-				zCoord = ((AABB) collidingBoundingBoxes2.get(k)).calculateZOffset(this.boundingBox, zCoord);
+				zCoord = ((AABB) collidingBoundingBoxes2.get(k)).calculateZOffset(this.bb, zCoord);
 			}
-			this.boundingBox.offset(0.0, 0.0, zCoord);
+			this.bb.offset(0.0, 0.0, zCoord);
 			if (!this.field_9293_aM && n3 != zCoord) {
 				yCoord = (xCoord = (zCoord = 0.0));
 			}
@@ -302,14 +302,14 @@ public abstract class Entity {
 				xCoord = n4;
 				yCoord = n5;
 				zCoord = n6;
-				this.boundingBox.setBB(copy2);
+				this.bb.setBB(copy2);
 			} else {
 				this.ySize += 0.5;
 			}
 		}
-		this.posX = (this.boundingBox.minX + this.boundingBox.maxX) / 2.0;
-		this.posY = this.boundingBox.minY + this.yOffset - this.ySize;
-		this.posZ = (this.boundingBox.minZ + this.boundingBox.maxZ) / 2.0;
+		this.x = (this.bb.minX + this.bb.maxX) / 2.0;
+		this.y = this.bb.minY + this.yOffset - this.ySize;
+		this.z = (this.bb.minZ + this.bb.maxZ) / 2.0;
 		this.isCollidedHorizontally = (n != xCoord || n3 != zCoord);
 		this.onGround = (n2 != yCoord && n2 < 0.0);
 		this.beenAttacked = (this.isCollidedHorizontally || n2 != yCoord);
@@ -322,21 +322,21 @@ public abstract class Entity {
 			this.fallDistance -= (float) yCoord;
 		}
 		if (n != xCoord) {
-			this.motionX = 0.0;
+			this.xd = 0.0;
 		}
 		if (n2 != yCoord) {
-			this.motionY = 0.0;
+			this.yd = 0.0;
 		}
 		if (n3 != zCoord) {
-			this.motionZ = 0.0;
+			this.zd = 0.0;
 		}
-		final double n4 = this.posX - posX;
-		final double n5 = this.posZ - posZ;
+		final double n4 = this.x - posX;
+		final double n5 = this.z - posZ;
 		this.distanceWalkedModified += (float) (sqrt(n4 * n4 + n5 * n5) * 0.6);
 		if (this.canTriggerWalking) {
-			final int floor_double = Mth.floor_double(this.posX);
-			final int floor_double2 = Mth.floor_double(this.posY - 0.20000000298023224 - this.yOffset);
-			final int floor_double3 = Mth.floor_double(this.posZ);
+			final int floor_double = Mth.floor_double(this.x);
+			final int floor_double2 = Mth.floor_double(this.y - 0.20000000298023224 - this.yOffset);
+			final int floor_double3 = Mth.floor_double(this.z);
 			final int k = this.world.getBlockId(floor_double, floor_double2, floor_double3);
 			if (this.distanceWalkedModified > this.nextStepDistance && k > 0) {
 				++this.nextStepDistance;
@@ -349,7 +349,7 @@ public abstract class Entity {
 		}
 		this.ySize *= 0.4f;
 		final boolean handleWaterMovement = this.handleWaterMovement();
-		if (this.world.isBoundingBoxBurning(this.boundingBox)) {
+		if (this.world.isBoundingBoxBurning(this.bb)) {
 			this.dealFireDamage(1);
 			if (!handleWaterMovement) {
 				++this.fire;
@@ -378,14 +378,14 @@ public abstract class Entity {
 	}
 
 	public boolean handleWaterMovement() {
-		return this.world.handleMaterialAcceleration(this.boundingBox.grow(0.0, -0.4000000059604645, 0.0), Material.WATER, this);
+		return this.world.handleMaterialAcceleration(this.bb.grow(0.0, -0.4000000059604645, 0.0), Material.WATER, this);
 	}
 
 	public boolean isInsideOfMaterial(final Material material) {
-		final double double1 = this.posY + this.getEyeHeight();
-		final int floor_double = Mth.floor_double(this.posX);
+		final double double1 = this.y + this.getEyeHeight();
+		final int floor_double = Mth.floor_double(this.x);
 		final int floor_float = (int) double1;
-		final int floor_double2 = Mth.floor_double(this.posZ);
+		final int floor_double2 = Mth.floor_double(this.z);
 		final int blockId = this.world.getBlockId(floor_double, floor_float, floor_double2);
 		return blockId != 0 && Block.BLOCKS[blockId].blockMaterial == material && double1 < floor_float + 1 - (LiquidBlock.getPercentAir(this.world.getBlockMetadata(floor_double, floor_float, floor_double2)) - 0.11111111f);
 	}
@@ -395,7 +395,7 @@ public abstract class Entity {
 	}
 
 	public boolean handleLavaMovement() {
-		return this.world.isMaterialInBB(this.boundingBox.grow(0.0, -0.4000000059604645, 0.0), Material.LAVA);
+		return this.world.isMaterialInBB(this.bb.grow(0.0, -0.4000000059604645, 0.0), Material.LAVA);
 	}
 
 	public void moveFlying(float xCoord, float yCoord, final float zCoord) {
@@ -406,15 +406,15 @@ public abstract class Entity {
 		xCoord *= sqrt_f;
 		yCoord *= sqrt_f;
 
-		final float sin = sin(toRadians(rotationYaw));
-		final float cos = cos(toRadians(rotationYaw));
+		final float sin = sin(toRadians(yRot));
+		final float cos = cos(toRadians(yRot));
 
-		this.motionX += xCoord * cos - yCoord * sin;
-		this.motionZ += yCoord * cos + xCoord * sin;
+		this.xd += xCoord * cos - yCoord * sin;
+		this.zd += yCoord * cos + xCoord * sin;
 	}
 
 	public float getEntityBrightness(final float float1) {
-		return this.world.getLightBrightness(Mth.floor_double(this.posX), Mth.floor_double(this.posY - this.yOffset + (this.boundingBox.maxY - this.boundingBox.minY) * 0.66), Mth.floor_double(this.posZ));
+		return this.world.getLightBrightness(Mth.floor_double(this.x), Mth.floor_double(this.y - this.yOffset + (this.bb.maxY - this.bb.minY) * 0.66), Mth.floor_double(this.z));
 	}
 
 	public void setWorld(final World world) {
@@ -422,43 +422,43 @@ public abstract class Entity {
 	}
 
 	public void setPositionAndRotation(final double xCoord, final double yCoord, final double zCoord, final float yaw, final float pitch) {
-		this.posX = xCoord;
-		this.prevPosX = xCoord;
+		this.x = xCoord;
+		this.xo = xCoord;
 		final double n = yCoord + this.yOffset;
-		this.posY = n;
-		this.prevPosY = n;
-		this.posZ = zCoord;
-		this.prevPosZ = zCoord;
-		this.rotationYaw = yaw;
-		this.rotationPitch = pitch;
-		this.setPosition(this.posX, this.posY, this.posZ);
+		this.y = n;
+		this.yo = n;
+		this.z = zCoord;
+		this.zo = zCoord;
+		this.yRot = yaw;
+		this.xRot = pitch;
+		this.setPosition(this.x, this.y, this.z);
 	}
 
 	public float getDistanceToEntity(final Entity entity) {
-		final float n = (float) (this.posX - entity.posX);
-		final float n2 = (float) (this.posY - entity.posY);
-		final float n3 = (float) (this.posZ - entity.posZ);
+		final float n = (float) (this.x - entity.x);
+		final float n2 = (float) (this.y - entity.y);
+		final float n3 = (float) (this.z - entity.z);
 		return sqrt(n * n + n2 * n2 + n3 * n3);
 	}
 
 	public double getDistanceSq(final double xCoord, final double yCoord, final double zCoord) {
-		final double n = this.posX - xCoord;
-		final double n2 = this.posY - yCoord;
-		final double n3 = this.posZ - zCoord;
+		final double n = this.x - xCoord;
+		final double n2 = this.y - yCoord;
+		final double n3 = this.z - zCoord;
 		return n * n + n2 * n2 + n3 * n3;
 	}
 
 	public double getDistance(final double xCoord, final double yCoord, final double zCoord) {
-		final double n = this.posX - xCoord;
-		final double n2 = this.posY - yCoord;
-		final double n3 = this.posZ - zCoord;
+		final double n = this.x - xCoord;
+		final double n2 = this.y - yCoord;
+		final double n3 = this.z - zCoord;
 		return sqrt(n * n + n2 * n2 + n3 * n3);
 	}
 
 	public double getDistanceSqToEntity(final Entity entity) {
-		final double n = this.posX - entity.posX;
-		final double n2 = this.posY - entity.posY;
-		final double n3 = this.posZ - entity.posZ;
+		final double n = this.x - entity.x;
+		final double n2 = this.y - entity.y;
+		final double n3 = this.z - entity.z;
 		return n * n + n2 * n2 + n3 * n3;
 	}
 
@@ -466,8 +466,8 @@ public abstract class Entity {
 	}
 
 	public void applyEntityCollision(final Entity entity) {
-		double n = entity.posX - this.posX;
-		double n2 = entity.posZ - this.posZ;
+		double n = entity.x - this.x;
+		double n2 = entity.z - this.z;
 		double abs_max = max(abs(n), abs(n2));
 		if (abs_max >= 0.009999999776482582) {
 			abs_max = sqrt(abs_max);
@@ -489,9 +489,9 @@ public abstract class Entity {
 	}
 
 	public void addVelocity(final double xCoord, final double yCoord, final double zCoord) {
-		this.motionX += xCoord;
-		this.motionY += yCoord;
-		this.motionZ += zCoord;
+		this.xd += xCoord;
+		this.yd += yCoord;
+		this.zd += zCoord;
 	}
 
 	public boolean attackEntityFrom(final Entity entity, final int nya1) {
@@ -510,14 +510,14 @@ public abstract class Entity {
 	}
 
 	public boolean isInRangeToRenderVec3D(final Vec3 var1) {
-		final double n = this.posX - var1.x;
-		final double n2 = this.posY - var1.y;
-		final double n3 = this.posZ - var1.z;
+		final double n = this.x - var1.x;
+		final double n2 = this.y - var1.y;
+		final double n3 = this.z - var1.z;
 		return this.isInRangeToRenderDist(n * n + n2 * n2 + n3 * n3);
 	}
 
 	public boolean isInRangeToRenderDist(final double distance) {
-		double averageEdgeLength = this.boundingBox.getAverageEdgeLength();
+		double averageEdgeLength = this.bb.getAverageEdgeLength();
 		averageEdgeLength *= 64.0;
 		return distance < averageEdgeLength * averageEdgeLength;
 	}
@@ -537,9 +537,9 @@ public abstract class Entity {
 	}
 
 	public void writeToNBT(final NBTTagCompound nbt) {
-		nbt.setTag("Pos", (NBTBase) this.newDoubleNBTList(this.posX, this.posY, this.posZ));
-		nbt.setTag("Motion", (NBTBase) this.newDoubleNBTList(this.motionX, this.motionY, this.motionZ));
-		nbt.setTag("Rotation", (NBTBase) this.newFloatNBTList(this.rotationYaw, this.rotationPitch));
+		nbt.setTag("Pos", (NBTBase) this.newDoubleNBTList(this.x, this.y, this.z));
+		nbt.setTag("Motion", (NBTBase) this.newDoubleNBTList(this.xd, this.yd, this.zd));
+		nbt.setTag("Rotation", (NBTBase) this.newFloatNBTList(this.yRot, this.xRot));
 		nbt.setFloat("FallDistance", this.fallDistance);
 		nbt.setShort("Fire", (short) this.fire);
 		nbt.setShort("Air", (short) this.air);
@@ -552,32 +552,32 @@ public abstract class Entity {
 		final NBTTagList tagList2 = nbt.getTagList("Motion");
 		final NBTTagList tagList3 = nbt.getTagList("Rotation");
 		this.setPosition(0.0, 0.0, 0.0);
-		this.motionX = ((NBTTagDouble) tagList2.getTag(0)).doubleValue;
-		this.motionY = ((NBTTagDouble) tagList2.getTag(1)).doubleValue;
-		this.motionZ = ((NBTTagDouble) tagList2.getTag(2)).doubleValue;
+		this.xd = ((NBTTagDouble) tagList2.getTag(0)).doubleValue;
+		this.yd = ((NBTTagDouble) tagList2.getTag(1)).doubleValue;
+		this.zd = ((NBTTagDouble) tagList2.getTag(2)).doubleValue;
 		final double doubleValue = ((NBTTagDouble) tagList.getTag(0)).doubleValue;
-		this.posX = doubleValue;
+		this.x = doubleValue;
 		this.lastTickPosX = doubleValue;
-		this.prevPosX = doubleValue;
+		this.xo = doubleValue;
 		final double doubleValue2 = ((NBTTagDouble) tagList.getTag(1)).doubleValue;
-		this.posY = doubleValue2;
+		this.y = doubleValue2;
 		this.lastTickPosY = doubleValue2;
-		this.prevPosY = doubleValue2;
+		this.yo = doubleValue2;
 		final double doubleValue3 = ((NBTTagDouble) tagList.getTag(2)).doubleValue;
-		this.posZ = doubleValue3;
+		this.z = doubleValue3;
 		this.lastTickPosZ = doubleValue3;
-		this.prevPosZ = doubleValue3;
+		this.zo = doubleValue3;
 		final float floatValue = ((NBTTagFloat) tagList3.getTag(0)).floatValue;
-		this.rotationYaw = floatValue;
+		this.yRot = floatValue;
 		this.prevRotationYaw = floatValue;
 		final float floatValue2 = ((NBTTagFloat) tagList3.getTag(1)).floatValue;
-		this.rotationPitch = floatValue2;
+		this.xRot = floatValue2;
 		this.prevRotationPitch = floatValue2;
 		this.fallDistance = nbt.getFloat("FallDistance");
 		this.fire = nbt.getShort("Fire");
 		this.air = nbt.getShort("Air");
 		this.onGround = nbt.getBoolean("OnGround");
-		this.setPosition(this.posX, this.posY, this.posZ);
+		this.setPosition(this.x, this.y, this.z);
 		this.readEntityFromNBT(nbt);
 	}
 
@@ -610,7 +610,7 @@ public abstract class Entity {
 	}
 
 	public EntityItem entityDropItem(final int integer1, final int integer2, final float float3) {
-		final EntityItem entity = new EntityItem(this.world, this.posX, this.posY + float3, this.posZ, new ItemStack(integer1, integer2));
+		final EntityItem entity = new EntityItem(this.world, this.x, this.y + float3, this.z, new ItemStack(integer1, integer2));
 		entity.delayBeforeCanPickup = 10;
 		this.world.onEntityJoin(entity);
 		return entity;
@@ -621,7 +621,7 @@ public abstract class Entity {
 	}
 
 	public boolean isEntityInsideOpaqueBlock() {
-		return this.world.isBlockNormalCube(Mth.floor_double(this.posX), Mth.floor_double(this.posY + this.getEyeHeight()), Mth.floor_double(this.posZ));
+		return this.world.isBlockNormalCube(Mth.floor_double(this.x), Mth.floor_double(this.y + this.getEyeHeight()), Mth.floor_double(this.z));
 	}
 
 	public boolean interact(final Player entityPlayer) {
@@ -637,13 +637,13 @@ public abstract class Entity {
 			this.ridingEntity = null;
 			return;
 		}
-		this.motionX = 0.0;
-		this.motionY = 0.0;
-		this.motionZ = 0.0;
+		this.xd = 0.0;
+		this.yd = 0.0;
+		this.zd = 0.0;
 		this.onUpdate();
-		this.setPosition(this.ridingEntity.posX, this.ridingEntity.posY + this.yOffset + this.ridingEntity.getYOffset(), this.ridingEntity.posZ);
-		this.entityRiderYawDelta += this.ridingEntity.rotationYaw - this.ridingEntity.prevRotationYaw;
-		this.entityRiderPitchDelta += this.ridingEntity.rotationPitch - this.ridingEntity.prevRotationPitch;
+		this.setPosition(this.ridingEntity.x, this.ridingEntity.y + this.yOffset + this.ridingEntity.getYOffset(), this.ridingEntity.z);
+		this.entityRiderYawDelta += this.ridingEntity.yRot - this.ridingEntity.prevRotationYaw;
+		this.entityRiderPitchDelta += this.ridingEntity.xRot - this.ridingEntity.prevRotationPitch;
 		while(this.entityRiderYawDelta >= 180.0) {
 			this.entityRiderYawDelta -= 360.0;
 		}
@@ -673,8 +673,8 @@ public abstract class Entity {
 		}
 		this.entityRiderYawDelta -= n;
 		this.entityRiderPitchDelta -= n2;
-		this.rotationYaw += (float) n;
-		this.rotationPitch += (float) n2;
+		this.yRot += (float) n;
+		this.xRot += (float) n2;
 	}
 
 	public double getYOffset() {
@@ -685,18 +685,18 @@ public abstract class Entity {
 		this.entityRiderPitchDelta = 0.0;
 		this.entityRiderYawDelta = 0.0;
 		if (this.ridingEntity == entity) {
-			this.ridingEntity.riddenByEntity = null;
+			this.ridingEntity.passenger = null;
 			this.ridingEntity = null;
 			return;
 		}
 		if (this.ridingEntity != null) {
-			this.ridingEntity.riddenByEntity = null;
+			this.ridingEntity.passenger = null;
 		}
-		if (entity.riddenByEntity != null) {
-			entity.riddenByEntity.ridingEntity = null;
+		if (entity.passenger != null) {
+			entity.passenger.ridingEntity = null;
 		}
 		this.ridingEntity = entity;
-		entity.riddenByEntity = this;
+		entity.passenger = this;
 	}
 
 	public void joinWorld(World world) {

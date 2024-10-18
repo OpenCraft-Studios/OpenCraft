@@ -499,7 +499,7 @@ public class Block {
 	}
 
 	public int getRenderColor(final IBlockAccess blockAccess, final int xCoord, final int yCoord, final int zCoord) {
-		return 16777215;
+		return 0xFFFFFF;
 	}
 
 }

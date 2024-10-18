@@ -99,9 +99,9 @@ public class GuiCreateWorld extends GuiScreen {
 	@Override
 	public void drawScreen(final int integer1, final int integer2, final float float3) {
 		this.drawDefaultBackground();
-		final Tessellator instance = Tessellator.instance;
-		this.drawCenteredString(this.fontRenderer, this.screenHeader, this.width / 2, 20, 16777215);
-		instance.color(16777215);
+		final Tessellator t = Tessellator.instance;
+		this.drawCenteredString(this.fontRenderer, this.screenHeader, this.width / 2, 20, 0xFFFFFF);
+		t.color(0xFFFFFF);
 		super.drawScreen(integer1, integer2, float3);
 	}
 

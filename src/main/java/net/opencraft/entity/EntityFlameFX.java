@@ -11,9 +11,9 @@ public class EntityFlameFX extends EntityFX {
 
 	public EntityFlameFX(final World fe, double double2, double double3, double double4, final double double5, final double double6, final double double7) {
 		super(fe, double2, double3, double4, double5, double6, double7);
-		this.motionX = this.motionX * 0.009999999776482582 + double5;
-		this.motionY = this.motionY * 0.009999999776482582 + double6;
-		this.motionZ = this.motionZ * 0.009999999776482582 + double7;
+		this.xd = this.xd * 0.009999999776482582 + double5;
+		this.yd = this.yd * 0.009999999776482582 + double6;
+		this.zd = this.zd * 0.009999999776482582 + double7;
 		double2 += (this.rand.nextFloat() - this.rand.nextFloat()) * 0.05f;
 		double3 += (this.rand.nextFloat() - this.rand.nextFloat()) * 0.05f;
 		double4 += (this.rand.nextFloat() - this.rand.nextFloat()) * 0.05f;
@@ -48,19 +48,19 @@ public class EntityFlameFX extends EntityFX {
 
 	@Override
 	public void onUpdate() {
-		this.prevPosX = this.posX;
-		this.prevPosY = this.posY;
-		this.prevPosZ = this.posZ;
+		this.xo = this.x;
+		this.yo = this.y;
+		this.zo = this.z;
 		if (this.particleAge++ >= this.particleMaxAge) {
 			this.setEntityDead();
 		}
-		this.moveEntity(this.motionX, this.motionY, this.motionZ);
-		this.motionX *= 0.9599999785423279;
-		this.motionY *= 0.9599999785423279;
-		this.motionZ *= 0.9599999785423279;
+		this.moveEntity(this.xd, this.yd, this.zd);
+		this.xd *= 0.9599999785423279;
+		this.yd *= 0.9599999785423279;
+		this.zd *= 0.9599999785423279;
 		if (this.onGround) {
-			this.motionX *= 0.699999988079071;
-			this.motionZ *= 0.699999988079071;
+			this.xd *= 0.699999988079071;
+			this.zd *= 0.699999988079071;
 		}
 	}
 

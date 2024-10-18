@@ -25,7 +25,7 @@ public class ItemSign extends Item {
 			return false;
 		}
 		fe.setBlockWithNotify(xCoord, yCoord, zCoord, Block.signPost.id);
-		fe.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, Mth.floor_double((gi.rotationYaw + 180.0f) * 16.0f / 360.0f - 0.5) & 0xF);
+		fe.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, Mth.floor_double((gi.yRot + 180.0f) * 16.0f / 360.0f - 0.5) & 0xF);
 		--hw.stackSize;
 		gi.displayGUIEditSign((TileEntitySign) fe.getBlockTileEntity(xCoord, yCoord, zCoord));
 		return true;

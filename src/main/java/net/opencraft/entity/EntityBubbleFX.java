@@ -17,23 +17,23 @@ public class EntityBubbleFX extends EntityFX {
 		this.particleTextureIndex = 32;
 		this.setSize(0.02f, 0.02f);
 		this.particleScale *= this.rand.nextFloat() * 0.6f + 0.2f;
-		this.motionX = double5 * 0.20000000298023224 + (float) (random() * 2.0 - 1.0) * 0.02f;
-		this.motionY = double6 * 0.20000000298023224 + (float) (random() * 2.0 - 1.0) * 0.02f;
-		this.motionZ = double7 * 0.20000000298023224 + (float) (random() * 2.0 - 1.0) * 0.02f;
+		this.xd = double5 * 0.20000000298023224 + (float) (random() * 2.0 - 1.0) * 0.02f;
+		this.yd = double6 * 0.20000000298023224 + (float) (random() * 2.0 - 1.0) * 0.02f;
+		this.zd = double7 * 0.20000000298023224 + (float) (random() * 2.0 - 1.0) * 0.02f;
 		this.particleMaxAge = (int) (8.0 / (random() * 0.8 + 0.2));
 	}
 
 	@Override
 	public void onUpdate() {
-		this.prevPosX = this.posX;
-		this.prevPosY = this.posY;
-		this.prevPosZ = this.posZ;
-		this.motionY += 0.002;
-		this.moveEntity(this.motionX, this.motionY, this.motionZ);
-		this.motionX *= 0.8500000238418579;
-		this.motionY *= 0.8500000238418579;
-		this.motionZ *= 0.8500000238418579;
-		if (this.world.getBlockMaterial(Mth.floor_double(this.posX), Mth.floor_double(this.posY), Mth.floor_double(this.posZ)) != Material.WATER) {
+		this.xo = this.x;
+		this.yo = this.y;
+		this.zo = this.z;
+		this.yd += 0.002;
+		this.moveEntity(this.xd, this.yd, this.zd);
+		this.xd *= 0.8500000238418579;
+		this.yd *= 0.8500000238418579;
+		this.zd *= 0.8500000238418579;
+		if (this.world.getBlockMaterial(Mth.floor_double(this.x), Mth.floor_double(this.y), Mth.floor_double(this.z)) != Material.WATER) {
 			this.setEntityDead();
 		}
 		if (this.particleMaxAge-- <= 0) {

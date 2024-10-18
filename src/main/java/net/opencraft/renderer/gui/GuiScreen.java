@@ -53,19 +53,20 @@ public abstract class GuiScreen extends GuiElement {
 	}
 
 	protected void b(final int integer1, final int integer2, final int integer3) {
-		if (integer3 == 0)
-			for (int i = 0; i < buttonList.size(); ++i) {
-				final GuiButton iq = buttonList.get(i);
-				iq.mouseReleased(integer1, integer2);
-			}
+		if (integer3 != 0)
+			return;
+
+		for (int i = 0; i < buttonList.size(); ++i) {
+			final GuiButton iq = buttonList.get(i);
+			iq.mouseReleased(integer1, integer2);
+		}
 	}
 
 	protected void actionPerformed(final GuiButton iq) {
 	}
 
-	public void setWorldAndResolution(final OpenCraft aw, final int integer2, final int integer3) {
-		oc = aw;
-		fontRenderer = aw.font;
+	public void setWorldAndResolution(final int integer2, final int integer3) {
+		fontRenderer = oc.font;
 		width = integer2;
 		height = integer3;
 		this.initGui();
@@ -116,17 +117,20 @@ public abstract class GuiScreen extends GuiElement {
 		else {
 			GL11.glDisable(2896);
 			GL11.glDisable(2912);
-			final Tessellator instance = Tessellator.instance;
+			final Tessellator t = Tessellator.instance;
 			GL11.glBindTexture(3553, oc.renderer.loadTexture("/assets/dirt.png"));
 			GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 			final float n = 32.0f;
-			instance.beginQuads();
-			instance.color(4210752);
-			instance.vertexUV(0.0, height, 0.0, 0.0, height / n + integer);
-			instance.vertexUV(width, height, 0.0, width / n, height / n + integer);
-			instance.vertexUV(width, 0.0, 0.0, width / n, 0 + integer);
-			instance.vertexUV(0.0, 0.0, 0.0, 0.0, 0 + integer);
-			instance.render();
+			t.beginQuads();
+			{
+				t.color(0x404040);
+				
+				t.vertexUV(0.0, height, 0.0, 0.0, height / n + integer);
+				t.vertexUV(width, height, 0.0, width / n, height / n + integer);
+				t.vertexUV(width, 0.0, 0.0, width / n, 0 + integer);
+				t.vertexUV(0.0, 0.0, 0.0, 0.0, 0 + integer);
+			}
+			t.render();
 		}
 	}
 

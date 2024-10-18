@@ -142,8 +142,8 @@ public class RenderGlobal implements IWorldAccess {
 
 	private void f() {
 		final Random random = new Random(10842L);
-		final Tessellator instance = Tessellator.instance;
-		instance.beginQuads();
+		final Tessellator t = Tessellator.instance;
+		t.beginQuads();
 		for ( int i = 0; i < 1500; ++i ) {
 			double n = random.nextFloat() * 2.0f - 1.0f;
 			double n2 = random.nextFloat() * 2.0f - 1.0f;
@@ -176,11 +176,11 @@ public class RenderGlobal implements IWorldAccess {
 					final double n15 = n12 * cos3 + n11 * sin3;
 					final double n16 = n14 * sin2 + n13 * cos2;
 					final double n17 = n13 * sin2 - n14 * cos2;
-					instance.vertex(n6 + (n17 * sin - n15 * cos), n7 + n16, n8 + (n15 * sin + n17 * cos));
+					t.vertex(n6 + (n17 * sin - n15 * cos), n7 + n16, n8 + (n15 * sin + n17 * cos));
 				}
 			}
 		}
-		instance.render();
+		t.render();
 	}
 
 	public void changeWorld(final World fe) {
@@ -251,7 +251,7 @@ public class RenderGlobal implements IWorldAccess {
 		}
 		if (this.k != null) {
 			final Entity player = this.k.player;
-			this.b(Mth.floor_double(player.posX), Mth.floor_double(player.posY), Mth.floor_double(player.posZ));
+			this.b(Mth.floor_double(player.x), Mth.floor_double(player.y), Mth.floor_double(player.z));
 			Arrays.sort((Object[]) this.n, (Comparator) new EntitySorter(player));
 		}
 	}
@@ -263,17 +263,17 @@ public class RenderGlobal implements IWorldAccess {
 		this.J = 0;
 		this.K = 0;
 		final Entity player = this.k.player;
-		RenderManager.renderPosX = player.lastTickPosX + (player.posX - player.lastTickPosX) * float3;
-		RenderManager.renderPosY = player.lastTickPosY + (player.posY - player.lastTickPosY) * float3;
-		RenderManager.renderPosZ = player.lastTickPosZ + (player.posZ - player.lastTickPosZ) * float3;
-		TileEntityRenderer.b = player.lastTickPosX + (player.posX - player.lastTickPosX) * float3;
-		TileEntityRenderer.c = player.lastTickPosY + (player.posY - player.lastTickPosY) * float3;
-		TileEntityRenderer.d = player.lastTickPosZ + (player.posZ - player.lastTickPosZ) * float3;
+		RenderManager.renderPosX = player.lastTickPosX + (player.x - player.lastTickPosX) * float3;
+		RenderManager.renderPosY = player.lastTickPosY + (player.y - player.lastTickPosY) * float3;
+		RenderManager.renderPosZ = player.lastTickPosZ + (player.z - player.lastTickPosZ) * float3;
+		TileEntityRenderer.b = player.lastTickPosX + (player.x - player.lastTickPosX) * float3;
+		TileEntityRenderer.c = player.lastTickPosY + (player.y - player.lastTickPosY) * float3;
+		TileEntityRenderer.d = player.lastTickPosZ + (player.z - player.lastTickPosZ) * float3;
 		final List loadedEntityList = this.k.getLoadedEntityList();
 		this.I = loadedEntityList.size();
 		for ( int i = 0; i < loadedEntityList.size(); ++i ) {
 			final Entity eq = (Entity) loadedEntityList.get(i);
-			if (eq.isInRangeToRenderVec3D(bo) && jt.isBoundingBoxInFrustum(eq.boundingBox)) {
+			if (eq.isInRangeToRenderVec3D(bo) && jt.isBoundingBoxInFrustum(eq.bb)) {
 				if (eq != this.k.player || this.t.options.thirdPersonView) {
 					++this.J;
 					RenderManager.instance.renderEntity(eq, float3);
@@ -363,17 +363,17 @@ public class RenderGlobal implements IWorldAccess {
 			this.O = 0;
 			this.P = 0;
 		}
-		final double n = gi.lastTickPosX + (gi.posX - gi.lastTickPosX) * double3;
-		final double n2 = gi.lastTickPosY + (gi.posY - gi.lastTickPosY) * double3;
-		final double n3 = gi.lastTickPosZ + (gi.posZ - gi.lastTickPosZ) * double3;
-		final double n4 = gi.posX - this.f;
-		final double n5 = gi.posY - this.g;
-		final double n6 = gi.posZ - this.h;
+		final double n = gi.lastTickPosX + (gi.x - gi.lastTickPosX) * double3;
+		final double n2 = gi.lastTickPosY + (gi.y - gi.lastTickPosY) * double3;
+		final double n3 = gi.lastTickPosZ + (gi.z - gi.lastTickPosZ) * double3;
+		final double n4 = gi.x - this.f;
+		final double n5 = gi.y - this.g;
+		final double n6 = gi.z - this.h;
 		if (n4 * n4 + n5 * n5 + n6 * n6 > 16.0) {
-			this.f = gi.posX;
-			this.g = gi.posY;
-			this.h = gi.posZ;
-			this.b(Mth.floor_double(gi.posX), Mth.floor_double(gi.posY), Mth.floor_double(gi.posZ));
+			this.f = gi.x;
+			this.g = gi.y;
+			this.h = gi.z;
+			this.b(Mth.floor_double(gi.x), Mth.floor_double(gi.y), Mth.floor_double(gi.z));
 			Arrays.sort((Object[]) this.n, (Comparator) new EntitySorter(gi));
 		}
 		final int n7 = 0;
@@ -485,9 +485,9 @@ public class RenderGlobal implements IWorldAccess {
 			}
 		}
 		final EntityPlayerSP thePlayer = this.t.player;
-		final double double5 = thePlayer.lastTickPosX + (thePlayer.posX - thePlayer.lastTickPosX) * double4;
-		final double double6 = thePlayer.lastTickPosY + (thePlayer.posY - thePlayer.lastTickPosY) * double4;
-		final double double7 = thePlayer.lastTickPosZ + (thePlayer.posZ - thePlayer.lastTickPosZ) * double4;
+		final double double5 = thePlayer.lastTickPosX + (thePlayer.x - thePlayer.lastTickPosX) * double4;
+		final double double6 = thePlayer.lastTickPosY + (thePlayer.y - thePlayer.lastTickPosY) * double4;
+		final double double7 = thePlayer.lastTickPosZ + (thePlayer.z - thePlayer.lastTickPosZ) * double4;
 		int n2 = 0;
 		for ( int j = 0; j < this.R.length; ++j ) {
 			this.R[j].b();
@@ -535,7 +535,7 @@ public class RenderGlobal implements IWorldAccess {
 			n3 = n6;
 		}
 		GL11.glColor3f(n, n2, n3);
-		final Tessellator instance = Tessellator.instance;
+		final Tessellator t = Tessellator.instance;
 		GL11.glDepthMask(false);
 		GL11.glEnable(2912);
 		GL11.glColor3f(n, n2, n3);
@@ -555,20 +555,20 @@ public class RenderGlobal implements IWorldAccess {
 		GL11.glRotatef(this.k.getCelestialAngle(float1) * 360.0f, 1.0f, 0.0f, 0.0f);
 		float n8 = 30.0f;
 		GL11.glBindTexture(3553, this.l.loadTexture("/assets/terrain/sun.png"));
-		instance.beginQuads();
-		instance.vertexUV(-n8, 100.0, -n8, 0.0, 0.0);
-		instance.vertexUV(n8, 100.0, -n8, 1.0, 0.0);
-		instance.vertexUV(n8, 100.0, n8, 1.0, 1.0);
-		instance.vertexUV(-n8, 100.0, n8, 0.0, 1.0);
-		instance.render();
+		t.beginQuads();
+		t.vertexUV(-n8, 100.0, -n8, 0.0, 0.0);
+		t.vertexUV(n8, 100.0, -n8, 1.0, 0.0);
+		t.vertexUV(n8, 100.0, n8, 1.0, 1.0);
+		t.vertexUV(-n8, 100.0, n8, 0.0, 1.0);
+		t.render();
 		n8 = 20.0f;
 		GL11.glBindTexture(3553, this.l.loadTexture("/assets/terrain/moon.png"));
-		instance.beginQuads();
-		instance.vertexUV(-n8, -100.0, n8, 1.0, 1.0);
-		instance.vertexUV(n8, -100.0, n8, 0.0, 1.0);
-		instance.vertexUV(n8, -100.0, -n8, 0.0, 0.0);
-		instance.vertexUV(-n8, -100.0, -n8, 1.0, 0.0);
-		instance.render();
+		t.beginQuads();
+		t.vertexUV(-n8, -100.0, n8, 1.0, 1.0);
+		t.vertexUV(n8, -100.0, n8, 0.0, 1.0);
+		t.vertexUV(n8, -100.0, -n8, 0.0, 0.0);
+		t.vertexUV(-n8, -100.0, -n8, 1.0, 0.0);
+		t.render();
 		GL11.glDisable(3553);
 		final float starBrightness = this.k.getStarBrightness(float1);
 		if (starBrightness > 0.0f) {
@@ -593,10 +593,10 @@ public class RenderGlobal implements IWorldAccess {
 			return;
 		}
 		GL11.glDisable(2884);
-		final float n = (float) (this.t.player.lastTickPosY + (this.t.player.posY - this.t.player.lastTickPosY) * float1);
+		final float n = (float) (this.t.player.lastTickPosY + (this.t.player.y - this.t.player.lastTickPosY) * float1);
 		final int n2 = 32;
 		final int n3 = 256 / n2;
-		final Tessellator instance = Tessellator.instance;
+		final Tessellator t = Tessellator.instance;
 		GL11.glBindTexture(3553, this.l.loadTexture("/assets/clouds.png"));
 		GL11.glEnable(3042);
 		GL11.glBlendFunc(770, 771);
@@ -613,8 +613,8 @@ public class RenderGlobal implements IWorldAccess {
 			float4 = n6;
 		}
 		final float n4 = 4.8828125E-4f;
-		double n7 = this.k.player.prevPosX + (this.k.player.posX - this.k.player.prevPosX) * float1 + (this.x + float1) * 0.03f;
-		double n8 = this.k.player.prevPosZ + (this.k.player.posZ - this.k.player.prevPosZ) * float1;
+		double n7 = this.k.player.xo + (this.k.player.x - this.k.player.xo) * float1 + (this.x + float1) * 0.03f;
+		double n8 = this.k.player.zo + (this.k.player.z - this.k.player.zo) * float1;
 		final int floor_double = Mth.floor_double(n7 / 2048.0);
 		final int floor_double2 = Mth.floor_double(n8 / 2048.0);
 		n7 -= floor_double * 2048;
@@ -622,17 +622,17 @@ public class RenderGlobal implements IWorldAccess {
 		final float n9 = 120.0f - n + 0.33f;
 		final float n10 = (float) (n7 * n4);
 		final float n11 = (float) (n8 * n4);
-		instance.beginQuads();
-		instance.color(float2, float3, float4, 0.8f);
+		t.beginQuads();
+		t.color(float2, float3, float4, 0.8f);
 		for ( int i = -n2 * n3; i < n2 * n3; i += n2 ) {
 			for ( int j = -n2 * n3; j < n2 * n3; j += n2 ) {
-				instance.vertexUV(i + 0, n9, j + n2, (i + 0) * n4 + n10, (j + n2) * n4 + n11);
-				instance.vertexUV(i + n2, n9, j + n2, (i + n2) * n4 + n10, (j + n2) * n4 + n11);
-				instance.vertexUV(i + n2, n9, j + 0, (i + n2) * n4 + n10, (j + 0) * n4 + n11);
-				instance.vertexUV(i + 0, n9, j + 0, (i + 0) * n4 + n10, (j + 0) * n4 + n11);
+				t.vertexUV(i + 0, n9, j + n2, (i + 0) * n4 + n10, (j + n2) * n4 + n11);
+				t.vertexUV(i + n2, n9, j + n2, (i + n2) * n4 + n10, (j + n2) * n4 + n11);
+				t.vertexUV(i + n2, n9, j + 0, (i + n2) * n4 + n10, (j + 0) * n4 + n11);
+				t.vertexUV(i + 0, n9, j + 0, (i + 0) * n4 + n10, (j + 0) * n4 + n11);
 			}
 		}
-		instance.render();
+		t.render();
 		GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 		GL11.glDisable(3042);
 		GL11.glEnable(2884);
@@ -640,12 +640,12 @@ public class RenderGlobal implements IWorldAccess {
 
 	public void c(final float float1) {
 		GL11.glDisable(2884);
-		final float n = (float) (this.t.player.lastTickPosY + (this.t.player.posY - this.t.player.lastTickPosY) * float1);
-		final Tessellator instance = Tessellator.instance;
+		final float n = (float) (this.t.player.lastTickPosY + (this.t.player.y - this.t.player.lastTickPosY) * float1);
+		final Tessellator t = Tessellator.instance;
 		final float n2 = 12.0f;
 		final float n3 = 4.0f;
-		double n4 = (this.k.player.prevPosX + (this.k.player.posX - this.k.player.prevPosX) * float1 + (this.x + float1) * 0.03f) / n2;
-		double n5 = (this.k.player.prevPosZ + (this.k.player.posZ - this.k.player.prevPosZ) * float1) / n2 + 0.33000001311302185;
+		double n4 = (this.k.player.xo + (this.k.player.x - this.k.player.xo) * float1 + (this.x + float1) * 0.03f) / n2;
+		double n5 = (this.k.player.zo + (this.k.player.z - this.k.player.zo) * float1) / n2 + 0.33000001311302185;
 		final float n6 = 108.0f - n + 0.33f;
 		final int floor_double = Mth.floor_double(n4 / 2048.0);
 		final int floor_double2 = Mth.floor_double(n5 / 2048.0);
@@ -685,66 +685,66 @@ public class RenderGlobal implements IWorldAccess {
 			}
 			for ( int j = -n13 + 1; j <= n13; ++j ) {
 				for ( int k = -n13 + 1; k <= n13; ++k ) {
-					instance.beginQuads();
+					t.beginQuads();
 					final float n15 = (float) (j * n12);
 					final float n16 = (float) (k * n12);
 					final float n17 = n15 - n10;
 					final float n18 = n16 - n11;
 					if (n6 > -n3 - 1.0f) {
-						instance.color(float2 * 0.7f, float3 * 0.7f, float4 * 0.7f, 0.8f);
-						instance.normal(0.0f, -1.0f, 0.0f);
-						instance.vertexUV(n17 + 0.0f, n6 + 0.0f, n18 + n12, (n15 + 0.0f) * n9 + n7, (n16 + n12) * n9 + n8);
-						instance.vertexUV(n17 + n12, n6 + 0.0f, n18 + n12, (n15 + n12) * n9 + n7, (n16 + n12) * n9 + n8);
-						instance.vertexUV(n17 + n12, n6 + 0.0f, n18 + 0.0f, (n15 + n12) * n9 + n7, (n16 + 0.0f) * n9 + n8);
-						instance.vertexUV(n17 + 0.0f, n6 + 0.0f, n18 + 0.0f, (n15 + 0.0f) * n9 + n7, (n16 + 0.0f) * n9 + n8);
+						t.color(float2 * 0.7f, float3 * 0.7f, float4 * 0.7f, 0.8f);
+						t.normal(0.0f, -1.0f, 0.0f);
+						t.vertexUV(n17 + 0.0f, n6 + 0.0f, n18 + n12, (n15 + 0.0f) * n9 + n7, (n16 + n12) * n9 + n8);
+						t.vertexUV(n17 + n12, n6 + 0.0f, n18 + n12, (n15 + n12) * n9 + n7, (n16 + n12) * n9 + n8);
+						t.vertexUV(n17 + n12, n6 + 0.0f, n18 + 0.0f, (n15 + n12) * n9 + n7, (n16 + 0.0f) * n9 + n8);
+						t.vertexUV(n17 + 0.0f, n6 + 0.0f, n18 + 0.0f, (n15 + 0.0f) * n9 + n7, (n16 + 0.0f) * n9 + n8);
 					}
 					if (n6 <= n3 + 1.0f) {
-						instance.color(float2, float3, float4, 0.8f);
-						instance.normal(0.0f, 1.0f, 0.0f);
-						instance.vertexUV(n17 + 0.0f, n6 + n3 - n14, n18 + n12, (n15 + 0.0f) * n9 + n7, (n16 + n12) * n9 + n8);
-						instance.vertexUV(n17 + n12, n6 + n3 - n14, n18 + n12, (n15 + n12) * n9 + n7, (n16 + n12) * n9 + n8);
-						instance.vertexUV(n17 + n12, n6 + n3 - n14, n18 + 0.0f, (n15 + n12) * n9 + n7, (n16 + 0.0f) * n9 + n8);
-						instance.vertexUV(n17 + 0.0f, n6 + n3 - n14, n18 + 0.0f, (n15 + 0.0f) * n9 + n7, (n16 + 0.0f) * n9 + n8);
+						t.color(float2, float3, float4, 0.8f);
+						t.normal(0.0f, 1.0f, 0.0f);
+						t.vertexUV(n17 + 0.0f, n6 + n3 - n14, n18 + n12, (n15 + 0.0f) * n9 + n7, (n16 + n12) * n9 + n8);
+						t.vertexUV(n17 + n12, n6 + n3 - n14, n18 + n12, (n15 + n12) * n9 + n7, (n16 + n12) * n9 + n8);
+						t.vertexUV(n17 + n12, n6 + n3 - n14, n18 + 0.0f, (n15 + n12) * n9 + n7, (n16 + 0.0f) * n9 + n8);
+						t.vertexUV(n17 + 0.0f, n6 + n3 - n14, n18 + 0.0f, (n15 + 0.0f) * n9 + n7, (n16 + 0.0f) * n9 + n8);
 					}
-					instance.color(float2 * 0.9f, float3 * 0.9f, float4 * 0.9f, 0.8f);
+					t.color(float2 * 0.9f, float3 * 0.9f, float4 * 0.9f, 0.8f);
 					if (j > -1) {
-						instance.normal(-1.0f, 0.0f, 0.0f);
+						t.normal(-1.0f, 0.0f, 0.0f);
 						for ( int l = 0; l < n12; ++l ) {
-							instance.vertexUV(n17 + l + 0.0f, n6 + 0.0f, n18 + n12, (n15 + l + 0.5f) * n9 + n7, (n16 + n12) * n9 + n8);
-							instance.vertexUV(n17 + l + 0.0f, n6 + n3, n18 + n12, (n15 + l + 0.5f) * n9 + n7, (n16 + n12) * n9 + n8);
-							instance.vertexUV(n17 + l + 0.0f, n6 + n3, n18 + 0.0f, (n15 + l + 0.5f) * n9 + n7, (n16 + 0.0f) * n9 + n8);
-							instance.vertexUV(n17 + l + 0.0f, n6 + 0.0f, n18 + 0.0f, (n15 + l + 0.5f) * n9 + n7, (n16 + 0.0f) * n9 + n8);
+							t.vertexUV(n17 + l + 0.0f, n6 + 0.0f, n18 + n12, (n15 + l + 0.5f) * n9 + n7, (n16 + n12) * n9 + n8);
+							t.vertexUV(n17 + l + 0.0f, n6 + n3, n18 + n12, (n15 + l + 0.5f) * n9 + n7, (n16 + n12) * n9 + n8);
+							t.vertexUV(n17 + l + 0.0f, n6 + n3, n18 + 0.0f, (n15 + l + 0.5f) * n9 + n7, (n16 + 0.0f) * n9 + n8);
+							t.vertexUV(n17 + l + 0.0f, n6 + 0.0f, n18 + 0.0f, (n15 + l + 0.5f) * n9 + n7, (n16 + 0.0f) * n9 + n8);
 						}
 					}
 					if (j <= 1) {
-						instance.normal(1.0f, 0.0f, 0.0f);
+						t.normal(1.0f, 0.0f, 0.0f);
 						for ( int l = 0; l < n12; ++l ) {
-							instance.vertexUV(n17 + l + 1.0f - n14, n6 + 0.0f, n18 + n12, (n15 + l + 0.5f) * n9 + n7, (n16 + n12) * n9 + n8);
-							instance.vertexUV(n17 + l + 1.0f - n14, n6 + n3, n18 + n12, (n15 + l + 0.5f) * n9 + n7, (n16 + n12) * n9 + n8);
-							instance.vertexUV(n17 + l + 1.0f - n14, n6 + n3, n18 + 0.0f, (n15 + l + 0.5f) * n9 + n7, (n16 + 0.0f) * n9 + n8);
-							instance.vertexUV(n17 + l + 1.0f - n14, n6 + 0.0f, n18 + 0.0f, (n15 + l + 0.5f) * n9 + n7, (n16 + 0.0f) * n9 + n8);
+							t.vertexUV(n17 + l + 1.0f - n14, n6 + 0.0f, n18 + n12, (n15 + l + 0.5f) * n9 + n7, (n16 + n12) * n9 + n8);
+							t.vertexUV(n17 + l + 1.0f - n14, n6 + n3, n18 + n12, (n15 + l + 0.5f) * n9 + n7, (n16 + n12) * n9 + n8);
+							t.vertexUV(n17 + l + 1.0f - n14, n6 + n3, n18 + 0.0f, (n15 + l + 0.5f) * n9 + n7, (n16 + 0.0f) * n9 + n8);
+							t.vertexUV(n17 + l + 1.0f - n14, n6 + 0.0f, n18 + 0.0f, (n15 + l + 0.5f) * n9 + n7, (n16 + 0.0f) * n9 + n8);
 						}
 					}
-					instance.color(float2 * 0.8f, float3 * 0.8f, float4 * 0.8f, 0.8f);
+					t.color(float2 * 0.8f, float3 * 0.8f, float4 * 0.8f, 0.8f);
 					if (k > -1) {
-						instance.normal(0.0f, 0.0f, -1.0f);
+						t.normal(0.0f, 0.0f, -1.0f);
 						for ( int l = 0; l < n12; ++l ) {
-							instance.vertexUV(n17 + 0.0f, n6 + n3, n18 + l + 0.0f, (n15 + 0.0f) * n9 + n7, (n16 + l + 0.5f) * n9 + n8);
-							instance.vertexUV(n17 + n12, n6 + n3, n18 + l + 0.0f, (n15 + n12) * n9 + n7, (n16 + l + 0.5f) * n9 + n8);
-							instance.vertexUV(n17 + n12, n6 + 0.0f, n18 + l + 0.0f, (n15 + n12) * n9 + n7, (n16 + l + 0.5f) * n9 + n8);
-							instance.vertexUV(n17 + 0.0f, n6 + 0.0f, n18 + l + 0.0f, (n15 + 0.0f) * n9 + n7, (n16 + l + 0.5f) * n9 + n8);
+							t.vertexUV(n17 + 0.0f, n6 + n3, n18 + l + 0.0f, (n15 + 0.0f) * n9 + n7, (n16 + l + 0.5f) * n9 + n8);
+							t.vertexUV(n17 + n12, n6 + n3, n18 + l + 0.0f, (n15 + n12) * n9 + n7, (n16 + l + 0.5f) * n9 + n8);
+							t.vertexUV(n17 + n12, n6 + 0.0f, n18 + l + 0.0f, (n15 + n12) * n9 + n7, (n16 + l + 0.5f) * n9 + n8);
+							t.vertexUV(n17 + 0.0f, n6 + 0.0f, n18 + l + 0.0f, (n15 + 0.0f) * n9 + n7, (n16 + l + 0.5f) * n9 + n8);
 						}
 					}
 					if (k <= 1) {
-						instance.normal(0.0f, 0.0f, 1.0f);
+						t.normal(0.0f, 0.0f, 1.0f);
 						for ( int l = 0; l < n12; ++l ) {
-							instance.vertexUV(n17 + 0.0f, n6 + n3, n18 + l + 1.0f - n14, (n15 + 0.0f) * n9 + n7, (n16 + l + 0.5f) * n9 + n8);
-							instance.vertexUV(n17 + n12, n6 + n3, n18 + l + 1.0f - n14, (n15 + n12) * n9 + n7, (n16 + l + 0.5f) * n9 + n8);
-							instance.vertexUV(n17 + n12, n6 + 0.0f, n18 + l + 1.0f - n14, (n15 + n12) * n9 + n7, (n16 + l + 0.5f) * n9 + n8);
-							instance.vertexUV(n17 + 0.0f, n6 + 0.0f, n18 + l + 1.0f - n14, (n15 + 0.0f) * n9 + n7, (n16 + l + 0.5f) * n9 + n8);
+							t.vertexUV(n17 + 0.0f, n6 + n3, n18 + l + 1.0f - n14, (n15 + 0.0f) * n9 + n7, (n16 + l + 0.5f) * n9 + n8);
+							t.vertexUV(n17 + n12, n6 + n3, n18 + l + 1.0f - n14, (n15 + n12) * n9 + n7, (n16 + l + 0.5f) * n9 + n8);
+							t.vertexUV(n17 + n12, n6 + 0.0f, n18 + l + 1.0f - n14, (n15 + n12) * n9 + n7, (n16 + l + 0.5f) * n9 + n8);
+							t.vertexUV(n17 + 0.0f, n6 + 0.0f, n18 + l + 1.0f - n14, (n15 + 0.0f) * n9 + n7, (n16 + l + 0.5f) * n9 + n8);
 						}
 					}
-					instance.render();
+					t.render();
 				}
 			}
 		}
@@ -779,7 +779,7 @@ public class RenderGlobal implements IWorldAccess {
 	}
 
 	public void drawBlockBreaking(final Player gi, final MovingObjectPosition hb, final int integer, final ItemStack hw, final float float5) {
-		final Tessellator instance = Tessellator.instance;
+		final Tessellator t = Tessellator.instance;
 		GL11.glEnable(3042);
 		GL11.glEnable(3008);
 		GL11.glBlendFunc(770, 1);
@@ -795,15 +795,15 @@ public class RenderGlobal implements IWorldAccess {
 				GL11.glDisable(3008);
 				GL11.glPolygonOffset(-3.0f, -3.0f);
 				GL11.glEnable(32823);
-				instance.beginQuads();
-				instance.setTranslationD(-(gi.lastTickPosX + (gi.posX - gi.lastTickPosX) * float5), -(gi.lastTickPosY + (gi.posY - gi.lastTickPosY) * float5), -(gi.lastTickPosZ + (gi.posZ - gi.lastTickPosZ) * float5));
-				instance.c();
+				t.beginQuads();
+				t.setTranslationD(-(gi.lastTickPosX + (gi.x - gi.lastTickPosX) * float5), -(gi.lastTickPosY + (gi.y - gi.lastTickPosY) * float5), -(gi.lastTickPosZ + (gi.z - gi.lastTickPosZ) * float5));
+				t.c();
 				if (stone == null) {
 					stone = Block.stone;
 				}
 				this.u.a(stone, hb.blockX, hb.blockY, hb.blockZ, 240 + (int) (this.damagePartialTime * 10.0f));
-				instance.render();
-				instance.setTranslationD(0.0, 0.0, 0.0);
+				t.render();
+				t.setTranslationD(0.0, 0.0, 0.0);
 				GL11.glPolygonOffset(0.0f, 0.0f);
 				GL11.glDisable(32823);
 				GL11.glEnable(3008);
@@ -838,7 +838,7 @@ public class RenderGlobal implements IWorldAccess {
 			final float n = 0.002f;
 			final int blockId = this.k.getBlockId(hb.blockX, hb.blockY, hb.blockZ);
 			if (blockId > 0) {
-				this.a(Block.BLOCKS[blockId].getSelectedBoundingBoxFromPool(this.k, hb.blockX, hb.blockY, hb.blockZ).grow(n, n, n).getOffsetBoundingBox(-(gi.lastTickPosX + (gi.posX - gi.lastTickPosX) * float5), -(gi.lastTickPosY + (gi.posY - gi.lastTickPosY) * float5), -(gi.lastTickPosZ + (gi.posZ - gi.lastTickPosZ) * float5)));
+				this.a(Block.BLOCKS[blockId].getSelectedBoundingBoxFromPool(this.k, hb.blockX, hb.blockY, hb.blockZ).grow(n, n, n).getOffsetBoundingBox(-(gi.lastTickPosX + (gi.x - gi.lastTickPosX) * float5), -(gi.lastTickPosY + (gi.y - gi.lastTickPosY) * float5), -(gi.lastTickPosZ + (gi.z - gi.lastTickPosZ) * float5)));
 			}
 			GL11.glDepthMask(true);
 			GL11.glEnable(3553);
@@ -847,31 +847,31 @@ public class RenderGlobal implements IWorldAccess {
 	}
 
 	private void a(final AABB en) {
-		final Tessellator instance = Tessellator.instance;
-		instance.begin(3);
-		instance.vertex(en.minX, en.minY, en.minZ);
-		instance.vertex(en.maxX, en.minY, en.minZ);
-		instance.vertex(en.maxX, en.minY, en.maxZ);
-		instance.vertex(en.minX, en.minY, en.maxZ);
-		instance.vertex(en.minX, en.minY, en.minZ);
-		instance.render();
-		instance.begin(3);
-		instance.vertex(en.minX, en.maxY, en.minZ);
-		instance.vertex(en.maxX, en.maxY, en.minZ);
-		instance.vertex(en.maxX, en.maxY, en.maxZ);
-		instance.vertex(en.minX, en.maxY, en.maxZ);
-		instance.vertex(en.minX, en.maxY, en.minZ);
-		instance.render();
-		instance.begin(1);
-		instance.vertex(en.minX, en.minY, en.minZ);
-		instance.vertex(en.minX, en.maxY, en.minZ);
-		instance.vertex(en.maxX, en.minY, en.minZ);
-		instance.vertex(en.maxX, en.maxY, en.minZ);
-		instance.vertex(en.maxX, en.minY, en.maxZ);
-		instance.vertex(en.maxX, en.maxY, en.maxZ);
-		instance.vertex(en.minX, en.minY, en.maxZ);
-		instance.vertex(en.minX, en.maxY, en.maxZ);
-		instance.render();
+		final Tessellator t = Tessellator.instance;
+		t.begin(3);
+		t.vertex(en.minX, en.minY, en.minZ);
+		t.vertex(en.maxX, en.minY, en.minZ);
+		t.vertex(en.maxX, en.minY, en.maxZ);
+		t.vertex(en.minX, en.minY, en.maxZ);
+		t.vertex(en.minX, en.minY, en.minZ);
+		t.render();
+		t.begin(3);
+		t.vertex(en.minX, en.maxY, en.minZ);
+		t.vertex(en.maxX, en.maxY, en.minZ);
+		t.vertex(en.maxX, en.maxY, en.maxZ);
+		t.vertex(en.minX, en.maxY, en.maxZ);
+		t.vertex(en.minX, en.maxY, en.minZ);
+		t.render();
+		t.begin(1);
+		t.vertex(en.minX, en.minY, en.minZ);
+		t.vertex(en.minX, en.maxY, en.minZ);
+		t.vertex(en.maxX, en.minY, en.minZ);
+		t.vertex(en.maxX, en.maxY, en.minZ);
+		t.vertex(en.maxX, en.minY, en.maxZ);
+		t.vertex(en.maxX, en.maxY, en.maxZ);
+		t.vertex(en.minX, en.minY, en.maxZ);
+		t.vertex(en.minX, en.maxY, en.maxZ);
+		t.render();
 	}
 
 	public void a(final int integer1, final int integer2, final int integer3, final int integer4, final int integer5, final int integer6) {
@@ -928,9 +928,9 @@ public class RenderGlobal implements IWorldAccess {
 	}
 
 	public void spawnParticle(final String particle, final double xCoordBlock, final double yCoordBlock, final double zCoordBlock, final double xPosition, final double yPosition, final double zPosition) {
-		final double n = this.k.player.posX - xCoordBlock;
-		final double n2 = this.k.player.posY - yCoordBlock;
-		final double n3 = this.k.player.posZ - zCoordBlock;
+		final double n = this.k.player.x - xCoordBlock;
+		final double n2 = this.k.player.y - yCoordBlock;
+		final double n3 = this.k.player.z - zCoordBlock;
 		if (n * n + n2 * n2 + n3 * n3 > 256.0) {
 			return;
 		}

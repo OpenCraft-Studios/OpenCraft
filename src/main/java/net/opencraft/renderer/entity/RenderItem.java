@@ -1,17 +1,15 @@
-
 package net.opencraft.renderer.entity;
+
+import static org.joml.Math.*;
+import static org.lwjgl.opengl.GL11.*;
+
+import java.util.Random;
 
 import net.opencraft.blocks.Block;
 import net.opencraft.entity.EntityItem;
 import net.opencraft.item.ItemStack;
 import net.opencraft.renderer.Tessellator;
 import net.opencraft.renderer.font.FontRenderer;
-
-import static org.joml.Math.*;
-
-import java.util.Random;
-
-import org.lwjgl.opengl.GL11;
 
 public class RenderItem extends Render<EntityItem> {
 
@@ -25,10 +23,11 @@ public class RenderItem extends Render<EntityItem> {
 		this.field_194_c = 0.75f;
 	}
 
-	public void doRender(final EntityItem entityLiving, final double xCoord, final double sqrt_double, final double yCoord, final float nya1, final float nya2) {
+	public void doRender(final EntityItem entityLiving, final double xCoord, final double sqrt_double,
+			final double yCoord, final float nya1, final float nya2) {
 		this.random.setSeed(187L);
 		final ItemStack item = entityLiving.item;
-		GL11.glPushMatrix();
+		glPushMatrix();
 		final float n = sin((entityLiving.age + nya2) / 10.0f + entityLiving.hoverStart) * 0.1f + 0.1f;
 		final float n2 = toDegrees((entityLiving.age + nya2) / 20.0f + entityLiving.hoverStart);
 		int n3 = 1;
@@ -41,36 +40,36 @@ public class RenderItem extends Render<EntityItem> {
 		if (entityLiving.item.stackSize > 20) {
 			n3 = 4;
 		}
-		GL11.glTranslatef((float) xCoord, (float) sqrt_double + n, (float) yCoord);
-		GL11.glEnable(32826);
+		glTranslatef((float) xCoord, (float) sqrt_double + n, (float) yCoord);
+		glEnable(32826);
 		if (item.itemID < 256 && Block.BLOCKS[item.itemID].getRenderType() == 0) {
-			GL11.glRotatef(n2, 0.0f, 1.0f, 0.0f);
+			glRotatef(n2, 0.0f, 1.0f, 0.0f);
 			this.loadTexture("/assets/terrain.png");
 			float n4 = 0.25f;
 			if (!Block.BLOCKS[item.itemID].renderAsNormalBlock() && item.itemID != Block.slabSingle.id) {
 				n4 = 0.5f;
 			}
-			GL11.glScalef(n4, n4, n4);
-			for ( int i = 0; i < n3; ++i ) {
-				GL11.glPushMatrix();
+			glScalef(n4, n4, n4);
+			for (int i = 0; i < n3; ++i) {
+				glPushMatrix();
 				if (i > 0) {
 					final float n5 = (this.random.nextFloat() * 2.0f - 1.0f) * 0.2f / n4;
 					final float n6 = (this.random.nextFloat() * 2.0f - 1.0f) * 0.2f / n4;
 					final float n7 = (this.random.nextFloat() * 2.0f - 1.0f) * 0.2f / n4;
-					GL11.glTranslatef(n5, n6, n7);
+					glTranslatef(n5, n6, n7);
 				}
 				this.renderBlocks.renderBlockOnInventory(Block.BLOCKS[item.itemID]);
-				GL11.glPopMatrix();
+				glPopMatrix();
 			}
 		} else {
-			GL11.glScalef(0.5f, 0.5f, 0.5f);
+			glScalef(0.5f, 0.5f, 0.5f);
 			final int iconIndex = item.getIconIndex();
 			if (item.itemID < 256) {
 				this.loadTexture("/assets/terrain.png");
 			} else {
 				this.loadTexture("/assets/gui/items.png");
 			}
-			final Tessellator instance = Tessellator.instance;
+			final Tessellator t = Tessellator.instance;
 			final float n5 = (iconIndex % 16 * 16 + 0) / 256.0f;
 			final float n6 = (iconIndex % 16 * 16 + 16) / 256.0f;
 			final float n7 = (iconIndex / 16 * 16 + 0) / 256.0f;
@@ -78,27 +77,33 @@ public class RenderItem extends Render<EntityItem> {
 			final float n9 = 1.0f;
 			final float n10 = 0.5f;
 			final float n11 = 0.25f;
-			for ( int j = 0; j < n3; ++j ) {
-				GL11.glPushMatrix();
+			for (int j = 0; j < n3; ++j) {
+				glPushMatrix();
 				if (j > 0) {
-					GL11.glTranslatef((this.random.nextFloat() * 2.0f - 1.0f) * 0.3f, (this.random.nextFloat() * 2.0f - 1.0f) * 0.3f, (this.random.nextFloat() * 2.0f - 1.0f) * 0.3f);
+					glTranslatef((this.random.nextFloat() * 2.0f - 1.0f) * 0.3f,
+							(this.random.nextFloat() * 2.0f - 1.0f) * 0.3f,
+							(this.random.nextFloat() * 2.0f - 1.0f) * 0.3f);
 				}
-				GL11.glRotatef(180.0f - this.renderManager.playerViewY, 0.0f, 1.0f, 0.0f);
-				instance.beginQuads();
-				instance.normal(0.0f, 1.0f, 0.0f);
-				instance.vertexUV(0.0f - n10, 0.0f - n11, 0.0, n5, n8);
-				instance.vertexUV(n9 - n10, 0.0f - n11, 0.0, n6, n8);
-				instance.vertexUV(n9 - n10, 1.0f - n11, 0.0, n6, n7);
-				instance.vertexUV(0.0f - n10, 1.0f - n11, 0.0, n5, n7);
-				instance.render();
-				GL11.glPopMatrix();
+				glRotatef(180.0f - this.renderManager.playerViewY, 0.0f, 1.0f, 0.0f);
+				t.beginQuads();
+				{
+					t.normal(0.0f, 1.0f, 0.0f);
+
+					t.vertexUV(0.0f - n10, 0.0f - n11, 0.0, n5, n8);
+					t.vertexUV(n9 - n10, 0.0f - n11, 0.0, n6, n8);
+					t.vertexUV(n9 - n10, 1.0f - n11, 0.0, n6, n7);
+					t.vertexUV(0.0f - n10, 1.0f - n11, 0.0, n5, n7);
+				}
+				t.render();
+				glPopMatrix();
 			}
 		}
-		GL11.glDisable(32826);
-		GL11.glPopMatrix();
+		glDisable(32826);
+		glPopMatrix();
 	}
 
-	public void drawItemIntoGui(final FontRenderer ej, final Renderer id, final ItemStack hw, final int integer4, final int integer5) {
+	public void drawItemIntoGui(final FontRenderer ej, final Renderer id, final ItemStack hw, final int integer4,
+			final int integer5) {
 		if (hw == null) {
 			return;
 		}
@@ -106,59 +111,62 @@ public class RenderItem extends Render<EntityItem> {
 			final int itemID = hw.itemID;
 			id.bindTexture(id.loadTexture("/assets/terrain.png"));
 			final Block gs = Block.BLOCKS[itemID];
-			GL11.glPushMatrix();
-			GL11.glTranslatef((float) (integer4 - 2), (float) (integer5 + 3), 0.0f);
-			GL11.glScalef(10.0f, 10.0f, 10.0f);
-			GL11.glTranslatef(1.0f, 0.5f, 8.0f);
-			GL11.glRotatef(210.0f, 1.0f, 0.0f, 0.0f);
-			GL11.glRotatef(45.0f, 0.0f, 1.0f, 0.0f);
-			GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+			glPushMatrix();
+			glTranslatef((float) (integer4 - 2), (float) (integer5 + 3), 0.0f);
+			glScalef(10.0f, 10.0f, 10.0f);
+			glTranslatef(1.0f, 0.5f, 8.0f);
+			glRotatef(210.0f, 1.0f, 0.0f, 0.0f);
+			glRotatef(45.0f, 0.0f, 1.0f, 0.0f);
+			glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 			this.renderBlocks.renderBlockOnInventory(gs);
-			GL11.glPopMatrix();
+			glPopMatrix();
 		} else if (hw.getIconIndex() >= 0) {
-			GL11.glDisable(2896);
+			glDisable(2896);
 			if (hw.itemID < 256) {
 				id.bindTexture(id.loadTexture("/assets/terrain.png"));
 			} else {
 				id.bindTexture(id.loadTexture("/assets/gui/items.png"));
 			}
-			this.renderTexturedQuad(integer4, integer5, hw.getIconIndex() % 16 * 16, hw.getIconIndex() / 16 * 16, 16, 16);
-			GL11.glEnable(2896);
+			this.renderTexturedQuad(integer4, integer5, hw.getIconIndex() % 16 * 16, hw.getIconIndex() / 16 * 16, 16,
+					16);
+			glEnable(GL_LIGHTING);
 		}
 	}
 
-	public void renderItemOverlayIntoGUI(final FontRenderer ej, final Renderer id, final ItemStack hw, final int integer4, final int integer5) {
+	public void renderItemOverlayIntoGUI(final FontRenderer ej, final Renderer id, final ItemStack hw,
+			final int integer4, final int integer5) {
 		if (hw == null) {
 			return;
 		}
 		if (hw.stackSize > 1) {
 			final String string = new StringBuilder().append("").append(hw.stackSize).toString();
-			GL11.glDisable(2896);
-			GL11.glDisable(2929);
-			ej.drawShadow(string, integer4 + 19 - 2 - ej.width(string), integer5 + 6 + 3, 16777215);
-			GL11.glEnable(2896);
-			GL11.glEnable(2929);
+			glDisable(2896);
+			glDisable(2929);
+			ej.drawShadow(string, integer4 + 19 - 2 - ej.width(string), integer5 + 6 + 3, 0xFFFFFF);
+			glEnable(GL_LIGHTING);
+			glEnable(2929);
 		}
 		if (hw.itemDamage > 0) {
 			final int integer6 = 13 - hw.itemDamage * 13 / hw.isItemStackDamageable();
 			final int n = 255 - hw.itemDamage * 255 / hw.isItemStackDamageable();
-			GL11.glDisable(2896);
-			GL11.glDisable(2929);
-			GL11.glDisable(3553);
-			final Tessellator instance = Tessellator.instance;
+			glDisable(2896);
+			glDisable(2929);
+			glDisable(3553);
+			final Tessellator t = Tessellator.instance;
 			final int integer7 = 255 - n << 16 | n << 8;
 			final int integer8 = (255 - n) / 4 << 16 | 0x3F00;
-			this.renderQuad(instance, integer4 + 2, integer5 + 13, 13, 2, 0);
-			this.renderQuad(instance, integer4 + 2, integer5 + 13, 12, 1, integer8);
-			this.renderQuad(instance, integer4 + 2, integer5 + 13, integer6, 1, integer7);
-			GL11.glEnable(3553);
-			GL11.glEnable(2896);
-			GL11.glEnable(2929);
-			GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+			this.renderQuad(t, integer4 + 2, integer5 + 13, 13, 2, 0);
+			this.renderQuad(t, integer4 + 2, integer5 + 13, 12, 1, integer8);
+			this.renderQuad(t, integer4 + 2, integer5 + 13, integer6, 1, integer7);
+			glEnable(3553);
+			glEnable(GL_LIGHTING);
+			glEnable(2929);
+			glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 		}
 	}
 
-	private void renderQuad(final Tessellator ag, final int integer2, final int integer3, final int integer4, final int integer5, final int integer6) {
+	private void renderQuad(final Tessellator ag, final int integer2, final int integer3, final int integer4,
+			final int integer5, final int integer6) {
 		ag.beginQuads();
 		ag.color(integer6);
 		ag.vertex(integer2 + 0, integer3 + 0, 0.0);
@@ -168,17 +176,18 @@ public class RenderItem extends Render<EntityItem> {
 		ag.render();
 	}
 
-	public void renderTexturedQuad(final int integer1, final int integer2, final int integer3, final int integer4, final int integer5, final int integer6) {
+	public void renderTexturedQuad(final int integer1, final int integer2, final int integer3, final int integer4,
+			final int integer5, final int integer6) {
 		final float n = 0.0f;
 		final float n2 = 0.00390625f;
 		final float n3 = 0.00390625f;
-		final Tessellator instance = Tessellator.instance;
-		instance.beginQuads();
-		instance.vertexUV(integer1 + 0, integer2 + integer6, n, (integer3 + 0) * n2, (integer4 + integer6) * n3);
-		instance.vertexUV(integer1 + integer5, integer2 + integer6, n, (integer3 + integer5) * n2, (integer4 + integer6) * n3);
-		instance.vertexUV(integer1 + integer5, integer2 + 0, n, (integer3 + integer5) * n2, (integer4 + 0) * n3);
-		instance.vertexUV(integer1 + 0, integer2 + 0, n, (integer3 + 0) * n2, (integer4 + 0) * n3);
-		instance.render();
+		final Tessellator t = Tessellator.instance;
+		t.beginQuads();
+		t.vertexUV(integer1 + 0, integer2 + integer6, n, (integer3 + 0) * n2, (integer4 + integer6) * n3);
+		t.vertexUV(integer1 + integer5, integer2 + integer6, n, (integer3 + integer5) * n2, (integer4 + integer6) * n3);
+		t.vertexUV(integer1 + integer5, integer2 + 0, n, (integer3 + integer5) * n2, (integer4 + 0) * n3);
+		t.vertexUV(integer1 + 0, integer2 + 0, n, (integer3 + 0) * n2, (integer4 + 0) * n3);
+		t.render();
 	}
 
 }

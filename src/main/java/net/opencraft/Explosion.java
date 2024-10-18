@@ -68,23 +68,23 @@ public class Explosion {
 			final Entity entity = (Entity) entitiesWithinAABBExcludingEntity.get(l);
 			final double n9 = entity.getDistance(double3, double4, double5) / float6;
 			if (n9 <= 1.0) {
-				double double6 = entity.posX - double3;
-				double double7 = entity.posY - double4;
-				double n7 = entity.posZ - double5;
+				double double6 = entity.x - double3;
+				double double7 = entity.y - double4;
+				double n7 = entity.z - double5;
 				final double yCoordBlock = Mth.sqrt_double(double6 * double6 + double7 * double7 + n7 * n7);
 				double6 /= yCoordBlock;
 				double7 /= yCoordBlock;
 				n7 /= yCoordBlock;
-				final double zCoordBlock = world.getBlockDensity(vector, entity.boundingBox);
+				final double zCoordBlock = world.getBlockDensity(vector, entity.bb);
 				final double n10 = (1.0 - n9) * zCoordBlock;
 				entity.attackEntityFrom(eq, (int) ((n10 * n10 + n10) / 2.0 * 8.0 * float6 + 1.0));
 				final double n11 = n10;
 				final Entity entity2 = entity;
-				entity2.motionX += double6 * n11;
+				entity2.xd += double6 * n11;
 				final Entity entity3 = entity;
-				entity3.motionY += double7 * n11;
+				entity3.yd += double7 * n11;
 				final Entity entity4 = entity;
-				entity4.motionZ += n7 * n11;
+				entity4.zd += n7 * n11;
 			}
 		}
 		float6 = n;

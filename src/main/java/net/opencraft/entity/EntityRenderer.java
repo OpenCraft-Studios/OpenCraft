@@ -5,6 +5,7 @@ import static net.opencraft.OpenCraft.*;
 import static org.joml.Math.*;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.NVFogDistance.*;
 
 import java.nio.FloatBuffer;
 import java.util.List;
@@ -60,8 +61,8 @@ public class EntityRenderer {
 
 	public void updateRenderer() {
 		this.fogColor2 = this.fogColor1;
-		final float lightBrightness = oc.world.getLightBrightness(Mth.floor_double(oc.player.posX),
-				Mth.floor_double(oc.player.posY), Mth.floor_double(oc.player.posZ));
+		final float lightBrightness = oc.world.getLightBrightness(Mth.floor_double(oc.player.x),
+				Mth.floor_double(oc.player.y), Mth.floor_double(oc.player.z));
 		final float n = (3 - oc.options.renderDistance) / 3.0f;
 		this.fogColor1 += (lightBrightness * (1.0f - n) + n - this.fogColor1) * 0.1f;
 		++this.rendererUpdateCount;
@@ -72,15 +73,15 @@ public class EntityRenderer {
 
 	private Vec3 orientCamera(final float float1) {
 		final EntityPlayerSP thePlayer = oc.player;
-		return Vec3.newTemp(thePlayer.prevPosX + (thePlayer.posX - thePlayer.prevPosX) * float1,
-				thePlayer.prevPosY + (thePlayer.posY - thePlayer.prevPosY) * float1,
-				thePlayer.prevPosZ + (thePlayer.posZ - thePlayer.prevPosZ) * float1);
+		return Vec3.newTemp(thePlayer.xo + (thePlayer.x - thePlayer.xo) * float1,
+				thePlayer.yo + (thePlayer.y - thePlayer.yo) * float1,
+				thePlayer.zo + (thePlayer.z - thePlayer.zo) * float1);
 	}
 
 	private void getMouseOver(final float float1) {
 		final EntityPlayerSP thePlayer = oc.player;
-		final float n = thePlayer.prevRotationPitch + (thePlayer.rotationPitch - thePlayer.prevRotationPitch) * float1;
-		final float n2 = thePlayer.prevRotationYaw + (thePlayer.rotationYaw - thePlayer.prevRotationYaw) * float1;
+		final float n = thePlayer.prevRotationPitch + (thePlayer.xRot - thePlayer.prevRotationPitch) * float1;
+		final float n2 = thePlayer.prevRotationYaw + (thePlayer.yRot - thePlayer.prevRotationYaw) * float1;
 		final Vec3 orientCamera = this.orientCamera(float1);
 		final float cos = cos(-n2 * 0.017453292f - PI_f);
 		final float sin = sin(-n2 * 0.017453292f - PI_f);
@@ -102,13 +103,13 @@ public class EntityRenderer {
 		final Vec3 addVector = orientCamera2.add(n4 * n7, n5 * n7, n6 * n7);
 		this.pointedEntity = null;
 		List<Entity> entitiesWithinAABBExcludingEntity = oc.world.getEntitiesWithinAABBExcludingEntity(thePlayer,
-				thePlayer.boundingBox.addCoord(n4 * n7, n5 * n7, n6 * n7));
+				thePlayer.bb.addCoord(n4 * n7, n5 * n7, n6 * n7));
 		double n8 = 0.0;
 		for (int i = 0; i < entitiesWithinAABBExcludingEntity.size(); ++i) {
 			final Entity pointedEntity = entitiesWithinAABBExcludingEntity.get(i);
 			if (pointedEntity.canBeCollidedWith()) {
 				final float n9 = 0.1f;
-				final MovingObjectPosition calculateIntercept = pointedEntity.boundingBox.grow(n9, n9, n9)
+				final MovingObjectPosition calculateIntercept = pointedEntity.bb.grow(n9, n9, n9)
 						.calculateIntercept(orientCamera2, addVector);
 				if (calculateIntercept != null) {
 					final double distanceTo2 = orientCamera2.distance(calculateIntercept.hitVec);
@@ -167,16 +168,16 @@ public class EntityRenderer {
 		final EntityPlayerSP player = oc.player;
 		double double1, double2, double3;
 
-		double1 = fma(player.posX - player.prevPosX, multiplier, player.prevPosX);
-		double2 = fma(player.posY - player.prevPosY, multiplier, player.prevPosY);
-		double3 = fma(player.posZ - player.prevPosZ, multiplier, player.prevPosZ);
+		double1 = fma(player.x - player.xo, multiplier, player.xo);
+		double2 = fma(player.y - player.yo, multiplier, player.yo);
+		double3 = fma(player.z - player.zo, multiplier, player.zo);
 
 		if (oc.options.thirdPersonView) {
 			double n = 4.0;
 
-			final double n2 = -sin(toRadians(player.rotationYaw)) * cos(toRadians(player.rotationPitch)) * n;
-			final double n3 = cos(toRadians(player.rotationYaw)) * cos(toRadians(player.rotationPitch)) * n;
-			final double n4 = -sin(toRadians(player.rotationPitch)) * n;
+			final double n2 = -sin(toRadians(player.yRot)) * cos(toRadians(player.xRot)) * n;
+			final double n3 = cos(toRadians(player.yRot)) * cos(toRadians(player.xRot)) * n;
+			final double n4 = -sin(toRadians(player.xRot)) * n;
 			for (int i = 0; i < 8; ++i) {
 				float n5 = (i & 0x1) * 2 - 1;
 				float n6 = (i >> 1 & 0x1) * 2 - 1;
@@ -196,10 +197,9 @@ public class EntityRenderer {
 			glTranslatef(0.0f, 0.0f, (float) (-n));
 		} else
 			glTranslatef(0.0f, 0.0f, -0.1f);
-		glRotatef(player.prevRotationPitch + (player.rotationPitch - player.prevRotationPitch) * multiplier, 1.0f,
-				0.0f, 0.0f);
-		glRotatef(player.prevRotationYaw + (player.rotationYaw - player.prevRotationYaw) * multiplier + 180.0f,
-				0.0f, 1.0f, 0.0f);
+		glRotatef(player.prevRotationPitch + (player.xRot - player.prevRotationPitch) * multiplier, 1.0f, 0.0f, 0.0f);
+		glRotatef(player.prevRotationYaw + (player.yRot - player.prevRotationYaw) * multiplier + 180.0f, 0.0f, 1.0f,
+				0.0f);
 	}
 
 	private void orientCamera(final float float1, final int integer) {
@@ -294,27 +294,27 @@ public class EntityRenderer {
 		} else {
 			glViewport(0, 0, oc.width, oc.height);
 			glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-			glClear(16640);
-			glMatrixMode(5889);
+			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+			glMatrixMode(GL_PROJECTION);
 			glLoadIdentity();
-			glMatrixMode(5888);
+			glMatrixMode(GL_MODELVIEW);
 			glLoadIdentity();
 			this.setupOverlayRendering();
 		}
 		if (oc.currentScreen != null) {
-			glClear(256);
+			glClear(GL_DEPTH_BUFFER_BIT);
 			oc.currentScreen.drawScreen(n, n2, oc.getTickDelta());
 		}
 	}
 
 	public void renderWorld(final float float1) {
 		this.getMouseOver(float1);
-		final EntityPlayerSP thePlayer = oc.player;
+		final EntityPlayerSP player = oc.player;
 		final RenderGlobal renderGlobal = oc.renderGlobal;
 		final EffectRenderer effectRenderer = oc.effectRenderer;
-		final double xCoord = thePlayer.lastTickPosX + (thePlayer.posX - thePlayer.lastTickPosX) * float1;
-		final double yCoord = thePlayer.lastTickPosY + (thePlayer.posY - thePlayer.lastTickPosY) * float1;
-		final double zCoord = thePlayer.lastTickPosZ + (thePlayer.posZ - thePlayer.lastTickPosZ) * float1;
+		final double xCoord = player.lastTickPosX + (player.x - player.lastTickPosX) * float1;
+		final double yCoord = player.lastTickPosY + (player.y - player.lastTickPosY) * float1;
+		final double zCoord = player.lastTickPosZ + (player.z - player.lastTickPosZ) * float1;
 		for (int i = 0; i < 2; ++i) {
 			if (oc.options.anaglyph.get())
 				if (i == 0)
@@ -323,46 +323,45 @@ public class EntityRenderer {
 					glColorMask(true, false, false, false);
 			glViewport(0, 0, oc.width, oc.height);
 			this.updateFogColor(float1);
-			glClear(16640);
-			glEnable(2884);
+			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+			glEnable(GL_CULL_FACE);
 			this.orientCamera(float1, i);
 			// Frustum.getInstance();
 			if (oc.options.renderDistance < 2) {
 				this.setupFog(-1);
 				renderGlobal.renderSky(float1);
 			}
-			glEnable(2912);
+			glEnable(GL_FOG);
 			this.setupFog(1);
 			final Frustrum frustrum = new Frustrum();
 			frustrum.setPosition(xCoord, yCoord, zCoord);
 			oc.renderGlobal.clipRenderersByFrustrum(frustrum, float1);
-			oc.renderGlobal.updateRenderers(thePlayer, false);
+			oc.renderGlobal.updateRenderers(player, false);
 			this.setupFog(0);
-			glEnable(2912);
+			glEnable(GL_FOG);
 			oc.renderer.bindTexture("/assets/terrain.png");
 			RenderHelper.disableStandardItemLighting();
-			renderGlobal.sortAndRender(thePlayer, 0, float1);
+			renderGlobal.sortAndRender(player, 0, float1);
 			RenderHelper.enableStandardItemLighting();
 			renderGlobal.renderEntities(this.orientCamera(float1), frustrum, float1);
-			effectRenderer.renderLitParticles(thePlayer, float1);
+			effectRenderer.renderLitParticles(player, float1);
 			RenderHelper.disableStandardItemLighting();
 			this.setupFog(0);
-			effectRenderer.renderParticles(thePlayer, float1);
-			if (oc.hitResult != null && thePlayer.isInsideOfMaterial(Material.WATER)) {
-				glDisable(3008);
-				renderGlobal.drawBlockBreaking(thePlayer, oc.hitResult, 0, thePlayer.inventory.getCurrentItem(),
-						float1);
-				renderGlobal.drawSelectionBox(thePlayer, oc.hitResult, 0, thePlayer.inventory.getCurrentItem(), float1);
-				glEnable(3008);
+			effectRenderer.renderParticles(player, float1);
+			if (oc.hitResult != null && player.isInsideOfMaterial(Material.WATER)) {
+				glDisable(GL_ALPHA_TEST);
+				renderGlobal.drawBlockBreaking(player, oc.hitResult, 0, player.inventory.getCurrentItem(), float1);
+				renderGlobal.drawSelectionBox(player, oc.hitResult, 0, player.inventory.getCurrentItem(), float1);
+				glEnable(GL_ALPHA_TEST);
 			}
-			glBlendFunc(770, 771);
+			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 			this.setupFog(0);
-			glEnable(3042);
-			glDisable(2884);
+			glEnable(GL_BLEND);
+			glDisable(GL_CULL_FACE);
 			oc.renderer.bindTexture("/assets/terrain.png");
 			if (oc.options.fancyGraphics) {
 				glColorMask(false, false, false, false);
-				final int sortAndRender = renderGlobal.sortAndRender(thePlayer, 1, float1);
+				final int sortAndRender = renderGlobal.sortAndRender(player, 1, float1);
 				glColorMask(true, true, true, true);
 				if (oc.options.anaglyph.get())
 					if (i == 0)
@@ -372,28 +371,27 @@ public class EntityRenderer {
 				if (sortAndRender > 0)
 					renderGlobal.renderAllRenderLists(1, float1);
 			} else
-				renderGlobal.sortAndRender(thePlayer, 1, float1);
+				renderGlobal.sortAndRender(player, 1, float1);
 			glDepthMask(true);
-			glEnable(2884);
-			glDisable(3042);
-			if (oc.hitResult != null && !thePlayer.isInsideOfMaterial(Material.WATER)) {
-				glDisable(3008);
-				renderGlobal.drawBlockBreaking(thePlayer, oc.hitResult, 0, thePlayer.inventory.getCurrentItem(),
-						float1);
-				renderGlobal.drawSelectionBox(thePlayer, oc.hitResult, 0, thePlayer.inventory.getCurrentItem(), float1);
-				glEnable(3008);
+			glEnable(GL_CULL_FACE);
+			glDisable(GL_BLEND);
+			if (oc.hitResult != null && !player.isInsideOfMaterial(Material.WATER)) {
+				glDisable(GL_ALPHA_TEST);
+				renderGlobal.drawBlockBreaking(player, oc.hitResult, 0, player.inventory.getCurrentItem(), float1);
+				renderGlobal.drawSelectionBox(player, oc.hitResult, 0, player.inventory.getCurrentItem(), float1);
+				glEnable(GL_ALPHA_TEST);
 			}
-			glDisable(2912);
+			glDisable(GL_FOG);
 			if (oc.isRaining)
 				this.renderRainSnow(float1);
 			if (this.pointedEntity != null) {
 			}
 			this.setupFog(0);
-			glEnable(2912);
+			glEnable(GL_FOG);
 			renderGlobal.renderClouds(float1);
-			glDisable(2912);
+			glDisable(GL_FOG);
 			this.setupFog(1);
-			glClear(256);
+			glClear(GL_DEPTH_BUFFER_BIT);
 			this.setupCameraTransform(float1, i);
 			if (!oc.options.anaglyph.get())
 				return;
@@ -402,11 +400,11 @@ public class EntityRenderer {
 	}
 
 	private void addRainParticles() {
-		final EntityPlayerSP thePlayer = oc.player;
+		final EntityPlayerSP player = oc.player;
 		final World theWorld = oc.world;
-		final int floor_double = Mth.floor_double(thePlayer.posX);
-		final int floor_double2 = Mth.floor_double(thePlayer.posY);
-		final int floor_double3 = Mth.floor_double(thePlayer.posZ);
+		final int floor_double = Mth.floor_double(player.x);
+		final int floor_double2 = Mth.floor_double(player.y);
+		final int floor_double3 = Mth.floor_double(player.z);
 		final int n = 4;
 		for (int i = 0; i < 50; ++i) {
 			final int n2 = floor_double + this.random.nextInt(n * 2 + 1) - n;
@@ -426,14 +424,14 @@ public class EntityRenderer {
 	private void renderRainSnow(final float float1) {
 		final EntityPlayerSP thePlayer = oc.player;
 		final World theWorld = oc.world;
-		final int floor_double = Mth.floor_double(thePlayer.posX);
-		final int floor_double2 = Mth.floor_double(thePlayer.posY);
-		final int floor_double3 = Mth.floor_double(thePlayer.posZ);
-		final Tessellator instance = Tessellator.instance;
-		glDisable(2884);
+		final int floor_double = Mth.floor_double(thePlayer.x);
+		final int floor_double2 = Mth.floor_double(thePlayer.y);
+		final int floor_double3 = Mth.floor_double(thePlayer.z);
+		final Tessellator t = Tessellator.instance;
+		glDisable(GL_CULL_FACE);
 		glNormal3f(0.0f, 1.0f, 0.0f);
-		glEnable(3042);
-		glBlendFunc(770, 771);
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		oc.renderer.bindTexture("/assets/rain.png");
 		for (int n = 5, i = floor_double - n; i <= floor_double + n; ++i)
 			for (int j = floor_double3 - n; j <= floor_double3 + n; ++j) {
@@ -447,35 +445,38 @@ public class EntityRenderer {
 				final float n4 = 2.0f;
 				if (n2 != n3) {
 					final float n5 = ((this.rendererUpdateCount + i * 3121 + j * 418711) % 32 + float1) / 32.0f;
-					final double n6 = i + 0.5f - thePlayer.posX;
-					final double n7 = j + 0.5f - thePlayer.posZ;
+					final double n6 = i + 0.5f - thePlayer.x;
+					final double n7 = j + 0.5f - thePlayer.z;
 					final float n8 = Mth.sqrt_double(n6 * n6 + n7 * n7) / n;
 					glColor4f(1.0f, 1.0f, 1.0f, (1.0f - n8 * n8) * 0.7f);
-					instance.beginQuads();
-					instance.vertexUV(i + 0, n2, j + 0, 0.0f * n4, n2 * n4 / 8.0f + n5 * n4);
-					instance.vertexUV(i + 1, n2, j + 1, 1.0f * n4, n2 * n4 / 8.0f + n5 * n4);
-					instance.vertexUV(i + 1, n3, j + 1, 1.0f * n4, n3 * n4 / 8.0f + n5 * n4);
-					instance.vertexUV(i + 0, n3, j + 0, 0.0f * n4, n3 * n4 / 8.0f + n5 * n4);
-					instance.vertexUV(i + 0, n2, j + 1, 0.0f * n4, n2 * n4 / 8.0f + n5 * n4);
-					instance.vertexUV(i + 1, n2, j + 0, 1.0f * n4, n2 * n4 / 8.0f + n5 * n4);
-					instance.vertexUV(i + 1, n3, j + 0, 1.0f * n4, n3 * n4 / 8.0f + n5 * n4);
-					instance.vertexUV(i + 0, n3, j + 1, 0.0f * n4, n3 * n4 / 8.0f + n5 * n4);
-					instance.render();
+					t.beginQuads();
+					{
+						t.vertexUV(i + 0, n2, j + 0, 0.0f * n4, n2 * n4 / 8.0f + n5 * n4);
+						t.vertexUV(i + 1, n2, j + 1, 1.0f * n4, n2 * n4 / 8.0f + n5 * n4);
+						t.vertexUV(i + 1, n3, j + 1, 1.0f * n4, n3 * n4 / 8.0f + n5 * n4);
+						t.vertexUV(i + 0, n3, j + 0, 0.0f * n4, n3 * n4 / 8.0f + n5 * n4);
+					
+						t.vertexUV(i + 0, n2, j + 1, 0.0f * n4, n2 * n4 / 8.0f + n5 * n4);
+						t.vertexUV(i + 1, n2, j + 0, 1.0f * n4, n2 * n4 / 8.0f + n5 * n4);
+						t.vertexUV(i + 1, n3, j + 0, 1.0f * n4, n3 * n4 / 8.0f + n5 * n4);
+						t.vertexUV(i + 0, n3, j + 1, 0.0f * n4, n3 * n4 / 8.0f + n5 * n4);
+					}
+					t.render();
 				}
 			}
-		glEnable(2884);
-		glDisable(3042);
+		glEnable(GL_CULL_FACE);
+		glDisable(GL_BLEND);
 	}
 
 	public void setupOverlayRendering() {
 		final ScaledResolution scaledResolution = new ScaledResolution(oc.width, oc.height);
 		final int scaledWidth = scaledResolution.getScaledWidth();
 		final int scaledHeight = scaledResolution.getScaledHeight();
-		glClear(256);
-		glMatrixMode(5889);
+		glClear(GL_DEPTH_BUFFER_BIT);
+		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
 		glOrtho(0.0, scaledWidth, scaledHeight, 0.0, 1000.0, 3000.0);
-		glMatrixMode(5888);
+		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity();
 		glTranslatef(0.0f, 0.0f, -2000.0f);
 	}
@@ -522,12 +523,11 @@ public class EntityRenderer {
 	}
 
 	private void setupFog(final int integer) {
-		final EntityPlayerSP thePlayer = oc.player;
-		glFogfv(GL_FOG_COLOR,
-				this.setFogColorBuffer(this.fogColorRed, this.fogColorGreen, this.fogColorBlue, 1.0f));
+		final EntityPlayerSP player = oc.player;
+		glFogfv(GL_FOG_COLOR, this.setFogColorBuffer(this.fogColorRed, this.fogColorGreen, this.fogColorBlue, 1.0f));
 		glNormal3f(0.0f, -1.0f, 0.0f);
 		glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
-		if (thePlayer.isInsideOfMaterial(Material.WATER)) {
+		if (player.isInsideOfMaterial(Material.WATER)) {
 			glFogi(GL_FOG_MODE, GL_EXP);
 			glFogf(GL_FOG_DENSITY, 0.1f);
 			float n = 0.4f;
@@ -541,7 +541,7 @@ public class EntityRenderer {
 				n2 = n5;
 				n3 = n6;
 			}
-		} else if (thePlayer.isInsideOfMaterial(Material.LAVA)) {
+		} else if (player.isInsideOfMaterial(Material.LAVA)) {
 			glFogi(GL_FOG_MODE, GL_EXP);
 			glFogf(GL_FOG_DENSITY, 2.0f);
 			float n = 0.4f;
@@ -556,18 +556,18 @@ public class EntityRenderer {
 				n3 = n6;
 			}
 		} else {
-			glFogi(2917, 9729);
-			glFogf(2915, this.farPlaneDistance * 0.25f);
+			glFogi(GL_FOG_MODE, GL_LINEAR); // TODO: you can modify how fog behaves, wow
+			glFogf(GL_FOG_START, this.farPlaneDistance * 0.25f);
 			glFogf(2916, this.farPlaneDistance);
 			if (integer < 0) {
-				glFogf(2915, 0.0f);
-				glFogf(2916, this.farPlaneDistance * 0.8f);
+				glFogf(GL_FOG_START, 0.0f);
+				glFogf(GL_FOG_END, this.farPlaneDistance * 0.8f);
 			}
 			if (GL.getCapabilities().GL_NV_fog_distance)
-				glFogi(34138, 34139);
+				glFogi(GL_FOG_DISTANCE_MODE_NV, GL_EYE_RADIAL_NV);
 		}
-		glEnable(2903);
-		glColorMaterial(1028, 4608);
+		glEnable(GL_COLOR_MATERIAL);
+		glColorMaterial(GL_FRONT, GL_AMBIENT);
 	}
 
 	private FloatBuffer setFogColorBuffer(final float float1, final float float2, final float float3,

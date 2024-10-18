@@ -49,14 +49,14 @@ public class EffectRenderer {
 	}
 
 	public void renderParticles(final Entity eq, final float float2) {
-		final float cos = cos(toRadians(eq.rotationYaw));
-		final float sin = sin(toRadians(eq.rotationYaw));
-		final float float3 = -sin * sin(toRadians(eq.rotationPitch));
-		final float float4 = cos * sin(toRadians(eq.rotationPitch));
-		final float cos2 = cos(toRadians(eq.rotationPitch));
-		EntityFX.interpPosX = eq.lastTickPosX + (eq.posX - eq.lastTickPosX) * float2;
-		EntityFX.interpPosY = eq.lastTickPosY + (eq.posY - eq.lastTickPosY) * float2;
-		EntityFX.interpPosZ = eq.lastTickPosZ + (eq.posZ - eq.lastTickPosZ) * float2;
+		final float cos = cos(toRadians(eq.yRot));
+		final float sin = sin(toRadians(eq.yRot));
+		final float float3 = -sin * sin(toRadians(eq.xRot));
+		final float float4 = cos * sin(toRadians(eq.xRot));
+		final float cos2 = cos(toRadians(eq.xRot));
+		EntityFX.interpPosX = eq.lastTickPosX + (eq.x - eq.lastTickPosX) * float2;
+		EntityFX.interpPosY = eq.lastTickPosY + (eq.y - eq.lastTickPosY) * float2;
+		EntityFX.interpPosZ = eq.lastTickPosZ + (eq.z - eq.lastTickPosZ) * float2;
 		for ( int i = 0; i < 2; ++i ) {
 			if (this.fxLayers[i].size() != 0) {
 				int n = 0;
@@ -67,12 +67,12 @@ public class EffectRenderer {
 					n = this.renderer.loadTexture("/assets/terrain.png");
 				}
 				GL11.glBindTexture(3553, n);
-				final Tessellator instance = Tessellator.instance;
-				instance.beginQuads();
+				final Tessellator t = Tessellator.instance;
+				t.beginQuads();
 				for ( int j = 0; j < this.fxLayers[i].size(); ++j ) {
-					((EntityFX) this.fxLayers[i].get(j)).renderParticle(instance, float2, cos, cos2, sin, float3, float4);
+					((EntityFX) this.fxLayers[i].get(j)).renderParticle(t, float2, cos, cos2, sin, float3, float4);
 				}
-				instance.render();
+				t.render();
 			}
 		}
 	}
@@ -82,9 +82,9 @@ public class EffectRenderer {
 		if (this.fxLayers[n].size() == 0) {
 			return;
 		}
-		final Tessellator instance = Tessellator.instance;
+		final Tessellator t = Tessellator.instance;
 		for ( int i = 0; i < this.fxLayers[n].size(); ++i ) {
-			((EntityFX) this.fxLayers[n].get(i)).renderParticle(instance, float2, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f);
+			((EntityFX) this.fxLayers[n].get(i)).renderParticle(t, float2, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f);
 		}
 	}
 

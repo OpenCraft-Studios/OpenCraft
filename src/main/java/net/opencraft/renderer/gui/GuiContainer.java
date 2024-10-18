@@ -1,11 +1,10 @@
 package net.opencraft.renderer.gui;
 
 import static net.opencraft.OpenCraft.*;
+import static org.lwjgl.opengl.GL11.*;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import org.lwjgl.opengl.GL11;
 
 import net.opencraft.client.config.GameSettings.PlayerInput;
 import net.opencraft.entity.EntityPlayerSP;
@@ -36,40 +35,42 @@ public abstract class GuiContainer extends GuiScreen {
 		final int n = (this.width - this.xSize) / 2;
 		final int n2 = (this.height - this.ySize) / 2;
 		this.drawGuiContainerBackgroundLayer(float3);
-		GL11.glPushMatrix();
-		GL11.glRotatef(180.0f, 1.0f, 0.0f, 0.0f);
+		glPushMatrix();
+		glRotatef(180.0f, 1.0f, 0.0f, 0.0f);
 		RenderHelper.enableStandardItemLighting();
-		GL11.glPopMatrix();
-		GL11.glPushMatrix();
-		GL11.glTranslatef((float) n, (float) n2, 0.0f);
-		GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
-		GL11.glEnable(32826);
-		for ( int i = 0; i < this.inventorySlots.size(); ++i ) {
+		glPopMatrix();
+		glPushMatrix();
+		glTranslatef((float) n, (float) n2, 0.0f);
+		glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+		glEnable(32826);
+		for (int i = 0; i < this.inventorySlots.size(); ++i) {
 			final Slot gq = (Slot) this.inventorySlots.get(i);
 			this.inventorySlots(gq);
 			if (gq.isAtCursorPos(integer1, integer2)) {
-				GL11.glDisable(2896);
-				GL11.glDisable(2929);
+				glDisable(2896);
+				glDisable(2929);
 				final int xPos = gq.xPos;
 				final int yPos = gq.yPos;
 				this.drawGradientRect(xPos, yPos, xPos + 16, yPos + 16, -2130706433, -2130706433);
-				GL11.glEnable(2896);
-				GL11.glEnable(2929);
+				glEnable(GL_LIGHTING);
+				glEnable(2929);
 			}
 		}
 		if (this.itemStack != null) {
-			GL11.glTranslatef(0.0f, 0.0f, 32.0f);
-			GuiContainer.itemRenderer.drawItemIntoGui(this.fontRenderer, oc.renderer, this.itemStack, integer1 - n - 8, integer2 - n2 - 8);
-			GuiContainer.itemRenderer.renderItemOverlayIntoGUI(this.fontRenderer, oc.renderer, this.itemStack, integer1 - n - 8, integer2 - n2 - 8);
+			glTranslatef(0.0f, 0.0f, 32.0f);
+			GuiContainer.itemRenderer.drawItemIntoGui(this.fontRenderer, oc.renderer, this.itemStack, integer1 - n - 8,
+					integer2 - n2 - 8);
+			GuiContainer.itemRenderer.renderItemOverlayIntoGUI(this.fontRenderer, oc.renderer, this.itemStack,
+					integer1 - n - 8, integer2 - n2 - 8);
 		}
-		GL11.glDisable(32826);
+		glDisable(32826);
 		RenderHelper.disableStandardItemLighting();
-		GL11.glDisable(2896);
-		GL11.glDisable(2929);
+		glDisable(2896);
+		glDisable(2929);
 		this.drawGuiContainerForegroundLayer();
-		GL11.glEnable(2896);
-		GL11.glEnable(2929);
-		GL11.glPopMatrix();
+		glEnable(GL_LIGHTING);
+		glEnable(2929);
+		glPopMatrix();
 	}
 
 	protected void drawGuiContainerForegroundLayer() {
@@ -86,10 +87,11 @@ public abstract class GuiContainer extends GuiScreen {
 		if (stackInSlot == null) {
 			final int backgroundIconIndex = gq.getBackgroundIconIndex();
 			if (backgroundIconIndex >= 0) {
-				GL11.glDisable(2896);
+				glDisable(2896);
 				oc.renderer.bindTexture(oc.renderer.loadTexture("/assets/gui/items.png"));
-				this.drawTexturedModalRect(xPos, yPos, backgroundIconIndex % 16 * 16, backgroundIconIndex / 16 * 16, 16, 16);
-				GL11.glEnable(2896);
+				this.drawTexturedModalRect(xPos, yPos, backgroundIconIndex % 16 * 16, backgroundIconIndex / 16 * 16, 16,
+						16);
+				glEnable(GL_LIGHTING);
 				return;
 			}
 		}
@@ -98,7 +100,7 @@ public abstract class GuiContainer extends GuiScreen {
 	}
 
 	private Slot a(final int integer1, final int integer2) {
-		for ( int i = 0; i < this.inventorySlots.size(); ++i ) {
+		for (int i = 0; i < this.inventorySlots.size(); ++i) {
 			Slot slot = inventorySlots.get(i);
 			if (slot.isAtCursorPos(integer1, integer2)) {
 				return slot;
@@ -172,7 +174,8 @@ public abstract class GuiContainer extends GuiScreen {
 							}
 						} else if (slotIndex.itemID == this.itemStack.itemID && this.itemStack.getMaxStackSize() > 1) {
 							final int integer4 = slotIndex.stackSize;
-							if (integer4 > 0 && integer4 + this.itemStack.stackSize <= this.itemStack.getMaxStackSize()) {
+							if (integer4 > 0
+									&& integer4 + this.itemStack.stackSize <= this.itemStack.getMaxStackSize()) {
 								final ItemStack itemStack4 = this.itemStack;
 								itemStack4.stackSize += integer4;
 								slotIndex.splitStack(integer4);
@@ -187,7 +190,8 @@ public abstract class GuiContainer extends GuiScreen {
 			} else if (this.itemStack != null) {
 				final int n = (this.width - this.xSize) / 2;
 				final int integer4 = (this.height - this.ySize) / 2;
-				if (integer1 < n || integer2 < integer4 || integer1 >= n + this.xSize || integer2 >= integer4 + this.xSize) {
+				if (integer1 < n || integer2 < integer4 || integer1 >= n + this.xSize
+						|| integer2 >= integer4 + this.xSize) {
 					final EntityPlayerSP thePlayer = oc.player;
 					if (integer3 == 0) {
 						thePlayer.dropPlayerItem(this.itemStack);

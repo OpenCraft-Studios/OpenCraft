@@ -62,15 +62,15 @@ public class Player extends EntityLiving {
 
 	@Override
 	public void onLivingUpdate() {
-		this.world.playSoundEffect(this.posX, this.posY, this.posZ, "calm", 0.0f);
+		this.world.playSoundEffect(this.x, this.y, this.z, "calm", 0.0f);
 		if (this.world.difficultySetting == 0 && this.health < 20 && this.ticksExisted % 20 * 4 == 0) {
 			this.heal(1);
 		}
 		this.inventory.decrementAnimations();
 		this.prevCameraYaw = this.cameraYaw;
 		super.onLivingUpdate();
-		float sqrt_double = Mth.sqrt_double(this.motionX * this.motionX + this.motionZ * this.motionZ);
-		float n = (float) Math.atan(-this.motionY * 0.20000000298023224) * 15.0f;
+		float sqrt_double = Mth.sqrt_double(this.xd * this.xd + this.zd * this.zd);
+		float n = (float) Math.atan(-this.yd * 0.20000000298023224) * 15.0f;
 		if (sqrt_double > 0.1f) {
 			sqrt_double = 0.1f;
 		}
@@ -83,7 +83,7 @@ public class Player extends EntityLiving {
 		this.cameraYaw += (sqrt_double - this.cameraYaw) * 0.4f;
 		this.cameraPitch += (n - this.cameraPitch) * 0.8f;
 		if (this.health > 0) {
-			final List entitiesWithinAABBExcludingEntity = this.world.getEntitiesWithinAABBExcludingEntity(this, this.boundingBox.grow(1.0, 0.0, 1.0));
+			final List entitiesWithinAABBExcludingEntity = this.world.getEntitiesWithinAABBExcludingEntity(this, this.bb.grow(1.0, 0.0, 1.0));
 			if (entitiesWithinAABBExcludingEntity != null) {
 				for ( int i = 0; i < entitiesWithinAABBExcludingEntity.size(); ++i ) {
 					this.collideWithPlayer((Entity) entitiesWithinAABBExcludingEntity.get(i));
@@ -103,19 +103,19 @@ public class Player extends EntityLiving {
 	@Override
 	public void onDeath(final Entity entity) {
 		this.setSize(0.2f, 0.2f);
-		this.setPosition(this.posX, this.posY, this.posZ);
-		this.motionY = 0.10000000149011612;
+		this.setPosition(this.x, this.y, this.z);
+		this.yd = 0.10000000149011612;
 		if (this.username.equals("Notch")) {
 			this.dropPlayerItemWithRandomChoice(new ItemStack(Item.appleRed, 1), true);
 		}
 		this.inventory.dropAllItems();
 		if (entity != null) {
-			this.motionX = -cos(toRadians(attackedAtYaw + rotationYaw)) * 0.1f;
-			this.motionZ = -sin(toRadians(attackedAtYaw + rotationYaw)) * 0.1f;
+			this.xd = -cos(toRadians(attackedAtYaw + yRot)) * 0.1f;
+			this.zd = -sin(toRadians(attackedAtYaw + yRot)) * 0.1f;
 		} else {
 			final double n = 0.0;
-			this.motionZ = n;
-			this.motionX = n;
+			this.zd = n;
+			this.xd = n;
 		}
 		this.yOffset = 0.1f;
 	}
@@ -133,29 +133,29 @@ public class Player extends EntityLiving {
 		if (hw == null) {
 			return;
 		}
-		final EntityItem entity = new EntityItem(this.world, this.posX, this.posY - 0.30000001192092896, this.posZ, hw);
+		final EntityItem entity = new EntityItem(this.world, this.x, this.y - 0.30000001192092896, this.z, hw);
 		entity.delayBeforeCanPickup = 40;
 		float n = 0.1f;
 		if (boolean2) {
 			final float n2 = this.rand.nextFloat() * 0.5f;
 			final float n3 = this.rand.nextFloat() * PI_TIMES_2_f;
-			entity.motionX = -sin(n3) * n2;
-			entity.motionZ = cos(n3) * n2;
-			entity.motionY = 0.20000000298023224;
+			entity.xd = -sin(n3) * n2;
+			entity.zd = cos(n3) * n2;
+			entity.yd = 0.20000000298023224;
 		} else {
 			n = 0.3f;
-			entity.motionX = -sin(toRadians(rotationYaw)) * cos(toRadians(rotationPitch)) * n;
-			entity.motionZ = cos(toRadians(rotationYaw)) * cos(toRadians(rotationPitch)) * n;
-			entity.motionY = -sin(toRadians(rotationYaw)) * n + 0.1f;
+			entity.xd = -sin(toRadians(yRot)) * cos(toRadians(xRot)) * n;
+			entity.zd = cos(toRadians(yRot)) * cos(toRadians(xRot)) * n;
+			entity.yd = -sin(toRadians(yRot)) * n + 0.1f;
 			n = 0.02f;
 			final float n2 = this.rand.nextFloat() * PI_TIMES_2_f;
 			n *= this.rand.nextFloat();
 			final EntityItem entityItem = entity;
-			entityItem.motionX += cos(n2) * n;
+			entityItem.xd += cos(n2) * n;
 			final EntityItem entityItem2 = entity;
-			entityItem2.motionY += (this.rand.nextFloat() - this.rand.nextFloat()) * 0.1f;
+			entityItem2.yd += (this.rand.nextFloat() - this.rand.nextFloat()) * 0.1f;
 			final EntityItem entityItem3 = entity;
-			entityItem3.motionZ += sin(n2) * n;
+			entityItem3.zd += sin(n2) * n;
 		}
 		world.onEntityJoin(entity);
 	}

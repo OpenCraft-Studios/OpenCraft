@@ -18,7 +18,7 @@ public class EntityZombie extends EntityMonster {
 	public void onLivingUpdate() {
 		if (this.world.isDaytime()) {
 			final float entityBrightness = this.getEntityBrightness(1.0f);
-			if (entityBrightness > 0.5f && this.world.canBlockSeeTheSky(Mth.floor_double(this.posX), Mth.floor_double(this.posY), Mth.floor_double(this.posZ)) && this.rand.nextFloat() * 30.0f < (entityBrightness - 0.4f) * 2.0f) {
+			if (entityBrightness > 0.5f && this.world.canBlockSeeTheSky(Mth.floor_double(this.x), Mth.floor_double(this.y), Mth.floor_double(this.z)) && this.rand.nextFloat() * 30.0f < (entityBrightness - 0.4f) * 2.0f) {
 				this.fire = 300;
 			}
 		}

@@ -39,14 +39,13 @@ public class ItemRenderer {
 		final float n = this.d + (this.c - this.d) * float1;
 		final EntityPlayerSP thePlayer = oc.player;
 		glPushMatrix();
-		glRotatef(thePlayer.prevRotationPitch + (thePlayer.rotationPitch - thePlayer.prevRotationPitch) * float1, 1.0f,
-				0.0f, 0.0f);
-		glRotatef(thePlayer.prevRotationYaw + (thePlayer.rotationYaw - thePlayer.prevRotationYaw) * float1, 0.0f, 1.0f,
+		glRotatef(thePlayer.prevRotationPitch + (thePlayer.xRot - thePlayer.prevRotationPitch) * float1, 1.0f, 0.0f,
 				0.0f);
+		glRotatef(thePlayer.prevRotationYaw + (thePlayer.yRot - thePlayer.prevRotationYaw) * float1, 0.0f, 1.0f, 0.0f);
 		RenderHelper.enableStandardItemLighting();
 		glPopMatrix();
-		final float lightBrightness = oc.world.getLightBrightness(Mth.floor_double(thePlayer.posX),
-				Mth.floor_double(thePlayer.posY), Mth.floor_double(thePlayer.posZ));
+		final float lightBrightness = oc.world.getLightBrightness(Mth.floor_double(thePlayer.x),
+				Mth.floor_double(thePlayer.y), Mth.floor_double(thePlayer.z));
 		glColor4f(lightBrightness, lightBrightness, lightBrightness, 1.0f);
 		if (this.b != null) {
 			glPushMatrix();
@@ -132,7 +131,7 @@ public class ItemRenderer {
 					}
 				}
 				t.render();
-				
+
 				// Quad 3
 				t.beginQuads();
 				t.normal(1.0f, 0.0f, 0.0f);
@@ -192,7 +191,8 @@ public class ItemRenderer {
 				glRotatef(n5 * 70.0f, 0.0f, 1.0f, 0.0f);
 				glRotatef(-n4 * 20.0f, 0.0f, 0.0f, 1.0f);
 			}
-			glBindTexture(GL_TEXTURE_2D, oc.renderer.loadAndBindTexture(oc.player.skinUrl, oc.player.addToPlayerScore()));
+			glBindTexture(GL_TEXTURE_2D,
+					oc.renderer.loadAndBindTexture(oc.player.skinUrl, oc.player.addToPlayerScore()));
 			glTranslatef(-1.0f, 3.6f, 3.5f);
 			glRotatef(120.0f, 0.0f, 0.0f, 1.0f);
 			glRotatef(200.0f, 1.0f, 0.0f, 0.0f);
@@ -216,11 +216,11 @@ public class ItemRenderer {
 			glBindTexture(GL_TEXTURE_2D, texId);
 			d(float1);
 		}
-		
+
 		if (oc.world.player.isEntityInsideOpaqueBlock()) {
-			final int xCoord = Mth.floor_double(oc.player.posX);
-			final int floor_double = Mth.floor_double(oc.player.posY);
-			final int floor_double2 = Mth.floor_double(oc.player.posZ);
+			final int xCoord = Mth.floor_double(oc.player.x);
+			final int floor_double = Mth.floor_double(oc.player.y);
+			final int floor_double2 = Mth.floor_double(oc.player.z);
 			glBindTexture(3553, oc.renderer.loadTexture("/assets/terrain.png"));
 			final int blockId = oc.world.getBlockId(xCoord, floor_double, floor_double2);
 			if (Block.BLOCKS[blockId] != null) {
@@ -236,7 +236,7 @@ public class ItemRenderer {
 	}
 
 	private void a(final float float1, final int integer) {
-		final Tessellator instance = Tessellator.instance;
+		final Tessellator t = Tessellator.instance;
 		float entityBrightness = oc.player.getEntityBrightness(float1);
 		entityBrightness = 0.1f;
 		glColor4f(entityBrightness, entityBrightness, entityBrightness, 0.5f);
@@ -251,18 +251,20 @@ public class ItemRenderer {
 		final float n8 = (integer % 16 + 15.99f) / 256.0f + n6;
 		final float n9 = integer / 16 / 256.0f - n6;
 		final float n10 = (integer / 16 + 15.99f) / 256.0f + n6;
-		instance.beginQuads();
-		instance.vertexUV(n, n3, n5, n8, n10);
-		instance.vertexUV(n2, n3, n5, n7, n10);
-		instance.vertexUV(n2, n4, n5, n7, n9);
-		instance.vertexUV(n, n4, n5, n8, n9);
-		instance.render();
+		t.beginQuads();
+		{
+			t.vertexUV(n, n3, n5, n8, n10);
+			t.vertexUV(n2, n3, n5, n7, n10);
+			t.vertexUV(n2, n4, n5, n7, n9);
+			t.vertexUV(n, n4, n5, n8, n9);
+		}
+		t.render();
 		glPopMatrix();
 		glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 	}
 
 	private void c(final float float1) {
-		final Tessellator instance = Tessellator.instance;
+		final Tessellator t = Tessellator.instance;
 		final float entityBrightness = oc.player.getEntityBrightness(float1);
 		glColor4f(entityBrightness, entityBrightness, entityBrightness, 0.5f);
 		glEnable(3042);
@@ -274,14 +276,14 @@ public class ItemRenderer {
 		final float n4 = -1.0f;
 		final float n5 = 1.0f;
 		final float n6 = -0.5f;
-		final float n7 = -oc.player.rotationYaw / 64.0f;
-		final float n8 = oc.player.rotationPitch / 64.0f;
-		instance.beginQuads();
-		instance.vertexUV(n2, n4, n6, n + n7, n + n8);
-		instance.vertexUV(n3, n4, n6, 0.0f + n7, n + n8);
-		instance.vertexUV(n3, n5, n6, 0.0f + n7, 0.0f + n8);
-		instance.vertexUV(n2, n5, n6, n + n7, 0.0f + n8);
-		instance.render();
+		final float n7 = -oc.player.yRot / 64.0f;
+		final float n8 = oc.player.xRot / 64.0f;
+		t.beginQuads();
+		t.vertexUV(n2, n4, n6, n + n7, n + n8);
+		t.vertexUV(n3, n4, n6, 0.0f + n7, n + n8);
+		t.vertexUV(n3, n5, n6, 0.0f + n7, 0.0f + n8);
+		t.vertexUV(n2, n5, n6, n + n7, 0.0f + n8);
+		t.render();
 		glPopMatrix();
 		glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 		glDisable(3042);
@@ -317,7 +319,7 @@ public class ItemRenderer {
 				t.vertexUV(n9, n12, n13, n6, n7);
 			}
 			t.render();
-			
+
 			glPopMatrix();
 		}
 		glColor4f(1.0f, 1.0f, 1.0f, 1.0f);

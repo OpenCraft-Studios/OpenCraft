@@ -24,9 +24,9 @@ public class ItemBucket extends Item {
 	@Override
 	public ItemStack onItemRightClick(final ItemStack hw, final World fe, final Player gi) {
 		final float n = 1.0f;
-		final float n2 = gi.prevRotationPitch + (gi.rotationPitch - gi.prevRotationPitch) * n;
-		final float n3 = gi.prevRotationYaw + (gi.rotationYaw - gi.prevRotationYaw) * n;
-		final Vec3 vector = Vec3.newTemp(gi.prevPosX + (gi.posX - gi.prevPosX) * n, gi.prevPosY + (gi.posY - gi.prevPosY) * n, gi.prevPosZ + (gi.posZ - gi.prevPosZ) * n);
+		final float n2 = gi.prevRotationPitch + (gi.xRot - gi.prevRotationPitch) * n;
+		final float n3 = gi.prevRotationYaw + (gi.yRot - gi.prevRotationYaw) * n;
+		final Vec3 vector = Vec3.newTemp(gi.xo + (gi.x - gi.xo) * n, gi.yo + (gi.y - gi.yo) * n, gi.zo + (gi.z - gi.zo) * n);
 		final float cos = cos(-n3 * 0.017453292f - PI_f);
 		final float sin = sin(-n3 * 0.017453292f - PI_f);
 		final float n4 = -cos(-n2 * 0.017453292f);

@@ -40,8 +40,8 @@ public class GuiChest extends GuiContainer {
 
 	@Override
 	protected void drawGuiContainerForegroundLayer() {
-		this.fontRenderer.draw(this.lowerChestInventory.getInvName(), 8, 6, 4210752);
-		this.fontRenderer.draw(this.upperChestInventory.getInvName(), 8, this.ySize - 96 + 2, 4210752);
+		this.fontRenderer.draw(this.lowerChestInventory.getInvName(), 8, 6, 0x404040);
+		this.fontRenderer.draw(this.upperChestInventory.getInvName(), 8, this.ySize - 96 + 2, 0x404040);
 	}
 
 	@Override

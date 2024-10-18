@@ -38,7 +38,7 @@ public class PlayerControllerSP extends PlayerController {
 
 	@Override
 	public void flipPlayer(final Player gi) {
-		gi.rotationYaw = -180.0f;
+		gi.yRot = -180.0f;
 	}
 
 	@Override
