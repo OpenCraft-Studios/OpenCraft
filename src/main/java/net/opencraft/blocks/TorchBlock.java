@@ -3,7 +3,7 @@ package net.opencraft.blocks;
 
 import java.util.Random;
 
-import net.opencraft.blocks.material.Material;
+import net.opencraft.blocks.material.EnumMaterial;
 import net.opencraft.client.input.MovingObjectPosition;
 import net.opencraft.physics.AABB;
 import net.opencraft.util.Vec3;
@@ -12,7 +12,7 @@ import net.opencraft.world.World;
 public class TorchBlock extends Block {
 
 	protected TorchBlock(final int blockid, final int blockIndexInTexture) {
-		super(blockid, blockIndexInTexture, Material.REDSTONE);
+		super(blockid, blockIndexInTexture, EnumMaterial.REDSTONE);
 		this.setTickOnLoad(true);
 	}
 

@@ -3,12 +3,12 @@ package net.opencraft.blocks;
 
 import java.util.Random;
 
-import net.opencraft.blocks.material.Material;
+import net.opencraft.blocks.material.EnumMaterial;
 
 public class LogBlock extends Block {
 
 	protected LogBlock(final int blockid) {
-		super(blockid, Material.WOOD);
+		super(blockid, EnumMaterial.WOOD);
 		this.blockIndexInTexture = 20;
 	}
 

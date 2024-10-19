@@ -4,7 +4,7 @@ package net.opencraft.entity;
 import static org.joml.Math.*;
 
 import net.opencraft.blocks.LiquidBlock;
-import net.opencraft.blocks.material.Material;
+import net.opencraft.blocks.material.EnumMaterial;
 import net.opencraft.renderer.Tessellator;
 import net.opencraft.util.Mth;
 import net.opencraft.world.World;
@@ -50,7 +50,7 @@ public class EntityRainFX extends EntityFX {
 			this.xd *= 0.699999988079071;
 			this.zd *= 0.699999988079071;
 		}
-		final Material blockMaterial = this.world.getBlockMaterial(Mth.floor_double(this.x), Mth.floor_double(this.y), Mth.floor_double(this.z));
+		final EnumMaterial blockMaterial = this.world.getBlockMaterial(Mth.floor_double(this.x), Mth.floor_double(this.y), Mth.floor_double(this.z));
 		if ((blockMaterial.isLiquid() || blockMaterial.isSolid()) && this.y < Mth.floor_double(this.y) + 1 - LiquidBlock.getPercentAir(this.world.getBlockMetadata(Mth.floor_double(this.x), Mth.floor_double(this.y), Mth.floor_double(this.z)))) {
 			this.setEntityDead();
 		}

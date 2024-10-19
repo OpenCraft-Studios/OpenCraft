@@ -5,7 +5,7 @@ import static org.joml.Math.*;
 
 import java.util.Random;
 
-import net.opencraft.blocks.material.Material;
+import net.opencraft.blocks.material.EnumMaterial;
 import net.opencraft.entity.Entity;
 import net.opencraft.physics.AABB;
 import net.opencraft.util.Vec3;
@@ -16,12 +16,12 @@ public abstract class LiquidBlock extends Block {
 
 	protected int unsure;
 
-	protected LiquidBlock(final int blockid, final Material material) {
-		super(blockid, ((material == Material.LAVA) ? 14 : 12) * 16 + 13, material);
+	protected LiquidBlock(final int blockid, final EnumMaterial material) {
+		super(blockid, ((material == EnumMaterial.LAVA) ? 14 : 12) * 16 + 13, material);
 		this.unsure = 1;
 		final float n = 0.0f;
 		final float n2 = 0.0f;
-		if (material == Material.LAVA) {
+		if (material == EnumMaterial.LAVA) {
 			this.unsure = 2;
 		}
 		this.setShape(0.0f + n2, 0.0f + n, 0.0f + n2, 1.0f + n2, 1.0f + n, 1.0f + n2);
@@ -167,10 +167,10 @@ public abstract class LiquidBlock extends Block {
 
 	@Override
 	public int tickRate() {
-		if (this.blockMaterial == Material.WATER) {
+		if (this.blockMaterial == EnumMaterial.WATER) {
 			return 5;
 		}
-		if (this.blockMaterial == Material.LAVA) {
+		if (this.blockMaterial == EnumMaterial.LAVA) {
 			return 30;
 		}
 		return 0;
@@ -190,18 +190,18 @@ public abstract class LiquidBlock extends Block {
 
 	@Override
 	public int getRenderBlockPass() {
-		return (this.blockMaterial == Material.WATER) ? 1 : 0;
+		return (this.blockMaterial == EnumMaterial.WATER) ? 1 : 0;
 	}
 
 	@Override
 	public void randomDisplayTick(final World world, final int xCoord, final int yCoord, final int zCoord, final Random random) {
-		if (this.blockMaterial == Material.WATER && random.nextInt(64) == 0) {
+		if (this.blockMaterial == EnumMaterial.WATER && random.nextInt(64) == 0) {
 			final int blockMetadata = world.getBlockMetadata(xCoord, yCoord, zCoord);
 			if (blockMetadata > 0 && blockMetadata < 8) {
 				world.playSoundEffect((xCoord + 0.5f), (yCoord + 0.5f), (zCoord + 0.5f), "liquid.water", random.nextFloat() * 0.25f + 0.75f, random.nextFloat() * 1.0f + 0.5f);
 			}
 		}
-		if (this.blockMaterial == Material.LAVA && world.getBlockMaterial(xCoord, yCoord + 1, zCoord) == Material.AIR && !world.isBlockNormalCube(xCoord, yCoord + 1, zCoord) && random.nextInt(100) == 0) {
+		if (this.blockMaterial == EnumMaterial.LAVA && world.getBlockMaterial(xCoord, yCoord + 1, zCoord) == EnumMaterial.AIR && !world.isBlockNormalCube(xCoord, yCoord + 1, zCoord) && random.nextInt(100) == 0) {
 			world.spawnParticle("lava", (xCoord + random.nextFloat()), yCoord + this.maxY, (zCoord + random.nextFloat()), 0.0, 0.0, 0.0);
 		}
 	}
@@ -220,21 +220,21 @@ public abstract class LiquidBlock extends Block {
 		if (world.getBlockId(xCoord, yCoord, zCoord) != this.id) {
 			return;
 		}
-		if (this.blockMaterial == Material.LAVA) {
+		if (this.blockMaterial == EnumMaterial.LAVA) {
 			int n = 0;
-			if (n != 0 || world.getBlockMaterial(xCoord, yCoord, zCoord - 1) == Material.WATER) {
+			if (n != 0 || world.getBlockMaterial(xCoord, yCoord, zCoord - 1) == EnumMaterial.WATER) {
 				n = 1;
 			}
-			if (n != 0 || world.getBlockMaterial(xCoord, yCoord, zCoord + 1) == Material.WATER) {
+			if (n != 0 || world.getBlockMaterial(xCoord, yCoord, zCoord + 1) == EnumMaterial.WATER) {
 				n = 1;
 			}
-			if (n != 0 || world.getBlockMaterial(xCoord - 1, yCoord, zCoord) == Material.WATER) {
+			if (n != 0 || world.getBlockMaterial(xCoord - 1, yCoord, zCoord) == EnumMaterial.WATER) {
 				n = 1;
 			}
-			if (n != 0 || world.getBlockMaterial(xCoord + 1, yCoord, zCoord) == Material.WATER) {
+			if (n != 0 || world.getBlockMaterial(xCoord + 1, yCoord, zCoord) == EnumMaterial.WATER) {
 				n = 1;
 			}
-			if (n != 0 || world.getBlockMaterial(xCoord, yCoord + 1, zCoord) == Material.WATER) {
+			if (n != 0 || world.getBlockMaterial(xCoord, yCoord + 1, zCoord) == EnumMaterial.WATER) {
 				n = 1;
 			}
 			if (n != 0) {
@@ -263,12 +263,12 @@ public abstract class LiquidBlock extends Block {
 		return (fluidSize + 1) / 9.0f;
 	}
 
-	public static double getFlowDirection(final IBlockAccess blockAccess, final int xCoord, final int yCoord, final int zCoord, final Material material) {
+	public static double getFlowDirection(final IBlockAccess blockAccess, final int xCoord, final int yCoord, final int zCoord, final EnumMaterial material) {
 		Vec3 vec3D = null;
-		if (material == Material.WATER) {
+		if (material == EnumMaterial.WATER) {
 			vec3D = ((LiquidBlock) Block.waterMoving).getFlowVector(blockAccess, xCoord, yCoord, zCoord);
 		}
-		if (material == Material.LAVA) {
+		if (material == EnumMaterial.LAVA) {
 			vec3D = ((LiquidBlock) Block.lavaMoving).getFlowVector(blockAccess, xCoord, yCoord, zCoord);
 		}
 		if (vec3D.x == 0.0 && vec3D.z == 0.0) {

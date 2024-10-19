@@ -3,7 +3,7 @@ package net.opencraft.item;
 
 import static org.joml.Math.*;
 
-import net.opencraft.blocks.material.Material;
+import net.opencraft.blocks.material.EnumMaterial;
 import net.opencraft.client.input.MovingObjectPosition;
 import net.opencraft.entity.Player;
 import net.opencraft.util.Mth;
@@ -44,11 +44,11 @@ public class ItemBucket extends Item {
 			int blockY = rayTraceBlocks_do_do.blockY;
 			int blockZ = rayTraceBlocks_do_do.blockZ;
 			if (this.isFull == 0) {
-				if (fe.getBlockMaterial(blockX, blockY, blockZ) == Material.WATER && fe.getBlockMetadata(blockX, blockY, blockZ) == 0) {
+				if (fe.getBlockMaterial(blockX, blockY, blockZ) == EnumMaterial.WATER && fe.getBlockMetadata(blockX, blockY, blockZ) == 0) {
 					fe.setBlockWithNotify(blockX, blockY, blockZ, 0);
 					return new ItemStack(Item.bucketWater);
 				}
-				if (fe.getBlockMaterial(blockX, blockY, blockZ) == Material.LAVA && fe.getBlockMetadata(blockX, blockY, blockZ) == 0) {
+				if (fe.getBlockMaterial(blockX, blockY, blockZ) == EnumMaterial.LAVA && fe.getBlockMetadata(blockX, blockY, blockZ) == 0) {
 					fe.setBlockWithNotify(blockX, blockY, blockZ, 0);
 					return new ItemStack(Item.bucketLava);
 				}

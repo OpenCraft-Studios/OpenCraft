@@ -14,7 +14,11 @@ public class EntitySorter implements Comparator<WorldRenderer> {
 
 	@Override
 	public int compare(final WorldRenderer dl1, final WorldRenderer dl2) {
-		return (dl1.chunkIndex(this.a) < dl2.chunkIndex(this.a)) ? -1 : 1;
+	    float chunkIndex1 = dl1.chunkIndex(this.a);
+	    float chunkIndex2 = dl2.chunkIndex(this.a);
+
+	    return Float.compare(chunkIndex1, chunkIndex2);
 	}
+
 
 }

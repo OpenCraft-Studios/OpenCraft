@@ -6,7 +6,7 @@ import static org.joml.Math.*;
 import java.util.List;
 
 import net.opencraft.blocks.Block;
-import net.opencraft.blocks.material.Material;
+import net.opencraft.blocks.material.EnumMaterial;
 import net.opencraft.client.sound.StepSound;
 import net.opencraft.nbt.NBTTagCompound;
 import net.opencraft.util.Mth;
@@ -122,7 +122,7 @@ public class EntityLiving extends Entity {
 		if (this.isEntityAlive() && this.isEntityInsideOpaqueBlock()) {
 			this.attackEntityFrom(null, 1);
 		}
-		if (this.isEntityAlive() && this.isInsideOfMaterial(Material.WATER)) {
+		if (this.isEntityAlive() && this.isInsideOfMaterial(EnumMaterial.WATER)) {
 			--this.air;
 			if (this.air == -20) {
 				this.air = 0;

@@ -6,7 +6,7 @@ import static org.joml.Math.*;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.opencraft.blocks.material.Material;
+import net.opencraft.blocks.material.EnumMaterial;
 import net.opencraft.entity.Entity;
 import net.opencraft.util.Mth;
 import net.opencraft.world.IBlockAccess;
@@ -125,8 +125,8 @@ public class Pathfinder {
 			if (integer3 > 0) {
 				pathPoint = this.openPoint(integer2, integer3, integer4);
 			}
-			final Material blockMaterial = this.worldMap.getBlockMaterial(integer2, integer3 - 1, integer4);
-			if (blockMaterial == Material.WATER || blockMaterial == Material.LAVA) {
+			final EnumMaterial blockMaterial = this.worldMap.getBlockMaterial(integer2, integer3 - 1, integer4);
+			if (blockMaterial == EnumMaterial.WATER || blockMaterial == EnumMaterial.LAVA) {
 				return null;
 			}
 		}
@@ -147,11 +147,11 @@ public class Pathfinder {
 		for ( int i = integer2; i < integer2 + d.xCoord; ++i ) {
 			for ( int j = integer3; j < integer3 + d.yCoord; ++j ) {
 				for ( int k = integer4; k < integer4 + d.zCoord; ++k ) {
-					final Material blockMaterial = this.worldMap.getBlockMaterial(integer2, integer3, integer4);
-					if (blockMaterial.getIsSolid()) {
+					final EnumMaterial blockMaterial = this.worldMap.getBlockMaterial(integer2, integer3, integer4);
+					if (blockMaterial.isSolid()) {
 						return 0;
 					}
-					if (blockMaterial == Material.WATER || blockMaterial == Material.LAVA) {
+					if (blockMaterial == EnumMaterial.WATER || blockMaterial == EnumMaterial.LAVA) {
 						return -1;
 					}
 				}

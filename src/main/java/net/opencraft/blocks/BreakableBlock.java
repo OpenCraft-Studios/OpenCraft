@@ -1,14 +1,14 @@
 
 package net.opencraft.blocks;
 
-import net.opencraft.blocks.material.Material;
+import net.opencraft.blocks.material.EnumMaterial;
 import net.opencraft.world.IBlockAccess;
 
 public class BreakableBlock extends Block {
 
 	private final boolean localFlag;
 
-	protected BreakableBlock(final int blockid, final int blockIndexInTexture, final Material material, final boolean boolean4) {
+	protected BreakableBlock(final int blockid, final int blockIndexInTexture, final EnumMaterial material, final boolean boolean4) {
 		super(blockid, blockIndexInTexture, material);
 		this.localFlag = boolean4;
 	}

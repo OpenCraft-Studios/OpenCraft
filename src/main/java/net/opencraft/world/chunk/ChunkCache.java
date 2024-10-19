@@ -2,7 +2,7 @@
 package net.opencraft.world.chunk;
 
 import net.opencraft.blocks.Block;
-import net.opencraft.blocks.material.Material;
+import net.opencraft.blocks.material.EnumMaterial;
 import net.opencraft.tileentity.TileEntity;
 import net.opencraft.world.IBlockAccess;
 import net.opencraft.world.World;
@@ -102,10 +102,10 @@ public class ChunkCache implements IBlockAccess {
 		return this.chunkArray[(xCoord >> 4) - this.chunkX][(zCoord >> 4) - this.chunkZ].getBlockMetadata(xCoord & 0xF, yCoord, zCoord & 0xF);
 	}
 
-	public Material getBlockMaterial(final int nya1, final int nya2, final int nya3) {
+	public EnumMaterial getBlockMaterial(final int nya1, final int nya2, final int nya3) {
 		final int blockId = this.getBlockId(nya1, nya2, nya3);
 		if (blockId == 0) {
-			return Material.AIR;
+			return EnumMaterial.AIR;
 		}
 		return Block.BLOCKS[blockId].blockMaterial;
 	}

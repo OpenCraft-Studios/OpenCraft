@@ -4,7 +4,7 @@ package net.opencraft.entity;
 import static org.joml.Math.*;
 
 import net.opencraft.blocks.Block;
-import net.opencraft.blocks.material.Material;
+import net.opencraft.blocks.material.EnumMaterial;
 import net.opencraft.item.ItemStack;
 import net.opencraft.nbt.NBTTagCompound;
 import net.opencraft.util.Mth;
@@ -54,7 +54,7 @@ public class EntityItem extends Entity {
 		this.yo = this.y;
 		this.zo = this.z;
 		this.yd -= 0.03999999910593033;
-		if (this.world.getBlockMaterial(Mth.floor_double(this.x), Mth.floor_double(this.y), Mth.floor_double(this.z)) == Material.LAVA) {
+		if (this.world.getBlockMaterial(Mth.floor_double(this.x), Mth.floor_double(this.y), Mth.floor_double(this.z)) == EnumMaterial.LAVA) {
 			this.yd = 0.20000000298023224;
 			this.xd = (this.rand.nextFloat() - this.rand.nextFloat()) * 0.2f;
 			this.zd = (this.rand.nextFloat() - this.rand.nextFloat()) * 0.2f;
@@ -80,7 +80,7 @@ public class EntityItem extends Entity {
 
 	@Override
 	public boolean handleWaterMovement() {
-		return this.world.handleMaterialAcceleration(this.bb, Material.WATER, this);
+		return this.world.handleMaterialAcceleration(this.bb, EnumMaterial.WATER, this);
 	}
 
 	private boolean pushOutOfBlocks(final double double1, final double double2, final double double3) {

@@ -6,7 +6,7 @@ import static org.joml.Math.*;
 import java.util.List;
 
 import net.opencraft.blocks.Block;
-import net.opencraft.blocks.material.Material;
+import net.opencraft.blocks.material.EnumMaterial;
 import net.opencraft.inventory.IInventory;
 import net.opencraft.inventory.InventoryPlayer;
 import net.opencraft.item.Item;
@@ -162,7 +162,7 @@ public class Player extends EntityLiving {
 
 	public float getCurrentPlayerStrVsBlock(final Block gs) {
 		float strVsBlock = this.inventory.getStrVsBlock(gs);
-		if (this.isInsideOfMaterial(Material.WATER)) {
+		if (this.isInsideOfMaterial(EnumMaterial.WATER)) {
 			strVsBlock /= 5.0f;
 		}
 		if (!this.onGround) {

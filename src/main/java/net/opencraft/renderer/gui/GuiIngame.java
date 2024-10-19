@@ -10,7 +10,7 @@ import java.util.*;
 import org.lwjgl.opengl.GL11;
 
 import net.opencraft.*;
-import net.opencraft.blocks.material.Material;
+import net.opencraft.blocks.material.EnumMaterial;
 import net.opencraft.inventory.InventoryPlayer;
 import net.opencraft.item.ItemStack;
 import net.opencraft.renderer.Tessellator;
@@ -110,7 +110,7 @@ public class GuiIngame extends GuiElement {
 					this.drawTexturedModalRect(integer7, integer5, 61, 0, 9, 9);
 				}
 			}
-			if (this.mc.player.isInsideOfMaterial(Material.WATER)) {
+			if (this.mc.player.isInsideOfMaterial(EnumMaterial.WATER)) {
 				for (int j = (int) ceil((this.mc.player.air - 2) * 10.0 / 300.0),
 						integer5 = (int) ceil(this.mc.player.air * 10.0 / 300.0) - j, k = 0; k < j + integer5; ++k) {
 					if (k < j) {

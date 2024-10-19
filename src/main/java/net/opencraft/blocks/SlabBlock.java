@@ -3,7 +3,7 @@ package net.opencraft.blocks;
 
 import java.util.Random;
 
-import net.opencraft.blocks.material.Material;
+import net.opencraft.blocks.material.EnumMaterial;
 import net.opencraft.world.IBlockAccess;
 import net.opencraft.world.World;
 
@@ -12,7 +12,7 @@ public class SlabBlock extends Block {
 	private final boolean blockType;
 
 	public SlabBlock(final int blockid, final boolean doubleSlab) {
-		super(blockid, 6, Material.ROCK);
+		super(blockid, 6, EnumMaterial.ROCK);
 		if (!(this.blockType = doubleSlab)) {
 			this.setShape(0.0f, 0.0f, 0.0f, 1.0f, 0.5f, 1.0f);
 		}

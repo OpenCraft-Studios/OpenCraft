@@ -1,14 +1,14 @@
 
 package net.opencraft.blocks;
 
-import net.opencraft.blocks.material.Material;
+import net.opencraft.blocks.material.EnumMaterial;
 import net.opencraft.entity.Player;
 import net.opencraft.world.World;
 
 public class CraftingTableBlock extends Block {
 
 	protected CraftingTableBlock(final int blockid) {
-		super(blockid, Material.WOOD);
+		super(blockid, EnumMaterial.WOOD);
 		this.blockIndexInTexture = 59;
 	}
 

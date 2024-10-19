@@ -3,7 +3,7 @@ package net.opencraft.blocks;
 
 import java.util.Random;
 
-import net.opencraft.blocks.material.Material;
+import net.opencraft.blocks.material.EnumMaterial;
 import net.opencraft.tileentity.TileEntity;
 import net.opencraft.world.World;
 
@@ -13,7 +13,7 @@ public class SignBlock extends ContainerBlock {
 	private final int isFreestanding;
 
 	protected SignBlock(final int blockid, final Class class2, final int standing) {
-		super(blockid, Material.WOOD);
+		super(blockid, EnumMaterial.WOOD);
 		this.blockIndexInTexture = 4;
 		this.signEntityClass = class2;
 		final float n = 0.25f;

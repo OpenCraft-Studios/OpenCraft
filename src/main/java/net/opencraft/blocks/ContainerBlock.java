@@ -1,17 +1,17 @@
 
 package net.opencraft.blocks;
 
-import net.opencraft.blocks.material.Material;
+import net.opencraft.blocks.material.EnumMaterial;
 import net.opencraft.tileentity.TileEntity;
 import net.opencraft.world.World;
 
 public abstract class ContainerBlock extends Block {
 
-	protected ContainerBlock(final int blockid, final Material material) {
+	protected ContainerBlock(final int blockid, final EnumMaterial material) {
 		super(blockid, material);
 	}
 
-	protected ContainerBlock(final int blockid, final int textureIndexSlot, final Material material) {
+	protected ContainerBlock(final int blockid, final int textureIndexSlot, final EnumMaterial material) {
 		super(blockid, textureIndexSlot, material);
 	}
 

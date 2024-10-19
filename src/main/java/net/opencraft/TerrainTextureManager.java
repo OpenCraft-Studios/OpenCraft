@@ -7,7 +7,7 @@ import java.util.Arrays;
 import javax.imageio.ImageIO;
 
 import net.opencraft.blocks.Block;
-import net.opencraft.blocks.material.Material;
+import net.opencraft.blocks.material.EnumMaterial;
 import net.opencraft.world.World;
 
 public class TerrainTextureManager {
@@ -101,9 +101,9 @@ public class TerrainTextureManager {
 						final Block block = Block.BLOCKS[worldObj.getBlockId(j, k, i)];
 						if (block == null) {
 							b = false;
-						} else if (block.blockMaterial == Material.WATER) {
+						} else if (block.blockMaterial == EnumMaterial.WATER) {
 							final int blockId = worldObj.getBlockId(j, k + 1, i);
-							if (blockId == 0 || Block.BLOCKS[blockId].blockMaterial != Material.WATER) {
+							if (blockId == 0 || Block.BLOCKS[blockId].blockMaterial != EnumMaterial.WATER) {
 								final float n9 = worldObj.getLightBrightness(j, k + 1, i) * (k / 127.0f * 0.6f + 0.4f);
 								if (n8 >= 0) {
 									if (n8 < 160) {

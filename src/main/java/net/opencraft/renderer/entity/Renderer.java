@@ -36,7 +36,7 @@ public class Renderer {
 
 	public Renderer(GameSettings options) {
 		intBuffer = BufferUtils.createIntBuffer(1);
-		byteBuffer = BufferUtils.createByteBuffer(0x5f5e0ff);
+		byteBuffer = BufferUtils.createByteBuffer(0x5F00000);
 		h = false;
 		this.options = Objects.requireNonNull(options, "settings mustn't be null!");
 	}
@@ -155,27 +155,24 @@ public class Renderer {
 	/**
 	 * Binds the specified image to the specified texture ID.
 	 */
-	public void bindTexture(final BufferedImage bufferedImage, final int textureID) {
+	public void bindTexture(final BufferedImage bi, final int textureID) {
 		glBindTexture(GL_TEXTURE_2D, textureID);
-		glTexParameteri(GL_TEXTURE_2D, 10241, 9728);
-		glTexParameteri(GL_TEXTURE_2D, 10240, 9728);
-		if (h) {
-			glTexParameteri(GL_TEXTURE_2D, 10242, 10496);
-			glTexParameteri(GL_TEXTURE_2D, 10243, 10496);
-		} else {
-			glTexParameteri(GL_TEXTURE_2D, 10242, 10497);
-			glTexParameteri(GL_TEXTURE_2D, 10243, 10497);
-		}
-		final int width = bufferedImage.getWidth();
-		final int height = bufferedImage.getHeight();
-		final int[] array = new int[width * height];
-		final byte[] array2 = new byte[width * height * 4];
-		bufferedImage.getRGB(0, 0, width, height, array, 0, width);
-		for (int i = 0; i < array.length; ++i) {
-			final int n = array[i] >> 24 & 0xFF;
-			int n2 = array[i] >> 16 & 0xFF;
-			int n3 = array[i] >> 8 & 0xFF;
-			int n4 = array[i] & 0xFF;
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+		
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, h ? GL_CLAMP : GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, h ? GL_CLAMP : GL_REPEAT);
+
+		int width = bi.getWidth();
+		int height = bi.getHeight();
+		int[] pixels_raw = new int[width * height];
+		byte[] array2 = new byte[width * height * 4];
+		bi.getRGB(0, 0, width, height, pixels_raw, 0, width);
+		for (int i = 0; i < pixels_raw.length; ++i) {
+			final int n = pixels_raw[i] >> 24 & 0xFF;
+			int n2 = pixels_raw[i] >> 16 & 0xFF;
+			int n3 = pixels_raw[i] >> 8 & 0xFF;
+			int n4 = pixels_raw[i] & 0xFF;
 			if (options != null && options.anaglyph.get()) {
 				final int n5 = (n2 * 30 + n3 * 59 + n4 * 11) / 100;
 				final int n6 = (n2 * 30 + n3 * 70) / 100;

@@ -3,7 +3,7 @@ package net.opencraft.blocks;
 
 import java.util.Random;
 
-import net.opencraft.blocks.material.Material;
+import net.opencraft.blocks.material.EnumMaterial;
 import net.opencraft.entity.EntityFallingSand;
 import net.opencraft.world.World;
 
@@ -16,7 +16,7 @@ public class SandBlock extends Block {
 	}
 
 	public SandBlock(final int blockid, final int blockIndexInTexture) {
-		super(blockid, blockIndexInTexture, Material.SAND);
+		super(blockid, blockIndexInTexture, EnumMaterial.SAND);
 	}
 
 	@Override
@@ -60,8 +60,8 @@ public class SandBlock extends Block {
 		if (blockId == Block.fire.id) {
 			return true;
 		}
-		final Material blockMaterial = Block.BLOCKS[blockId].blockMaterial;
-		return blockMaterial == Material.WATER || blockMaterial == Material.LAVA;
+		final EnumMaterial blockMaterial = Block.BLOCKS[blockId].blockMaterial;
+		return blockMaterial == EnumMaterial.WATER || blockMaterial == EnumMaterial.LAVA;
 	}
 
 }

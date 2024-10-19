@@ -3,13 +3,13 @@ package net.opencraft.blocks;
 
 import java.util.Random;
 
-import net.opencraft.blocks.material.Material;
+import net.opencraft.blocks.material.EnumMaterial;
 import net.opencraft.item.Item;
 
 public class OreBlock extends Block {
 
 	public OreBlock(final int blockid, final int blockIndexInTexture) {
-		super(blockid, blockIndexInTexture, Material.ROCK);
+		super(blockid, blockIndexInTexture, EnumMaterial.ROCK);
 	}
 
 	@Override

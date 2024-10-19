@@ -8,7 +8,7 @@ import java.util.Random;
 
 import net.opencraft.blocks.Block;
 import net.opencraft.blocks.LiquidBlock;
-import net.opencraft.blocks.material.Material;
+import net.opencraft.blocks.material.EnumMaterial;
 import net.opencraft.client.sound.StepSound;
 import net.opencraft.item.ItemStack;
 import net.opencraft.nbt.NBTBase;
@@ -378,10 +378,10 @@ public abstract class Entity {
 	}
 
 	public boolean handleWaterMovement() {
-		return this.world.handleMaterialAcceleration(this.bb.grow(0.0, -0.4000000059604645, 0.0), Material.WATER, this);
+		return this.world.handleMaterialAcceleration(this.bb.grow(0.0, -0.4000000059604645, 0.0), EnumMaterial.WATER, this);
 	}
 
-	public boolean isInsideOfMaterial(final Material material) {
+	public boolean isInsideOfMaterial(final EnumMaterial material) {
 		final double double1 = this.y + this.getEyeHeight();
 		final int floor_double = Mth.floor_double(this.x);
 		final int floor_float = (int) double1;
@@ -395,7 +395,7 @@ public abstract class Entity {
 	}
 
 	public boolean handleLavaMovement() {
-		return this.world.isMaterialInBB(this.bb.grow(0.0, -0.4000000059604645, 0.0), Material.LAVA);
+		return this.world.isMaterialInBB(this.bb.grow(0.0, -0.4000000059604645, 0.0), EnumMaterial.LAVA);
 	}
 
 	public void moveFlying(float xCoord, float yCoord, final float zCoord) {

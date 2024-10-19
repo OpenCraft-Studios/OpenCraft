@@ -3,7 +3,7 @@ package net.opencraft.blocks;
 
 import java.util.Random;
 
-import net.opencraft.blocks.material.Material;
+import net.opencraft.blocks.material.EnumMaterial;
 import net.opencraft.world.World;
 
 public class MovingLiquidBlock extends LiquidBlock {
@@ -12,7 +12,7 @@ public class MovingLiquidBlock extends LiquidBlock {
 	boolean[] isOptimalFlowDirection;
 	int[] flowCost;
 
-	protected MovingLiquidBlock(final int blockid, final Material material) {
+	protected MovingLiquidBlock(final int blockid, final EnumMaterial material) {
 		super(blockid, material);
 		this.numAdjacentSources = 0;
 		this.isOptimalFlowDirection = new boolean[4];
@@ -47,10 +47,10 @@ public class MovingLiquidBlock extends LiquidBlock {
 					n2 = flowDecay2 + 8;
 				}
 			}
-			if (this.numAdjacentSources >= 2 && this.blockMaterial == Material.WATER) {
+			if (this.numAdjacentSources >= 2 && this.blockMaterial == EnumMaterial.WATER) {
 				n2 = 0;
 			}
-			if (this.blockMaterial == Material.LAVA && flowDecay < 8 && n2 < 8 && n2 > flowDecay && random.nextInt(4) != 0) {
+			if (this.blockMaterial == EnumMaterial.LAVA && flowDecay < 8 && n2 < 8 && n2 > flowDecay && random.nextInt(4) != 0) {
 				n2 = flowDecay;
 				b = false;
 			}
@@ -103,7 +103,7 @@ public class MovingLiquidBlock extends LiquidBlock {
 		if (this.liquidCanDisplaceBlock(world, xCoord, yCoord, zCoord)) {
 			final int blockId = world.getBlockId(xCoord, yCoord, zCoord);
 			if (blockId > 0) {
-				if (this.blockMaterial == Material.LAVA) {
+				if (this.blockMaterial == EnumMaterial.LAVA) {
 					this.triggerLavaMixEffects(world, xCoord, yCoord, zCoord);
 				} else {
 					Block.BLOCKS[blockId].dropBlockAsItem(world, xCoord, yCoord, zCoord, world.getBlockMetadata(xCoord, yCoord, zCoord));
@@ -214,8 +214,8 @@ public class MovingLiquidBlock extends LiquidBlock {
 	}
 
 	private boolean liquidCanDisplaceBlock(final World world, final int xCoord, final int yCoord, final int zCoord) {
-		final Material blockMaterial = world.getBlockMaterial(xCoord, yCoord, zCoord);
-		return blockMaterial != this.blockMaterial && blockMaterial != Material.LAVA && !this.blockBlocksFlow(world, xCoord, yCoord, zCoord);
+		final EnumMaterial blockMaterial = world.getBlockMaterial(xCoord, yCoord, zCoord);
+		return blockMaterial != this.blockMaterial && blockMaterial != EnumMaterial.LAVA && !this.blockBlocksFlow(world, xCoord, yCoord, zCoord);
 	}
 
 	@Override

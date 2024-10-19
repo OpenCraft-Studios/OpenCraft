@@ -30,7 +30,7 @@ public class GuiGameOver extends GuiScreen {
 			oc.displayGuiScreen(null);
 		}
 		if (iq.id == 2) {
-			oc.changeWorld1(null);
+			oc.changeWorld(null);
 			oc.displayGuiScreen(new GuiMainMenu());
 		}
 	}

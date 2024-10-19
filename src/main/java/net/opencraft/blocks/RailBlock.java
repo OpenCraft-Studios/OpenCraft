@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import net.opencraft.blocks.material.Material;
+import net.opencraft.blocks.material.EnumMaterial;
 import net.opencraft.client.input.MovingObjectPosition;
 import net.opencraft.physics.AABB;
 import net.opencraft.util.Vec3;
@@ -16,7 +16,7 @@ import net.opencraft.world.chunk.ChunkPosition;
 public class RailBlock extends Block {
 
 	protected RailBlock(final int blockid, final int blockIndexIntexture) {
-		super(blockid, blockIndexIntexture, Material.REDSTONE);
+		super(blockid, blockIndexIntexture, EnumMaterial.REDSTONE);
 		this.setShape(0.0f, 0.0f, 0.0f, 1.0f, 0.125f, 1.0f);
 	}
 

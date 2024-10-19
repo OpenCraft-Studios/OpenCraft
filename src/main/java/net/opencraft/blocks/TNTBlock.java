@@ -3,14 +3,14 @@ package net.opencraft.blocks;
 
 import java.util.Random;
 
-import net.opencraft.blocks.material.Material;
+import net.opencraft.blocks.material.EnumMaterial;
 import net.opencraft.entity.EntityTNTPrimed;
 import net.opencraft.world.World;
 
 public class TNTBlock extends Block {
 
 	public TNTBlock(final int blockid, final int blockIndexInTexture) {
-		super(blockid, blockIndexInTexture, Material.TNT);
+		super(blockid, blockIndexInTexture, EnumMaterial.TNT);
 	}
 
 	@Override

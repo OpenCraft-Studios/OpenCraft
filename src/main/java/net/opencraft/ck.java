@@ -1,7 +1,7 @@
 
 package net.opencraft;
 
-import net.opencraft.blocks.material.Material;
+import net.opencraft.blocks.material.EnumMaterial;
 import net.opencraft.entity.Entity;
 import net.opencraft.entity.EntityLiving;
 import net.opencraft.renderer.gui.IProgressListener;
@@ -45,7 +45,7 @@ public class ck {
 		if (fe.isBlockNormalCube(x, y, z)) {
 			return 0;
 		}
-		if (fe.getBlockMaterial(x, y, z) != Material.AIR) {
+		if (fe.getBlockMaterial(x, y, z) != EnumMaterial.AIR) {
 			return 0;
 		}
 		for ( int i = 0; i < 3; ++i ) {

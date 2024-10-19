@@ -12,7 +12,7 @@ import java.util.stream.Stream;
 import net.opencraft.*;
 import net.opencraft.blocks.Block;
 import net.opencraft.blocks.LiquidBlock;
-import net.opencraft.blocks.material.Material;
+import net.opencraft.blocks.material.EnumMaterial;
 import net.opencraft.client.input.MovingObjectPosition;
 import net.opencraft.entity.Entity;
 import net.opencraft.nbt.NBTTagCompound;
@@ -289,10 +289,10 @@ public class World implements IBlockAccess {
 	}
 
 	@Override
-	public Material getBlockMaterial(final int nya1, final int nya2, final int nya3) {
+	public EnumMaterial getBlockMaterial(final int nya1, final int nya2, final int nya3) {
 		final int blockId = this.getBlockId(nya1, nya2, nya3);
 		if (blockId == 0) {
-			return Material.AIR;
+			return EnumMaterial.AIR;
 		}
 		return Block.BLOCKS[blockId].blockMaterial;
 	}
@@ -1048,7 +1048,7 @@ public class World implements IBlockAccess {
 		return false;
 	}
 
-	public boolean handleMaterialAcceleration(final AABB aabb, final Material material, final Entity entity) {
+	public boolean handleMaterialAcceleration(final AABB aabb, final EnumMaterial material, final Entity entity) {
 		final int floor_double = Mth.floor_double(aabb.minX);
 		final int floor_double2 = Mth.floor_double(aabb.maxX + 1.0);
 		final int floor_double3 = Mth.floor_double(aabb.minY);
@@ -1079,7 +1079,7 @@ public class World implements IBlockAccess {
 		return b;
 	}
 
-	public boolean isMaterialInBB(final AABB aabb, final Material material) {
+	public boolean isMaterialInBB(final AABB aabb, final EnumMaterial material) {
 		final int floor_double = Mth.floor_double(aabb.minX);
 		final int floor_double2 = Mth.floor_double(aabb.maxX + 1.0);
 		final int floor_double3 = Mth.floor_double(aabb.minY);

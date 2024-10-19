@@ -3,7 +3,7 @@ package net.opencraft.blocks;
 
 import java.util.Random;
 
-import net.opencraft.blocks.material.Material;
+import net.opencraft.blocks.material.EnumMaterial;
 import net.opencraft.entity.Player;
 import net.opencraft.tileentity.TileEntity;
 import net.opencraft.tileentity.TileEntityFurnace;
@@ -15,7 +15,7 @@ public class FurnaceBlock extends ContainerBlock {
 	private final boolean isActive;
 
 	protected FurnaceBlock(final int blockid, final boolean isActive) {
-		super(blockid, Material.ROCK);
+		super(blockid, EnumMaterial.ROCK);
 		this.isActive = isActive;
 		this.blockIndexInTexture = 45;
 	}

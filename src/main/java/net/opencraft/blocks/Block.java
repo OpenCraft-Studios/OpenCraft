@@ -4,7 +4,8 @@ package net.opencraft.blocks;
 import java.util.List;
 import java.util.Random;
 
-import net.opencraft.blocks.material.Material;
+import net.opencraft.blocks.material.EnumMaterial;
+import net.opencraft.blocks.material.EnumMaterial;
 import net.opencraft.client.input.MovingObjectPosition;
 import net.opencraft.client.sound.*;
 import net.opencraft.entity.*;
@@ -111,7 +112,7 @@ public class Block {
 	public double maxZ;
 	public StepSound stepSound;
 	public float blockParticleGravity;
-	public final Material blockMaterial;
+	public final EnumMaterial blockMaterial;
 
 	static {
 		soundPowderFootstep = new StepSound("stone", 1.0f, 1.0f);
@@ -132,14 +133,14 @@ public class Block {
 		stone = new StoneBlock(1, 1).setHardness(1.5f).setResistance(10.0f).setStepSound(Block.soundStoneFootstep);
 		grass = (GrassBlock) new GrassBlock(2).setHardness(0.6f).setStepSound(Block.soundGrassFootstep);
 		dirt = new DirtBlock(3, 2).setHardness(0.5f).setStepSound(Block.soundGravelFootstep);
-		cobblestone = new Block(4, 16, Material.ROCK).setHardness(2.0f).setResistance(10.0f).setStepSound(Block.soundStoneFootstep);
-		planks = new Block(5, 4, Material.WOOD).setHardness(2.0f).setResistance(5.0f).setStepSound(Block.soundWoodFootstep);
+		cobblestone = new Block(4, 16, EnumMaterial.ROCK).setHardness(2.0f).setResistance(10.0f).setStepSound(Block.soundStoneFootstep);
+		planks = new Block(5, 4, EnumMaterial.WOOD).setHardness(2.0f).setResistance(5.0f).setStepSound(Block.soundWoodFootstep);
 		sapling = new SaplingBlock(6, 15).setHardness(0.0f).setStepSound(Block.soundGrassFootstep);
-		bedrock = new Block(7, 17, Material.ROCK).setHardness(-1.0f).setResistance(6000000.0f).setStepSound(Block.soundStoneFootstep);
-		waterMoving = new MovingLiquidBlock(8, Material.WATER).setHardness(100.0f).setLightOpacity(3);
-		waterStill = new StaticLiquidBlock(9, Material.WATER).setHardness(100.0f).setLightOpacity(3);
-		lavaMoving = new MovingLiquidBlock(10, Material.LAVA).setHardness(0.0f).setLightValue(1.0f).setLightOpacity(255);
-		lavaStill = new StaticLiquidBlock(11, Material.LAVA).setHardness(100.0f).setLightValue(1.0f).setLightOpacity(255);
+		bedrock = new Block(7, 17, EnumMaterial.ROCK).setHardness(-1.0f).setResistance(6000000.0f).setStepSound(Block.soundStoneFootstep);
+		waterMoving = new MovingLiquidBlock(8, EnumMaterial.WATER).setHardness(100.0f).setLightOpacity(3);
+		waterStill = new StaticLiquidBlock(9, EnumMaterial.WATER).setHardness(100.0f).setLightOpacity(3);
+		lavaMoving = new MovingLiquidBlock(10, EnumMaterial.LAVA).setHardness(0.0f).setLightValue(1.0f).setLightOpacity(255);
+		lavaStill = new StaticLiquidBlock(11, EnumMaterial.LAVA).setHardness(100.0f).setLightValue(1.0f).setLightOpacity(255);
 		SAND = new SandBlock(12, 18).setHardness(0.5f).setStepSound(Block.soundSandFootstep);
 		gravel = new GravelBlock(13, 19).setHardness(0.6f).setStepSound(Block.soundGravelFootstep);
 		oreGold = new OreBlock(14, 32).setHardness(3.0f).setResistance(5.0f).setStepSound(Block.soundStoneFootstep);
@@ -148,7 +149,7 @@ public class Block {
 		wood = new LogBlock(17).setHardness(2.0f).setStepSound(Block.soundWoodFootstep);
 		leaves = (LeavesBlock) new LeavesBlock(18, 52).setHardness(0.2f).setLightOpacity(1).setStepSound(Block.soundGrassFootstep);
 		sponge = new SpongeBlock(19).setHardness(0.6f).setStepSound(Block.soundGrassFootstep);
-		glass = new GlassBlock(20, 49, Material.GLASS, false).setHardness(0.3f).setStepSound(Block.soundGlassFootstep);
+		glass = new GlassBlock(20, 49, EnumMaterial.GLASS, false).setHardness(0.3f).setStepSound(Block.soundGlassFootstep);
 		woolRed = null;
 		woolOrange = null;
 		woolYellow = null;
@@ -163,7 +164,7 @@ public class Block {
 		woolMagenta = null;
 		woolPink = null;
 		woolDarkGray = null;
-		woolGray = new Block(35, 64, Material.CLOTH).setHardness(0.8f).setStepSound(Block.soundClothFootstep);
+		woolGray = new Block(35, 64, EnumMaterial.CLOTH).setHardness(0.8f).setStepSound(Block.soundClothFootstep);
 		woolWhite = null;
 		plantYellow = (FlowerBlock) new FlowerBlock(37, 13).setHardness(0.0f).setStepSound(Block.soundGrassFootstep);
 		plantRed = (FlowerBlock) new FlowerBlock(38, 12).setHardness(0.0f).setStepSound(Block.soundGrassFootstep);
@@ -173,10 +174,10 @@ public class Block {
 		blockSteel = new OreStorageBlock(42, 38).setHardness(5.0f).setResistance(10.0f).setStepSound(Block.soundMetalFootstep);
 		slabDouble = new SlabBlock(43, true).setHardness(2.0f).setResistance(10.0f).setStepSound(Block.soundStoneFootstep);
 		slabSingle = new SlabBlock(44, false).setHardness(2.0f).setResistance(10.0f).setStepSound(Block.soundStoneFootstep);
-		brick = new Block(45, 7, Material.ROCK).setHardness(2.0f).setResistance(10.0f).setStepSound(Block.soundStoneFootstep);
+		brick = new Block(45, 7, EnumMaterial.ROCK).setHardness(2.0f).setResistance(10.0f).setStepSound(Block.soundStoneFootstep);
 		tnt = new TNTBlock(46, 8).setHardness(0.0f).setStepSound(Block.soundGrassFootstep);
 		bookshelf = new BookshelfBlock(47, 35).setHardness(1.5f).setStepSound(Block.soundWoodFootstep);
-		mossyCobblestone = new Block(48, 36, Material.ROCK).setHardness(2.0f).setResistance(10.0f).setStepSound(Block.soundStoneFootstep);
+		mossyCobblestone = new Block(48, 36, EnumMaterial.ROCK).setHardness(2.0f).setResistance(10.0f).setStepSound(Block.soundStoneFootstep);
 		obsidian = new ObsidianBlock(49, 37).setHardness(10.0f).setResistance(20.0f).setStepSound(Block.soundStoneFootstep);
 		torch = new TorchBlock(50, 80).setHardness(0.0f).setLightValue(0.9375f).setStepSound(Block.soundWoodFootstep);
 		fire = (FireBlock) new FireBlock(51, 31).setHardness(0.0f).setLightValue(1.0f).setStepSound(Block.soundWoodFootstep);
@@ -203,7 +204,7 @@ public class Block {
 		}
 	}
 
-	protected Block(final int blockid, final Material material) {
+	protected Block(final int blockid, final EnumMaterial material) {
 		this.stepSound = Block.soundPowderFootstep;
 		this.blockParticleGravity = 1.0f;
 		if (Block.BLOCKS[blockid] != null) {
@@ -218,7 +219,7 @@ public class Block {
 		Block.canBlockGrass[blockid] = this.getCanBlockGrass();
 	}
 
-	protected Block(final int blockid, final int textureIndexSlot, final Material material) {
+	protected Block(final int blockid, final int textureIndexSlot, final EnumMaterial material) {
 		this(blockid, material);
 		this.blockIndexInTexture = textureIndexSlot;
 	}

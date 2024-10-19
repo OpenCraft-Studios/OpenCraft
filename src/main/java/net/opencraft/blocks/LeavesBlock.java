@@ -3,7 +3,7 @@ package net.opencraft.blocks;
 
 import java.util.Random;
 
-import net.opencraft.blocks.material.Material;
+import net.opencraft.blocks.material.EnumMaterial;
 import net.opencraft.entity.Entity;
 import net.opencraft.world.World;
 
@@ -12,7 +12,7 @@ public class LeavesBlock extends LeavesBaseBlock {
 	private final int textureIndexSlot;
 
 	protected LeavesBlock(final int blockid, final int blockIndexInTexture) {
-		super(blockid, blockIndexInTexture, Material.LEAVES, false);
+		super(blockid, blockIndexInTexture, EnumMaterial.LEAVES, false);
 		this.textureIndexSlot = blockIndexInTexture;
 		this.setTickOnLoad(true);
 	}

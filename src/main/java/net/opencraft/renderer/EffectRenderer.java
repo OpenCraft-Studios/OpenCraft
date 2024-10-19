@@ -19,9 +19,7 @@ public class EffectRenderer {
 	private Renderer renderer;
 	private Random rand;
 
-	@SuppressWarnings(
-		"unchecked"
-	)
+	@SuppressWarnings("unchecked")
 	public EffectRenderer(final World fe, final Renderer id) {
 		this.fxLayers = new List[3];
 		this.rand = new Random();
@@ -29,7 +27,7 @@ public class EffectRenderer {
 			this.worldObj = fe;
 
 		this.renderer = id;
-		for ( int i = 0; i < 3; ++i )
+		for (int i = 0; i < 3; ++i)
 			this.fxLayers[i] = new ArrayList<>();
 	}
 
@@ -38,8 +36,8 @@ public class EffectRenderer {
 	}
 
 	public void updateEffects() {
-		for ( int i = 0; i < 3; ++i ) {
-			for ( int j = 0; j < this.fxLayers[i].size(); ++j ) {
+		for (int i = 0; i < 3; ++i) {
+			for (int j = 0; j < this.fxLayers[i].size(); ++j) {
 				final EntityFX entityFX = (EntityFX) this.fxLayers[i].get(j);
 				entityFX.onUpdate();
 				if (entityFX.isDead)
@@ -57,7 +55,7 @@ public class EffectRenderer {
 		EntityFX.interpPosX = eq.lastTickPosX + (eq.x - eq.lastTickPosX) * float2;
 		EntityFX.interpPosY = eq.lastTickPosY + (eq.y - eq.lastTickPosY) * float2;
 		EntityFX.interpPosZ = eq.lastTickPosZ + (eq.z - eq.lastTickPosZ) * float2;
-		for ( int i = 0; i < 2; ++i ) {
+		for (int i = 0; i < 2; ++i) {
 			if (this.fxLayers[i].size() != 0) {
 				int n = 0;
 				if (i == 0) {
@@ -69,7 +67,7 @@ public class EffectRenderer {
 				GL11.glBindTexture(3553, n);
 				final Tessellator t = Tessellator.instance;
 				t.beginQuads();
-				for ( int j = 0; j < this.fxLayers[i].size(); ++j ) {
+				for (int j = 0; j < this.fxLayers[i].size(); ++j) {
 					((EntityFX) this.fxLayers[i].get(j)).renderParticle(t, float2, cos, cos2, sin, float3, float4);
 				}
 				t.render();
@@ -83,14 +81,14 @@ public class EffectRenderer {
 			return;
 		}
 		final Tessellator t = Tessellator.instance;
-		for ( int i = 0; i < this.fxLayers[n].size(); ++i ) {
+		for (int i = 0; i < this.fxLayers[n].size(); ++i) {
 			((EntityFX) this.fxLayers[n].get(i)).renderParticle(t, float2, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f);
 		}
 	}
 
 	public void clearEffects(final World fe) {
 		this.worldObj = fe;
-		for ( int i = 0; i < 3; ++i ) {
+		for (int i = 0; i < 3; ++i) {
 			this.fxLayers[i].clear();
 		}
 	}
@@ -101,23 +99,25 @@ public class EffectRenderer {
 			return;
 		}
 		final Block gs = Block.BLOCKS[blockId];
-		for ( int n = 4, i = 0; i < n; ++i ) {
-			for ( int j = 0; j < n; ++j ) {
-				for ( int k = 0; k < n; ++k ) {
+		for (int n = 4, i = 0; i < n; ++i) {
+			for (int j = 0; j < n; ++j) {
+				for (int k = 0; k < n; ++k) {
 					final double double2 = integer1 + (i + 0.5) / n;
 					final double double3 = integer2 + (j + 0.5) / n;
 					final double double4 = integer3 + (k + 0.5) / n;
-					this.addEffect(new EntityDiggingFX(this.worldObj, double2, double3, double4, double2 - integer1 - 0.5, double3 - integer2 - 0.5, double4 - integer3 - 0.5, gs));
+					this.addEffect(new EntityDiggingFX(this.worldObj, double2, double3, double4,
+							double2 - integer1 - 0.5, double3 - integer2 - 0.5, double4 - integer3 - 0.5, gs));
 				}
 			}
 		}
 	}
 
 	public void addBlockHitEffects(final int integer1, final int integer2, final int integer3, final int integer4) {
+
 		final int blockId = this.worldObj.getBlockId(integer1, integer2, integer3);
-		if (blockId == 0) {
+		if (blockId == 0)
 			return;
-		}
+
 		final Block gs = Block.BLOCKS[blockId];
 		final float n = 0.1f;
 		double double2 = integer1 + this.rand.nextDouble() * (gs.maxX - gs.minX - n * 2.0f) + n + gs.minX;
@@ -141,7 +141,8 @@ public class EffectRenderer {
 		if (integer4 == 5) {
 			double2 = integer1 + gs.maxX + n;
 		}
-		this.addEffect(new EntityDiggingFX(this.worldObj, double2, double3, double4, 0.0, 0.0, 0.0, gs).multiplyVelocity(0.2f).multipleParticleScaleBy(0.6f));
+		this.addEffect(new EntityDiggingFX(this.worldObj, double2, double3, double4, 0.0, 0.0, 0.0, gs)
+				.multiplyVelocity(0.2f).multipleParticleScaleBy(0.6f));
 	}
 
 	public String getStatistics() {

@@ -5,7 +5,7 @@ import static org.joml.Math.*;
 
 import java.util.Random;
 
-import net.opencraft.blocks.material.Material;
+import net.opencraft.blocks.material.EnumMaterial;
 import net.opencraft.client.input.MovingObjectPosition;
 import net.opencraft.entity.Player;
 import net.opencraft.item.Item;
@@ -17,7 +17,7 @@ import net.opencraft.world.World;
 public class DoorBlock extends Block {
 
 	protected DoorBlock(final int blockid) {
-		super(blockid, Material.WOOD);
+		super(blockid, EnumMaterial.WOOD);
 		this.blockIndexInTexture = 97;
 		final float n = 0.5f;
 		this.setShape(0.5f - n, 0.0f, 0.5f - n, 0.5f + n, 1.0f, 0.5f + n);

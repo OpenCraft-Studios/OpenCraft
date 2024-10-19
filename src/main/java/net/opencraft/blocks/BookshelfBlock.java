@@ -3,12 +3,12 @@ package net.opencraft.blocks;
 
 import java.util.Random;
 
-import net.opencraft.blocks.material.Material;
+import net.opencraft.blocks.material.EnumMaterial;
 
 public class BookshelfBlock extends Block {
 
 	public BookshelfBlock(final int blockid, final int blockIndexInTexture) {
-		super(blockid, blockIndexInTexture, Material.WOOD);
+		super(blockid, blockIndexInTexture, EnumMaterial.WOOD);
 	}
 
 	@Override

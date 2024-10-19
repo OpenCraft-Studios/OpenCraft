@@ -1,12 +1,12 @@
 
 package net.opencraft.blocks;
 
-import net.opencraft.blocks.material.Material;
+import net.opencraft.blocks.material.EnumMaterial;
 import net.opencraft.world.World;
 
 public class StaticLiquidBlock extends LiquidBlock {
 
-	protected StaticLiquidBlock(final int blockid, final Material material) {
+	protected StaticLiquidBlock(final int blockid, final EnumMaterial material) {
 		super(blockid, material);
 		this.setTickOnLoad(false);
 	}

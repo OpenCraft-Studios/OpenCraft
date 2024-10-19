@@ -3,7 +3,7 @@ package net.opencraft.blocks;
 
 import java.util.Random;
 
-import net.opencraft.blocks.material.Material;
+import net.opencraft.blocks.material.EnumMaterial;
 import net.opencraft.physics.AABB;
 import net.opencraft.world.IBlockAccess;
 import net.opencraft.world.World;
@@ -14,7 +14,7 @@ public class FireBlock extends Block {
 	private final int[] abilityToCatchFire;
 
 	protected FireBlock(final int blockid, final int blockIndexInTexture) {
-		super(blockid, blockIndexInTexture, Material.FIRE);
+		super(blockid, blockIndexInTexture, EnumMaterial.FIRE);
 		this.chanceToEncourageFire = new int[256];
 		this.abilityToCatchFire = new int[256];
 		this.setBurnRate(Block.planks.id, 5, 20);

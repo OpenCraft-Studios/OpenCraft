@@ -3,7 +3,7 @@ package net.opencraft.renderer.entity;
 
 import net.opencraft.OpenCraft;
 import net.opencraft.blocks.*;
-import net.opencraft.blocks.material.Material;
+import net.opencraft.blocks.material.EnumMaterial;
 import net.opencraft.renderer.Tessellator;
 import net.opencraft.util.Mth;
 import net.opencraft.world.IBlockAccess;
@@ -610,7 +610,7 @@ public class RenderBlocks {
 		final float n4 = 0.6f;
 		final double minY = 0.0;
 		final double maxY = 1.0;
-		final Material blockMaterial = gs.blockMaterial;
+		final EnumMaterial blockMaterial = gs.blockMaterial;
 		final int blockMetadata = this.a.getBlockMetadata(integer2, integer3, integer4);
 		final float a = this.a(integer2, integer3, integer4, blockMaterial);
 		final float a2 = this.a(integer2, integer3, integer4 + 1, blockMaterial);
@@ -727,7 +727,7 @@ public class RenderBlocks {
 		return b;
 	}
 
-	private float a(final int integer1, final int integer2, final int integer3, final Material jy) {
+	private float a(final int integer1, final int integer2, final int integer3, final EnumMaterial jy) {
 		int n = 0;
 		float n2 = 0.0f;
 		for ( int i = 0; i < 4; ++i ) {
@@ -736,7 +736,7 @@ public class RenderBlocks {
 			if (this.a.getBlockMaterial(xCoord, integer2 + 1, zCoord) == jy) {
 				return 1.0f;
 			}
-			final Material blockMaterial = this.a.getBlockMaterial(xCoord, integer2, zCoord);
+			final EnumMaterial blockMaterial = this.a.getBlockMaterial(xCoord, integer2, zCoord);
 			if (blockMaterial == jy) {
 				final int blockMetadata = this.a.getBlockMetadata(xCoord, integer2, zCoord);
 				if (blockMetadata >= 8 || blockMetadata == 0) {

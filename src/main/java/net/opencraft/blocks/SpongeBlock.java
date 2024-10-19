@@ -1,13 +1,13 @@
 
 package net.opencraft.blocks;
 
-import net.opencraft.blocks.material.Material;
+import net.opencraft.blocks.material.EnumMaterial;
 import net.opencraft.world.World;
 
 public class SpongeBlock extends Block {
 
 	protected SpongeBlock(final int integer) {
-		super(integer, Material.SPONGE);
+		super(integer, EnumMaterial.SPONGE);
 		this.blockIndexInTexture = 48;
 	}
 
@@ -16,7 +16,7 @@ public class SpongeBlock extends Block {
 		for ( int n = 2, i = xCoord - n; i <= xCoord + n; ++i ) {
 			for ( int j = yCoord - n; j <= yCoord + n; ++j ) {
 				for ( int k = zCoord - n; k <= zCoord + n; ++k ) {
-					if (world.getBlockMaterial(i, j, k) == Material.WATER) {
+					if (world.getBlockMaterial(i, j, k) == EnumMaterial.WATER) {
 					}
 				}
 			}

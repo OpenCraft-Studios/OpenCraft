@@ -17,7 +17,7 @@ import org.lwjgl.opengl.GL;
 
 import net.opencraft.ScaledResolution;
 import net.opencraft.blocks.Block;
-import net.opencraft.blocks.material.Material;
+import net.opencraft.blocks.material.EnumMaterial;
 import net.opencraft.client.input.MovingObjectPosition;
 import net.opencraft.item.ItemRenderer;
 import net.opencraft.renderer.EffectRenderer;
@@ -127,7 +127,7 @@ public class EntityRenderer {
 	private float getFOVModifier(final float float1) {
 		final EntityPlayerSP thePlayer = oc.player;
 		float n = oc.options.fov;
-		if (thePlayer.isInsideOfMaterial(Material.WATER))
+		if (thePlayer.isInsideOfMaterial(EnumMaterial.WATER))
 			n = 60.0f;
 		if (thePlayer.health <= 0)
 			n /= (1.0f - 500.0f / (thePlayer.deathTime + float1 + 500.0f)) * 2.0f + 1.0f;
@@ -348,7 +348,7 @@ public class EntityRenderer {
 			RenderHelper.disableStandardItemLighting();
 			this.setupFog(0);
 			effectRenderer.renderParticles(player, float1);
-			if (oc.hitResult != null && player.isInsideOfMaterial(Material.WATER)) {
+			if (oc.hitResult != null && player.isInsideOfMaterial(EnumMaterial.WATER)) {
 				glDisable(GL_ALPHA_TEST);
 				renderGlobal.drawBlockBreaking(player, oc.hitResult, 0, player.inventory.getCurrentItem(), float1);
 				renderGlobal.drawSelectionBox(player, oc.hitResult, 0, player.inventory.getCurrentItem(), float1);
@@ -375,7 +375,7 @@ public class EntityRenderer {
 			glDepthMask(true);
 			glEnable(GL_CULL_FACE);
 			glDisable(GL_BLEND);
-			if (oc.hitResult != null && !player.isInsideOfMaterial(Material.WATER)) {
+			if (oc.hitResult != null && !player.isInsideOfMaterial(EnumMaterial.WATER)) {
 				glDisable(GL_ALPHA_TEST);
 				renderGlobal.drawBlockBreaking(player, oc.hitResult, 0, player.inventory.getCurrentItem(), float1);
 				renderGlobal.drawSelectionBox(player, oc.hitResult, 0, player.inventory.getCurrentItem(), float1);
@@ -497,11 +497,11 @@ public class EntityRenderer {
 		this.fogColorRed += (n2 - this.fogColorRed) * n;
 		this.fogColorGreen += (n3 - this.fogColorGreen) * n;
 		this.fogColorBlue += (n4 - this.fogColorBlue) * n;
-		if (thePlayer.isInsideOfMaterial(Material.WATER)) {
+		if (thePlayer.isInsideOfMaterial(EnumMaterial.WATER)) {
 			this.fogColorRed = 0.02f;
 			this.fogColorGreen = 0.02f;
 			this.fogColorBlue = 0.2f;
-		} else if (thePlayer.isInsideOfMaterial(Material.LAVA)) {
+		} else if (thePlayer.isInsideOfMaterial(EnumMaterial.LAVA)) {
 			this.fogColorRed = 0.6f;
 			this.fogColorGreen = 0.1f;
 			this.fogColorBlue = 0.0f;
@@ -527,7 +527,7 @@ public class EntityRenderer {
 		glFogfv(GL_FOG_COLOR, this.setFogColorBuffer(this.fogColorRed, this.fogColorGreen, this.fogColorBlue, 1.0f));
 		glNormal3f(0.0f, -1.0f, 0.0f);
 		glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
-		if (player.isInsideOfMaterial(Material.WATER)) {
+		if (player.isInsideOfMaterial(EnumMaterial.WATER)) {
 			glFogi(GL_FOG_MODE, GL_EXP);
 			glFogf(GL_FOG_DENSITY, 0.1f);
 			float n = 0.4f;
@@ -541,7 +541,7 @@ public class EntityRenderer {
 				n2 = n5;
 				n3 = n6;
 			}
-		} else if (player.isInsideOfMaterial(Material.LAVA)) {
+		} else if (player.isInsideOfMaterial(EnumMaterial.LAVA)) {
 			glFogi(GL_FOG_MODE, GL_EXP);
 			glFogf(GL_FOG_DENSITY, 2.0f);
 			float n = 0.4f;

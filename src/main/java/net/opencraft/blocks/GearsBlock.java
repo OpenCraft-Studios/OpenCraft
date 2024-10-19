@@ -3,14 +3,14 @@ package net.opencraft.blocks;
 
 import java.util.Random;
 
-import net.opencraft.blocks.material.Material;
+import net.opencraft.blocks.material.EnumMaterial;
 import net.opencraft.physics.AABB;
 import net.opencraft.world.World;
 
 public class GearsBlock extends Block {
 
 	protected GearsBlock(final int blockid, final int blockIndexInTexture) {
-		super(blockid, blockIndexInTexture, Material.REDSTONE);
+		super(blockid, blockIndexInTexture, EnumMaterial.REDSTONE);
 	}
 
 	@Override

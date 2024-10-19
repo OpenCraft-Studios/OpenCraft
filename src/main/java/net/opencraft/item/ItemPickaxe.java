@@ -2,7 +2,7 @@
 package net.opencraft.item;
 
 import net.opencraft.blocks.Block;
-import net.opencraft.blocks.material.Material;
+import net.opencraft.blocks.material.EnumMaterial;
 
 public class ItemPickaxe extends ItemTool {
 
@@ -28,7 +28,7 @@ public class ItemPickaxe extends ItemTool {
 		if (gs == Block.blockSteel || gs == Block.oreIron) {
 			return this.getHarvestLevel >= 1;
 		}
-		return gs.blockMaterial == Material.ROCK || gs.blockMaterial == Material.METAL;
+		return gs.blockMaterial == EnumMaterial.ROCK || gs.blockMaterial == EnumMaterial.METAL;
 	}
 
 	static {

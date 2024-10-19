@@ -3,7 +3,7 @@ package net.opencraft.tileentity;
 
 import net.opencraft.blocks.Block;
 import net.opencraft.blocks.FurnaceBlock;
-import net.opencraft.blocks.material.Material;
+import net.opencraft.blocks.material.EnumMaterial;
 import net.opencraft.inventory.IInventory;
 import net.opencraft.item.Item;
 import net.opencraft.item.ItemStack;
@@ -208,7 +208,7 @@ public class TileEntityFurnace extends TileEntity implements IInventory {
 			return 0;
 		}
 		final int shiftedIndex = hw.getItem().shiftedIndex;
-		if (shiftedIndex < 256 && Block.BLOCKS[shiftedIndex].blockMaterial == Material.WOOD) {
+		if (shiftedIndex < 256 && Block.BLOCKS[shiftedIndex].blockMaterial == EnumMaterial.WOOD) {
 			return 300;
 		}
 		if (shiftedIndex == Item.stick.shiftedIndex) {

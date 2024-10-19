@@ -3,7 +3,7 @@ package net.opencraft.blocks;
 
 import java.util.Random;
 
-import net.opencraft.blocks.material.Material;
+import net.opencraft.blocks.material.EnumMaterial;
 import net.opencraft.entity.Entity;
 import net.opencraft.physics.AABB;
 import net.opencraft.world.World;
@@ -11,7 +11,7 @@ import net.opencraft.world.World;
 public class FarmlandBlock extends Block {
 
 	protected FarmlandBlock(final int blockid) {
-		super(blockid, Material.GROUND);
+		super(blockid, EnumMaterial.GROUND);
 		this.blockIndexInTexture = 87;
 		this.setTickOnLoad(true);
 		this.setShape(0.0f, 0.0f, 0.0f, 1.0f, 0.9375f, 1.0f);
@@ -82,7 +82,7 @@ public class FarmlandBlock extends Block {
 		for ( int i = xCoord - 4; i <= xCoord + 4; ++i ) {
 			for ( int j = yCoord; j <= yCoord + 1; ++j ) {
 				for ( int k = zCoord - 4; k <= zCoord + 4; ++k ) {
-					if (world.getBlockMaterial(i, j, k) == Material.WATER) {
+					if (world.getBlockMaterial(i, j, k) == EnumMaterial.WATER) {
 						return true;
 					}
 				}

@@ -24,15 +24,15 @@ public class GuiIngameMenu extends GuiScreen {
 	}
 
 	@Override
-	protected void actionPerformed(final GuiButton iq) {
-		if (iq.id == 0) {
+	protected void actionPerformed(GuiButton button) {
+		if (button.id == 0) {
 			oc.displayGuiScreen(new GuiOptions(this, oc.options));
 		}
-		if (iq.id == 1) {
-			oc.changeWorld1(null);
+		if (button.id == 1) {
+			oc.changeWorld(null);
 			oc.displayGuiScreen(new GuiMainMenu());
 		}
-		if (iq.id == 4) {
+		if (button.id == 4) {
 			oc.displayGuiScreen(null);
 			oc.setIngameFocus();
 		}

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.opencraft.EnumArt;
-import net.opencraft.blocks.material.Material;
+import net.opencraft.blocks.material.EnumMaterial;
 import net.opencraft.item.Item;
 import net.opencraft.item.ItemStack;
 import net.opencraft.nbt.NBTTagCompound;
@@ -140,7 +140,7 @@ public class EntityPainting extends Entity {
 		n4 = Mth.floor_double(this.y - this.art.sizeY / 32.0f);
 		for ( int i = 0; i < n; ++i ) {
 			for ( int j = 0; j < n2; ++j ) {
-				Material material;
+				EnumMaterial material;
 				if (this.direction == 0 || this.direction == 2) {
 					material = this.world.getBlockMaterial(n3 + i, n4 + j, this.zPosition);
 				} else {

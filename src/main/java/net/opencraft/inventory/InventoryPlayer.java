@@ -2,7 +2,7 @@
 package net.opencraft.inventory;
 
 import net.opencraft.blocks.Block;
-import net.opencraft.blocks.material.Material;
+import net.opencraft.blocks.material.EnumMaterial;
 import net.opencraft.entity.Entity;
 import net.opencraft.entity.Player;
 import net.opencraft.item.ItemArmor;
@@ -225,7 +225,7 @@ public class InventoryPlayer implements IInventory {
 	}
 
 	public boolean canHarvestBlock(final Block gs) {
-		if (gs.blockMaterial != Material.ROCK && gs.blockMaterial != Material.METAL)
+		if (gs.blockMaterial != EnumMaterial.ROCK && gs.blockMaterial != EnumMaterial.METAL)
 			return true;
 		final ItemStack stackInSlot = this.getStackInSlot(this.currentItem);
 		return stackInSlot != null && stackInSlot.canHarvestBlock(gs);

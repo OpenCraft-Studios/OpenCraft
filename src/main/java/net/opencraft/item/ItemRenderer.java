@@ -6,7 +6,7 @@ import static org.joml.Math.*;
 import static org.lwjgl.opengl.GL11.*;
 
 import net.opencraft.blocks.Block;
-import net.opencraft.blocks.material.Material;
+import net.opencraft.blocks.material.EnumMaterial;
 import net.opencraft.entity.EntityPlayerSP;
 import net.opencraft.renderer.Tessellator;
 import net.opencraft.renderer.entity.*;
@@ -16,7 +16,7 @@ public class ItemRenderer {
 
 	private ItemStack b;
 	private float c, d;
-	private boolean f;
+	private boolean handBreakingAnimation;
 	private int e;
 
 	private RenderBlocks renderBlocks;
@@ -26,7 +26,7 @@ public class ItemRenderer {
 		this.c = 0.0f;
 		this.d = 0.0f;
 		this.e = 0;
-		this.f = false;
+		this.handBreakingAnimation = false;
 		this.renderBlocks = new RenderBlocks();
 	}
 
@@ -50,7 +50,7 @@ public class ItemRenderer {
 		if (this.b != null) {
 			glPushMatrix();
 			final float n2 = 0.8f;
-			if (this.f) {
+			if (this.handBreakingAnimation) {
 				final float n3 = (this.e + float1) / 8.0f;
 				final float n4 = sin(n3 * PI_f);
 				final float n5 = sin(sqrt(n3) * PI_f);
@@ -59,7 +59,7 @@ public class ItemRenderer {
 			glTranslatef(0.7f * n2, -0.65f * n2 - (1.0f - n) * 0.6f, -0.9f * n2);
 			glRotatef(45.0f, 0.0f, 1.0f, 0.0f);
 			glEnable(32826);
-			if (this.f) {
+			if (this.handBreakingAnimation) {
 				final float n3 = (this.e + float1) / 8.0f;
 				final float n4 = sin(n3 * n3 * PI_f);
 				final float n5 = sin(sqrt(n3) * PI_f);
@@ -175,7 +175,7 @@ public class ItemRenderer {
 		} else {
 			glPushMatrix();
 			final float n2 = 0.8f;
-			if (this.f) {
+			if (this.handBreakingAnimation) {
 				final float n3 = (this.e + float1) / 8.0f;
 				final float n4 = sin(n3 * PI_f);
 				final float n5 = sin(sqrt(n3) * PI_f);
@@ -184,7 +184,7 @@ public class ItemRenderer {
 			glTranslatef(0.8f * n2, -0.75f * n2 - (1.0f - n) * 0.6f, -0.9f * n2);
 			glRotatef(45.0f, 0.0f, 1.0f, 0.0f);
 			glEnable(32826);
-			if (this.f) {
+			if (this.handBreakingAnimation) {
 				final float n3 = (this.e + float1) / 8.0f;
 				final float n4 = sin(n3 * n3 * PI_f);
 				final float n5 = sin(sqrt(n3) * PI_f);
@@ -227,7 +227,7 @@ public class ItemRenderer {
 				this.a(float1, Block.BLOCKS[blockId].getBlockTextureFromSide(2));
 			}
 		}
-		if (oc.player.isInsideOfMaterial(Material.WATER)) {
+		if (oc.player.isInsideOfMaterial(EnumMaterial.WATER)) {
 			final int xCoord = oc.renderer.loadTexture("/assets/water.png");
 			glBindTexture(3553, xCoord);
 			this.c(float1);
@@ -327,11 +327,17 @@ public class ItemRenderer {
 	}
 
 	public void updateEquippedItem() {
+		if (oc.player == null)
+			return;
+		
+		if (oc.player.inventory == null)
+			return;
+		
 		this.d = this.c;
-		if (f) {
+		if (handBreakingAnimation) {
 			if (++e == 8) {
 				e = 0;
-				f = false;
+				handBreakingAnimation = false;
 			}
 		}
 		final ItemStack currentItem = oc.player.inventory.getCurrentItem();
@@ -355,7 +361,7 @@ public class ItemRenderer {
 
 	public void resetEquippedProgress() {
 		this.e = -1;
-		this.f = true;
+		this.handBreakingAnimation = true;
 	}
 
 	public void d() {

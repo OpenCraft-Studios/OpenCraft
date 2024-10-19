@@ -374,7 +374,7 @@ public class RenderGlobal implements IWorldAccess {
 			this.g = gi.y;
 			this.h = gi.z;
 			this.b(Mth.floor_double(gi.x), Mth.floor_double(gi.y), Mth.floor_double(gi.z));
-			Arrays.sort((Object[]) this.n, (Comparator) new EntitySorter(gi));
+			Arrays.sort(this.n, new EntitySorter(gi));
 		}
 		final int n7 = 0;
 		int n9;

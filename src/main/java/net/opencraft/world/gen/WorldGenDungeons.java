@@ -4,7 +4,7 @@ package net.opencraft.world.gen;
 import java.util.Random;
 
 import net.opencraft.blocks.Block;
-import net.opencraft.blocks.material.Material;
+import net.opencraft.blocks.material.EnumMaterial;
 import net.opencraft.item.Item;
 import net.opencraft.item.ItemStack;
 import net.opencraft.tileentity.TileEntityChest;
@@ -22,7 +22,7 @@ public class WorldGenDungeons extends WorldGenerator {
 		for ( int i = integer3 - n2 - 1; i <= integer3 + n2 + 1; ++i ) {
 			for ( int j = integer4 - 1; j <= integer4 + n + 1; ++j ) {
 				for ( int k = integer5 - n3 - 1; k <= integer5 + n3 + 1; ++k ) {
-					final Material blockMaterial = fe.getBlockMaterial(i, j, k);
+					final EnumMaterial blockMaterial = fe.getBlockMaterial(i, j, k);
 					if (j == integer4 - 1 && !blockMaterial.isSolid()) {
 						return false;
 					}

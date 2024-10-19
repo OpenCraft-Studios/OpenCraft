@@ -3,7 +3,7 @@ package net.opencraft.entity;
 
 import static org.joml.Math.*;
 
-import net.opencraft.blocks.material.Material;
+import net.opencraft.blocks.material.EnumMaterial;
 import net.opencraft.util.Mth;
 import net.opencraft.world.World;
 
@@ -33,7 +33,7 @@ public class EntityBubbleFX extends EntityFX {
 		this.xd *= 0.8500000238418579;
 		this.yd *= 0.8500000238418579;
 		this.zd *= 0.8500000238418579;
-		if (this.world.getBlockMaterial(Mth.floor_double(this.x), Mth.floor_double(this.y), Mth.floor_double(this.z)) != Material.WATER) {
+		if (this.world.getBlockMaterial(Mth.floor_double(this.x), Mth.floor_double(this.y), Mth.floor_double(this.z)) != EnumMaterial.WATER) {
 			this.setEntityDead();
 		}
 		if (this.particleMaxAge-- <= 0) {
